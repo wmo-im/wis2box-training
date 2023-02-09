@@ -3,7 +3,7 @@
 - Use the following command to generate the json file
 
 ``
-csv2bufr mappings create 001125 001126 001127 001128 004001 004002 004003 004004 004005 005002 006002 007031 010004 012101 013009 --output example1.json
+csv2bufr mappings create 001125 001126 001127 001128 004001 004002 004003 004004 004005 005002 006002 007031 010004 012101 013009 --output exercise-1.json
 ``
 
 The 6 digit numbers correspond to the following (identified by either the local BUFR tables or by looking up on the ECMWF website).
@@ -29,7 +29,7 @@ The 6 digit numbers correspond to the following (identified by either the local 
 - Run the following to convert to BUFR.
 
 ``
-csv2bufr data transform --bufr-template example1.json --output-dir . example1.csv
+csv2bufr data transform --bufr-template exercise-1.json --output-dir . exercise-1.csv
 ``
 
 This should create the following file: ``WIGOS_0-20000-0-MYWSI001_20230203T120200.bufr4``
