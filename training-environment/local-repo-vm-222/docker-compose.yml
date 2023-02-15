@@ -1,0 +1,43 @@
+services:
+  registry_mirror:
+    container_name: registry-mirror
+    restart: always
+    image: registry:2
+    environment:
+      REGISTRY_STORAGE_DELETE_ENABLED: "true"
+      REGISTRY_PROXY_REMOTEURL: "https://registry-1.docker.io"
+    ports:
+      - "5000:5000"
+    volumes:
+      - registy-mirror-data:/var/lib/registry
+
+  minio:
+    container_name: minio
+    image: minio/minio:RELEASE.2022-12-02T19-19-22Z.fips
+    mem_limit: 512m
+    memswap_limit: 512m
+    restart: always
+    command: server --console-address ":9001" /data
+    # in a production-setup minio needs to be
+    volumes:
+      - minio-data:/data
+    ports:
+      - "9000:9001"
+      - "9000:9000"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 5s
+      timeout: 1s
+      retries: 3
+
+  mosquitto:
+    container_name: mosquitto
+    build:
+      context: ./mosquitto
+    ports:
+      - "1883:1883"
+      - "8883:8883"
+
+volumes:
+  minio-data:
+  registry-mirror-data:
