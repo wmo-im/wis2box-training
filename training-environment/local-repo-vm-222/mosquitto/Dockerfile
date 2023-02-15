@@ -21,9 +21,6 @@
 
 FROM eclipse-mosquitto
 
-RUN mkdir -p /data/wis2box/mosquitto
-RUN ln -s /mosquitto /data/wis2box/mosquitto
-
 COPY mosquitto.conf /mosquitto/config/mosquitto.conf
 COPY acl.conf /mosquitto/config/acl.conf
 COPY entrypoint.sh /docker-entrypoint.sh
