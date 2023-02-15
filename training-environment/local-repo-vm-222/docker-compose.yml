@@ -9,7 +9,7 @@ services:
     ports:
       - "5000:5000"
     volumes:
-      - registry-mirror-data::/var/lib/registry
+      - registry-mirror-data:/var/lib/registry
 
   minio:
     container_name: minio
@@ -22,7 +22,7 @@ services:
     volumes:
       - minio-data:/data
     ports:
-      - "9000:9001"
+      - "9001:9001"
       - "9000:9000"
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
