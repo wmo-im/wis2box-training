@@ -9,7 +9,7 @@ services:
     ports:
       - "5000:5000"
     volumes:
-      - registy-mirror-data:/var/lib/registry
+      - registry-mirror-data::/var/lib/registry
 
   minio:
     container_name: minio
