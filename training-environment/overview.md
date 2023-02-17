@@ -1,6 +1,6 @@
 # training-environment
 
-The WIS2box training-environment consists of the following components:
+The portable WIS2box training-environment consists of the following components:
 - One (1) Nighthawk WiFi router
 - Three (3) ZOTAX ZBOX Mini PCs (M Series Edge MI623)
 
