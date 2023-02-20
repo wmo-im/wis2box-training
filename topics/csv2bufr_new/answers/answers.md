@@ -111,6 +111,10 @@ and of course can use BUFR Dump to inspect the contents of the output BUFR.
 
 1. Navigate to `answers/ex_4/synop_bufr.json` to see the correct mappings file for the example data. If you use your own CSV data, your mappings file will likely differ.
 
+________________________________________
+
+Additional questions:
+
 ## Exercise 5
 
 1. The correct units are the following:

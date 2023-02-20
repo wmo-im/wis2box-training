@@ -152,7 +152,7 @@
             "value": "data:height_of_barometer_above_msl",
             "valid_min": "const:-400.0",
             "valid_max": "const:12707.0",
-            "scale": "const:-2",
+            "scale": "const:0",
             "offset": "const:0"
         },
         {
@@ -160,22 +160,22 @@
             "value": "data:non_coordinate_pressure",
             "valid_min": "const:0",
             "valid_max": "const:163820",
-            "scale": "const:2",
+            "scale": "const:0",
             "offset": "const:0"
         },
         {
             "eccodes_key": "#1#airTemperature",
             "value": "data:air_temp",
-            "valid_min": "const:-20",
-            "valid_max": "const:40",
+            "valid_min": "const:0.0",
+            "valid_max": "const:655.34",
             "scale": "const:0",
-            "offset": "const:273.15"
+            "offset": "const:0"
         },
         {
             "eccodes_key": "#1#relativeHumidity",
             "value": "data:relative_humidity",
-            "valid_min": "const:0",
-            "valid_max": "const:150",
+            "valid_min": "const:-100.0",
+            "valid_max": "const:309.4",
             "scale": "const:0",
             "offset": "const:0"
         }
