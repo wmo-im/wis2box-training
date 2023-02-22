@@ -5,7 +5,7 @@ services:
     image: registry:2
     environment:
       REGISTRY_STORAGE_DELETE_ENABLED: "true"
-      REGISTRY_PROXY_REMOTEURL: "https://registry-1.docker.io"
+      REGISTRY_PROXY_REMOTEURL: "https://index.docker.io"
     ports:
       - "5000:5000"
     volumes:
