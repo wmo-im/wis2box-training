@@ -24,7 +24,7 @@ Each VM-host has a 'vm-clone-base'-template from which new VMs can be created.
 - 2 vCPUs
 - 48 GB local storage
 - 4 GB RAM
-- Ubuntu 22.0.4 with Docker CE, mosquitto-tools, python3, python3-pip, unzip, docker-compose 
+- Ubuntu 20.0.4 with Docker CE, mosquitto-clients, python3, python3-pip, unzip, docker-compose 
 - /etc/docker/daemon.json with registry-mirror pointing to http://10.0.2.222:5000
 
 ### VM-naming convention
@@ -40,3 +40,19 @@ Student VMs:
 - on vm-host-2: 10.0.3.11, 10.0.3.12, 10.0.3.13 etc.
 
 local-repo-vm: 10.0.2.222
+
+### bucket with wis2-training-materials
+
+Files can be shared within the local network using the Minio-bucket on local-repo-vm-222
+
+For example to share the wis2box release archive:
+
+```bash
+python3 copy_file_to_minio.py wis2box-1.0.beta1.zip http://wmo_admin:XXX@10.0.2.222:9000/wis2-training-materials/
+```
+
+After which the file can be downloaded by:
+
+```bash
+wget http://10.0.2.222/wis2-training-materials/wis2box-1.0.beta1.zip
+```
