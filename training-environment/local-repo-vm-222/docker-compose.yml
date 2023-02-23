@@ -29,6 +29,8 @@ services:
       interval: 5s
       timeout: 1s
       retries: 3
+    env_file:
+      - .env
 
   mosquitto:
     container_name: mosquitto
@@ -37,6 +39,8 @@ services:
     ports:
       - "1883:1883"
       - "8883:8883"
+    env_file:
+      - .env
 
 volumes:
   minio-data:
