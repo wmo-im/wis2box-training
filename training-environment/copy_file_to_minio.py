@@ -22,7 +22,10 @@ if minio_url != '' and '@' in minio_url:
     creds = minio_url.split('@')[0]
     endpoint = minio_url.split('@')[1].split('/')[0]
     bucket = minio_url.split('@')[1].split('/')[1]
-    minio_path = minio_url.split('@')[1].split('/')[2]
+    minio_path = '/'
+    # path is remaining bit after the bucket ...
+    if len(minio_url.split('@')[1].split('/'))>2:
+        minio_path = minio_url.replace(f'{creds}@{endpoint}/{bucket}','')
     client = Minio(
         endpoint=endpoint,
         access_key=creds.split(':')[0],
