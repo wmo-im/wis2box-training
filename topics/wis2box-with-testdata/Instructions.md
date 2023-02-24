@@ -3,7 +3,7 @@
 Download the archive and unzip it:
 
 ```
-wget http://10.0.2.222/wis2-training-materials/wis2box-training.zip
+http://10.0.2.222/wis2-training-materials//wis2box-training-release.zip
 unzip wis2box-training.zip
 ```
 
