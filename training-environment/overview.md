@@ -45,14 +45,15 @@ local-repo-vm: 10.0.2.222
 
 Files can be shared within the local network using the Minio-bucket on local-repo-vm-222
 
-For example to share the wis2box release archive:
+To share the wis2box release archive:
 
 ```bash
-python3 copy_file_to_minio.py wis2box-1.0.beta1.zip http://wmo_admin:XXX@10.0.2.222:9000/wis2-training-materials/
+zip -L ../wis2box-training wis2box-training-release.zip
+python3 copy_file_to_minio.py wis2box.zip http://wmo_admin:XXX@10.0.2.222:9000/wis2-training-materials/
 ```
 
 After which the file can be downloaded by:
 
 ```bash
-wget http://10.0.2.222/wis2-training-materials/wis2box-1.0.beta1.zip
+wget http://10.0.2.222/wis2-training-materials/wis2box-training-release.zip
 ```
