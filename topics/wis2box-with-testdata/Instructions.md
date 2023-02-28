@@ -1,16 +1,18 @@
 # Run wis2box using test-data
 
+Login to your designated VM with your username and password.
+
 Download the archive and unzip it:
 
 ```
-http://10.0.2.222/wis2-training-materials//wis2box-training-release.zip
-unzip wis2box-training.zip
+wget http://10.0.2.222/wis2-training-materials//wis2box-training-release.zip
+unzip wis2box-training-release.zip
 ```
 
 Go into the new directory:
 
 ```
-cd wis2box-training
+cd wis2box-training-release
 ```
 
 ## review the test-data-setup
