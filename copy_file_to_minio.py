@@ -35,11 +35,11 @@ if minio_url != '' and '@' in minio_url:
         filepath = filepath.replace('\\', '/')
         identifier = minio_path+'/'+filepath.split('/')[-1]
         print(f"Put into bucket={bucket} : {filepath} ")
-    try:
-        client.fput_object(bucket, identifier, filepath)
-        print(f'Success! File available at: {protocol}{endpoint}/{bucket}{identifier}')
-    except Exception as e:
-        print('failed with error:')
-        print(e)
+        try:
+            client.fput_object(bucket, identifier, filepath)
+            print(f'Success! File available at: {protocol}{endpoint}/{bucket}{identifier}')
+        except Exception as e:
+            print('failed with error:')
+            print(e)
 else:
     print('Please specify minio_url in the form http://username:password@localhost/bucket/directory')
