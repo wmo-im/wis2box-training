@@ -1,3 +1,5 @@
 topics/*.html
+documentation/*.html
+documentation/*/*.html
 topics/*/*.html
 .env

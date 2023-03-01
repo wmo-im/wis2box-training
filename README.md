@@ -1,7 +1,7 @@
 # wis2box-training
 Repository to contain training materials and data for training on the configuration and use of the WIS2box.
 
-### bucket with wis2-training-materials
+### bucket with exercise-materials
 
 Files can be shared within the local network using the Minio-bucket 'exercise-materials' on local-repo-vm-222
 
