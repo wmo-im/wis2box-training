@@ -43,6 +43,6 @@ local-repo-vm: 10.0.2.222
 
 ### minio-bucket setup
 
-'wis2-training-materials' bucket has to be created manually when local-repo-vm-222 is first started and requires 'readonly' access permission.
+'exercise-materials' bucket has to be created manually when local-repo-vm-222 is first started and requires 'readonly' access permission.
 
-'topics' bucket has to be created manually when local-repo-vm-222 is first started and requires 'readonly' access permission.
+'documentation' bucket has to be created manually when local-repo-vm-222 is first started and requires 'readonly' access permission.
