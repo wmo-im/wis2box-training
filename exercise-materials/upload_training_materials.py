@@ -10,7 +10,7 @@ local_path = sys.argv[1]
 minio_url = os.getenv("MINIO_URL")
 
 # hardcoded bucket-name
-bucket = 'wis2-training-materials'
+bucket = 'exercise-materials'
 
 filepaths = glob.glob(local_path)
 if len(filepaths) == 0:
