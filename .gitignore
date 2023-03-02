@@ -4,3 +4,5 @@ documentation/*/*.html
 topics/*/*.html
 .env
 update_topics_bucket_old.py
+
+site
