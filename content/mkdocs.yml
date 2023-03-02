@@ -1,0 +1,53 @@
+site_name: WIS2 in a box training
+site_description: "WIS2 in a box (wis2box) is a Free and Open Source (FOSS) Reference Implementation of a WMO WIS2 node. The project provides a plug and play toolset to ingest, process, and publish weather/climate/water data using standards-based approaches in alignment with the WIS2 principles. wis2box also provides access to all data in the WIS2 network. wis2box is designed to have a low barrier to entry for data providers, providing enabling infrastructure and services for data discovery, access, and visualization."
+site_author: World Meteorological Organization
+copyright: "&copy; 2023 World Meteorological Organization"
+site_url: https://wmo-im.github.io/wis2box-training
+repo_url: https://github.com/wmo-im/wis2box-training
+
+nav:
+    - Home: index.md
+    - Practical sessions:
+        - Connecting to the Global Broker: practical-sessions/connecting-to-the-global-broker.md
+        - Accessing your training environment: practical-sessions/connecting-to-your-training-environment.md
+        - Installing WIS2 in a box with quickstart test data: practical-sessions/connecting-to-your-training-environment.md
+        - Configuring data mappings: practical-sessions/connecting-to-your-training-environment.md
+        - Configuring WIS2 discovery metadata: practical-sessions/connecting-to-your-training-environment.md
+        - Configuring station metadata: practical-sessions/connecting-to-your-training-environment.md
+        - Data ingest and monitoring: practical-sessions/connecting-to-your-training-environment.md
+        - Download data from WIS2: practical-sessions/connecting-to-your-training-environment.md
+    - Cheatsheets:
+        - Linux: practical-sessions/connecting-to-your-training-environment.md
+        - Docker: practical-sessions/connecting-to-your-training-environment.md
+        - WIS2 in a box: practical-sessions/connecting-to-your-training-environment.md
+
+use_directory_urls: true
+
+theme:
+    name: material
+    palette:
+        scheme: default
+    features:
+        - navigation.indexes 
+    favicon: https://public.wmo.int/sites/all/themes/wmo/favicon.ico
+    logo: assets/img/wmo-logo.png
+
+plugins:
+    - search
+
+markdown_extensions:
+    - meta
+    - admonition
+    - pymdownx.details
+    - pymdownx.superfences
+    - footnotes
+    - attr_list
+    - md_in_html
+
+extra_css:
+    - assets/css/termynal.css
+    - assets/css/custom.css
+
+extra_javascript:
+    - assets/js/termynal.js
+    - assets/js/custom.js
