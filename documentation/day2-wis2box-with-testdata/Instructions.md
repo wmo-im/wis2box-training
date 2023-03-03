@@ -1,11 +1,75 @@
-# Run wis2box using test-data
+---
+title: "WIS2 Training Day 2"
+date: "21/02/2023"
+...
+
+# WIS2box with test-data
+
+# Total Learning outcomes
+
+Learning outcomes for this session:
+- Installed wis2box on your personal VM
+- Setup the wis2box with pre-defined configuration
+- Know how to start the wis2box and check the status of its components
+- Be familiar with the wis2box runtime configuration steps
+- Know how to access the wis2box-UI, wis2box-API and Grafana dashboard
+
+# Essentials
+
+Here are some essential commands you wil use in these exercises :
+
+## wis2box-ctl.py
+`wis2box-ctl.py` is a python script that defines the docker-compose commands to control the stack of wis2box-services:
+
+```console
+csv2bufr data transform --bufr-template <my_template.json> --output-dir <./my_folder> <my_data.csv>
+```
+
+## inside the wis2box-management container
+
+Inside the wis2box-management container, accessible using ``python3 wis2box-ctl.py login`, the following commands are available:
+
+### wis2box data
+
+```console
+Usage: wis2box data [OPTIONS] COMMAND [ARGS]...
+
+  Data workflow
+
+Options:
+  --help  Show this message and exit.
+
+Commands:
+  add-collection        Add collection index to API backend
+  add-collection-items  Add collection items to API backend
+  archive               Move data from incoming storage to archive storage
+  clean                 Clean data directories and API indexes
+  delete-collection     Delete collection from api backend
+  ingest                Ingest data file or directory
+```
+
+### wis2box metadata
+
+Usage: wis2box metadata [OPTIONS] COMMAND [ARGS]...
+
+  Metadata management
+
+Options:
+  --help  Show this message and exit.
+
+Commands:
+  discovery  Discovery metadata management
+  station    Station metadata management
+
+
+## Prepare training materials
 
 Login to your designated VM with your username and password.
 
 Download the archive and unzip it:
 
 ```
-wget http://10.0.2.222/exercise-materials/wis2box-training-release.zip
+wget http://www.wis2.training/exercise-materials/wis2box-training-release.zip
 unzip wis2box-training-release.zip
 ```
 
@@ -41,8 +105,8 @@ Before starting the wis2box add your student-VM host to the VM by editing the fi
 And ensure you dev.env now has the additional environment-variables specifying **your** VM-host:
 
 ```
-WIS2BOX_URL=http://<your-host-ip>
-WIS2BOX_API_URL=http://<your-host-ip>/oapi
+WIS2BOX_URL=http://<your-host>
+WIS2BOX_API_URL=http://<your-host>/oapi
 ```
 
 ## Ex. 2 start the wis2box
@@ -77,7 +141,7 @@ These are the collections currently published the wis2box-api.
 5. Make sure you can connect to your wis2box-broker using MQTT-explorer. 
 - protocol=mqtt:// host=`<your-host>` port=1883
 - username=wis2box password=wis2box
-- under advanced ensure you subscribe to the topics '#' and 'origin/#'
+- under 'advanced' subscribe to the topics '$SYS' and 'origin/#'
 
 You should see statistics being published by your broker on the $SYS-topic. Keep MQTT-explorer running and proceed with the runtime configuration steps.
 
@@ -89,12 +153,23 @@ You should see statistics being published by your broker on the $SYS-topic. Keep
 python3 wis2box-ctl.py login
 ```
 
-2. Run the following command to see the content of /data/wis2box inside the wis2box-management-container:
+Note this command is equivalent to `docker exec -it wis2box-management /bin/bash`, meaning that you have entered an interactive shell inside the `wis2box-management` container
+
+Run the following command to see the environment variables used by your wis2box
+
+```
+wis2box environment show
+```
+
+Note the variables you have set for WIS2BOX_HOST_DATADIR, WIS2BOX_URL and WIS2BOX_API_URL
+
+Run the following command to see the content of /data/wis2box inside the wis2box-management-container:
 
 ```
 ls /data/wis2box/
 ```
- (you should see the same files as in test-data/ on the VM-host)
+
+Note that the content of /data/wis2box matches that of the directory defined by $WIS2BOX_HOST_DATADIR on your VM.
 
 2. Run the following command to add the test dataset:
 
