@@ -212,9 +212,7 @@ Stuff should happen, if not, check for errors !
 
 3. Check your the wis2box workflow monitoring on `http://<your-host>:3000` (Grafana). What changes can you observe ?
 
-## Ex. 5 connecting to your broker
-
-Re-ingest and view the messages being published on mqtt-explorer by connecting your local broker.
+4. View the messages that have been published on your local broker in MQTT-explorer.
 
 
 
