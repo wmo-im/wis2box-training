@@ -8,4 +8,4 @@ RUN pip install -r requirements.txt
 RUN mkdocs build
 
 ENTRYPOINT ["mkdocs"]
-CMD ["serve"]
+CMD ["serve", "--dev-addr=0.0.0.0:8000"]
