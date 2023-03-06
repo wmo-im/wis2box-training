@@ -45,7 +45,7 @@ services:
   mkdocs:
     container_name: mkdocs
     build:
-      context: ./mkdocs
+      context: ../../documentation
     ports:
       - "80:8000"
 
