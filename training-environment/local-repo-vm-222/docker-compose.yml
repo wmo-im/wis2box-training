@@ -23,7 +23,7 @@ services:
       - minio-data:/data
     ports:
       - "9001:9001"
-      - "80:9000"
+      - "9000:9000"
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost/minio/health/live"]
       interval: 5s
@@ -41,6 +41,13 @@ services:
       - "8883:8883"
     env_file:
       - .env
+  
+  mkdocs:
+    container_name: mkdocs
+    build:
+      context: ./mkdocs
+    ports:
+      - "80:8000"
 
 volumes:
   minio-data:
