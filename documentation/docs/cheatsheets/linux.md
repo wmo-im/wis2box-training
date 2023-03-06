@@ -2,112 +2,165 @@
 title: Linux cheatsheet
 ---
 
-# Linux Cheatsheet
+# Linux cheatsheet
+
+## Overview
+
+The basic concepts of working in a Linux operating system are **files** and **directories** (folders) organized in
+a tree structure within an **environment**.
+
+Once you login to a Linux system, you are working in a **shell** in which you can work on files and directories,
+by executing commands which are installed on the system.  The Bash shell is a common and popular shell which
+is typically found on Linux systems.
 
 ## Bash
+
 ### Directory Navigation
-* Entering a true directory: 
 
-    ```console
-    cd /folder_1/folder_2
-    ```
+* Entering an absolute directory:
 
-* Entering a local directory: 
+```bash
+cd /dir1/dir2
+```
 
-    ```console
-    cd ./folder
-    ```
+* Entering a relative directory:
 
-* Move one directory upwards: 
+```bash
+cd ./somedir
+```
 
-    ```console
-    cd ..
-    ```
-* Move to the previously used directory: 
+* Move one directory up:
 
-    ```console
-    cd -
-    ```
+```bash
+cd ..
+```
+
+* Move two directories up:
+
+```bash
+cd ../..
+```
+
+* Move to your "home" directory:
+
+```bash
+cd -
+```
 
 ### File Management
-* Listing files present in a directory: 
 
-    ```console
-    ls
-    ```
+* Listing files in the current directory:
 
-* Create a file: 
+```bash
+ls
+```
 
-    ```console
-    touch <file_name>
-    ```
+* Listing files in the current directory with more detail:
 
-* Copy one file to another: 
+```bash
+ls -l
+```
 
-    ```console
-    cat <file_1> >> <file_2>
-    ```
+* List the root of the filessystem:
 
-    **or** 
-    
-    ```console
-    cp <file_1> <file_2>
-    ```
+```bash
+ls -l /
+```
+
+* Create an empty file:
+
+```bash
+touch foo.txt
+```
+
+* Create a file from an echo:
+
+```bash
+echo "hi there" > test-file.txt
+```
+
+* Copy a file:
+
+```bash
+cp file1 file2
+```
+
+* Concatenate two files into a new file:
+
+```bash
+cat file1 file2 > newfile
+```
+
+* Append another file into file3
+
+```bash
+cat file3 >> newfile
+```
 
 * Delete a file: 
 
-    ```console
-    rm <file_name>
-    ```
-* Delete all files with the same file extension: 
-
-    ```console
-    rm *.<file_extension>
-    ```
-* Create a folder 
-
-    ```console
-    mkdir <folder_name>
-    ```
-
-### Connecting Commands
-This routes the output of one command to another command, and is done using the pipe `|` symbol: 
-
-```console
-command_1 |command_2
+```bash
+rm newfile
 ```
 
-* Restrict outputs to those containing keyword: 
+* Delete all files with the same file extension: 
 
-    ```console
-    command |grep <keyWord>
-    ```
+```bash
+rm *.dat
+```
 
-    * Ignoring case: 
+* Create a directory
+
+```bash
+mkdir dir1
+```
+
+### Chaining commands together with pipes
+
+Pipes allow a user to send the output of one command to another using the pipe `|` symbol:
+
+```bash
+echo "hi" | sed 's/hi/bye/'
+```
+
+* Filtering command outputs using grep:
+
+
+```bash
+echo "id,title" > test-file.txt
+echo "1,birds" >> test-file.txt
+echo "2,fish" >> test-file.txt
+echo "3,cats" >> test-file.txt
+
+cat test-file.txt | grep fish
+```
+
+* Ignoring case: 
     
-        ```console
-        command |grep -i <keyword>
-        ```
+```bash
+grep -i FISH test-file.txt
+```
 
-    * Count matching lines: 
+* Count matching lines: 
     
-        ```console
-        command |grep -c <keyWord>
-        ```
+```bash
+grep -c fish test-file.txt
+```
 
-    * Return outputs not containing keyword: 
+* Return outputs not containing keyword: 
     
-        ```console
-        command |grep -v <keyWord>
-        ```
+```bash
+grep -v birds test-file.txt
+```
 
 * Display output one screen at a time: 
 
-    ```console
-    command |more
-    ```
+```bash
+cat test-file.txt | more
+```
     
-    ...with controls:
-    * Scroll down line by line: *enter*
-    * Go to next page: *space bar*
-    * Go back one page: *b*
+...with controls:
+
+- Scroll down line by line: *enter*
+- Go to next page: *space bar*
+- Go back one page: *b*

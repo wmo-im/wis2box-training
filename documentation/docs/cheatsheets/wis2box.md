@@ -2,60 +2,93 @@
 title: WIS2 in a box cheatsheet
 ---
 
-# WIS2 in a box Cheatsheet
+# WIS2 in a box cheatsheet
 
-### Installing
-* Build the WIS2Box: 
+## Overview
 
-    ```console
-    python3 wis2box-ctl.py build
-    ```
+wis2box runs as a suite of Docker Compose commands.  The ``wis2box-ctl.py`` command is a utility
+(written in Python) to run Docker Compose commands easily.
 
-* Update the WIS2Box: 
+## wis2box command essentials
+
+### Building
+
+* Build all of wis2box:
+
+```bash
+python3 wis2box-ctl.py build
+```
+
+* Build a specific wis2box Docker image:
+
+```bash
+python3 wis2box-ctl.py build wis2box-management
+```
+
+* Update wis2box:
     
-    ```console
-    python3 wis2box-ctl.py update
-    ```
+```bash
+python3 wis2box-ctl.py update
+```
 
-* Start the WIS2Box: 
+### Starting and stopping
+
+* Start wis2box:
     
-    ```console
-    python3 wis2box-ctl.py start
-    ```
+```bash
+python3 wis2box-ctl.py start
+```
 
-* Login to the *wis2box-management* container: 
+* Stop wis2box:
+    
+```bash
+python3 wis2box-ctl.py stop
+```
 
-    ```console
-    python3 wis2box-ctl.py login
-    ```
+* Verify all wis2box containers are running: 
 
-* Verify all containers are running: 
+```bash
+python3 wis2box-ctl.py status
+```
 
-    ```console
-    python3 wis2box-ctl.py status
-    ```
+* Login to a wis2box container (*wis2box-management* by default):
 
-### Metadata and Observations
-* Publish discovery metadata: 
+```bash
+python3 wis2box-ctl.py login
+```
 
-    ```console
-    wis2box metadata discovery publish <discovery_metadata_dir.yml>
-    ```
+* Login to a specific wis2box container:
 
-* Add observation collections from discovery metadata: 
+```bash
+python3 wis2box-ctl.py login wis2box-api
+```
 
-    ```console
-    wis2box data add-collection <discovery_metadata_dir.yml>
-    ```
+### Design time commands (metadata management and publishing)
 
-* Ingest data into the *wis2box-incoming* bucket: 
+!!! note  
 
-    ```console
-    wis2box data ingest --topic-hierarchy <topic.hierarchy> --path <observation_dir>
-    ```
+    You must be logged into the **wis2box-management** container to run the below commands
 
-* Publish stations: 
+* Publish discovery metadata:
 
-    ```console
-    wis2box metadata station publish-collection
-    ```
+```bash
+wis2box metadata discovery publish /path/to/discovery-metadata-file.yml
+```
+
+* Publish station metadata:
+
+```bash
+wis2box metadata station publish-collection
+```
+
+* Add a dataset of observation collections from discovery metadata:
+
+```bash
+wis2box data add-collection /path/to/discovery-metadata-file.yml
+```
+
+* Ingest data into the *wis2box-incoming* bucket to trigger processing and publishing:
+
+```bash
+wis2box data ingest --topic-hierarchy topic.hierarchy.path --path /path/to/directory/of/data/files
+```

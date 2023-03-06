@@ -2,92 +2,121 @@
 title: Docker cheatsheet
 ---
 
-# Docker Cheatsheet
+# Docker cheatsheet
 
-### Using a New Image
+## Overview
+
+Docker allows for creating virtual envronments in an isolated manner in support
+of virtualization of computing resources.  The basic concept behind Docker is containerization,
+where software can run as services, interacting with other software containers, for example.
+
+The typical Docker workflow involves creating **images**, which are then run as **containers**.
+
+### Image management
+
+* List available images
+
+```bash
+docker images
+```
+
+* Build an image from a Dockerfile:
+
+```bash
+cat << EOF > Dockerfile
+FROM ubuntu:latest
+
+RUN apt-get update 
+RUN apt-get install –y nginx 
+
+CMD ["echo", "Hello from my first Docker setup!"] 
+EOF
+```
+
 * Building the image:
 
-    ```console
-    docker build -t <image_name> <dir_of_dockerfile>
-    ```
+```bash
+docker build -t my-image:local .
+```
 
-    **Note**: If you are in the directory of the Docker file already, this is more simply:
+* Removing an image:
 
-    ```console
-    docker build -t <image_name> .
-    ```
-
+```bash
+docker rmi <image-name>
+```
 
 ### Volume Management
-* Create a volume: 
 
-    ```console
-    docker volume create <volume_name>
-    ```
+* List all created volumes:
 
-* List all created volumes: 
+```bash
+docker volume ls
+```
 
-    ```console
-    docker volume ls
-    ```
+* Create a volume:
 
-* Display detailed information on a volume: 
+```bash
+docker volume create my-volume
+```
 
-    ```console
-    docker volume inspect <volume_name>
-    ```
+* Display detailed information on a volume:
 
-* Remove a volume: 
+```bash
+docker volume inspect my-volume
+```
 
-    ```console
-    docker volume rm <volume_name>
-    ```
+* Remove a volume:
+
+```bash
+docker volume rm my-volume
+```
 
 * Remove all unused volumes:
 
-    ```console
-    docker volume prune
-    ```
+```bash
+docker volume prune
+```
 
 ### Container Management
-* Create a container from an image, with an interactive terminal (`it`) and a mounted volume (`v`): 
 
-    ```console
-    docker run -it -v ${pwd}:/app <image_name>
-    ```
+* Create a container from an image, with an interactive terminal (`it`) and a mounted volume (`v`):
+
+```bash
+docker run -it -v ${pwd}:/app my-image:local
+```
 
 * Display a list of currently running containers:
     
-    ```console
-    docker ps
-    ```
+```bash
+docker ps
+```
 
-    ...or a list of all containers:
+* List of all containers:
     
-    ```console
-    docker ps -a
-    ```
+```bash
+docker ps -a
+```
 
-* Start a stopped container: 
+* Start a container:
 
-    ```console
-    docker start <container_name>
-    ```
+```bash
+docker start <container_name>
+```
 
-* Enter the interactive terminal of a running container: 
+* Enter the interactive terminal of a running container:
 
-    ```console
-    docker exec -it <container_name> bash
-    ```
+```bash
+docker exec -it <container_name> /bin/bash
+```
 
 * Remove a container 
 
-    ```console
-    docker rm <container_name>
-    ```
+```bash
+docker rm <container_name>
+```
 
-* Remove a running container: 
+* Remove a running container:
 
-    ```console
-    docker rm -f <container_name>
-    ```
+```bash
+docker rm -f <container_name>
+```

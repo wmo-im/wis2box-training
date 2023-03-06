@@ -15,12 +15,13 @@ Files can be shared within the local network using the MinIO `exercise-materials
 
 ```bash
 wget http://www.wis2.training/exercise-materials/wis2box-training-release.zip
+unzip wis2box-training-release.zip
 ```
 
 ## Building the workshop content locally
 
 The workshop manual is powered by [MkDocs](https://www.mkdocs.org) which facilitates easy management
-of training content and publishing. Workshop content is written in Markdown.
+and publishing of documentation.  Workshop content is written in Markdown.
 
 ### Setting up the manual environment locally
 
@@ -30,10 +31,10 @@ python3 -m venv .
 . bin/activate
 # fork or clone from GitHub
 git clone https://github.com/wmo-im/wis2box-training.git
-cd wis2box-training/content
+cd wis2box-training/documentation
 # install required dependencies
 pip install -r requirements.txt
-# build the website
+# build the website, output is in site/
 mkdocs build
 # serve locally
 mkdocs serve  # website is made available on http://localhost:8000
