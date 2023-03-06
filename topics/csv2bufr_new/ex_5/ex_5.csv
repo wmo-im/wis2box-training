@@ -1,2 +1,0 @@
-wigos_identifier_series,wigos_issuer_of_identifier,wigos_issue_number,wigos_local_identifier_character,year,month,day,hour,minute,lat,lon,height_of_barometer_above_msl,non_coordinate_pressure,air_temp,relative_humidity
-0,20000,0,MYWSI001,2023,2,3,12,2,47.59,10.54,1500,1023.1,8.15,45.2

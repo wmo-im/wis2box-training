@@ -14,17 +14,7 @@ Workshop resources can be found at the following areas.
 Files can be shared within the local network using the MinIO `exercise-materials` bucket on `local-repo-vm-222`:
 
 ```bash
-wget http://10.0.2.222/exercise-materials/wis2box-training-release.zip
-```
-
-### Static HTML for topics
-
-Exercise instructions can be shared on the local network using the MinIO `documentation` bucket on `local-repo-vm-222`.
-
-To update the static HTML in the `documentation` bucket after a git pull/update:
-
-```bash
-python3 update_topics_html.py
+wget http://www.wis2.training/exercise-materials/wis2box-training-release.zip
 ```
 
 ## Building the workshop content locally
