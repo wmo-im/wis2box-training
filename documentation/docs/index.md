@@ -49,17 +49,17 @@ The goals of this training are to become familiar with the following:
 
 ## Conventions
 
-Exercises are indicated as follows:
+!!! question
 
-!!! question "Example exercise"
-
-    A section marked like this indicates that you can try out the exercise.
-
-Also you will notice tips and notes sections within the text:
+    A section marked like this indicates questions to be answered
 
 !!! tip
 
     Tips share additional help on how to best achieve tasks
+
+!!! note
+
+    Notes provide additional inforamtion on how to best achieve tasks
 
 Examples are indicated as follows:
 
