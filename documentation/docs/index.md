@@ -15,7 +15,11 @@ Particpants will be able to work with sample test data and metadata, as well as 
 
 This training covers a wide range of topics (install/setup/configuration, publishing/downloading data, etc.).
 
-Please see the left hand navigation for the table of contents.
+## Navigation
+
+The left hand navigation provides a table of contents for the entire training.
+
+The right hand navigation provides a table of concents for a specific page.
 
 ## Prerequisites
 
