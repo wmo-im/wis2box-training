@@ -24,4 +24,16 @@ jobs:
           pip install -r requirements.txt
       - name: Deploy 📦
         run: mkdocs gh-deploy --strict --force --message 'update website via GitHub Actions'
+      - name: add exercises zipfile 📦
+        run: |
+          cd ..
+          zip -r exercises.zip exercise-materials/
+          ls -lh
+          git push --set-upstream origin gh-pages
+          git config --global user.email "tomkralidis@gmail.com"
+          git config --global user.name "Tom Kralidis"
+          git checkout gh-pages
+          git add exercises.zip
+          git commit -m "add exercise materials zipfile" -a
+          git push
 

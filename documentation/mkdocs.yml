@@ -7,12 +7,19 @@ repo_url: https://github.com/wmo-im/wis2box-training
 
 nav:
     - Home: index.md
+    - Overviews:
+        - WIS2: overviews/wis2.md
+        - WIS2 in a box: overviews/wis2box.md
+        - Architecture: overviews/architecture.md
+        - Case studies: overviews/case-studies.md
+        - Training environment: overviews/training-environment.md
+        - BUFR and ecCodes: overviews/bufr-eccodes.md
     - Practical sessions:
         - Connecting to the Global Broker: practical-sessions/connecting-to-the-global-broker.md
         - Accessing your training environment: practical-sessions/accessing-your-training-environment.md
-        - Installing WIS2-in-a-box with test data: practical-sessions/wis2box-with-test-data.md
-        - How to use CSV2BUFR: practical-sessions/csv2bufr.md
-        - How to use SYNOP2BUFR: practical-sessions/synop2bufr.md
+        - Installing wis2box with test data: practical-sessions/wis2box-with-test-data.md
+        - How to use csv2bufr: practical-sessions/csv2bufr.md
+        - How to use synop2bufr: practical-sessions/synop2bufr.md
         - Configuring data mappings: practical-sessions/configuring-data-mappings.md
         - Configuring WIS2 discovery metadata: practical-sessions/configuring-wis2-discovery-metadata.md
         - Configuring station metadata: practical-sessions/configuring-station-metadata.md
@@ -36,6 +43,7 @@ theme:
 
 plugins:
     - search
+    - print-site
 
 markdown_extensions:
     - meta

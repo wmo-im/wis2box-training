@@ -7,7 +7,7 @@ on:
 
 defaults:
   run:
-    working-directory: content
+    working-directory: documentation
 
 jobs:
   build:
