@@ -8,7 +8,7 @@ title: Access your student-VM
 
 During WIS2-in-a-box local training sessions you can access your personal student-VM on the local training network "WIS2-training". 
 
-If you want to run this training outside of a local training session, please provide your own instance as detailed at [training-environment](../overviews/training-environment.md).
+If you want to run this training outside of a local training session, please provide your own instance as detailed at [training-environment](https://wmoomm-my.sharepoint.com/:p:/g/personal/tproescholdt_wmo_int/EQoxn5WS7kBAoe5iNyfeteABAjw67YZBvEWM92NlWUu5wQ?e=gtgm13).
 
 In this session you will ensure you can connect to your student-VM, check pre-installed software and download the exercise-materials.
 
