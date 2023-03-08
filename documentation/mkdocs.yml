@@ -9,8 +9,9 @@ nav:
     - Home: index.md
     - Overviews: overviews.md
     - Practical sessions:
-        - Connecting to the Global Broker: practical-sessions/connecting-to-the-global-broker.md
-        - Installing wis2box with test data: practical-sessions/wis2box-with-test-data.md
+        - Connecting to WIS2 over MQTT: practical-sessions/connecting-to-MQTT.md
+        - Accessing your student VM: practical-sessions/access-your-student-vm.md
+        - Installing WIS2-box (with test data): practical-sessions/wis2box-with-test-data.md
         - How to use csv2bufr: practical-sessions/csv2bufr.md
         - How to use synop2bufr: practical-sessions/synop2bufr.md
         - Configuring data mappings: practical-sessions/configuring-data-mappings.md

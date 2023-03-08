@@ -1,84 +1,31 @@
 ---
-title: "Installing WIS2box with test-data"
+title: "Installing WIS2-in-a-box (with test-data)"
 ...
 
-# WIS2box with test-data
+# Installing WIS2-in-a-box (with test-data)
 
-# Total Learning outcomes
+## Introduction
 
-Learning outcomes for this session:
-- Installed wis2box on your personal VM
-- Setup the wis2box with pre-defined configuration
-- Know how to start the wis2box and check the status of its components
-- Be familiar with the wis2box runtime configuration steps
-- Know how to access the wis2box-UI, wis2box-API and Grafana dashboard
+In this session you will learn how to install the WIS2-in-a-box on your student-VM and get familiar with the run-time configuration steps and the web-accessible interfaces. You will use predefined configuration and data-samples for test-data to allow you to review the services provided by your WIS2-in-a-box.
 
-# Essentials
-
-Here are some essential commands you wil use in these exercises :
-
-## wis2box-ctl.py
-`wis2box-ctl.py` is a python script that defines the docker-compose commands to control the stack of wis2box-services:
-
-```console
-csv2bufr data transform --bufr-template <my_template.json> --output-dir <./my_folder> <my_data.csv>
-```
-
-## inside the wis2box-management container
-
-Inside the wis2box-management container, accessible using ``python3 wis2box-ctl.py login`, the following commands are available:
-
-### wis2box data
-
-```console
-Usage: wis2box data [OPTIONS] COMMAND [ARGS]...
-
-  Data workflow
-
-Options:
-  --help  Show this message and exit.
-
-Commands:
-  add-collection        Add collection index to API backend
-  add-collection-items  Add collection items to API backend
-  archive               Move data from incoming storage to archive storage
-  clean                 Clean data directories and API indexes
-  delete-collection     Delete collection from api backend
-  ingest                Ingest data file or directory
-```
-
-### wis2box metadata
-
-Usage: wis2box metadata [OPTIONS] COMMAND [ARGS]...
-
-  Metadata management
-
-Options:
-  --help  Show this message and exit.
-
-Commands:
-  discovery  Discovery metadata management
-  station    Station metadata management
-
-
-## Prepare training materials
+## Access wis2box-setup
 
 Login to your designated VM with your username and password.
 
-Download the archive and unzip it:
+Your home-directory should already contain the exercise-materials you downloaded in the session [access-your-student-vm](overviews/access-your-student-vm)
 
-```
-wget http://www.wis2.training/exercise-materials/wis2box-training-release.zip
-unzip wis2box-training-release.zip
-```
+Go into the directory containing the wis2box-setup prepared for this training:
 
-Go into the new directory:
-
-```
-cd wis2box-training-release
+```bash
+cd ~/exercise-materials/wis2box-setup
 ```
 
-## Ex. 1 review the test-data-setup
+!!! note
+    You can find the latest 'wis2box-setup'-archive here:
+    [wis2box-releases](https://github.com/wmo-im/wis2box/releases).
+    The contents of the directory 'wis2box-setup' are similar to that you will find when downloading and extracting 'wis2box-setup-*.zip' from the wis2box-releases-page.
+
+## Review/setup environment variables in dev.env
 
 Copy test.env to dev.env:
 
@@ -92,12 +39,20 @@ Review the contents of dev.env.
 cat dev.env
 ```
 
-Note that the WIS2BOX_HOST_DATADIR is set to '${PWD}/test-data'. This directory will be mapped as /data/wis2box inside the wis2box-management container.
-Note that the LOGGING_LEVEL is set to INFO. The default LOGGING_LEVEL is WARNING.
+!!! note
+    Note that the WIS2BOX_HOST_DATADIR is set to '${PWD}/test-data'. This directory will be mapped as /data/wis2box inside the wis2box-management container.
 
-- Inspect the content of test-data/data-mappings.yml, what topics are configured in this file ?
-- Inspect the content of test-data/metadata/station/station_list.csv. How many stations are defined in this file?
-- Inspect the content in the 'test-data/observations'-directory. What is the data-format used? What type of observations are reported in this file?
+!!! note
+    Note that the LOGGING_LEVEL is set to INFO. The default LOGGING_LEVEL is WARNING.
+
+!!! question
+    Inspect the content of test-data/data-mappings.yml, what topics are configured in this file ?
+
+!!! question
+    Inspect the content of test-data/metadata/station/station_list.csv. How many stations are defined in this file?
+
+!!! question
+    Inspect the content in the 'test-data/observations'-directory. What is the data-format used? What type of observations are reported in this file?
 
 Before starting the wis2box add your student-VM host to the VM by editing the file using a command-line editor (vi/vim/nano)
 
@@ -108,7 +63,7 @@ WIS2BOX_URL=http://<your-host>
 WIS2BOX_API_URL=http://<your-host>/oapi
 ```
 
-## Ex. 2 start the wis2box
+## Start the WIS2-in-a-box services
 
 1. start the wis2box with the following command:
 
@@ -134,8 +89,10 @@ This is the wis2box-ui, is is empty as you have not yet setup any datasets.
 
 These are the collections currently published the wis2box-api. 
 
-- What collection is currently available?
-- How many data-notifications have been published ?
+!!! question
+     What collection is currently available?
+!!! question
+    How many data-notifications have been published ?
 
 5. Make sure you can connect to your wis2box-broker using MQTT-explorer. 
 - protocol=mqtt:// host=`<your-host>` port=1883
@@ -144,7 +101,7 @@ These are the collections currently published the wis2box-api.
 
 You should see statistics being published by your broker on the $SYS-topic. Keep MQTT-explorer running and proceed with the runtime configuration steps.
 
-## Ex. 3 Runtime configuration steps for the wis2box
+## Runtime configuration steps for the wis2box
 
 1. Login to the wis2box-management container using the following command:
 
@@ -184,8 +141,11 @@ wis2box data add-collection /data/wis2box/mwi-surface-weather-observations.yml
 wis2box metadata discovery publish /data/wis2box/mwi-surface-weather-observations.yml
 ```
 
-- Go back to your browser and refresh `http://<your-host>/oapi/collections`. Inspect the new collection.
-- Check MQTT-explorer: find the message metadata-message that was published by your wis2box-broker
+!!! question
+    Go back to your browser and refresh `http://<your-host>/oapi/collections`. What new collection is now available ?
+
+!!! question
+    Check MQTT-explorer: find the message metadata-message that was published by your wis2box-broker. What is the topic is used to publish the metadata-message ?
 
 4. Run the following command to publish the data in test-data/metadata/station/station_list.csv :
 
@@ -195,7 +155,7 @@ wis2box metadata station publish-collection
 
 - Go back to your browser and refresh `http://<your-host>/oapi/collections`. Inspect the 'stations'-collection and confirm that all stations from test-data/station/station_list.csv are now visible.
 
-## Ex. 4 Ingesting data
+## Ingesting data
 
 Make you are logged in to the wis2box-management-container (python3 wis2box-ctl.py login) and execute the following command:
 
@@ -203,15 +163,28 @@ Make you are logged in to the wis2box-management-container (python3 wis2box-ctl.
 wis2box data ingest -th mwi.mwi_met_centre.data.core.weather.surface-based-observations.synop -p /data/wis2box/observations/malawi/
 ```
 
-Stuff should happen, if not, check for errors !
+Check the command completes successfully without errors before proceeding to answer the following questions.
 
-1. Review the collections on your API `http://<your-host>/oapi/collections`. What changes can you observe ?
+!!! question
+    Review the collections on your API `http://<your-host>/oapi/collections`. What changes can you observe ?
 
-2. Check out the 'explore'-option on `http://<your-host>`. What changes can you observe ?
+!!! question
+    Check out the 'explore'-option on `http://<your-host>`. What changes can you observe ?
 
-3. Check your the wis2box workflow monitoring on `http://<your-host>:3000` (Grafana). What changes can you observe ?
+!!! question
+    Check your the wis2box workflow monitoring on `http://<your-host>:3000` (Grafana). Can you identify any errors ?
 
-4. View the messages that have been published on your local broker in MQTT-explorer.
+View the messages that have been published on your local broker in MQTT-explorer.
 
+!!! question
+    What is the topic used to publish messages advertizing the new data? What is the url to download the data ?
 
+# Learning outcomes
 
+Learning outcomes for this session:
+
+- Installed wis2box on your personal VM
+- Setup the wis2box with pre-defined configuration
+- Know how to start the wis2box and check the status of its components
+- Be familiar with the wis2box runtime configuration steps
+- Know how to access the wis2box-UI, wis2box-API and Grafana dashboard
