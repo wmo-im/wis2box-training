@@ -4,19 +4,19 @@ Repository containing wis2box training material (exercises, data, configuration)
 
 ## Environment
 
-This training is provided on a local network containing all data, images and configurations required
-to deliver wis2box training in an isolated environment/network.
+The folder 'environment' provides documentation and materials used to run the local setup.
 
-Workshop resources can be found at the following areas.
+The wis2box-training is designed to be run on a local network containing all data, images and configurations.
 
-### Exercise materials
+A set of hardware (WiFi router and 3 mini-PCs) is brought along to local training sessions. The hardware setup will provide a dedicate student-VM with Ubuntu and docker to each participant.
 
-Files can be shared within the local network using the MinIO `exercise-materials` bucket on `local-repo-vm-222`:
+A local registry mirroring docker-hub is setup on the local hardware to reduce the time needed to download large docker-images in a low bandwidth environment.
 
-```bash
-wget http://www.wis2.training/exercise-materials/wis2box-training-release.zip
-unzip wis2box-training-release.zip
-```
+## Exercise materials
+
+All the contents of the folder 'exercise-materials' are added to the gh-pages during deployment in a single zip-file 'exercise-materials.zip'. 
+
+The practical sessions will start by asking the student to download this archive on their local machine and extracting it.
 
 ## Building the workshop content locally
 

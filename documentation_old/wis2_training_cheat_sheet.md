@@ -18,13 +18,13 @@ You can access your dedicated VM on the local WIS2-training network using an **S
 ### Using a New Image
 * Building the image:
 
-    ```console
+    ```bash
     docker build -t <image_name> <dir_of_dockerfile>
     ```
 
     **Note**: If you are in the directory of the Docker file already, this is more simply:
 
-    ```console
+    ```bash
     docker build -t <image_name> .
     ```
 
@@ -32,74 +32,74 @@ You can access your dedicated VM on the local WIS2-training network using an **S
 ### Volume Management
 * Create a volume: 
 
-    ```console
+    ```bash
     docker volume create <volume_name>
     ```
 
 * List all created volumes: 
 
-    ```console
+    ```bash
     docker volume ls
     ```
 
 * Display detailed information on a volume: 
 
-    ```console
+    ```bash
     docker volume inspect <volume_name>
     ```
 
 * Remove a volume: 
 
-    ```console
+    ```bash
     docker volume rm <volume_name>
     ```
 
 * Remove all unused volumes:
 
-    ```console
+    ```bash
     docker volume prune
     ```
 
 ### Container Management
 * Create a container from an image, with an interactive terminal (`it`) and a mounted volume (`v`): 
 
-    ```console
+    ```bash
     docker run -it -v ${pwd}:/app <image_name>
     ```
 
 * Display a list of currently running containers:
     
-    ```console
+    ```bash
     docker ps
     ```
 
     ...or a list of all containers:
     
-    ```console
+    ```bash
     docker ps -a
     ```
 
 * Start a stopped container: 
 
-    ```console
+    ```bash
     docker start <container_name>
     ```
 
 * Enter the interactive terminal of a running container: 
 
-    ```console
+    ```bash
     docker exec -it <container_name> bash
     ```
 
 * Remove a container 
 
-    ```console
+    ```bash
     docker rm <container_name>
     ```
 
 * Remove a running container: 
 
-    ```console
+    ```bash
     docker rm -f <container_name>
     ```
 
@@ -107,102 +107,102 @@ You can access your dedicated VM on the local WIS2-training network using an **S
 ### Directory Navigation
 * Entering a true directory: 
 
-    ```console
+    ```bash
     cd /folder_1/folder_2
     ```
 
 * Entering a local directory: 
 
-    ```console
+    ```bash
     cd ./folder
     ```
 
 * Move one directory upwards: 
 
-    ```console
+    ```bash
     cd ..
     ```
 * Move to the previously used directory: 
 
-    ```console
+    ```bash
     cd -
     ```
 
 ### File Management
 * Listing files present in a directory: 
 
-    ```console
+    ```bash
     ls
     ```
 
 * Create a file: 
 
-    ```console
+    ```bash
     touch <file_name>
     ```
 
 * Copy one file to another: 
 
-    ```console
+    ```bash
     cat <file_1> >> <file_2>
     ```
 
     **or** 
     
-    ```console
+    ```bash
     cp <file_1> <file_2>
     ```
 
 * Delete a file: 
 
-    ```console
+    ```bash
     rm <file_name>
     ```
 * Delete all files with the same file extension: 
 
-    ```console
+    ```bash
     rm *.<file_extension>
     ```
 * Create a folder 
 
-    ```console
+    ```bash
     mkdir <folder_name>
     ```
 
 ### Connecting Commands
 This routes the output of one command to another command, and is done using the pipe `|` symbol: 
 
-```console
+```bash
 command_1 |command_2
 ```
 
 * Restrict outputs to those containing keyword: 
 
-    ```console
+    ```bash
     command |grep <keyWord>
     ```
 
     * Ignoring case: 
     
-        ```console
+        ```bash
         command |grep -i <keyword>
         ```
 
     * Count matching lines: 
     
-        ```console
+        ```bash
         command |grep -c <keyWord>
         ```
 
     * Return outputs not containing keyword: 
     
-        ```console
+        ```bash
         command |grep -v <keyWord>
         ```
 
 * Display output one screen at a time: 
 
-    ```console
+    ```bash
     command |more
     ```
     
@@ -215,19 +215,19 @@ command_1 |command_2
 
 * Display the data contained in a BUFR file: 
     
-    ```console
+    ```bash
     bufr_dump -p my_bufr
     ```
 
 * Compare the differences between two BUFR files: 
 
-    ```console
+    ```bash
     bufr_compare <bufr_1> <bufr_2>
     ```
 
     * Ignore/blacklist keys from the comparison: 
     
-        ```console
+        ```bash
         bufr_compare -b <key_1,key_2,key_3> <bufr_1> <bufr_2>
         ```
 
@@ -235,7 +235,7 @@ command_1 |command_2
 
 Multiple commands can be ran in sequential order from the same line using the semi-colon `;` symbol: 
 
-```console
+```bash
 command_1; command_2; command_3
 ```
 
@@ -246,56 +246,56 @@ ___
 ### Installing
 * Build the WIS2Box: 
 
-    ```console
+    ```bash
     python3 wis2box-ctl.py build
     ```
 
 * Update the WIS2Box: 
     
-    ```console
+    ```bash
     python3 wis2box-ctl.py update
     ```
 
 * Start the WIS2Box: 
     
-    ```console
+    ```bash
     python3 wis2box-ctl.py start
     ```
 
 * Login to the *wis2box-management* container: 
 
-    ```console
+    ```bash
     python3 wis2box-ctl.py login
     ```
 
 * Verify all containers are running: 
 
-    ```console
+    ```bash
     python3 wis2box-ctl.py status
     ```
 
 ### Metadata and Observations
 * Publish discovery metadata: 
 
-    ```console
+    ```bash
     wis2box metadata discovery publish <discovery_metadata_dir.yml>
     ```
 
 * Add observation collections from discovery metadata: 
 
-    ```console
+    ```bash
     wis2box data add-collection <discovery_metadata_dir.yml>
     ```
 
 * Ingest data into the *wis2box-incoming* bucket: 
 
-    ```console
+    ```bash
     wis2box data ingest --topic-hierarchy <topic.hierarchy> --path <observation_dir>
     ```
 
 * Publish stations: 
 
-    ```console
+    ```bash
     wis2box metadata station publish-collection
     ```
 
@@ -304,7 +304,7 @@ _____
 ## SYNOP2BUFR
 * Convert a SYNOP message to BUFR: 
 
-    ```console
+    ```bash
     synop2bufr transform --metadata <my_file.csv> --output-dir <./my_folder> --year <message_year> --month <message_month> <SYNOP_file_dir.txt>
     ```
     
@@ -320,12 +320,12 @@ _____
 ## CSV2BUFR
 * Create a template mappings file: 
 
-    ```console
+    ```bash
     csv2bufr mappings create <BUFR descriptors> --output <output_dir>
     ```
 
 * Convert a CSV file to BUFR: 
 
-    ```console
+    ```bash
     csv2bufr data transform --bufr-template <my_template.json> --output-dir <./my_folder> <CSV_file_dir.csv>
     ```

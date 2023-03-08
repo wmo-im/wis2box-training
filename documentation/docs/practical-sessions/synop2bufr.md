@@ -17,7 +17,7 @@ Before attempting the questions below, here are some essential commands that wil
 ## Transform
 The `transform` function is what will convert a given SYNOP message to BUFR, and can be used in the following way in the command line:
 
-```console
+```bash
 synop2bufr transform --metadata my_file.csv --output-dir ./my_folder --year message_year --month message_month my_SYNOP.txt
 ```
 
@@ -35,19 +35,19 @@ In the examples, the year and month are not given, so feel free to specify a dat
 ## BUFR Dump
 The `bufr_dump` function will allow you to inspect the BUFR files created from the conversion. It has many options, but the following will be the most applicable to the exercises:
 
-```console
+```bash
 bufr_dump -p my_bufr.bufr4
 ```
 
 This will enumerate the content of your BUFR on screen. If you are interested in the values taken by a variable in particular, you can use the `grep` command. For example:
 
-```console
+```bash
 bufr_dump -p my_bufr.bufr4 |grep -i 'temperature'
 ```
 
 This will enumerate the variables related to temperature in your BUFR file. If you want to do this for multiple types of variables, you can use the `\|` command. For example:
 
-```console
+```bash
 bufr_dump -p my_bufr.bufr4 |grep -i 'temperature\|wind'
 ```
 
@@ -55,7 +55,7 @@ bufr_dump -p my_bufr.bufr4 |grep -i 'temperature\|wind'
 
 To begin with the exercises, login to your VM, and start the synop2bufr container with the following command:
 
-```console
+```bash
 docker run -it -v synop2bufr-exercises:/exercises synop2bufr
 ```
 

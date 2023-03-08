@@ -19,7 +19,7 @@ Before attempting the questions below, here are some essential commands that wil
 
 The `mappings create` function will allow you to create the an empty BUFR mapping template JSON file, which maps the CSV column headers to their corresponding ecCodes element. It can be used in the following way in the command line:
 
-```console
+```bash
 csv2bufr mappings create <BUFR descriptors> --output <output_dir>
 ```
 
@@ -28,26 +28,26 @@ For more information, see an <a href="https://csv2bufr.readthedocs.io/en/latest/
 ## Data Transform
 The `data transform` function is what will convert a CSV file to BUFR, and can be used in the following way in the command line:
 
-```console
+```bash
 csv2bufr data transform --bufr-template <my_template.json> --output-dir <./my_folder> <my_data.csv>
 ```
 
 ## BUFR Dump
 The `bufr_dump` function will allow you to inspect the BUFR files created from the conversion. It has many options, but the following will be the most applicable to the exercises:
 
-```console
+```bash
 bufr_dump -p <my_bufr.bufr4>
 ```
 
 This will enumerate the content of your BUFR on screen. If you are interested in the values taken by a variable in particular, you can use the `grep` command. For example:
 
-```console
+```bash
 bufr_dump -p <my_bufr.bufr4> |grep -i 'temperature'
 ```
 
 This will enumerate the variables related to temperature in your BUFR file. If you want to do this for multiple types of variables, you can use the `\|` command. For example:
 
-```console
+```bash
 bufr_dump -p <my_bufr.bufr4> |grep -i 'temperature\|wind'
 ```
 
@@ -55,7 +55,7 @@ bufr_dump -p <my_bufr.bufr4> |grep -i 'temperature\|wind'
 
 To begin with the exercises, login to your VM, change to 'exercise-materials'directory and start the a docker-container running the csv2bufr-image with the following command:
 
-```console
+```bash
 docker run -it -v csv2bufr-exercises:/exercises wmoim/csv2bufr
 ```
 
