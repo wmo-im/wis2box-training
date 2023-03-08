@@ -5,6 +5,7 @@ title: "How to use CSV2BUFR"
 # Total Learning outcomes
 
 By the end of the session you should be able to use the tools provided by csv2bufr to:
+
 - Create a BUFR mapping file and understand the basic structure
 - Understand the links between the mapping file and the data in their CSV files. 
 - Customise the BUFR mapping file (and/or input CSV) to apply to their CSV date.
@@ -52,11 +53,14 @@ bufr_dump -p <my_bufr.bufr4> |grep -i 'temperature\|wind'
 
 # Exercises
 
-To begin with the exercises, login to your VM, and start the csv2bufr container with the following command:
+To begin with the exercises, login to your VM, change to 'exercise-materials'directory and start the a docker-container running the csv2bufr-image with the following command:
 
 ```console
-docker run -it -v csv2bufr-exercises:/exercises csv2bufr
+docker run -it -v csv2bufr-exercises:/exercises wmoim/csv2bufr
 ```
+
+!!! note
+The additional flag '-v csv2bufr-exercises:/exercises' ensures that the directory 'csv2bufr-exercises' on your student-VM is accessible as '/exercises' inside your container.
 
 ## Exercise 1
 

@@ -11,7 +11,7 @@ This training provides step-by-step explanations of various aspects of the wis2b
 to help you publish and download data from WIS2.  The training is provided in the form of overview presentations as well as
 hands-on practical exercises.
 
-Particpants will be able to work with sample test data and metadata, as well as integrate their own data and metadata.
+Participants will be able to work with sample test data and metadata, as well as integrate their own data and metadata.
 
 This training covers a wide range of topics (install/setup/configuration, publishing/downloading data, etc.).
 
@@ -32,9 +32,9 @@ The right hand navigation provides a table of concents for a specific page.
 
 This training requires the following tools:
 
-- Console/terminal to be able to run various command line tools
-- MQTT Explorer
-- WinSCP
+- An instance running Ubuntu OS with Docker and docker-composer (see [training-environment](overviews/training-environment.md))
+- SSH-client to access your instance
+- MQTT Explorer on your local machine
 
 ## Goals and learning outcomes
 
@@ -50,47 +50,41 @@ The goals of this training are to become familiar with the following:
     - downloading data from broker
     - monitoring operations
 
-
 ## Conventions
 
 !!! question
 
-    A section marked like this indicates questions to be answered
+    A section marked like this invites you to answer a question.
+
+Also you will notice tips and notes sections within the text:
 
 !!! tip
 
-    Tips share additional help on how to best achieve tasks
+    Tips share help on how to best achieve tasks.
 
 !!! note
 
-    Notes provide additional inforamtion on how to best achieve tasks
+    Notes provide additional information on the topic covered by the practical session.
+
+!!! note
+
+    Notes provide additional information on how to best achieve tasks
 
 Examples are indicated as follows:
 
-Code
-``` {.html linenums="1"}
-<html>
-    <head>
-        <title>This is an HTML sample</title>
-    </head>
-</html>
-```
-
 Configuration
 ``` {.yaml linenums="1"}
-my-collection:
+my-collection-defined-in-yaml:
     type: collection
-    title: my cool collection title
-    description: my cool collection description
+    title: my title defined as a yaml attribute named title
+    description: my description as a yaml attribute named description
 ```
 
 Snippets which need to be typed in a on a terminal/console are indicated as:
 
-<div class="termy">
 ```bash
 echo 'Hello world'
 ```
-</div>
 
 ## Training location and materials
 
@@ -103,9 +97,9 @@ The training contents, wiki and issue tracker are managed on GitHub at [https://
 This training can be exported to PDF.  To save or print this training material, go to the [print page](print_page), and select
 File > Print > Save as PDF.
 
-## Test data for exercises
+## Exercise materials
 
-Test data can be downloaded from the [exercises.zip](https://wmo-im.github.io/wis2box-training/exercises.zip) zipfile.
+Exercise materials can be downloaded from the [exercise-materials.zip](https://wmo-im.github.io/wis2box-training/exercise-materials.zip) zipfile.
 
 
 ## Support
@@ -118,4 +112,4 @@ For additional support of questions, please contact wis@wmo.int.
 
 As always, wis2box core documentation can always be found at [https://docs.wis2box.wis.wmo.int](https://docs.wis2box.wis.wmo.int).
 
-Contributions are always enncouraged and welcome!
+Contributions are always encouraged and welcome!

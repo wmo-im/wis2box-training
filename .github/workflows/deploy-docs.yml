@@ -27,13 +27,13 @@ jobs:
       - name: add exercises zipfile 📦
         run: |
           cd ..
-          zip -r exercises.zip exercise-materials/
+          zip -r exercise-materials.zip exercise-materials/
           ls -lh
           git push --set-upstream origin gh-pages
           git config --global user.email "tomkralidis@gmail.com"
           git config --global user.name "Tom Kralidis"
           git checkout gh-pages
-          git add exercises.zip
-          git commit -m "add exercise materials zipfile" -a
+          git add exercise-materials.zip
+          git commit -m "add exercise-materials zipfile" -a
           git push
 
