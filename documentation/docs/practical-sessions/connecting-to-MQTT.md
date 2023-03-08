@@ -34,7 +34,7 @@ You should see the following:
 
 <img alt="mqtt-explorer-global-broker-topics" src="../../assets/img/mqtt-explorer-global-broker-topics.png" width="600">
 
-You are now read to start exploring the WIS2 topics and message structure and answer the following questions:
+You are now ready to start exploring the WIS2 topics and message structure and answer the following questions:
 
 !!! question
     How to distinguish the originating country providing the data? How many countries can you identify sharing data?

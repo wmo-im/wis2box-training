@@ -11,13 +11,13 @@ date: "22/02/2023"
 1. There is 1 station.
 1. This is done using the `transform` command, for example:
 
-    ```console
+    ```bash
     synop2bufr transform --metadata station_list.csv --output-dir . message.txt
     ```
 
 1. This can be done using the following command:
 
-    ```console
+    ```bash
     bufr_dump -p WIGOS_0-20000-0-15015_20230221T120000.bufr4 |grep -i 'latitude\|longitude'
     ```
 
@@ -27,28 +27,28 @@ date: "22/02/2023"
 1. There are 3 stations.
 1. This is done using the `transform` command, for example:
 
-    ```console
+    ```bash
     synop2bufr transform --metadata station_list.csv --output-dir . message.txt
     ```
 
 1. The number of BUFR files output is determined by the number of valid SYNOP reports in the text file, provided the station TSI of each report can be found in the station list file with a corresponding WSI.
 1. This can be done using the following commands:
 
-    ```console
+    ```bash
     bufr_dump -p WIGOS_0-20000-0-15015_20230221T120000.bufr4 |grep -i 'wigos'
     ```
 
-    ```console
+    ```bash
     bufr_dump -p WIGOS_0-20000-0-15020_20230221T120000.bufr4 |grep -i 'wigos'
     ```
 
-    ```console
+    ```bash
     bufr_dump -p WIGOS_0-20000-0-15090_20230221T120000.bufr4 |grep -i 'wigos'
     ```
 
     Note that if you have a folder with just these 3 BUFR files, you can use the **shorter command**:
 
-    ```console
+    ```bash
     bufr_dump -p *.bufr4 |grep -i 'wigos'
     ```
 
@@ -57,13 +57,13 @@ date: "22/02/2023"
 1. No, this is not a problem provided that there exists a row in the station list file with a station TSI matching that of the SYNOP report we're trying to convert.
 1. This is done using the `transform` command, for example:
 
-    ```console
+    ```bash
     synop2bufr transform --metadata station_list.csv --output-dir . message.txt
     ```
 
 1. This can be done in one command:
 
-    ```console
+    ```bash
     bufr_dump -p WIGOS_0-20000-0-15260_20230221T115500.bufr4 |grep -i 'temperature\|cover\|sunshine\|wind'
     ```
 

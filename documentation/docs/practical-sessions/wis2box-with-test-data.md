@@ -12,7 +12,7 @@ In this session you will learn how to install the WIS2-in-a-box on your student-
 
 Login to your designated VM with your username and password.
 
-Your home-directory should already contain the exercise-materials you downloaded in the session [access-your-student-vm](overviews/access-your-student-vm)
+Your home-directory should already contain the exercise-materials you downloaded in the session [access-your-student-vm](../practical-sessions/access-your-student-vm.md)
 
 Go into the directory containing the wis2box-setup prepared for this training:
 
@@ -65,7 +65,7 @@ WIS2BOX_API_URL=http://<your-host>/oapi
 
 ## Start the WIS2-in-a-box services
 
-1. start the wis2box with the following command:
+start the wis2box with the following command:
 
 ```
 python3 wis2box-ctl.py start
@@ -73,7 +73,7 @@ python3 wis2box-ctl.py start
 
 Wait until the command has completed.
 
-2. Inspect the status with the following command:
+Inspect the status with the following command:
 
 ```
 python3 wis2box-ctl.py status
@@ -81,11 +81,11 @@ python3 wis2box-ctl.py status
 
 Repeat the status-command until you are sure all services are Up.
 
-3. Open a browser and visit the page `http://<your-host>`. 
+Open a browser and visit the page `http://<your-host>`. 
 
 This is the wis2box-ui, is is empty as you have not yet setup any datasets.
 
-4. In an new tab, open the page `http://<your-host>/oapi/collections`. 
+In an new tab, open the page `http://<your-host>/oapi/collections`. 
 
 These are the collections currently published the wis2box-api. 
 
@@ -94,7 +94,7 @@ These are the collections currently published the wis2box-api.
 !!! question
     How many data-notifications have been published ?
 
-5. Make sure you can connect to your wis2box-broker using MQTT-explorer. 
+Make sure you can connect to your wis2box-broker using MQTT-explorer. 
 - protocol=mqtt:// host=`<your-host>` port=1883
 - username=wis2box password=wis2box
 - under 'advanced' subscribe to the topics '$SYS' and 'origin/#'
@@ -103,7 +103,7 @@ You should see statistics being published by your broker on the $SYS-topic. Keep
 
 ## Runtime configuration steps for the wis2box
 
-1. Login to the wis2box-management container using the following command:
+Login to the wis2box-management container using the following command:
 
 ```
 python3 wis2box-ctl.py login
@@ -127,7 +127,7 @@ ls /data/wis2box/
 
 Note that the content of /data/wis2box matches that of the directory defined by $WIS2BOX_HOST_DATADIR on your VM.
 
-2. Run the following command to add the test dataset:
+Run the following command to add the test dataset:
 
 ```
 wis2box data add-collection /data/wis2box/mwi-surface-weather-observations.yml
@@ -135,7 +135,7 @@ wis2box data add-collection /data/wis2box/mwi-surface-weather-observations.yml
 
 - Go back to your browser and refresh `http://<your-host>/oapi/collections` collections. Inspect the new collection.
 
-3. Run the following command to publish discovery metadata for the test dataset
+Run the following command to publish discovery metadata for the test dataset:
 
 ```
 wis2box metadata discovery publish /data/wis2box/mwi-surface-weather-observations.yml
@@ -147,7 +147,7 @@ wis2box metadata discovery publish /data/wis2box/mwi-surface-weather-observation
 !!! question
     Check MQTT-explorer: find the message metadata-message that was published by your wis2box-broker. What is the topic is used to publish the metadata-message ?
 
-4. Run the following command to publish the data in test-data/metadata/station/station_list.csv :
+Run the following command to publish the data in test-data/metadata/station/station_list.csv :
 
 ```
 wis2box metadata station publish-collection

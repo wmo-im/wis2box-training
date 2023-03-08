@@ -8,7 +8,7 @@ title: Access your student-VM
 
 During WIS2-in-a-box local training sessions you can access your personal student-VM on the local training network "WIS2-training". 
 
-If you want to run this training outside of a local training session, please provide your own instance as detailed at [training-environment](../overviews/training-environment.md).
+If you want to run this training outside of a local training session, please provide your own instance as detailed at [training-environment](https://wmoomm-my.sharepoint.com/:p:/g/personal/tproescholdt_wmo_int/EQoxn5WS7kBAoe5iNyfeteABAjw67YZBvEWM92NlWUu5wQ?e=gtgm13).
 
 In this session you will ensure you can connect to your student-VM, check pre-installed software and download the exercise-materials.
 
@@ -31,7 +31,7 @@ Use an SSH-client to connect to your student-VM using the following:
 
 Once connected, please change your password to ensure others can not access your VM:
 
-```console
+```bash
 limper@student-vm:~$ passwd
 Changing password for limper.
 Current password:
@@ -46,29 +46,29 @@ Your student-VM comes with python, docker and docker-compose installed.
 
 
 Check docker version:
-```console
+```bash
 docker --version
 ```
 returns:
-```console
+```bash
 Docker version 20.10.17, build 100c701
 ```
 
 Check docker-compose version:
-```console
+```bash
 docker-compose --version
 ```
 returns:
-```console
+```bash
 docker-compose version 1.29.2, build unknown
 ```
 
 Check python version:
-```console
+```bash
 python3 --version
 ```
 returns:
-```console
+```bash
 Python 3.8.10
 ```
 
@@ -76,7 +76,7 @@ Python 3.8.10
 
 On the local training environment your student-account has been added to the 'docker'-group to allow you to start docker-containers. You can verify this by running the docker 'hello-world' command:
 
-```console
+```bash
 docker run -it hello-world
 ```
 
@@ -90,7 +90,7 @@ This commands download the 'hello-world'-image from the local registry and inter
 
 Inspect you local docker system usage using the command:
 
-```console
+```bash
 docker system df
 ```
 
@@ -99,17 +99,17 @@ docker system df
 
 Clean-up your docker system with the command:
 
-```console
+```bash
 docker system prune -a
 ```
 
 Verify docker system is now clean:
-```console
+```bash
 docker system df
 ```
 
 should return:
-```console
+```bash
 TYPE            TOTAL     ACTIVE    SIZE      RECLAIMABLE
 Images          0         0         0B        0B
 Containers      0         0         0B        0B
