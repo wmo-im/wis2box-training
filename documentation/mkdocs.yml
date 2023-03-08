@@ -4,16 +4,17 @@ site_author: World Meteorological Organization
 copyright: "&copy; 2023 World Meteorological Organization"
 site_url: https://wmo-im.github.io/wis2box-training
 repo_url: https://github.com/wmo-im/wis2box-training
+edit_uri: tree/main/documentation/docs
 
 nav:
     - Home: index.md
     - Overviews: overviews.md
     - Practical sessions:
-        - Connecting to WIS2 over MQTT: practical-sessions/connecting-to-MQTT.md
+        - Connecting to WIS2 over MQTT: practical-sessions/connecting-to-mqtt.md
         - Accessing your student VM: practical-sessions/access-your-student-vm.md
-        - Installing WIS2-box (with test data): practical-sessions/wis2box-with-test-data.md
-        - How to use csv2bufr: practical-sessions/csv2bufr.md
-        - How to use synop2bufr: practical-sessions/synop2bufr.md
+        - Installing wis2box with test data: practical-sessions/installing-wis2box-with-test-data.md
+        - Converting CSV data to BUFR: practical-sessions/converting-csv-data-to-bufr.md
+        - Converting SYNOP data to BUFR: practical-sessions/converting-synop-data-to-bufr.md
         - Configuring data mappings: practical-sessions/configuring-data-mappings.md
         - Configuring WIS2 discovery metadata: practical-sessions/configuring-wis2-discovery-metadata.md
         - Configuring station metadata: practical-sessions/configuring-station-metadata.md
@@ -24,6 +25,8 @@ nav:
         - Docker: cheatsheets/docker.md
         - WIS2 in a box: cheatsheets/wis2box.md
 
+strict: true
+
 use_directory_urls: true
 
 theme:
@@ -31,7 +34,7 @@ theme:
     palette:
         scheme: default
     features:
-        - navigation.indexes 
+        - navigation.indexes
     favicon: https://public.wmo.int/sites/all/themes/wmo/favicon.ico
     logo: assets/img/wmo-logo.png
 
@@ -49,9 +52,4 @@ markdown_extensions:
     - md_in_html
 
 extra_css:
-    - assets/css/termynal.css
     - assets/css/custom.css
-
-extra_javascript:
-    - assets/js/termynal.js
-    - assets/js/custom.js

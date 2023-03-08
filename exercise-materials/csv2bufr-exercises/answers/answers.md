@@ -1,7 +1,7 @@
 ---
 title: "WIS2 Training Day 3"
 date: "22/02/2023"
-...
+---
 
 # Answers
 

@@ -347,12 +347,12 @@
           "exemplar": true,
           "expr": "delta(wis2box_notify_total[$__interval])",
           "interval": "1m",
-          "legendFormat": "WIS2.0 notifications",
+          "legendFormat": "WIS2 notifications",
           "range": true,
           "refId": "A"
         }
       ],
-      "title": "Number of WIS2.0 notifications published by wis2box",
+      "title": "Number of WIS2 notifications published by wis2box",
       "type": "timeseries"
     }
   ],

@@ -1,35 +1,35 @@
 ---
-title: Access your student-VM
-...
+title: Access your student VM
+---
 
-# Access your student-VM
+# Access your student VM
 
 ## Introduction
 
-During WIS2-in-a-box local training sessions you can access your personal student-VM on the local training network "WIS2-training". 
+In this session you will ensure you can connect to your student VM, check pre-installed software and download the exercise materials.
 
-If you want to run this training outside of a local training session, please provide your own instance as detailed at [training-environment](https://wmoomm-my.sharepoint.com/:p:/g/personal/tproescholdt_wmo_int/EQoxn5WS7kBAoe5iNyfeteABAjw67YZBvEWM92NlWUu5wQ?e=gtgm13).
+As part of locally run wis2box training sessions, you can access your personal student VM on the local training network named "WIS2-training".
 
-In this session you will ensure you can connect to your student-VM, check pre-installed software and download the exercise-materials.
+If you want to run this training outside of a local training session, you can provide your own instance as detailed in the [training environment](../../overviews) overview.
 
 ## Connect to your student VM on the local training network
 
-Use the following to connect your PC the local WiFi broadcasted in the room during WIS2-training:
+Use the following configuraiton to connect your PC on the local WiFi broadcasted in the room during WIS2 training:
 
-- SSID: WIS2-training
-- password: dataismagic!
+- **SSID: WIS2-training**
+- **password: dataismagic!**
 
-Use an SSH-client to connect to your student-VM using the following:
+Use an SSH client to connect to your student VM using the following:
 
--   Host: country-lastname.wis2box.training -> **replace with your country and lastname**
--   Port: 22
--   Username: lastname -> **replace with your lastname**
--   Password: namibia2023
+- **Host: country-lastname.wis2box.training** (replace with your country and lastname)
+- **Port: 22**
+- **Username: lastname** (replace with your lastname)
+- **Password: namibia2023**
 
 !!! tip
-    Contact a trainer if you are unsure about the host-name or have an issue connecting. 
+    Contact a trainer if you are unsure about the hostname or have issues connecting.
 
-Once connected, please change your password to ensure others can not access your VM:
+Once connected, please change your password to ensure others cannot access your VM:
 
 ```bash
 limper@student-vm:~$ passwd
@@ -42,8 +42,7 @@ passwd: password updated successfully
 
 ## Verify software versions
 
-Your student-VM comes with python, docker and docker-compose installed. 
-
+Your student VM comes with Python, Docker and Docker Compose pre-installed.
 
 Check docker version:
 ```bash
@@ -54,7 +53,7 @@ returns:
 Docker version 20.10.17, build 100c701
 ```
 
-Check docker-compose version:
+Check Docker Compose version:
 ```bash
 docker-compose --version
 ```
@@ -63,7 +62,7 @@ returns:
 docker-compose version 1.29.2, build unknown
 ```
 
-Check python version:
+Check Python version:
 ```bash
 python3 --version
 ```
@@ -74,36 +73,35 @@ Python 3.8.10
 
 ## Run docker 'hello-world'
 
-On the local training environment your student-account has been added to the 'docker'-group to allow you to start docker-containers. You can verify this by running the docker 'hello-world' command:
+In the local training environment, your student account has been added to the `docker` group to allow you to work with Docker.  You can verify this by running the Docker `hello-world` image:
 
 ```bash
 docker run -it hello-world
 ```
 
-This commands download the 'hello-world'-image from the local registry and interactively runs a docker-container for this image.
+This command downloads the `hello-world` image from the local registry and interactively runs a Docker container for this image.
 
 !!! tip
-    
-    If you get an error it is often an indication your user does not have permission to access the docker file-system. The user running docker-commands must be added to the 'docker'-group to be allowed to run docker-containers.
+    If you get an error it is often an indication that your username does not have the appropriate permissions to access the Docker filesystem.  The user running Docker commands must be added to the `docker` group in order to run Docker containers.
 
-## Review docker system usage 
+## Review Docker system usage
 
-Inspect you local docker system usage using the command:
+Inspect youf local Docker system usage using the command:
 
 ```bash
 docker system df
 ```
 
 !!! question
-    What usage can you currently observe for your docker system?
+    What usage can you currently observe for your Docker system?
 
-Clean-up your docker system with the command:
+Cleanup your Docker system with the command:
 
 ```bash
 docker system prune -a
 ```
 
-Verify docker system is now clean:
+Verify Docker system is now clean of any Docker resources:
 ```bash
 docker system df
 ```
@@ -119,26 +117,34 @@ Build Cache     0         0         0B        0
 
 ## Download the exercise materials
 
-Please download the exercise materials on your local VM now and extract the archive with the following commands:
+Please download the exercise materials to your local VM and extract the archive with the following commands:
 
 ```bash
 wget https://wmo-im.github.io/wis2box-training/exercise-materials.zip
-unzip https://wmo-im.github.io/wis2box-training/exercise-materials.zip
+unzip exercise-materials.zip
 ```
 
-Inspect the content of the new directory 'exercise-materials', these are the materials your will use in some of the other practical sessions:
+Inspect the contents of the `exercise-materials` directory; these are the materials used as part of the training and practical sessions.
 
 ```bash
-ls exercise-materials/*
+cd exercise-materials
+ls
 ```
 
-## Learning outcomes
 
-You should now be able to:
+Return to your previous directory:
 
-- Access your student VM over SSH
-- Verify the version for python, docker and docker-compose on your student-VM
-- Verify docker commands can be successfully run
-- Know how to check docker system usage
-- Access the exercises-materials for this training on your student-VM
+```bash
+cd ..
+```
 
+## Conclusion
+
+!!! success "Congratulations!"
+    In this practical session, you learned how to:
+
+    - access your student VM over SSH
+    - verify the versions of Python, Docker and Docker Compose on your local student VM
+    - verify that Docker commands can be successfully run
+    - check Docker system resource usage
+    - download, extract and review the exercise materials for this training on your local student VM
