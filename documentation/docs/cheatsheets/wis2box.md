@@ -26,7 +26,7 @@ python3 wis2box-ctl.py build wis2box-management
 ```
 
 * Update wis2box:
-    
+
 ```bash
 python3 wis2box-ctl.py update
 ```
@@ -34,18 +34,18 @@ python3 wis2box-ctl.py update
 ### Starting and stopping
 
 * Start wis2box:
-    
+
 ```bash
 python3 wis2box-ctl.py start
 ```
 
 * Stop wis2box:
-    
+
 ```bash
 python3 wis2box-ctl.py stop
 ```
 
-* Verify all wis2box containers are running: 
+* Verify all wis2box containers are running:
 
 ```bash
 python3 wis2box-ctl.py status
@@ -65,7 +65,7 @@ python3 wis2box-ctl.py login wis2box-api
 
 ### Design time commands (metadata management and publishing)
 
-!!! note  
+!!! note
 
     You must be logged into the **wis2box-management** container to run the below commands
 

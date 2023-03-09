@@ -8,13 +8,13 @@ The folder 'environment' provides documentation and materials used to run the lo
 
 The wis2box-training is designed to be run on a local network containing all data, images and configurations.
 
-A set of hardware (WiFi router and 3 mini-PCs) is brought along to local training sessions. The hardware setup will provide a dedicate student-VM with Ubuntu and docker to each participant.
+A set of hardware (WiFi router and 3 mini-PCs) is brought along to local training sessions. The hardware setup will provide a dedicate student VM with Ubuntu and docker to each participant.
 
 A local registry mirroring docker-hub is setup on the local hardware to reduce the time needed to download large docker-images in a low bandwidth environment.
 
 ## Exercise materials
 
-All the contents of the folder 'exercise-materials' are added to the gh-pages during deployment in a single zip-file 'exercise-materials.zip'. 
+All the contents of the folder 'exercise-materials' are added to the gh-pages during deployment in a single zip-file 'exercise-materials.zip'.
 
 The practical sessions will start by asking the student to download this archive on their local machine and extracting it.
 

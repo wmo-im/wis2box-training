@@ -33,7 +33,7 @@ The right hand navigation provides a table of concents for a specific page.
 This training requires the following tools:
 
 - An instance running Ubuntu OS with Docker and docker-composer (see [training-environment](https://wmoomm-my.sharepoint.com/:p:/g/personal/tproescholdt_wmo_int/EQoxn5WS7kBAoe5iNyfeteABAjw67YZBvEWM92NlWUu5wQ?e=gtgm13))
-- SSH-client to access your instance
+- SSH client to access your instance
 - MQTT Explorer on your local machine
 
 ## Goals and learning outcomes
@@ -64,11 +64,7 @@ Also you will notice tips and notes sections within the text:
 
 !!! note
 
-    Notes provide additional information on the topic covered by the practical session.
-
-!!! note
-
-    Notes provide additional information on how to best achieve tasks
+    Notes provide additional information on the topic covered by the practical session, as well as how to best achieve tasks.
 
 Examples are indicated as follows:
 

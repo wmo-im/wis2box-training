@@ -73,7 +73,7 @@ ls -l /
 touch foo.txt
 ```
 
-* Create a file from an echo:
+* Create a file from an `echo` command:
 
 ```bash
 echo "hi there" > test-file.txt
@@ -85,25 +85,25 @@ echo "hi there" > test-file.txt
 cp file1 file2
 ```
 
-* Concatenate two files into a new file:
+* Concatenate two files into a new file called `newfile`:
 
 ```bash
 cat file1 file2 > newfile
 ```
 
-* Append another file into file3
+* Append another file into `newfile`
 
 ```bash
 cat file3 >> newfile
 ```
 
-* Delete a file: 
+* Delete a file:
 
 ```bash
 rm newfile
 ```
 
-* Delete all files with the same file extension: 
+* Delete all files with the same file extension:
 
 ```bash
 rm *.dat
@@ -135,32 +135,50 @@ echo "3,cats" >> test-file.txt
 cat test-file.txt | grep fish
 ```
 
-* Ignoring case: 
-    
+* Ignoring case:
+
 ```bash
 grep -i FISH test-file.txt
 ```
 
-* Count matching lines: 
-    
+* Count matching lines:
+
 ```bash
 grep -c fish test-file.txt
 ```
 
-* Return outputs not containing keyword: 
-    
+* Return outputs not containing keyword:
+
 ```bash
 grep -v birds test-file.txt
 ```
 
-* Display output one screen at a time: 
+* Count the number of lines in `test-file.txt`:
 
 ```bash
-cat test-file.txt | more
+wc -l test-file.txt
 ```
-    
+
+* Display output one screen at a time:
+
+```bash
+more test-file.txt
+```
+
 ...with controls:
 
 - Scroll down line by line: *enter*
 - Go to next page: *space bar*
 - Go back one page: *b*
+
+* Display the first 3 lines of the file:
+
+```bash
+head -3 test-file.txt
+```
+
+* Display the last 2 lines of the file:
+
+```bash
+tail -2 test-file.txt
+```

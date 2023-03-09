@@ -41,7 +41,7 @@ services:
       - "8883:8883"
     env_file:
       - .env
-  
+
   mkdocs:
     container_name: mkdocs
     build:

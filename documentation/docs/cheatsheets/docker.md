@@ -10,7 +10,7 @@ Docker allows for creating virtual envronments in an isolated manner in support
 of virtualization of computing resources.  The basic concept behind Docker is containerization,
 where software can run as services, interacting with other software containers, for example.
 
-The typical Docker workflow involves creating **images**, which are then run as **containers**.
+The typical Docker workflow involves creating and building **images**, which are then run as live **containers**.
 
 ### Image management
 
@@ -26,10 +26,10 @@ docker images
 cat << EOF > Dockerfile
 FROM ubuntu:latest
 
-RUN apt-get update 
-RUN apt-get install –y nginx 
+RUN apt-get update
+RUN apt-get install –y nginx
 
-CMD ["echo", "Hello from my first Docker setup!"] 
+CMD ["echo", "Hello from my first Docker setup!"]
 EOF
 ```
 
@@ -42,7 +42,7 @@ docker build -t my-image:local .
 * Removing an image:
 
 ```bash
-docker rmi <image-name>
+docker rmi my-image:local
 ```
 
 ### Volume Management
@@ -79,20 +79,20 @@ docker volume prune
 
 ### Container Management
 
-* Create a container from an image, with an interactive terminal (`it`) and a mounted volume (`v`):
+* Create a container from an image, with an interactive terminal (`-it`) and a mounted volume (`v`):
 
 ```bash
 docker run -it -v ${pwd}:/app my-image:local
 ```
 
 * Display a list of currently running containers:
-    
+
 ```bash
 docker ps
 ```
 
 * List of all containers:
-    
+
 ```bash
 docker ps -a
 ```
@@ -100,23 +100,28 @@ docker ps -a
 * Start a container:
 
 ```bash
-docker start <container_name>
+docker start my-image:local  # starts a new container
 ```
 
 * Enter the interactive terminal of a running container:
 
+
+!!! tip
+
+    use `docker ps` to use the container id in the command below
+
 ```bash
-docker exec -it <container_name> /bin/bash
+docker exec -it my-container /bin/bash
 ```
 
-* Remove a container 
+* Remove a container
 
 ```bash
-docker rm <container_name>
+docker rm my-container
 ```
 
 * Remove a running container:
 
 ```bash
-docker rm -f <container_name>
+docker rm -f my-container
 ```
