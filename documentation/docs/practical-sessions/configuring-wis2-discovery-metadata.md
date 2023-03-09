@@ -8,13 +8,20 @@ As described in the [overviews](../../overviews), WIS2 requires discovery metada
 your data to be shared to WIS2 Global Services.  This session will walk you through creating and publishing
 discovery metadata from wis2box from a configuration file.
 
+## Preparation
+
+!!! note
+    Ensure you are running MQTT Explorer and you are connected to the broker on your student VM before continuing.
+
+!!! note
+    Ensure you are logged into the **wis2box-management** container on your student VM: 
+
+    ```bash
+    cd ~/exercise-materials/wis2box-setup
+    python3 wis2box-ctl.py login
+    ```
+
 ## Creating discovery metadata
-
-!!! note
-    Ensure you are logged into the **wis2box-management** container before continuing.
-
-!!! note
-    Ensure you are running MQTT Explorer connected to your broker.
 
 Copy the test discovery metadata into your own file (you may name the file whatever you wish):
 

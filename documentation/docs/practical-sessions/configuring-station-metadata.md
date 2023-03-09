@@ -9,10 +9,17 @@ This session will walk you through creating and publishing station metadata from
 from a configuration file.  wis2box uses a fixed station metadata list that is used as
 part of its runtime operation.
 
-## Creating station metadata
+## Preparation
 
 !!! note
-    Ensure you are logged into the **wis2box-management** container before continuing.
+    Ensure you are logged into the **wis2box-management** container on your student VM: 
+
+    ```bash
+    cd ~/exercise-materials/wis2box-setup
+    python3 wis2box-ctl.py login
+    ```
+
+## Creating station metadata
 
 Update the file `~/exercises-metadata/test-data/metadata/station/station_list.csv`, adding your new station:
 

@@ -13,11 +13,23 @@ By the end of the session you should be able to use the tools provided by csv2bu
 - Customise the BUFR mapping file (and/or input CSV) to apply to their CSV date.
 - Succesfully convert their data to the recommended BUFR sequence to meet GBON requirements.
 
-# Essentials
+## Preparation
+
+To begin with the exercises, login to your VM, change to 'exercise-materials'directory and start the a docker-container running the csv2bufr-image with the following command:
+
+```bash
+cd ~/exercise-materials/
+docker run -it -v csv2bufr-exercises:/exercises wmoim/csv2bufr
+```
+
+!!! note
+	The additional flag '-v csv2bufr-exercises:/exercises' ensures that the directory 'csv2bufr-exercises' on your student VM is accessible as '/exercises' inside your container.
+
+## Essentials
 
 Before attempting the questions below, here are some essential commands that will be helpful:
 
-## Mappings Create
+### Mappings Create
 
 The `mappings create` function will allow you to create the an empty BUFR mapping template JSON file, which maps the CSV column headers to their corresponding ecCodes element. It can be used in the following way in the command line:
 
@@ -27,14 +39,14 @@ csv2bufr mappings create <BUFR descriptors> --output <output_dir>
 
 For more information, see an <a href="https://csv2bufr.readthedocs.io/en/latest/example.html#creating-a-new-mapping-file" target="_blank">example here.</a>
 
-## Data Transform
+### Data Transform
 The `data transform` function is what will convert a CSV file to BUFR, and can be used in the following way in the command line:
 
 ```bash
 csv2bufr data transform --bufr-template <my_template.json> --output-dir <./my_folder> <my_data.csv>
 ```
 
-## BUFR Dump
+### BUFR Dump
 The `bufr_dump` function will allow you to inspect the BUFR files created from the conversion. It has many options, but the following will be the most applicable to the exercises:
 
 ```bash
@@ -52,17 +64,6 @@ This will enumerate the variables related to temperature in your BUFR file. If y
 ```bash
 bufr_dump -p <my_bufr.bufr4> |grep -i 'temperature\|wind'
 ```
-
-# Exercises
-
-To begin with the exercises, login to your VM, change to 'exercise-materials'directory and start the a docker-container running the csv2bufr-image with the following command:
-
-```bash
-docker run -it -v csv2bufr-exercises:/exercises wmoim/csv2bufr
-```
-
-!!! note
-The additional flag '-v csv2bufr-exercises:/exercises' ensures that the directory 'csv2bufr-exercises' on your student VM is accessible as '/exercises' inside your container.
 
 ## Exercise 1
 
