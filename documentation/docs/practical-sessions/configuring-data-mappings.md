@@ -9,6 +9,16 @@ is data ingest and publishing, which are driven by wis2box data mappings.  The b
 is configuring a WIS2 topic to a defined ingest and publish workflow and files/templates.  In this session, you
 will work on adding to the data mappings in support of publishing your data via wis2box.
 
+## Preparation
+
+!!! note
+    Ensure you are logged into the **wis2box-management** container on your student VM: 
+
+    ```bash
+    cd ~/exercise-materials/wis2box-setup
+    python3 wis2box-ctl.py login
+    ```
+
 ## Configure a data mapping
 
 !!! note

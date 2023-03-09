@@ -11,6 +11,14 @@ TODO: Tom to review
 - Understand the relationship between the number of SYNOP reports and the number of BUFR files produced.
 - Ability to inspect the contents of the BUFR files created.
 
+## Preparation
+
+To begin with the exercises, login to your VM, change to 'exercise-materials'directory and start the a docker-container running the synop2bufr-image with the following command:
+
+```bash
+cd ~/exercise-materials/
+docker run -it -v csv2bufr-exercises:/exercises wmoim/synop2bufr
+```
 
 # Essentials
 
