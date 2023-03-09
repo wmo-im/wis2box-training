@@ -4,7 +4,7 @@ title: Overviews
 
 # Overviews
 
-The following presentations provide conceptual overviews presented during the WIS2-training session:
+The following presentations provide conceptual overviews presented during the training:
 
 - [WIS2-pilot-phase](https://wmo-teams.atlassian.net/wiki/download/attachments/377061379/WIS2-Pilot-phase-Namibia.pptx)
 - [WIS 2.0 Architecture](https://wmo-teams.atlassian.net/wiki/download/attachments/377061379/WIS+2.0+Architecture.pptx)
