@@ -81,7 +81,7 @@ Update the `[country]` and `[centre_id]` values in your new/added data mapping.
 ## Conclusion
 
 !!! success "Congratulations!"
-    In this practical session, you learned:
+    In this practical session, you learned how to:
 
     - inspect the live wis2box data mappings
     - add a new data mapping
