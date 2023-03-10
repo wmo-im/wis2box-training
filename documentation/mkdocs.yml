@@ -8,7 +8,6 @@ edit_uri: tree/main/documentation/docs
 
 nav:
     - Home: index.md
-    - Overviews: overviews.md
     - Practical sessions:
         - Connecting to WIS2 over MQTT: practical-sessions/connecting-to-mqtt.md
         - Accessing your student VM: practical-sessions/access-your-student-vm.md
