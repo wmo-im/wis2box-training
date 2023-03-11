@@ -36,7 +36,7 @@ wis2box environment show | grep WIS2BOX_DATA_MAPPINGS
     Where are the live data mappings located?
 
 !!! question
-    How can using the `$WIS2BOX_DATA_MAPPINGS` environment variable be valuable, as compared to `/data/wis2box/data-mappings.yml`?
+    How can using the `WIS2BOX_DATA_MAPPINGS` environment variable be valuable, as compared to `/data/wis2box/data-mappings.yml`?
 
 ### Add CSV data
 
@@ -78,7 +78,7 @@ Update the `[country]` and `[centre_id]` values in your new/added data mapping.
     The `file-pattern` values throughout the data mapping provide a [regular expression](https://www.regular-expressions.info) to be able to match filenames.  Ensure your filenames are formatted as per the regular expression in the new data mapping, to include `WIGOS_` as a fixed value, followed by the WIGOS Station Identifier (WSI), followed by an underscore (`_`), as well as any other information (i.e. datestamp).  Ensure the file extension is `.csv`.  An real world example would be `WIGOS_0-454-2-AWSBALAKA_2021-11-18T0955.csv`.
 
 !!! note
-    centre id's will officially managed and introduced as part of the WIS2 Topic Hierarchy throughout the WIS2 Pilot Phase.
+    Centre id's will officially managed and introduced as part of the WIS2 Topic Hierarchy throughout the WIS2 Pilot Phase.
 
 ## Conclusion
 

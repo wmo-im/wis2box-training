@@ -87,7 +87,7 @@ wis2box metadata station publish-collection
 wis2box data add-collection /path/to/discovery-metadata-file.yml
 ```
 
-* Ingest data into the *wis2box-incoming* bucket to trigger processing and publishing:
+* Ingest data into the **wis2box-incoming** bucket to trigger processing and publishing:
 
 ```bash
 wis2box data ingest --topic-hierarchy topic.hierarchy.path --path /path/to/directory/of/data/files
