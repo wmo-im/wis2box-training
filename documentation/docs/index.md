@@ -26,8 +26,9 @@ The goals of this training are to become familiar with the following:
 - wis2box core functions:
     - sending data
     - registering as a WIS2 Node
-    - downloading data from broker
-    - monitoring operations
+    - subscribing to a Global Broker
+    - downloading data from a Global Cache or other WIS2 Nodes
+    - monitoring wis2box operations
 
 ## Training schedule
 
