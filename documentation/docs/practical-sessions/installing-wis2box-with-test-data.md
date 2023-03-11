@@ -40,16 +40,16 @@ cat dev.env
 ```
 
 !!! note
-    `dev.env` is a required file always used by wis2box
+    `dev.env` is a required file always used by wis2box. 
 
-!!! note
-    `WIS2BOX_HOST_DATADIR` is set to `${PWD}/test-data`.  This directory will be mapped as `/data/wis2box` inside the **wis2box-management** container.
-
-!!! note
-    ``LOGGING_LEVEL`` is set to ``INFO``.  The ``LOGGING_LEVEL`` for a wisbox default installation is ``WARNING``.
+    For this exercise ``WIS2BOX_HOST_DATADIR`` is set to ``${PWD}/test-data``.  This directory will be mapped as `/data/wis2box` inside the **wis2box-management** container.
+    
+    For this exercise ``LOGGING_LEVEL`` is set to ``INFO``.  The ``LOGGING_LEVEL`` for a wisbox default installation is ``WARNING``.
 
 !!! question
-    Inspect the content of `test-data/data-mappings.yml`, what topics are configured in this file?
+    Inspect the content of `test-data/data-mappings.yml`, what topics are configured in this file? 
+
+    Hint: the WIS2-topic is specified by replacing '/' with '.' inside the wis2box configuration files.
 
 !!! question
     Inspect the content of `test-data/metadata/station/station_list.csv`.  How many stations are defined in this file?
@@ -161,7 +161,7 @@ Go back to your web browser and refresh the `http://<your-host>/oapi/collections
 Switch back to MQTT Explorer and find the discovery metadata message that was published by your broker.
 
 !!! question
-    What is the topic is used to publish the discovery metadata message?
+    What is the topic is used to publish the discovery metadata message? 
 
 Run the following command to publish the station metadata in `test-data/metadata/station/station_list.csv`:
 

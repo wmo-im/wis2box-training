@@ -8,13 +8,25 @@ title: Access your student VM
 
 In this session you will ensure you can connect to your student VM, check pre-installed software and download the exercise materials.
 
-As part of locally run wis2box training sessions, you can access your personal student VM on the local training network named "WIS2-training".
+During locally organized WIS2 training sessions, participants will be provided with a personal student VM accessible on the local training network.
 
-If you want to run this training outside of a local training session, you can provide your own instance as detailed in the [training environment](../../overviews) overview.
+!!! Note
+    
+    If you like to try these exercises outside of locally organized WIS2 training sessions, a student VM can be obtained by using any commercial cloud provider:
+    
+    - GCP (Google Cloud Platform) VM instance ‘e2-medium’
+    - AWS (Amazon Web Services)  ec2-instance ‘t3a.medium’ 
+    - Azure (Microsoft) Azure Virtual Machine ‘standard_b2s’
+    
+    Select OS Ubuntu 20.0.4.5 LTS and ensure you have minimum of 24 GB of locally attached storage. 
+    
+    You will also need to install: Python (3.8.10), Docker (20.10.17) and docker-compose (1.29.2).
 
 ## Connect to your student VM on the local training network
 
-Use the following configuraiton to connect your PC on the local WiFi broadcasted in the room during WIS2 training:
+You can connect to your student during locally organized WIS2 training session as follows.
+
+Connect to the local WiFi training network:
 
 - **SSID: WIS2-training**
 - **password: dataismagic!**
@@ -86,7 +98,7 @@ This command downloads the `hello-world` image from the local registry and inter
 
 ## Review Docker system usage
 
-Inspect youf local Docker system usage using the command:
+Inspect your local Docker system usage using the command:
 
 ```bash
 docker system df
