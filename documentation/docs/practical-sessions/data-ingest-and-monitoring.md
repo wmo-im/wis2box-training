@@ -107,18 +107,22 @@ wis2box data ingest --topic-hierarchy mwi.mwi_met_centre.data.core.weather.surfa
 
 !!! tip
 
-    You do not have to adjust the topic hierarchy when using the **wis2box-management** command line.
-
+    You do not have to adjust the topic hierarchy (i.e. replacing periods to slashes) when using the **wis2box-management** command line.
 
 ## Monitoring for errors
 
+TODO
+
 ## Verify the data publishing
+
+TODO
 
 ### Visualizing your data
 
 Open your web browser and navigate to `http://<your-host>.  You should see a dataset with same title as you configured
 in your discovery metadata configuration.  Click the **EXPLORE** button.
 
+TODO
 
 ## Conclusion
 
