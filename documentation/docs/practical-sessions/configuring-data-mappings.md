@@ -2,7 +2,9 @@
 title: Configuring data mappings
 ---
 
-# Introduction
+# Configuring data mappings
+
+## Introduction
 
 wis2box uses a number of configuration files to allow for a simple setup of the system.  At the heart of wis2box
 is data ingest and publishing, which are driven by wis2box data mappings.  The basic concept of data mappings
