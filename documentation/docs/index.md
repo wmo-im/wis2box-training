@@ -32,7 +32,7 @@ The goals of this training are to become familiar with the following:
 
 ## Training schedule
 
-- 20 - 24 March 2023: Windhoek, Namibia
+- 20 - 24 March 2023: Windhoek, Namibia ([agenda](https://wmo-teams.atlassian.net/wiki/spaces/WIS2/pages/370868225/WIS+2.0+training+workshop+Namibia+20-24+March+2023))
 - 12 - 16 June 2023: Port of Spain, Trinidad and Tobago
 
 ## Navigation

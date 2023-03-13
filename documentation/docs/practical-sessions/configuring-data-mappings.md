@@ -26,7 +26,7 @@ will work on adding to the data mappings in support of publishing your data via 
 !!! note
     Ensure you are logged into the **wis2box-management** container before continuing.
 
-Inspect the wis2box environnment to locate the data mappings in use by the system, as defined by the `WIS2BOX_DATA_MAPPINGS` environment variable:
+Inspect the wis2box environment to locate the data mappings in use by the system, as defined by the `WIS2BOX_DATA_MAPPINGS` environment variable:
 
 ```bash
 wis2box environment show | grep WIS2BOX_DATA_MAPPINGS
