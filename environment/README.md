@@ -34,6 +34,7 @@ The 'vm-clone-base' template consists of:
     - python3-pip
     - unzip
     - docker-compose
+    - minio pywis-pubsub (installed via `pip3`)
 - `/etc/docker/daemon.json` with a Docker registry mirror pointing to http://10.0.2.222:5000
 
 ### VM naming convention
