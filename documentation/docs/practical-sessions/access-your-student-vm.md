@@ -86,7 +86,7 @@ This command downloads the `hello-world` image from the local registry and inter
 
 ## Review Docker system usage
 
-Inspect youf local Docker system usage using the command:
+Inspect your local Docker system usage using the command:
 
 ```bash
 docker system df
