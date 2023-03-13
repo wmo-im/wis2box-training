@@ -12,11 +12,11 @@ As part of locally run wis2box training sessions, you can access your personal s
 
 If you want to run this training outside of a local training session, you can provide your own instance using any Cloud Provider:
 
-- GCP (Google Cloud Platform) VM instance ‘e2-medium’
-- AWS (Amazon Web Services)  ec2-instance ‘t3a.medium’ 
-- Azure (Microsoft) Azure Virtual Machine ‘standard_b2s’
+- GCP (Google Cloud Platform) VM instance `e2-medium`
+- AWS (Amazon Web Services)  ec2-instance `t3a.medium` 
+- Azure (Microsoft) Azure Virtual Machine `standard_b2s`
 
-Select Ubuntu Server 20.0.4 LTS as OS and install docker engine (20.0.17) and docker-compose (1.29.2). Please also install python3 (3.8) and python3-pip. 
+Select Ubuntu Server 20.0.4 LTS as OS and install Docker engine (20.0.17) and Docker Compose (1.29.2). Please also install `python3` (3.8) and `python3-pip`.
 
 ## Connect to your student VM on the local training network
 

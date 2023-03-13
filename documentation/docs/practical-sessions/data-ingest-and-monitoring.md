@@ -22,7 +22,7 @@ Note that the starting point for wis2box workflow is the MinIO container publish
 
 ### Verify data mappings
 
-Ensure you are logged into the wis2box-management container on your student VM:
+Ensure you are logged into the **wis2box-management** container on your student VM:
 
 ```bash
 python3 wis2box-ctl.py login
@@ -59,29 +59,29 @@ python3 wis2box-ctl.py status
 
 ## Open the Grafana dashboard
 
-Please ensure you have opened the Grafana dashboard home-page at `http://<your-host>:3000`
+Ensure you have opened the Grafana dashboard home-page at `http://<your-host>:3000`
 
 <img alt="grafana-homepage" src="../../assets/img/grafana-homepage.png" width="600">
 
 !!! question
 
-    Can you see all the stations you have configured in the panel on the left hand side ?
+    Can you see all the stations you have configured in the panel on the left hand side?
 
     Are there any errors reported so far?
 
     Have there been any WIS2 notifications published so far? 
 
-Keep a browser-tab open with the Grafana dashboard during the next few exercises to monitor the status of your data publishing.
+Keep a web browser tab open with the Grafana dashboard during the next few exercises to monitor the status of your data publishing.
 
 ## Upload your data
 
-You can use multiple methods to ingest data into wis2box and start publishing WIS2-notifications. 
+You can use multiple methods to ingest data into wis2box and start publishing notifications to WIS2.
 
 It is recommended to test your configuration is setup correctly by ingesting a single data-sample manually before setting up automatic ingestion of your data.
 
-Manual ingestion can be done using the `MinIO` admin interface to upload a file into the `wis2box-incoming`-bucket or by using the `wis2box data ingest`-command inside the `wis2box-management container`.
+Manual ingestion can be done using the `MinIO` admin interface to upload a file into the `wis2box-incoming` bucket or by using the `wis2box data ingest` command from within the **wis2box-management** container.
 
-When automating ingesting you can use scripts to copy data into the `wis2box-incoming`-bucket at regular intervals or you can use the optional wis2box-ftp.
+When automating data ingest you can also use scripts to copy data into the `wis2box-incoming` bucket at regular intervals or you can use the optional **wis2box-ftp** container setup (more on this later).
 
 !!! note
 
@@ -138,9 +138,9 @@ wis2box data ingest --topic-hierarchy mwi.mwi_met_centre.data.core.weather.surfa
 
     You do not have to adjust the topic hierarchy (i.e. replacing periods to slashes) when using the **wis2box-management** command line.
 
-### Ingesting data using python
+### Ingesting data using Python
 
-This will be an example of how to ingest data using python. A sample-script will be provided and the participant is required to correctly define the path for their data, the topic, and the wis2box connection details.
+This will be an example of how to ingest data using Python. A sample script will be provided and the participant is required to correctly define the path for their data, the topic, and the wis2box connection details.
 
 TODO prepare the sample script and add it to wis2box-setup
 
@@ -161,11 +161,11 @@ Then start the `wis2box-ftp` service with the following command:
 docker-compose -f docker-compose.wis2box-ftp.yml -p wis2box_project --env-file dev.env up -d
 ```
 
-Now open WinSCP on your local laptop and prepare the connection to the wis2box-ftp as follows:
+Now open WinSCP on your local laptop and prepare the connection to the **wis2box-ftp** container as follows:
 
 <img alt="winscp-new-session" src="../../assets/img/winscp-new-session.png" width="400">
 
-Replace "Host name" with that of **your** student VM and use the username and password for the FTP you specified in your dev.env.
+Replace "Host name" with that of **your** student VM and use the username and password for the FTP you specified in your `dev.env`.
 
 Once you have established the connection you will land in an empty directory. 
 
@@ -177,7 +177,7 @@ Enter the topic hierarchy value of your dataset as a directory:
 
 <img alt="winscp_wis2box-ftp_example" src="../../assets/img/winscp-example.png" width="400">
 
-Now enter the directory you created and you can copy your data-sample from your host-machine to trigger the wis2box data ingestion process. 
+Now enter the directory you created and you can copy your data sample from your host machine to trigger the wis2box data ingest.
 
 Check your Grafana dashboard.
 
@@ -200,6 +200,6 @@ TODO add screenshots, add exercise
     In this practical session, you learned how to:
 
     - prepare and verify your data mappings, discovery metadata, and station metadata
-    - trigger the wis2box workflow using different data ingestion methods
+    - trigger the wis2box workflow using different data ingest methods
     - monitor the status of your data ingest and publishing
     - view your data on the wis2box UI
