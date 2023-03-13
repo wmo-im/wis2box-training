@@ -10,7 +10,13 @@ In this session you will ensure you can connect to your student VM, check pre-in
 
 As part of locally run wis2box training sessions, you can access your personal student VM on the local training network named "WIS2-training".
 
-If you want to run this training outside of a local training session, you can provide your own instance as detailed in the [training environment](../../overviews) overview.
+If you want to run this training outside of a local training session, you can provide your own instance using any Cloud Provider:
+
+- GCP (Google Cloud Platform) VM instance ‘e2-medium’
+- AWS (Amazon Web Services)  ec2-instance ‘t3a.medium’ 
+- Azure (Microsoft) Azure Virtual Machine ‘standard_b2s’
+
+Select Ubuntu Server 20.0.4 LTS as OS and install docker engine (20.0.17) and docker-compose (1.29.2). Please also install python3 (3.8) and python3-pip. 
 
 ## Connect to your student VM on the local training network
 
