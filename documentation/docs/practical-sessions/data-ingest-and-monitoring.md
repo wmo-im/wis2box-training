@@ -151,14 +151,14 @@ You can add an additional service to allow your data to be accessible over FTP.
 To define the FTP username and password, add the following additional environment variables to your `dev.env`:
 
 ```bash
-    FTP_USER=wis2box
-    FTP_PASSWORD=wis2box123
+FTP_USER=wis2box
+FTP_PASSWORD=wis2box123
 ```
 
 Then start the `wis2box-ftp` service with the following command:
 
 ```bash
-    docker-compose -f docker-compose.wis2box-ftp.yml -p wis2box_project --env-file dev.env up -d
+docker-compose -f docker-compose.wis2box-ftp.yml -p wis2box_project --env-file dev.env up -d
 ```
 
 Now open WinSCP on your local laptop and prepare the connection to the wis2box-ftp as follows:
@@ -173,14 +173,7 @@ Select the option to create a 'new directory':
 
 <img alt="winscp-empty" src="../../assets/img/winscp-empty.png" width="500">
 
-Enter the topic hierarchy value of your dataset as a directory.
-
-For example to correctly ingest data for topic_hierarchy:
-
-- ita.roma_met_centre.data.core.weather.surface-based-observations.synop
-You need to copy the data into the directory:
-
--   /ita/roma_met_centre/data/core/weather/surface-based-observations/synop
+Enter the topic hierarchy value of your dataset as a directory:
 
 <img alt="winscp_wis2box-ftp_example" src="../../assets/img/winscp-example.png" width="400">
 
