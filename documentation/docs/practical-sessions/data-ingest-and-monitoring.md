@@ -59,7 +59,7 @@ python3 wis2box-ctl.py status
 
 ## Open the Grafana dashboard
 
-Please ensure you have opened the Grafana dashboard home-page at http://<your-host>:3000
+Please ensure you have opened the Grafana dashboard home-page at `http://<your-host>:3000`
 
 <img alt="grafana-homepage" src="../../assets/img/grafana-homepage.png" width="600">
 
@@ -142,13 +142,61 @@ wis2box data ingest --topic-hierarchy mwi.mwi_met_centre.data.core.weather.surfa
 
 This will be an example of how to ingest data using python. A sample-script will be provided and the participant is required to correctly define the path for their data, the topic, and the wis2box connection details.
 
+TODO prepare the sample script and add it to wis2box-setup
+
 ### Ingesting data using the optional FTP-server
 
-This will be an example of how to start the optional wis2box-ftp service. The participant will need to start the service and define the correct directory-structure on their ftp-server for their data to successfully ingest data. 
+You can add an additional service to allow your data to be accessible over FTP.
+
+To define the FTP username and password, add the following additional environment variables to your `dev.env`:
+
+```bash
+    FTP_USER=wis2box
+    FTP_PASSWORD=wis2box123
+```
+
+Then start the `wis2box-ftp` service with the following command:
+
+```bash
+    docker-compose -f docker-compose.wis2box-ftp.yml -p wis2box_project --env-file dev.env up -d
+```
+
+Now open WinSCP on your local laptop and prepare the connection to the wis2box-ftp as follows:
+
+<img alt="winscp-new-session" src="../../assets/img/winscp-new-session.png" width="400">
+
+Replace "Host name" with that of **your** student VM and use the username and password for the FTP you specified in your dev.env.
+
+Once you have established the connection you will land in an empty directory. 
+
+Select the option to create a 'new directory':
+
+<img alt="winscp-empty" src="../../assets/img/winscp-empty.png" width="500">
+
+Enter the topic hierarchy value of your dataset as a directory.
+
+For example to correctly ingest data for topic_hierarchy:
+
+- ita.roma_met_centre.data.core.weather.surface-based-observations.synop
+You need to copy the data into the directory:
+
+-   /ita/roma_met_centre/data/core/weather/surface-based-observations/synop
+
+<img alt="winscp_wis2box-ftp_example" src="../../assets/img/winscp-example.png" width="400">
+
+Now enter the directory you created and you can copy your data-sample from your host-machine to trigger the wis2box data ingestion process. 
+
+Check your Grafana dashboard.
+
+!!! Question
+
+    Did you manage to successfully publish WIS2 notifications for your data?
+
+    If not, review the errors reported and try to determine what went wrong.
 
 ### Viewing data in the WIS2BOX-UI
 
-Open your web browser and navigate to `http://<your-host>.  You should see a dataset with same title as you configured
+Open your web browser and navigate to `http://<your-host>`.  You should see a dataset with same title as you configured
 in your discovery metadata configuration.  Click the **EXPLORE** button.
 
 TODO add screenshots, add exercise

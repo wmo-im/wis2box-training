@@ -20,7 +20,7 @@ Select Ubuntu Server 20.0.4 LTS as OS and install docker engine (20.0.17) and do
 
 ## Connect to your student VM on the local training network
 
-Use the following configuraiton to connect your PC on the local WiFi broadcasted in the room during WIS2 training:
+Use the following configuration to connect your PC on the local WiFi broadcasted in the room during WIS2 training:
 
 - **SSID: WIS2-training**
 - **password: dataismagic!**
