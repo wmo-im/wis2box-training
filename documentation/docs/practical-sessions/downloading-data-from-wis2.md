@@ -26,6 +26,10 @@ Note that the starting point for wis2box workflow is the MinIO container publish
     python3 wis2box-ctl.py login
     ```
 
+## Working with pywiscat
+
+TODO
+
 ## Working with pywis-pubsub
 
 The [first practical session](../connecting-to-mqtt) used MQTT Explorer to connect to the  Météo-France Global Broker.
@@ -36,10 +40,10 @@ Let's use the [pywis-pubsub](https://github.com/wmo-im/pywis-pubsub) to subscrib
 pywis-pubsub subscribe --help
 ```
 
-Update the sample configuration to connect to the Météo-France Global Broker:
+Update the sample configuration (see the sections marked **TBD**) to connect to the Météo-France Global Broker:
 
 ```bash
-vi ~/exercise-materials/wis2box-setup/examples/config/pywis-pubsub.yml
+vi ~/exercise-materials/pywis-pubsub-exercises/config.yml
 ```
 
 Update the following values in the configuration:
@@ -49,12 +53,12 @@ Update the following values in the configuration:
     - password: everyone
     - host: globalbroker.meteo.fr
     - port: 8883
-- **subscribe_topics**: `origin/#` `cache/#`
+- **subscribe_topics**: `origin/#` and `cache/#` (on separate lines)
 
 Run the `pywis-pubsub` command:
 
 ```bash
-pywis-pubsub subscribe -c exercise-materials/wis2box-setup/examples/config/pywis-pubsub.yml   
+pywis-pubsub subscribe -c ~/exercise-materials/pywis-pubsub-exercises/config.yml
 ```
 
 !!! question

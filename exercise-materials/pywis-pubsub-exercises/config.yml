@@ -1,0 +1,18 @@
+broker: mqtt://username:password@host:port
+
+# list of topics to subscribe to
+subscribe_topics:
+    - TBD
+    - TBD
+
+# whether to verify data
+verify_data: true
+
+# whether to validate message against schema
+validate_message: false
+
+# storage: filesystem
+storage:
+    type: fs
+    options:
+        path: TBD
