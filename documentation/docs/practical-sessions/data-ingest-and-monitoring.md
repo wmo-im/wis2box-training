@@ -140,7 +140,7 @@ wis2box data ingest --topic-hierarchy mwi.mwi_met_centre.data.core.weather.surfa
 
 ### MinIO Python client
 
-You might want to automate data ingestion from your system into the wis2box using python.
+At some point you may want to automate data ingestion from your system into the wis2box using Python.
 
 MinIO provides a Python client which can be installed as follows:
 
@@ -148,27 +148,27 @@ MinIO provides a Python client which can be installed as follows:
 pip3 install minio
 ```
 
-Login to your student-VM and you will note that this library should already be installed.
+Login to your student VM and you will note that this library should already be installed.
 
-Go to the directory exercise-materials/wis2box-setup and view the example script:
+Go to the directory `exercise-materials/wis2box-setup` and view the example script:
 
+Run the script using the following command:
 
-Run the script using the command:
 ```bash 
 python3 example/scripts/copy_to_incoming.py
 ```
 
 !!! question
-    The sample script needs to be modified before it can be used. Why did the script fail?
+    The sample script needs to be modified before it can be used.  Why did the script fail?
 
-The script needs to know the correct endpoint for accessing MinIO on your wis2box. If the wis2box is running on your host, the MinIO-endpoint is available at `http://<your-host>:9000`.
+The script needs to know the correct endpoint for accessing MinIO on your wis2box. If wis2box is running on your host, the MinIO endpoint is available at `http://<your-host>:9000`.
 
-The sample-script provides the basic structure for copying a file into MinIO. Try to use this to ingest a data-sample of your choosing.
+The sample script provides the basic structure for copying a file into MinIO. Try to ingest a data sample of your choosing using this script.
 
 !!! question 
-    Use the python-example provided to create a python-script to ingest data into your wis2box. What is the correct topic for your data? Are you able to detect new WIS2-notification on the Grafana dashboard ? If not, try to understand the errors and adjust the script.
+    Use the Python example provided to create your own Python script to ingest data into your wis2box.  What is the correct topic for your data?  Are you able to detect new WIS2 notification on the Grafana dashboard? If not, try to understand the errors and adjust the script accordingly.
 
-### wis2box-FTP
+### wis2box FTP
 
 You can add an additional service to allow your data to be accessible over FTP.
 

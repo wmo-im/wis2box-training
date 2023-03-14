@@ -116,7 +116,7 @@ docker system df
 !!! question
     What usage can you currently observe for your Docker system?
 
-Check the current images available on your docker system:
+Check the current images available on your Docker system:
 
 ```bash
 docker image ls
