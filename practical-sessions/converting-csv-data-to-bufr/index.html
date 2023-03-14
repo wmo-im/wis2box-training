@@ -1,0 +1,1011 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="WIS2 in a box (wis2box) is a Free and Open Source (FOSS) Reference Implementation of a WMO WIS2 node. The project provides a plug and play toolset to ingest, process, and publish weather/climate/water data using standards-based approaches in alignment with the WIS2 principles. wis2box also provides access to all data in the WIS2 network. wis2box is designed to have a low barrier to entry for data providers, providing enabling infrastructure and services for data discovery, access, and visualization.">
+      
+      
+        <meta name="author" content="World Meteorological Organization">
+      
+      
+        <link rel="canonical" href="https://wmo-im.github.io/wis2box-training/practical-sessions/converting-csv-data-to-bufr/">
+      
+      
+        <link rel="prev" href="../converting-synop-data-to-bufr/">
+      
+      
+        <link rel="next" href="../converting-daycli-data-to-bufr/">
+      
+      <link rel="icon" href="https://public.wmo.int/sites/all/themes/wmo/favicon.ico">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.1.3">
+    
+    
+      
+        <title>Converting CSV data to BUFR - WIS2 in a box training</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.c4a75a56.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.a0c5b2b5.min.css">
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../css/print-site-enum-headings1.css">
+    
+      <link rel="stylesheet" href="../../css/print-site-enum-headings2.css">
+    
+      <link rel="stylesheet" href="../../css/print-site-enum-headings3.css">
+    
+      <link rel="stylesheet" href="../../css/print-site-enum-headings4.css">
+    
+      <link rel="stylesheet" href="../../css/print-site-enum-headings5.css">
+    
+      <link rel="stylesheet" href="../../css/print-site-enum-headings6.css">
+    
+      <link rel="stylesheet" href="../../css/print-site.css">
+    
+      <link rel="stylesheet" href="../../css/print-site-material.css">
+    
+      <link rel="stylesheet" href="../../assets/css/custom.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="" data-md-color-accent="">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#converting-csv-data-to-bufr" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="WIS2 in a box training" class="md-header__button md-logo" aria-label="WIS2 in a box training" data-md-component="logo">
+      
+  <img src="../../assets/img/wmo-logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            WIS2 in a box training
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Converting CSV data to BUFR
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/wmo-im/wis2box-training" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.3.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="WIS2 in a box training" class="md-nav__button md-logo" aria-label="WIS2 in a box training" data-md-component="logo">
+      
+  <img src="../../assets/img/wmo-logo.png" alt="logo">
+
+    </a>
+    WIS2 in a box training
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/wmo-im/wis2box-training" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.3.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        Home
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+      
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+          Practical sessions
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Practical sessions
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../connecting-to-mqtt/" class="md-nav__link">
+        Connecting to WIS2 over MQTT
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../access-your-student-vm/" class="md-nav__link">
+        Accessing your student VM
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../installing-wis2box-with-test-data/" class="md-nav__link">
+        Installing wis2box with test data
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../converting-synop-data-to-bufr/" class="md-nav__link">
+        Converting SYNOP data to BUFR
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Converting CSV data to BUFR
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Converting CSV data to BUFR
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    Introduction
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#preparation" class="md-nav__link">
+    Preparation
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#csv2bufr-primer" class="md-nav__link">
+    csv2bufr primer
+  </a>
+  
+    <nav class="md-nav" aria-label="csv2bufr primer">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mappings-create" class="md-nav__link">
+    mappings Create
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data-transform" class="md-nav__link">
+    data transform
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eccodes-bufr-refresher" class="md-nav__link">
+    ecCodes BUFR refresher
+  </a>
+  
+    <nav class="md-nav" aria-label="ecCodes BUFR refresher">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bufr_dump" class="md-nav__link">
+    bufr_dump
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#inspecting-csv-data-and-bufr-conversion" class="md-nav__link">
+    Inspecting CSV data and BUFR conversion
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusion" class="md-nav__link">
+    Conclusion
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../converting-daycli-data-to-bufr/" class="md-nav__link">
+        Converting DAYCLI data to BUFR
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../configuring-data-mappings/" class="md-nav__link">
+        Configuring data mappings
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../configuring-wis2-discovery-metadata/" class="md-nav__link">
+        Configuring WIS2 discovery metadata
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../configuring-station-metadata/" class="md-nav__link">
+        Configuring station metadata
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../data-ingest-and-monitoring/" class="md-nav__link">
+        Data ingest and monitoring
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../downloading-data-from-wis2/" class="md-nav__link">
+        Downloading data from WIS2
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+      
+      
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+          Cheatsheets
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Cheatsheets
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cheatsheets/linux/" class="md-nav__link">
+        Linux
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cheatsheets/docker/" class="md-nav__link">
+        Docker
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cheatsheets/wis2box/" class="md-nav__link">
+        WIS2 in a box
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    Introduction
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#preparation" class="md-nav__link">
+    Preparation
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#csv2bufr-primer" class="md-nav__link">
+    csv2bufr primer
+  </a>
+  
+    <nav class="md-nav" aria-label="csv2bufr primer">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mappings-create" class="md-nav__link">
+    mappings Create
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data-transform" class="md-nav__link">
+    data transform
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eccodes-bufr-refresher" class="md-nav__link">
+    ecCodes BUFR refresher
+  </a>
+  
+    <nav class="md-nav" aria-label="ecCodes BUFR refresher">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bufr_dump" class="md-nav__link">
+    bufr_dump
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#inspecting-csv-data-and-bufr-conversion" class="md-nav__link">
+    Inspecting CSV data and BUFR conversion
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusion" class="md-nav__link">
+    Conclusion
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+<h1 id="converting-csv-data-to-bufr">Converting CSV data to BUFR</h1>
+<h2 id="introduction">Introduction</h2>
+<p>CSV data is a commonly used format for recording tabular data.  <code>csv2bufr</code> is a tool to help
+convert CSV to BUFR data.</p>
+<p>In this session you will learn to create BUFR data from CSV, using custom and flexible
+configuration (mappings) in support of meeting WMO GBON requirements.</p>
+<h2 id="preparation">Preparation</h2>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Ensure that you are logged into yoru student VM.</p>
+</div>
+<p>Navigate to the <code>excercise-materials</code> directory and launch the <strong>csv2bufr</strong> image into a Docker container:</p>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>~/exercise-materials/
+docker<span class="w"> </span>run<span class="w"> </span>-it<span class="w"> </span>-v<span class="w"> </span>csv2bufr-exercises:/exercises<span class="w"> </span>wmoim/csv2bufr
+</code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The additional flag <code>-v csv2bufr-exercises:/exercises</code> ensures that the directory 'csv2bufr-exercises' on your student VM is accessible as '/exercises' inside your container.</p>
+</div>
+<h2 id="csv2bufr-primer">csv2bufr primer</h2>
+<p>Below are essential <code>csv2bufr</code> commands and configurations:</p>
+<h3 id="mappings-create">mappings Create</h3>
+<p>The <code>mappings create</code> command creates an empty BUFR mapping template JSON file, which maps CSV column headers to their corresponding ecCodes element:</p>
+<div class="highlight"><pre><span></span><code>csv2bufr<span class="w"> </span>mappings<span class="w"> </span>create<span class="w"> </span>&lt;BUFR<span class="w"> </span>descriptors&gt;<span class="w"> </span>--output<span class="w"> </span>&lt;output_dir&gt;
+</code></pre></div>
+<p>For more information, see the following [example](https://csv2bufr.readthedocs.io/en/latest/example.html#creating-a-new-mapping-file].</p>
+<h3 id="data-transform">data transform</h3>
+<p>The <code>data transform</code> command converts a CSV file to BUFR format:</p>
+<div class="highlight"><pre><span></span><code>csv2bufr<span class="w"> </span>data<span class="w"> </span>transform<span class="w"> </span>--bufr-template<span class="w"> </span>&lt;my_template.json&gt;<span class="w"> </span>--output-dir<span class="w"> </span>&lt;./my_folder&gt;<span class="w"> </span>&lt;my_data.csv&gt;
+</code></pre></div>
+<h2 id="eccodes-bufr-refresher">ecCodes BUFR refresher</h2>
+<h3 id="bufr_dump">bufr_dump</h3>
+<p>The <code>bufr_dump</code> function will allow you to inspect the BUFR files created from the conversion.  It has numerous options;, the following will be most applicable to the exercises:</p>
+<div class="highlight"><pre><span></span><code>bufr_dump<span class="w"> </span>-p<span class="w"> </span>&lt;my_bufr.bufr4&gt;
+</code></pre></div>
+<p>This will display the content of your BUFR on screen.  If you are interested in the values taken by a variable in particular, use the <code>grep</code> command:</p>
+<div class="highlight"><pre><span></span><code>bufr_dump<span class="w"> </span>-p<span class="w"> </span>&lt;my_bufr.bufr4&gt;<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-i<span class="w"> </span>temperature
+</code></pre></div>
+<p>This will display the variables related to temperature in your BUFR data.  If you want to do this for multiple types of variables, filter the output using a pipe (<code>|</code>):</p>
+<div class="highlight"><pre><span></span><code>bufr_dump<span class="w"> </span>-p<span class="w"> </span>&lt;my_bufr.bufr4&gt;<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-i<span class="w"> </span><span class="s1">&#39;temperature|wind&#39;</span>
+</code></pre></div>
+<h2 id="inspecting-csv-data-and-bufr-conversion">Inspecting CSV data and BUFR conversion</h2>
+<p>Navigate to the <code>ex_1</code> directory and create a mapping file:</p>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>ex_1
+vi<span class="w"> </span>my-mapping.json
+</code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>csv2bufr mappings files have no set file extension, however it recommended to use <code>json</code>.</p>
+</div>
+<p>Using the <a href="https://confluence.ecmwf.int/display/ECC/WMO%3D38+element+table">ecCodes WMO element table page</a>, create a mapping file of the following variables:</p>
+<ul>
+<li>WIGOS Station Identifier (series, issuer, issue number, local identifier)</li>
+<li>Date (year, month, day)</li>
+<li>Time (hour, minute)</li>
+<li>Location (latitude, longitude)</li>
+<li>Barometer height above sea level</li>
+<li>Station level pressure</li>
+<li>Air temperature</li>
+<li>Relative humidity</li>
+</ul>
+<p>Open the mapping file you have just created and remove any unused elements.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Look for and delete the elements which have <code>"value": ""</code> (you will notice these elements do not directly correspond to any columns in the CSV file).</p>
+</div>
+<p>Use the <code>csv2bufr</code> <code>data transform</code> command to convert the file <code>ex_1.csv</code> to BUFR format.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>See the <a href="#csv2bufr-primer">csv2bufr primer</a> section.</p>
+</div>
+<p>Use BUFR Dump to find the latitude and longitude value stored in the output BUFR file. Verify these values using the CSV file.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>See the <a href="../converting-synop-data-to-bufr#bufr_dump">BUFR primer</a> section.</p>
+</div>
+<p>Navigate to the <code>ex_2</code> directory:</p>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>../ex_2
+</code></pre></div>
+<p>Repeat the previous steps, replacing the following elements with their respective BUFR sequences (which have the form <strong>3XXYYY</strong>):</p>
+<ul>
+<li>WIGOS Station Identifier (series, issuer, issue number, local identifier)</li>
+<li>Date (year, month, day)</li>
+<li>Time (hour, minute)</li>
+<li>Location (latitude, longitude)</li>
+</ul>
+<p>The <code>BUFR_TableD_en.csv</code> file from the <code>BUFR_tables</code> directory contains the defined BUFR sequences as per the official WMO BUFR code tables.</p>
+<p>The first few columns of this file are as follows (important columns are in <strong>bold</strong>):</p>
+<ul>
+<li>BUFR category (numeric)</li>
+<li>BUFR category (name)</li>
+<li><strong>BUFR sequence number</strong></li>
+<li><strong>BUFR sequence name</strong></li>
+<li>BUFR sequence subtitle</li>
+<li><strong>Included BUFR element number</strong></li>
+<li><strong>Included BUFR element name</strong></li>
+</ul>
+<p>A given seqeunce will appear multiple times, once for each BUFR element it contains.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Search for the corresponding 6 digit codes found in the previous exercise, and find the corresponding sequence in the 3rd column. For example, the BUFR elements <strong>005002</strong> (Latitude) and <strong>006002</strong> (Longitude) can be replaced with sequence <strong>301023</strong> (Latitude/longitude (coarse accuracy)).</p>
+</div>
+<p>Navigate to the <code>ex_3</code> directory, and inspect file <code>ex_3.csv</code>.  Compare this file to <code>ex_2.csv</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>../ex_3
+more<span class="w"> </span>ex_3.csv
+more<span class="w"> </span>ex_2.csv
+</code></pre></div>
+<p>You should notice that the data is the same, however the column names are different.  With this in mind, create a mapping template file for the <code>ex_3.csv</code> file, deleting the redundant elements, and changinge the <code>"value"</code> item to correctly correspond to each column in <code>ex_3.csv</code>.
+<div class="highlight"><pre><span></span><code>my-mapping-ex_3.json
+</code></pre></div></p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>In the first column, <code>"eccodes_key": "#1#wigosIdentifierSeries"</code> should now be paired with <code>"value": "data:wigos_identifier_series"</code>.</p>
+</div>
+<p>Use the csv2bufr <code>data transform</code> function to convert <code>ex_3.csv</code> to BUFR format.</p>
+<p>Check that the data stored in the output BUFR is the same as that in the CSV that is was converted from.</p>
+<p>Navigate to the <code>ex_4</code> directory:</p>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>../ex_4
+</code></pre></div>
+<p>Here, you are free to either work with your own synoptic CSV data, or use the file <code>ex_4_hourly.csv</code>.</p>
+<p>Noting that a SYNOP report cannot contain the WIGOS station identifier, creating a mappings template which contains the mappings for both the WIGOS station identifier and the hourly synoptic data.</p>
+<p>Delete all elements in the mapping template that are not present in the CSV data (you should expect to delete most of the file), and edit element names appropriately.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Make sure that <code>number_header_rows</code> and <code>column_names_row</code> are correct.</p>
+</div>
+<ol>
+<li>Convert the CSV data data to BUFR format.</li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The below steps are optional as time permits:</p>
+</div>
+<p>Navigate to the <code>ex_5</code> directory and open the file <code>ex_5.csv</code>::</p>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>../ex_5
+vi<span class="w"> </span>ex_5.csv
+</code></pre></div>
+<p>This file contains the same data and column names as <code>ex_2.csv</code>, but uses different units:</p>
+<ul>
+<li><code>heightOfBarometerAboveMeanSeaLevel</code> is given in $\text{cm}$</li>
+<li><code>nonCoordinatePressure</code> is given in $\text{hPa}$</li>
+<li><code>airTemperature</code> is given in $^{\circ}\text{C}$</li>
+</ul>
+<p>Using the <a href="https://confluence.ecmwf.int/display/ECC/WMO%3D38+element+table">ecCodes WMO element table page</a>, find the correct units for these three variables.</p>
+<p>Find the scale ($x$, for a multiplication by $10^x$) and offset (addition of a constant $c$) required for each of these conversions.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>As $1\text{cm} = 1\text{m}\times 10^{-2}$, the first conversion requires a scale of $x=-2$ and an offset of $c=0$.</p>
+</div>
+<ol>
+<li>Open the mapping file <code>mapping_5.json</code>:</li>
+</ol>
+<div class="highlight"><pre><span></span><code>vi<span class="w"> </span>mapping_5.json
+</code></pre></div>
+<p>This the same mapping file as you generated and modified a couple of exercises ago.  Using your answers in the previous question, convert the units using the <code>scale</code> and <code>offset</code> keys.</p>
+<p>Convert the file <code>ex_5.csv</code> to BUFR format.</p>
+<p>Navigate to the <code>ex_6</code> directory and open the file <code>ex_6.csv</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>../ex_6
+vi<span class="w"> </span>ex_6.csv
+</code></pre></div>
+<div class="admonition question">
+<p class="admonition-title">Question</p>
+<p>Notice that this time the <code>relative_humidity</code> column contains an incorrect value.  Why is this value incorrect?</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Think of valid minimum and maximum values for relative humidity.</p>
+</div>
+<p>By adjusting the <code>valid_min</code> and <code>valid_max</code> keys of the <code>relativeHumidity</code> element in the mapping file <code>mapping_6.json</code>, enforce a quality control measure which prevents this value from being written to BUFR.</p>
+<p>Add more valid minimum and maximum values to the mappings file according to your own preference.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The minimum and maximum values must have the <strong>same units</strong> as your <strong>original</strong> input data, not the converted values discussed in the previous exercise.</p>
+</div>
+<p>Convert the file <code>ex_6.csv</code> to BUFR format, and use <code>bufr_dump</code> to verify that this variable has no value in the resulting BUFR.</p>
+<h2 id="conclusion">Conclusion</h2>
+<div class="admonition success">
+<p class="admonition-title">Congratulations!</p>
+<p>In this practical session, you learned:</p>
+<ul>
+<li>the basic usage of <code>csv2bufr</code></li>
+<li>how to create and update a simple csv2bufr mapping file for a variety of scenarios, including for GBON requirements, unit conversion, and quality control/range checking</li>
+<li>how to <code>csv2bufr</code> on a test data file and convert to BUFR format</li>
+<li>how to lookup the BUFR element number for a parameter to be encoded</li>
+<li>how to encode BUFR data for the example input data and inspect the resulting output data</li>
+<li>about the sequence for hourly climate data</li>
+<li>about the BUFR Manual on Codes requirements on the units of variables, e.g. Celsius -&gt; Kelvin.</li>
+</ul>
+</div>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      &copy; 2023 World Meteorological Organization
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.indexes"], "search": "../../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.efa0ade1.min.js"></script>
+      
+        <script src="../../js/print-site.js"></script>
+      
+    
+  </body>
+</html>
