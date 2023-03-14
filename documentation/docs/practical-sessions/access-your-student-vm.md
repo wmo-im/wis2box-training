@@ -16,7 +16,16 @@ If you want to run this training outside of a local training session, you can pr
 - AWS (Amazon Web Services)  ec2-instance `t3a.medium` 
 - Azure (Microsoft) Azure Virtual Machine `standard_b2s`
 
-Select Ubuntu Server 20.0.4 LTS as OS and install Docker engine (20.0.17) and Docker Compose (1.29.2). Please also install `python3` (3.8) and `python3-pip`.
+Select Ubuntu Server 20.0.4 LTS as OS and install Docker engine (20.0.17). 
+
+To ensure you have the available tools and python-modules for the exercises, please run the following:
+
+```bash
+sudo apt-get -y install mosquitto-clients python3.8 python3-pip unzip
+sudo pip3 install docker-compose==1.29.0 requests==2.26.0 urllib3==1.26.0
+sudo pip3 install minio==7.1.13
+sudo pip3 install pywis-pubsub
+```
 
 ## Connect to your student VM on the local training network
 
@@ -27,10 +36,10 @@ Use the following configuration to connect your PC on the local WiFi broadcasted
 
 Use an SSH client to connect to your student VM using the following:
 
-- **Host: country-lastname.wis2box.training** (replace with your country and lastname)
+- **Host: country-lastname.wis2.training** (replace with your country and lastname)
 - **Port: 22**
 - **Username: lastname** (replace with your lastname)
-- **Password: namibia2023**
+- **Password: wis2training**
 
 !!! tip
     Contact a trainer if you are unsure about the hostname or have issues connecting.
