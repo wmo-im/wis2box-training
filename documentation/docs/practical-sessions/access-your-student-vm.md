@@ -27,6 +27,12 @@ sudo pip3 install minio==7.1.13
 sudo pip3 install pywis-pubsub
 ```
 
+If you are using the student VM provided during local WIS2 training sessions, this software will already be installed.
+
+!!! note
+
+    The student-VMs provided during WIS2 local training sessions have the following command-line editors pre-installed: vi, vim, nano and emacs.
+
 ## Connect to your student VM on the local training network
 
 Use the following configuration to connect your PC on the local WiFi broadcasted in the room during WIS2 training:
@@ -109,6 +115,12 @@ docker system df
 
 !!! question
     What usage can you currently observe for your Docker system?
+
+Check the current images available on your docker system:
+
+```bash
+docker image ls
+```
 
 Cleanup your Docker system with the command:
 
