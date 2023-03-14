@@ -73,7 +73,7 @@ Ensure you have opened the Grafana dashboard home-page at `http://<your-host>:30
 
 Keep a web browser tab open with the Grafana dashboard during the next few exercises to monitor the status of your data publishing.
 
-## Upload your data
+## Ingesting your data into the WIS2-box
 
 You can use multiple methods to ingest data into wis2box and start publishing notifications to WIS2.
 
@@ -138,13 +138,37 @@ wis2box data ingest --topic-hierarchy mwi.mwi_met_centre.data.core.weather.surfa
 
     You do not have to adjust the topic hierarchy (i.e. replacing periods to slashes) when using the **wis2box-management** command line.
 
-### Ingesting data using Python
+### MinIO Python client
 
-This will be an example of how to ingest data using Python. A sample script will be provided and the participant is required to correctly define the path for their data, the topic, and the wis2box connection details.
+At some point you may want to automate data ingestion from your system into the wis2box using Python.
 
-TODO prepare the sample script and add it to wis2box-setup
+MinIO provides a Python client which can be installed as follows:
 
-### Ingesting data using the optional FTP-server
+```bash
+pip3 install minio
+```
+
+Login to your student VM and you will note that this library should already be installed.
+
+Go to the directory `exercise-materials/wis2box-setup` and view the example script:
+
+Run the script using the following command:
+
+```bash 
+python3 example/scripts/copy_to_incoming.py
+```
+
+!!! question
+    The sample script needs to be modified before it can be used.  Why did the script fail?
+
+The script needs to know the correct endpoint for accessing MinIO on your wis2box. If wis2box is running on your host, the MinIO endpoint is available at `http://<your-host>:9000`.
+
+The sample script provides the basic structure for copying a file into MinIO. Try to ingest a data sample of your choosing using this script.
+
+!!! question 
+    Use the Python example provided to create your own Python script to ingest data into your wis2box.  What is the correct topic for your data?  Are you able to detect new WIS2 notification on the Grafana dashboard? If not, try to understand the errors and adjust the script accordingly.
+
+### wis2box FTP
 
 You can add an additional service to allow your data to be accessible over FTP.
 
