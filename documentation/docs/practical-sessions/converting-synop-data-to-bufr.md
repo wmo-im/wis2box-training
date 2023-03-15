@@ -62,10 +62,30 @@ bufr_dump -p my_bufr.bufr4 | egrep -i 'temperature|wind'
 ```
 
 ## Preparation
+## Inspecting SYNOP data and BUFR conversion
+
+Launch the **synop2bufr** image as new interactive Docker container using the following command:
+
+```bash
+docker run -it -v ~/exercise-materials/synop2bufr-exercises:/exercises:rw wmoim/synop2bufr
+```
 
 !!! note
+    The argument `-v ~/exercise-materials/synop2bufr-exercises:/exercises:rw` ensures that the directory 'synop2bufr-exercises' on your student VM is accessible as '/exercises' inside your container. (with `:rw` for read-write permission)
 
-    Ensure that you are logged into your student VM. Ensure you have the exercise-materials downloaded in your home-directory as detailed [previously](https://wmo-im.github.io/wis2box-training/practical-sessions/access-your-student-vm/#download-the-exercise-materials).
+Once inside your new interactive container please navigate to the /exercises directory and check the directory contents looks as follows:
+
+```bash
+wis2user@dd0fc6ccfa85:~$ cd /exercises
+wis2user@dd0fc6ccfa85:/exercises$ ls
+BUFR_tables  answers  ex_1  ex_2  ex_3  ex_4  ex_5  ex_6 
+```
+
+Now proceed with the following exercises.
+
+## Inspecting SYNOP data and BUFR conversion
+
+    Ensure that you are logged into your student VM. Ensure you have the exercise-materials downloaded in your home-directory as detailed [previously](accessing-your-student-vm.md#download-the-exercise-materials).
 
 Launch the **synop2bufr** image as an interactive Docker container using the following command:
 
@@ -75,9 +95,7 @@ docker run -it -v ~/exercise-materials/synop2bufr-exercises:/exercises --userwmo
 
 ## Preparation
 
-!!! note
-
-    Ensure that you are logged into your student VM. Ensure you have the exercise-materials downloaded in your home-directory as detailed [previously](access-your-student-vm.md#download-the-exercise-materials). 
+Ensure that you are logged into your student VM. Ensure you have the exercise-materials downloaded in your home-directory as detailed [previously](accessing-your-student-vm.md#download-the-exercise-materials). 
 
 Launch the **synop2bufr** image as new interactive Docker container using the following command:
 
