@@ -1,8 +1,8 @@
 ---
-title: Access your student VM
+title: Accessing your student VM
 ---
 
-# Access your student VM
+# Accessing your student VM
 
 ## Introduction
 
@@ -31,7 +31,12 @@ If you are using the student VM provided during local WIS2 training sessions, th
 
 !!! note
 
-    The student-VMs provided during WIS2 local training sessions have the following command-line editors pre-installed: vi, vim, nano and emacs.
+    The student-VMs provided during WIS2 local training sessions have the following command-line editors pre-installed:
+
+    - vi
+    - vim
+    - nano
+    - emacs
 
 ## Connect to your student VM on the local training network
 
@@ -92,13 +97,7 @@ returns:
 Python 3.8.10
 ```
 
-## Docker
-
-In the practical sessions for the WIS2-box training you will use run several of your exercises inside Docker images. The WIS2-box software that you will learn to deploy during this training is also composed of services running inside Docker container. 
-
-Here are some basic commands to familiarize yourself with Docker.
-
-### Run docker 'hello-world'
+## Run docker 'hello-world'
 
 In the local training environment, your student account has been added to the `docker` group to allow you to work with Docker.  You can verify this by running the Docker `hello-world` image:
 
@@ -111,7 +110,7 @@ This command downloads the `hello-world` image from the local registry and inter
 !!! tip
     If you get an error it is often an indication that your username does not have the appropriate permissions to access the Docker filesystem.  The user running Docker commands must be added to the `docker` group in order to run Docker containers.
 
-### Review Docker system usage
+## Review Docker system usage
 
 Inspect your local Docker system usage using the command:
 
@@ -119,20 +118,14 @@ Inspect your local Docker system usage using the command:
 docker system df
 ```
 
-Check the current containers on your Docker system, using `-a` to include non-running containers:
-
-```bash
-docker ps -a
-```
+!!! question
+    What usage can you currently observe for your Docker system?
 
 Check the current images available on your Docker system:
 
 ```bash
 docker image ls
 ```
-
-!!! note
-    Note that your docker system has the 'hello-world'-image and that a container was created from this image.
 
 Cleanup your Docker system with the command:
 
@@ -153,9 +146,6 @@ Containers      0         0         0B        0B
 Local Volumes   0         0         0B        0B
 Build Cache     0         0         0B        0
 ```
-
-!!! tip
-    See the [Docker cheatsheet](../cheatsheets/docker.md) to learn about additional Docker commands
 
 ## Download the exercise materials
 

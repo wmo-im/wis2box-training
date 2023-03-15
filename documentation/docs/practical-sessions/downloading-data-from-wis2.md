@@ -1,36 +1,25 @@
 ---
-title: Downloading data from WIS2
+title: Finding and downloading data from WIS2
 ---
 
-# Downloading data from WIS2
+# Finding and downloading data from WIS2
 
 ## Introduction
 
-In this session you will learn how to download data from a WIS2 Global Broker.
+In this session you will learn how to discover data from the WIS2 Global Discovery Catalogue and download data from a WIS2 Global Broker.
 
 Note that the starting point for wis2box workflow is the MinIO container publishing a message on the `wisbox-storage/#` topic on the local broker.
 
 ## Preparation
 
 !!! note
-    Before starting please login to your student VM and ensure your wis2box is started and all services are up:
+    Before starting please login to your student VM.
 
-    ```bash
-    python3 wis2box-ctl.py start
-    python3 wis2box-ctl.py status
-    ```
-
-    Ensure you are logged into the wis2box-management container on your student VM:
-
-    ```bash
-    python3 wis2box-ctl.py login
-    ```
-
-## Working with pywiscat
+## Finding data with pywiscat
 
 TODO
 
-## Working with pywis-pubsub
+## Downloading data with pywis-pubsub
 
 The [first practical session](../connecting-to-mqtt) used MQTT Explorer to connect to the  Météo-France Global Broker.
 
