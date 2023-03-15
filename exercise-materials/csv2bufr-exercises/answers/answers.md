@@ -1,4 +1,4 @@
----
+csv2bufr data transform --bufr-template mapping_1.json --output-dir . ex_1.csv---
 title: "WIS2 Training Day 3"
 date: "22/02/2023"
 ---
@@ -33,19 +33,8 @@ The 6 digit numbers correspond to the following (identified by either the local 
 | airTemperature (K, 2dp)                  | 012101                |
 | relativeHumidity (%, 1dp)                | 013009                |
 
-2. The BUFR elements to delete are:
-    * "bufrHeaderCentre"
-    * "bufrHeaderSubCentre"
-    * "updateSequenceNumber"
-    * "dataSubCategory"
-    * "localTablesVersionNumber"
-    * "typicalSecond"
-    * "typicalDate"
-    * "typicalTime"
-    * "subsetNumber"
 
-
-3. This is done using the `data transform` command as follows:
+1. This is done using the `data transform` command as follows:
 
     ```bash
     csv2bufr data transform --bufr-template mapping_1.json --output-dir . ex_1.csv
@@ -53,10 +42,10 @@ The 6 digit numbers correspond to the following (identified by either the local 
 
 This should create the following file: `WIGOS_0-20000-0-MYWSI001_20230203T120200.bufr4`
 
-4. This can be done using the following command:
+1. This can be done using the following command:
 
     ```bash
-    bufr_dump -p  WIGOS_0-20000-0-MYWSI001_20230203T120200.bufr4 |grep -i 'latitude\|longitude'
+    bufr_dump -p  WIGOS_0-20000-0-MYWSI001_20230203T120200.bufr4 | egrep -i 'latitude\|longitude'
     ```
 
 ## Exercise 2
@@ -73,13 +62,11 @@ Using the BUFR codes for the remaining variables as in *exercise 1*, we can crea
 csv2bufr mappings create 301150 301011 301012 301023 007031 010004 012101 013009 --output mapping_2.json
 ```
 
-After deleting unnecessary BUFR elements in the mappings file like before, we convert `ex_2.csv` to BUFR using command:
-
 ```bash
 csv2bufr data transform --bufr-template mapping_2.json --output-dir . ex_2.csv
 ```
 
-and of course can use BUFR Dump to inspect the contents of the output BUFR.
+and of course can use bufr_dump to inspect the contents of the output BUFR.
 
 ## Exercise 3
 
@@ -89,7 +76,7 @@ and of course can use BUFR Dump to inspect the contents of the output BUFR.
     csv2bufr mappings create 301150 301011 301012 301023 007031 010004 012101 013009 --output mapping_3.json
     ```
 
-1. The elements to delete are the same as that in the previous exercises. As per the hint, we make the following changes to the mappings file:\
+1. As per the hint, we make the following changes to the mappings file:\
     \
     `"value": "data:wigosIdentifierSeries"`\
     &rarr; `"value": "data:wigos_identifier_series"`\
@@ -121,7 +108,7 @@ and of course can use BUFR Dump to inspect the contents of the output BUFR.
     `"value": "data:relativeHumidity"`\
     &rarr; `"value": "data:relative_humdity"`\
 
-2. This is done as usual in the following way:
+1. This is done as usual in the following way:
 
     ```bash
     csv2bufr data transform --bufr-template mapping_3.json --output-dir . ex_3.csv
@@ -130,18 +117,6 @@ and of course can use BUFR Dump to inspect the contents of the output BUFR.
 1. Using the `bufr_dump` command as in *exercise 1* allows you to check that all the data is the same as the CSV.
 
 ## Exercise 4
-
-1. The sequence for the WIGOS station identifier is `301150` and the sequence for the synoptic data is `307080`, thus we can create the mappings template as follows:
-
-    ```bash
-    csv2bufr mappings create 301150 307080 --output mappings_4.json
-    ```
-
-1. Navigate to `answers/ex_4/synop_bufr.json` to see the correct mappings file for the example data. If you use your own CSV data, your mappings file will likely differ.
-
-________________________________________
-
-## Exercise 5
 
 1. The correct units are the following:
 
@@ -157,7 +132,7 @@ ________________________________________
 | `nonCoordinatePressure` | $2$ | $0$ |
 | `airTemperature` | $0$ | $273.15$
 
-3. Your mappings file should contain the following:
+1. Your mappings file should contain the following:
 
     ```json
         {
@@ -190,6 +165,17 @@ ________________________________________
     ```bash
     csv2bufr data transform --bufr-template mapping_5.json --output-dir . ex_5.csv
     ```
+
+## Exercise 5
+
+1. The sequence for the WIGOS station identifier is `301150` and the sequence for the synoptic data is `307080`, thus we can create the mappings template as follows:
+
+    ```bash
+    csv2bufr mappings create 301150 307080 --output mappings_4.json
+    ```
+
+1. Navigate to `answers/ex_4/synop_bufr.json` to see the correct mappings file for the example data. If you use your own CSV data, your mappings file will likely differ.
+
 
 ## Question 6
 
@@ -227,5 +213,4 @@ ________________________________________
     ```bash
     relativeHumidity=MISSING
     ```
-
 

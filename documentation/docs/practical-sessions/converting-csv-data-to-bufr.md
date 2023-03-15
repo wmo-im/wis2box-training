@@ -28,7 +28,7 @@ docker run -it -v `pwd`/csv2bufr-exercises:/exercises wmoim/csv2bufr
 
 !!! note
 
-    The additional flag `-v \`pwd\`/csv2bufr-exercises:/exercises` ensures that the directory 'csv2bufr-exercises' on your student VM is accessible as '/exercises' inside your container.
+    The additional flag ``-v `pwd`/csv2bufr-exercises:/exercises`` ensures that the directory 'csv2bufr-exercises' on your student VM is accessible as '/exercises' inside your container.
 
 ## csv2bufr primer
 
@@ -75,11 +75,13 @@ bufr_dump -p <my_bufr.bufr4> | egrep -i 'temperature|wind'
 ```
 
 ## Inspecting CSV data and BUFR conversion
-### Exercise 1
+
+### Exercise 1: mapping BUFR elements
+
 Navigate to the `ex_1` directory and create a mapping file:
 
 ```bash
-cd ex_1
+cd /exercises/ex_1
 ```
 
 !!! note
@@ -97,13 +99,6 @@ Using the [ecCodes WMO element table page](https://confluence.ecmwf.int/display/
 - Air temperature
 - Relative humidity
 
-Open the mapping file you have just created and remove any unused elements.
-
-!!! tip
-
-    To edit the file you can use nano, vi, vim or emacs on the container.
-    Look for and delete the elements which have `"value": ""` (you will notice these elements do not directly correspond to any columns in the CSV file).
-
 Use the `csv2bufr` `data transform` command to convert the file `ex_1.csv` to BUFR format.
 
 !!! tip
@@ -116,11 +111,12 @@ Use bufr_dump to find the latitude and longitude value stored in the output BUFR
 
     See the [BUFR primer](../converting-synop-data-to-bufr#bufr_dump) section.
 
-### Exercise 2
+### Exercise 2: mapping BUFR sequences
+
 Navigate to the `ex_2` directory:
 
 ```bash
-cd ../ex_2
+cd /exercises/ex_2
 ```
 
 Repeat the previous steps, replacing the following elements with their respective BUFR sequences (which have the form **3XXYYY**):
@@ -142,18 +138,20 @@ The first few columns of this file are as follows (important columns are in **bo
 - **Included BUFR element number**
 - **Included BUFR element name**
 
-A given seqeunce will appear multiple times, once for each BUFR element it contains.
+A given sequence will appear multiple times, once for each BUFR element it contains.
 
 !!! tip
 
     Search for the corresponding 6 digit codes found in the previous exercise, and find the corresponding sequence in the 3rd column. For example, the BUFR elements **005002** (Latitude) and **006002** (Longitude) can be replaced with sequence **301023** (Latitude/longitude (coarse accuracy)).
 
+### Exercise 3: adapting the mapping file to your input csv data (column names)
+
 Navigate to the `ex_3` directory, and inspect file `ex_3.csv`.  Compare this file to `ex_2.csv`:
 
 ```bash
-cd ../ex_3
+cd /exercises/ex_3
 more ex_3.csv
-more ex_2.csv
+more ../ex_2/ex_2.csv
 ```
 
 You should notice that the data is the same, however the column names are different.  With this in mind, create a mapping template file for the `ex_3.csv` file, deleting the redundant elements, and changinge the `"value"` item to correctly correspond to each column in `ex_3.csv`.
@@ -169,33 +167,12 @@ Use the csv2bufr `data transform` function to convert `ex_3.csv` to BUFR format.
 
 Check that the data stored in the output BUFR is the same as that in the CSV that is was converted from.
 
-Navigate to the `ex_4` directory:
+### Exercise 4: adapting the mapping file to your input csv data (units)
+Navigate to the `ex_4` directory and open the file `ex_5.csv`::
 
 ```bash
-cd ../ex_4
-```
-
-Here, you are free to either work with your own synoptic CSV data, or use the file `ex_4_hourly.csv`.
-
-Noting that a SYNOP report cannot contain the WIGOS station identifier, creating a mappings template which contains the mappings for both the WIGOS station identifier and the hourly synoptic data.
-
-Delete all elements in the mapping template that are not present in the CSV data (you should expect to delete most of the file), and edit element names appropriately.
-
-!!! note
-
-    Make sure that `number_header_rows` and `column_names_row` are correct.
-
-1. Convert the CSV data data to BUFR format.
-
-!!! note
-
-    The below steps are optional as time permits:
-
-Navigate to the `ex_5` directory and open the file `ex_5.csv`::
-
-```bash
-cd ../ex_5
-vi ex_5.csv
+cd /exercises/ex_4
+vi ex_4.csv
 ```
 
 This file contains the same data and column names as `ex_2.csv`, but uses different units:
@@ -212,20 +189,40 @@ Find the scale ($x$, for a multiplication by $10^x$) and offset (addition of a c
 
     As $1\text{cm} = 1\text{m}\times 10^{-2}$, the first conversion requires a scale of $x=-2$ and an offset of $c=0$.
 
-1. Open the mapping file `mapping_5.json`:
+Open the mapping file `mapping_4.json`:
 
 ```bash
-vi mapping_5.json
+vi mapping_4.json
 ```
 
 This the same mapping file as you generated and modified a couple of exercises ago.  Using your answers in the previous question, convert the units using the `scale` and `offset` keys.
 
-Convert the file `ex_5.csv` to BUFR format.
+Convert the file `ex_4.csv` to BUFR format.
 
+### Exercise 5: create mappings for hourly synop with WIGOS Station Identifier
+Navigate to the `ex_5` directory:
+
+```bash
+cd /exercises/ex_5
+```
+
+Here, you are free to either work with your own synoptic CSV data, or use the file `ex_4_hourly.csv`.
+
+Noting that a SYNOP report cannot contain the WIGOS station identifier, creating a mappings template which contains the mappings for both the WIGOS station identifier and the hourly synoptic data.
+
+Delete all elements in the mapping template that are not present in the CSV data (you should expect to delete most of the file), and edit element names appropriately.
+
+!!! note
+
+    Make sure that `number_header_rows` and `column_names_row` are correct.
+
+Convert the CSV data data to BUFR format.
+
+### Exercise 6
 Navigate to the `ex_6` directory and open the file `ex_6.csv`:
 
 ```bash
-cd ../ex_6
+cd /exercises/ex_6
 vi ex_6.csv
 ```
 
