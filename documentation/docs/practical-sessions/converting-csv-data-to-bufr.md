@@ -16,18 +16,18 @@ configuration (mappings) in support of meeting WMO GBON requirements.
 
 !!! note
 
-    Ensure that you are logged into yoru student VM.
+    Ensure that you are logged into your student VM.
 
 Navigate to the `excercise-materials` directory and launch the **csv2bufr** image into a Docker container:
 
 ```bash
 cd ~/exercise-materials/
-docker run -it -v csv2bufr-exercises:/exercises wmoim/csv2bufr
+docker run -it -v `pwd`/csv2bufr-exercises:/exercises wmoim/csv2bufr
 ```
 
 !!! note
 
-    The additional flag `-v csv2bufr-exercises:/exercises` ensures that the directory 'csv2bufr-exercises' on your student VM is accessible as '/exercises' inside your container.
+    The additional flag `-v \`pwd\`/csv2bufr-exercises:/exercises` ensures that the directory 'csv2bufr-exercises' on your student VM is accessible as '/exercises' inside your container.
 
 ## csv2bufr primer
 
@@ -41,7 +41,7 @@ The `mappings create` command creates an empty BUFR mapping template JSON file, 
 csv2bufr mappings create <BUFR descriptors> --output <output_dir>
 ```
 
-For more information, see the following [example](https://csv2bufr.readthedocs.io/en/latest/example.html#creating-a-new-mapping-file].
+For more information, see the following [example](https://csv2bufr.readthedocs.io/en/latest/example.html#creating-a-new-mapping-file).
 
 ### data transform
 
@@ -61,25 +61,24 @@ The `bufr_dump` function will allow you to inspect the BUFR files created from t
 bufr_dump -p <my_bufr.bufr4>
 ```
 
-This will display the content of your BUFR on screen.  If you are interested in the values taken by a variable in particular, use the `grep` command:
+This will display the content of your BUFR on screen.  If you are interested in the values taken by a variable in particular, use the `egrep` command:
 
 ```bash
-bufr_dump -p <my_bufr.bufr4> | grep -i temperature
+bufr_dump -p <my_bufr.bufr4> | egrep -i temperature
 ```
 
 This will display the variables related to temperature in your BUFR data.  If you want to do this for multiple types of variables, filter the output using a pipe (`|`):
 
 ```bash
-bufr_dump -p <my_bufr.bufr4> | grep -i 'temperature|wind'
+bufr_dump -p <my_bufr.bufr4> | egrep -i 'temperature|wind'
 ```
 
 ## Inspecting CSV data and BUFR conversion
-
+### Exercise 1
 Navigate to the `ex_1` directory and create a mapping file:
 
 ```bash
 cd ex_1
-vi my-mapping.json
 ```
 
 !!! note
@@ -101,6 +100,7 @@ Open the mapping file you have just created and remove any unused elements.
 
 !!! tip
 
+    To edit the file you can use nano, vi, vim or emacs on the container.
     Look for and delete the elements which have `"value": ""` (you will notice these elements do not directly correspond to any columns in the CSV file).
 
 Use the `csv2bufr` `data transform` command to convert the file `ex_1.csv` to BUFR format.
@@ -109,12 +109,13 @@ Use the `csv2bufr` `data transform` command to convert the file `ex_1.csv` to BU
 
     See the [csv2bufr primer](#csv2bufr-primer) section.
 
-Use BUFR Dump to find the latitude and longitude value stored in the output BUFR file. Verify these values using the CSV file.
+Use bufr_dump to find the latitude and longitude value stored in the output BUFR file. Verify these values using the CSV file.
 
 !!! tip
 
     See the [BUFR primer](../converting-synop-data-to-bufr#bufr_dump) section.
 
+### Exercise 2
 Navigate to the `ex_2` directory:
 
 ```bash
