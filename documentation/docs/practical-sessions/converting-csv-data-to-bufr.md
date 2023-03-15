@@ -12,26 +12,22 @@ convert CSV to BUFR data.
 In this session you will learn to create BUFR data from CSV, using custom and flexible
 configuration (mappings) in support of meeting WMO GBON requirements.
 
-<<<<<<< HEAD
 ## Preparation
 
 !!! note
 
     Ensure that you are logged into your student VM. Ensure you have the exercise-materials downloaded in your home-directory as detailed [previously](access-your-student-vm.md#download-the-exercise-materials).
 
-
 Launch the **csv2bufr** image as new Docker container using the following command:
 
 ```bash
-docker run -it -v ~/exercise-materials/csv2bufr-exercises:/exercises:rw --user root wmoim/csv2bufr
+docker run -it -v ~/exercise-materials/csv2bufr-exercises:/exercises wmoim/csv2bufr
 ```
 
 !!! note
 
-    The additional flag `-v ~/csv2bufr-exercises:/exercises` ensures that the directory 'csv2bufr-exercises' on your student VM is accessible as '/exercises' inside your container.
+    The additional flag `-v ~/exercise-materials/csv2bufr-exercises:/exercises` ensures that the directory 'csv2bufr-exercises' on your student VM is accessible as '/exercises' inside your container.
 
-=======
->>>>>>> d60e1bd (add rw add cleanup move prep-section)
 ## csv2bufr primer
 
 Below are essential `csv2bufr` commands and configurations:
@@ -98,8 +94,6 @@ wis2user@dd0fc6ccfa85:~$ cd /exercises
 wis2user@dd0fc6ccfa85:/exercises$ ls
 BUFR_tables  answers  ex_1  ex_2  ex_3  ex_4  ex_5  ex_6 
 ```
-
-Now proceed with the following exercises.
 
 ## Inspecting CSV data and BUFR conversion
 ### Exercise 1
