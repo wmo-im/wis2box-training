@@ -13,7 +13,7 @@ hands-on practical exercises.
 
 Participants will be able to work with sample test data and metadata, as well as integrate their own data and metadata.
 
-This training covers a wide range of topics (install/setup/configuration, publishing/downloading data, etc.).
+This training covers a wide range of topics (install/setup/configuration, publishing/downloading data, etc.). 
 
 ## Goals and learning outcomes
 
