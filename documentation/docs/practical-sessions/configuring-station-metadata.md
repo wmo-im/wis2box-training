@@ -4,6 +4,8 @@ title: Configuring station metadata
 
 # Configuring station metadata
 
+## Introduction
+
 wis2box requires station metadata to be able to process and publish observations to WIS2.
 This session will walk you through creating and publishing station metadata from wis2box
 from a configuration file.  wis2box uses a fixed station metadata list that is used as

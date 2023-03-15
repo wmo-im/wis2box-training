@@ -32,20 +32,20 @@ services:
         ipv4_address: 10.5.0.2
       default:
   # mqtt_metrics_collector, listens to mqtt-broker
-  # TODO: integrate this into mqp-publisher
   mqtt_metrics_collector:
     <<: *logging
     container_name: mqtt_metrics_collector
+    restart: unless-stopped
     env_file:
       - default.env
       - dev.env
-    image: wmoim/wis2box-mqtt-metrics-collector:latest
+    image: wmoim/wis2box-mqtt-metrics-collector:1.0b2
     depends_on:
       - mosquitto
       - wis2box-management
     ports:
       - 8001:8001
-
+    
   # prometheus to collect metrics
   prometheus:
     <<: *logging
@@ -89,10 +89,10 @@ services:
       - GF_ANALYTICS_CHECK_FOR_UPDATES=false
       - GF_USERS_VIEWERS_CAN_EDIT=true
       - GF_UNIFIED_ALERTING_ENABLED=false
-      - GF_ALERTING_ENABLED=false
+      - GF_ALERTING_ENABLED=true
       - GF_USERS_DEFAULT_THEME=dark
       - GF_DISABLE_SIGNOUT_MENU=true
-      - GF_SERVER_ROOT_URL=${WIS2BOX_URL:-http://localhost:8999}/monitoring
+      - GF_SERVER_ROOT_URL=${WIS2BOX_URL:-http://localhost}/monitoring
       - GF_SERVER_SERVE_FROM_SUB_PATH=true
     ports:
       - 3000:3000

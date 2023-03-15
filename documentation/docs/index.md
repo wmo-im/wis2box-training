@@ -15,6 +15,26 @@ Participants will be able to work with sample test data and metadata, as well as
 
 This training covers a wide range of topics (install/setup/configuration, publishing/downloading data, etc.).
 
+## Goals and learning outcomes
+
+The goals of this training are to become familiar with the following:
+
+- WIS2 concepts and core functions and components
+- Required and optional functions of a WIS2 Node
+- WIS2 in a box architecture and environment
+- data and metadata formats used in WIS2 for discovery and access
+- wis2box core functions:
+    - sending data
+    - registering as a WIS2 Node
+    - subscribing to a Global Broker
+    - downloading data from a Global Cache or other WIS2 Nodes
+    - monitoring wis2box operations
+
+## Training schedule
+
+- 20 - 24 March 2023: Windhoek, Namibia ([agenda](https://wmo-teams.atlassian.net/wiki/spaces/WIS2/pages/370868225/WIS+2.0+training+workshop+Namibia+20-24+March+2023))
+- 12 - 16 June 2023: Port of Spain, Trinidad and Tobago
+
 ## Navigation
 
 The left hand navigation provides a table of contents for the entire training.
@@ -35,20 +55,6 @@ This training requires the following tools:
 - An instance running Ubuntu OS with Docker and docker-composer (see [training-environment](https://wmoomm-my.sharepoint.com/:p:/g/personal/tproescholdt_wmo_int/EQoxn5WS7kBAoe5iNyfeteABAjw67YZBvEWM92NlWUu5wQ?e=gtgm13))
 - SSH client to access your instance
 - MQTT Explorer on your local machine
-
-## Goals and learning outcomes
-
-The goals of this training are to become familiar with the following:
-
-- WIS2 concepts and core functions and components
-- Required and optional functions of a WIS2 Node
-- WIS2 in a box architecture and environment
-- data and metadata formats used in WIS2 for discovery and access
-- wis2box core functions:
-    - sending data
-    - registering as a WIS2 Node
-    - downloading data from broker
-    - monitoring operations
 
 ## Conventions
 

@@ -10,21 +10,42 @@ In this session you will ensure you can connect to your student VM, check pre-in
 
 As part of locally run wis2box training sessions, you can access your personal student VM on the local training network named "WIS2-training".
 
-If you want to run this training outside of a local training session, you can provide your own instance as detailed in the [training environment](../../overviews) overview.
+If you want to run this training outside of a local training session, you can provide your own instance using any Cloud Provider:
+
+- GCP (Google Cloud Platform) VM instance `e2-medium`
+- AWS (Amazon Web Services)  ec2-instance `t3a.medium` 
+- Azure (Microsoft) Azure Virtual Machine `standard_b2s`
+
+Select Ubuntu Server 20.0.4 LTS as OS and install Docker engine (20.0.17). 
+
+To ensure you have the available tools and python-modules for the exercises, please run the following:
+
+```bash
+sudo apt-get -y install mosquitto-clients python3.8 python3-pip unzip
+sudo pip3 install docker-compose==1.29.0 requests==2.26.0 urllib3==1.26.0
+sudo pip3 install minio==7.1.13
+sudo pip3 install pywis-pubsub
+```
+
+If you are using the student VM provided during local WIS2 training sessions, this software will already be installed.
+
+!!! note
+
+    The student-VMs provided during WIS2 local training sessions have the following command-line editors pre-installed: vi, vim, nano and emacs.
 
 ## Connect to your student VM on the local training network
 
-Use the following configuraiton to connect your PC on the local WiFi broadcasted in the room during WIS2 training:
+Use the following configuration to connect your PC on the local WiFi broadcasted in the room during WIS2 training:
 
 - **SSID: WIS2-training**
 - **password: dataismagic!**
 
 Use an SSH client to connect to your student VM using the following:
 
-- **Host: country-lastname.wis2box.training** (replace with your country and lastname)
+- **Host: country-lastname.wis2.training** (replace with your country and lastname)
 - **Port: 22**
 - **Username: lastname** (replace with your lastname)
-- **Password: namibia2023**
+- **Password: wis2training**
 
 !!! tip
     Contact a trainer if you are unsure about the hostname or have issues connecting.
@@ -71,7 +92,13 @@ returns:
 Python 3.8.10
 ```
 
-## Run docker 'hello-world'
+## Docker
+
+In the practical sessions for the WIS2-box training you will use run several of your exercises inside Docker images. The WIS2-box software that you will learn to deploy during this training is also composed of services running inside Docker container. 
+
+Here are some basic commands to familiarize yourself with Docker.
+
+### Run docker 'hello-world'
 
 In the local training environment, your student account has been added to the `docker` group to allow you to work with Docker.  You can verify this by running the Docker `hello-world` image:
 
@@ -84,16 +111,28 @@ This command downloads the `hello-world` image from the local registry and inter
 !!! tip
     If you get an error it is often an indication that your username does not have the appropriate permissions to access the Docker filesystem.  The user running Docker commands must be added to the `docker` group in order to run Docker containers.
 
-## Review Docker system usage
+### Review Docker system usage
 
-Inspect youf local Docker system usage using the command:
+Inspect your local Docker system usage using the command:
 
 ```bash
 docker system df
 ```
 
-!!! question
-    What usage can you currently observe for your Docker system?
+Check the current containers on your Docker system, using `-a` to include non-running containers:
+
+```bash
+docker ps -a
+```
+
+Check the current images available on your Docker system:
+
+```bash
+docker image ls
+```
+
+!!! note
+    Note that your docker system has the 'hello-world'-image and that a container was created from this image.
 
 Cleanup your Docker system with the command:
 
@@ -114,6 +153,9 @@ Containers      0         0         0B        0B
 Local Volumes   0         0         0B        0B
 Build Cache     0         0         0B        0
 ```
+
+!!! tip
+    See the [Docker cheatsheet](../cheatsheets/docker.md) to learn about additional Docker commands
 
 ## Download the exercise materials
 

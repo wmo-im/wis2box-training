@@ -4,6 +4,8 @@ title: Configuring WIS2 discovery metadata
 
 # Configuring WIS2 discovery metadata
 
+## Introduction
+
 As described in the [overviews](../../overviews), WIS2 requires discovery metadata to be provided describing
 your data to be shared to WIS2 Global Services.  This session will walk you through creating and publishing
 discovery metadata from wis2box from a configuration file.
