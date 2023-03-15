@@ -12,25 +12,19 @@ help convert SYNOP to BUFR data.  [ecCodes](https://confluence.ecmwf.int/display
 is a package to reading and writing GRIB and BUFR formats.
 
 In this session you will learn about converting a SYNOP report into the WMO BUFR format using the
-abovementioned tools, as well as the relationship between SYNOP reports and BUFR messages.
+above mentioned tools, as well as the relationship between SYNOP reports and BUFR messages.
 
 ## Preparation
 
-Navigate to the `excercise-materials` directory and launch the **synop2bufr** image into a Docker container:
-
-```bash
-cd exercise-materials
-docker run -it -v csv2bufr-exercises:/exercises wmoim/synop2bufr
-```
-
 !!! note
 
-    Notice the volume mapping from your local directory to the container.
+    Ensure that you are logged into your student VM. Ensure you have the exercise-materials downloaded in your home-directory as detailed [previously](access-your-student-vm.md#download-the-exercise-materials).
 
-!!! tip
+Launch the **synop2bufr** image as new Docker container using the following command:
 
-    See the [Docker cheatsheet](../cheatsheets/docker.md) to learn about additional Docker commands
-    
+```bash
+docker run -it -v ~/exercise-materials/synop2bufr-exercises:/exercises wmoim/synop2bufr
+```
 
 ## synop2bufr primer
 
