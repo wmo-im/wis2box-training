@@ -14,22 +14,9 @@ is a package to reading and writing GRIB and BUFR formats.
 In this session you will learn about converting a SYNOP report into the WMO BUFR format using the
 above mentioned tools, as well as the relationship between SYNOP reports and BUFR messages.
 
-## Preparation
-
 !!! note
 
-    Ensure that you are logged into your student VM. Ensure you have the exercise-materials downloaded in your home-directory as detailed [previously](https://wmo-im.github.io/wis2box-training/practical-sessions/access-your-student-vm/#download-the-exercise-materials).
-
-Navigate to the `excercise-materials` directory and launch the **synop2bufr** image into a Docker container:
-
-```bash
-cd exercise-materials
-docker run -it -v `pwd`/synop2bufr-exercises:/exercises wmoim/synop2bufr
-```
-
-!!! note
-
-    The additional flag `-v \`pwd\`/synop2bufr-exercises:/exercises` ensures that the directory 'synop2bufr-exercises' on your student VM is accessible as '/exercises' inside your container.
+    The argument `-v ~/exercise-materials/synop2bufr-exercises:/exercises` ensures that the directory 'synop2bufr-exercises' on your student VM is accessible as '/exercises' inside your container.
 
 ## synop2bufr primer
 
@@ -78,7 +65,25 @@ This will display variables related to temperature in your BUFR data. If you wan
 bufr_dump -p my_bufr.bufr4 | egrep -i 'temperature|wind'
 ```
 
+## Preparation
+
+!!! note
+
+    Ensure that you are logged into your student VM. Ensure you have the exercise-materials downloaded in your home-directory as detailed [previously](https://wmo-im.github.io/wis2box-training/practical-sessions/access-your-student-vm/#download-the-exercise-materials).
+
+Launch the **synop2bufr** image as an interactive Docker container using the following command:
+
+```bash
+docker run -it -v ~/exercise-materials/synop2bufr-exercises:/exercises --userwmoim/synop2bufr
+```
+
 ## Inspecting SYNOP data and BUFR conversion
+
+To begin with the exercises, login to your VM, and start the **synop2bufr** container with the following command:
+
+```bash
+docker run -it -v ~/exercise-materials/synop2bufr-exercises:/exercises:rw synop2bufr
+```
 
 !!! note
 
