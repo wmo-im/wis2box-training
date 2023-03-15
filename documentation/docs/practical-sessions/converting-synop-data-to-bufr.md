@@ -14,13 +14,6 @@ is a package to reading and writing GRIB and BUFR formats.
 In this session you will learn about converting a SYNOP report into the WMO BUFR format using the
 above mentioned tools, as well as the relationship between SYNOP reports and BUFR messages.
 
-<<<<<<< HEAD
-!!! note
-
-    The argument `-v ~/exercise-materials/synop2bufr-exercises:/exercises` ensures that the directory 'synop2bufr-exercises' on your student VM is accessible as '/exercises' inside your container.
-
-=======
->>>>>>> d60e1bd (add rw add cleanup move prep-section)
 ## synop2bufr primer
 
 Below are essential `synop2bufr` commands and configurations:
@@ -84,9 +77,6 @@ docker run -it -v ~/exercise-materials/synop2bufr-exercises:/exercises --userwmo
 
 !!! note
 
-<<<<<<< HEAD
-    Ensure that you are logged in the docker container started in the [preparation step](#Preparation). If needed consult the [Docker cheatsheet](../cheatsheets/docker.md).
-=======
     Ensure that you are logged into your student VM. Ensure you have the exercise-materials downloaded in your home-directory as detailed [previously](access-your-student-vm.md#download-the-exercise-materials). 
 
 Launch the **synop2bufr** image as new interactive Docker container using the following command:
@@ -110,7 +100,6 @@ Now proceed with the following exercises.
 
 ## Inspecting SYNOP data and BUFR conversion
 
->>>>>>> d60e1bd (add rw add cleanup move prep-section)
 
 ### Exercise 1
 Navigate to the `ex_1` directory and inspect a SYNOP message:
