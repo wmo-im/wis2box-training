@@ -63,7 +63,7 @@ bufr_dump -p my_bufr.bufr4 | egrep -i 'temperature|wind'
 
 ## Preparation
 
-Ensure that you are logged into your student VM. Ensure you have the exercise-materials downloaded in your home-directory as detailed [previously](access-your-student-vm.md#download-the-exercise-materials). 
+Ensure that you are logged into your student VM. Ensure you have the exercise-materials downloaded in your home-directory as detailed [previously](accessing-your-student-vm.md#download-the-exercise-materials). 
 
 Launch the **synop2bufr** image as a new interactive Docker container using the following command:
 
