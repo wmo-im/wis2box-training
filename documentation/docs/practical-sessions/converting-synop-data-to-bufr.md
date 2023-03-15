@@ -31,12 +31,6 @@ docker run -it -v `pwd`/synop2bufr-exercises:/exercises wmoim/synop2bufr
 
     The additional flag `-v \`pwd\`/synop2bufr-exercises:/exercises` ensures that the directory 'synop2bufr-exercises' on your student VM is accessible as '/exercises' inside your container.
 
-Launch the **synop2bufr** image as new Docker container using the following command:
-
-```bash
-docker run -it -v ~/exercise-materials/synop2bufr-exercises:/exercises wmoim/synop2bufr
-```
-
 ## synop2bufr primer
 
 Below are essential `synop2bufr` commands and configurations:
