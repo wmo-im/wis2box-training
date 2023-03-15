@@ -14,22 +14,6 @@ is a package to reading and writing GRIB and BUFR formats.
 In this session you will learn about converting a SYNOP report into the WMO BUFR format using the
 above mentioned tools, as well as the relationship between SYNOP reports and BUFR messages.
 
-## Preparation
-
-!!! note
-
-    Ensure that you are logged into your student VM. Ensure you have the exercise-materials downloaded in your home-directory as detailed [previously](access-your-student-vm.md#download-the-exercise-materials). 
-
-Launch the **synop2bufr** image as new Docker container using the following command:
-
-```bash
-docker run -it -v ~/exercise-materials/synop2bufr-exercises:/exercises:rw wmoim/synop2bufr
-```
-
-!!! note
-
-    The argument `-v ~/exercise-materials/synop2bufr-exercises:/exercises:rw` ensures that the directory 'synop2bufr-exercises' on your student VM is accessible as '/exercises' inside your container. (with `:rw` for read-write permission)
-
 ## synop2bufr primer
 
 Below are essential `synop2bufr` commands and configurations:
@@ -77,22 +61,38 @@ This will display variables related to temperature in your BUFR data. If you wan
 bufr_dump -p my_bufr.bufr4 | grep -i 'temperature|wind'
 ```
 
-## Inspecting SYNOP data and BUFR conversion
-
-To begin with the exercises, login to your VM, and start the **synop2bufr** container with the following command:
-
-```bash
-docker run -it -v ~/exercise-materials/synop2bufr-exercises:/exercises:rw synop2bufr
-```
+## Preparation
 
 !!! note
 
-    Ensure that you are still logged into your student VM
+    Ensure that you are logged into your student VM. Ensure you have the exercise-materials downloaded in your home-directory as detailed [previously](access-your-student-vm.md#download-the-exercise-materials). 
+
+Launch the **synop2bufr** image as new interactive Docker container using the following command:
+
+```bash
+docker run -it -v ~/exercise-materials/synop2bufr-exercises:/exercises:rw wmoim/synop2bufr
+```
+
+!!! note
+    The argument `-v ~/exercise-materials/synop2bufr-exercises:/exercises:rw` ensures that the directory 'synop2bufr-exercises' on your student VM is accessible as '/exercises' inside your container. (with `:rw` for read-write permission)
+
+Once inside your new interactive container please navigate to the /exercises directory and check the directory contents looks as follows:
+
+```bash
+wis2user@dd0fc6ccfa85:~$ cd /exercises
+wis2user@dd0fc6ccfa85:/exercises$ ls
+BUFR_tables  answers  ex_1  ex_2  ex_3  ex_4  ex_5  ex_6 
+```
+
+Now proceed with the following exercises.
+
+## Inspecting SYNOP data and BUFR conversion
+
 
 Navigate to the `ex_1` directory and inspect a SYNOP message:
 
 ```bash
-cd ex_1
+cd /exercises/ex_1
 more message.txt
 ```
 
@@ -234,6 +234,14 @@ Considering the error presented, justify the number of BUFR files produced.
 
 
 ## Conclusion
+
+Please exit the interactive container and prune your docker system after finishing the exercises:
+
+```bash
+exit
+docker system prune -a -f
+docker system df
+```
 
 !!! success "Congratulations!"
 

@@ -12,18 +12,6 @@ convert CSV to BUFR data.
 In this session you will learn to create BUFR data from CSV, using custom and flexible
 configuration (mappings) in support of meeting WMO GBON requirements.
 
-## Preparation
-
-!!! note
-
-    Ensure that you are logged into your student VM. Ensure you have the exercise-materials downloaded in your home-directory as detailed [previously](access-your-student-vm.md#download-the-exercise-materials).
-
-Launch the **csv2bufr** image as new Docker container using the following command:
-
-```bash
-docker run -it -v ~/exercise-materials/csv2bufr-exercises:/exercises:rw wmoim/csv2bufr
-```
-
 ## csv2bufr primer
 
 Below are essential `csv2bufr` commands and configurations:
@@ -68,6 +56,31 @@ This will display the variables related to temperature in your BUFR data.  If yo
 bufr_dump -p <my_bufr.bufr4> | grep -i 'temperature|wind'
 ```
 
+## Preparation
+
+!!! note
+
+    Ensure that you are logged into your student VM. Ensure you have the exercise-materials downloaded in your home-directory as detailed [previously](access-your-student-vm.md#download-the-exercise-materials). 
+
+Launch the **csv2bufr** image as new interactive Docker container using the following command:
+
+```bash
+docker run -it -v ~/exercise-materials/csv2bufr-exercises:/exercises:rw wmoim/csv2bufr
+```
+
+!!! note
+    The argument `-v ~/exercise-materials/csv2bufr-exercises:/exercises:rw` ensures that the directory 'csv2bufr-exercises' on your student VM is accessible as '/exercises' inside your container. (with `:rw` for read-write permission)
+
+Once inside your new interactive container please navigate to the /exercises directory and check the directory contents looks as follows:
+
+```bash
+wis2user@dd0fc6ccfa85:~$ cd /exercises
+wis2user@dd0fc6ccfa85:/exercises$ ls
+BUFR_tables  answers  ex_1  ex_2  ex_3  ex_4  ex_5  ex_6 
+```
+
+Now proceed with the following exercises.
+
 ## Inspecting CSV data and BUFR conversion
 
 Navigate to the `ex_1` directory and create a mapping file:
@@ -108,7 +121,7 @@ Use BUFR Dump to find the latitude and longitude value stored in the output BUFR
 
 !!! tip
 
-    See the [BUFR primer](../converting-synop-data-to-bufr#bufr_dump) section.
+    See the [BUFR primer](../converting-csv-data-to-bufr#bufr_dump) section.
 
 Navigate to the `ex_2` directory:
 
@@ -135,7 +148,7 @@ The first few columns of this file are as follows (important columns are in **bo
 - **Included BUFR element number**
 - **Included BUFR element name**
 
-A given seqeunce will appear multiple times, once for each BUFR element it contains.
+A given sequence will appear multiple times, once for each BUFR element it contains.
 
 !!! tip
 
@@ -149,7 +162,7 @@ more ex_3.csv
 more ex_2.csv
 ```
 
-You should notice that the data is the same, however the column names are different.  With this in mind, create a mapping template file for the `ex_3.csv` file, deleting the redundant elements, and changinge the `"value"` item to correctly correspond to each column in `ex_3.csv`.
+You should notice that the data is the same, however the column names are different.  With this in mind, create a mapping template file for the `ex_3.csv` file, deleting the redundant elements, and changing the `"value"` item to correctly correspond to each column in `ex_3.csv`.
 ```bash
 my-mapping-ex_3.json
 ```
@@ -168,9 +181,9 @@ Navigate to the `ex_4` directory:
 cd ../ex_4
 ```
 
-Here, you are free to either work with your own synoptic CSV data, or use the file `ex_4_hourly.csv`.
+Here, you are free to either work with your own csvtic CSV data, or use the file `ex_4_hourly.csv`.
 
-Noting that a SYNOP report cannot contain the WIGOS station identifier, creating a mappings template which contains the mappings for both the WIGOS station identifier and the hourly synoptic data.
+Noting that a csv report cannot contain the WIGOS station identifier, creating a mappings template which contains the mappings for both the WIGOS station identifier and the hourly csvtic data.
 
 Delete all elements in the mapping template that are not present in the CSV data (you should expect to delete most of the file), and edit element names appropriately.
 
@@ -241,6 +254,14 @@ Add more valid minimum and maximum values to the mappings file according to your
 Convert the file `ex_6.csv` to BUFR format, and use `bufr_dump` to verify that this variable has no value in the resulting BUFR.
 
 ## Conclusion
+
+Please exit the interactive container and prune your docker system after finishing the exercises:
+
+```bash
+exit
+docker system prune -a -f
+docker system df
+```
 
 !!! success "Congratulations!"
 
