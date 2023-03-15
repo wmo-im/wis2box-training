@@ -12,22 +12,6 @@ convert CSV to BUFR data.
 In this session you will learn to create BUFR data from CSV, using custom and flexible
 configuration (mappings) in support of meeting WMO GBON requirements.
 
-## Preparation
-
-!!! note
-
-    Ensure that you are logged into your student VM. Ensure you have the exercise-materials downloaded in your home-directory as detailed [previously](access-your-student-vm.md#download-the-exercise-materials).
-
-Launch the **csv2bufr** image as new Docker container using the following command:
-
-```bash
-docker run -it -v ~/exercise-materials/csv2bufr-exercises:/exercises wmoim/csv2bufr
-```
-
-!!! note
-
-    The additional flag `-v ~/exercise-materials/csv2bufr-exercises:/exercises` ensures that the directory 'csv2bufr-exercises' on your student VM is accessible as '/exercises' inside your container.
-
 ## csv2bufr primer
 
 Below are essential `csv2bufr` commands and configurations:
@@ -74,24 +58,22 @@ bufr_dump -p <my_bufr.bufr4> | egrep -i 'temperature|wind'
 
 ## Preparation
 
-!!! note
+Ensure that you are logged into your student VM. Ensure you have the exercise-materials downloaded in your home-directory as detailed [previously](access-your-student-vm.md#download-the-exercise-materials). 
 
-    Ensure that you are logged into your student VM. Ensure you have the exercise-materials downloaded in your home-directory as detailed [previously](access-your-student-vm.md#download-the-exercise-materials). 
-
-Launch the **csv2bufr** image as new interactive Docker container using the following command:
+Launch the **csv2bufr** image as a new interactive Docker container using the following command:
 
 ```bash
-docker run -it -v ~/exercise-materials/csv2bufr-exercises:/exercises:rw wmoim/csv2bufr
+docker run -it -v ~/exercise-materials/csv2bufr-exercises:/exercises wmoim/csv2bufr
 ```
 
 !!! note
-    The argument `-v ~/exercise-materials/csv2bufr-exercises:/exercises:rw` ensures that the directory 'csv2bufr-exercises' on your student VM is accessible as '/exercises' inside your container. (with `:rw` for read-write permission)
+    The argument `-v ~/exercise-materials/csv2bufr-exercises:/exercises` ensures that the directory 'csv2bufr-exercises' on your student VM is accessible as '/exercises' inside your container.
 
 Once inside your new interactive container please navigate to the /exercises directory and check the directory contents looks as follows:
 
 ```bash
-wis2user@dd0fc6ccfa85:~$ cd /exercises
-wis2user@dd0fc6ccfa85:/exercises$ ls
+cd /exercises
+ls
 BUFR_tables  answers  ex_1  ex_2  ex_3  ex_4  ex_5  ex_6 
 ```
 

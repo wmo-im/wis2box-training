@@ -14,15 +14,12 @@ If this data is recorded in CSV format, we can use [csv2bufr](https://github.com
 
 ## Preparation
 
-!!! note
+Ensure that you are logged into your student VM. Ensure you have the exercise-materials downloaded in your home-directory as detailed [previously](access-your-student-vm.md#download-the-exercise-materials). 
 
-    Ensure that you are logged into your student VM.
-
-Navigate to the `exercise-materials` directory and launch the **csv2bufr** image into a Docker container:
+Launch the **daycli2bufr** image as a new interactive Docker container using the following command:
 
 ```bash
-cd ~/exercise-materials/
-docker run -it -v ~/exercise-materials/csv2bufr-exercises:/exercises:rw wmoim/daycli2bufr
+docker run -it -v ~/exercise-materials/csv2bufr-exercises:/exercises --user root wmoim/daycli2bufr
 ```
 
 ## Exercise
