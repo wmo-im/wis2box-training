@@ -79,10 +79,16 @@ docker volume prune
 
 ### Container Management
 
-* Create a container from an image, with an interactive terminal (`-it`) and a mounted volume (`v`):
+* Create a container from an image, with an interactive terminal (`-it`) and the directory `${pwd}` on the host mounted as read-only directory `/app` inside the container:
 
 ```bash
 docker run -it -v ${pwd}:/app my-image:local
+```
+
+Add :rw to give read-write permission to `/app` inside the container:
+
+```bash
+docker run -it -v ${pwd}:/app:rw my-image:local
 ```
 
 * Display a list of currently running containers:
