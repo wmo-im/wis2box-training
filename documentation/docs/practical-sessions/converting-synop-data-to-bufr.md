@@ -18,13 +18,17 @@ above mentioned tools, as well as the relationship between SYNOP reports and BUF
 
 !!! note
 
-    Ensure that you are logged into your student VM. Ensure you have the exercise-materials downloaded in your home-directory as detailed [previously](access-your-student-vm.md#download-the-exercise-materials).
+    Ensure that you are logged into your student VM. Ensure you have the exercise-materials downloaded in your home-directory as detailed [previously](access-your-student-vm.md#download-the-exercise-materials). 
 
 Launch the **synop2bufr** image as new Docker container using the following command:
 
 ```bash
-docker run -it -v ~/exercise-materials/synop2bufr-exercises:/exercises wmoim/synop2bufr
+docker run -it -v ~/exercise-materials/synop2bufr-exercises:/exercises:rw wmoim/synop2bufr
 ```
+
+!!! note
+
+    The argument `-v ~/exercise-materials/synop2bufr-exercises:/exercises:rw` ensures that the directory 'synop2bufr-exercises' on your student VM is accessible as '/exercises' inside your container. (with `:rw` for read-write permission)
 
 ## synop2bufr primer
 
@@ -78,7 +82,7 @@ bufr_dump -p my_bufr.bufr4 | grep -i 'temperature|wind'
 To begin with the exercises, login to your VM, and start the **synop2bufr** container with the following command:
 
 ```bash
-docker run -it -v synop2bufr-exercises:/exercises synop2bufr
+docker run -it -v ~/exercise-materials/synop2bufr-exercises:/exercises:rw synop2bufr
 ```
 
 !!! note

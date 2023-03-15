@@ -21,12 +21,8 @@ configuration (mappings) in support of meeting WMO GBON requirements.
 Launch the **csv2bufr** image as new Docker container using the following command:
 
 ```bash
-docker run -it -v ~/exercise-materials/csv2bufr-exercises:/exercises wmoim/csv2bufr
+docker run -it -v ~/exercise-materials/csv2bufr-exercises:/exercises:rw wmoim/csv2bufr
 ```
-
-!!! note
-
-    The additional flag `-v ~/exercise-materials/csv2bufr-exercises:/exercises` ensures that the directory 'csv2bufr-exercises' on your student VM is accessible as '/exercises' inside your container.
 
 ## csv2bufr primer
 

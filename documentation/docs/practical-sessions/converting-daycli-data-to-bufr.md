@@ -22,7 +22,7 @@ Navigate to the `exercise-materials` directory and launch the **csv2bufr** image
 
 ```bash
 cd ~/exercise-materials/
-docker run -it -v csv2bufr-exercises:/exercises wmoim/daycli2bufr
+docker run -it -v ~/exercise-materials/csv2bufr-exercises:/exercises:rw wmoim/daycli2bufr
 ```
 
 ## Exercise
