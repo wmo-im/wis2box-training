@@ -1,0 +1,6 @@
+Is it problematic that this file contains more stations than there are reports in the SYNOP message?
+No. 
+To convert message.txt to BUFR run the following command
+synop2bufr transform --metadata station_list.csv message.txt
+To find the required information from the BUFR file use the following command
+bufr_dump -p WIGOS* | egrep -i "wigos|airtemperature|cloudcover|sun|windspeed"

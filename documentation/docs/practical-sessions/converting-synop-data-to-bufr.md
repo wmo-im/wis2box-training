@@ -18,7 +18,18 @@ above mentioned tools, as well as the relationship between SYNOP reports and BUF
 
 !!! note
 
-    Ensure that you are logged into your student VM. Ensure you have the exercise-materials downloaded in your home-directory as detailed [previously](access-your-student-vm.md#download-the-exercise-materials).
+    Ensure that you are logged into your student VM. Ensure you have the exercise-materials downloaded in your home-directory as detailed [previously](https://wmo-im.github.io/wis2box-training/practical-sessions/access-your-student-vm/#download-the-exercise-materials).
+
+Navigate to the `excercise-materials` directory and launch the **synop2bufr** image into a Docker container:
+
+```bash
+cd exercise-materials
+docker run -it -v `pwd`/synop2bufr-exercises:/exercises wmoim/synop2bufr
+```
+
+!!! note
+
+    The additional flag `-v \`pwd\`/synop2bufr-exercises:/exercises` ensures that the directory 'synop2bufr-exercises' on your student VM is accessible as '/exercises' inside your container.
 
 Launch the **synop2bufr** image as new Docker container using the following command:
 
@@ -37,7 +48,7 @@ The `transform` function converts a SYNOP message to BUFR:
 synop2bufr transform --metadata my_file.csv --output-dir ./my_folder --year message_year --month message_month my_SYNOP.txt
 ```
 
-Note that if the metadata, output direction, year and month options are not specified, they will assume their default values:
+Note that if the metadata, output directory, year and month options are not specified, they will assume their default values:
 
 | Option      | Default |
 | ----------- | ----------- |
@@ -61,34 +72,29 @@ The `bufr_dump` command is a generic BUFR information tool.  It has many options
 bufr_dump -p my_bufr.bufr4
 ```
 
-This will display BUFR content to your screen.  If you are interested in the values taken by a variable in particular, use the `grep` command:
+This will display BUFR content to your screen.  If you are interested in the values taken by a variable in particular, use the `egrep` command:
 
 ```bash
-bufr_dump -p my_bufr.bufr4 |grep -i temperature
+bufr_dump -p my_bufr.bufr4 | egrep -i temperature
 ```
 
 This will display variables related to temperature in your BUFR data. If you want to do this for multiple types of variables, filter the output using a pipe (`|`):
 
 ```bash
-bufr_dump -p my_bufr.bufr4 | grep -i 'temperature|wind'
+bufr_dump -p my_bufr.bufr4 | egrep -i 'temperature|wind'
 ```
 
 ## Inspecting SYNOP data and BUFR conversion
 
-To begin with the exercises, login to your VM, and start the **synop2bufr** container with the following command:
-
-```bash
-docker run -it -v synop2bufr-exercises:/exercises synop2bufr
-```
-
 !!! note
 
-    Ensure that you are still logged into your student VM
+    Ensure that you are logged in the docker container started in the [preparation step](#Preparation). If needed consult the [Docker cheatsheet](../cheatsheets/docker.md).
 
+### Exercise 1
 Navigate to the `ex_1` directory and inspect a SYNOP message:
 
 ```bash
-cd ex_1
+cd /exercises/ex_1
 more message.txt
 ```
 
@@ -114,7 +120,7 @@ Convert `message.txt` to BUFR format.
 
 !!! note
 
-    BUFR files have no set file extension, however it recommended to use `bufr4`.
+    BUFR files have no set file extension, however it is recommended to use `bufr4`.
 
 Inspect the resulting BUFR data and compare the latitude and longitude values to those in the station list.
 
@@ -122,6 +128,7 @@ Inspect the resulting BUFR data and compare the latitude and longitude values to
 
     See the [ecCodes primer](#eccodes-primer) section.
 
+### Exercise 2
 Navigate to the `ex_2` directory and inspect another SYNOP message:
 
 ```bash
@@ -150,8 +157,9 @@ Convert `message.txt` to BUFR format.
     Based on the results of the exercises in this and the previous exercise, how would you predict the number of
     resulting BUFR files based upon the number of SYNOP reports and stations listed in the station metadata file?
 
-Use BUFR Dump to check each of the output BUFR files contain different WIGOS metadata.
+Use bufr_dump to check each of the output BUFR files contain different WIGOS Station Identifiers (WSI).
 
+### Exercise 3
 Navigate to the `ex_3` directory and inspect the SYNOP message:
 
 ```bash
@@ -174,34 +182,36 @@ more station_list.csv
 
 !!! note
 
-    The station list file is simply metadata for `synop2bufr` to provide further information in processing a SYNOP message.
+    The station list file is a source of metadata for `synop2bufr` to provide the information missing in the alphanumeric SYNOP report and required in the BUFR SYNOP.
 
 Convert `message.txt` to BUFR format.
 
-Use BUFR Dump to find the following:
+Use bufr_dump to find the following:
 
 - Air temperature (K) of the report
 - Total cloud cover (%) of the report
 - Total period of sunshine (mins) of the report
 - Wind speed (m/s) of the report
 
+### Exercise 4
 Navigate to the `ex_4` directory and inspect the SYNOP message:
 
 ```bash
 cd ../ex_4
-more message_incorrect.txt
+more message.txt
 ```
 
 !!! question
 
     What is incorrect about this SYNOP file?
 
-Convert `message_incorrect.txt` using `station_list.csv`
+Convert `message.txt` using `station_list.csv`
 
 !!! question
 
     What problem(s) did you encounter with this conversion?
 
+### Exercise 5
 Navigate to the `ex_5` directory and inspect the SYNOP message:
 
 ```bash
@@ -209,24 +219,12 @@ cd ../ex_5
 more message.txt
 ```
 
-Inspect the station list:
-
-
-```bash
-more station_list_incorrect.csv
-```
-
-!!! question
-
-    What is missing in the station list?
-
 Convert `message.txt` to BUFR format.
 
 !!! question
 
-    What problem(s) did you encounter with this conversion?  Were there any message(s) was displayed?
-
-Considering the error presented, justify the number of BUFR files produced.
+    What problem(s) did you encounter with this conversion?  
+    Considering the error presented, justify the number of BUFR files produced.
 
 
 ## Conclusion

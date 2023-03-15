@@ -1,0 +1,9 @@
+How many SYNOP reports are in this file?
+1
+How many stations are listed in the station list?
+1
+To convert message.txt to BUFR run the following command
+synop2bufr transform --metadata station_list.csv message.txt
+To compare the latitude and longitude values
+bufr_dump -p WIGOS* | egrep -i "WIGOS|airtemperature|cloudcover|sun|windspeed"
+more station_list.csv

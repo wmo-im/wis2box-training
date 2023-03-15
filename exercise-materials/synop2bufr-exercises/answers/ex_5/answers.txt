@@ -1,0 +1,6 @@
+To convert message.txt to BUFR run the following command
+synop2bufr transform --metadata station_list.csv message.txt
+What problem(s) did you encounter with this conversion?
+station 15015 is missing from station_list.csv
+Considering the error presented, justify the number of BUFR files produced.
+Only two BUFR messages were produced for the stations present in the station_list.csv file
