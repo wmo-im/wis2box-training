@@ -39,6 +39,14 @@ Inspect the output BUFR files using `bufr_dump` and verify the data is the same 
 
 ## Conclusion
 
+Please exit the interactive container and prune your docker system after finishing the exercises:
+
+```bash
+exit
+docker system prune -a -f
+docker system df
+```
+
 !!! success "Congratulations!"
 
     In this practical session, you learned how to:
