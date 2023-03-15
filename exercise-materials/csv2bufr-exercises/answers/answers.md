@@ -54,7 +54,7 @@ We find the following BUFR sequences for the variables requested:
 * WIGOS station identifier (WIGOS identifier): `301150`
 * Date (Year, month, day): `301011`
 * Time (Hour, minute): `301012`
-* Location (Latitude/longitude (coarse accuracy)): `301023`.
+* Location (Latitude/longitude (coarse accuracy)): `301023`
 
 Using the BUFR codes for the remaining variables as in *exercise 1*, we can create a mappings template by the following command:
 
@@ -120,9 +120,9 @@ and of course can use bufr_dump to inspect the contents of the output BUFR.
 
 1. The correct units are the following:
 
-    * `heightOfBarometerAboveMeanSeaLevel` should be in $\text{m}$, not $\text{cm}$.
-	* `nonCoordinatePressure` should be given in $\text{Pa}$, not $\text{hPa}$.
-	* `airTemperature` should be given in $\text{K}$, not $^{\circ}\text{C}$.
+    * `heightOfBarometerAboveMeanSeaLevel` should be in $\text{m}$, not $\text{cm}$
+	* `nonCoordinatePressure` should be given in $\text{Pa}$, not $\text{hPa}$
+	* `airTemperature` should be given in $\text{K}$, not $^{\circ}\text{C}$
 
 1. The correct scale and offsets are:
 
