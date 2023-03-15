@@ -77,33 +77,6 @@ ls
 BUFR_tables  answers  ex_1  ex_2  ex_3  ex_4  ex_5  ex_6 
 ```
 
-Now proceed with the following exercises.
-
-## Inspecting CSV data and BUFR conversion
-
-!!! note
-
-    Ensure that you are logged into your student VM. Ensure you have the exercise-materials downloaded in your home-directory as detailed [previously](access-your-student-vm.md#download-the-exercise-materials). 
-
-Launch the **csv2bufr** image as new interactive Docker container using the following command:
-
-```bash
-docker run -it -v ~/exercise-materials/csv2bufr-exercises:/exercises:rw wmoim/csv2bufr
-```
-
-!!! note
-    The argument `-v ~/exercise-materials/csv2bufr-exercises:/exercises:rw` ensures that the directory 'csv2bufr-exercises' on your student VM is accessible as '/exercises' inside your container. (with `:rw` for read-write permission)
-
-Once inside your new interactive container please navigate to the /exercises directory and check the directory contents looks as follows:
-
-```bash
-wis2user@dd0fc6ccfa85:~$ cd /exercises
-wis2user@dd0fc6ccfa85:/exercises$ ls
-BUFR_tables  answers  ex_1  ex_2  ex_3  ex_4  ex_5  ex_6 
-```
-
-Now proceed with the following exercises.
-
 ## Inspecting CSV data and BUFR conversion
 ### Exercise 1
 Navigate to the `ex_1` directory and create a mapping file:
