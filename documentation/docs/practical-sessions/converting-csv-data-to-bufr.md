@@ -111,7 +111,7 @@ Use bufr_dump to find the latitude and longitude value stored in the output BUFR
 
     See the [BUFR primer](../converting-synop-data-to-bufr#bufr_dump) section.
 
-### Exercise 2: mapping BUFR sequences
+### Exercise 2: Mapping BUFR sequences
 
 Navigate to the `ex_2` directory:
 
@@ -144,7 +144,7 @@ A given sequence will appear multiple times, once for each BUFR element it conta
 
     Search for the corresponding 6 digit codes found in the previous exercise, and find the corresponding sequence in the 3rd column. For example, the BUFR elements **005002** (Latitude) and **006002** (Longitude) can be replaced with sequence **301023** (Latitude/longitude (coarse accuracy)).
 
-### Exercise 3: adapting the mapping file to your input csv data (column names)
+### Exercise 3: Adapting the mapping file to your input CSV data (column names)
 
 Navigate to the `ex_3` directory, and inspect file `ex_3.csv`.  Compare this file to `ex_2.csv`:
 
@@ -167,8 +167,8 @@ Use the csv2bufr `data transform` function to convert `ex_3.csv` to BUFR format.
 
 Check that the data stored in the output BUFR is the same as that in the CSV that is was converted from.
 
-### Exercise 4: adapting the mapping file to your input csv data (units)
-Navigate to the `ex_4` directory and open the file `ex_5.csv`::
+### Exercise 4: Adapting the mapping file to your input CSV data (units)
+Navigate to the `ex_4` directory and open the file `ex_5.csv`:
 
 ```bash
 cd /exercises/ex_4
@@ -199,7 +199,7 @@ This the same mapping file as you generated and modified a couple of exercises a
 
 Convert the file `ex_4.csv` to BUFR format.
 
-### Exercise 5: create mappings for hourly synop with WIGOS Station Identifier
+### Exercise 5: Create mappings for hourly synop with WIGOS Station Identifier
 Navigate to the `ex_5` directory:
 
 ```bash
@@ -210,7 +210,7 @@ Here, you are free to either work with your own synoptic CSV data, or use the fi
 
 Noting that a SYNOP report cannot contain the WIGOS station identifier, creating a mappings template which contains the mappings for both the WIGOS station identifier and the hourly synoptic data.
 
-Delete all elements in the mapping template that are not present in the CSV data (you should expect to delete most of the file), and edit element names appropriately.
+Delete all elements in the mapping template that are not present in the CSV data (you should expect to delete most of the file), and edit element names accordingly.
 
 !!! note
 
