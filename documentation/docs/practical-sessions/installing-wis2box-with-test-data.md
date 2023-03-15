@@ -12,7 +12,7 @@ In this session you will learn how to install wis2box on your student VM and get
 
 Login to your designated VM with your username and password.
 
-Your home directory should already contain the exercise materials you downloaded earlier as part of the [Accessing your student VM](../practical-sessions/access-your-student-vm.md) session.
+Your home directory should already contain the exercise materials you downloaded earlier as part of the [Accessing your student VM](../practical-sessions/accessing-your-student-vm.md) session.
 
 Go into the directory containing the wis2box training setup:
 
@@ -57,7 +57,7 @@ cat dev.env
 !!! question
     Inspect the content in the `test-data/observations` directory.  What is the data format used?  What type of observations are reported?
 
-Before starting wis2box, add your student VM host to the VM by editing the `dev.env` file using a command-line editor (vi/vim/nano):
+Before starting wis2box, add your student VM host to the VM by editing the `dev.env` file using a command-line editor (vi/vim/emacs/nano):
 
 And ensure you dev.env now has the additional environment-variables specifying **your** VM host:
 

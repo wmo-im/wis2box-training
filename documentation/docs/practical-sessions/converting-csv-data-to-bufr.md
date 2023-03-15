@@ -16,7 +16,7 @@ configuration (mappings) in support of meeting WMO GBON requirements.
 
 !!! note
 
-    Ensure that you are logged into your student VM. Ensure you have the exercise-materials downloaded in your home-directory as detailed [previously](access-your-student-vm.md#download-the-exercise-materials).
+    Ensure that you are logged into your student VM. Ensure you have the exercise-materials downloaded in your home-directory as detailed [previously](accessing-your-student-vm.md#download-the-exercise-materials).
 
 
 Launch the **csv2bufr** image as new Docker container using the following command:
