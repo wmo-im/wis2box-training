@@ -114,7 +114,7 @@ Convert `message.txt` to BUFR format.
 
 !!! note
 
-    BUFR files have no set file extension, however it is recommended to use `bufr4`.
+    BUFR files have no set file extension, however it is recommended to use `.bufr4`.
 
 Inspect the resulting BUFR data and compare the latitude and longitude values to those in the station list.
 
