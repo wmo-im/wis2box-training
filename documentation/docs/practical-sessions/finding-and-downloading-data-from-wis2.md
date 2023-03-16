@@ -6,7 +6,7 @@ title: Finding and downloading data from WIS2
 
 ## Introduction
 
-In this session you will learn how to discover data from the WIS2 Global Discovery Catalogue and download data from a WIS2 Global Broker.
+In this session you will learn how to discover data from the WIS2 Global Discovery Catalogue (GDC) and download data from a WIS2 Global Broker (GB).
 
 Note that the starting point for wis2box workflow is the MinIO container publishing a message on the `wisbox-storage/#` topic on the local broker.
 
@@ -17,7 +17,37 @@ Note that the starting point for wis2box workflow is the MinIO container publish
 
 ## Finding data with pywiscat
 
-TODO
+Let's use [pywiscat](https://github.com/wmo-im/pywiscat) to query the GDC
+
+```bash
+pywiscat wis2 search
+```
+
+!!! question
+
+    How many records are returned from the search?
+
+
+Let's try querying the GDC with a keyword:
+
+```bash
+pywiscat wis2 search -q radar
+```
+
+!!! question
+
+    What is the data policy of the results?
+
+Let's get more details on a specific search result that we are interested in:
+
+```bash
+pywiscat wis2 get <id>
+```
+
+!!! tip
+
+    Use the `id` value from the previous search.
+
 
 ## Downloading data with pywis-pubsub
 

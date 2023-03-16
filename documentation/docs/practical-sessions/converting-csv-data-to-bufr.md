@@ -86,7 +86,7 @@ cd /exercises/ex_1
 
 !!! note
 
-    csv2bufr mappings files have no set file extension, however it recommended to use `json`.
+    csv2bufr mappings files have no set file extension, however it recommended to use `.json`.
 
 Using the [ecCodes WMO element table page](https://confluence.ecmwf.int/display/ECC/WMO%3D38+element+table), create a mapping file of the following variables:
 
