@@ -16,18 +16,9 @@ If you want to run this training outside of a local training session, you can pr
 - AWS (Amazon Web Services)  ec2-instance `t3a.medium` 
 - Azure (Microsoft) Azure Virtual Machine `standard_b2s`
 
-Select Ubuntu Server 20.0.4 LTS as OS and install Docker engine (20.0.17). 
+Select Ubuntu Server 20.0.4 LTS as OS and run the setup script available in [student_vm.zip](https://wmo-im.github.io/wis2box-training/student_vm.zip) on your instance to ensure you have all required software.
 
-To ensure you have the available tools and python-modules for the exercises, please run the following:
-
-```bash
-sudo apt-get -y install mosquitto-clients python3.8 python3-pip unzip
-sudo pip3 install docker-compose==1.29.0 requests==2.26.0 urllib3==1.26.0
-sudo pip3 install minio==7.1.13
-sudo pip3 install pywis-pubsub
-```
-
-If you are using the student VM provided during local WIS2 training sessions, this software will already be installed.
+If you are using the student VM provided during local WIS2 training sessions, the required software will already be installed.
 
 !!! note
 
@@ -68,14 +59,14 @@ passwd: password updated successfully
 
 ## Verify software versions
 
-Your student VM comes with Python, Docker and Docker Compose pre-installed.
+To be able to run wis2box, the student VM comes with Python Docker and Docker Compose pre-installed. 
 
 Check docker version:
 ```bash
 docker --version
 ```
 returns:
-```bash
+```console
 Docker version 20.10.17, build 100c701
 ```
 
@@ -84,7 +75,7 @@ Check Docker Compose version:
 docker-compose --version
 ```
 returns:
-```bash
+```console
 docker-compose version 1.29.2, build unknown
 ```
 
@@ -93,13 +84,49 @@ Check Python version:
 python3 --version
 ```
 returns:
-```bash
+```console
 Python 3.8.10
 ```
+To be able to practice conversion to BUFR, the student VM also comes with eccodes, synop2bufr and csv2bufr pre-installed:
 
-## Run docker 'hello-world'
+Check the eccodes version via the `bufr_dump` command:
+```bash
+bufr_dump -V
+```
+returns:
+```console
 
-In the local training environment, your student account has been added to the `docker` group to allow you to work with Docker.  You can verify this by running the Docker `hello-world` image:
+ecCodes Version 2.28.0
+
+
+```
+
+
+Check synop2bufr version:
+```bash
+synop2bufr --version
+```
+returns:
+```console
+synop2bufr, version 0.3.1
+```
+
+Check csv2bufr version:
+```bash
+csv2bufr --version
+```
+returns:
+```console
+csv2bufr, version 0.5.1
+```
+
+## Test Docker
+
+In the local training environment, your student account has been added to the `docker` group to allow you to work with Docker. It is important to verify Docker is working correctly before installing wis2box.
+
+### Docker hello-world
+
+You can verify Docker is working correctly on your system by running `hello-world` image:
 
 ```bash
 docker run -it hello-world
@@ -110,7 +137,7 @@ This command downloads the `hello-world` image from the local registry and inter
 !!! tip
     If you get an error it is often an indication that your username does not have the appropriate permissions to access the Docker filesystem.  The user running Docker commands must be added to the `docker` group in order to run Docker containers.
 
-## Review Docker system usage
+### Review Docker system usage
 
 Inspect your local Docker system usage using the command:
 
@@ -139,7 +166,7 @@ docker system df
 ```
 
 should return:
-```bash
+```console
 TYPE            TOTAL     ACTIVE    SIZE      RECLAIMABLE
 Images          0         0         0B        0B
 Containers      0         0         0B        0B
@@ -153,7 +180,7 @@ Please download the exercise materials to your home directory of your local VM a
 
 !!! warning
     Make sure you are on your home directory before downloading the exercise materials.
-    Execute `cd` 
+    Execute `cd ~/` to enter your home directory.
 
 ```bash
 wget https://wmo-im.github.io/wis2box-training/exercise-materials.zip
@@ -167,7 +194,6 @@ cd exercise-materials
 ls
 ```
 
-
 Return to your previous directory:
 
 ```bash
@@ -180,7 +206,7 @@ cd ..
     In this practical session, you learned how to:
 
     - access your student VM over SSH
-    - verify the versions of Python, Docker and Docker Compose on your local student VM
+    - verify the required software for the practical exercises is installed
     - verify that Docker commands can be successfully run
     - check Docker system resource usage
     - download, extract and review the exercise materials for this training on your local student VM

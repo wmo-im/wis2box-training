@@ -42,12 +42,11 @@ services:
     env_file:
       - .env
 
-  mkdocs:
-    container_name: mkdocs
-    build:
-      context: ../../documentation
-    ports:
-      - "80:8000"
+  nginx:
+    container_name: nginx
+    image: nginx:alpine
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
 
 volumes:
   minio-data:
