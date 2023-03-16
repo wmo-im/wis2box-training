@@ -13,22 +13,20 @@ In this session you will learn to create BUFR data from CSV, using custom and fl
 configuration (mappings) in support of meeting WMO GBON requirements.
 
 ## Preparation
+!!! warning
+    Ensure that you are logged into your student VM.
+    Ensure you have the exercise-materials downloaded in your home-directory as detailed [previously](accessing-your-student-vm.md#download-the-exercise-materials).
 
-!!! note
-
-    Ensure that you are logged into your student VM. Ensure you have the exercise-materials downloaded in your home-directory as detailed [previously](accessing-your-student-vm.md#download-the-exercise-materials).
-
-
-Launch the **csv2bufr** image as new Docker container using the following command:
+Navigate to the `exercise-materials/csv2bufr-exercises` directory and make sure that the exercises directories are there.
 
 ```bash
-cd ~/exercise-materials/
-docker run -it -v `pwd`/csv2bufr-exercises:/exercises wmoim/csv2bufr
+cd ~/exercise-materials/csv2bufr-exercises
+ls
 ```
 
-!!! note
+!!! tip
+    You shuld be able to see the following directories `BUFR_tables answers  ex_1  ex_2  ex_3  ex_4  ex_5 ex_6`
 
-    The additional flag ``-v `pwd`/csv2bufr-exercises:/exercises`` ensures that the directory 'csv2bufr-exercises' on your student VM is accessible as '/exercises' inside your container.
 
 ## csv2bufr primer
 
@@ -81,7 +79,7 @@ bufr_dump -p <my_bufr.bufr4> | egrep -i 'temperature|wind'
 Navigate to the `ex_1` directory and create a mapping file:
 
 ```bash
-cd /exercises/ex_1
+cd ~/exercise-materials/csv2bufr-exercises/ex_1
 ```
 
 !!! note
@@ -116,7 +114,7 @@ Use bufr_dump to find the latitude and longitude value stored in the output BUFR
 Navigate to the `ex_2` directory:
 
 ```bash
-cd /exercises/ex_2
+cd ~/exercise-materials/csv2bufr-exercises/ex_2
 ```
 
 Repeat the previous steps, replacing the following elements with their respective BUFR sequences (which have the form **3XXYYY**):
@@ -149,7 +147,7 @@ A given sequence will appear multiple times, once for each BUFR element it conta
 Navigate to the `ex_3` directory, and inspect file `ex_3.csv`.  Compare this file to `ex_2.csv`:
 
 ```bash
-cd /exercises/ex_3
+cd ~/exercise-materials/csv2bufr-exercises/ex_3
 more ex_3.csv
 more ../ex_2/ex_2.csv
 ```
@@ -168,10 +166,10 @@ Use the csv2bufr `data transform` function to convert `ex_3.csv` to BUFR format.
 Check that the data stored in the output BUFR is the same as that in the CSV that is was converted from.
 
 ### Exercise 4: Adapting the mapping file to your input CSV data (units)
-Navigate to the `ex_4` directory and open the file `ex_5.csv`:
+Navigate to the `ex_4` directory and open the file `ex_4.csv`:
 
 ```bash
-cd /exercises/ex_4
+cd ~/exercise-materials/csv2bufr-exercises/ex_4
 vi ex_4.csv
 ```
 
@@ -192,10 +190,13 @@ Find the scale ($x$, for a multiplication by $10^x$) and offset (addition of a c
 Open the mapping file `mapping_4.json`:
 
 ```bash
-vi mapping_4.json
+nano mapping_4.json
 ```
 
-This the same mapping file as you generated and modified a couple of exercises ago.  Using your answers in the previous question, convert the units using the `scale` and `offset` keys.
+!!! tip
+    To edit the mapping_4.json file you can use nano, vi, vim or emacs.
+
+This is the same mapping file as you generated and modified a couple of exercises ago.  Using your answers in the previous question, convert the units using the `scale` and `offset` keys.
 
 Convert the file `ex_4.csv` to BUFR format.
 
@@ -203,10 +204,10 @@ Convert the file `ex_4.csv` to BUFR format.
 Navigate to the `ex_5` directory:
 
 ```bash
-cd /exercises/ex_5
+cd ~/exercise-materials/csv2bufr-exercises/ex_5
 ```
 
-Here, you are free to either work with your own synoptic CSV data, or use the file `ex_4_hourly.csv`.
+Here, you are free to either work with your own synoptic CSV data, or use the file `ex_5_hourly.csv`.
 
 Noting that a SYNOP report cannot contain the WIGOS station identifier, creating a mappings template which contains the mappings for both the WIGOS station identifier and the hourly synoptic data.
 
@@ -222,7 +223,7 @@ Convert the CSV data data to BUFR format.
 Navigate to the `ex_6` directory and open the file `ex_6.csv`:
 
 ```bash
-cd /exercises/ex_6
+cd ~/exercise-materials/csv2bufr-exercises/ex_6
 vi ex_6.csv
 ```
 

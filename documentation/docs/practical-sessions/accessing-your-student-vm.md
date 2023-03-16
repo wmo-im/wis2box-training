@@ -149,7 +149,11 @@ Build Cache     0         0         0B        0
 
 ## Download the exercise materials
 
-Please download the exercise materials to your local VM and extract the archive with the following commands:
+Please download the exercise materials to your home directory of your local VM and extract the archive with the following commands:
+
+!!! warning
+    Make sure you are on your home directory before downloading the exercise materials.
+    Execute `cd` 
 
 ```bash
 wget https://wmo-im.github.io/wis2box-training/exercise-materials.zip

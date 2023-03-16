@@ -16,20 +16,19 @@ above mentioned tools, as well as the relationship between SYNOP reports and BUF
 
 ## Preparation
 
-!!! note
+!!! warning
+    Ensure that you are logged into your student VM. 
+    Ensure you have the exercise-materials downloaded in your home-directory as detailed [previously](accessing-your-student-vm.md#download-the-exercise-materials).
 
-    Ensure that you are logged into your student VM. Ensure you have the exercise-materials downloaded in your home-directory as detailed [previously](https://wmo-im.github.io/wis2box-training/practical-sessions/access-your-student-vm/#download-the-exercise-materials).
-
-Navigate to the `excercise-materials` directory and launch the **synop2bufr** image into a Docker container:
+Navigate to the `exercise-materials/synop2bufr-exercises` directory and make sure that the exercises directories are there.
 
 ```bash
-cd exercise-materials
-docker run -it -v `pwd`/synop2bufr-exercises:/exercises wmoim/synop2bufr
+cd ~/exercise-materials/synop2bufr-exercises
+ls
 ```
 
-!!! note
-
-    The additional flag ``-v `pwd`/synop2bufr-exercises:/exercises`` ensures that the directory 'synop2bufr-exercises' on your student VM is accessible as '/exercises' inside your container.
+!!! tip
+    You shuld be able to see the following directories `answers  ex_1  ex_2  ex_3  ex_4  ex_5`
 
 ## synop2bufr primer
 
@@ -80,15 +79,11 @@ bufr_dump -p my_bufr.bufr4 | egrep -i 'temperature|wind'
 
 ## Inspecting SYNOP data and BUFR conversion
 
-!!! note
-
-    Ensure that you are logged in the docker container started in the [preparation step](#Preparation). If needed consult the [Docker cheatsheet](../cheatsheets/docker.md).
-
 ### Exercise 1
-Navigate to the `ex_1` directory and inspect a SYNOP message:
+Navigate to the `exercise-materials/synop2bufr-exercises/ex_1` directory and inspect the SYNOP message file message.txt:
 
 ```bash
-cd /exercises/ex_1
+cd ~/exercise-materials/synop2bufr-exercises/ex_1
 more message.txt
 ```
 
@@ -123,10 +118,10 @@ Inspect the resulting BUFR data and compare the latitude and longitude values to
     See the [ecCodes primer](#eccodes-primer) section.
 
 ### Exercise 2
-Navigate to the `ex_2` directory and inspect another SYNOP message:
+Navigate to the `exercise-materials/synop2bufr-exercises/ex_2` directory and inspect the SYNOP message file message.txt:
 
 ```bash
-cd ../ex_2
+cd ~/exercise-materials/synop2bufr-exercises/ex_2
 more message.txt
 ```
 
@@ -154,10 +149,10 @@ Convert `message.txt` to BUFR format.
 Use bufr_dump to check each of the output BUFR files contain different WIGOS Station Identifiers (WSI).
 
 ### Exercise 3
-Navigate to the `ex_3` directory and inspect the SYNOP message:
+Navigate to the `exercise-materials/synop2bufr-exercises/ex_3` directory and inspect the SYNOP message file message.txt:
 
 ```bash
-cd ../ex_3
+cd ~/exercise-materials/synop2bufr-exercises/ex_3
 more message.txt
 ```
 
@@ -188,32 +183,32 @@ Use bufr_dump to find the following:
 - Wind speed (m/s) of the report
 
 ### Exercise 4
-Navigate to the `ex_4` directory and inspect the SYNOP message:
+Navigate to the `exercise-materials/synop2bufr-exercises/ex_4` directory and inspect the SYNOP message file message.txt:
 
 ```bash
-cd ../ex_4
-more message.txt
+cd ~/exercise-materials/synop2bufr-exercises/ex_4
+more message_incorrect.txt
 ```
 
 !!! question
 
     What is incorrect about this SYNOP file?
 
-Convert `message.txt` using `station_list.csv`
+Convert `message_incorrect.txt` using `station_list.csv`
 
 !!! question
 
     What problem(s) did you encounter with this conversion?
 
 ### Exercise 5
-Navigate to the `ex_5` directory and inspect the SYNOP message:
+Navigate to the `exercise-materials/synop2bufr-exercises/ex_5` directory and inspect the SYNOP message file message.txt:
 
 ```bash
-cd ../ex_5
+cd ~/exercise-materials/synop2bufr-exercises/ex_5
 more message.txt
 ```
 
-Convert `message.txt` to BUFR format.
+Convert `message.txt` to BUFR format using `station_list_incorrect.csv` 
 
 !!! question
 

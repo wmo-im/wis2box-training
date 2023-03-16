@@ -13,16 +13,14 @@ This session will focus on understanding the structure of a typical DAYCLI CSV f
 If this data is recorded in CSV format, we can use [csv2bufr](https://github.com/wmo-im/csv2bufr) to convert this data to BUFR.  Moreover, if the structure of the CSV file is correct, then one does **not need to configure** a mappings file for the conversion to BUFR, as a DAYCLI mapping template comes included with csv2bufr to manage such data.
 
 ## Preparation
-
-!!! note
-
+!!! warning
     Ensure that you are logged into your student VM.
+    Ensure you have the exercise-materials downloaded in your home-directory as detailed [previously](accessing-your-student-vm.md#download-the-exercise-materials).
 
-Navigate to the `exercise-materials` directory and launch the **csv2bufr** image into a Docker container:
+Navigate to the `exercise-materials/daycli2bufr-exercises` directory.
 
 ```bash
-cd ~/exercise-materials/
-docker run -it -v csv2bufr-exercises:/exercises wmoim/daycli2bufr
+cd ~/exercise-materials/daycli2bufr-exercises
 ```
 
 ## Exercise
@@ -32,7 +30,7 @@ Open the file `daycli.csv`.  Compare the column structure to that of the final s
 Convert this CSV file to BUFR using the built-in daycli mapping file:
 
 ```bash
-csv2bufr data transform --bufr-template daycli --output-dir <your output folder> daycli.csv
+csv2bufr data transform --bufr-template daycli daycli.csv
 ```
 
 Inspect the output BUFR files using `bufr_dump` and verify the data is the same as the original DAYCLI CSV file.
