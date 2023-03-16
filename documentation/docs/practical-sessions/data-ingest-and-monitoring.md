@@ -73,7 +73,7 @@ Ensure you have opened the Grafana dashboard home-page at `http://<your-host>:30
 
 Keep a web browser tab open with the Grafana dashboard during the next few exercises to monitor the status of your data publishing.
 
-## Ingesting your data into the WIS2-box
+## Ingesting your data into the wis2box
 
 You can use multiple methods to ingest data into wis2box and start publishing notifications to WIS2.
 

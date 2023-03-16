@@ -25,13 +25,13 @@ cd ~/exercise-materials/wis2box-setup
 
     The contents of the 'wis2box-setup' directory are similar to that you will find when downloading and extracting `wis2box-setup-*.zip` from the official wis2box download page.
 
-## wis2box setup using test-data
+## wis2box setup using test data
 
-Before starting the wis2box, you should review the content of the test-data you will use and set the hostname of your wis2box.
+Before starting the wis2box, you should review the content of the test data you will use and set the hostname of your wis2box.
 
 ### dev.env
 
-The wis2box-setup reads environment variables from `dev.env`. A basic example is provided by `test.env` in your current directory.
+The wis2box setup reads environment variables from `dev.env`. A basic example is provided by `test.env` in your current directory.
 
 Copy `test.env` to `dev.env`:
 
@@ -76,7 +76,7 @@ And ensure you specify **your** VM host for `MYHOSTNAME`.
 
 ### data-mappings.yml
 
-The wis2box-setup determines the topic-hierarchy and the plugins for the data it ingests from the `data-mappings.yml` provided in the `WIS2BOX_HOST_DATADIR`. 
+The wis2box setup determines the topic hierarchy and the plugins for the data it ingests from the `data-mappings.yml` provided in the `WIS2BOX_HOST_DATADIR`. 
 
 The test-data directory provides the configuration you will use in this exercise.
 
@@ -90,13 +90,13 @@ cat test-data/data-mappings.yml
     What topics are configured in this file?
 
 !!! note
-    The `wis2box.data.csv2bufr.ObservationDataCSV2BUFR` converts csv-data into BUFR-format. The attribute `notify: true` indicates that the broker should publish a WIS2-notification for each BUFR-file that was produced
+    The `wis2box.data.csv2bufr.ObservationDataCSV2BUFR` converts csv-data into BUFR format. The attribute `notify: true` indicates that the broker should publish a WIS2 notification for each BUFR file that was produced
 
-    The plugin for `wis2box.data.bufr2geojson.ObservationDataBUFR2GeoJSON` converts bufr4 to GeoJSON which is stored in the wis2box-api backend (elasticsearch).
+    The plugin for `wis2box.data.bufr2geojson.ObservationDataBUFR2GeoJSON` converts bufr4 to GeoJSON which is stored in the **wis2box-api** backend (Elasticsearch).
 
 ### metadata/station/station_list.csv
 
-The wis2box-setup reads metadata about the stations for which it will process data from the file `metadata/station/station_list.csv` provided in the `WIS2BOX_HOST_DATADIR`. 
+The wis2box setup reads metadata about the stations for which it will process data from the file `metadata/station/station_list.csv` provided in the `WIS2BOX_HOST_DATADIR`. 
 
 Inspect the content of `test-data/metadata/station/station_list.csv`:  
 
@@ -280,5 +280,5 @@ Click the the "EXPLORE" option on `http://<your-host>`.
     - run the various wis2box runtime configuration steps
     - access the wis2box web application, API, and Grafana dashboard
 
-!!! note "...in case you finish the exercise early"
+!!! note "In case you finish the exercise early"
     For extra credit: try to address the ERRORs until you can successfully publish the data for all the observations in `test-data/observations/malawi/`.

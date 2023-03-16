@@ -16,7 +16,7 @@ If you want to run this training outside of a local training session, you can pr
 - AWS (Amazon Web Services)  ec2-instance `t3a.medium` 
 - Azure (Microsoft) Azure Virtual Machine `standard_b2s`
 
-Select Ubuntu Server 20.0.4 LTS as OS and run the setup-script available in [student_vm.zip](https://wmo-im.github.io/wis2box-training/student_vm.zip) on your instance to ensure you have all required software.
+Select Ubuntu Server 20.0.4 LTS as OS and run the setup script available in [student_vm.zip](https://wmo-im.github.io/wis2box-training/student_vm.zip) on your instance to ensure you have all required software.
 
 If you are using the student VM provided during local WIS2 training sessions, the required software will already be installed.
 
@@ -59,7 +59,7 @@ passwd: password updated successfully
 
 ## Verify software versions
 
-To be able to run WIS2-box, the student VM comes with Python Docker and Docker Compose pre-installed. 
+To be able to run wis2box, the student VM comes with Python Docker and Docker Compose pre-installed. 
 
 Check docker version:
 ```bash
@@ -89,7 +89,7 @@ Python 3.8.10
 ```
 To be able to practice conversion to BUFR, the student VM also comes with eccodes, synop2bufr and csv2bufr pre-installed:
 
-Check the eccodes version via the `bufr_dump`-command:
+Check the eccodes version via the `bufr_dump` command:
 ```bash
 bufr_dump -V
 ```

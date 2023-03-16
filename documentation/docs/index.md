@@ -52,7 +52,7 @@ The right hand navigation provides a table of concents for a specific page.
 
 This training requires the following tools:
 
-- An instance running Ubuntu OS (provided by WMO-trainers during local training sessions) see [student-vm](practical-sessions/accessing-your-student-vm.md#introduction)
+- An instance running Ubuntu OS (provided by WMO trainers during local training sessions) see [student-vm](practical-sessions/accessing-your-student-vm.md#introduction)
 - SSH client to access your instance
 - MQTT Explorer on your local machine
 - FTP client to copy files from your local machine
