@@ -38,6 +38,19 @@ pywiscat wis2 search -q radar
 
     What is the data policy of the results?
 
+Try additional queries with `-q``
+
+!!! tip
+
+    The `-q` flag allows for the following syntax:
+
+    - `-q "sea": find all records with the word `sea`
+    - `-q "NOT sea": find all records that do not contain the word "sea"
+    - `-q "sea AND ice": find all records with both `sea` and `ice`
+    - `-q "sea OR ice": find all records with both `sea` and `ice`
+    - `-q "sea NOT ice": find all records with `sea` but not `ice`
+    - `-q "sea~": fuzzy search
+
 Let's get more details on a specific search result that we are interested in:
 
 ```bash
