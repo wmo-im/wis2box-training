@@ -30,7 +30,7 @@ Open the file `daycli.csv`.  Compare the column structure to that of the final s
 Convert this CSV file to BUFR using the built-in daycli mapping file:
 
 ```bash
-csv2bufr data transform --bufr-template daycli daycli.csv
+csv2bufr data transform --bufr-template daycli --output-dir ./ daycli.csv
 ```
 
 Inspect the output BUFR files using `bufr_dump` and verify the data is the same as the original DAYCLI CSV file.
