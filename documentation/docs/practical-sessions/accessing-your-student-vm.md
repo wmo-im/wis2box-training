@@ -59,7 +59,7 @@ passwd: password updated successfully
 
 ## Verify software versions
 
-Your student VM comes with Python, Docker and Docker Compose pre-installed.
+To be able to run WIS2-box, the student VM comes with Python Docker and Docker Compose pre-installed. 
 
 Check docker version:
 ```bash
@@ -87,6 +87,20 @@ returns:
 ```console
 Python 3.8.10
 ```
+To be able to practice conversion to BUFR, the student VM also comes with eccodes, synop2bufr and csv2bufr pre-installed:
+
+Check the eccodes version via the `bufr_dump`-command:
+```bash
+bufr_dump -V
+```
+returns:
+```console
+
+ecCodes Version 2.28.0
+
+
+```
+
 
 Check synop2bufr version:
 ```bash
@@ -94,7 +108,7 @@ synop2bufr --version
 ```
 returns:
 ```console
-synop2bufr, version 0.5.1
+synop2bufr, version 0.3.1
 ```
 
 Check csv2bufr version:
@@ -108,7 +122,7 @@ csv2bufr, version 0.5.1
 
 ## Test Docker
 
-In the local training environment, your student account has been added to the `docker` group to allow you to work with Docker. It is important to verify Docker is working correctly before installing WIS2-in-a-box software.
+In the local training environment, your student account has been added to the `docker` group to allow you to work with Docker. It is important to verify Docker is working correctly before installing wis2box.
 
 ### Docker hello-world
 
@@ -166,7 +180,7 @@ Please download the exercise materials to your home directory of your local VM a
 
 !!! warning
     Make sure you are on your home directory before downloading the exercise materials.
-    Execute `cd` 
+    Execute `cd ~/` to enter your home directory.
 
 ```bash
 wget https://wmo-im.github.io/wis2box-training/exercise-materials.zip
