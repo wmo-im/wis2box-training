@@ -52,9 +52,10 @@ The right hand navigation provides a table of concents for a specific page.
 
 This training requires the following tools:
 
-- An instance running Ubuntu OS with Docker and docker-composer (see [training-environment](https://wmoomm-my.sharepoint.com/:p:/g/personal/tproescholdt_wmo_int/EQoxn5WS7kBAoe5iNyfeteABAjw67YZBvEWM92NlWUu5wQ?e=gtgm13))
+- An instance running Ubuntu OS (provided by WMO-trainers during local training sessions) see [student-vm](practical-sessions/accessing-your-student-vm.md#introduction)
 - SSH client to access your instance
 - MQTT Explorer on your local machine
+- FTP client to copy files from your local machine
 
 ## Conventions
 

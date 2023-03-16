@@ -30,12 +30,14 @@ jobs:
         run: |
           cd ..
           zip -r exercise-materials.zip exercise-materials/
+          zip -r student_vm.zip environment/student-VM/
           ls -lh
           git push --set-upstream origin gh-pages
           git config --global user.email "tomkralidis@gmail.com"
           git config --global user.name "Tom Kralidis"
           git checkout gh-pages
           git add exercise-materials.zip
+          git add student_vm.zip
           git commit -m "add exercise-materials zipfile" -a
           git push
 
