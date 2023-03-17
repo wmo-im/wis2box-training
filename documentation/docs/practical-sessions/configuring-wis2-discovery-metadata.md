@@ -62,7 +62,7 @@ Update the following values in the discovery metadata configuration:
 !!! tip
     Ensure that bbox values are correctly signed (for example, use the minus sign [`-`] for southern or western hemispheres.
 
-## Publishing dataset discovery metadata
+## Publishing discovery metadata
 
 Run the following command to publish your discovery metadata:
 
@@ -93,7 +93,7 @@ Ensure that your discovery metadata updates were published to the API, by refres
 
 Feel free to update additional values and re-publishing your discovery metadata to get a better idea of how and where discovery metadata content is updated.
 
-## Publishing dataset to the API
+## Publishing your dataset to the API
 
 Run the below command to add the data to the API:
 

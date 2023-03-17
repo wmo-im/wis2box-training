@@ -66,7 +66,7 @@ vi $WIS2BOX_DATA_MAPPINGS
 
 Verify that the file you copied from `~/exercise-materials/wis2box-setup/synop-csv-mappings.yml` is now part of the live data mappings file.
 
-Update the `[country]` and `[centre_id]` values in your new/added data mapping.  User your username as the `centre_id` topic.
+Update the `[country]` and `[centre_id]` values in your new/added data mapping.  Use your username as the `centre_id` topic.
 
 !!! tip
     The `country` value should match one of the countries in the [country list of the WIS2 Topic Hierarchy](https://github.com/wmo-im/wis2-topic-hierarchy/blob/main/topic-hierarchy/country.csv).
