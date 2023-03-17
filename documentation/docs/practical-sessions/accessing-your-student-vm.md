@@ -108,7 +108,7 @@ synop2bufr --version
 ```
 returns:
 ```console
-synop2bufr, version 0.3.1
+synop2bufr, version 0.3.2
 ```
 
 Check csv2bufr version:
@@ -194,7 +194,7 @@ cd exercise-materials
 ls
 ```
 
-To access the material on your local machine rather than from the command-line, you can use SCP. Using WinSCP, you can create a new SCP connection to your VM as follows:
+To access the material on your local machine rather than from the command line, you can use SCP. Using WinSCP, you can create a new SCP connection to your VM as follows:
 
 <img alt="winscp-student-vm-scp.png" src="../../assets/img/winscp-student-vm-scp.png" width="400">
 

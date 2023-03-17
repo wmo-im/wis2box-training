@@ -23,5 +23,3 @@ client = Minio(
 identifier = minio_path+local_file.split('/')[-1]
 print(f"Put into {BUCKET_INCOMING} : {local_file} as {identifier}")
 client.fput_object(BUCKET_INCOMING, identifier, local_file)
-
-

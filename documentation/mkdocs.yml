@@ -20,9 +20,8 @@ nav:
         - Configuring station metadata: practical-sessions/configuring-station-metadata.md
         - Data ingest and monitoring: practical-sessions/data-ingest-and-monitoring.md
         - Downloading and finding data from WIS2: practical-sessions/downloading-and-finding-data-from-wis2.md
-        #- Finding and downloading data from WIS2: practical-sessions/finding-and-downloading-data-from-wis2.md
         - Answers:
-            - CSV data to BUFR answers: answers/csv2-bufr-answers.md
+            - CSV data to BUFR answers: answers/csv2bufr-answers.md
     - Cheatsheets:
         - Linux: cheatsheets/linux.md
         - Docker: cheatsheets/docker.md

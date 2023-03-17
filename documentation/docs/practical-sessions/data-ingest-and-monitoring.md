@@ -171,15 +171,15 @@ The script needs to know the correct endpoint for accessing MinIO on your wis2bo
 
 The sample script provides the basic structure for copying a file into MinIO. Try to ingest a data sample of your choosing using this script.
 
-!!! question "ingest data using python"
+!!! question "ingest data using Python"
     Use the Python example provided to create your own Python script to ingest data into your wis2box.  
     
     Ensure that you:
-        - define the correct MinIO-endpoint for your host
-        - define the correct path in MinIO for the topics defined in your data-mappings.yml
-        - define the correct local-path from which
-    
-    Ensure that the script runs correctly and new data notifications are published on your wis2box-broker. Review and correct any errors reported on the Grafana dashboard:x
+        - define the correct MinIO endpoint for your host
+        - define the correct path in MinIO for the topics defined in your `data-mappings.yml`
+        - determine the correct local path where the script can access the data to ingest
+
+    Ensure that the script runs correctly and new data notifications are published on your wis2box broker. Review and correct any errors reported on the Grafana dashboard:
 
 ### wis2box FTP
 

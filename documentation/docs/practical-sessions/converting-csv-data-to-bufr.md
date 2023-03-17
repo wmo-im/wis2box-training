@@ -109,7 +109,7 @@ Use bufr_dump to find the latitude and longitude value stored in the output BUFR
 
     See the [BUFR primer](../converting-synop-data-to-bufr#bufr_dump) section.
 
-[Check here to see answers to exercise 1](../answers/csv2-bufr-answers.md#exercise-1)
+[Check here to see answers to exercise 1](../answers/csv2bufr-answers.md#exercise-1)
 
 ### Exercise 2: Mapping BUFR sequences
 
@@ -144,7 +144,7 @@ A given sequence will appear multiple times, once for each BUFR element it conta
 
     Search for the corresponding 6 digit codes found in the previous exercise, and find the corresponding sequence in the 3rd column. For example, the BUFR elements **005002** (Latitude) and **006002** (Longitude) can be replaced with sequence **301023** (Latitude/longitude (coarse accuracy)).
 
-[Check here to see answers to exercise 2](../answers/csv2-bufr-answers.md#exercise-2)
+[Check here to see answers to exercise 2](../answers/csv2bufr-answers.md#exercise-2)
 
 ### Exercise 3: Adapting the mapping file to your input CSV data (column names)
 
@@ -169,7 +169,7 @@ Use the csv2bufr `data transform` function to convert `ex_3.csv` to BUFR format.
 
 Check that the data stored in the output BUFR is the same as that in the CSV that is was converted from.
 
-[Check here to see answers to exercise 3](../answers/csv2-bufr-answers.md#exercise-3)
+[Check here to see answers to exercise 3](../answers/csv2bufr-answers.md#exercise-3)
 
 ### Exercise 4: Adapting the mapping file to your input CSV data (units)
 Navigate to the `ex_4` directory and edit the file `ex_4.csv`:
@@ -206,7 +206,7 @@ This is the same mapping file as you generated and modified a couple of exercise
 
 Convert the file `ex_4.csv` to BUFR format.
 
-[Answers to exercise 4](../answers/csv2-bufr-answers.md#exercise-4)
+[Answers to exercise 4](../answers/csv2bufr-answers.md#exercise-4)
 
 ### Exercise 5: Create mappings for hourly synop with WIGOS Station Identifier
 Navigate to the `ex_5` directory:
@@ -227,7 +227,7 @@ Delete all elements in the mapping template that are not present in the CSV data
 
 Convert the CSV data data to BUFR format.
 
-[Answers to exercise 5](../answers/csv2-bufr-answers.md#exercise-5)
+[Answers to exercise 5](../answers/csv2bufr-answers.md#exercise-5)
 
 ### Exercise 6
 Navigate to the `ex_6` directory and edit the file `ex_6.csv`:
@@ -255,7 +255,7 @@ Add more valid minimum and maximum values to the mappings file according to your
 
 Convert the file `ex_6.csv` to BUFR format, and use `bufr_dump` to verify that this variable has no value in the resulting BUFR.
 
-[Answers to exercise 6](../answers/csv2-bufr-answers.md#exercise-6)
+[Answers to exercise 6](../answers/csv2bufr-answers.md#exercise-6)
 
 ## Conclusion
 
