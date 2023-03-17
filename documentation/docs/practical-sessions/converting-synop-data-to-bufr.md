@@ -28,7 +28,7 @@ ls
 ```
 
 !!! tip
-    You shuld be able to see the following directories `answers  ex_1  ex_2  ex_3  ex_4  ex_5`
+    You should be able to see the following directories `answers  ex_1  ex_2  ex_3  ex_4  ex_5`
 
 ## synop2bufr primer
 
@@ -38,14 +38,14 @@ Below are essential `synop2bufr` commands and configurations:
 The `transform` function converts a SYNOP message to BUFR:
 
 ```bash
-synop2bufr transform --metadata my_file.csv --output-dir ./my_folder --year message_year --month message_month my_SYNOP.txt
+synop2bufr transform --metadata my_file.csv --output-dir ./my_directory --year message_year --month message_month my_SYNOP.txt
 ```
 
 Note that if the metadata, output directory, year and month options are not specified, they will assume their default values:
 
 | Option      | Default |
 | ----------- | ----------- |
-| --metadata | metadata.csv |
+| --metadata | station_list.csv |
 | --output-dir | The current working directory. |
 | --year | The current year. |
 | --month | The current month. |
@@ -101,7 +101,8 @@ more station_list.csv
 
     How many stations are listed in the station list?
 
-Convert `message.txt` to BUFR format.
+!!! question
+    Convert `message.txt` to BUFR format.
 
 !!! tip
 
@@ -111,7 +112,9 @@ Convert `message.txt` to BUFR format.
 
     BUFR files have no set file extension, however it is recommended to use `.bufr4`.
 
-Inspect the resulting BUFR data and compare the latitude and longitude values to those in the station list.
+Inspect the resulting BUFR data using `bufr_dump`.
+!!! question
+     Compare the latitude and longitude values to those in the station list.
 
 !!! tip
 
@@ -139,14 +142,18 @@ more station_list.csv
 
     How many stations are listed in the station list?
 
-Convert `message.txt` to BUFR format.
+!!! question
+    Convert `message.txt` to BUFR format.
 
 !!! question
 
     Based on the results of the exercises in this and the previous exercise, how would you predict the number of
     resulting BUFR files based upon the number of SYNOP reports and stations listed in the station metadata file?
 
-Use bufr_dump to check each of the output BUFR files contain different WIGOS Station Identifiers (WSI).
+Inspect the resulting BUFR data using `bufr_dump`.
+
+!!! question
+    Check each of the output BUFR files contain different WIGOS Station Identifiers (WSI).
 
 ### Exercise 3
 Navigate to the `exercise-materials/synop2bufr-exercises/ex_3` directory and inspect the SYNOP message file message.txt:
@@ -173,14 +180,24 @@ more station_list.csv
 
     The station list file is a source of metadata for `synop2bufr` to provide the information missing in the alphanumeric SYNOP report and required in the BUFR SYNOP.
 
-Convert `message.txt` to BUFR format.
+!!! question
+    Convert `message.txt` to BUFR format.
 
-Use bufr_dump to find the following:
+Inspect the resulting BUFR data using `bufr_dump`.
 
-- Air temperature (K) of the report
-- Total cloud cover (%) of the report
-- Total period of sunshine (mins) of the report
-- Wind speed (m/s) of the report
+!!! question
+
+    Find the following variables:
+
+    - Air temperature (K) of the report
+    - Total cloud cover (%) of the report
+    - Total period of sunshine (mins) of the report
+    - Wind speed (m/s) of the report
+
+!!! tip
+
+    You may find the last command of the [ecCodes primer](#eccodes-primer) section useful.
+
 
 ### Exercise 4
 Navigate to the `exercise-materials/synop2bufr-exercises/ex_4` directory and inspect the SYNOP message file message.txt:
@@ -194,7 +211,7 @@ more message_incorrect.txt
 
     What is incorrect about this SYNOP file?
 
-Convert `message_incorrect.txt` using `station_list.csv`
+Attempt to convert `message_incorrect.txt` using `station_list.csv`
 
 !!! question
 
@@ -208,7 +225,7 @@ cd ~/exercise-materials/synop2bufr-exercises/ex_5
 more message.txt
 ```
 
-Convert `message.txt` to BUFR format using `station_list_incorrect.csv` 
+Attempt to convert `message.txt` to BUFR format using `station_list_incorrect.csv` 
 
 !!! question
 

@@ -85,6 +85,12 @@ echo "hi there" > test-file.txt
 cp file1 file2
 ```
 
+* Wildcards: operate on file patterns:
+
+```bash
+ls -l fil*  # matches file1 and file2
+```
+
 * Concatenate two files into a new file called `newfile`:
 
 ```bash

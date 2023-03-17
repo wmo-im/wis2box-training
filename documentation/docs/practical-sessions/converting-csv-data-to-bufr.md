@@ -37,7 +37,7 @@ Below are essential `csv2bufr` commands and configurations:
 The `mappings create` command creates an empty BUFR mapping template JSON file, which maps CSV column headers to their corresponding ecCodes element:
 
 ```bash
-csv2bufr mappings create <BUFR descriptors> --output <output_dir>
+csv2bufr mappings create <BUFR descriptors> --output <my_template.json>
 ```
 
 For more information, see the following [example](https://csv2bufr.readthedocs.io/en/latest/example.html#creating-a-new-mapping-file).
@@ -47,7 +47,7 @@ For more information, see the following [example](https://csv2bufr.readthedocs.i
 The `data transform` command converts a CSV file to BUFR format:
 
 ```bash
-csv2bufr data transform --bufr-template <my_template.json> --output-dir <./my_folder> <my_data.csv>
+csv2bufr data transform --bufr-template <my_template.json> --output-dir <./my_directory> <my_data.csv>
 ```
 
 ## ecCodes BUFR refresher
@@ -89,9 +89,9 @@ cd ~/exercise-materials/csv2bufr-exercises/ex_1
 Using the [ecCodes WMO element table page](https://confluence.ecmwf.int/display/ECC/WMO%3D38+element+table), create a mapping file of the following variables:
 
 - WIGOS Station Identifier (series, issuer, issue number, local identifier)
-- Date (year, month, day)
-- Time (hour, minute)
-- Location (latitude, longitude)
+- Date (Year, month, day)
+- Time (Hour, minute)
+- Location (Latitude, longitude)
 - Barometer height above sea level
 - Station level pressure
 - Air temperature
@@ -109,8 +109,6 @@ Use bufr_dump to find the latitude and longitude value stored in the output BUFR
 
     See the [BUFR primer](../converting-synop-data-to-bufr#bufr_dump) section.
 
-[Check here to see answers to exercise 1](../answers/csv2bufr-answers.md#exercise-1)
-
 ### Exercise 2: Mapping BUFR sequences
 
 Navigate to the `ex_2` directory:
@@ -119,12 +117,14 @@ Navigate to the `ex_2` directory:
 cd ~/exercise-materials/csv2bufr-exercises/ex_2
 ```
 
-Repeat the previous steps, replacing the following elements with their respective BUFR sequences (which have the form **3XXYYY**):
+!!! question
+
+    Repeat the previous steps, replacing the following elements with their respective BUFR sequences (which have the form **3XXYYY**):
 
 * WIGOS Station Identifier (series, issuer, issue number, local identifier)
-* Date (year, month, day)
-* Time (hour, minute)
-* Location (latitude, longitude)
+* Date (Year, month, day)
+* Time (Hour, minute)
+* Location (Latitude, longitude)
 
 The `BUFR_TableD_en.csv` file from the `BUFR_tables` directory contains the defined BUFR sequences as per the official WMO BUFR code tables.
 
@@ -144,11 +144,13 @@ A given sequence will appear multiple times, once for each BUFR element it conta
 
     Search for the corresponding 6 digit codes found in the previous exercise, and find the corresponding sequence in the 3rd column. For example, the BUFR elements **005002** (Latitude) and **006002** (Longitude) can be replaced with sequence **301023** (Latitude/longitude (coarse accuracy)).
 
-[Check here to see answers to exercise 2](../answers/csv2bufr-answers.md#exercise-2)
-
 ### Exercise 3: Adapting the mapping file to your input CSV data (column names)
 
-Navigate to the `ex_3` directory, and inspect file `ex_3.csv`.  Compare this file to `ex_2.csv`:
+Navigate to the `ex_3` directory, and inspect file `ex_3.csv`.
+
+!!! question
+
+    Compare this file to `ex_2.csv`:
 
 ```bash
 cd ~/exercise-materials/csv2bufr-exercises/ex_3
@@ -156,20 +158,31 @@ more ex_3.csv
 more ../ex_2/ex_2.csv
 ```
 
-You should notice that the data is the same, however the column names are different.  With this in mind, create a mapping template file for the `ex_3.csv` file, deleting the redundant elements, and changinge the `"value"` item to correctly correspond to each column in `ex_3.csv`.
+You should notice that the data is the same, however the column names are different.
+
+!!! question
+
+    With this in mind, create a mapping template file for the `ex_3.csv` file. 
+    
+Open the mapping file generated:
+
 ```bash
-my-mapping-ex_3.json
+nano <my_mapping.json>
 ```
+
+!!! question
+
+    Change the `"value"` items to correctly correspond to each column in `ex_3.csv`.
 
 !!! tip
 
     In the first column, `"eccodes_key": "#1#wigosIdentifierSeries"` should now be paired with `"value": "data:wigos_identifier_series"`.
 
-Use the csv2bufr `data transform` function to convert `ex_3.csv` to BUFR format.
+!!! question
+    Use the csv2bufr `data transform` function to convert `ex_3.csv` to BUFR format.
 
-Check that the data stored in the output BUFR is the same as that in the CSV that is was converted from.
-
-[Check here to see answers to exercise 3](../answers/csv2bufr-answers.md#exercise-3)
+!!! question
+    Check that the data stored in the output BUFR is the same as that in the CSV that is was converted from.
 
 ### Exercise 4: Adapting the mapping file to your input CSV data (units)
 Navigate to the `ex_4` directory and edit the file `ex_4.csv`:
@@ -181,17 +194,21 @@ vi ex_4.csv
 
 This file contains the same data and column names as `ex_2.csv`, but uses different units:
 
-- `heightOfBarometerAboveMeanSeaLevel` is given in $\text{cm}$
-- `nonCoordinatePressure` is given in $\text{hPa}$
-- `airTemperature` is given in $^{\circ}\text{C}$
+- `heightOfBarometerAboveMeanSeaLevel` is given in **cm**
+- `nonCoordinatePressure` is given in **hPA**
+- `airTemperature` is given in **&deg;C**
 
-Using the [ecCodes WMO element table page](https://confluence.ecmwf.int/display/ECC/WMO%3D38+element+table), find the correct units for these three variables.
+!!! question
 
-Find the scale ($x$, for a multiplication by $10^x$) and offset (addition of a constant $c$) required for each of these conversions.
+    Using the [ecCodes WMO element table page](https://confluence.ecmwf.int/display/ECC/WMO%3D38+element+table), find the correct units for these three variables.
+
+!!! question
+
+    Find the scale (*x*, for a multiplication by *10<sup>x</sup>*) and offset (addition of a constant *c*) required for each of these conversions.
 
 !!! tip
 
-    As $1\text{cm} = 1\text{m}\times 10^{-2}$, the first conversion requires a scale of $x=-2$ and an offset of $c=0$.
+    As 1cm = 1m x 10<sup>-2</sup>, the first conversion requires a scale of *x=-2* and an offset of *c=0*.
 
 Open the mapping file `mapping_4.json`:
 
@@ -204,9 +221,9 @@ nano mapping_4.json
 
 This is the same mapping file as you generated and modified a couple of exercises ago.  Using your answers in the previous question, convert the units using the `scale` and `offset` keys.
 
-Convert the file `ex_4.csv` to BUFR format.
+!!! question
 
-[Answers to exercise 4](../answers/csv2bufr-answers.md#exercise-4)
+    Convert the file `ex_4.csv` to BUFR format.
 
 ### Exercise 5: Create mappings for hourly synop with WIGOS Station Identifier
 Navigate to the `ex_5` directory:
@@ -217,17 +234,19 @@ cd ~/exercise-materials/csv2bufr-exercises/ex_5
 
 Here, you are free to either work with your own synoptic CSV data, or use the file `ex_5_hourly.csv`.
 
-Noting that a SYNOP report cannot contain the WIGOS station identifier, creating a mappings template which contains the mappings for both the WIGOS station identifier and the hourly synoptic data.
+!!! question
 
-Delete all elements in the mapping template that are not present in the CSV data (you should expect to delete most of the file), and edit element names accordingly.
+    Noting that a SYNOP report cannot contain the WIGOS station identifier, creating a mappings template which contains the mappings for both the WIGOS station identifier and the hourly synoptic data.
+
+!!! question
+
+    Just like previous exercises, edit the element names in the mapping file according to the CSV data.
 
 !!! note
 
-    Make sure that `number_header_rows` and `column_names_row` are correct.
+    Ensure that `number_header_rows` and `column_names_row` are correct.
 
 Convert the CSV data data to BUFR format.
-
-[Answers to exercise 5](../answers/csv2bufr-answers.md#exercise-5)
 
 ### Exercise 6
 Navigate to the `ex_6` directory and edit the file `ex_6.csv`:
@@ -245,17 +264,21 @@ vi ex_6.csv
 
     Think of valid minimum and maximum values for relative humidity.
 
-By adjusting the `valid_min` and `valid_max` keys of the `relativeHumidity` element in the mapping file `mapping_6.json`, enforce a quality control measure which prevents this value from being written to BUFR.
+!!! question
 
-Add more valid minimum and maximum values to the mappings file according to your own preference.
+    By adjusting the `valid_min` and `valid_max` keys of the `relativeHumidity` element in the mapping file `mapping_6.json`, enforce a quality control measure which prevents this value from being written to BUFR.
+
+!!! question
+
+    Add more valid minimum and maximum values to the mappings file according to your own preference.
 
 !!! note
 
     The minimum and maximum values must have the **same units** as your **original** input data, not the converted values discussed in the previous exercise.
 
-Convert the file `ex_6.csv` to BUFR format, and use `bufr_dump` to verify that this variable has no value in the resulting BUFR.
+!!! question
 
-[Answers to exercise 6](../answers/csv2bufr-answers.md#exercise-6)
+    Convert the file `ex_6.csv` to BUFR format, and use `bufr_dump` to verify that this variable has no value in the resulting BUFR.
 
 ## Conclusion
 

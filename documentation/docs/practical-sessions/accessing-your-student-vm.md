@@ -87,9 +87,10 @@ returns:
 ```console
 Python 3.8.10
 ```
-To be able to practice conversion to BUFR, the student VM also comes with eccodes, synop2bufr and csv2bufr pre-installed:
+To be able to practice conversion to BUFR, the student VM also comes with ecCodes, synop2bufr and csv2bufr pre-installed:
 
-Check the eccodes version via the `bufr_dump` command:
+Check the ecCodes version via the `bufr_dump` command:
+
 ```bash
 bufr_dump -V
 ```

@@ -118,7 +118,7 @@ Enter the topic hierarchy value of your dataset as a directory.
 
     `mwi/mwi_met_centre/data/core/weather/surface-based-observations/synop`.
 
-It's time to upload your data to the new path!  Click the **Upload** button to add a file or folder to MinIO:
+It's time to upload your data to the new path!  Click the **Upload** button to add a file or directory to MinIO:
 
 <img alt="minio-admin-create-new-path" src="../../assets/img/minio-admin-create-new-path.png" width="600">
 
