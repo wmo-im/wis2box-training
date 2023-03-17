@@ -166,7 +166,7 @@ Use the csv2bufr `data transform` function to convert `ex_3.csv` to BUFR format.
 Check that the data stored in the output BUFR is the same as that in the CSV that is was converted from.
 
 ### Exercise 4: Adapting the mapping file to your input CSV data (units)
-Navigate to the `ex_4` directory and open the file `ex_4.csv`:
+Navigate to the `ex_4` directory and edit the file `ex_4.csv`:
 
 ```bash
 cd ~/exercise-materials/csv2bufr-exercises/ex_4
@@ -220,7 +220,7 @@ Delete all elements in the mapping template that are not present in the CSV data
 Convert the CSV data data to BUFR format.
 
 ### Exercise 6
-Navigate to the `ex_6` directory and open the file `ex_6.csv`:
+Navigate to the `ex_6` directory and edit the file `ex_6.csv`:
 
 ```bash
 cd ~/exercise-materials/csv2bufr-exercises/ex_6

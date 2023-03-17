@@ -25,7 +25,7 @@ cd ~/exercise-materials/daycli-exercises
 
 ## Exercise
 
-Open the file `daycli.csv`.  Compare the column structure to that of the final slides of the presentation we just viewed.
+Edit the file `daycli.csv`.  Compare the column structure to that of the final slides of the presentation we just viewed.
 
 Convert this CSV file to BUFR using the built-in daycli mapping file:
 

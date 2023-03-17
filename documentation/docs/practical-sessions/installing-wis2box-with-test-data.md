@@ -155,9 +155,9 @@ To view collections currently published to the API, navigate to the page `http:/
 !!! question
     Which stations are configured?
 
-## Connect MQTT explorer to your wis2box-broker
+## Connect MQTT Explorer to your wis2box-broker
 
-Go to MQTT explorer on your computer and prepare a new connection to connect to your broker (running via the **wis2box-broker** container).
+Go to MQTT Explorer on your computer and prepare a new connection to connect to your broker (running via the **wis2box-broker** container).
 
 Use the following connection details:
 
@@ -168,7 +168,7 @@ Use the following connection details:
 - **Password: wis2box**
 - under 'ADVANCED', subscribe to the topics `$SYS/#` and `origin/#`
 
-Make sure to SAVE your connection details.
+Make sure to click "SAVE" to store your connection details.
 
 <img alt="mqtt-explorer-wis2box-broker.png" src="../../assets/img/mqtt-explorer-wis2box-broker.png" width="600">
 

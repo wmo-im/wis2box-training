@@ -45,10 +45,10 @@ more ~/my-discovery-metadata.yml
 
 Update the following values in the discovery metadata configuration:
 
-- `wis2box.topic_hierarchy`: the topic hierarchy that categorizes the data (this value should be the same as the definition in your newly create data mapping).
+- `wis2box.topic_hierarchy`: the topic hierarchy that categorizes the data (this value should be the same as the definition in your newly created data mapping).
 - `wis2box.country`: 3-letter country code in lower case
 - `wis2box.centre_id`: your centre id as defined in the previous exercise
-- `metadata.identifier`: a unique identifier consisting of `urn:x-wmo:md:[country]:[centre_id]:[dataset_name]`, where `[dataset-name]` can be any name of your choosing
+- `metadata.identifier`: a unique identifier consisting of `urn:x-wmo:md:[country]:[centre_id]:[dataset_name]`, where `[dataset-name]` can be any name of your choosing.  Remember this value for API validation later on in this exercise
 - `identification.title`: a human readable title describing your data
 - `identification.abstract`: a human readable description describing your data
 - `identification.dates.creation`: when the discovery metadata was created (today's date)
@@ -57,12 +57,12 @@ Update the following values in the discovery metadata configuration:
 - `contact.pointOfContact`: your organization's point of contact information
 
 !!! tip
-    The configuration is based on the YAML format.  Ensure your config is propertly indented (4 spaces).
+    The configuration is based on the YAML format.  Consult the [YAML cheatsheet](../cheatsheets/yaml.md) for more information.
 
 !!! tip
     Ensure that bbox values are correctly signed (for example, use the minus sign [`-`] for southern or western hemispheres.
 
-## Publishing discovery metadata
+## Publishing dataset discovery metadata
 
 Run the following command to publish your discovery metadata:
 
@@ -92,6 +92,22 @@ Ensure that your discovery metadata updates were published to the API, by refres
     Are you able to see the updates you made in the configuration?
 
 Feel free to update additional values and re-publishing your discovery metadata to get a better idea of how and where discovery metadata content is updated.
+
+## Publishing dataset to the API
+
+Run the below command to add the data to the API:
+
+```bash
+wis2box data add-collection ~/my-discovery-metadata.yml
+```
+
+Ensure that your dataset was published to the API, by navigating to `http://<your-host>/oapi/collections/<metadata.identifier>`.
+
+!!! question
+    Do you see your new dataset in the API?
+
+!!! question
+    Do you see any data coming from your new dataset in the API?  If not, why not?
 
 ## Conclusion
 
