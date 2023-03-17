@@ -22,6 +22,7 @@ nav:
         - Downloading and finding data from WIS2: practical-sessions/downloading-and-finding-data-from-wis2.md
         - Answers:
             - CSV data to BUFR answers: answers/csv2bufr-answers.md
+            - SYNOP data to BUFR answers: answers/synop2bufr-answers.md
     - Cheatsheets:
         - Linux: cheatsheets/linux.md
         - Docker: cheatsheets/docker.md
