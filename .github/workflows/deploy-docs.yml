@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - ml-1703
     paths:
       - 'documentation/**'
       - 'exercise-materials/**'
