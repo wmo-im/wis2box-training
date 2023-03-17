@@ -4,6 +4,9 @@
     "inputExtendedDelayedDescriptorReplicationFactor": [],
     "number_header_rows": 1,
     "column_names_row": 1,
+    "delimiter": ",",
+    "quoting": "QUOTE_NONE",
+    "quotechar": "",
     "header": [
         {
             "eccodes_key": "edition",
