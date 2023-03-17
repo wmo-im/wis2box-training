@@ -5,6 +5,7 @@
     "wigos_station_identifier": "data:Station_ID",
     "number_header_rows": 4,
     "column_names_row": 2,
+    "delimiter": ",",
     "header":[
         {"eccodes_key": "edition", "value": "const:4"},
         {"eccodes_key": "masterTableNumber", "value": "const:0"},
