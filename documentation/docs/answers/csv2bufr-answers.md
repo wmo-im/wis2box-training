@@ -119,17 +119,17 @@ and of course can use `bufr_dump` to inspect the contents of the output BUFR.
 
 1. The correct units are as follows:
 
-    * `heightOfBarometerAboveMeanSeaLevel` should be in $\text{m}$, not $\text{cm}$
-	* `nonCoordinatePressure` should be given in $\text{Pa}$, not $\text{hPa}$
-	* `airTemperature` should be given in $\text{K}$, not $^{\circ}\text{C}$
+    * `heightOfBarometerAboveMeanSeaLevel` should be in **m**, not cm.
+	* `nonCoordinatePressure` should be given in **Pa**, not hPa.
+	* `airTemperature` should be given in **K**, not &deg;C.
 
 1. The correct scale and offsets are:
 
 | Variable | Scale | Offset |
 |----------|-------|--------|
-|`heightOfBarometerAboveMeanSeaLevel`| $-2$ | $0$ |
-| `nonCoordinatePressure` | $2$ | $0$ |
-| `airTemperature` | $0$ | $273.15$
+|`heightOfBarometerAboveMeanSeaLevel`| -2 | 0 |
+| `nonCoordinatePressure` | 2 | 0 |
+| `airTemperature` | 0 | 273.15
 
 1. Your mappings file should contain the following:
 
@@ -179,9 +179,9 @@ and of course can use `bufr_dump` to inspect the contents of the output BUFR.
 
 ## Question 6
 
-1. The `relative_humidity` variable cannot take a value of $-5\%$ because it is impossible for relative humidity to be less than $0$.
+1. The `relative_humidity` variable cannot take a value of -5% because it is impossible for relative humidity to be less than 0.
 
-1. The `relative_humidity` variable is at minimum $0$, and the maximum value is subjective, for example $150%.
+1. The `relative_humidity` variable is at minimum 0, and the maximum value is subjective, for example 150.
 
 1. The `relative_humidity` element should be adjusted to look like the following:
 
@@ -196,7 +196,7 @@ and of course can use `bufr_dump` to inspect the contents of the output BUFR.
         }
     ```
 
-1. You should repeat the process above to the variables of your choice, keeping the units of the input data in mind. For example, as `air_temp` is in $^{\circ}\text{C}$ you may set `"valid_min": "const:-20"` and `"valid_max": "const:40"`.
+1. You should repeat the process above to the variables of your choice, keeping the units of the input data in mind. For example, as `air_temp` is in &deg;C you may set `"valid_min": "const:-20"` and `"valid_max": "const:40"`.
 
 1. This is done as usual in the following way:
 
@@ -205,7 +205,7 @@ and of course can use `bufr_dump` to inspect the contents of the output BUFR.
     ```
 
     ```bash
-    bufr_dump -p  WIGOS_0-20000-0-MYWSI001_20230203T120200.bufr4 |grep -i 'relativeHumidity'
+    bufr_dump -p  WIGOS_0-20000-0-MYWSI001_20230203T120200.bufr4 | egrep -i 'relativeHumidity'
     ```
 
     which should output:
