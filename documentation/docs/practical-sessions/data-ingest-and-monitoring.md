@@ -34,7 +34,7 @@ Open your data mappings file:
 vi $WIS2BOX_DATA_MAPPINGS
 ```
 
-Verify the topic hierarchy and plugin type that was updated [previously](configuring-data-mappings.md).
+Verify the topic hierarchy and plugin type that you have updated [previously](configuring-data-mappings.md).
 
 ### Verify discovery metadata
 
@@ -122,6 +122,13 @@ It's time to upload your data to the new path!  Click the **Upload** button to a
 
 <img alt="minio-admin-create-new-path" src="../../assets/img/minio-admin-create-new-path.png" width="600">
 
+
+!!! question "View the Grafana dashboard"
+    Check the Grafana dashboard, can you confirm the wis2box workflow was initiated after you uploaded your data? In case you see any errors, try to use the information provided in the dashboard to resolve the errors.
+
+!!! question "View new messages on your wis2box-broker"
+    Check MQTT-explorer, can you confirm that new messages were successfully published on your wis2box-broker?
+
 ### wis2box-management command line
 
 If you prefer, you can manually trigger the data ingestion action using the wis2box-management command line. 
@@ -150,23 +157,29 @@ pip3 install minio
 
 Login to your student VM and you will note that this library should already be installed.
 
-Go to the directory `exercise-materials/wis2box-setup` and view the example script:
+Go to the directory `exercise-materials/wis2box-setup` and run the example script using the following command:
 
-Run the script using the following command:
-
-```bash 
-python3 example/scripts/copy_to_incoming.py
+```bash
+cd ~/exercise-materials/wis2box-setup
+python3 examples/scripts/copy_to_incoming.py
 ```
 
-!!! question
-    The sample script needs to be modified before it can be used.  Why did the script fail?
+!!! note
+    The sample script needs to be modified before it can be used. 
 
 The script needs to know the correct endpoint for accessing MinIO on your wis2box. If wis2box is running on your host, the MinIO endpoint is available at `http://<your-host>:9000`.
 
 The sample script provides the basic structure for copying a file into MinIO. Try to ingest a data sample of your choosing using this script.
 
-!!! question 
-    Use the Python example provided to create your own Python script to ingest data into your wis2box.  What is the correct topic for your data?  Are you able to detect new WIS2 notification on the Grafana dashboard? If not, try to understand the errors and adjust the script accordingly.
+!!! question "ingest data using Python"
+    Use the Python example provided to create your own Python script to ingest data into your wis2box.  
+    
+    Ensure that you:
+        - define the correct MinIO endpoint for your host
+        - define the correct path in MinIO for the topics defined in your `data-mappings.yml`
+        - determine the correct local path where the script can access the data to ingest
+
+    Ensure that the script runs correctly and new data notifications are published on your wis2box broker. Review and correct any errors reported on the Grafana dashboard:
 
 ### wis2box FTP
 

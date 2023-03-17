@@ -253,10 +253,17 @@ Done
 
 ```
 
+### Review new data in the wis2box API
+
 Browse through the new items available in the collections on your API on `http://<your-host>/oapi/collections`.
 
-!!! question
-    What changes do you observe?
+!!! question "Explore data notifications"
+    Access a single item in 'Data notifications' and find how you can access your data the data in BUFR format.
+
+!!! question "View data in GeoJSON format"
+    Access a single item in 'Surface weather observations from Malawi' and find how you can access the data in GeoJSON format.
+
+### Review new data in the Grafana dashboard
 
 Check your wis2box workflow monitoring on `http://<your-host>:3000` (powered by the **grafana** container). You should see the following:
 
@@ -265,15 +272,19 @@ Check your wis2box workflow monitoring on `http://<your-host>:3000` (powered by 
 !!! question
     Try to understand the information shown on your monitoring dashboard. How many WIS2 notifications were published on your broker? Can you determine the source of reported ERRORs?
 
-View the messages that have been published on your local broker in MQTT Explorer.
+### Review new data on your wis2box broker
+
+View the messages that have been published on your wis2box-broker in MQTT Explorer.
 
 !!! question
-    What is the topic used to publish messages advertising new data? What is the URL to download the data?
+    What is the topic used to publish messages advertising new data? How many messages have been published? What is the URL to download the data?
 
-Click the the "EXPLORE" option on `http://<your-host>`.
+### Review new data on the wis2box UI
 
-!!! question
-    What changes do you observe?
+Click the "EXPLORE" option on `http://<your-host>`.
+
+!!! question "View latest data per station"
+    Click on on the stations in the station-list or hover your mouse over a station in the map to see the latest data for that station.
 
 ## Conclusion
 
