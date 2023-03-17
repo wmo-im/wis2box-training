@@ -155,7 +155,11 @@ To view collections currently published to the API, navigate to the page `http:/
 !!! question
     Which stations are configured?
 
-Make sure you can connect to your broker (running via the **wis2box-broker** container) using MQTT Explorer with the following connection details:
+## Connect MQTT explorer to your wis2box-broker
+
+Go to MQTT explorer on your computer and prepare a new connection to connect to your broker (running via the **wis2box-broker** container).
+
+Use the following connection details:
 
 - **Protocol: mqtt://**
 - **Host: `<your-host>`**
@@ -164,9 +168,11 @@ Make sure you can connect to your broker (running via the **wis2box-broker** con
 - **Password: wis2box**
 - under 'ADVANCED', subscribe to the topics `$SYS/#` and `origin/#`
 
+Make sure to SAVE your connection details.
+
 <img alt="mqtt-explorer-wis2box-broker.png" src="../../assets/img/mqtt-explorer-wis2box-broker.png" width="600">
 
-You should see statistics being published by your broker on the `$SYS` topic.
+Once you are connected, you should see statistics being published by your broker on the `$SYS` topic.
 
 Keep MQTT Explorer running and continue with the runtime configuration steps.
 

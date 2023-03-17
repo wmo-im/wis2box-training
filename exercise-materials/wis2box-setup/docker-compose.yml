@@ -22,6 +22,7 @@ services:
 
   wis2box-api:
     container_name: wis2box-api
+    # use training image
     image: wmoim/wis2box-api:0.5.1-training
     env_file:
       - default.env
