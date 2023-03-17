@@ -16,7 +16,7 @@ If you want to run this training outside of a local training session, you can pr
 - AWS (Amazon Web Services)  ec2-instance `t3a.medium` 
 - Azure (Microsoft) Azure Virtual Machine `standard_b2s`
 
-Select Ubuntu Server 20.0.4 LTS as OS and run the setup script available in [student_vm.zip](https://wmo-im.github.io/wis2box-training/student_vm.zip) on your instance to ensure you have all required software.
+Select Ubuntu Server 20.0.4 LTS as OS and run the setup script available in [student_vm.zip](https://wmo-im.github.io/wis2box-training/student_vm_not_yet_ready.zip) on your instance to ensure you have all required software.
 
 If you are using the student VM provided during local WIS2 training sessions, the required software will already be installed.
 
@@ -194,11 +194,14 @@ cd exercise-materials
 ls
 ```
 
-Return to your previous directory:
+To access the material on your local machine rather than from the command-line, you can use SCP. Using WinSCP, you can create a new SCP connection to your VM as follows:
 
-```bash
-cd ..
-```
+<img alt="winscp-student-vm-scp.png" src="../../assets/img/winscp-student-vm-scp.png" width="400">
+
+And you should be able to access the exercise-materials:
+
+<img alt="winscp-student-vm-exercise-materials.png" src="../../assets/img/winscp-student-vm-exercise-materials.png" width="500">
+
 
 ## Conclusion
 

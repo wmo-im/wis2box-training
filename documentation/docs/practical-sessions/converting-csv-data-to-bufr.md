@@ -25,7 +25,7 @@ ls
 ```
 
 !!! tip
-    You shuld be able to see the following directories `BUFR_tables answers  ex_1  ex_2  ex_3  ex_4  ex_5 ex_6`
+    You should be able to see the following directories `BUFR_tables answers  ex_1  ex_2  ex_3  ex_4  ex_5 ex_6`
 
 
 ## csv2bufr primer
@@ -109,6 +109,8 @@ Use bufr_dump to find the latitude and longitude value stored in the output BUFR
 
     See the [BUFR primer](../converting-synop-data-to-bufr#bufr_dump) section.
 
+[Check here to see answers to exercise 1](../answers/csv2-bufr-answers.md#exercise-1)
+
 ### Exercise 2: Mapping BUFR sequences
 
 Navigate to the `ex_2` directory:
@@ -142,6 +144,8 @@ A given sequence will appear multiple times, once for each BUFR element it conta
 
     Search for the corresponding 6 digit codes found in the previous exercise, and find the corresponding sequence in the 3rd column. For example, the BUFR elements **005002** (Latitude) and **006002** (Longitude) can be replaced with sequence **301023** (Latitude/longitude (coarse accuracy)).
 
+[Check here to see answers to exercise 2](../answers/csv2-bufr-answers.md#exercise-2)
+
 ### Exercise 3: Adapting the mapping file to your input CSV data (column names)
 
 Navigate to the `ex_3` directory, and inspect file `ex_3.csv`.  Compare this file to `ex_2.csv`:
@@ -164,6 +168,8 @@ my-mapping-ex_3.json
 Use the csv2bufr `data transform` function to convert `ex_3.csv` to BUFR format.
 
 Check that the data stored in the output BUFR is the same as that in the CSV that is was converted from.
+
+[Check here to see answers to exercise 3](../answers/csv2-bufr-answers.md#exercise-3)
 
 ### Exercise 4: Adapting the mapping file to your input CSV data (units)
 Navigate to the `ex_4` directory and edit the file `ex_4.csv`:
@@ -200,6 +206,8 @@ This is the same mapping file as you generated and modified a couple of exercise
 
 Convert the file `ex_4.csv` to BUFR format.
 
+[Answers to exercise 4](../answers/csv2-bufr-answers.md#exercise-4)
+
 ### Exercise 5: Create mappings for hourly synop with WIGOS Station Identifier
 Navigate to the `ex_5` directory:
 
@@ -218,6 +226,8 @@ Delete all elements in the mapping template that are not present in the CSV data
     Make sure that `number_header_rows` and `column_names_row` are correct.
 
 Convert the CSV data data to BUFR format.
+
+[Answers to exercise 5](../answers/csv2-bufr-answers.md#exercise-5)
 
 ### Exercise 6
 Navigate to the `ex_6` directory and edit the file `ex_6.csv`:
@@ -244,6 +254,8 @@ Add more valid minimum and maximum values to the mappings file according to your
     The minimum and maximum values must have the **same units** as your **original** input data, not the converted values discussed in the previous exercise.
 
 Convert the file `ex_6.csv` to BUFR format, and use `bufr_dump` to verify that this variable has no value in the resulting BUFR.
+
+[Answers to exercise 6](../answers/csv2-bufr-answers.md#exercise-6)
 
 ## Conclusion
 
