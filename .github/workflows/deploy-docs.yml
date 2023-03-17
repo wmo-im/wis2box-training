@@ -6,6 +6,7 @@ on:
       - main
     paths:
       - 'documentation/**'
+      - 'exercise-materials/**'
 
 defaults:
   run:
