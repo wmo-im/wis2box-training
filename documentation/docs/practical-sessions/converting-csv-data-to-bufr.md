@@ -25,7 +25,7 @@ ls
 ```
 
 !!! tip
-    You shuld be able to see the following directories `BUFR_tables answers  ex_1  ex_2  ex_3  ex_4  ex_5 ex_6`
+    You should be able to see the following directories `BUFR_tables answers  ex_1  ex_2  ex_3  ex_4  ex_5 ex_6`
 
 
 ## csv2bufr primer
@@ -47,7 +47,7 @@ For more information, see the following [example](https://csv2bufr.readthedocs.i
 The `data transform` command converts a CSV file to BUFR format:
 
 ```bash
-csv2bufr data transform --bufr-template <my_template.json> --output-dir <./my_folder> <my_data.csv>
+csv2bufr data transform --bufr-template <my_template.json> --output-dir <./my_directory> <my_data.csv>
 ```
 
 ## ecCodes BUFR refresher
@@ -240,11 +240,11 @@ Here, you are free to either work with your own synoptic CSV data, or use the fi
 
 !!! question
 
-    Just like previous exercises, edit element names in the mapping file according to the CSV data.
+    Just like previous exercises, edit the element names in the mapping file according to the CSV data.
 
 !!! note
 
-    Make sure that `number_header_rows` and `column_names_row` are correct.
+    Ensure that `number_header_rows` and `column_names_row` are correct.
 
 Convert the CSV data data to BUFR format.
 

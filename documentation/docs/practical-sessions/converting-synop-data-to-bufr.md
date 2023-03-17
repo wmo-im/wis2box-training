@@ -38,7 +38,7 @@ Below are essential `synop2bufr` commands and configurations:
 The `transform` function converts a SYNOP message to BUFR:
 
 ```bash
-synop2bufr transform --metadata my_file.csv --output-dir ./my_folder --year message_year --month message_month my_SYNOP.txt
+synop2bufr transform --metadata my_file.csv --output-dir ./my_directory --year message_year --month message_month my_SYNOP.txt
 ```
 
 Note that if the metadata, output directory, year and month options are not specified, they will assume their default values:

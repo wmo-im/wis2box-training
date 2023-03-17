@@ -4,7 +4,7 @@ Repository containing wis2box training material (exercises, data, configuration)
 
 ## Environment
 
-The folder 'environment' provides documentation and materials used to run the local setup.
+The 'environment' directory provides documentation and materials used to run the local setup.
 
 The wis2box-training is designed to be run on a local network containing all data, images and configurations.
 
@@ -14,7 +14,7 @@ A local registry mirroring docker-hub is setup on the local hardware to reduce t
 
 ## Exercise materials
 
-All the contents of the folder 'exercise-materials' are added to the gh-pages during deployment in a single zip-file 'exercise-materials.zip'.
+All the contents of the 'exercise-materials' directory are added to the gh-pages during deployment in a single zip-file 'exercise-materials.zip'.
 
 The practical sessions will start by asking the student to download this archive on their local machine and extracting it.
 
