@@ -8,8 +8,6 @@ title: Downloading and finding data from WIS2
 
 In this session you will learn how to discover data from the WIS2 Global Discovery Catalogue (GDC) and download data from a WIS2 Global Broker (GB).
 
-Note that the starting point for wis2box workflow is the MinIO container publishing a message on the `wisbox-storage/#` topic on the local broker.
-
 ## Preparation
 
 !!! note

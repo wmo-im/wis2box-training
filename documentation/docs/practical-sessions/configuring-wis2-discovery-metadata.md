@@ -38,7 +38,7 @@ more ~/my-discovery-metadata.yml
 ```
 
 !!! note
-    All values in the discovery metadata configuration are required and shoud be included.
+    All values in the discovery metadata configuration are required and should be included.
 
 !!! question
     How does line 3 of your discovery metadata file relate to the new data mapping in the previous session?
