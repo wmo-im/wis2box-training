@@ -38,9 +38,9 @@ Use the following configuration to connect your PC on the local WiFi broadcasted
 
 Use an SSH client to connect to your student VM using the following:
 
-- **Host: country-lastname.wis2.training** (replace with your country and lastname)
+- **Host: country-lastname.wis2.training** (replace with your country and your last name)
 - **Port: 22**
-- **Username: lastname** (replace with your lastname)
+- **Username: lastname** (replace with your last name)
 - **Password: wis2training**
 
 !!! tip

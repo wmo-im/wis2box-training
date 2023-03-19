@@ -44,7 +44,7 @@ You are now ready to start exploring the WIS2 topics and message structure and a
 
     `origin/a/wis2/mwi/malawi_wmo_demo/data/core/weather/surface-based-observations/synop`
 
-    What is the the value of the URL from which we can download the data in `.bufr` format?
+    What is the URL from which we can download the data in BUFR format?
 
 !!! question
     Find the latest message received on the following topic:
@@ -58,7 +58,7 @@ You are now ready to start exploring the WIS2 topics and message structure and a
 
 !!! note
     MQTT Explorer is a helpful tool to review the topic structure for a given MQTT broker and visually work with the MQTT protocol.  There exist
-    many MQTT client and server software.  To work with MQTT programatically (for example, in Python), [paho-mqtt](https://pypi.org/project/paho-mqtt/)
+    many MQTT client and server software.  To work with MQTT programmatically (for example, in Python), [paho-mqtt](https://pypi.org/project/paho-mqtt/)
     can be used to connect to an MQTT broker and process incoming messages.
 
 ## Conclusion

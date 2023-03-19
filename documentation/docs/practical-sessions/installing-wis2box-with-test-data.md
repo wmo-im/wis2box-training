@@ -52,9 +52,9 @@ cat dev.env
     `WIS2BOX_HOST_DATADIR` is set to `${PWD}/test-data`.  This directory will be mapped as `/data/wis2box` inside the **wis2box-management** container.
 
 !!! note
-    ``LOGGING_LEVEL`` is set to ``INFO``.  The ``LOGGING_LEVEL`` for a wisbox default installation is ``WARNING``.
+    ``LOGGING_LEVEL`` is set to ``INFO``.  The ``LOGGING_LEVEL`` for a wis2box default installation is ``WARNING``.
 
-Before starting wis2box, edit the `dev.env` file using a command-line editor (vi/vim/emacs/nano), and add the `WIS2BOX_URL` and `WISB2BOX_API_URL` variables as follows:
+Before starting wis2box, edit the `dev.env` file using a command-line editor (vi/vim/emacs/nano), and add the `WIS2BOX_URL` and `WIS2BOX_API_URL` variables as follows:
 
 ```bash
 # Required
@@ -258,7 +258,7 @@ Done
 Browse through the new items available in the collections on your API on `http://<your-host>/oapi/collections`.
 
 !!! question "Explore data notifications"
-    Access a single item in 'Data notifications' and find how you can access your data the data in BUFR format.
+    Access a single item in 'Data notifications', find the download URL and verify that you can download the BUFR file.
 
 !!! question "View data in GeoJSON format"
     Access a single item in 'Surface weather observations from Malawi' and find how you can access the data in GeoJSON format.
@@ -277,13 +277,13 @@ Check your wis2box workflow monitoring on `http://<your-host>:3000` (powered by 
 View the messages that have been published on your wis2box-broker in MQTT Explorer.
 
 !!! question
-    What is the topic used to publish messages advertising new data? How many messages have been published? What is the URL to download the data?
+    What is the topic used to publish notifications for new data? How many WIS2 data notifications have been published?
 
 ### Review new data on the wis2box UI
 
 Click the "EXPLORE" option on `http://<your-host>`.
 
-!!! question "View latest data per station"
+!!! question "View latest data per station on the wis2box UI"
     Click on on the stations in the station-list or hover your mouse over a station in the map to see the latest data for that station.
 
 ## Conclusion
