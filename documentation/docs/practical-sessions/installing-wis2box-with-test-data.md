@@ -258,7 +258,7 @@ Done
 Browse through the new items available in the collections on your API on `http://<your-host>/oapi/collections`.
 
 !!! question "Explore data notifications"
-    Access a single item in 'Data notifications', find the download-url and verify that you can download the BUFR file.
+    Access a single item in 'Data notifications', find the download URL and verify that you can download the BUFR file.
 
 !!! question "View data in GeoJSON format"
     Access a single item in 'Surface weather observations from Malawi' and find how you can access the data in GeoJSON format.
@@ -283,7 +283,7 @@ View the messages that have been published on your wis2box-broker in MQTT Explor
 
 Click the "EXPLORE" option on `http://<your-host>`.
 
-!!! question "View latest data per station on the wis2box-UI"
+!!! question "View latest data per station on the wis2box UI"
     Click on on the stations in the station-list or hover your mouse over a station in the map to see the latest data for that station.
 
 ## Conclusion
