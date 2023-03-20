@@ -27,7 +27,7 @@ cd ~/exercise-materials/wis2box-setup
 
 ## wis2box setup using test data
 
-Before starting the wis2box, you should review the content of the test data you will use and set the hostname of your wis2box.
+Before starting wis2box, you should review the content of the test data you will use and set the hostname of your wis2box.
 
 ### dev.env
 
@@ -144,7 +144,7 @@ Open a new tab and navigate to the page `http://<your-host>/oapi`.
 
 <img alt="wis2box-api.png" src="../../assets/img/wis2box-api.png" width="600">
 
-This is the wis2box API (running via the **wis2box-api** container).
+This is wis2box API (running via the **wis2box-api** container).
 
 To view collections currently published to the API, navigate to the page `http://<your-host>/oapi/collections`.
 

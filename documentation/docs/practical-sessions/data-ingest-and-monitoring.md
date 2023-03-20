@@ -73,7 +73,7 @@ Ensure you have opened the Grafana dashboard home-page at `http://<your-host>:30
 
 Keep a web browser tab open with the Grafana dashboard during the next few exercises to monitor the status of your data publishing.
 
-## Ingesting your data into the wis2box
+## Ingesting your data into wis2box
 
 You can use multiple methods to ingest data into wis2box and start publishing notifications to WIS2.
 
@@ -124,7 +124,7 @@ It's time to upload your data to the new path!  Click the **Upload** button to a
 
 
 !!! question "View the Grafana dashboard"
-    Check the Grafana dashboard, can you confirm the wis2box workflow was initiated after you uploaded your data? In case you see any errors, try to use the information provided in the dashboard to resolve the errors.
+    Check the Grafana dashboard; can you confirm the wis2box workflow was initiated after you uploaded your data? In case you see any errors, try to use the information provided in the dashboard to resolve the errors.
 
 !!! question "View new messages on your wis2box-broker"
     Check MQTT-explorer, can you confirm that new messages were successfully published on your wis2box-broker?
@@ -147,7 +147,7 @@ wis2box data ingest --topic-hierarchy mwi.mwi_met_centre.data.core.weather.surfa
 
 ### MinIO Python client
 
-At some point you may want to automate data ingestion from your system into the wis2box using Python.
+At some point you may want to automate data ingestion from your system into wis2box using Python.
 
 MinIO provides a Python client which can be installed as follows:
 
@@ -224,7 +224,7 @@ Check your Grafana dashboard.
 
     If not, review the errors reported and try to determine what went wrong.
 
-### Viewing data in the WIS2BOX-UI
+### Viewing data in the wis2box UI
 
 Open your web browser and navigate to `http://<your-host>`.  You should see a dataset with same title as you configured
 in your discovery metadata configuration.  Click the **EXPLORE** button.
@@ -237,6 +237,6 @@ TODO add screenshots, add exercise
     In this practical session, you learned how to:
 
     - prepare and verify your data mappings, discovery metadata, and station metadata
-    - trigger the wis2box workflow using different data ingest methods
+    - trigger wis2box workflow using different data ingest methods
     - monitor the status of your data ingest and publishing
     - view your data on the wis2box UI
