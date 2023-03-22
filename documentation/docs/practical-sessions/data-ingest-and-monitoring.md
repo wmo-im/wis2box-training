@@ -183,9 +183,9 @@ The sample script provides the basic structure for copying a file into MinIO. Tr
 
 ### wis2box FTP
 
-To allow your data to be accessible over FTP you can use the 'wis2box-ftp'-image. This container provides a service that forwards data received over FTP to MinIO.
+To allow your data to be accessible over FTP you can use the 'wis2box-ftp' image. This container provides a service that forwards data received over FTP to MinIO.
 
-Create a new file `ftp.env` using any text-editor, and give it the following content:
+Create a new file `ftp.env` using any text editor, and add the following content:
 
 ```console
 MYHOSTNAME=trainer-limper.wis2.training
@@ -209,11 +209,11 @@ Then start the `wis2box-ftp` service with the following command:
 docker-compose -f docker-compose.wis2box-ftp.yml --env-file ftp.env up -d
 ```
 
-To test the FTP-service, you can use WinSCP on your local laptop and prepare the connection to the **wis2box-ftp** container as follows:
+To test the FTP service, you can use WinSCP on your local laptop and prepare the connection to the **wis2box-ftp** container as follows:
 
 <img alt="winscp-new-session" src="../../assets/img/winscp-new-session.png" width="400">
 
-Replace "Host name" with that of **your** student VM and use the username and password for the FTP as specified by `FTP_USER` and `FTP_PASSWORD` in your ftp.env.
+Replace "Host name" with that of **your** student VM and use the username and password for the FTP as specified by `FTP_USER` and `FTP_PASSWORD` in your `ftp.env` file.
 
 Once you have established the connection you will land in an empty directory. 
 
@@ -236,7 +236,7 @@ Check your Grafana dashboard.
     If not, review the errors reported and try to determine what went wrong.
 
 !!! Note
-    You can run `docker logs wis2box-ftp` to check if the FTP-service is running correctly.
+    You can run `docker logs wis2box-ftp` to check if the FTP service is running correctly.
 
 ## Conclusion
 
