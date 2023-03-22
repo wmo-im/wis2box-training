@@ -183,26 +183,37 @@ The sample script provides the basic structure for copying a file into MinIO. Tr
 
 ### wis2box FTP
 
-You can add an additional service to allow your data to be accessible over FTP.
+To allow your data to be accessible over FTP you can use the 'wis2box-ftp'-image. This container provides a service that forwards data received over FTP to MinIO.
 
-To define the FTP username and password, add the following additional environment variables to your `dev.env`:
+Create a new file `ftp.env` using any text-editor, and give it the following content:
 
-```bash
+```console
+MYHOSTNAME=trainer-limper.wis2.training
+
 FTP_USER=wis2box
-FTP_PASSWORD=wis2box123
+FTP_PASS=wis2box123
+FTP_HOST=${MYHOSTNAME}
+
+WIS2BOX_STORAGE_ENDPOINT=http://${MYHOSTNAME}:9000
+WIS2BOX_STORAGE_USER=minio
+WIS2BOX_STORAGE_PASSWORD=minio123
+
+LOGGING_LEVEL=INFO
 ```
+
+and ensure `MYHOSTNAME` is set to **your** hostname.
 
 Then start the `wis2box-ftp` service with the following command:
 
 ```bash
-docker-compose -f docker-compose.wis2box-ftp.yml -p wis2box_project --env-file dev.env up -d
+docker-compose -f docker-compose.wis2box-ftp.yml --env-file ftp.env up -d
 ```
 
-Now open WinSCP on your local laptop and prepare the connection to the **wis2box-ftp** container as follows:
+To test the FTP-service, you can use WinSCP on your local laptop and prepare the connection to the **wis2box-ftp** container as follows:
 
 <img alt="winscp-new-session" src="../../assets/img/winscp-new-session.png" width="400">
 
-Replace "Host name" with that of **your** student VM and use the username and password for the FTP you specified in your `dev.env`.
+Replace "Host name" with that of **your** student VM and use the username and password for the FTP as specified by `FTP_USER` and `FTP_PASSWORD` in your ftp.env.
 
 Once you have established the connection you will land in an empty directory. 
 
@@ -224,12 +235,8 @@ Check your Grafana dashboard.
 
     If not, review the errors reported and try to determine what went wrong.
 
-### Viewing data in the wis2box UI
-
-Open your web browser and navigate to `http://<your-host>`.  You should see a dataset with same title as you configured
-in your discovery metadata configuration.  Click the **EXPLORE** button.
-
-TODO add screenshots, add exercise
+!!! Note
+    You can run `docker logs wis2box-ftp` to check if the FTP-service is running correctly.
 
 ## Conclusion
 
