@@ -44,7 +44,7 @@ This should create the following file: `WIGOS_0-20000-0-MYWSI001_20230203T120200
 1. This can be done using the following command:
 
     ```bash
-    bufr_dump -p  WIGOS_0-20000-0-MYWSI001_20230203T120200.bufr4 | egrep -i 'latitude\|longitude'
+    bufr_dump -p  WIGOS_0-20000-0-MYWSI001_20230203T120200.bufr4 | egrep -i 'latitude|longitude'
     ```
 
 ## Exercise 2
@@ -75,37 +75,20 @@ and of course can use `bufr_dump` to inspect the contents of the output BUFR.
     csv2bufr mappings create 301150 301011 301012 301023 007031 010004 012101 013009 --output mapping_3.json
     ```
 
-1. As per the hint, we make the following changes to the mappings file:\
-    \
-    `"value": "data:wigosIdentifierSeries"`\
-    &rarr; `"value": "data:wigos_identifier_series"`\
-    \
-    `"value": "data:wigosIssuerOfIdentifier"`\
-    &rarr; `"value": "data:wigos_issuer_of_identifier"`\
-    \
-    `"value": "data:wigosIssueNumber"`\
-    &rarr; `"value": "data:wigos_issue_number"`\
-    \
-    `"value": "data:wigosLocalIdentifierCharacter"`\
-    &rarr; `"value": "data:wigos_local_identifier_character"`\
-    \
-    `"value": "data:latitude"` \
-    &rarr; `"value": "data:lat"`\
-    \
-    `"value": "data:longitude"`\
-    &rarr; `"value": "data:lon"`\
-    \
-    `"value": "data:heightOfBarometerAboveMeanSeaLevel"`\
-    &rarr; `"value": "data:height_of_barometer_above_msl"`\
-    \
-    `"value": "data:nonCoordinatePressure"`\
-    &rarr; `"value": "data:non_coordinate_pressure"`\
-    \
-    `"value": "data:airTemperature"`\
-    &rarr; `"value": "data:air_temp"`\
-    \
-    `"value": "data:relativeHumidity"`\
-    &rarr; `"value": "data:relative_humdity"`\
+1. As per the hint, we make the following changes to the mappings file:
+
+    |From|To|
+    |---|---|
+    |`"value": "data:wigosIdentifierSeries"` | `"value": "data:wigos_identifier_series"`|
+    |`"value": "data:wigosIssuerOfIdentifier"` | `"value": "data:wigos_issuer_of_identifier"`|
+    |`"value": "data:wigosIssueNumber"` | `"value": "data:wigos_issue_number"`|
+    |`"value": "data:wigosLocalIdentifierCharacter"` | `"value": "data:wigos_local_identifier_character"`|
+    |`"value": "data:latitude"` | `"value": "data:lat"`|
+    |`"value": "data:longitude"` | `"value": "data:lon"`|
+    |`"value": "data:heightOfBarometerAboveMeanSeaLevel"` |`"value": "data:height_of_barometer_above_msl"`|
+    |`"value": "data:nonCoordinatePressure"` | `"value": "data:non_coordinate_pressure"`|
+    |`"value": "data:airTemperature"` |  `"value": "data:air_temp"`|
+    |`"value": "data:relativeHumidity"` | `"value": "data:relative_humdity"`|
 
 1. This is done as usual in the following way:
 
