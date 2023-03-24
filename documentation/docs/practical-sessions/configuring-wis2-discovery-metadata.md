@@ -62,6 +62,13 @@ Update the following values in the discovery metadata configuration:
 !!! tip
     Ensure that bbox values are correctly signed (for example, use the minus sign [`-`] for southern or western hemispheres.
 
+!!! tip
+    The following tools can be valuable for deriving your `identification.extents.spatial.bbox`:
+
+    - [https://gist.github.com/graydon/11198540](https://gist.github.com/graydon/11198540)
+    - [http://bboxfinder.com](http://bboxfinder.com)
+    - [https://boundingbox.klokantech.com](https://boundingbox.klokantech.com)
+
 ## Publishing discovery metadata
 
 Run the following command to publish your discovery metadata:
