@@ -1,7 +1,7 @@
 ---
-title: 20 - 24 March 2023: Windhoek, Namibia
+title: 12 - 16 June 2023: Port of Spain, Trinidad and Tobago
 ---
 
-# 20 - 24 March 2023: Windhoek, Namibia
+# 12 - 16 June 2023: Port of Spain, Trinidad and Tobago
 
 TODO
