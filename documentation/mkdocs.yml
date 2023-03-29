@@ -10,8 +10,8 @@ nav:
     - Home: index.md
     - Schedule:
         - Index: index.md
-        - 20 - 24 March 2023 - Windhoek, Namibia: schedule/namibia-2023-03/index.md
-        - 12 - 16 June 2023 - Port of Spain, Trinidad and Tobago: schedule/trinidad-and-tobago-2023-06/index.md
+        - 20 - 24 March 2023 - Windhoek, Namibia 🇳🇦: schedule/namibia-2023-03/index.md
+        - 12 - 16 June 2023 - Port of Spain, Trinidad and Tobago 🇹🇹: schedule/trinidad-and-tobago-2023-06/index.md
     - Practical sessions:
         - Connecting to WIS2 over MQTT: practical-sessions/connecting-to-mqtt.md
         - Accessing your student VM: practical-sessions/accessing-your-student-vm.md

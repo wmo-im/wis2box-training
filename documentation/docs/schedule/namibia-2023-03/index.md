@@ -1,8 +1,8 @@
 ---
-title: 20 - 24 March 2023: Windhoek, Namibia
+title: 20 - 24 March 2023: Windhoek, Namibia 🇳🇦
 ---
 
-# 20 - 24 March 2023: Windhoek, Namibia
+# 20 - 24 March 2023: Windhoek, Namibia 🇳🇦
 
 ## Venue
 
@@ -88,35 +88,35 @@ Corner Of Auas Aviation Road, 9000 Windhoek, Namibia
 
 |    | Country      | Name                       |
 |----|--------------|----------------------------|
-| 1  | Algeria      | Abderraouf KADEM           |
-| 2  | Congo        | Francilly Lardin SAMBA     |
-| 3  | Eswatini     | Mbongeni Ian GAMEDZE       |
-| 4  | Kenya        | Peter Kipkorir MUTAI       |
-| 5  | Malawi       | Patrick Edward MTINGWI     |
-| 6  | Morocco      | Chems Eddine EL GARRAI     |
-| 7  | Namibia      | Odillo KGOBETSI            |
-| 8  | Namibia      | Laina AMUNJELA (Ms.)       |
-| 9  | Namibia      | Seblonica IMALWA (Ms.)     |
-| 10 | Namibia      | Prince Julian HAOSEB       |
-| 11 | Namibia      | Uvatera TJIMUNE            |
-| 12 | Namibia      | Vilho NDEUNYEMA            |
-| 13 | South Africa | Tshepo Hope TAWANE         |
-| 14 | South Africa | Teko Mohono                |
-| 15 | South Africa | Thula Ngidi                |
-| 16 | South Africa | Christa Ferreira (Ms.)     |
-| 17 | Tanzania     | Rose Dudley SENYAGWA (Ms.) |
-| 18 | Zambia       | Naomi MUCHIPU (Ms.)        |
-| 19 | Zimbabwe     | Joyce BANDA (Ms.)          |
-| 20 | Zimbabwe     | Wilfred Janda CHAWAGUTA    |
-| 21 | Zimbabwe     | Zvidzai Malvin KANENGONI   |
+| 1  | Algeria 🇩🇿     | Abderraouf KADEM           |
+| 2  | Congo 🇨🇬       | Francilly Lardin SAMBA     |
+| 3  | Eswatini 🇸🇿     | Mbongeni Ian GAMEDZE       |
+| 4  | Kenya 🇰🇪        | Peter Kipkorir MUTAI       |
+| 5  | Malawi 🇲🇼      | Patrick Edward MTINGWI     |
+| 6  | Morocco 🇲🇦      | Chems Eddine EL GARRAI     |
+| 7  | Namibia 🇳🇦     | Odillo KGOBETSI            |
+| 8  | Namibia 🇳🇦     | Laina AMUNJELA (Ms.)       |
+| 9  | Namibia 🇳🇦     | Seblonica IMALWA (Ms.)     |
+| 10 | Namibia 🇳🇦     | Prince Julian HAOSEB       |
+| 11 | Namibia 🇳🇦     | Uvatera TJIMUNE            |
+| 12 | Namibia 🇳🇦     | Vilho NDEUNYEMA            |
+| 13 | South Africa 🇿🇦 | Tshepo Hope TAWANE         |
+| 14 | South Africa 🇿🇦 | Teko Mohono                |
+| 15 | South Africa 🇿🇦 | Thula Ngidi                |
+| 16 | South Africa 🇿🇦 | Christa Ferreira (Ms.)     |
+| 17 | Tanzania     🇹🇿 | Rose Dudley SENYAGWA (Ms.) |
+| 18 | Zambia      🇿🇲 | Naomi MUCHIPU (Ms.)        |
+| 19 | Zimbabwe 🇿🇼    | Joyce BANDA (Ms.)          |
+| 20 | Zimbabwe 🇿🇼    | Wilfred Janda CHAWAGUTA    |
+| 21 | Zimbabwe 🇿🇼    | Zvidzai Malvin KANENGONI   |
 
 
 ## Instructors
 
 |Name|Organization|
 |----|------------|
-|Enrico Fucile|WMO Secretariat|
-|Hassan Haddouch|WMO Secretariat|
-|Tom Kralidis|Meteorological Service of Canada|
-|Maaike Limper|WMO Secretariat|
-|Timo Proescholdt|WMO Secretariat|
+|Enrico Fucile|WMO Secretariat 🇺🇳|
+|Hassan Haddouch|WMO Secretariat 🇺🇳|
+|Tom Kralidis|Meteorological Service of Canada 🇨🇦|
+|Maaike Limper|WMO Secretariat 🇺🇳|
+|Timo Proescholdt|WMO Secretariat 🇺🇳|
