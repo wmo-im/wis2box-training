@@ -97,7 +97,7 @@ File > Print > Save as PDF.
 
 ## Exercise materials
 
-Exercise materials can be downloaded from the [exercise-materials.zip](https://wmo-im.github.io/wis2box-training/exercise-materials.zip) zipfile.
+Exercise materials can be downloaded from the [exercise-materials.zip](https://training.wis2box.wis.wmo.int/exercise-materials.zip) zipfile.
 
 
 ## Support
