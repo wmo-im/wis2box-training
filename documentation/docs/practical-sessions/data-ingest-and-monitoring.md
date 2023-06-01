@@ -8,17 +8,13 @@ title: Data ingest and monitoring
 
 In this session you will learn various ways to ingest data into your wis2box and learn how you can monitor if your data is being ingested without errors.
 
-Note that the starting point for wis2box workflow is the MinIO container publishing a message on the `wis2box-storage/#` topic on the local broker.
+## preparation
 
-## Preparation
+### Download test-data
 
-!!! note
-    Before starting please login to your student VM and ensure your wis2box is started and all services are up:
+Download the following file onto your local computer:
 
-    ```bash
-    python3 wis2box-ctl.py start
-    python3 wis2box-ctl.py status
-    ```
+[WIGOS_0-454-2-AWSBILIRA_2023-06-01T1055.csv](https://training.wis2box.wis.wmo.int/WIGOS_0-454-2-AWSBILIRA_2023-06-01T1055.csv) 
 
 ### Verify data mappings
 
@@ -35,37 +31,31 @@ vi $WIS2BOX_DATA_MAPPINGS
 ```
 
 !!! question
-    Which plugins are configured for which stations ?
+    Which plugins are configured for your dataset ?
 
-## Open the Grafana dashboard
+### Open the Grafana dashboard
 
-Ensure you have opened the Grafana dashboard home-page at `http://<your-host>:3000`
+Open the Grafana dashboard home-page at `http://<your-host>:3000`
 
 <img alt="grafana-homepage" src="../../assets/img/grafana-homepage.png" width="600">
 
 !!! question
 
-    Can you see all the stations you have configured in the panel on the left hand side?
-
     Are there any errors reported so far?
 
-    Have there been any WIS2 notifications published so far? 
+    Have there been any WIS2 notifications published in the last 24 hours?
 
 Keep a web browser tab open with the Grafana dashboard during the next few exercises to monitor the status of your data publishing.
 
 ## Ingesting your data into wis2box
 
-You can use multiple methods to ingest data into wis2box and start publishing notifications to WIS2.
+You can use multiple methods to ingest data into wis2box and start publishing notifications to WIS2. Previously you used the `wis2box data ingest` command from within the **wis2box-management** container, which requires the data to be available on the wis2box-instance.
 
-It is recommended to test your configuration is setup correctly by ingesting a single data-sample manually before setting up automatic ingestion of your data.
+Another method for manually ingesting data is to use the `MinIO` admin interface to upload a file into the `wis2box-incoming` bucket. 
 
-Manual ingestion can be done using the `MinIO` admin interface to upload a file into the `wis2box-incoming` bucket or by using the `wis2box data ingest` command from within the **wis2box-management** container.
+If your data-collection software supports sending data to an FTP-endpoint you could use the optional **wis2box-ftp** container setup.
 
-When automating data ingest you can also use scripts to copy data into the `wis2box-incoming` bucket at regular intervals or you can use the optional **wis2box-ftp** container setup (more on this later).
-
-!!! note
-
-    Uploading data to MinIO or via the command automatically triggers data ingest and publishing.
+You can also automate data ingest using a script to copy data into the `wis2box-incoming` bucket at regular intervals, for example using Python and the MinIO-client.
 
 ### MinIO admin interface
 
@@ -86,22 +76,16 @@ Click the **Create new path** button:
 
 <img alt="minio-admin-create-new-path" src="../../assets/img/minio-admin-create-new-path.png" width="600">
 
-Enter the topic hierarchy value of your dataset as a directory.
+Create the following path '/test/data/':
 
-!!! tip
+And then upload the file 'WIGOS_0-454-2-AWSBILIRA_2023-06-01T1055.csv' into the folder 'wis2box-incoming/test/data'
 
-    Ensure that you replace all periods (`.`) with slashes (`/`).  For example, the topic hierarchy value:
+!!! question "View the Grafana dashboard"
+    Check the Grafana dashboard and find the error reported after uploading the file.
 
-    `mwi.mwi_met_centre.data.core.weather.surface-based-observations.synop`
+Navigate the directory structure until you are in the folder 'wis2box-incoming/mwi/mwi_wmo_demo/data/core/weather/surface-based-observations/synop':
 
-    should be entered as:
-
-    `mwi/mwi_met_centre/data/core/weather/surface-based-observations/synop`.
-
-It's time to upload your data to the new path!  Click the **Upload** button to add a file or directory to MinIO:
-
-<img alt="minio-admin-create-new-path" src="../../assets/img/minio-admin-create-new-path.png" width="600">
-
+Upload the file 'WIGOS_0-454-2-AWSBILIRA_2023-06-01T1055.csv' it to 'wis2box-incoming/mwi/mwi_wmo_demo/data/core/weather/surface-based-observations/synop'
 
 !!! question "View the Grafana dashboard"
     Check the Grafana dashboard; can you confirm the wis2box workflow was initiated after you uploaded your data? In case you see any errors, try to use the information provided in the dashboard to resolve the errors.
@@ -109,81 +93,19 @@ It's time to upload your data to the new path!  Click the **Upload** button to a
 !!! question "View new messages on your wis2box-broker"
     Check MQTT-explorer, can you confirm that new messages were successfully published on your wis2box-broker?
 
-### wis2box-management command line
-
-If you prefer, you can manually trigger the data ingestion action using the wis2box-management command line. 
-
-Ensure your data is available in a directory inside the directory defined by `$WIS2BOX_HOST_DATADIR` in your `dev.env` on your student VM.  You will then be able to access your access your data when logged into the **wis2box-management** container as follows:
-
-```bash
-wis2box data ingest --topic-hierarchy mwi.mwi_met_centre.data.core.weather.surface-based-observations.synop --path $WIS2BOX_DATADIR/my-data-directory`
-```
-
-!!! tip
-
-    For the topic hierarchy, use the value as defined for `topic_hierarchy:` in your discovery metadata file.
-
-    You do not have to adjust the topic hierarchy (i.e. replacing periods to slashes) when using the **wis2box-management** command line.
-
-### MinIO Python client
-
-At some point you may want to automate data ingestion from your system into wis2box using Python.
-
-MinIO provides a Python client which can be installed as follows:
-
-```bash
-pip3 install minio
-```
-
-Login to your student VM and you will note that this library should already be installed.
-
-Go to the directory `exercise-materials/wis2box-setup` and run the example script using the following command:
-
-```bash
-cd ~/exercise-materials/wis2box-setup
-python3 examples/scripts/copy_to_incoming.py
-```
-
 !!! note
-    The sample script needs to be modified before it can be used. 
 
-The script needs to know the correct endpoint for accessing MinIO on your wis2box. If wis2box is running on your host, the MinIO endpoint is available at `http://<your-host>:9000`.
+    The wis2box interprets the folder-structure in the wis2box-incoming as the corresponding topic-hierarchy for the file.
+    `mwi.mwi_wmo_demo.data.core.weather.surface-based-observations.synop`
+    corresponds to the path:
+    `mwi/mwi_wmo_demo/data/core/weather/surface-based-observations/synop`.
 
-The sample script provides the basic structure for copying a file into MinIO. Try to ingest a data sample of your choosing using this script.
-
-!!! question "ingest data using Python"
-    Use the Python example provided to create your own Python script to ingest data into your wis2box.  
-    
-    Ensure that you:
-        - define the correct MinIO endpoint for your host
-        - define the correct path in MinIO for the topics defined in your `data-mappings.yml`
-        - determine the correct local path where the script can access the data to ingest
-
-    Ensure that the script runs correctly and new data notifications are published on your wis2box broker. Review and correct any errors reported on the Grafana dashboard:
+    If there are no data-mappings defined for the topic-hiearachy corresponding to the directory that received data, wis2box will not initiate the workflow.
 
 ### wis2box FTP
 
 To allow your data to be accessible over FTP you can use the 'wis2box-ftp' image. This container provides a service that forwards data received over FTP to MinIO.
 
-Create a new file `ftp.env` using any text editor, and add the following content:
-
-```console
-MYHOSTNAME=trainer-limper.wis2.training
-
-FTP_USER=wis2box
-FTP_PASS=wis2box123
-FTP_HOST=${MYHOSTNAME}
-
-WIS2BOX_STORAGE_ENDPOINT=http://${MYHOSTNAME}:9000
-WIS2BOX_STORAGE_USER=minio
-WIS2BOX_STORAGE_PASSWORD=minio123
-
-LOGGING_LEVEL=INFO
-```
-
-and ensure `MYHOSTNAME` is set to **your** hostname.
-
-Then start the `wis2box-ftp` service with the following command:
 
 ```bash
 docker-compose -f docker-compose.wis2box-ftp.yml --env-file ftp.env up -d
@@ -218,12 +140,61 @@ Check your Grafana dashboard.
 !!! Note
     You can run `docker logs wis2box-ftp` to check if the FTP service is running correctly.
 
+!!! Note
+    To change the username/password for the wis2box-ftp edit the file `ftp.env` and set your own values for FTP_USER and FTP_PASS:
+
+    ```console
+    FTP_USER=wis2box
+    FTP_PASS=wis2box123
+    ```
+    And restart the wis2box-ftp service:
+    ```console
+    docker-compose -f docker-compose.wis2box-ftp.yml down
+    docker-compose -f docker-compose.wis2box-ftp.yml --env-file ftp.env up -d
+    ```
+
+Then start the `wis2box-ftp` service with the following command:
+
+### MinIO Python client (optional exercise)
+
+You may want to automate data ingestion from your system into wis2box using Python-scripts
+
+MinIO provides a Python client which can be installed as follows:
+
+```bash
+pip3 install minio
+```
+
+On your student machine the 'minio'-module for python will already be installed.
+
+Go to the directory `exercise-materials/wis2box-setup` and run the example script using the following command:
+
+```bash
+cd ~/exercise-materials/wis2box-setup
+python3 examples/scripts/copy_to_incoming.py
+```
+
+!!! note
+    The sample script needs to be modified before it can be used. 
+
+The script needs to know the correct endpoint for accessing MinIO on your wis2box. If wis2box is running on your host, the MinIO endpoint is available at `http://<your-host>:9000`.
+
+The sample script provides the basic structure for copying a file into MinIO. Try to ingest a data sample of your choosing using this script.
+
+!!! question "ingest data using Python"
+    Use the Python example provided to create your own Python script to ingest data into your wis2box.  
+    
+    Ensure that you:
+        - define the correct MinIO endpoint for your host
+        - define the correct path in MinIO for the topics defined in your `data-mappings.yml`
+        - determine the correct local path where the script can access the data to ingest
+
+    Ensure that the script runs correctly and new data notifications are published on your wis2box broker. Review and correct any errors reported on the Grafana dashboard:
+
 ## Conclusion
 
 !!! success "Congratulations!"
     In this practical session, you learned how to:
 
-    - prepare and verify your data mappings, discovery metadata, and station metadata
     - trigger wis2box workflow using different data ingest methods
     - monitor the status of your data ingest and publishing
-    - view your data on the wis2box UI

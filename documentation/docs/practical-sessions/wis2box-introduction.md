@@ -16,14 +16,8 @@ Login to your designated VM with your username and password.
 
 !!! note
 
-    The latest wis2box-release 'wis2box-1.0b3' was pre-installed on your student-VM using the release-archive available at GitHub:
+    The latest wis2box-release 'wis2box-1.0b3' was pre-installed on your student-VM using the release-archive available at GitHub.
     
-    ```bash
-    wget https://github.com/wmo-im/wis2box/releases/download/1.0b3/wis2box-setup-1.0b3.zip
-    unzip wis2box-setup-1.0b3.zip
-    cd wis2box-1.0b3
-    ```
-
     You can always find the latest 'wis2box-setup' archive at [https://github.com/wmo-im/wis2box/releases](https://github.com/wmo-im/wis2box/releases)
 
 ## wis2box start and status
@@ -155,8 +149,6 @@ Go back to your browser and visit the wis2box-UI.
 !!! success "Congratulations!"
     In this practical session, you learned how to:
 
-    - install wis2box on your personal VM
-    - setup wis2box with the pre-defined configuration
     - start wis2box and check the status of its components
     - ingest some data test observations
     - access the wis2box UI, API, MinIO UI and Grafana dashboard
