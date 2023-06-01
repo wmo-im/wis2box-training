@@ -64,8 +64,6 @@ You can login with 'username=minio' and 'password=minio123'.
 
 You should be see the buckets 'wis2box-archive', 'wis2box-incoming', 'wis2box-public'.
 
-<img alt="wis2box-minio-buckets.png" src="../../assets/img/wis2box-minio-buckets.png" width="600">
-
 You can click 'browse' to view the contents of the buckets. 
 
 Navigate to the **wis2box-incoming** bucket:
