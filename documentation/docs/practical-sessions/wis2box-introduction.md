@@ -1,0 +1,162 @@
+---
+title: WIS2box services introduction
+---
+
+#  wis2box services introduction
+
+## Introduction
+
+In this session you will run the wis2box-software that was pre-installed on your student VM using the test data configuration.
+
+You will review and access the services provided by your wis2box: the MQTT-broker and HTTP-accessible services and view how the services work when manually ingesting some test-data.
+
+## Preparation
+
+Login to your designated VM with your username and password.
+
+!!! note
+
+    The latest wis2box-release 'wis2box-1.0b3' was pre-installed on your student-VM using the release-archive available at GitHub:
+    
+    ```bash
+    wget https://github.com/wmo-im/wis2box/releases/download/1.0b3/wis2box-setup-1.0b3.zip
+    unzip wis2box-setup-1.0b3.zip
+    cd wis2box-1.0b3
+    ```
+
+    You can always find the latest 'wis2box-setup' archive at [https://github.com/wmo-im/wis2box/releases](https://github.com/wmo-im/wis2box/releases)
+
+## wis2box start and status
+
+Go into the directory containing the wis2box software stack:
+
+```bash
+cd ~/wis2box-1.0b3
+```
+
+Start the wis2box with the following command:
+
+```bash
+python3 wis2box-ctl.py start
+```
+
+Inspect the status with the following command:
+
+```bash
+python3 wis2box-ctl.py status
+```
+
+Repeat this command until you are sure all services are up and running.
+
+!!! question
+    What services are running ? Which ports are used for each service ?
+
+!!! note
+    The wis2box runs as a set of Docker containers managed by docker-compose. 
+    
+    The services are defined in the docker-compose*.yml files you can find in the ~/wis2box-1.0b3/ directory.
+    
+    The script 'wis2box-ctl.py' is used to run the underlying docker-compose commands that control the wis2box-services.
+
+## wis2box UI
+
+Open a web browser and visit the page `http://<your-host>`.
+
+This is the default wis2box web application (running via the **wis2box-ui** container). 
+
+Click the "EXPLORE" option on `http://<your-host>`.
+
+!!! question "View latest data per station on the wis2box UI"
+    Click on on a station in the station-list or hover your mouse over a station in the map to see the latest data for that station.
+
+<img alt="wis2box-ui-map.png" src="../../assets/img/wis2box-ui-map.png" width="600">
+
+!!! question "View data profile over time per measured variable"
+    After selecting a station in the map, click on "data" and select a variable to see a graph of the measured variable over time.
+
+<img alt="wis2box-ui-data.png" src="../../assets/img/wis2box-ui-data.png" width="600">
+
+!!! question
+    What is last timestamp in UTC for which the Malawi station "Bilira" received data ?
+
+## wis2box API
+
+Open a new tab and navigate to the page `http://<your-host>/oapi`.
+
+<img alt="wis2box-api.png" src="../../assets/img/wis2box-api.png" width="600">
+
+This is the wis2box API (running via the **wis2box-api** container).
+
+To view collections currently published to the API, click `View the collections in this service`.
+
+!!! question
+     What collections are currently available?
+!!! question
+    How many data notifications have been published?
+!!! question
+    How many stations are configured?
+
+## wis2box-broker
+
+Go to MQTT Explorer on your computer and prepare a new connection to connect to your broker (running via the **wis2box-broker** container).
+
+Use the following connection details:
+
+- **Protocol: mqtt://**
+- **Host: `<your-host>`**
+- **Port: 1883**
+- **Username: wis2box**
+- **Password: wis2box**
+- under 'ADVANCED', subscribe to the topics `$SYS/#` and `origin/#`
+
+Make sure to click "SAVE" to store your connection details.
+
+<img alt="mqtt-explorer-wis2box-broker.png" src="../../assets/img/mqtt-explorer-wis2box-broker.png" width="600">
+
+Once you are connected, you should see statistics being published by your broker on the `$SYS` topic.
+
+Make sure MQTT Explorer is connected to your broker before proceeding to the next exercise: 
+
+## publishing WIS2 data
+
+To demonstrate how the WIS2box can publish WIS2 data we will manually ingest some data from the command line:
+
+In your SSH-client window make sure you are in the ~/wis2box-1.0b3 directory and login to the **wis2box-management** container as follows:
+
+```bash
+cd ~/wis2box-1.0b3/
+python3 wis2box-ctl.py login
+```
+
+!!! note
+    This command is equivalent to `docker exec -it wis2box-management /bin/bash`, meaning that you have entered an interactive shell inside the **wis2box-management** container.
+
+Run the following command to ingest some additional data for Malawi :
+```bash
+wis2box data ingest -th mwi.mwi_met_centre.data.core.weather.surface-based-observations.synop -p /data/wis2box/observations/malawi-new-data/
+```
+
+After the data ingestion ran successfully, you should be able to view new messages that have been published on your wis2box-broker in MQTT Explorer.
+
+!!! question
+    What is the topic used to publish notifications for new data? How many WIS2 data notifications have been published?
+
+!!! question "download data"
+    What is the URL that allows you to download the published data in BUFR-format?
+    Copy-paste the URL in your browser to verify you can download the corresponding .bufr4 file.
+
+Go back to your browser and visit the wis2box-UI.
+
+!!! question "review new data"
+    Find the stations for which you ingested new data and verify new data is available.
+
+## Conclusion
+
+!!! success "Congratulations!"
+    In this practical session, you learned how to:
+
+    - install wis2box on your personal VM
+    - setup wis2box with the pre-defined configuration
+    - start wis2box and check the status of its components
+    - ingest some data test observations
+    - access the wis2box UI, API, MinIO UI and Grafana dashboard

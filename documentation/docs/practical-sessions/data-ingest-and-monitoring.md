@@ -34,28 +34,8 @@ Open your data mappings file:
 vi $WIS2BOX_DATA_MAPPINGS
 ```
 
-Verify the topic hierarchy and plugin type that you have updated [previously](configuring-data-mappings.md).
-
-### Verify discovery metadata
-
-Open the discovery metadata file created [previously](configuring-data-mappings.md) and verify that the values
-in the `wis2box` section are consistent with the topic defined in your data mappings.
-
-### Verify station metadata
-
-Open the station metadata file updated [previously](configuring-station-metadata.md) and verify that the values
-in the `wis2box` section are consistent with the topic defined in your data mappings.
-
-### Restart and verify wis2box status
-
-For good measure, restart to ensure that the data mappings are registered.  
-
-Restart the **wis2box-management** container with the following command:
-
-```bash
-python3 wis2box-ctl.py restart wis2box-management
-python3 wis2box-ctl.py status
-```
+!!! question
+    Which plugins are configured for which stations ?
 
 ## Open the Grafana dashboard
 
@@ -89,14 +69,14 @@ When automating data ingest you can also use scripts to copy data into the `wis2
 
 ### MinIO admin interface
 
-Open your web browser and navigate to the MinIO admin interface of of your student VM (`http://<your-host>:9000`):
+Open a new tab in your web browser and visit the page `http://<your-host>:9001'. You should see the login screen for MinIO. 
+You can login with 'username=minio' and 'password=minio123'.
 
-User the username and password that are specified in your wis2box environment:
+You should be see the buckets 'wis2box-archive', 'wis2box-incoming', 'wis2box-public'.
 
-```bash
-echo $MINIO_ROOT_USER
-echo $MINIO_ROOT_PASSWORD
-```
+<img alt="wis2box-minio-buckets.png" src="../../assets/img/wis2box-minio-buckets.png" width="600">
+
+You can click 'browse' to view the contents of the buckets. 
 
 Navigate to the **wis2box-incoming** bucket:
 

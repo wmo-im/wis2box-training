@@ -39,7 +39,7 @@ Corner Of Auas Aviation Road, 9000 Windhoek, Namibia
 |Time|Subject|Instructor(s)|Presentation(s)|
 |----|-------|----------|-------------|
 |9h - 9h30|The training environment|Timo Proescholdt|[Presentation](WIS 2 box training environment-3.pptx)|
-|9h30 - 11h|Practical session: [Accessing your student VM](../../practical-sessions/accessing-your-student-vm)|Maaike Limper/Timo Proescholdt||
+|9h30 - 11h|Practical session: [Accessing your student VM](../../practical-sessions/student-vm)|Maaike Limper/Timo Proescholdt||
 |11h - 11h30|Break||
 |11h30 - 12h30|WIS2 in a box architecture, project and installation|Tom Kralidis|[Architecture](wis2box-training-wis2box-architecture.pptx)<br/><br/>[Project and installation](wis2box-training-wis2box-project-install.pptx)|
 |12h30 - 13h30|Lunch break||
