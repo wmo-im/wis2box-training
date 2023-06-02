@@ -24,7 +24,7 @@ ls
 ```
 
 !!! tip
-    You should be able to see the following directories `BUFR_tables answers  ex_1  ex_2  ex_3  ex_4  ex_5 ex_6`
+    You should be able to see the following directories `BUFR_tables answers  ex_1  ex_2  ex_3  ex_4  ex_5`
 
 
 ## csv2bufr primer
@@ -48,6 +48,10 @@ The `data transform` command converts a CSV file to BUFR format:
 ```bash
 csv2bufr data transform --bufr-template <my_template.json> --output-dir <./my_directory> <my_data.csv>
 ```
+
+!!! note
+    The output directory is not required, and by default is the current working directory.
+
 
 ## ecCodes BUFR refresher
 
@@ -73,211 +77,149 @@ bufr_dump -p <my_bufr.bufr4> | egrep -i 'temperature|wind'
 
 ## Inspecting CSV data and BUFR conversion
 
-### Exercise 1: mapping BUFR elements
+### Exercise 1: Converting a CSV file to BUFR
+In this exercise we will look at a pre-configured mapping file for the CSV data, and will use this to convert the data to BUFR.
 
-Navigate to the `ex_1` directory and create a mapping file:
+Navigate to the `ex_1` directory
 
 ```bash
 cd ~/exercise-materials/csv2bufr-exercises/ex_1
 ```
 
+and open the CSV data `ex_1.csv`.
+
+1. How many header rows are there in this data?
+2. Which row contains the column names?
+
+Now open the mappings file `mappings_1.json`.
+
 !!! note
 
     csv2bufr mappings files have no set file extension, however it recommended to use `.json`.
 
-Using the [ecCodes WMO element table page](https://confluence.ecmwf.int/display/ECC/WMO%3D38+element+table), create a mapping file of the following variables:
+3. Verify that `"number_header_rows"` and `"column_names_row"` are the same as your answers above.
 
-- WIGOS Station Identifier (series, issuer, issue number, local identifier)
-- Date (Year, month, day)
-- Time (Hour, minute)
-- Location (Latitude, longitude)
-- Barometer height above sea level
-- Station level pressure
-- Air temperature
-- Relative humidity
+4. Locate each of the CSV column names in this mappings file.
 
-Use the `csv2bufr` `data transform` command to convert the file `ex_1.csv` to BUFR format.
+5. By the `data transform` command, use the mappings file to convert this CSV data to BUFR.
 
-!!! tip
+6. Use bufr_dump to find the latitude and longitude value stored in the output BUFR file. Verify these values using the CSV file.
 
-    See the [csv2bufr primer](#csv2bufr-primer) section.
+### Exercise 2: Correcting the datetime format
+In this exercise we will investigate the correct format to present the datetime of an observation in the CSV file.
 
-Use bufr_dump to find the latitude and longitude value stored in the output BUFR file. Verify these values using the CSV file.
-
-!!! tip
-
-    See the [BUFR primer](../converting-synop-data-to-bufr#bufr_dump) section.
-
-### Exercise 2: Mapping BUFR sequences
-
-Navigate to the `ex_2` directory:
+Navigate to the `ex_2` directory
 
 ```bash
 cd ~/exercise-materials/csv2bufr-exercises/ex_2
 ```
 
-!!! question
+and open the CSV data `ex_2.csv`.
 
-    Repeat the previous steps, replacing the following elements with their respective BUFR sequences (which have the form **3XXYYY**):
+1. What are the differences in the way that the datetime is represented in this CSV file compared to the previous one?
 
-* WIGOS Station Identifier (series, issuer, issue number, local identifier)
-* Date (Year, month, day)
-* Time (Hour, minute)
-* Location (Latitude, longitude)
+Now open the mappings file `mappings_2.json`. By looking at the eccodes keys related to dates and times, it should seem clear that it is not possible to map the datetime with the CSV in its current state.
 
-The `BUFR_TableD_en.csv` file from the `BUFR_tables` directory contains the defined BUFR sequences as per the official WMO BUFR code tables.
+2. Create new columns in the CSV file for each component of the datetime, with appropriate column names to match those of the mapping file.
 
-The first few columns of this file are as follows (important columns are in **bold**):
+3. By the `data transform` command, use the mappings file to convert this CSV data to BUFR.
 
-- BUFR category (numeric)
-- BUFR category (name)
-- **BUFR sequence number**
-- **BUFR sequence name**
-- BUFR sequence subtitle
-- **Included BUFR element number**
-- **Included BUFR element name**
+### Exercise 3: Handling changes to the CSV data
+In this exercise we consider the following scenario: given the same CSV data but with different column names, how can we adjust the mappings file to convert this data to BUFR? For simplicity, we will only look at one column name change.
 
-A given sequence will appear multiple times, once for each BUFR element it contains.
-
-!!! tip
-
-    Search for the corresponding 6 digit codes found in the previous exercise, and find the corresponding sequence in the 3rd column. For example, the BUFR elements **005002** (Latitude) and **006002** (Longitude) can be replaced with sequence **301023** (Latitude/longitude (coarse accuracy)).
-
-### Exercise 3: Adapting the mapping file to your input CSV data (column names)
-
-Navigate to the `ex_3` directory, and inspect file `ex_3.csv`.
-
-!!! question
-
-    Compare this file to `ex_2.csv`:
+Navigate to the `ex_3` directory
 
 ```bash
 cd ~/exercise-materials/csv2bufr-exercises/ex_3
-more ex_3.csv
-more ../ex_2/ex_2.csv
 ```
 
-You should notice that the data is the same, however the column names are different.
+1. By the `data transform` command, attempt to convert the CSV data to BUFR. What error appears?
 
-!!! question
+Open the CSV data `ex_3.csv`.
 
-    With this in mind, create a mapping template file for the `ex_3.csv` file. 
-    
-Open the mapping file generated:
+2. What column name has been changed?
 
-```bash
-nano <my_mapping.json>
-```
+Open the mappings file `mappings_3.json`.
 
-!!! question
+3. Find the original column name in this mapping file, and change it to the new name.
+4. By the `data transform` command, use the mappings file to convert this CSV data to BUFR.
+5. Use `bufr_dump` to verify that `relativeHumidity` has the same value as the CSV data.
 
-    Change the `"value"` items to correctly correspond to each column in `ex_3.csv`.
+### Exercise 4: Unit conversion
+In this exercise, we expand on the work above by not only handling changes to column names, but also the units of the data. We achieve this by using `offset` and `scale` in the mappings file.
 
-!!! tip
-
-    In the first column, `"eccodes_key": "#1#wigosIdentifierSeries"` should now be paired with `"value": "data:wigos_identifier_series"`.
-
-!!! question
-    Use the csv2bufr `data transform` function to convert `ex_3.csv` to BUFR format.
-
-!!! question
-    Check that the data stored in the output BUFR is the same as that in the CSV that is was converted from.
-
-### Exercise 4: Adapting the mapping file to your input CSV data (units)
-Navigate to the `ex_4` directory and edit the file `ex_4.csv`:
+Navigate to the `ex_4` directory
 
 ```bash
 cd ~/exercise-materials/csv2bufr-exercises/ex_4
-vi ex_4.csv
 ```
 
-This file contains the same data and column names as `ex_2.csv`, but uses different units:
+and open the CSV data `ex_4.csv`.
 
-- `heightOfBarometerAboveMeanSeaLevel` is given in **cm**
-- `nonCoordinatePressure` is given in **hPA**
-- `airTemperature` is given in **&deg;C**
+1. Which row are the units of the variables written?
 
-!!! question
+You should notice that `BP` now has units hPa instead of Pa. Moreover, the air temperature and dewpoint temperature now have column names `AirTempC` and `DewPointTempC`, with units C instead of K.
 
-    Using the [ecCodes WMO element table page](https://confluence.ecmwf.int/display/ECC/WMO%3D38+element+table), find the correct units for these three variables.
+2. What power of 10 is needed to convert hPa to Pa?
+3. What constant must be added to convert degrees C to K?
 
-!!! question
+Open the mappings file `mappings_3.json`. Find the lines corresponding to the variables above.
 
-    Find the scale (*x*, for a multiplication by *10<sup>x</sup>*) and offset (addition of a constant *c*) required for each of these conversions.
+4. Convert `BP` to Pa by adding the following line to the right of `"data:BP"`
 
-!!! tip
+    ```bash
+    "offset": "const:0", "scale": "const:x"
+    ```
 
-    As 1cm = 1m x 10<sup>-2</sup>, the first conversion requires a scale of *x=-2* and an offset of *c=0*.
+    where `x` is your answer in part 3.
 
-Open the mapping file `mapping_4.json`:
+5. Change the column names of air temperature and dewpoint temperature in the mappings file to match that of the CSV file, as you did in the previous exercise.
 
-```bash
-nano mapping_4.json
-```
+6. Convert `AirTempC` to K by adding the following line to the right of `"data:AirTempC"`
 
-!!! tip
-    To edit the mapping_4.json file you can use nano, vi, vim or emacs.
+    ```bash
+    "offset": "const:y", "scale": "const:0"
+    ```
 
-This is the same mapping file as you generated and modified a couple of exercises ago.  Using your answers in the previous question, convert the units using the `scale` and `offset` keys.
+    where `y` is your answer in part 4.
 
-!!! question
+7. Convert `DewPointTempC` to K by adding the following line to the right of `"data:DewPointTempC"`
 
-    Convert the file `ex_4.csv` to BUFR format.
+    ```bash
+    "offset": "const:y", "scale": "const:0"
+    ```
 
-### Exercise 5: Create mappings for hourly synop with WIGOS Station Identifier
-Navigate to the `ex_5` directory:
+    where `y` is your answer in part 4.
+
+8. By the `data transform` command, use the mappings file to convert this CSV data to BUFR.
+
+9. Use `bufr_dump` to verify that `nonCoordinatePressure`, `airTemperature` and `dewpointTemperature` have the values you would expect after conversion.
+
+### Exercise 5: Implementing quality control
+In this exercise, we will implement some minimum and maximum tolerable values to prevent clearly incorrect data from being converted to BUFR. To do this, we will use `valid_min` and `valid_max` in the mappings file.
+
+Navigate to the `ex_5` directory
 
 ```bash
 cd ~/exercise-materials/csv2bufr-exercises/ex_5
 ```
 
-Here, you are free to either work with your own synoptic CSV data, or use the file `ex_5_hourly.csv`.
+and open the CSV data `ex_5.csv`.
 
-!!! question
+1. Which two variables have values that are clearly incorrect?
+2. For each of these variables, decide on some sensible minimum and maximum tolerable values.
 
-    Noting that a SYNOP report cannot contain the WIGOS station identifier, creating a mappings template which contains the mappings for both the WIGOS station identifier and the hourly synoptic data.
+Open the mappings file `mappings_4.json`. Find the lines corresponding to the variables above.
 
-!!! question
+3. Implement these minimum and maximum values by adding the following line to the right of the `"data:` code:
 
-    Just like previous exercises, edit the element names in the mapping file according to the CSV data.
+    ```bash
+    "valid_min": "const:a", "valid_max": "const:b"
+    ```
+    
+    where a and b are values you chose in part 2.
 
-!!! note
-
-    Ensure that `number_header_rows` and `column_names_row` are correct.
-
-Convert the CSV data data to BUFR format.
-
-### Exercise 6
-Navigate to the `ex_6` directory and edit the file `ex_6.csv`:
-
-```bash
-cd ~/exercise-materials/csv2bufr-exercises/ex_6
-vi ex_6.csv
-```
-
-!!! question
-
-    Notice that this time the `relative_humidity` column contains an incorrect value.  Why is this value incorrect?
-
-!!! tip
-
-    Think of valid minimum and maximum values for relative humidity.
-
-!!! question
-
-    By adjusting the `valid_min` and `valid_max` keys of the `relativeHumidity` element in the mapping file `mapping_6.json`, enforce a quality control measure which prevents this value from being written to BUFR.
-
-!!! question
-
-    Add more valid minimum and maximum values to the mappings file according to your own preference.
-
-!!! note
-
-    The minimum and maximum values must have the **same units** as your **original** input data, not the converted values discussed in the previous exercise.
-
-!!! question
-
-    Convert the file `ex_6.csv` to BUFR format, and use `bufr_dump` to verify that this variable has no value in the resulting BUFR.
+4. By the `data transform` command, use this mappings file to convert this CSV data to BUFR. What happens? Is a BUFR file written? Justify why.
 
 ## Conclusion
 
@@ -285,10 +227,6 @@ vi ex_6.csv
 
     In this practical session, you learned:
 
-    - the basic usage of `csv2bufr`
-    - how to create and update a simple csv2bufr mapping file for a variety of scenarios, including for GBON requirements, unit conversion, and quality control/range checking
-    - how to `csv2bufr` on a test data file and convert to BUFR format
-    - how to lookup the BUFR element number for a parameter to be encoded
-    - how to encode BUFR data for the example input data and inspect the resulting output data
-    - about the sequence for hourly climate data
-    - about the BUFR Manual on Codes requirements on the units of variables, e.g. Celsius -> Kelvin.
+    - The basic usage of `csv2bufr`
+    - How to update a simple csv2bufr mapping file for a variety of scenarios, including for GBON requirements, unit conversion, and quality control/range checking
+    - How to `csv2bufr` on a test data file and convert to BUFR format
