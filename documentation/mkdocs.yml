@@ -6,6 +6,9 @@ site_url: https://training.wis2box.wis.wmo.int
 repo_url: https://github.com/wmo-im/wis2box-training
 edit_uri: tree/main/documentation/docs
 
+docs_dir: docs
+site_dir: /tmp/html
+
 nav:
     - Home: index.md
     - Schedule:

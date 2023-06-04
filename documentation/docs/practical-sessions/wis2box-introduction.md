@@ -113,7 +113,7 @@ Make sure MQTT Explorer is connected to your broker before proceeding to the nex
 
 ## publishing WIS2 data
 
-To demonstrate how the WIS2box can publish WIS2 data we will manually ingest some data from the command line:
+To demonstrate how the wis2box can publish WIS2 data we will manually ingest some data from the command line:
 
 In your SSH client window, ensure you are in the `~/wis2box-1.0b3` directory and login to the **wis2box-management** container as follows:
 
