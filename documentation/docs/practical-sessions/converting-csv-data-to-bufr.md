@@ -80,7 +80,7 @@ bufr_dump -p <my_bufr.bufr4> | egrep -i 'temperature|wind'
 ### Exercise 1: Converting a CSV file to BUFR
 In this exercise we will look at a pre-configured mapping file for the CSV data, and will use this to convert the data to BUFR.
 
-Navigate to the `ex_1` directory
+Navigate to the `ex_1` directory:
 
 ```bash
 cd ~/exercise-materials/csv2bufr-exercises/ex_1
@@ -108,7 +108,7 @@ Now open the mappings file `mappings_1.json`.
 ### Exercise 2: Correcting the datetime format
 In this exercise we will investigate the correct format to present the datetime of an observation in the CSV file.
 
-Navigate to the `ex_2` directory
+Navigate to the `ex_2` directory:
 
 ```bash
 cd ~/exercise-materials/csv2bufr-exercises/ex_2
@@ -148,7 +148,7 @@ Open the mappings file `mappings_3.json`.
 ### Exercise 4: Unit conversion
 In this exercise, we expand on the work above by not only handling changes to column names, but also the units of the data. We achieve this by using `offset` and `scale` in the mappings file.
 
-Navigate to the `ex_4` directory
+Navigate to the `ex_4` directory:
 
 ```bash
 cd ~/exercise-materials/csv2bufr-exercises/ex_4
@@ -165,7 +165,7 @@ You should notice that `BP` now has units hPa instead of Pa. Moreover, the air t
 
 Open the mappings file `mappings_3.json`. Find the lines corresponding to the variables above.
 
-4. Convert `BP` to Pa by adding the following line to the right of `"data:BP"`
+4. Convert `BP` to Pa by adding the following line to the right of `"data:BP"`:
 
     ```bash
     "offset": "const:0", "scale": "const:x"
@@ -175,7 +175,7 @@ Open the mappings file `mappings_3.json`. Find the lines corresponding to the va
 
 5. Change the column names of air temperature and dewpoint temperature in the mappings file to match that of the CSV file, as you did in the previous exercise.
 
-6. Convert `AirTempC` to K by adding the following line to the right of `"data:AirTempC"`
+6. Convert `AirTempC` to K by adding the following line to the right of `"data:AirTempC"`:
 
     ```bash
     "offset": "const:y", "scale": "const:0"
@@ -183,7 +183,7 @@ Open the mappings file `mappings_3.json`. Find the lines corresponding to the va
 
     where `y` is your answer in part 4.
 
-7. Convert `DewPointTempC` to K by adding the following line to the right of `"data:DewPointTempC"`
+7. Convert `DewPointTempC` to K by adding the following line to the right of `"data:DewPointTempC"`:
 
     ```bash
     "offset": "const:y", "scale": "const:0"
@@ -193,12 +193,12 @@ Open the mappings file `mappings_3.json`. Find the lines corresponding to the va
 
 8. By the `data transform` command, use the mappings file to convert this CSV data to BUFR.
 
-9. Use `bufr_dump` to verify that `nonCoordinatePressure`, `airTemperature` and `dewpointTemperature` have the values you would expect after conversion.
+9. Use the `bufr_dump` command to verify that `nonCoordinatePressure`, `airTemperature` and `dewpointTemperature` have the values you would expect after conversion.
 
 ### Exercise 5: Implementing quality control
 In this exercise, we will implement some minimum and maximum tolerable values to prevent clearly incorrect data from being converted to BUFR. To do this, we will use `valid_min` and `valid_max` in the mappings file.
 
-Navigate to the `ex_5` directory
+Navigate to the `ex_5` directory:
 
 ```bash
 cd ~/exercise-materials/csv2bufr-exercises/ex_5
@@ -211,7 +211,7 @@ and open the CSV data `ex_5.csv`.
 
 Open the mappings file `mappings_4.json`. Find the lines corresponding to the variables above.
 
-3. Implement these minimum and maximum values by adding the following line to the right of the `"data:` code:
+3. Implement these minimum and maximum values by adding the following line to the right of the `data:` code:
 
     ```bash
     "valid_min": "const:a", "valid_max": "const:b"
