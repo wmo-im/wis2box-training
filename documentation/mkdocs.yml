@@ -12,20 +12,20 @@ nav:
         - Index: index.md
         - 20 - 24 March 2023 - Windhoek, Namibia 🇳🇦: schedule/namibia-2023-03/index.md
         - 12 - 16 June 2023 - Port of Spain, Trinidad and Tobago 🇹🇹: schedule/trinidad-and-tobago-2023-06/index.md
-        - 9 - 13 October 2023 - Jakarta, Indonesia: schedule/indonesia-2023-10/index.md
+        - 9 - 13 October 2023 - Jakarta, Indonesia 🇮🇩: schedule/indonesia-2023-10/index.md
     - Practical sessions:
         - Connecting to WIS2 over MQTT: practical-sessions/connecting-to-mqtt.md
         - Your student VM: practical-sessions/student-vm.md
         - Converting SYNOP data to BUFR: practical-sessions/converting-synop-data-to-bufr.md
         - Converting CSV data to BUFR: practical-sessions/converting-csv-data-to-bufr.md
         - Converting DAYCLI data to BUFR: practical-sessions/converting-daycli-data-to-bufr.md
-        - WIS2box introduction: practical-sessions/wis2box-introduction.md
-        - WIS2box data ingestion and monitoring: practical-sessions/data-ingest-and-monitoring.md
-        - WIS2box using the API to query data: practical-sessions/wis2box-api.md
-        - WIS2box environment variables: practical-sessions/environment-variables.md
-        - WIS2box data mappings: practical-sessions/configuring-data-mappings.md
-        - WIS2box discovery metadata: practical-sessions/configuring-wis2-discovery-metadata.md
-        - WIS2box station metadata: practical-sessions/configuring-station-metadata.md
+        - wis2box introduction: practical-sessions/wis2box-introduction.md
+        - wis2box data ingestion and monitoring: practical-sessions/data-ingest-and-monitoring.md
+        - wis2box using the API to query data: practical-sessions/wis2box-api.md
+        - wis2box environment variables: practical-sessions/environment-variables.md
+        - wis2box data mappings: practical-sessions/configuring-data-mappings.md
+        - wis2box discovery metadata: practical-sessions/configuring-wis2-discovery-metadata.md
+        - wis2box station metadata: practical-sessions/configuring-station-metadata.md
         - Downloading and finding data from WIS2: practical-sessions/downloading-and-finding-data-from-wis2.md
         - Answers:
             - CSV data to BUFR answers: answers/csv2bufr-answers.md
