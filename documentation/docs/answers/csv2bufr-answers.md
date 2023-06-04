@@ -6,15 +6,15 @@ title: Converting CSV data to BUFR answers
 
 ## Exercise 1
 
-1. There are 4 header rows.
-2. Row 2 contains the column names.
-3. Found by checking the lines 6 and 7 in the mapping file.
-4. These are found in the `"data:` lines of the mapping file.
-5. The CSV data is written to BUFR using:
+1. There are 4 header rows
+2. Row 2 contains the column names
+3. Found by checking the lines 6 and 7 in the mapping file
+4. These are found in the `data:` lines of the mapping file
+5. The CSV data is converted to BUFR using the following command:
     ```bash
     csv2bufr data transform ex_1.csv --bufr-template mappings_1.json
     ```
-6. The latitude and longitude can be verified using:
+6. The latitude and longitude can be verified using the following command:
     ```bash
     bufr_dump -p WIGOS_0-454-2-AWSMULANJE_20230526T005500.bufr4 | egrep -i 'latitude|longitude'
     ```
@@ -37,7 +37,7 @@ title: Converting CSV data to BUFR answers
     csv2bufr data transform ex_3.csv --bufr-template mappings_3.json
     ```
 
-    You should see the error:
+    You should see the following error:
 
     ```bash
     Column RH not found in input data
@@ -47,13 +47,13 @@ title: Converting CSV data to BUFR answers
 
 2. The relative humidity column now has name `RelativeHumidity` instead of `RH`.
 
-3. We do this by changing line:
+3. We do this by changing the line:
 
     ```bash
     {"eccodes_key": "#1#relativeHumidity", "value":"data:RH"}
     ```
 
-    to line:
+    to:
 
     ```bash
     {"eccodes_key": "#1#relativeHumidity", "value":"data:RelativeHumidity"}
