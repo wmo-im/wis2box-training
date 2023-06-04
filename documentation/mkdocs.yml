@@ -11,11 +11,6 @@ site_dir: /tmp/html
 
 nav:
     - Home: index.md
-    - Schedule:
-        - Index: index.md
-        - 20 - 24 March 2023 - Windhoek, Namibia 🇳🇦: schedule/namibia-2023-03/index.md
-        - 12 - 16 June 2023 - Port of Spain, Trinidad and Tobago 🇹🇹: schedule/trinidad-and-tobago-2023-06/index.md
-        - 9 - 13 October 2023 - Jakarta, Indonesia 🇮🇩: schedule/indonesia-2023-10/index.md
     - Practical sessions:
         - Connecting to WIS2 over MQTT: practical-sessions/connecting-to-mqtt.md
         - Accessing your student VM: practical-sessions/accessing-your-student-vm.md
@@ -38,6 +33,10 @@ nav:
         - Docker: cheatsheets/docker.md
         - YAML: cheatsheets/yaml.md
         - WIS2 in a box: cheatsheets/wis2box.md
+    - Schedule:
+        - 20 - 24 March 2023 - Windhoek, Namibia 🇳🇦: schedule/namibia-2023-03/index.md
+        - 12 - 16 June 2023 - Port of Spain, Trinidad and Tobago 🇹🇹: schedule/trinidad-and-tobago-2023-06/index.md
+        - 9 - 13 October 2023 - Jakarta, Indonesia 🇮🇩: schedule/indonesia-2023-10/index.md
 
 
 strict: true
