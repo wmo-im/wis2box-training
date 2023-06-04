@@ -15,7 +15,6 @@ If this data is recorded in CSV format, we can use [csv2bufr](https://github.com
 ## Preparation
 !!! warning
     Ensure that you are logged into your student VM.
-    Ensure you have the exercise-materials downloaded in your home-directory as detailed [previously](accessing-your-student-vm.md#download-the-exercise-materials).
 
 Navigate to the `exercise-materials/daycli-exercises` directory.
 

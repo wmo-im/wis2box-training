@@ -18,7 +18,6 @@ above mentioned tools, as well as the relationship between SYNOP reports and BUF
 
 !!! warning
     Ensure that you are logged into your student VM. 
-    Ensure you have the exercise-materials downloaded in your home-directory as detailed [previously](accessing-your-student-vm.md#download-the-exercise-materials).
 
 Navigate to the `exercise-materials/synop2bufr-exercises` directory and make sure that the exercises directories are there.
 

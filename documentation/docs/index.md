@@ -5,7 +5,7 @@ title: Home
 <img alt="WMO logo" src="assets/img/wmo-logo.png" width="200">
 # WIS2 in a box training
 
-WIS2 in a box ([wis2box](https://docs.wis2box.wis.wmo.int)) is a Free and Open Source (FOSS) Reference Implementation of a WMO WIS2 node. The project provides a plug and play toolset to ingest, process, and publish weather/climate/water data using standards-based approaches in alignment with the WIS2 principles. wis2box also provides access to all data in the WIS2 network. wis2box is designed to have a low barrier to entry for data providers, providing enabling infrastructure and services for data discovery, access, and visualization.
+WIS2 in a box ([wis2box](https://docs.wis2box.wis.wmo.int)) is a Free and Open Source (FOSS) Reference Implementation of a WMO WIS2 node. The project provides a plug and play tool-set to ingest, process, and publish weather/climate/water data using standards-based approaches in alignment with the WIS2 principles. wis2box also provides access to all data in the WIS2 network. wis2box is designed to have a low barrier to entry for data providers, providing enabling infrastructure and services for data discovery, access, and visualization.
 
 This training provides step-by-step explanations of various aspects of the wis2box project as well as a number of exercises
 to help you publish and download data from WIS2.  The training is provided in the form of overview presentations as well as
@@ -19,16 +19,15 @@ This training covers a wide range of topics (install/setup/configuration, publis
 
 The goals of this training are to become familiar with the following:
 
-- WIS2 concepts and core functions and components
-- Required and optional functions of a WIS2 Node
-- WIS2 in a box architecture and environment
+- WIS2 architecture core concepts and components
 - data and metadata formats used in WIS2 for discovery and access
-- wis2box core functions:
-    - sending data
-    - registering as a WIS2 Node
-    - subscribing to a Global Broker
-    - downloading data from a Global Cache or other WIS2 Nodes
-    - monitoring wis2box operations
+- WIS2-in-a-box (wis2box) architecture and environment
+- wis2box-core functions:
+    - metadata management
+    - data ingestion and transformation to BUFR-format
+    - MQTT-broker for WIS2-message publishing
+    - HTTP-endpoint for data download
+    - API-endpoint for programmatic access to data
 
 ## Navigation
 
@@ -47,10 +46,10 @@ The right hand navigation provides a table of concents for a specific page.
 
 This training requires the following tools:
 
-- An instance running Ubuntu OS (provided by WMO trainers during local training sessions) see [student-vm](practical-sessions/accessing-your-student-vm.md#introduction)
+- An instance running Ubuntu OS (provided by WMO trainers during local training sessions) see [student-vm](practical-sessions/student-vm.md#introduction)
 - SSH client to access your instance
 - MQTT Explorer on your local machine
-- FTP client to copy files from your local machine
+- SCP and FTP client to copy files from your local machine
 
 ## Conventions
 
