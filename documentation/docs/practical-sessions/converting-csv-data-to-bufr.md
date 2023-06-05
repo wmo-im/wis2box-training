@@ -146,7 +146,7 @@ Open the mappings file `mappings_3.json`.
 5. Use `bufr_dump` to verify that `relativeHumidity` has the same value as the CSV data.
 
 ### Exercise 4: Unit conversion
-In this exercise, we expand on the work above by not only handling changes to column names, but also the units of the data. We achieve this by using `of'fset` and `scale` in the mappings file.
+In this exercise, we expand on the work above by not only handling changes to column names, but also the units of the data. We achieve this by using `offset` and `scale` in the mappings file.
 
 Navigate to the `ex_4` directory:
 
