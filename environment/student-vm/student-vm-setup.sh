@@ -1,4 +1,4 @@
-# this is the wis2box-base-setup script to create the student-vm as used in the wis2box-training
+# this is the wis2box base setup script to create the student-vm as used in the wis2box-training
 # using base OS: Ubuntu 20.04 LTS (Focal)
 
 # install ecCodes, pymetdecoder, csv2bufr, synop2bufr

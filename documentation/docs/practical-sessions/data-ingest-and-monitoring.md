@@ -8,9 +8,9 @@ title: Data ingest and monitoring
 
 In this session you will learn various ways to ingest data into your wis2box and learn how you can monitor if your data is being ingested without errors.
 
-## preparation
+## Preparation
 
-### Download test-data
+### Download test data
 
 Download the following file onto your local computer:
 
@@ -89,11 +89,11 @@ Upload the file 'WIGOS_0-454-2-AWSBILIRA_2023-06-01T1055.csv' it to 'wis2box-inc
     Check the Grafana dashboard; can you confirm the wis2box workflow was initiated after you uploaded your data? In case you see any errors, try to use the information provided in the dashboard to resolve the errors.
 
 !!! question "View new messages on your wis2box-broker"
-    Check MQTT-explorer, can you confirm that new messages were successfully published on your wis2box-broker?
+    Check MQTT Explorer, can you confirm that new messages were successfully published on your wis2box broker?
 
 !!! note
 
-    The wis2box interprets the folder-structure in the wis2box-incoming as the corresponding topic-hierarchy for the file.
+    The wis2box interprets the folder-structure in the `wis2box-incoming` bucket as the corresponding topic-hierarchy for the file.
     `mwi.mwi_wmo_demo.data.core.weather.surface-based-observations.synop`
     corresponds to the path:
     `mwi/mwi_wmo_demo/data/core/weather/surface-based-observations/synop`.
@@ -102,7 +102,7 @@ Upload the file 'WIGOS_0-454-2-AWSBILIRA_2023-06-01T1055.csv' it to 'wis2box-inc
 
 ### wis2box FTP
 
-To allow your data to be accessible over FTP you can use the 'wis2box-ftp' image. This container provides a service that forwards data received over FTP to MinIO.
+To allow your data to be accessible over FTP you can use the **wis2box-ftp** container, which provides a service that forwards data received over FTP to MinIO.
 
 
 ```bash
@@ -139,7 +139,7 @@ Check your Grafana dashboard.
     You can run `docker logs wis2box-ftp` to check if the FTP service is running correctly.
 
 !!! Note
-    To change the username/password for the wis2box-ftp edit the file `ftp.env` and set your own values for FTP_USER and FTP_PASS:
+    To change the username/password for the wis2box FTP service, edit the file `ftp.env` and set your own values for `FTP_USER` and `FTP_PASS`:
 
     ```console
     FTP_USER=wis2box
@@ -155,7 +155,7 @@ Then start the `wis2box-ftp` service with the following command:
 
 ### MinIO Python client (optional exercise)
 
-You may want to automate data ingestion from your system into wis2box using Python-scripts
+You may want to automate data ingest from your system into wis2box using Python tools.
 
 MinIO provides a Python client which can be installed as follows:
 
@@ -163,7 +163,7 @@ MinIO provides a Python client which can be installed as follows:
 pip3 install minio
 ```
 
-On your student machine the 'minio'-module for python will already be installed.
+On your student VM the 'minio' module for Python will already be installed.
 
 Go to the directory `exercise-materials/wis2box-setup` and run the example script using the following command:
 

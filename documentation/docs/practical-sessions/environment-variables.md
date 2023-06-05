@@ -31,7 +31,7 @@ Run the following command to view the environment variables used by your wis2box
 wis2box environment show
 ```
 
-Note the variables you have set for `WIS2BOX_HOST_DATADIR`, `WIS2BOX_URL` and `WIS2BOX_API_URL` etc.
+Note the variables you have set for `WIS2BOX_HOST_DATADIR`, `WIS2BOX_URL` and `WIS2BOX_API_URL`, etc.
 
 Review that your **wis2box-broker** and MinIO storage passwords have been updated.
 
@@ -67,7 +67,7 @@ data-mappings.yml metadata
 !!! success "Congratulations!"
     In this practical session, you learned how to:
 
-    - reinitialize wis2box-services
-    - set the wis2box-data-directory
-    - set the logging level for the wis2box-services   
+    - reinitialize wis2box services
+    - set the wis2box data directory
+    - set the logging level for the wis2box services   
     - set custom passwords for your broker and storage

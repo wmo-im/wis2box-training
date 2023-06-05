@@ -72,10 +72,10 @@ Update the `[country]` and `[centre_id]` values in your new/added data mapping. 
     The `country` value should match one of the countries in the [country list of the WIS2 Topic Hierarchy](https://github.com/wmo-im/wis2-topic-hierarchy/blob/main/topic-hierarchy/country.csv).
 
 !!! note
-    Centre ids will be officially managed and introduced as part of the WIS2 Topic Hierarchy throughout the WIS2 Pilot Phase, at which point each centre's id will be in the [centre_id list of the WIS2 Topic Hierarchy](https://github.com/wmo-im/wis2-topic-hierarchy/blob/main/topic-hierarchy/country.csv).  `centre_id` values should be lower case and contain no accents or special characters. Dashes should be used instead of underscores.
+    Centre ids will be officially managed and introduced as part of the WIS2 Topic Hierarchy throughout the WIS2 Pilot Phase, at which point each centre's id will be in the [centre_id list of the WIS2 Topic Hierarchy](https://github.com/wmo-im/wis2-topic-hierarchy/blob/main/topic-hierarchy/centre-id.csv).  `centre_id` values should be lower case and contain no accents or special characters. Dashes should be used instead of underscores.
 
 !!! note
-    The `file-pattern` values throughout the data mapping provide a [regular expression](https://www.regular-expressions.info) to be able to match filenames.  Ensure your filenames are formatted as per the regular expression in the new data mapping, to include `WIGOS_` as a fixed value, followed by the WIGOS Station Identifier (WSI), followed by an underscore (`_`), as well as any other information (i.e. datestamp).  Ensure the file extension is `.csv`.  An real world example would be `WIGOS_0-454-2-AWSBALAKA_2021-11-18T0955.csv`.
+    The `file-pattern` values throughout the data mapping provide a [regular expression](https://www.regular-expressions.info) to be able to match filenames.  Ensure your filenames are formatted as per the regular expression in the new data mapping, to include `WIGOS_` as a fixed value, followed by the WIGOS Station Identifier (WSI), followed by an underscore (`_`), as well as any other information (i.e. datestamp).  Ensure the file extension is `.csv`.  A real world example would be `WIGOS_0-454-2-AWSBALAKA_2021-11-18T0955.csv`.
 
 
 !!! tip
