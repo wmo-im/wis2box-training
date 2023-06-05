@@ -6,10 +6,10 @@ title: Converting CSV data to BUFR answers
 
 ## Exercise 1
 
-1. There are 4 header rows
-2. Row 2 contains the column names
-3. Found by checking the lines 6 and 7 in the mapping file
-4. These are found in the `data:` lines of the mapping file
+1. There are 4 header rows.
+2. Row 2 contains the column names.
+3. Found by checking the lines 6 and 7 in the mapping file.
+4. These are found in the `data:` lines of the mapping file.
 5. The CSV data is converted to BUFR using the following command:
     ```bash
     csv2bufr data transform ex_1.csv --bufr-template mappings_1.json
