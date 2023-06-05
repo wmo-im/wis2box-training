@@ -24,7 +24,7 @@ ls
 ```
 
 !!! tip
-    You should be able to see the following directories `BUFR_tables answers  ex_1  ex_2  ex_3  ex_4  ex_5`
+    You should be able to see the following directories `answers  ex_1  ex_2  ex_3  ex_4  ex_5`
 
 
 ## csv2bufr primer
@@ -57,7 +57,7 @@ csv2bufr data transform --bufr-template <my_template.json> --output-dir <./my_di
 
 ### bufr_dump
 
-The `bufr_dump` function will allow you to inspect the BUFR files created from the conversion.  It has numerous options;, the following will be most applicable to the exercises:
+The `bufr_dump` function will allow you to inspect the BUFR files created from the conversion. It has numerous options, the following will be most applicable to the exercises:
 
 ```bash
 bufr_dump -p <my_bufr.bufr4>
@@ -163,7 +163,7 @@ You should notice that `BP` now has units hPa instead of Pa. Moreover, the air t
 2. What power of 10 is needed to convert hPa to Pa?
 3. What constant must be added to convert degrees C to K?
 
-Open the mappings file `mappings_3.json`. Find the lines corresponding to the variables above.
+Open the mappings file `mappings_4.json`. Find the lines corresponding to the variables above.
 
 4. Convert `BP` to Pa by adding the following line to the right of `"data:BP"`:
 
@@ -209,7 +209,7 @@ and open the CSV data `ex_5.csv`.
 1. Which two variables have values that are clearly incorrect?
 2. For each of these variables, decide on some sensible minimum and maximum tolerable values.
 
-Open the mappings file `mappings_4.json`. Find the lines corresponding to the variables above.
+Open the mappings file `mappings_5.json`. Find the lines corresponding to the variables above.
 
 3. Implement these minimum and maximum values by adding the following line to the right of the `data:` code:
 
@@ -219,7 +219,7 @@ Open the mappings file `mappings_4.json`. Find the lines corresponding to the va
     
     where a and b are values you chose in part 2.
 
-4. By the `data transform` command, use this mappings file to convert this CSV data to BUFR. What happens? Is a BUFR file written? Justify why.
+4. By the `data transform` command, use this mappings file to convert this CSV data to BUFR. What happens? Is a BUFR file written?
 
 ## Conclusion
 
