@@ -134,8 +134,7 @@ title: Converting CSV data to BUFR answers
     ```
 
     ```bash
-    {"eccodes_key": "#1#airTemperature", "value":"data:AirTempC", "valid_min": "const:-20", "valid_max": "const:50", "offset": "const:273.15", "scale": "const:0"},
-    {"eccodes_key": "#1#dewpointTemperature", "value":"data:DewPointTempC", "valid_min": "const:-20", "valid_max": "const:50", "offset": "const:273.15", "scale": "const:0"}
+    {"eccodes_key": "#1#airTemperature", "value":"data:AirTempC", "valid_min": "const:-20", "valid_max": "const:50", "offset": "const:273.15", "scale": "const:0"}
     ```
 
     !!! note
@@ -144,12 +143,9 @@ title: Converting CSV data to BUFR answers
 4. You will see the following error:
 
     ```bash
-    ECCODES ERROR   :  encode_double_value: pressureReducedToMeanSeaLevel (010051). Value (-102043) out of range (minAllowed=0, maxAllowed=163830).
-    ECCODES ERROR   :  Cannot encode pressureReducedToMeanSeaLevel=-102043 (subset=1)
-    error calling codes_set(49887440, 'pack', True): Value out of coding range
+    #1#pressureReducedToMeanSeaLevel: Value (-102043.2) out of valid range (0 - 150000).; Element set to missing
+    #1#airTemperature: Value (2585.0) out of valid range (-20 - 50).; Element set to missing
     ```
 
-    and no BUFR file is written. This is because the pressure reduced to sea level variable is out of the range of minimum and maximum valid values.
+    and a BUFR file will still be written. However, it will not contain the values of these variables, as they are set to missing.
 
-    !!! note
-    There will be no error for the air temperature being out of range. This is because once one value out of range error occurs, the csv2bufr process is halted.

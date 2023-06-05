@@ -219,7 +219,7 @@ Open the mappings file `mappings_5.json`. Find the lines corresponding to the va
     
     where a and b are values you chose in part 2.
 
-4. By the `data transform` command, use this mappings file to convert this CSV data to BUFR. What happens? Is a BUFR file written? Justify why.
+4. By the `data transform` command, use this mappings file to convert this CSV data to BUFR. What happens? Is a BUFR file written?
 
 ## Conclusion
 

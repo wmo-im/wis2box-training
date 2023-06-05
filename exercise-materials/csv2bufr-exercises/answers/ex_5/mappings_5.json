@@ -48,7 +48,7 @@
         {"eccodes_key": "#1#characteristicOfPressureTendency",                     "value":"data:BP_Tendency"},
         {"eccodes_key": "#1#heightOfSensorAboveLocalGroundOrDeckOfMarinePlatform", "value":"data:Temp_H"},
         {"eccodes_key": "#1#airTemperature",                                       "value":"data:AirTempC", "valid_min": "const:-20", "valid_max": "const:50", "offset": "const:273.15", "scale": "const:0"},
-        {"eccodes_key": "#1#dewpointTemperature",                                  "value":"data:DewPointTempC", "valid_min": "const:-20", "valid_max": "const:50", "offset": "const:273.15", "scale": "const:0"},
+        {"eccodes_key": "#1#dewpointTemperature",                                  "value":"data:DewPointTempC", "offset": "const:273.15", "scale": "const:0"},
         {"eccodes_key": "#1#relativeHumidity",                                     "value":"data:RelativeHumidity"}
     ]
 }
