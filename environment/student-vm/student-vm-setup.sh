@@ -26,7 +26,7 @@ export PATH="$PATH:/opt/eccodes/bin"
 export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/opt/eccodes/lib"
 
 sudo pip3 install https://github.com/wmo-im/pymetdecoder/archive/refs/tags/v0.1.5.zip
-sudo pip3 install https://github.com/wmo-im/csv2bufr/archive/refs/tags/v0.5.1.zip
+sudo pip3 install https://github.com/wmo-im/csv2bufr/archive/refs/tags/v0.6.2.zip
 sudo pip3 install https://github.com/wmo-im/synop2bufr/archive/refs/tags/v0.4.0.zip
 python3 -m eccodes selfcheck
 
@@ -48,6 +48,9 @@ sudo apt-get install -y docker-ce python3.8 python3-pip
 sudo pip3 install pip --upgrade
 sudo pip3 install pyopenssl --upgrade
 sudo pip3 install docker-compose==1.29.2 requests==2.26.0 urllib3==1.26.0
+
+# install oscar-client
+pip3 install git+https://github.com/kurt-hectic/oscar-client.git@develop
 
 # (re-)download wis2box
 cd ~/
