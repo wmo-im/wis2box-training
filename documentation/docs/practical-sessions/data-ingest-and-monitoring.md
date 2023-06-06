@@ -53,7 +53,7 @@ You can use multiple methods to ingest data into wis2box and start publishing no
 
 Another method for manually ingesting data is to use the `MinIO` admin interface to upload a file into the `wis2box-incoming` bucket. 
 
-If your data-collection software supports sending data to an FTP-endpoint you could use the optional **wis2box-ftp** container setup.
+If your data-collection software supports sending data to an FTP endpoint you could use the optional **wis2box-ftp** container setup.
 
 You can also automate data ingest using a script to copy data into the `wis2box-incoming` bucket at regular intervals, for example using Python and the MinIO-client.
 
@@ -81,9 +81,9 @@ And then upload the file 'WIGOS_0-454-2-AWSBILIRA_2023-06-01T1055.csv' into the 
 !!! question "View the Grafana dashboard"
     Check the Grafana dashboard and find the error reported after uploading the file.
 
-Navigate the directory structure until you are in the folder 'wis2box-incoming/mwi/mwi_wmo_demo/data/core/weather/surface-based-observations/synop'
+Navigate the directory structure until you are in the folder `wis2box-incoming/mwi/mwi_wmo_demo/data/core/weather/surface-based-observations/synop`
 
-Upload the file 'WIGOS_0-454-2-AWSBILIRA_2023-06-01T1055.csv' to 'wis2box-incoming/mwi/mwi_wmo_demo/data/core/weather/surface-based-observations/synop'
+Upload the file `WIGOS_0-454-2-AWSBILIRA_2023-06-01T1055.csv` to `wis2box-incoming/mwi/mwi_wmo_demo/data/core/weather/surface-based-observations/synop`
 
 !!! question "View the Grafana dashboard"
     Check the Grafana dashboard; can you confirm the wis2box workflow was initiated after you uploaded your data? In case you see any errors, try to use the information provided in the dashboard to resolve the errors.
