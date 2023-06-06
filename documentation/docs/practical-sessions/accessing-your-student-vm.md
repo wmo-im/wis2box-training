@@ -141,19 +141,20 @@ And you should be able to see the following content:
 
 ## Exercise 1: Editing files on your Student VM
 
-Connect to your Student VM using WinSCP and browse into the directory: **exercise-materials/accessing-your-student-vm/**
+Connect to your Student VM using WinSCP and browse into the directory: `~/exercise-materials/accessing-your-student-vm/`
 
-Right-click on the file **hello_world.txt** and select **edit->internal editor**.  Edit this file by adding a message of your own and save your changes.
+Right-click on the file `hello_world.txt` and select **Edit -> Internal editor**.  Edit this file by adding a message of your own and save your changes.
 
 <img alt="winscp_internal_editor.png" src="../../assets/img/winscp_internal_editor.png" width="600">
 
-From within your SSH-client check the content of the file ~/exercise-materials/accessing-your-student-vm/hello_world.txt ":
+From within your SSH client check the content of the file `~/exercise-materials/accessing-your-student-vm/hello_world.txt`:
+
 ```bash
 cat ~/exercise-materials/accessing-your-student-vm/hello_world.txt
 ```
 And confirm you see the changes you made in the file.
 
-During the exercises you will be asked to edit files. It's up to you if you prefer to edit files from the command-line in the SSH-client-windows (using vi/vim/nano/exams) or using WinSCP.
+During the exercises you will be asked to edit files. It is up to you if you prefer to edit files from the command line in your SSH client (using `vi`/`vim`/`nano`/`emacs`) or using WinSCP.
 
 ## Conclusion
 
