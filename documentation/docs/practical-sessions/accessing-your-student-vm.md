@@ -135,15 +135,25 @@ To access the material on your local machine rather than from the command line, 
 
 <img alt="winscp-student-vm-scp.png" src="../../assets/img/winscp-student-vm-scp.png" width="400">
 
-And you should be able to access the exercise-materials:
+And you should be able to see the following content:
 
 <img alt="winscp-student-vm-exercise-materials.png" src="../../assets/img/winscp-student-vm-exercise-materials.png" width="600">
 
-During the exercises you will be asked to edit files. It's up to you if you prefer to edit files from the command-line in the SSH-client-windows (using vi/vim/nano/exams) or using WinSCP.
+## Exercise 1: Editing files on your Student VM
 
-If you prefer to edit files using WinSCP, you can right-click on a file and select 'edit'->'Edit (internal)' to use WinSCP's internal file-editor:
+Connect to your Student VM using WinSCP and browse into the directory: **exercise-materials/accessing-your-student-vm/**
+
+Right-click on the file **hello_world.txt** and select **edit->internal editor**.  Edit this file by adding a message of your own and save your changes.
 
 <img alt="winscp_internal_editor.png" src="../../assets/img/winscp_internal_editor.png" width="600">
+
+From within your SSH-client check the content of the file ~/exercise-materials/accessing-your-student-vm/hello_world.txt ":
+```bash
+cat ~/exercise-materials/accessing-your-student-vm/hello_world.txt
+```
+And confirm you see the changes you made in the file.
+
+During the exercises you will be asked to edit files. It's up to you if you prefer to edit files from the command-line in the SSH-client-windows (using vi/vim/nano/exams) or using WinSCP.
 
 ## Conclusion
 

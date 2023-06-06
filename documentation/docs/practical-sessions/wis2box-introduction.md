@@ -1,8 +1,8 @@
 ---
-title: wis2box services introduction
+title: wis2box introduction
 ---
 
-#  wis2box services introduction
+#  wis2box introduction
 
 ## Introduction
 
@@ -10,15 +10,23 @@ In this session you will run the wis2box software that was pre-installed on your
 
 You will review and access the services provided by your wis2box: the MQTT broker and HTTP accessible services and view how the services work when manually ingesting some test-data.
 
+!!! note "wis2box installation and configuration"
+    The latest wis2box release has been pre-installed on your student VM using the release archive available on GitHub:
+
+    ```bash
+    wget https://github.com/wmo-im/wis2box/releases/download/1.0b3/wis2box-setup-1.0b3.zip
+    unzip wis2box-setup-1.0b3.zip
+    ```
+    
+    You can always find the latest 'wis2box-setup' archive at [https://github.com/wmo-im/wis2box/releases](https://github.com/wmo-im/wis2box/releases).
+
+    Your student VM has been pre-configured with a dataset for Malawi and includes some previously ingested data. Later during this training you will learn how to setup datasets of your own.
+
+    All the required steps for installation and configuration of the wis2box can be found in the [wis2box-documentation](https://docs.wis2box.wis.wmo.int/en/latest/)
+
 ## Preparation
 
 Login to your designated VM with your username and password.
-
-!!! note
-
-    The latest wis2box release has been pre-installed on your student VM using the release archive available on GitHub.
-    
-    You can always find the latest 'wis2box-setup' archive at [https://github.com/wmo-im/wis2box/releases](https://github.com/wmo-im/wis2box/releases).
 
 ## wis2box start and status
 
@@ -45,12 +53,12 @@ Repeat this command until all services are up and running.
 !!! question
     What services are running? Which ports are used for each service?
 
-!!! note
+!!! note "wis2box and docker"
     wis2box runs as a set of Docker containers managed by docker-compose.
     
     The services are defined in the various `docker-compose*.yml` which can be found in the `~/wis2box-1.0b3/` directory.
     
-    The script 'wis2box-ctl.py' is used to run the underlying Docker Compose commands that control the wis2box services.
+    The python-script 'wis2box-ctl.py' is used to run the underlying Docker Compose commands that control the wis2box services.
 
 ## wis2box UI
 

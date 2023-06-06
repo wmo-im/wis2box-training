@@ -14,7 +14,7 @@ In this session you will learn various ways to ingest data into your wis2box and
 
 Download the following file onto your local computer:
 
-[WIGOS_0-454-2-AWSBILIRA_2023-06-01T1055.csv](https://training.wis2box.wis.wmo.int/WIGOS_0-454-2-AWSBILIRA_2023-06-01T1055.csv) 
+[WIGOS_0-454-2-AWSBILIRA_2023-06-01T1055.csv](https://raw.githubusercontent.com/wmo-im/wis2box-training/main/WIGOS_0-454-2-AWSBILIRA_2023-06-01T1055.csv) 
 
 ### Verify data mappings
 
@@ -81,9 +81,9 @@ And then upload the file 'WIGOS_0-454-2-AWSBILIRA_2023-06-01T1055.csv' into the 
 !!! question "View the Grafana dashboard"
     Check the Grafana dashboard and find the error reported after uploading the file.
 
-Navigate the directory structure until you are in the folder 'wis2box-incoming/mwi/mwi_wmo_demo/data/core/weather/surface-based-observations/synop':
+Navigate the directory structure until you are in the folder 'wis2box-incoming/mwi/mwi_wmo_demo/data/core/weather/surface-based-observations/synop'
 
-Upload the file 'WIGOS_0-454-2-AWSBILIRA_2023-06-01T1055.csv' it to 'wis2box-incoming/mwi/mwi_wmo_demo/data/core/weather/surface-based-observations/synop'
+Upload the file 'WIGOS_0-454-2-AWSBILIRA_2023-06-01T1055.csv' to 'wis2box-incoming/mwi/mwi_wmo_demo/data/core/weather/surface-based-observations/synop'
 
 !!! question "View the Grafana dashboard"
     Check the Grafana dashboard; can you confirm the wis2box workflow was initiated after you uploaded your data? In case you see any errors, try to use the information provided in the dashboard to resolve the errors.
@@ -98,7 +98,7 @@ Upload the file 'WIGOS_0-454-2-AWSBILIRA_2023-06-01T1055.csv' it to 'wis2box-inc
     corresponds to the path:
     `mwi/mwi_wmo_demo/data/core/weather/surface-based-observations/synop`.
 
-    If there are no data-mappings defined for the topic-hiearachy corresponding to the directory that received data, wis2box will not initiate the workflow.
+    If there are no data-mappings defined for the topic-hierarchy corresponding to the directory that received data, wis2box will not initiate the workflow.
 
 ### wis2box FTP
 
