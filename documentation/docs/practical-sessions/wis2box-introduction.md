@@ -53,12 +53,12 @@ Repeat this command until all services are up and running.
 !!! question
     What services are running? Which ports are used for each service?
 
-!!! note "wis2box and docker"
+!!! note "wis2box and Docker"
     wis2box runs as a set of Docker containers managed by docker-compose.
     
     The services are defined in the various `docker-compose*.yml` which can be found in the `~/wis2box-1.0b3/` directory.
     
-    The python-script 'wis2box-ctl.py' is used to run the underlying Docker Compose commands that control the wis2box services.
+    The Python script `wis2box-ctl.py` is used to run the underlying Docker Compose commands that control the wis2box services.
 
 ## wis2box UI
 
