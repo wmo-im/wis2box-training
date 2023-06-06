@@ -74,9 +74,9 @@ Click the **Create new path** button:
 
 <img alt="minio-admin-create-new-path" src="../../assets/img/minio-admin-create-new-path.png" width="600">
 
-Create the following path '/test/data/':
+Create the following path: `/test/data/`.
 
-And then upload the file 'WIGOS_0-454-2-AWSBILIRA_2023-06-01T1055.csv' into the folder 'wis2box-incoming/test/data'
+And then upload the file `WIGOS_0-454-2-AWSBILIRA_2023-06-01T1055.csv` into the folder `wis2box-incoming/test/data`.
 
 !!! question "View the Grafana dashboard"
     Check the Grafana dashboard and find the error reported after uploading the file.

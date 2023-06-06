@@ -69,7 +69,7 @@ This is the default wis2box web application (running via the **wis2box-ui** cont
 Click the "EXPLORE" option on `http://<your-host>`.
 
 !!! question "View latest data per station on the wis2box UI"
-    Click on on a station in the station-list or hover your mouse over a station in the map to see the latest data for that station.
+    Click on on a station in the station list or hover your mouse over a station in the map to see the latest data for that station.
 
 <img alt="wis2box-ui-map.png" src="../../assets/img/wis2box-ui-map.png" width="600">
 

@@ -8,7 +8,23 @@ title: Connecting to WIS2 over MQTT
 
 WIS2 uses the MQTT protocol to advertise the availability of weather/climate/water data. The WIS2 Global Broker subscribes to all WIS2 Nodes in the network and republishes the messages it receives. The Global Cache subscribes to the Global Broker, downloads the data in the message and then republishes the message on the `cache` topic with a new URL.  The Global Discovery Catalogue publishes discovery metadata from the Broker and provides a search API.
 
-As part of the WIS2 Pilot Phase in 2023, Météo-France is running a Global Broker.  In this practical session you will learn how to use the MQTT Explorer tool to review the topics available on this Global Broker and be able to display WIS2 notification messages.
+As part of the WIS2 Pilot Phase in 2023, the following Global Broker services are available:
+
+### Météo-France
+
+- host: globalbroker.meteo.fr
+- port: 8883
+- username: everyone
+- password: everyone
+
+### CMA
+
+- host: gb.wis.cma.cn
+- port: 8883
+- username: everyone
+- password: everyone
+
+In this practical session you will learn how to use the MQTT Explorer tool to review the topics available on this Global Broker and be able to display WIS2 notification messages.
 
 ## Using MQTT Explorer to connect to the Global Broker
 
@@ -66,7 +82,7 @@ You are now ready to start exploring the WIS2 topics and message structure and a
 !!! success "Congratulations!"
     Congratulations!  In this practical session, you learned:
 
-    - how to subscribe to the WIS2 Global Broker from Météo-France using MQTT Explorer
+    - how to subscribe to WIS2 Global Broker services using MQTT Explorer
     - the WIS2 topic structure
     - the WIS2 notification message structure
     - the difference between Global Broker messages published on the `origin` and `cache` topics
