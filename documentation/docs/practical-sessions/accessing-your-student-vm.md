@@ -87,7 +87,7 @@ csv2bufr --version
 ```
 returns:
 ```console
-csv2bufr, version 0.5.1
+csv2bufr, version 0.6.0
 ```
 
 To be able to run wis2box, the student VM also comes with Python Docker and Docker Compose pre-installed. 
@@ -139,6 +139,11 @@ And you should be able to access the exercise-materials:
 
 <img alt="winscp-student-vm-exercise-materials.png" src="../../assets/img/winscp-student-vm-exercise-materials.png" width="600">
 
+During the exercises you will be asked to edit files. It's up to you if you prefer to edit files from the command-line in the SSH-client-windows (using vi/vim/nano/exams) or using WinSCP.
+
+If you prefer to edit files using WinSCP, you can right-click on a file and select 'edit'->'Edit (internal)' to use WinSCP's internal file-editor:
+
+<img alt="winscp_internal_editor.png" src="../../assets/img/winscp_internal_editor.png" width="600">
 
 ## Conclusion
 
