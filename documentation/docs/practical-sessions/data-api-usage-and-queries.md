@@ -17,6 +17,8 @@ In this practical session you will learn how to use the data API to discovery, b
 
     `http://<your-host>/oapi`
 
+<img alt="wis2box-api-landing-page" src="../../assets/img/wis2box-api-landing-page.png" width="600">
+
 ## Inspecting collections
 
 From the landing page, click on the 'Collections' link.
@@ -27,6 +29,8 @@ From the landing page, click on the 'Collections' link.
 ## Inspecting stations
 
 From the landing page, click on the 'Collections' link, then click on the 'Stations' link.
+
+<img alt="wis2box-api-collections-stations" src="../../assets/img/wis2box-api-collections-stations.png" width="600">
 
 Click on the 'Browse' link, then click on the 'json' link.
 
@@ -40,7 +44,11 @@ Click on the 'Browse' link, then click on the 'json' link.
 
 From the landing page, click on the 'Collections' link, then click on the 'Surface weather observations from Malawi' link.
 
+<img alt="wis2box-api-collections-malawi-obs" src="../../assets/img/wis2box-api-collections-malawi-obs.png" width="600">
+
 Click on the 'Queryables' link.
+
+<img alt="wis2box-api-collections-malawi-obs-queryables" src="../../assets/img/wis2box-api-collections-malawi-obs-queryables.png" width="600">
 
 !!! question
     Which queryable would be used to filter by station identifier?
