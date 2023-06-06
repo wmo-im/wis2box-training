@@ -2,7 +2,7 @@
 title: Accessing your student VM
 ---
 
-# Your student VM
+# Accessing your student VM
 
 ## Introduction
 

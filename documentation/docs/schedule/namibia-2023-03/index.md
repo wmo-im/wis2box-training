@@ -78,7 +78,7 @@ Corner Of Auas Aviation Road, 9000 Windhoek, Namibia
 
 |Time|Subject|Instructor(s)|Presentation(s)|
 |----|-------|----------|-------------|
-|9h - 10h30|Joining WIS2 as a WIS2 Node|Timo Proescholdt|[Participating in the pilot phase as a WIS2 node](Participating in the pilot phase as a WIS2 node.pptx)|
+|9h - 10h30|Joining WIS2 as a WIS2 Node|Timo Proescholdt|[Participating in the pilot phase as a WIS2 Node](Participating in the pilot phase as a WIS2 node.pptx)|
 |10h30 - 11h|Next steps with WIS2|Hassan Haddouch/Enrico Fucile|[Next steps with WIS2](Next-steps-Namibia.pptx)|
 |11h - 11h30|Round table: participants' plans for WIS2|all|[WIS2 National Plan](Day5-Template for participants-WIS 2.0 National Plan.pptx)|
 |11h30 - 12h|Closing ceremony|all||

@@ -16,9 +16,9 @@ Login to your designated VM with your username and password.
 
 !!! note
 
-    The latest wis2box-release 'wis2box-1.0b3' was pre-installed on your student VM using the release archive available on GitHub.
+    The latest wis2box release has been pre-installed on your student VM using the release archive available on GitHub.
     
-    You can always find the latest 'wis2box-setup' archive at [https://github.com/wmo-im/wis2box/releases](https://github.com/wmo-im/wis2box/releases)
+    You can always find the latest 'wis2box-setup' archive at [https://github.com/wmo-im/wis2box/releases](https://github.com/wmo-im/wis2box/releases).
 
 ## wis2box start and status
 
@@ -113,7 +113,7 @@ Make sure MQTT Explorer is connected to your broker before proceeding to the nex
 
 ## publishing WIS2 data
 
-To demonstrate how the wis2box can publish WIS2 data we will manually ingest some data from the command line:
+To demonstrate how wis2box can publish WIS2 data we will manually ingest some data from the command line:
 
 In your SSH client window, ensure you are in the `~/wis2box-1.0b3` directory and login to the **wis2box-management** container as follows:
 
@@ -130,7 +130,7 @@ Run the following command to ingest some additional data for Malawi:
 wis2box data ingest -th mwi.mwi_met_centre.data.core.weather.surface-based-observations.synop -p /data/wis2box/observations/malawi-new-data/
 ```
 
-After the data ingestion ran successfully, you should be able to view new messages that have been published on your wis2box broker in MQTT Explorer.
+After the data ingest runs successfully, you should be able to view new messages that have been published on your wis2box broker in MQTT Explorer.
 
 !!! question
     What is the topic used to publish notifications for new data? How many WIS2 data notifications have been published?
@@ -142,7 +142,7 @@ After the data ingestion ran successfully, you should be able to view new messag
 Go back to your browser and visit the wis2box UI.
 
 !!! question "review new data"
-    Find the stations for which you ingested new data and verify new data is available.
+    Did your new data appear in wis2box? Find the stations for which you ingested new data and verify new data is available.
 
 ## Conclusion
 
