@@ -59,7 +59,7 @@ You can also automate data ingest using a script to copy data into the `wis2box-
 
 ### MinIO admin interface
 
-Open a new tab in your web browser and visit the page `http://<your-host>:9001'. You should see the login screen for MinIO. 
+Open a new tab in your web browser and visit the page `http://<your-host>:9001`. You should see the login screen for MinIO. 
 You can login with 'username=minio' and 'password=minio123'.
 
 You should be see the buckets 'wis2box-archive', 'wis2box-incoming', 'wis2box-public'.

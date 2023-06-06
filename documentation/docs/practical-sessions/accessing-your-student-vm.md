@@ -87,7 +87,7 @@ csv2bufr --version
 ```
 returns:
 ```console
-csv2bufr, version 0.6.0
+csv2bufr, version 0.6.2
 ```
 
 To be able to run wis2box, the student VM also comes with Python Docker and Docker Compose pre-installed. 

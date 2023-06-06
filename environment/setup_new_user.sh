@@ -8,6 +8,7 @@ sudo cp -rf wis2box-1.0b3/ /home/`echo $USERNAME`/wis2box-1.0b3/
 echo WIS2BOX_HOST_DATADIR=/home/`echo $USERNAME`/exercise-materials/wis2box-test-data/ > /tmp/dev.env
 echo WIS2BOX_URL=http://`echo $USERNAME`.wis2.training >> /tmp/dev.env
 echo WIS2BOX_API_URL=http://`echo $USERNAME`.wis2.training/oapi >> /tmp/dev.env
+echo LOG_LEVEL=INFO >> /tmp/dev.env
 sudo cp /tmp/dev.env /home/testuser/wis2box-1.0b3/
 
 sudo chown -R `echo $USERNAME`:`echo $USERNAME` /home/`echo $USERNAME`
