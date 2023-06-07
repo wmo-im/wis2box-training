@@ -39,7 +39,7 @@ if len(sys.argv) != 2 or len(sys.argv[1].split('-')) != 4:
 
 wsi = sys.argv[1]
 
-client = OSCARClient()
+client = OSCARClient(env='prod')
 
 station = client.get_station_report(wsi)
 
