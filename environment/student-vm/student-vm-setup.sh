@@ -37,6 +37,7 @@ sudo apt-get -y install mosquitto-clients nano vim
 sudo pip3 install minio==7.1.13
 sudo pip3 install pywis-pubsub
 sudo pip3 install https://github.com/wmo-im/pywiscat/archive/master.zip
+sudo pip3 install https://github.com/wmo-cop/pyoscar/archive/master.zip
 
 # install the Docker engine, Python 3.8 and Docker Compose
 sudo mkdir -m 0755 -p /etc/apt/keyrings
