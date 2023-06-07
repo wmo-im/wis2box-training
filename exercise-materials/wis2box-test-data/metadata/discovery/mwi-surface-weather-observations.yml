@@ -1,19 +1,19 @@
 wis2box:
     retention: P30D
-    topic_hierarchy: mwi.mwi_met_centre.data.core.weather.surface-based-observations.synop
+    topic_hierarchy: mwi.mwi_wmo_demo.data.core.weather.surface-based-observations.synop
     country: mwi
-    centre_id: mwi_met_centre
+    centre_id: mwi_wmo_demo
 
 mcf:
     version: 1.0
 
 metadata:
-    identifier: urn:x-wmo:md:mwi:mwi_met_centre:surface-weather-observations
+    identifier: urn:x-wmo:md:mwi:mwi_wmo_demo:core:surface-weather-observations
     hierarchylevel: dataset
 
 identification:
-    title: Surface weather observations from Malawi
-    abstract: Surface weather observations from Malawi
+    title: Surface weather observations from Malawi (demo core data)
+    abstract: Surface weather observations from Malawi (demo core data)
     dates:
         creation: 2021-11-29
     keywords:
