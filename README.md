@@ -33,7 +33,7 @@ python3 -m venv .
 git clone https://github.com/wmo-im/wis2box-training.git
 cd wis2box-training/documentation
 # install required dependencies
-pip install -r requirements.txt
+pip3 install -r requirements.txt
 # build the website, output is in site/
 mkdocs build
 # serve locally

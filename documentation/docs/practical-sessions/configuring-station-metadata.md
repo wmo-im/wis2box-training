@@ -47,15 +47,15 @@ For each new station, add a row to the end of the file with the following values
 
 It is recommended to use station information from the [WMO OSCAR/Surface](https://oscar.wmo.int/surface) system where available.
 
-The script `~exercise-materials/create-station-list/oscar2wis2box.py` can be used to add stations to your station list if they are available in OSCAR/Surface.
+The script `~/exercise-materials/create-station-list/oscar2wis2box.py` can be used to add stations to your station list if they are available in OSCAR/Surface.
 
 For example to add the station with WIGOS Station Identifier=0-20000-0-78224 to your `station_list.csv`, run the following command:
 
 ```bash
-python3 ~exercise-materials/station-list/oscar2wis2box.py 0-20000-0-78224 >> ~/wis2box-data/metadata/station/station_list.csv
+python3 ~/exercise-materials/station-list/oscar2wis2box.py 0-20000-0-78224 >> ~/wis2box-data/metadata/station/station_list.csv
 ```
 
-### Review your station-list
+### Review your station list
 
 Check the content of your station list from the command line as follows:
 
