@@ -50,7 +50,7 @@ Note that if the metadata, output directory, year and month options are not spec
 | --month | The current month. |
 
 !!! note
-    One must be cautious using the default year and month, as the day of the month specified in the report may not correspond with this. E.g. June 2023 does not have a 31st day.
+    One must be cautious using the default year and month, as the day of the month specified in the report may not correspond (e.g. June does not have 31 days).
 
 In the examples, the year and month are not given, so feel free to specify a date yourself or use the default values.
 
