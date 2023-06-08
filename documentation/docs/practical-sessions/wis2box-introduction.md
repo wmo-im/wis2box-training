@@ -119,7 +119,7 @@ Once you are connected, you should see statistics being published by your broker
 
 Make sure MQTT Explorer is connected to your broker before proceeding to the next exercise: 
 
-## publishing WIS2 data
+## Publishing WIS2 data
 
 To demonstrate how wis2box can publish WIS2 data we will manually ingest some data from the command line:
 
@@ -152,7 +152,7 @@ Go back to your browser and visit the wis2box UI.
 !!! question "review new data"
     Did your new data appear in wis2box? Find the stations for which you ingested new data and verify new data is available.
 
-## publishing WIS2 data with access restrictions
+## Publishing WIS2 data with access restrictions
 
 We will now publish some more data on the topic containing `data.recommended`
 
@@ -176,7 +176,7 @@ wis2box data ingest -th mwi.mwi_wmo_demo.data.recommended.weather.surface-based-
     Copy and paste the URL in your browser to verify you can download the corresponding `.bufr4` file.
 
 !!! note "Downloading restricted data"
-    You will not be able to download the data using the URL in the message published on `origin/a/wis2/mwi/mwi_wmo_demo/data/recommended/` as the data-access has been restricted by the data supplier.
+    You will not be able to download the data using the URL in the message published on `origin/a/wis2/mwi/mwi_wmo_demo/data/recommended/` as the data access has been restricted by the data supplier.
 
 The data is currently restricted with the access-token `mysecrettoken`. In order to download the data you would need to add this token to the header:
 
@@ -192,4 +192,4 @@ wget --header "Authorization: Bearer mysecrettoken" http://testuser.wis2.trainin
     - start wis2box and check the status of its components
     - ingest some data test observations
     - access the wis2box UI, API, MinIO UI and Grafana dashboard
-    - use access-control for restricted datasets
+    - use access control for restricted datasets
