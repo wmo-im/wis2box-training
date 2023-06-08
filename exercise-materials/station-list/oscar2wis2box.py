@@ -58,6 +58,10 @@ results = OrderedDict({
 if '0-2000' in station['wigosIds'][0]['wid']:
     results['traditional_station_identifier'] = station['wigosIds'][0]['wid'].split('-')[-1]  # noqa
 
+for v in ['station_name', 'territory_name']:
+    if ',' in results[v]:
+        results[v] = f'"{results[v]}"'
+
 line = ','.join([(str(results[k]) if results[k] is not None else '') for k, v in results.items()])  # noqa
 
 print(line)
