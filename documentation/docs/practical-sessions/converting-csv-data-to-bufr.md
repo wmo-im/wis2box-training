@@ -33,7 +33,7 @@ ls
 
 There are some requirements on the data that must be present in the CSV file:
 
-- WIGOS Station Identifier, either in 1 column or split over 4 columns for each component
+- WIGOS Station Identifier, either in 1 column or split over 4 columns for each component as follows:
 - Observation year
 - Observation month
 - Observation day
@@ -45,7 +45,7 @@ There are some requirements on the data that must be present in the CSV file:
 - Barometer height
 
 !!! note
-    Notice that the datetime of the observation is split into 5 different columns.
+    Notice that the datetime of the observation is split into 5 different columns (from most to least significant).
 
 Below are essential `csv2bufr` commands and configurations:
 
@@ -209,12 +209,12 @@ Open the mappings file `mappings_4.json`. Find the lines corresponding to the va
 
     where `y` is your answer in part 4.
 
-8. By the `data transform` command, use the mappings file to convert this CSV data to BUFR.
+8. By running the `csv2bufr data transform` command, use the mappings file to convert this CSV data to BUFR.
 
 9. Use the `bufr_dump` command to verify that `nonCoordinatePressure`, `airTemperature` and `dewpointTemperature` have the values you would expect after conversion.
 
 ### Exercise 5: Implementing quality control
-In this exercise, we will implement some minimum and maximum tolerable values to prevent data of certain varaibles from being encoded into BUFR. To do this, we will use `valid_min` and `valid_max` in the mappings file.
+In this exercise, we will implement some minimum and maximum tolerable values to prevent data of certain variables from being encoded into BUFR. To do this, we will use `valid_min` and `valid_max` in the mappings file.
 
 Navigate to the `ex_5` directory:
 
@@ -222,7 +222,7 @@ Navigate to the `ex_5` directory:
 cd ~/exercise-materials/csv2bufr-exercises/ex_5
 ```
 
-1. By the `data transform` command, use the mappings file to convert this CSV data to BUFR. What error occurs? Is a BUFR file created?
+1. By running the `csv2bufr data transform` command, use the mappings file to convert this CSV data to BUFR. What error occurs? Is a BUFR file created?
 
 2. Use the `bufr_dump` command to check the values of `pressureReducedToMeanSeaLevel`, `airTemperature` and `dewpointTemperature`. Which variables are missing, and why?
 
@@ -239,7 +239,7 @@ where `a` and `b` are values. These values represent the minimum and maximum tol
     !!! note
     The valid minimum and maximum values should take the same units as the CSV data.
 
-4. By the `data transform` command, use this mappings file to convert this CSV data to BUFR again. Do you notice any errors this time?
+4. By running the `csv2bufr data transform` command, use this mappings file to convert this CSV data to BUFR again. Do you notice any errors this time?
 
 ## Conclusion
 
