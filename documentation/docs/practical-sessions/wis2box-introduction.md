@@ -176,9 +176,9 @@ wis2box data ingest -th mwi.mwi_wmo_demo.data.recommended.weather.surface-based-
     Copy and paste the URL in your browser to verify you can download the corresponding `.bufr4` file.
 
 !!! note "Downloading restricted data"
-    You will not be able to download the data using the URL in the message published on `origin/a/wis2/mwi/mwi_wmo_demo/data/recommended/` as the data access has been restricted by the data supplier. In this case you will get the error `401 Authorization Required`.
+    You will not be able to download the data using the URL in the message published on `origin/a/wis2/mwi/mwi_wmo_demo/data/recommended/` as the data access has been restricted by the data publisher. In this case you will get the error `401 Authorization Required`.
 
-The data is currently restricted with the access-token `mysecrettoken`. In order to download the data you would need to add this token to the header:
+The data is currently restricted with the access token `mysecrettoken`. In order to download the data you would need to add this token to the header:
 
 ```bash
 wget --header "Authorization: Bearer mysecrettoken" http://testuser.wis2.training/data/2023-06-07/wis/mwi/mwi_wmo_demo/data/recommended/weather/surface-based-observations/synop/WIGOS_0-454-2-AWSCHIKWAWA_20230607T085500.bufr4
