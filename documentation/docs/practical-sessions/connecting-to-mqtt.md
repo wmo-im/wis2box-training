@@ -53,7 +53,7 @@ At this point, the following should appear in the MQTT Explorer session:
 You are now ready to start exploring the WIS2 topics and message structure and answer the following questions:
 
 !!! question "Review the WIS2 topic structure"
-    Use MQTT to browse topic structure under the 'origin' and 'cache' topics.
+    Use MQTT to browse topic structure under the `origin` and `cache` topics.
     
     How can we distinguish the originating country providing the data?
     
@@ -64,9 +64,9 @@ You are now ready to start exploring the WIS2 topics and message structure and a
 
     `origin/a/wis2/zmb/zambia_met_service/data/core/weather/surface-based-observations/synop`
 
-    You can view the content of the WIS2-message in the "Value"-section on the right hand side.
+    You can view the content of the WIS2 message in the "Value" section on the right hand side.
 
-    What is the timestamp in UTC for when this data was published ?
+    What is the timestamp in UTC for when this data was published?
 
     What is the URL from which we can download the data in BUFR format?
 
@@ -75,14 +75,14 @@ You are now ready to start exploring the WIS2 topics and message structure and a
 
     `cache/a/wis2/zmb/zambia_met_service/data/core/weather/surface-based-observations/synop`
 
-    What is the timestamp in UTC for when this data was published ?
+    What is the timestamp in UTC for when this data was published?
 
     What is the URL we can use to download the data?  What is the difference between this URL and the URL in the previous question?
 
 !!! note
     MQTT Explorer is a helpful tool to review the topic structure for a given MQTT broker and visually work with the MQTT protocol. There exist many MQTT client and server software. 
     
-    To work with MQTT programmatically (for example, in Python), you can use MQTT-client libraries such as [paho-mqtt](https://pypi.org/project/paho-mqtt/) to connect to an MQTT broker and process incoming messages.
+    To work with MQTT programmatically (for example, in Python), you can use MQTT client libraries such as [paho-mqtt](https://pypi.org/project/paho-mqtt/) to connect to an MQTT broker and process incoming messages.
 
 ## Conclusion
 
