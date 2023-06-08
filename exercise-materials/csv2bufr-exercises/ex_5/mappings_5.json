@@ -43,12 +43,12 @@
         {"eccodes_key": "#1#heightOfStationGroundAboveMeanSeaLevel",               "value":"data:Elevation"},
         {"eccodes_key": "#1#heightOfBarometerAboveMeanSeaLevel",                   "value":"data:BP_Elevation"},
         {"eccodes_key": "#1#nonCoordinatePressure",                                "value":"data:BP", "offset": "const:0", "scale": "const:2"},
-        {"eccodes_key": "#1#pressureReducedToMeanSeaLevel",                        "value":"data:QNH"},
+        {"eccodes_key": "#1#pressureReducedToMeanSeaLevel",                        "value":"data:QNH", "valid_min": "const:50000", "valid_max": "100000"},
         {"eccodes_key": "#1#3HourPressureChange",                                  "value":"data:BP_Change", "valid_min": "const:-5000", "valid_max": "const:5230"},
         {"eccodes_key": "#1#characteristicOfPressureTendency",                     "value":"data:BP_Tendency"},
         {"eccodes_key": "#1#heightOfSensorAboveLocalGroundOrDeckOfMarinePlatform", "value":"data:Temp_H"},
-        {"eccodes_key": "#1#airTemperature",                                       "value":"data:AirTempC", "offset": "const:273.15", "scale": "const:0"},
-        {"eccodes_key": "#1#dewpointTemperature",                                  "value":"data:DewPointTempC", "offset": "const:273.15", "scale": "const:0"},
+        {"eccodes_key": "#1#airTemperature",                                       "value":"data:AirTempC", "valid_min": "const:-10", "valid_max": "const:25", "offset": "const:273.15", "scale": "const:0"},
+        {"eccodes_key": "#1#dewpointTemperature",                                  "value":"data:DewPointTempC", "valid_min": "const:-10", "valid_max": "const:25", "offset": "const:273.15", "scale": "const:0"},
         {"eccodes_key": "#1#relativeHumidity",                                     "value":"data:RelativeHumidity"}
     ]
 }

@@ -29,6 +29,24 @@ ls
 
 ## csv2bufr primer
 
+### Necessary CSV data
+
+There are some requirements on the data that must be present in the CSV file:
+
+- WIGOS Station Identifier, either in 1 column or split over 4 columns for each component
+- Observation year
+- Observation month
+- Observation day
+- Observation hour
+- Observation minute
+- Latitude
+- Longitude
+- Station height
+- Barometer height
+
+!!! note
+    Notice that the datetime of the observation is split into 5 different columns.
+
 Below are essential `csv2bufr` commands and configurations:
 
 ### mappings Create
@@ -120,7 +138,7 @@ and open the CSV data `ex_2.csv`.
 
 Now open the mappings file `mappings_2.json`. By looking at the eccodes keys related to dates and times, it should seem clear that it is not possible to map the datetime with the CSV in its current state.
 
-2. Create new columns in the CSV file for each component of the datetime, with appropriate column names to match those of the mapping file.
+2. Create new columns in the CSV file for each component of the datetime: `Year`, `Month`, `Day`, `Hour`, `Minute`.
 
 3. By the `data transform` command, use the mappings file to convert this CSV data to BUFR.
 
@@ -196,7 +214,7 @@ Open the mappings file `mappings_4.json`. Find the lines corresponding to the va
 9. Use the `bufr_dump` command to verify that `nonCoordinatePressure`, `airTemperature` and `dewpointTemperature` have the values you would expect after conversion.
 
 ### Exercise 5: Implementing quality control
-In this exercise, we will implement some minimum and maximum tolerable values to prevent clearly incorrect data from being converted to BUFR. To do this, we will use `valid_min` and `valid_max` in the mappings file.
+In this exercise, we will implement some minimum and maximum tolerable values to prevent data of certain varaibles from being encoded into BUFR. To do this, we will use `valid_min` and `valid_max` in the mappings file.
 
 Navigate to the `ex_5` directory:
 
@@ -204,22 +222,24 @@ Navigate to the `ex_5` directory:
 cd ~/exercise-materials/csv2bufr-exercises/ex_5
 ```
 
-and open the CSV data `ex_5.csv`.
+1. By the `data transform` command, use the mappings file to convert this CSV data to BUFR. What error occurs? Is a BUFR file created?
 
-1. Which two variables have values that are clearly incorrect?
-2. For each of these variables, decide on some sensible minimum and maximum tolerable values.
+2. Use the `bufr_dump` command to check the values of `pressureReducedToMeanSeaLevel`, `airTemperature` and `dewpointTemperature`. Which variables are missing, and why?
 
-Open the mappings file `mappings_5.json`. Find the lines corresponding to the variables above.
+Open the mappings file `mappings_5.json`. Find the lines corresponding to the variables above. You will find the following on these lines:
 
-3. Implement these minimum and maximum values by adding the following line to the right of the `data:` code:
+```bash
+"valid_min": "const:a", "valid_max": "const:b"
+```
 
-    ```bash
-    "valid_min": "const:a", "valid_max": "const:b"
-    ```
-    
-    where a and b are values you chose in part 2.
+where `a` and `b` are values. These values represent the minimum and maximum tolerable extremes for encoding into BUFR. 
 
-4. By the `data transform` command, use this mappings file to convert this CSV data to BUFR. What happens? Is a BUFR file written?
+3. Change `a` and `b` on each line to form a less tight range of tolerance for these variables.
+
+    !!! note
+    The valid minimum and maximum values should take the same units as the CSV data.
+
+4. By the `data transform` command, use this mappings file to convert this CSV data to BUFR again. Do you notice an errors this time?
 
 ## Conclusion
 
@@ -228,5 +248,7 @@ Open the mappings file `mappings_5.json`. Find the lines corresponding to the va
     In this practical session, you learned:
 
     - The basic usage of `csv2bufr`
+    - The required structure of CSV data for conversion to BUFR
     - How to update a simple csv2bufr mapping file for a variety of scenarios, including for GBON requirements, unit conversion, and quality control/range checking
-    - How to `csv2bufr` on a test data file and convert to BUFR format
+    - How to use `csv2bufr` on a test data file and convert to BUFR format
+    - How to use `bufr_dump` to verify the values of BUFR encoded variables

@@ -19,11 +19,11 @@
         {"eccodes_key": "numberOfSubsets", "value": "const:1"},
         {"eccodes_key": "observedData", "value": "const:1"},
         {"eccodes_key": "compressedData", "value": "const:0"},
-        {"eccodes_key": "typicalYear", "value":"data:M_Year"},
-        {"eccodes_key": "typicalMonth", "value":"data:M_Month"},
-        {"eccodes_key": "typicalDay", "value":"data:M_DayOfMonth"},
-        {"eccodes_key": "typicalHour", "value":"data:M_HourOfDay"},
-        {"eccodes_key": "typicalMinute", "value":"data:M_Minutes"},
+        {"eccodes_key": "typicalYear", "value":"data:Year"},
+        {"eccodes_key": "typicalMonth", "value":"data:Month"},
+        {"eccodes_key": "typicalDay", "value":"data:Day"},
+        {"eccodes_key": "typicalHour", "value":"data:Hour"},
+        {"eccodes_key": "typicalMinute", "value":"data:Minute"},
         {"eccodes_key": "unexpandedDescriptors", "value": "array:301150,307080"}
     ],
     "data": [

@@ -49,6 +49,9 @@ Note that if the metadata, output directory, year and month options are not spec
 | --year | The current year. |
 | --month | The current month. |
 
+!!! note
+    One must be cautious using the default year and month, as the day of the month specified in the report may not correspond with this. E.g. June 2023 does not have a 31st day.
+
 In the examples, the year and month are not given, so feel free to specify a date yourself or use the default values.
 
 ## ecCodes primer

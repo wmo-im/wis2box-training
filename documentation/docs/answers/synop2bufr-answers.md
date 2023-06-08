@@ -17,7 +17,7 @@ title: Converting SYNOP data to BUFR answers
 1. This can be done using the following command:
 
     ```bash
-    bufr_dump -p WIGOS_0-20000-0-15015_20230221T120000.bufr4 | egrep -i 'latitude|longitude'
+    bufr_dump -p <file.bufr4> | egrep -i 'latitude|longitude'
     ```
 
 ## Exercise 2
@@ -34,15 +34,15 @@ title: Converting SYNOP data to BUFR answers
 1. This can be done using the following commands:
 
     ```bash
-    bufr_dump -p WIGOS_0-20000-0-15015_20230221T120000.bufr4 | egrep -i 'wigos'
+    bufr_dump -p <file.bufr4> | egrep -i 'wigos'
     ```
 
     ```bash
-    bufr_dump -p WIGOS_0-20000-0-15020_20230221T120000.bufr4 | egrep -i 'wigos'
+    bufr_dump -p <file.bufr4> | egrep -i 'wigos'
     ```
 
     ```bash
-    bufr_dump -p WIGOS_0-20000-0-15090_20230221T120000.bufr4 | egrep -i 'wigos'
+    bufr_dump -p <file.bufr4> | egrep -i 'wigos'
     ```
 
     Note that if you have a directory with just these 3 BUFR files, you can use Linux wildcards as follows:
@@ -63,7 +63,7 @@ title: Converting SYNOP data to BUFR answers
 1. This can be done in one command:
 
     ```bash
-    bufr_dump -p WIGOS_0-20000-0-15260_20230221T115500.bufr4 | egrep -i 'temperature|cover|sunshine|wind'
+    bufr_dump -p <file.bufr4> | egrep -i 'temperature|cover|sunshine|wind'
     ```
 
 Of course a command for each variable can also be used.
