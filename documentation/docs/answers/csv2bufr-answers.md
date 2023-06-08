@@ -39,7 +39,7 @@ title: Converting CSV data to BUFR answers
 
     You should see the following error:
 
-    ```bash
+    ```
     Column RH not found in input data
     ```
 
@@ -49,13 +49,13 @@ title: Converting CSV data to BUFR answers
 
 3. We do this by changing the line:
 
-    ```bash
+    ```
     {"eccodes_key": "#1#relativeHumidity", "value":"data:RH"}
     ```
 
     to:
 
-    ```bash
+    ```
     {"eccodes_key": "#1#relativeHumidity", "value":"data:RelativeHumidity"}
     ```
 
@@ -75,7 +75,7 @@ title: Converting CSV data to BUFR answers
 
     !!! note
         The value returned is not the same exact value as what is present in the CSV file: 54.09.
-        This is because this particular ecCode is always an integer, so is rounded.
+        This is because some variables (such as relative humidity) in BUFR are always integers, hence are rounded.
 
 
 ## Exercise 4
@@ -85,22 +85,22 @@ title: Converting CSV data to BUFR answers
 3. 273.15, as 0 degrees C = 273.15 K
 4. You should have the following line in your mapppings file:
 
-    ```bash
+    ```
     {"eccodes_key": "#1#nonCoordinatePressure", "value":"data:BP", "offset": "const:0", "scale": "const:2"}
     ```
 
 5. You should have the following line in your mappings file:
 
-    ```bash
+    ```
     {"eccodes_key": "#1#airTemperature", "value":"data:AirTempC"}
     {"eccodes_key": "#1#dewpointTemperature", "value":"data:DewPointTempC"}
     ```
 
-6. ```bash
+6. ```
     {"eccodes_key": "#1#airTemperature", "value":"data:AirTempC", "offset": "const:273.15", "scale": "const:0"}
     ```
 
-7. ```bash
+7. ```
     {"eccodes_key": "#1#dewpointTemperature", "value":"data:DewPointTempC", "offset": "const:273.15", "scale": "const:0"}
     ```
 
@@ -118,34 +118,29 @@ title: Converting CSV data to BUFR answers
 
 ## Exercise 5
 
-1. Non coordinate pressure (QNH) takes a negative value and the air temperature is too high.
-
-2. This will vary from person to person, but here is an example:
-
-    | Variable        | Minimum | Maximum |
-    |-----------------|---------|---------|
-    | Pressure (Pa)   | 0       | 150000  |
-    | Temperature (C) | -20     | 50      |
-
-3. You should have the following line in your mappings file:
+1. When converting `ex_5.csv` to BUFR, we see the following error:
 
     ```bash
-    {"eccodes_key": "#1#pressureReducedToMeanSeaLevel", "value":"data:QNH", "valid_min": "const:0", "valid_max": "const:150000"}
+    #1#pressureReducedToMeanSeaLevel: Value (102043.2) out of valid range (50000 - 100000).; Element set to missing
+    #1#airTemperature: Value (25.85) out of valid range (-10 - 25).; Element set to missing
     ```
+
+2. By using the following command:
 
     ```bash
-    {"eccodes_key": "#1#airTemperature", "value":"data:AirTempC", "valid_min": "const:-20", "valid_max": "const:50", "offset": "const:273.15", "scale": "const:0"}
+    bufr_dump -p WIGOS_0-454-2-AWSMULANJE_20230526T005500.bufr4 | egrep -i 'pressureReducedToMeanSeaLevel|airTemperature|dewpointTemperature'
     ```
 
-    !!! note
-    The valid minimum and maximum values should take the same units as the CSV data.
+    which gives the following output:
 
-4. You will see the following error:
-
-    ```bash
-    #1#pressureReducedToMeanSeaLevel: Value (-102043.2) out of valid range (0 - 150000).; Element set to missing
-    #1#airTemperature: Value (2585.0) out of valid range (-20 - 50).; Element set to missing
+    ```
+    pressureReducedToMeanSeaLevel=MISSING
+    airTemperature=MISSING
+    dewpointTemperature=289.1
     ```
 
-    and a BUFR file will still be written. However, it will not contain the values of these variables, as they are set to missing.
+    We find that the pressure and air temperature variables are missing because, from the error found in part 1, these variables are outside of the valid range.
 
+3. This is personal preference.
+
+4. Provided the values of `QNH`, `AirTempC`, and `DewPointTempC` are within the ranges set in the previous part, the CSV file should convert to BUFR without any errors.
