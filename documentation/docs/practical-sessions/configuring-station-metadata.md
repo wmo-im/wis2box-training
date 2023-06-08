@@ -17,7 +17,7 @@ Login to your student VM using SSH.
 Ensure wis2box is running:
 
 ```bash
-cd ~/wis2box-1.0b3
+cd ~/wis2box-1.0b4
 python3 wis2box-ctl.py start
 python3 wis2box-ctl.py status
 ```
@@ -49,10 +49,12 @@ It is recommended to use station information from the [WMO OSCAR/Surface](https:
 
 The script `~/exercise-materials/create-station-list/oscar2wis2box.py` can be used to add stations to your station list if they are available in OSCAR/Surface.
 
-For example to add the station with WIGOS Station Identifier=0-20000-0-78224 to your `station_list.csv`, run the following command:
+For example to add the stations with WIGOS-IDs=0-20000-0-78970, 0-20000-0-78969 and 0-20000-0-78962 to your `station_list.csv`, run the following commands: 
 
 ```bash
-python3 ~/exercise-materials/station-list/oscar2wis2box.py 0-20000-0-78224 >> ~/wis2box-data/metadata/station/station_list.csv
+python3 ~/exercise-materials/station-list/oscar2wis2box.py 0-20000-0-78970 >> ~/wis2box-data/metadata/station/station_list.csv
+python3 ~/exercise-materials/station-list/oscar2wis2box.py 0-20000-0-78969 >> ~/wis2box-data/metadata/station/station_list.csv
+python3 ~/exercise-materials/station-list/oscar2wis2box.py 0-20000-0-78962 >> ~/wis2box-data/metadata/station/station_list.csv
 ```
 
 ### Review your station list
@@ -63,27 +65,28 @@ Check the content of your station list from the command line as follows:
 cat ~/wis2box-data/metadata/station/station_list.csv
 ```
 
-Or open the file in WinSCP and ensure you have at least three stations defined.
+Or open the file in WinSCP.
+
+Keep adding lines to the station_list.csv and ensure you have at least three stations defined.
 
 ## Publishing station metadata
 
 Login in to the **wis2box-management** container:
 
 ```bash
-cd ~/wis2box-1.0b3/
+cd ~/wis2box-1.0b4/
 python3 wis2box-ctl.py login
 ```
 
 Run the following command to publish your station metadata:
 
 ```bash
-wis2box metadata station discovery publish-collection
+wis2box metadata station publish-collection
 ```
 
-Ensure that your new station metadata was published to the API, by navigating to `http://<your-host>/oapi/collections/stations`.
+Ensure that your new station metadata was published to the API, by navigating to `http://<your-hostname>.wis2.training/oapi/collections/stations/items`:
 
-!!! question
-    Do you see your new station metadata?
+<img alt="stationlist_from_oscar" src="../../assets/img/stationlist_from_oscar.png" width="800">
 
 Click on your station metadata record and inspect the content, noting how it relates to the content of the `station_list.csv` you have updated.
 
