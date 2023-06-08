@@ -11,7 +11,8 @@ python3 wis2box-ctl.py execute wis2box auth add-token --topic-hierarchy mwi.mwi_
 python3 wis2box-ctl.py execute wis2box auth add-token -p mwi_wmo_demo:reco mysecrettoken -y
 python3 wis2box-ctl.py execute wis2box data ingest -th mwi.mwi_wmo_demo.data.core.weather.surface-based-observations.synop -p /data/wis2box/observations/malawi-preingested-core/
 python3 wis2box-ctl.py execute wis2box data ingest -th mwi.mwi_wmo_demo.data.recommended.weather.surface-based-observations.synop -p /data/wis2box/observations/malawi-preingested-reco/
-echo "sleep before refresh station-links..."
+echo "sleep before refresh station links..."
 sleep 120
+echo "publishing station metadata"
 python3 wis2box-ctl.py execute wis2box metadata station publish-collection
-echo "done, sleeping!"
+echo "done!"
