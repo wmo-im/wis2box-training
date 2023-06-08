@@ -10,14 +10,14 @@ In this session you will customize your wis2box environment variables and re-ini
 
 ### Preparation
 
-Login to your student VM.
+Login to your student VM using WinSCP (using SCP-protocol) and PuTTY.
 
 ## re-initialize wis2box
 
 Stop your wis2box:
 
 ```bash
-cd ~/wis2box-1.0b3/
+cd ~/wis2box-1.0b4/
 python3 wis2box-ctl.py stop
 ```
 
@@ -61,7 +61,7 @@ The wis2box setup reads environment variables from `dev.env`.
 Make sure you are in the wis2box-directory and the check the current content of your `dev.env`.
 
 ```bash
-cd ~/wis2box-1.0b3/
+cd ~/wis2box-1.0b4/
 cat dev.env
 ```
 
@@ -74,9 +74,9 @@ This setup was using the pre-defined configuration stored in `~/exercise-materia
     
     Make sure you keep these values when editing your `dev.env`
 
-In the next few steps we will review how to update some of key environment variables used in wis2box by editing `dev.env` in the directory `wis2box-1.0b3`.
+In the next few steps we will review how to update some of key environment variables used in wis2box by editing `dev.env` in the directory `wis2box-1.0b4`.
 
-You can use WinSCP to connect to your instance and edit this file or you can edit the file from the command line when connected via SSH.
+You can use WinSCP to connect to your instance and edit this file or you can edit the file from the command line using PuTTY.
 
 ## define your own wis2box-data directory
 
@@ -98,7 +98,7 @@ The wis2box requires the file `data-mappings.yml` stored in your wis2box data di
 
 Use the following commands to create an (empty) `data-mappings.yml` that you will populate at a later step. 
 ```bash
-echo "data > ~/wis2box-data/data-mappings.yml
+echo "data:" > ~/wis2box-data/data-mappings.yml
 ```
 
 ### create an (empty) `station-list.csv`
@@ -108,21 +108,22 @@ The wis2box requires the file `metadata/station/station_list.csv` store in your 
 Use the following commands to create `metadata/station/station_list.csv` (headers only):
 
 ```bash
-echo "station_name,wigos_station_identifier,traditional_station_identifier,facility_type,latitude,longitude,elevation,territory_name,wmo_region
-" > ~/wis2box-data/metadata/station/station_list.csv
+echo "station_name,wigos_station_identifier,traditional_station_identifier,facility_type,latitude,longitude,elevation,territory_name,wmo_region" > ~/wis2box-data/metadata/station/station_list.csv
 ```
 
-Edit `dev.env` (using WinSCP or from the command line) and update the value for `WIS2BOX_HOST_DATADIR` and replace:
+Edit `dev.env` (using WinSCP or from the command line):
 
- `WIS2BOX_HOST_DATADIR=/home/<your-username>/exercise-materials/wis2box-test-data` 
+Comment out the original `WIS2BOX_HOST_DATADIR` :
  
-with:
+ `# WIS2BOX_HOST_DATADIR=/home/<your-username>/exercise-materials/wis2box-test-data` 
+ 
+And add the following to point to your new directory:
 
  `WIS2BOX_HOST_DATADIR=/home/<your-username>/wis2box-data`
 
 ### define custom credentials for your broker and storage
 
-Edit the file 'dev.env' and add the following to customize the default broker credentials:
+Edit the file `dev.env` and add the following to customize the default broker credentials (replace `XXXXXXXX` with your own password):
 
 ```bash
 # broker credentials
@@ -130,7 +131,7 @@ WIS2BOX_BROKER_USERNAME=wis2box
 WIS2BOX_BROKER_PASSWORD=XXXXXXXX
 ```
 
-And the following content to `dev.env` to set the storage credentials:
+And the following content to `dev.env` to set the storage credentials (replace XXXXXXXX with your own password)
 
 ```bash
 # storage credentials
@@ -153,7 +154,6 @@ MINIO_ROOT_USER=${WIS2BOX_STORAGE_USERNAME}
 MINIO_ROOT_PASSWORD=${WIS2BOX_STORAGE_PASSWORD}
 MINIO_NOTIFY_MQTT_USERNAME_WIS2BOX=${WIS2BOX_BROKER_USERNAME}
 MINIO_NOTIFY_MQTT_PASSWORD_WIS2BOX=${WIS2BOX_BROKER_PASSWORD}
-MINIO_NOTIFY_MQTT_BROKER_WIS2BOX=tcp://${WIS2BOX_BROKER_HOST}:${WIS2BOX_BROKER_PORT}
 ```
 
 The content of you `dev.env` should now look as follows (except for your own passwords and URLs):

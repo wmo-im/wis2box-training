@@ -52,30 +52,37 @@ At this point, the following should appear in the MQTT Explorer session:
 
 You are now ready to start exploring the WIS2 topics and message structure and answer the following questions:
 
-!!! question
-    How can we distinguish the originating country providing the data?  How many countries are sharing data?
+!!! question "Review the WIS2 topic structure"
+    Use MQTT to browse topic structure under the `origin` and `cache` topics.
+    
+    How can we distinguish the originating country providing the data?
+    
+    How many countries are sharing data?
 
-!!! question
+!!! question "Zambia data from origin"
     Find the latest message received in the following topic:
 
-    `origin/a/wis2/mwi/malawi_wmo_demo/data/core/weather/surface-based-observations/synop`
+    `origin/a/wis2/zmb/zambia_met_service/data/core/weather/surface-based-observations/synop`
+
+    You can view the content of the WIS2 message in the "Value" section on the right hand side.
+
+    What is the timestamp in UTC for when this data was published?
 
     What is the URL from which we can download the data in BUFR format?
 
-!!! question
+!!! question "Zambia data from cache"
     Find the latest message received on the following topic:
 
-    `cache/a/wis2/mwi/malawi_wmo_demo/data/core/weather/surface-based-observations/synop`
+    `cache/a/wis2/zmb/zambia_met_service/data/core/weather/surface-based-observations/synop`
+
+    What is the timestamp in UTC for when this data was published?
 
     What is the URL we can use to download the data?  What is the difference between this URL and the URL in the previous question?
 
-!!! question
-    How does the WIS2 message define the location where the data was observed?  And how you can determine the time that the data was published?
-
 !!! note
-    MQTT Explorer is a helpful tool to review the topic structure for a given MQTT broker and visually work with the MQTT protocol.  There exist
-    many MQTT client and server software.  To work with MQTT programmatically (for example, in Python), [paho-mqtt](https://pypi.org/project/paho-mqtt/)
-    can be used to connect to an MQTT broker and process incoming messages.
+    MQTT Explorer is a helpful tool to review the topic structure for a given MQTT broker and visually work with the MQTT protocol. There exist many MQTT client and server software. 
+    
+    To work with MQTT programmatically (for example, in Python), you can use MQTT client libraries such as [paho-mqtt](https://pypi.org/project/paho-mqtt/) to connect to an MQTT broker and process incoming messages.
 
 ## Conclusion
 

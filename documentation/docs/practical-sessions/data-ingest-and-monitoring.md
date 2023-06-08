@@ -15,23 +15,12 @@ Login to you student VM using your SSH client.
 Make sure wis2box is up and running:
 
 ```bash
-cd ~/wis2box-1.0b3
+cd ~/wis2box-1.0b4
 python3 wis2box-ctl.py start
 python3 wis2box-ctl.py status
 ```
 
-### Verify data mappings
-
-Execute the following command from your SSH client window.
-
-```bash
-cat ~/exercise-materials/wis2box-test-data/data-mappings.yml
-```
-
-These are the data mappings currently used on your wis2box instance.
-
-!!! question
-    Which plugins are configured for your dataset ?
+Make sure your have MQTT explorer running and connected to your instance.
 
 ### Open the Grafana dashboard
 
@@ -61,16 +50,18 @@ You can also automate data ingest using a script to copy data into the `wis2box-
 
 ### Download test data
 
-Download the following files onto your local computer:
+Click on the two links below and download two new data samples on your computer:
 
-[WIGOS_0-454-2-AWSBILIRA_new.csv](https://raw.githubusercontent.com/wmo-im/wis2box-training/main/sample-data/WIGOS_0-454-2-AWSBILIRA_new.csv) 
+<a href="../../sample-data/WIGOS_0-454-2-AWSBILIRA_new.csv">WIGOS_0-454-2-AWSBILIRA_new.csv</a>
 
-[WIGOS_0-454-2-AWSCHIKANGAWA_new.csv](https://raw.githubusercontent.com/wmo-im/wis2box-training/main/sample-data/WIGOS_0-454-2-AWSCHIKANGAWA_new.csv) 
+<a href="../../sample-data/WIGOS_0-454-2-AWSCHIKANGAWA_new.csv">WIGOS_0-454-2-AWSCHIKANGAWA_new.csv</a>
 
 ### MinIO admin interface
 
 Open a new tab in your web browser and visit the page `http://<your-host>:9001`. You should see the login screen for MinIO. 
-You can login with 'username=minio' and 'password=minio123'.
+You can login with username `minio` and password `minio123`:
+
+<img alt="minio-admin-buckets" src="../../assets/img/minio-login.png" width="600">
 
 You should be see the buckets 'wis2box-archive', 'wis2box-incoming', 'wis2box-public'.
 
@@ -87,14 +78,18 @@ Click the **Create new path** button and create the new folder path: `/test/data
 And then upload the file `WIGOS_0-454-2-AWSBILIRA_new.csv` into the folder `wis2box-incoming/test/data`.
 
 !!! question "View the Grafana dashboard"
-    Go back to the Grafana dashboard on your instance at port 3000. Find the error reported after uploading the file.
+    Go back to the Grafana dashboard on your instance at port 3000.
+
+    You should see the following error:
+
+    <img alt="grafana_error" src="../../assets/img/grafana_error.png" width="600">
 
 Navigate the directory structure until you are in the folder `wis2box-incoming/mwi/mwi_wmo_demo/data/core/weather/surface-based-observations/synop`
 
 Upload the file `WIGOS_0-454-2-AWSBILIRA_new.csv` to `wis2box-incoming/mwi/mwi_wmo_demo/data/core/weather/surface-based-observations/synop`
 
 !!! question "View the Grafana dashboard"
-    Check the Grafana dashboard; can you confirm the wis2box workflow was initiated after you uploaded your data? In case you see any errors, try to use the information provided in the dashboard to resolve the errors.
+    Check the Grafana dashboard; can you confirm the wis2box workflow was initiated after you uploaded your data?
 
 !!! question "View new messages on your wis2box-broker"
     Check MQTT Explorer, can you confirm that new messages were successfully published on your wis2box broker?
@@ -115,12 +110,10 @@ Upload the file `WIGOS_0-454-2-AWSBILIRA_new.csv` to `wis2box-incoming/mwi/mwi_w
 
 To allow your data to be accessible over FTP you can use the **wis2box-ftp** container, which provides a service that forwards data received over FTP to MinIO.
 
-See [wis2box-ftp documentation](https://docs.wis2box.wis.wmo.int/en/latest/user/data-ingest.html#wis2box-ftp) for more information on how to prepare the wis2box-ftp configuration.
-
-For the purpose of this training you can use your predefined configuration in `~/wis2box-1.0b3/ftp.env` to start your wis2box-ftp as follows:
+For the purpose of this training you can use your predefined configuration in `~/wis2box-1.0b4/ftp.env` to start your wis2box-ftp as follows:
 
 ```bash
-cd ~/wis2box-1.0b3/
+cd ~/wis2box-1.0b4/
 docker-compose -f docker-compose.wis2box-ftp.yml --env-file ftp.env up -d
 ```
 
@@ -134,17 +127,17 @@ Select the option to create a 'new directory':
 
 <img alt="winscp-empty" src="../../assets/img/winscp-empty.png" width="500">
 
-Enter the topic hierarchy value of your dataset as a directory:
+Create the directory `mwi/mwi_wmo_demo/data/core/weather/surface-based-observations/synop`
 
-<img alt="winscp_wis2box-ftp_example" src="../../assets/img/winscp-example.png" width="400">
+Enter the new directory you created and you can copy the file `WIGOS_0-454-2-AWSCHIKANGAWA_new.csv` from your host machine on the wis2box-ftp:
 
-Now enter the directory you created and you can copy your data sample from your host machine to trigger the wis2box data ingest.
+<img alt="winscp-after-file-upload" src="../../assets/img/winscp-after-file-upload.png" width="600">
 
-Check your Grafana dashboard.
+Check your Grafana dashboard and MQTT explorer to review the result of copying the file in the wis2box-ftp.
 
 !!! Question
 
-    Did you manage to successfully publish WIS2 notifications for your data?
+    Did you manage to successfully publish WIS2 notifications for your new data?
 
     If not, review the errors reported and try to determine what went wrong.
 
@@ -152,19 +145,27 @@ Check your Grafana dashboard.
     You can run `docker logs wis2box-ftp` to check if the FTP service is running correctly.
 
 !!! Note
-    To change the username/password for the wis2box FTP service, edit the file `ftp.env` and set your own values for `FTP_USER` and `FTP_PASS`:
+    You can view ftp-configuration in `ftp.env` from the command line:
+
+    ```bash
+    cat ~/wis2box-1.0b4/ftp.env
+    ```
 
     ```console
     FTP_USER=wis2box
-    FTP_PASS=wis2box123
-    ```
-    And restart the wis2box-ftp service:
-    ```console
-    docker-compose -f docker-compose.wis2box-ftp.yml down
-    docker-compose -f docker-compose.wis2box-ftp.yml --env-file ftp.env up -d
+    FTP_PASS=wis2box
+    FTP_HOST=testuser.wis2.training
+    WIS2BOX_STORAGE_ENDPOINT=http://testuser.wis2.training:9000
+    WIS2BOX_STORAGE_USER=minio
+    WIS2BOX_STORAGE_PASSWORD=minio123
+    LOGGING_LEVEL=WARNING
     ```
 
-Then start the `wis2box-ftp` service with the following command:
+    To change the username/password for the wis2box FTP service, edit the file `ftp.env` and update `FTP_USER` and `FTP_PASS`.
+
+    If you you update your storage credentials from the default `minio`/`minio123`, you will also need to update the values in `ftp.env`.
+
+    See [wis2box-ftp documentation](https://docs.wis2box.wis.wmo.int/en/latest/user/data-ingest.html#wis2box-ftp) for more information on how to use the wis2box-ftp service.
 
 ### MinIO Python client (optional exercise)
 

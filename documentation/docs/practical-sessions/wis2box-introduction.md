@@ -33,7 +33,7 @@ Login to your designated VM with your username and password.
 Navigate to the directory containing the wis2box software stack:
 
 ```bash
-cd ~/wis2box-1.0b3
+cd ~/wis2box-1.0b4
 ```
 
 Start wis2box with the following command:
@@ -56,7 +56,7 @@ Repeat this command until all services are up and running.
 !!! note "wis2box and Docker"
     wis2box runs as a set of Docker containers managed by docker-compose.
     
-    The services are defined in the various `docker-compose*.yml` which can be found in the `~/wis2box-1.0b3/` directory.
+    The services are defined in the various `docker-compose*.yml` which can be found in the `~/wis2box-1.0b4/` directory.
     
     The Python script `wis2box-ctl.py` is used to run the underlying Docker Compose commands that control the wis2box services.
 
@@ -123,10 +123,10 @@ Make sure MQTT Explorer is connected to your broker before proceeding to the nex
 
 To demonstrate how wis2box can publish WIS2 data we will manually ingest some data from the command line:
 
-In your SSH client window, ensure you are in the `~/wis2box-1.0b3` directory and login to the **wis2box-management** container as follows:
+In your SSH client window, ensure you are in the `~/wis2box-1.0b4` directory and login to the **wis2box-management** container as follows:
 
 ```bash
-cd ~/wis2box-1.0b3/
+cd ~/wis2box-1.0b4/
 python3 wis2box-ctl.py login
 ```
 
@@ -159,7 +159,7 @@ We will now publish some more data on the topic containing `data.recommended`
 In your SSH client window, login to the **wis2box-management** container:
 
 ```bash
-cd ~/wis2box-1.0b3/
+cd ~/wis2box-1.0b4/
 python3 wis2box-ctl.py login
 ```
 
@@ -176,9 +176,9 @@ wis2box data ingest -th mwi.mwi_wmo_demo.data.recommended.weather.surface-based-
     Copy and paste the URL in your browser to verify you can download the corresponding `.bufr4` file.
 
 !!! note "Downloading restricted data"
-    You will not be able to download the data using the URL in the message published on `origin/a/wis2/mwi/mwi_wmo_demo/data/recommended/` as the data access has been restricted by the data supplier.
+    You will not be able to download the data using the URL in the message published on `origin/a/wis2/mwi/mwi_wmo_demo/data/recommended/` as the data access has been restricted by the data publisher. In this case you will get the error `401 Authorization Required`.
 
-The data is currently restricted with the access-token `mysecrettoken`. In order to download the data you would need to add this token to the header:
+The data is currently restricted with the access token `mysecrettoken`. In order to download the data you would need to add this token to the header:
 
 ```bash
 wget --header "Authorization: Bearer mysecrettoken" http://testuser.wis2.training/data/2023-06-07/wis/mwi/mwi_wmo_demo/data/recommended/weather/surface-based-observations/synop/WIGOS_0-454-2-AWSCHIKWAWA_20230607T085500.bufr4

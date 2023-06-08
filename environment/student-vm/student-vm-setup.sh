@@ -25,8 +25,8 @@ echo 'export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/eccodes/lib' >> ~/.bashrc
 export PATH="$PATH:/opt/eccodes/bin"
 export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/opt/eccodes/lib"
 
-sudo pip3 install https://github.com/wmo-im/pymetdecoder/archive/refs/tags/v0.1.5.zip
-sudo pip3 install https://github.com/wmo-im/csv2bufr/archive/refs/tags/v0.6.2.zip
+sudo pip3 install https://github.com/wmo-im/pymetdecoder/archive/refs/tags/v0.1.7.zip
+sudo pip3 install https://github.com/wmo-im/csv2bufr/archive/refs/tags/v0.6.3.zip
 sudo pip3 install https://github.com/wmo-im/synop2bufr/archive/refs/tags/v0.4.0.zip
 python3 -m eccodes selfcheck
 
@@ -55,10 +55,10 @@ pip3 install git+https://github.com/kurt-hectic/oscar-client.git@develop
 
 # (re-)download wis2box
 cd ~/
-rm -rf wis2box-1.0b3/
-wget https://github.com/wmo-im/wis2box/releases/download/1.0b3/wis2box-setup-1.0b3.zip
-unzip wis2box-setup-1.0b3.zip
-rm wis2box-setup-1.0b3.zip
+rm -rf wis2box-1.0b4/
+wget https://github.com/wmo-im/wis2box/releases/download/1.0b3/wis2box-setup-1.0b4.zip
+unzip wis2box-setup-1.0b4.zip
+rm wis2box-setup-1.0b4.zip
 
 # (re-)download exercise materials
 rm -rf exercise-materials/

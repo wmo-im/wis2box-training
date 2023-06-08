@@ -87,7 +87,7 @@ csv2bufr --version
 ```
 returns:
 ```console
-csv2bufr, version 0.6.2
+csv2bufr, version 0.6.3
 ```
 
 To be able to run wis2box, the student VM also comes with Python Docker and Docker Compose pre-installed. 
@@ -128,7 +128,7 @@ ls ~/
 ```
 returns:
 ```console
-exercise-materials  wis2box-1.0b3
+exercise-materials  wis2box-1.0b4
 ```
 
 To access the material on your local machine rather than from the command line, you can use SCP. Using WinSCP, you can create a new SCP connection to your VM as follows:
