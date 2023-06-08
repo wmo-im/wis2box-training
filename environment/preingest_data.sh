@@ -16,4 +16,4 @@ python3 wis2box-ctl.py execute wis2box data ingest -th mwi.mwi_wmo_demo.data.rec
 python3 wis2box-ctl.py execute wis2box metadata station publish-collection
 sleep 60
 python3 wis2box-ctl.py stop
-cd ~/
+cd
