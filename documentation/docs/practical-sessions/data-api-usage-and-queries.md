@@ -40,7 +40,13 @@ Click on the 'Browse' link, then click on the 'json' link.
 !!! question
     How can we query for a single station (e.g. `Balaka`)?
 
+!!! note
+    The above example is based on the Malawi test data.  Try testing against the stations your have ingested as part of the exercises.
+
 ## Inspecting observations
+
+!!! note
+    The above example is based on the Malawi test data.  Try testing against the observation your have ingested as part of the exercises.
 
 From the landing page, click on the 'Collections' link, then click on the 'Surface weather observations from Malawi' link.
 

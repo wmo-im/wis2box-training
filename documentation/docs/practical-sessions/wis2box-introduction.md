@@ -152,7 +152,7 @@ Go back to your browser and visit the wis2box UI.
 !!! question "review new data"
     Did your new data appear in wis2box? Find the stations for which you ingested new data and verify new data is available.
 
-## Publishing WIS2 data with access restrictions
+## Publishing WIS2 data with access control
 
 We will now publish some more data on the topic containing `data.recommended`
 
