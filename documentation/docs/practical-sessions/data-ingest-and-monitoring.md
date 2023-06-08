@@ -10,9 +10,9 @@ In this session you will learn various ways to ingest data into your wis2box and
 
 ## Preparation
 
-Login to you student VM using your SSH-client.
+Login to you student VM using your SSH client.
 
-Make sure your wis2box is up and running:
+Make sure wis2box is up and running:
 
 ```bash
 cd ~/wis2box-1.0b3
@@ -22,13 +22,13 @@ python3 wis2box-ctl.py status
 
 ### Verify data mappings
 
-Execute the following command from your SSH-client window.
+Execute the following command from your SSH client window.
 
 ```bash
 cat ~/exercise-materials/wis2box-test-data/data-mappings.yml
 ```
 
-These are the data-mappings currently used on your wis2box-instance.
+These are the data mappings currently used on your wis2box instance.
 
 !!! question
     Which plugins are configured for your dataset ?
@@ -51,7 +51,7 @@ Keep a web browser tab open with the Grafana dashboard during the next few exerc
 
 You can use multiple methods to ingest data into wis2box and start publishing notifications to WIS2. 
 
-Previously you used the `wis2box data ingest` command from within the **wis2box-management** container, which requires the data to be available on the wis2box-instance.
+Previously you used the `wis2box data ingest` command from within the **wis2box-management** container, which requires the data to be available on the wis2box instance.
 
 Another method for manually ingesting data is to use the `MinIO` admin interface to upload a file into the `wis2box-incoming` bucket. 
 
@@ -124,7 +124,7 @@ cd ~/wis2box-1.0b3/
 docker-compose -f docker-compose.wis2box-ftp.yml --env-file ftp.env up -d
 ```
 
-To test the FTP service, you can use WinSCP on your local laptop and prepare the connection to the **wis2box-ftp** container as follows (password=wis2box)
+To test the FTP service, you can use WinSCP on your local laptop and prepare the connection to the **wis2box-ftp** container as follows (password=`wis2box`)
 
 <img alt="winscp-new-session" src="../../assets/img/winscp-new-session.png" width="400">
 
