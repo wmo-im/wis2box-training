@@ -10,7 +10,7 @@ In this session you will customize your wis2box environment variables and re-ini
 
 ### Preparation
 
-Login to your student VM using WinSCP (using SCP-protocol) and PuTTy.
+Login to your student VM using WinSCP (using SCP-protocol) and PuTTY.
 
 ## re-initialize wis2box
 
@@ -76,7 +76,7 @@ This setup was using the pre-defined configuration stored in `~/exercise-materia
 
 In the next few steps we will review how to update some of key environment variables used in wis2box by editing `dev.env` in the directory `wis2box-1.0b4`.
 
-You can use WinSCP to connect to your instance and edit this file or you can edit the file from the command line using PuTTy.
+You can use WinSCP to connect to your instance and edit this file or you can edit the file from the command line using PuTTY.
 
 ## define your own wis2box-data directory
 
@@ -98,7 +98,7 @@ The wis2box requires the file `data-mappings.yml` stored in your wis2box data di
 
 Use the following commands to create an (empty) `data-mappings.yml` that you will populate at a later step. 
 ```bash
-echo "data: > ~/wis2box-data/data-mappings.yml
+echo "data:" > ~/wis2box-data/data-mappings.yml
 ```
 
 ### create an (empty) `station-list.csv`
@@ -108,14 +108,14 @@ The wis2box requires the file `metadata/station/station_list.csv` store in your 
 Use the following commands to create `metadata/station/station_list.csv` (headers only):
 
 ```bash
-echo station_name,wigos_station_identifier,traditional_station_identifier,facility_type,latitude,longitude,elevation,territory_name,wmo_region > ~/wis2box-data/metadata/station/station_list.csv
+echo "station_name,wigos_station_identifier,traditional_station_identifier,facility_type,latitude,longitude,elevation,territory_name,wmo_region" > ~/wis2box-data/metadata/station/station_list.csv
 ```
 
-Edit `dev.env` (using WinSCP or from the command line) :
+Edit `dev.env` (using WinSCP or from the command line):
 
 Comment out the original `WIS2BOX_HOST_DATADIR` :
  
- `#WIS2BOX_HOST_DATADIR=/home/<your-username>/exercise-materials/wis2box-test-data` 
+ `# WIS2BOX_HOST_DATADIR=/home/<your-username>/exercise-materials/wis2box-test-data` 
  
 And add the following to point to your new directory:
 
@@ -123,7 +123,7 @@ And add the following to point to your new directory:
 
 ### define custom credentials for your broker and storage
 
-Edit the file 'dev.env' and add the following to customize the default broker credentials (replace XXXXXXXX with your own password):
+Edit the file `dev.env` and add the following to customize the default broker credentials (replace `XXXXXXXX` with your own password):
 
 ```bash
 # broker credentials
