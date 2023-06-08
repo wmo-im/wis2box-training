@@ -50,7 +50,7 @@ You can also automate data ingest using a script to copy data into the `wis2box-
 
 ### Download test data
 
-Click on the two links below and download two new data-samples on your computer:
+Click on the two links below and download two new data samples on your computer:
 
 <a href="../../sample-data/WIGOS_0-454-2-AWSBILIRA_new.csv">WIGOS_0-454-2-AWSBILIRA_new.csv</a>
 
@@ -59,7 +59,7 @@ Click on the two links below and download two new data-samples on your computer:
 ### MinIO admin interface
 
 Open a new tab in your web browser and visit the page `http://<your-host>:9001`. You should see the login screen for MinIO. 
-You can login with 'username=minio' and 'password=minio123' :
+You can login with username `minio` and password `minio123`:
 
 <img alt="minio-admin-buckets" src="../../assets/img/minio-login.png" width="600">
 
@@ -127,7 +127,7 @@ Select the option to create a 'new directory':
 
 <img alt="winscp-empty" src="../../assets/img/winscp-empty.png" width="500">
 
-And create the directory `mwi/mwi_wmo_demo/data/core/weather/surface-based-observations/synop`
+Create the directory `mwi/mwi_wmo_demo/data/core/weather/surface-based-observations/synop`
 
 Enter the new directory you created and you can copy the file `WIGOS_0-454-2-AWSCHIKANGAWA_new.csv` from your host machine on the wis2box-ftp:
 
@@ -145,7 +145,7 @@ Check your Grafana dashboard and MQTT explorer to review the result of copying t
     You can run `docker logs wis2box-ftp` to check if the FTP service is running correctly.
 
 !!! Note
-    You can view ftp-configuration in `ftp.env` from the command-line:
+    You can view ftp-configuration in `ftp.env` from the command line:
 
     ```bash
     cat ~/wis2box-1.0b4/ftp.env
@@ -161,9 +161,9 @@ Check your Grafana dashboard and MQTT explorer to review the result of copying t
     LOGGING_LEVEL=WARNING
     ```
 
-    To change the username/password for the wis2box FTP service, edit the file `ftp.env` and update `FTP_USER` and `FTP_PASS`
+    To change the username/password for the wis2box FTP service, edit the file `ftp.env` and update `FTP_USER` and `FTP_PASS`.
 
-    If you you update your storage-credentials from the default minio/minio123, you will also need to update the values in `ftp.env`
+    If you you update your storage credentials from the default `minio`/`minio123`, you will also need to update the values in `ftp.env`.
 
     See [wis2box-ftp documentation](https://docs.wis2box.wis.wmo.int/en/latest/user/data-ingest.html#wis2box-ftp) for more information on how to use the wis2box-ftp service.
 
