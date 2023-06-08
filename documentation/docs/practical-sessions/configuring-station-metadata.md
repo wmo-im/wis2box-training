@@ -67,7 +67,7 @@ cat ~/wis2box-data/metadata/station/station_list.csv
 
 Or open the file in WinSCP.
 
-Keep adding lines to the station_list.csv and ensure you have at least three stations defined.
+Keep adding lines to `station_list.csv` and ensure you have at least three stations defined.
 
 ## Publishing station metadata
 
@@ -84,7 +84,7 @@ Run the following command to publish your station metadata:
 wis2box metadata station publish-collection
 ```
 
-Ensure that your new station metadata was published to the API, by navigating to `http://<your-hostname>.wis2.training/oapi/collections/stations/items`:
+Ensure that your new station metadata was published to the API, by navigating to `http://<your-host>.wis2.training/oapi/collections/stations/items`:
 
 <img alt="stationlist_from_oscar" src="../../assets/img/stationlist_from_oscar.png" width="800">
 
