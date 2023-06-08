@@ -239,7 +239,7 @@ where `a` and `b` are values. These values represent the minimum and maximum tol
     !!! note
     The valid minimum and maximum values should take the same units as the CSV data.
 
-4. By the `data transform` command, use this mappings file to convert this CSV data to BUFR again. Do you notice an errors this time?
+4. By the `data transform` command, use this mappings file to convert this CSV data to BUFR again. Do you notice any errors this time?
 
 ## Conclusion
 
