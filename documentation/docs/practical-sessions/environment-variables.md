@@ -78,7 +78,7 @@ In the next few steps we will review how to update some of key environment varia
 
 You can use WinSCP to connect to your instance and edit this file or you can edit the file from the command line using PuTTY.
 
-## define your own wis2box-data directory
+## Define your own wis2box data directory
 
 Using the SSH client connected to your student VM, use the following command to create a new directory on your instance:
 ```bash
