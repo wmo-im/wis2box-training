@@ -10,25 +10,25 @@ In this session you will learn various ways to ingest data into your wis2box and
 
 ## Preparation
 
-### Download test data
+Login to you student VM using your SSH client.
 
-Download the following file onto your local computer:
+Make sure wis2box is up and running:
 
-[WIGOS_0-454-2-AWSBILIRA_2023-06-01T1055.csv](https://raw.githubusercontent.com/wmo-im/wis2box-training/main/WIGOS_0-454-2-AWSBILIRA_2023-06-01T1055.csv) 
+```bash
+cd ~/wis2box-1.0b3
+python3 wis2box-ctl.py start
+python3 wis2box-ctl.py status
+```
 
 ### Verify data mappings
 
-Ensure you are logged into the **wis2box-management** container on your student VM:
+Execute the following command from your SSH client window.
 
 ```bash
-python3 wis2box-ctl.py login
+cat ~/exercise-materials/wis2box-test-data/data-mappings.yml
 ```
 
-Open your data mappings file:
-
-```bash
-vi $WIS2BOX_DATA_MAPPINGS
-```
+These are the data mappings currently used on your wis2box instance.
 
 !!! question
     Which plugins are configured for your dataset ?
@@ -49,13 +49,23 @@ Keep a web browser tab open with the Grafana dashboard during the next few exerc
 
 ## Ingesting your data into wis2box
 
-You can use multiple methods to ingest data into wis2box and start publishing notifications to WIS2. Previously you used the `wis2box data ingest` command from within the **wis2box-management** container, which requires the data to be available on the wis2box-instance.
+You can use multiple methods to ingest data into wis2box and start publishing notifications to WIS2. 
+
+Previously you used the `wis2box data ingest` command from within the **wis2box-management** container, which requires the data to be available on the wis2box instance.
 
 Another method for manually ingesting data is to use the `MinIO` admin interface to upload a file into the `wis2box-incoming` bucket. 
 
 If your data-collection software supports sending data to an FTP endpoint you could use the optional **wis2box-ftp** container setup.
 
 You can also automate data ingest using a script to copy data into the `wis2box-incoming` bucket at regular intervals, for example using Python and the MinIO-client.
+
+### Download test data
+
+Download the following files onto your local computer:
+
+[WIGOS_0-454-2-AWSBILIRA_new.csv](https://raw.githubusercontent.com/wmo-im/wis2box-training/main/sample-data/WIGOS_0-454-2-AWSBILIRA_new.csv) 
+
+[WIGOS_0-454-2-AWSCHIKANGAWA_new.csv](https://raw.githubusercontent.com/wmo-im/wis2box-training/main/sample-data/WIGOS_0-454-2-AWSCHIKANGAWA_new.csv) 
 
 ### MinIO admin interface
 
@@ -70,20 +80,18 @@ Navigate to the **wis2box-incoming** bucket:
 
 <img alt="minio-admin-buckets" src="../../assets/img/minio-admin-buckets.png" width="600">
 
-Click the **Create new path** button:
+Click the **Create new path** button and create the new folder path: `/test/data/`.
 
 <img alt="minio-admin-create-new-path" src="../../assets/img/minio-admin-create-new-path.png" width="600">
 
-Create the following path: `/test/data/`.
-
-And then upload the file `WIGOS_0-454-2-AWSBILIRA_2023-06-01T1055.csv` into the folder `wis2box-incoming/test/data`.
+And then upload the file `WIGOS_0-454-2-AWSBILIRA_new.csv` into the folder `wis2box-incoming/test/data`.
 
 !!! question "View the Grafana dashboard"
-    Check the Grafana dashboard and find the error reported after uploading the file.
+    Go back to the Grafana dashboard on your instance at port 3000. Find the error reported after uploading the file.
 
 Navigate the directory structure until you are in the folder `wis2box-incoming/mwi/mwi_wmo_demo/data/core/weather/surface-based-observations/synop`
 
-Upload the file `WIGOS_0-454-2-AWSBILIRA_2023-06-01T1055.csv` to `wis2box-incoming/mwi/mwi_wmo_demo/data/core/weather/surface-based-observations/synop`
+Upload the file `WIGOS_0-454-2-AWSBILIRA_new.csv` to `wis2box-incoming/mwi/mwi_wmo_demo/data/core/weather/surface-based-observations/synop`
 
 !!! question "View the Grafana dashboard"
     Check the Grafana dashboard; can you confirm the wis2box workflow was initiated after you uploaded your data? In case you see any errors, try to use the information provided in the dashboard to resolve the errors.
@@ -94,9 +102,12 @@ Upload the file `WIGOS_0-454-2-AWSBILIRA_2023-06-01T1055.csv` to `wis2box-incomi
 !!! note
 
     The wis2box interprets the folder-structure in the `wis2box-incoming` bucket as the corresponding topic-hierarchy for the file.
+    
     `mwi.mwi_wmo_demo.data.core.weather.surface-based-observations.synop`
+    
     corresponds to the path:
-    `mwi/mwi_wmo_demo/data/core/weather/surface-based-observations/synop`.
+    
+    `mwi/mwi_wmo_demo/data/core/weather/surface-based-observations/synop`
 
     If there are no data-mappings defined for the topic-hierarchy corresponding to the directory that received data, wis2box will not initiate the workflow.
 
@@ -104,16 +115,18 @@ Upload the file `WIGOS_0-454-2-AWSBILIRA_2023-06-01T1055.csv` to `wis2box-incomi
 
 To allow your data to be accessible over FTP you can use the **wis2box-ftp** container, which provides a service that forwards data received over FTP to MinIO.
 
+See [wis2box-ftp documentation](https://docs.wis2box.wis.wmo.int/en/latest/user/data-ingest.html#wis2box-ftp) for more information on how to prepare the wis2box-ftp configuration.
+
+For the purpose of this training you can use your predefined configuration in `~/wis2box-1.0b3/ftp.env` to start your wis2box-ftp as follows:
 
 ```bash
+cd ~/wis2box-1.0b3/
 docker-compose -f docker-compose.wis2box-ftp.yml --env-file ftp.env up -d
 ```
 
-To test the FTP service, you can use WinSCP on your local laptop and prepare the connection to the **wis2box-ftp** container as follows:
+To test the FTP service, you can use WinSCP on your local laptop and prepare the connection to the **wis2box-ftp** container as follows (password=`wis2box`)
 
 <img alt="winscp-new-session" src="../../assets/img/winscp-new-session.png" width="400">
-
-Replace "Host name" with that of **your** student VM and use the username and password for the FTP as specified by `FTP_USER` and `FTP_PASSWORD` in your `ftp.env` file.
 
 Once you have established the connection you will land in an empty directory. 
 
@@ -165,10 +178,10 @@ pip3 install minio
 
 On your student VM the 'minio' module for Python will already be installed.
 
-Go to the directory `exercise-materials/wis2box-setup` and run the example script using the following command:
+Go to the directory `exercise-materials/data-ingest` and run the example script using the following command:
 
 ```bash
-cd ~/exercise-materials/wis2box-setup
+cd ~/exercise-materials/data-ingest
 python3 examples/scripts/copy_to_incoming.py
 ```
 
@@ -183,9 +196,10 @@ The sample script provides the basic structure for copying a file into MinIO. Tr
     Use the Python example provided to create your own Python script to ingest data into your wis2box.  
     
     Ensure that you:
-        - define the correct MinIO endpoint for your host
-        - define the correct path in MinIO for the topics defined in your `data-mappings.yml`
-        - determine the correct local path where the script can access the data to ingest
+
+    - define the correct MinIO endpoint for your host
+    - define the correct path in MinIO for the topics defined in your `data-mappings.yml`
+    - determine the correct local path where the script can access the data to ingest
 
     Ensure that the script runs correctly and new data notifications are published on your wis2box broker. Review and correct any errors reported on the Grafana dashboard:
 

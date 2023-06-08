@@ -119,7 +119,7 @@ Once you are connected, you should see statistics being published by your broker
 
 Make sure MQTT Explorer is connected to your broker before proceeding to the next exercise: 
 
-## publishing WIS2 data
+## Publishing WIS2 data
 
 To demonstrate how wis2box can publish WIS2 data we will manually ingest some data from the command line:
 
@@ -133,9 +133,9 @@ python3 wis2box-ctl.py login
 !!! note
     This command is equivalent to `docker exec -it wis2box-management /bin/bash`, meaning that you have entered an interactive shell inside the **wis2box-management** container.
 
-Run the following command to ingest some additional data for Malawi:
+Run the following command to ingest some additional data:
 ```bash
-wis2box data ingest -th mwi.mwi_met_centre.data.core.weather.surface-based-observations.synop -p /data/wis2box/observations/malawi-new-data/
+wis2box data ingest -th mwi.mwi_wmo_demo.data.core.weather.surface-based-observations.synop -p /data/wis2box/observations/malawi-new-data/
 ```
 
 After the data ingest runs successfully, you should be able to view new messages that have been published on your wis2box broker in MQTT Explorer.
@@ -152,6 +152,38 @@ Go back to your browser and visit the wis2box UI.
 !!! question "review new data"
     Did your new data appear in wis2box? Find the stations for which you ingested new data and verify new data is available.
 
+## Publishing WIS2 data with access restrictions
+
+We will now publish some more data on the topic containing `data.recommended`
+
+In your SSH client window, login to the **wis2box-management** container:
+
+```bash
+cd ~/wis2box-1.0b3/
+python3 wis2box-ctl.py login
+```
+
+Run the following command to ingest some additional data:
+```bash
+wis2box data ingest -th mwi.mwi_wmo_demo.data.recommended.weather.surface-based-observations.synop -p /data/wis2box/observations/malawi-new-data/
+```
+
+!!! question
+    What is the topic used to publish notifications for the new data? How many WIS2 data notifications have been published?
+
+!!! question "download data"
+    What is the URL that allows you to download the newly published data in BUFR-format?
+    Copy and paste the URL in your browser to verify you can download the corresponding `.bufr4` file.
+
+!!! note "Downloading restricted data"
+    You will not be able to download the data using the URL in the message published on `origin/a/wis2/mwi/mwi_wmo_demo/data/recommended/` as the data access has been restricted by the data supplier.
+
+The data is currently restricted with the access-token `mysecrettoken`. In order to download the data you would need to add this token to the header:
+
+```bash
+wget --header "Authorization: Bearer mysecrettoken" http://testuser.wis2.training/data/2023-06-07/wis/mwi/mwi_wmo_demo/data/recommended/weather/surface-based-observations/synop/WIGOS_0-454-2-AWSCHIKWAWA_20230607T085500.bufr4
+```
+
 ## Conclusion
 
 !!! success "Congratulations!"
@@ -160,3 +192,4 @@ Go back to your browser and visit the wis2box UI.
     - start wis2box and check the status of its components
     - ingest some data test observations
     - access the wis2box UI, API, MinIO UI and Grafana dashboard
+    - use access control for restricted datasets
