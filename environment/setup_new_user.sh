@@ -23,7 +23,7 @@ echo FTP_USER=wis2box >> /tmp/ftp.env
 echo FTP_PASS=wis2box >> /tmp/ftp.env
 echo FTP_HOST=`echo $USERNAME`.wis2.training >> /tmp/ftp.env
 echo "WIS2BOX_STORAGE_ENDPOINT=http://`echo $USERNAME`.wis2.training:9000" >> /tmp/ftp.env
-echo WIS2BOX_STORAGE_USER=minio >> /tmp/ftp.env
+echo WIS2BOX_STORAGE_USERNAME=minio >> /tmp/ftp.env
 echo WIS2BOX_STORAGE_PASSWORD=minio123 >> /tmp/ftp.env
 echo LOGGING_LEVEL=WARNING >> /tmp/ftp.env
 sudo cp /tmp/ftp.env /home/`echo $USERNAME`/wis2box-1.0b4/
