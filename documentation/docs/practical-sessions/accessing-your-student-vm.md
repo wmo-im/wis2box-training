@@ -78,7 +78,7 @@ synop2bufr --version
 ```
 returns:
 ```console
-synop2bufr, version 0.4.0
+synop2bufr, version 0.4.1
 ```
 
 Check csv2bufr version:

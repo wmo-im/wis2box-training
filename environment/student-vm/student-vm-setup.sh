@@ -27,7 +27,7 @@ export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/opt/eccodes/lib"
 
 sudo pip3 install https://github.com/wmo-im/pymetdecoder/archive/refs/tags/v0.1.7.zip
 sudo pip3 install https://github.com/wmo-im/csv2bufr/archive/refs/tags/v0.6.3.zip
-sudo pip3 install https://github.com/wmo-im/synop2bufr/archive/refs/tags/v0.4.0.zip
+sudo pip3 install https://github.com/wmo-im/synop2bufr/archive/refs/tags/v0.4.1.zip
 python3 -m eccodes selfcheck
 
 # install various utilities
