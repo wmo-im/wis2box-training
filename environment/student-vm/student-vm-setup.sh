@@ -50,9 +50,6 @@ sudo pip3 install pip --upgrade
 sudo pip3 install pyopenssl --upgrade
 sudo pip3 install docker-compose==1.29.2 requests==2.26.0 urllib3==1.26.0
 
-# install oscar-client
-pip3 install git+https://github.com/kurt-hectic/oscar-client.git@develop
-
 # (re-)download wis2box
 cd ~/
 rm -rf wis2box-1.0b4/
