@@ -14,8 +14,8 @@ You will review and access the services provided by your wis2box: the MQTT broke
     The latest wis2box release has been pre-installed on your student VM using the release archive available on GitHub:
 
     ```bash
-    wget https://github.com/wmo-im/wis2box/releases/download/1.0b3/wis2box-setup-1.0b3.zip
-    unzip wis2box-setup-1.0b3.zip
+    wget https://github.com/wmo-im/wis2box/releases/download/1.0b4/wis2box-setup-1.0b4.zip
+    unzip wis2box-setup-1.0b4.zip
     ```
     
     You can always find the latest 'wis2box-setup' archive at [https://github.com/wmo-im/wis2box/releases](https://github.com/wmo-im/wis2box/releases).

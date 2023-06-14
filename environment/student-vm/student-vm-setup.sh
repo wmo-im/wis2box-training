@@ -53,7 +53,7 @@ sudo pip3 install docker-compose==1.29.2 requests==2.26.0 urllib3==1.26.0
 # (re-)download wis2box
 cd ~/
 rm -rf wis2box-1.0b4/
-wget https://github.com/wmo-im/wis2box/releases/download/1.0b3/wis2box-setup-1.0b4.zip
+wget https://github.com/wmo-im/wis2box/releases/download/1.0b4/wis2box-setup-1.0b4.zip
 unzip wis2box-setup-1.0b4.zip
 rm wis2box-setup-1.0b4.zip
 
