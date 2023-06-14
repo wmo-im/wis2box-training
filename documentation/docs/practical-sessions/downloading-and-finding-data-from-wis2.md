@@ -33,11 +33,7 @@ Open MQTT Explorer and connect to the Météo-France Global Broker.
 
 Update the following values in the configuration:
 
-- **broker**
-    - username: everyone
-    - password: everyone
-    - host: globalbroker.meteo.fr
-    - port: 8883
+- **broker**: `mqtts://everyone:everyone@globalbroker.meteo.fr:8883`
 - **subscribe_topics**: fill in one to many topics `origin/#` and `cache/#` (on separate lines)
 - **storage.option.path**: add a directory to where data should be downloaded
 
