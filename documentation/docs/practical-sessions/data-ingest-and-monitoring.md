@@ -20,7 +20,7 @@ python3 wis2box-ctl.py start
 python3 wis2box-ctl.py status
 ```
 
-Make sure your have MQTT explorer running and connected to your instance.
+Make sure your have MQTT Explorer running and connected to your instance.
 
 ### Open the Grafana dashboard
 
@@ -133,7 +133,7 @@ Enter the new directory you created and you can copy the file `WIGOS_0-454-2-AWS
 
 <img alt="winscp-after-file-upload" src="../../assets/img/winscp-after-file-upload.png" width="600">
 
-Check your Grafana dashboard and MQTT explorer to review the result of copying the file in the wis2box-ftp.
+Check your Grafana dashboard and MQTT Explorer to review the result of copying the file in the wis2box-ftp.
 
 !!! Question
 

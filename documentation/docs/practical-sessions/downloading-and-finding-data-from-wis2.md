@@ -40,8 +40,13 @@ Update the following values in the configuration:
 Run the `pywis-pubsub` command:
 
 ```bash
-pywis-pubsub subscribe -c ~/exercise-materials/pywis-pubsub-exercises/config.yml --verbosity INFO
+pywis-pubsub subscribe -c ~/exercise-materials/pywis-pubsub-exercises/config.yml --verbosity INFO -d
 ```
+
+!!! note
+
+    The above command will download data to your local system for demo purposes.  For operational environments
+    you will need to consider and manage diskspace requirements as part of your workflow.
 
 !!! question
 
