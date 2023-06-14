@@ -40,7 +40,7 @@ Update the following values in the configuration:
 Run the `pywis-pubsub` command:
 
 ```bash
-pywis-pubsub subscribe -c ~/exercise-materials/pywis-pubsub-exercises/config.yml
+pywis-pubsub subscribe -c ~/exercise-materials/pywis-pubsub-exercises/config.yml --verbosity INFO
 ```
 
 !!! question
