@@ -135,7 +135,7 @@ python3 wis2box-ctl.py login
 
 Run the following command to ingest some additional data:
 ```bash
-wis2box data ingest -th mwi.mwi_wmo_demo.data.core.weather.surface-based-observations.synop -p /data/wis2box/observations/malawi-new-data/
+wis2box data ingest -th mwi.mwi_wmo_demo.data.core.weather.surface-based-observations.synop -p /data/wis2box/observations/malawi-new-core/
 ```
 
 After the data ingest runs successfully, you should be able to view new messages that have been published on your wis2box broker in MQTT Explorer.
@@ -165,7 +165,7 @@ python3 wis2box-ctl.py login
 
 Run the following command to ingest some additional data:
 ```bash
-wis2box data ingest -th mwi.mwi_wmo_demo.data.recommended.weather.surface-based-observations.synop -p /data/wis2box/observations/malawi-new-data/
+wis2box data ingest -th mwi.mwi_wmo_demo.data.recommended.weather.surface-based-observations.synop -p /data/wis2box/observations/malawi-new-reco/
 ```
 
 !!! question
