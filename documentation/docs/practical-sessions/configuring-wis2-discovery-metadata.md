@@ -65,7 +65,7 @@ Update the following values in the discovery metadata configuration:
 
 ## Publishing discovery metadata
 
-First login to the wis2box-management container:
+First login to the **wis2box-management** container:
 
 ```bash
 python3 wis2box-ctl.py login
