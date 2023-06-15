@@ -21,8 +21,8 @@ nav:
         - wis2box data ingest and monitoring: practical-sessions/data-ingest-and-monitoring.md
         - Downloading and finding data from WIS2: practical-sessions/downloading-and-finding-data-from-wis2.md
         - wis2box environment variables: practical-sessions/environment-variables.md
-        - wis2box configuring discovery metadata: practical-sessions/configuring-wis2-discovery-metadata.md
         - wis2box configuring data mappings: practical-sessions/configuring-data-mappings.md
+        - wis2box configuring discovery metadata: practical-sessions/configuring-wis2-discovery-metadata.md
         - wis2box configuring station metadata: practical-sessions/configuring-station-metadata.md
         - wis2box data API usage and queries: practical-sessions/data-api-usage-and-queries.md
         - Answers:
