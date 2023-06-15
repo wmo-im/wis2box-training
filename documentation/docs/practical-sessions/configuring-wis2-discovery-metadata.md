@@ -12,22 +12,16 @@ discovery metadata from wis2box from a configuration file.
 
 ## Preparation
 
-!!! note
-    Ensure you are running MQTT Explorer and you are connected to the broker on your student VM before continuing.
+Ensure you are running MQTT Explorer and you are connected to the broker on your student VM before continuing.
 
-!!! note
-    Ensure you are logged into the **wis2box-management** container on your student VM: 
-
-    ```bash
-    cd ~/exercise-materials/wis2box-setup
-    python3 wis2box-ctl.py login
-    ```
+Login to your student VM using your SSH-client.
 
 ## Creating discovery metadata
 
 Copy the test discovery metadata into your own file (you may name the file whatever you wish):
 
 ```bash
+cd ~/wis2box-1.0b4/
 cp examples/config/surface-weather-observations.yml ~/wis2box-data/my-discovery-metadata.yml
 ```
 
