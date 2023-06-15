@@ -35,7 +35,7 @@ From the landing page, click on the 'Collections' link, then click on the 'Stati
 Click on the 'Browse' link, then click on the 'json' link.
 
 !!! question
-    How many stations are returned? Compare this number to your `~/exercises-metadata/test-data/metadata/station/station_list.csv` file.
+    How many stations are returned? Compare this number to the station list in `/data/wis2box/metadata/station/station_list.csv` file when logged into wis2box (`python3 wis2box-ctl.py login`).
 
 !!! question
     How can we query for a single station (e.g. `Balaka`)?
