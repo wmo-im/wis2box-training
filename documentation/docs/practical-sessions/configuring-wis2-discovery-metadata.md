@@ -12,29 +12,23 @@ discovery metadata from wis2box from a configuration file.
 
 ## Preparation
 
-!!! note
-    Ensure you are running MQTT Explorer and you are connected to the broker on your student VM before continuing.
+Ensure you are running MQTT Explorer and you are connected to the broker on your student VM before continuing.
 
-!!! note
-    Ensure you are logged into the **wis2box-management** container on your student VM: 
-
-    ```bash
-    cd ~/exercise-materials/wis2box-setup
-    python3 wis2box-ctl.py login
-    ```
+Login to your student VM using your SSH-client.
 
 ## Creating discovery metadata
 
 Copy the test discovery metadata into your own file (you may name the file whatever you wish):
 
 ```bash
-cp ~/exercise-materials/wis2box-setup/test-data/mwi-surface-weather-observations.yml ~/my-discovery-metadata.yml
+cd ~/wis2box-1.0b4/
+cp examples/config/surface-weather-observations.yml ~/wis2box-data/my-discovery-metadata.yml
 ```
 
 Inspect the sample discovery metadata:
 
 ```bash
-more ~/my-discovery-metadata.yml
+more ~/wis2box-data/my-discovery-metadata.yml
 ```
 
 !!! note
@@ -71,10 +65,16 @@ Update the following values in the discovery metadata configuration:
 
 ## Publishing discovery metadata
 
+First login to the **wis2box-management** container:
+
+```bash
+python3 wis2box-ctl.py login
+```
+
 Run the following command to publish your discovery metadata:
 
 ```bash
-wis2box metadata discovery publish ~/my-discovery-metadata.yml
+wis2box metadata discovery publish /data/wis2box/my-discovery-metadata.yml
 ```
 
 Ensure that your discovery metadata was published to the API, by navigating to `http://<your-host>/oapi/collections/discovery-metadata`.
@@ -89,8 +89,8 @@ Click on your discovery metadata record and inspect the content, noting how it r
 Update the title of your discovery metadata, and re-publish:
 
 ```bash
-vi ~/my-discovery-metadata.yml
-wis2box metadata discovery publish ~/my-discovery-metadata.yml
+vi /data/wis2box/my-discovery-metadata.yml
+wis2box metadata discovery publish /data/wis2box/my-discovery-metadata.yml
 ```
 
 Ensure that your discovery metadata updates were published to the API, by refreshing the page to your discovery metadata.
@@ -105,7 +105,7 @@ Feel free to update additional values and re-publishing your discovery metadata 
 Run the below command to add the data to the API:
 
 ```bash
-wis2box data add-collection ~/my-discovery-metadata.yml
+wis2box data add-collection /data/wis2box/my-discovery-metadata.yml
 ```
 
 Ensure that your dataset was published to the API, by navigating to `http://<your-host>/oapi/collections/<metadata.identifier>`.
