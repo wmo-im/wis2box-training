@@ -13,58 +13,20 @@ will work on adding to the data mappings in support of publishing your data via 
 
 ## Preparation
 
-!!! note
-    Ensure you are logged into the **wis2box-management** container on your student VM: 
-
-    ```bash
-    cd ~/exercise-materials/wis2box-setup
-    python3 wis2box-ctl.py login
-    ```
-
-## Configure a data mapping
-
-!!! note
-    Ensure you are logged into the **wis2box-management** container before continuing.
-
-Inspect the wis2box environment to locate the data mappings in use by the system, as defined by the `WIS2BOX_DATA_MAPPINGS` environment variable:
-
-```bash
-wis2box environment show | grep WIS2BOX_DATA_MAPPINGS
-```
-
-!!! question
-    Where are the live data mappings located?
-
-!!! question
-    How can using the `WIS2BOX_DATA_MAPPINGS` environment variable be valuable, as compared to `/data/wis2box/data-mappings.yml`?
+Login to your student VM
 
 ### Add CSV data
 
-Let's add a data mapping for wis2box to process CSV data.  Inspect the contents of the sample SYNOP CSV data mapping:
+Here's how to add data mapping for wis2box to process CSV data.  Inspect the contents of the sample SYNOP CSV data mapping:
 
 ```bash
-cat ~/exercise-materials/wis2box-setup/synop-csv-mappings.yml
+cat ~/wis2box-1.0b4/synop-csv-mappings.yml
 ```
 
 !!! question
     What topic is defined in this mapping?  What values of the topic are placeholders to be updated later in this session?
 
-Copy and paste the above file contents into the `$WIS2BOX_DATA_MAPPINGS` file (either manually or via the command below)::
-
-```bash
-tail -n +2 exercise-materials/wis2box-setup/test-data/data-mappings.yml >> $WIS2BOX_DATA_MAPPINGS
-```
-
-!!! tip
-    Be sure that the first `data:` line from the above file is omitted when copying/pasting into the `$WIS2BOX_DATA_MAPPINGS` file.
-
-Open the data mappings file:
-
-```bash
-vi $WIS2BOX_DATA_MAPPINGS
-```
-
-Verify that the file you copied from `~/exercise-materials/wis2box-setup/synop-csv-mappings.yml` is now part of the live data mappings file.
+Copy and paste the above file contents into your file `~/wis2box-data/data-mappings.yml`
 
 Update the `[country]` and `[centre_id]` values in your new/added data mapping.  Use your username as the `centre_id` topic.
 
