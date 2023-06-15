@@ -40,8 +40,13 @@ Update the following values in the configuration:
 Run the `pywis-pubsub` command:
 
 ```bash
-pywis-pubsub subscribe -c ~/exercise-materials/pywis-pubsub-exercises/config.yml --verbosity INFO
+pywis-pubsub subscribe -c ~/exercise-materials/pywis-pubsub-exercises/config.yml --verbosity INFO -d
 ```
+
+!!! note
+
+    The above command will download data to your local system for demo purposes.  For operational environments
+    you will need to consider and manage diskspace requirements as part of your workflow.
 
 !!! question
 
@@ -53,6 +58,16 @@ pywis-pubsub subscribe -c ~/exercise-materials/pywis-pubsub-exercises/config.yml
 
 Stop the `pywis-pubsub` command (CTRL-C) and update the configuration to be able to download the data
 to `/tmp/wis2-data`.
+
+Try spatial filtering with a bounding box:
+
+```bash
+pywis-pubsub subscribe -c ~/exercise-materials/pywis-pubsub-exercises/config.yml --verbosity INFO -d -b -142,42,-52,84
+```
+
+!!! note
+
+    Try using your own bounding box (format is `west,south,east,north`, in decimal degrees).
 
 ## Finding data with pywiscat
 
