@@ -14,30 +14,19 @@ nav:
     - Practical sessions:
         - Connecting to WIS2 over MQTT: practical-sessions/connecting-to-mqtt.md
         - Accessing your student VM: practical-sessions/accessing-your-student-vm.md
+        - Initializing the wis2box: practical-sessions/wis2box-introduction.md
+        - Creating WIS2 discovery metadata: practical-sessions/configuring-wis2-discovery-metadata.md
+        - Creating wis2box station metadata: practical-sessions/configuring-station-metadata.md
         - Converting SYNOP data to BUFR: practical-sessions/converting-synop-data-to-bufr.md
         - Converting CSV data to BUFR: practical-sessions/converting-csv-data-to-bufr.md
-        - Converting DAYCLI data to BUFR: practical-sessions/converting-daycli-data-to-bufr.md
-        - wis2box introduction: practical-sessions/wis2box-introduction.md
-        - wis2box data ingest and monitoring: practical-sessions/data-ingest-and-monitoring.md
+        - Automating data ingestion: practical-sessions/data-ingest-and-monitoring.md
         - Downloading and finding data from WIS2: practical-sessions/downloading-and-finding-data-from-wis2.md
-        - wis2box environment variables: practical-sessions/environment-variables.md
-        - wis2box configuring data mappings: practical-sessions/configuring-data-mappings.md
-        - wis2box configuring discovery metadata: practical-sessions/configuring-wis2-discovery-metadata.md
-        - wis2box configuring station metadata: practical-sessions/configuring-station-metadata.md
-        - wis2box data API usage and queries: practical-sessions/data-api-usage-and-queries.md
-        - Answers:
-            - SYNOP data to BUFR answers: answers/synop2bufr-answers.md
-            - CSV data to BUFR answers: answers/csv2bufr-answers.md
+        - Querying data using the WIS2Box-api: practical-sessions/data-api-usage-and-queries.md
     - Cheatsheets:
         - Linux: cheatsheets/linux.md
         - Docker: cheatsheets/docker.md
         - YAML: cheatsheets/yaml.md
         - WIS2 in a box: cheatsheets/wis2box.md
-    - Schedule:
-        - 20 - 24 March 2023 - Windhoek, Namibia 🇳🇦: schedule/namibia-2023-03/index.md
-        - 12 - 16 June 2023 - Port of Spain, Trinidad and Tobago 🇹🇹: schedule/trinidad-and-tobago-2023-06/index.md
-        - 9 - 13 October 2023 - Jakarta, Indonesia 🇮🇩: schedule/indonesia-2023-10/index.md
-
 
 strict: true
 
