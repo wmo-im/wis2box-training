@@ -1,26 +1,22 @@
 ---
-title: wis2box introduction
+title: Initializing the wis2box
 ---
 
-#  wis2box introduction
+#  Initializing the wis2box
 
 ## Introduction
 
-In this session you will run the wis2box software that was pre-installed on your student VM using the test data configuration.
-
-You will review and access the services provided by your wis2box: the MQTT broker and HTTP accessible services and view how the services work when manually ingesting some test-data.
+In this session you will prepare the initial configuration of your wis2box and start the services.
 
 !!! note "wis2box installation and configuration"
     The latest wis2box release has been pre-installed on your student VM using the release archive available on GitHub:
 
     ```bash
-    wget https://github.com/wmo-im/wis2box/releases/download/1.0b4/wis2box-setup-1.0b4.zip
-    unzip wis2box-setup-1.0b4.zip
+    wget https://github.com/wmo-im/wis2box/releases/download/1.0b5/wis2box-setup-1.0b5.zip
+    unzip wis2box-setup-1.0b5.zip
     ```
     
     You can always find the latest 'wis2box-setup' archive at [https://github.com/wmo-im/wis2box/releases](https://github.com/wmo-im/wis2box/releases).
-
-    Your student VM has been pre-configured with a dataset for Malawi and includes some previously ingested data. Later during this training you will learn how to setup datasets of your own.
 
     All the required steps for installation and configuration of the wis2box can be found in the [wis2box-documentation](https://docs.wis2box.wis.wmo.int/en/latest/)
 
@@ -33,7 +29,7 @@ Login to your designated VM with your username and password.
 Navigate to the directory containing the wis2box software stack:
 
 ```bash
-cd ~/wis2box-1.0b4
+cd ~/wis2box-1.0b5
 ```
 
 Start wis2box with the following command:
@@ -60,26 +56,17 @@ Repeat this command until all services are up and running.
     
     The Python script `wis2box-ctl.py` is used to run the underlying Docker Compose commands that control the wis2box services.
 
+## wis2box webapp
+
+Open a web browser and visit the page `http://<your-host>/wis2box-webapp`.
+
+This is the (new) wis2box web-application where you can ingest SYNOP and csv data and manage your station metadata.
+
 ## wis2box UI
 
 Open a web browser and visit the page `http://<your-host>`.
 
-This is the default wis2box web application (running via the **wis2box-ui** container). 
-
-Click the "EXPLORE" option on `http://<your-host>`.
-
-!!! question "View latest data per station on the wis2box UI"
-    Click on on a station in the station list or hover your mouse over a station in the map to see the latest data for that station.
-
-<img alt="wis2box-ui-map.png" src="../../assets/img/wis2box-ui-map.png" width="600">
-
-!!! question "View data profile over time per measured variable"
-    After selecting a station in the map, click on "data" and select a variable to see a graph of the measured variable over time.
-
-<img alt="wis2box-ui-data.png" src="../../assets/img/wis2box-ui-data.png" width="600">
-
-!!! question
-    What is last timestamp in UTC for which the Malawi station "Bilira" received data?
+The wis2box UI will display your configured datasets and allow you to view surface based weather observations published by your wis2box.
 
 ## wis2box API
 
@@ -117,79 +104,11 @@ Make sure to click "SAVE" to store your connection details.
 
 Once you are connected, you should see statistics being published by your broker on the `$SYS` topic.
 
-Make sure MQTT Explorer is connected to your broker before proceeding to the next exercise: 
-
-## Publishing WIS2 data
-
-To demonstrate how wis2box can publish WIS2 data we will manually ingest some data from the command line:
-
-In your SSH client window, ensure you are in the `~/wis2box-1.0b4` directory and login to the **wis2box-management** container as follows:
-
-```bash
-cd ~/wis2box-1.0b4/
-python3 wis2box-ctl.py login
-```
-
-!!! note
-    This command is equivalent to `docker exec -it wis2box-management /bin/bash`, meaning that you have entered an interactive shell inside the **wis2box-management** container.
-
-Run the following command to ingest some additional data:
-```bash
-wis2box data ingest -th mwi.mwi_wmo_demo.data.core.weather.surface-based-observations.synop -p /data/wis2box/observations/malawi-new-core/
-```
-
-After the data ingest runs successfully, you should be able to view new messages that have been published on your wis2box broker in MQTT Explorer.
-
-!!! question
-    What is the topic used to publish notifications for new data? How many WIS2 data notifications have been published?
-
-!!! question "download data"
-    What is the URL that allows you to download the published data in BUFR-format?
-    Copy and paste the URL in your browser to verify you can download the corresponding `.bufr4` file.
-
-Go back to your browser and visit the wis2box UI.
-
-!!! question "review new data"
-    Did your new data appear in wis2box? Find the stations for which you ingested new data and verify new data is available.
-
-## Publishing WIS2 data with access control
-
-We will now publish some more data on the topic containing `data.recommended`
-
-In your SSH client window, login to the **wis2box-management** container:
-
-```bash
-cd ~/wis2box-1.0b4/
-python3 wis2box-ctl.py login
-```
-
-Run the following command to ingest some additional data:
-```bash
-wis2box data ingest -th mwi.mwi_wmo_demo.data.recommended.weather.surface-based-observations.synop -p /data/wis2box/observations/malawi-new-reco/
-```
-
-!!! question
-    What is the topic used to publish notifications for the new data? How many WIS2 data notifications have been published?
-
-!!! question "download data"
-    What is the URL that allows you to download the newly published data in BUFR-format?
-    Copy and paste the URL in your browser to verify you can download the corresponding `.bufr4` file.
-
-!!! note "Downloading restricted data"
-    You will not be able to download the data using the URL in the message published on `origin/a/wis2/mwi/mwi_wmo_demo/data/recommended/` as the data access has been restricted by the data publisher. In this case you will get the error `401 Authorization Required`.
-
-The data is currently restricted with the access token `mysecrettoken`. In order to download the data you would need to add this token to the header:
-
-```bash
-wget --header "Authorization: Bearer mysecrettoken" http://testuser.wis2.training/data/2023-06-07/wis/mwi/mwi_wmo_demo/data/recommended/weather/surface-based-observations/synop/WIGOS_0-454-2-AWSCHIKWAWA_20230607T085500.bufr4
-```
-
 ## Conclusion
 
 !!! success "Congratulations!"
     In this practical session, you learned how to:
 
-    - start wis2box and check the status of its components
-    - ingest some data test observations
-    - access the wis2box UI, API, MinIO UI and Grafana dashboard
-    - use access control for restricted datasets
+    - Run the wis2box-create-config script to create the initial configuration
+    - Start wis2box and check the status of its components
+    - access the wis2box-webapp, API, MinIO UI and Grafana dashboard
