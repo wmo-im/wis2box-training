@@ -4,25 +4,25 @@ title: Initializing the wis2box
 
 #  Initializing the wis2box
 
-## Introduction
+!!! abstract
 
-In this session you will prepare the initial configuration of your wis2box and start the services.
+    In this session you will prepare the initial configuration of your wis2box and start the services.
 
-!!! note "wis2box installation and configuration"
-    The latest wis2box release has been pre-installed on your student VM using the release archive available on GitHub:
 
-    ```bash
-    wget https://github.com/wmo-im/wis2box/releases/download/1.0b5/wis2box-setup-1.0b5.zip
-    unzip wis2box-setup-1.0b5.zip
-    ```
-    
-    You can always find the latest 'wis2box-setup' archive at [https://github.com/wmo-im/wis2box/releases](https://github.com/wmo-im/wis2box/releases).
-
-    All the required steps for installation and configuration of the wis2box can be found in the [wis2box-documentation](https://docs.wis2box.wis.wmo.int/en/latest/)
+The current training materials are using wis2box-1.0b5. See [accessing-your-student-vm](accessing-your-student-vm.md) for instructions on how to download and install the wis2box software stack if you are running this training outside of a local training session.
 
 ## Preparation
 
-Login to your designated VM with your username and password.
+Login to your designated VM with your username and password and ensure you are in the 'wis2box-1.0b5' directory:
+
+```bash
+cd ~/wis2box-1.0b5
+```
+
+## wis2box-create-config
+
+The wis2box-create-config script is used to create the initial configuration of your wis2box. It will create 
+
 
 ## wis2box start and status
 
