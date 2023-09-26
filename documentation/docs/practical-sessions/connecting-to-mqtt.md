@@ -14,7 +14,7 @@ WIS2 uses the MQTT protocol to advertise the availability of weather/climate/wat
 
 As part of the WIS2 Pilot Phase in 2023, two Global Brokers are available, one hosted by CMA and one hosted by Meteo-France.
 
-This is an example of the WIS2-notification message structure:	
+This is an example of the WIS2-notification message structure for a message received on the topic `origin/a/wis2/arg/sabm/data/core/weather/surface-based-observations/synop`:	
 
 ```json
 {
@@ -136,7 +136,7 @@ Disconnect from MQTT Explorer and update the 'Advanced' sections to change the s
 <img alt="mqtt-explorer-global-broker-topics-exercise2" src="../../assets/img/mqtt-explorer-global-broker-topics-exercise2.png" width="600">
 
 !!! note
-    The `+` wildcard is used to subscribe to all countries (fourth level) and centres (fifth level).
+    The `+` wildcard is used to subscribe to all countries (fourth level) and centres (fifth level) while the remaining topic structure is fixed to ensure we subscribe to sub-topics `data/core/weather/surface-based-observations/synop`.	
 
 Wait for a bit until messages start appearing again.
 
@@ -177,7 +177,7 @@ The same message is published on both the `origin` and `cache` topics. Find a me
 ## Conclusion
 
 !!! success "Congratulations!"
-    Congratulations!  In this practical session, you learned:
+    In this practical session, you learned:
 
     - how to subscribe to WIS2 Global Broker services using MQTT Explorer
     - the WIS2 topic structure
