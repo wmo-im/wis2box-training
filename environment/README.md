@@ -60,3 +60,9 @@ order to create MinIO storage.  The following buckets must be created manually w
 
 - `exercise-materials`
 - `documentation`
+
+### student vm setup
+
+Student VMs can be setup by cloning the a base-template.
+
+The script 'setup_student_vm.sh' can be used to by the wmo_admin-account to create a new user-account on the student VM and add the latest wis2box release to the home directory of the new user along with the exercise materials.

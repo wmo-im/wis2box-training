@@ -4,9 +4,21 @@ title: Accessing your student VM
 
 # Accessing your student VM
 
+!!! abstract
+
+    In this session you will practice accessing your student VM using SSH and WinSCP.
+
 ## Introduction
 
 As part of locally run wis2box training sessions, you can access your personal student VM on the local training network named "WIS2-training".
+
+Your student VM has the following software pre-installed:
+
+- Ubuntu 22.0.4.3 LTS [ubuntu-22.04.3-live-server-amd64.iso](https://releases.ubuntu.com/jammy/ubuntu-22.04.3-live-server-amd64.iso)
+- Python 3.10.12
+- Docker 24.0.6
+- Docker Compose 2.21.0
+- Editors: vim, nano
 
 !!! note
 
@@ -16,18 +28,19 @@ As part of locally run wis2box training sessions, you can access your personal s
     - AWS (Amazon Web Services)  ec2-instance `t3a.medium` 
     - Azure (Microsoft) Azure Virtual Machine `standard_b2s`
 
-    Select Ubuntu Server 20.0.4 LTS as OS and run the setup script available in [student-vm-setup.zip](https://training.wis2box.wis.wmo.int/student-vm-setup.zip) on your instance to ensure you have all required software.
+    Select Ubuntu Server 22.0.4 LTS as OS and run setup instructions as described at https://docs.wis2box.wis.wmo.int/en/latest/user/getting-started.html#software-dependencies
+
+
+    You can download the release-archive for the wis2box-release used in this training as follows:
+
+    ```bash
+    wget https://github.com/wmo-im/wis2box/releases/download/1.0b5/wis2box-setup-1.0b5.zip
+    unzip wis2box-setup-1.0b5.zip
+    ```
+    
+    You can always find the latest 'wis2box-setup' archive at [https://github.com/wmo-im/wis2box/releases](https://github.com/wmo-im/wis2box/releases).
 
     If you are using the student VM provided during local WIS2 training sessions, the required software will already be installed.
-
-!!! note
-
-    The student-VMs provided during WIS2 local training sessions have the following command-line editors pre-installed:
-
-    - vi
-    - vim
-    - nano
-    - emacs
 
 ## Connect to your student VM on the local training network
 
@@ -61,54 +74,7 @@ passwd: password updated successfully
 
 To be able to practice conversion to BUFR, the student VM comes with ecCodes, synop2bufr and csv2bufr pre-installed:
 
-Check the ecCodes version via the `bufr_dump` command:
-
-```bash
-bufr_dump -V
-```
-returns:
-```console
-
-ecCodes Version 2.28.0
-```
-
-Check synop2bufr version:
-```bash
-synop2bufr --version
-```
-returns:
-```console
-synop2bufr, version 0.4.1
-```
-
-Check csv2bufr version:
-```bash
-csv2bufr --version
-```
-returns:
-```console
-csv2bufr, version 0.6.3
-```
-
-To be able to run wis2box, the student VM also comes with Python Docker and Docker Compose pre-installed. 
-
-Check docker version:
-```bash
-docker --version
-```
-returns:
-```console
-Docker version 20.10.17, build 100c701
-```
-
-Check Docker Compose version:
-```bash
-docker-compose --version
-```
-returns:
-```console
-docker-compose version 1.29.0, build unknown
-```
+To be able to run wis2box, the student VM comes with Python, Docker and Docker Compose pre-installed. 
 
 Check Python version:
 ```bash
@@ -116,7 +82,39 @@ python3 --version
 ```
 returns:
 ```console
-Python 3.8.10
+Python 3.10.12
+```
+
+Check docker version:
+```bash
+docker --version
+```
+returns:
+```console
+Docker version 24.0.6, build ed223bc
+```
+
+Check Docker Compose version:
+```bash
+docker compose version
+```
+returns:
+```console
+Docker Compose version v2.21.0
+```
+
+To ensure your user can run docker commands your user has been added to the `docker` group. 
+
+To test that your user can run docker hello-world, run the following command:
+```bash
+docker run hello-world
+```
+
+returns:
+```console
+Hello from Docker!
+This message shows that your installation appears to be working correctly.
+...
 ```
 
 ## Inspect the exercise materials
@@ -128,33 +126,18 @@ ls ~/
 ```
 returns:
 ```console
-exercise-materials  wis2box-1.0b4
+exercise-materials  wis2box-1.0b5
 ```
 
-To access the material on your local machine rather than from the command line, you can use SCP. Using WinSCP, you can create a new SCP connection to your VM as follows:
+You can use WinSCP to connect to your instance and inspect the contents of your home directory and download or upload files between your VM and your local PC.
+
+Using WinSCP, you can create a new SCP connection to your VM as follows:
 
 <img alt="winscp-student-vm-scp.png" src="../../assets/img/winscp-student-vm-scp.png" width="400">
 
 And you should be able to see the following content:
 
 <img alt="winscp-student-vm-exercise-materials.png" src="../../assets/img/winscp-student-vm-exercise-materials.png" width="600">
-
-## Exercise 1: Editing files on your Student VM
-
-Connect to your Student VM using WinSCP and browse into the directory: `~/exercise-materials/accessing-your-student-vm/`
-
-Right-click on the file `hello_world.txt` and select **Edit -> Internal editor**.  Edit this file by adding a message of your own and save your changes.
-
-<img alt="winscp_internal_editor.png" src="../../assets/img/winscp_internal_editor.png" width="600">
-
-From within your SSH client check the content of the file `~/exercise-materials/accessing-your-student-vm/hello_world.txt`:
-
-```bash
-cat ~/exercise-materials/accessing-your-student-vm/hello_world.txt
-```
-And confirm you see the changes you made in the file.
-
-During the exercises you will be asked to edit files. It is up to you if you prefer to edit files from the command line in your SSH client (using `vi`/`vim`/`nano`/`emacs`) or using WinSCP.
 
 ## Conclusion
 
