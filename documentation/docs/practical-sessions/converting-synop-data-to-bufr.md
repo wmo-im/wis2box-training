@@ -4,7 +4,7 @@ title: Converting SYNOP data to BUFR
 
 # Converting SYNOP data to BUFR
 
-!!! abstract Learning outcomes
+!!! abstract "Learning outcomes"
     By the end of this session you will be able to:
 
     - Submit valid FM-12 SYNOP bulletins via the WIS2box web app for conversion to BUFR and exchange over the WIS2.0.
@@ -26,11 +26,16 @@ as the relationship between the information contained in the FM-12 SYNOP reports
 
 ## Preparation
 
-!!! warning
+!!! warning "Prerequisites"
     - Ensure that your WIS2box has been configured and started, including the setting execution tokens 
       for the ``processes/wis2box`` and ``collections/stations``paths. Confirm the status by visiting 
       the WIS2box API (``http://<your-host-name>/oapi``) and verifying that the API is running.
-    - Ensure that you are able to access the MinIO admin interface at: ``http://<your-host-name>:9001``
+    - Ensure that you are able to access the wis2box management container using a file transfer
+      tool such as WinSCP.
+    - For practical purposes the exercises in this session use data from Romania, import the 
+      station ``0-20000-0-15015`` into your station list and associate it with the topic
+      for your "Surface weather observations collection". This will be removed at the end of the session.
+
 
 ## Inspecting SYNOP data and BUFR conversion
 
@@ -221,28 +226,33 @@ and inspected. In this exercise we will use this tool and the wis2box management
 have configured a WIS2box and have been able to log in).
 
 Before starting the exercise we need to transfer some data to the wis2box. Download one of the BUFR files
-you created in the previous exercise and save this to a MinIO bucket. 
+you created in the previous exercise and transfer this to your wis2box using WinSCP (or file transfer tool
+of your choice). Files placed under the ``/home/wis2box-data`` path will be available on the wis2box under
+``/data/wis2box``.
 
 !!! hint
-    Create a new bucket, e.g. synop2bufr-exercise, through the MinIO admin interface and save to this location.
-    The admin interface can be found at ``http://<your-host-name>:9001``.
+    Create a new directory, e.g. ``/home/wis2box-data/practicals/synop2bufr``, to transfer the files to rather 
+    than putting them directly in ``/home/wis2box-data/``.
 
 You are now ready to begin the exercise, start by logging in to the wis2box management container and navigate
 to the wis2box data directory:
 
-!!! example
-    ``` {.copy}
-    cd /data/wis2box/synop2bufr
-    ```
+```bash
+cd /data/wis2box/praticals/synop2bufr
+```
 
 Confirm that ecCodes and bufr_dump are available, these will have been automatically installed as part of the
 wis2box configuration process.
 
-!!! example
-    commands to follow ...
+
+```bash
+>> bufr_dump -V
+ecCodes Version 2.28.0
+```    
+
 
 Now experiment using ``bufr_dump`` to decode and extract data from the file. Some examples are given below, you will
-need to update the filename to that of the file saved to the MinIO bucket.
+need to update the filename to that of the file transferred to the wis2box.
 
 ```bash
 bufr_dump -p my_bufr.bufr4
@@ -261,6 +271,17 @@ This will display variables related to temperature in your BUFR data. If you wan
 bufr_dump -p my_bufr.bufr4 | egrep -i 'temperature|wind'
 ```
 
+## Housekeeping
+
+During the exercises in this session you will have imported several files into your station list. Navigate to the 
+station list page and click the trash can icons to delete the stations. You may need to refresh the page to have
+the stations removed from the list after deleting.
+
+<center><img alt="Station metadata viewer"
+         src="../../assets/img/synop2bufr-trash.png" width="600"></center>
+
+You can also delete the files used in the final exercise as this will no longer be required.
+
 ## Conclusion
 
 !!! success "Congratulations!"
@@ -271,3 +292,4 @@ bufr_dump -p my_bufr.bufr4 | egrep -i 'temperature|wind'
     - how to diagnose and correct simple errors in an FM-12SYNOP report;
     - the importance of registering stations in the wis2box (and OSCAR/Surface);
     - and how to use `bufr_dump` to inspect the content of BUFR data.
+
