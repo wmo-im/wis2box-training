@@ -31,7 +31,7 @@ Your student VM has the following software pre-installed:
     Select Ubuntu Server 22.0.4 LTS as OS and run setup instructions as described at https://docs.wis2box.wis.wmo.int/en/latest/user/getting-started.html#software-dependencies
 
 
-    You can download the release-archive for the wis2box-release used in this training as follows:
+    You can get the release-archive for the wis2box-release used in this training as follows:
 
     ```bash
     wget https://github.com/wmo-im/wis2box/releases/download/1.0b5/wis2box-setup-1.0b5.zip
@@ -39,6 +39,13 @@ Your student VM has the following software pre-installed:
     ```
     
     You can always find the latest 'wis2box-setup' archive at [https://github.com/wmo-im/wis2box/releases](https://github.com/wmo-im/wis2box/releases).
+
+    You can get the exercise materials for this training as follows:
+
+    ```bash
+    wget https://training.wis2box.wis.wmo.int/exercise-materials.zip
+    unzip exercise-materials.zip
+    ```
 
     If you are using the student VM provided during local WIS2 training sessions, the required software will already be installed.
 

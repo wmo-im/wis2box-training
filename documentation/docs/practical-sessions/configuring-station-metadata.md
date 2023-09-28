@@ -6,11 +6,11 @@ title: Configuring station metadata
 
 ## Introduction
 
-wis2box uses a fixed station metadata list that is used as part of its runtime operation. 
+The wis2box has a collection of station metadata that is used to publish data on WIS2.
 Only data for stations configured in the wis2box station list will be published on your wis2box broker.
 The **WIGOS Station Identifier (WSI)** is used as the unique reference of the station which produced a specific set of observation data.
 
-## Preparation
+## 
 
 Login to your student VM using SSH.
 
