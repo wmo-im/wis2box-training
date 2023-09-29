@@ -29,7 +29,7 @@ cd ~/wis2box-1.0b5
 
 ## wis2box-create-config
 
-The wis2box-create-config script is used to create the initial configuration of your wis2box. 
+The wis2box-create-config script can be used to create the initial configuration of your wis2box. 
 
 It will ask you a set of question to help setup your configuration.
 
