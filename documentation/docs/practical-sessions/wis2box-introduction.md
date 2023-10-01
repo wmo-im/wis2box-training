@@ -1,17 +1,17 @@
 ---
-title: Initializing the wis2box
+title: Initializing wis2box
 ---
 
-#  Initializing the wis2box
+#  Initializing wis2box
 
 !!! abstract "Learning outcomes"
 
     By the end of this session you will be able to:
 
-    * Run the wis2box-create-config script to create the initial configuration
+    * Run the `wis2box-create-config.py` script to create the initial configuration
     * Start wis2box and check the status of its components
-    * Access the wis2box-webapp, API, MinIO UI and Grafana dashboard in a browser
-    * Connect to the local wis2box-broker using MQTT Explorer
+    * Access the **wis2box-webapp**, API, MinIO UI and Grafana dashboard in a browser
+    * Connect to the local **wis2box-broker** using MQTT Explorer
 
 !!! note
 
@@ -21,15 +21,15 @@ title: Initializing the wis2box
 
 ## Preparation
 
-Login to your designated VM with your username and password and ensure you are in the 'wis2box-1.0b5' directory:
+Login to your designated VM with your username and password and ensure you are in the `wis2box-1.0b5` directory:
 
 ```bash
 cd ~/wis2box-1.0b5
 ```
 
-## wis2box-create-config
+## `wis2box-create-config.py`
 
-The wis2box-create-config script can be used to create the initial configuration of your wis2box. 
+The `wis2box-create-config.py` script can be used to create the initial configuration of your wis2box. 
 
 It will ask you a set of question to help setup your configuration.
 
@@ -41,7 +41,7 @@ Run the script as follows:
 python3 wis2box-create-config.py
 ```
 
-We recommend you use the directory "wis2box-data" in your home-directory to store your configuration and data. 
+We recommend you use the directory `wis2box-data` in your home directory to store your configuration and data. 
 Note that you need to define the full path to this directory.
 
 For example if your username is `mlimper`, the full path to the directory is `/home/mlimper/wis2box-data`:
@@ -57,7 +57,7 @@ y
 The directory /home/mlimper/wis2box-data has been created.
 ```
 
-Next, you will be asked to enter the URL for your wis2box. This is the URL that will be used to access the wis2box web-application, API and UI.
+Next, you will be asked to enter the URL for your wis2box. This is the URL that will be used to access the wis2box web application, API and UI.
 
 Please use `http://<your-hostname>` as the URL. Remember that your hostname is defined by your `username.wis2.training`
 
@@ -71,9 +71,9 @@ The URL of the wis2box will be set to:
 Is this correct? (y/n/exit)
 ```
 
-We recommend that you use the option of random password generation when prompted for WIS2BOX_STORAGE_PASSWORD and WIS2BOX_BROKER_PASSWORD.
+We recommend that you use the option of random password generation when prompted for `WIS2BOX_STORAGE_PASSWORD` and `WIS2BOX_BROKER_PASSWORD`.
 
-Next you will be asked for the 3-letter iso-code for your country and centre-id for your wis2box. The centre-id can be a string of your choosing for the purpose of this training.
+Next you will be asked for the 3-letter ISO code for your country and centre-id for your wis2box. The centre-id can be a string of your choosing for the purpose of this training.
 
 ```{.copy}
 Please enter your 3-letter ISO country code:
@@ -121,7 +121,7 @@ Created new metadata file: /home/mlimper/wis2box-data/metadata/discovery/metadat
 
 We will review the discovery metadata templates in a later session.
 
-Once the scripts is completed check the contents of the wis2box.env file in your current directory:
+Once the scripts is completed check the contents of the `wis2box.env` file in your current directory:
 
 ```bash
 cat ~/wis2box-1.0b5/wis2box.env
@@ -131,9 +131,9 @@ Or check the content of the file via WinSCP.
 
 !!! note
 
-    The wis2box.env file contains environment variables defining the configuration of your wis2box. For more information consult the [wis2box-documentation](https://docs.wis2box.wis.wmo.int/en/latest/reference/configuration.html)
+    The `wis2box.env` file contains environment variables defining the configuration of your wis2box. For more information consult the [wis2box-documentation](https://docs.wis2box.wis.wmo.int/en/latest/reference/configuration.html)
 
-You can also check the contents of the data-mappings.yml file in your wis2box data directory:
+You can also check the contents of the `data-mappings.yml` file in your wis2box data directory:
 
 ```bash
 cat ~/wis2box-data/data-mappings.yml
@@ -143,7 +143,7 @@ Or check the content of the file via WinSCP.
 
 !!! note
 
-    The data-mappings.yml define the plugins used to transform your data. For more information see [data pipeline plugins in the wis2box-documentation](https://docs.wis2box.wis.wmo.int/en/latest/reference/running/data-pipeline-plugins.html)
+    The `data-mappings.yml` define the plugins used to transform your data. For more information see [data pipeline plugins in the wis2box-documentation](https://docs.wis2box.wis.wmo.int/en/latest/reference/running/data-pipeline-plugins.html)
 
 
 ## wis2box start and status
@@ -216,13 +216,13 @@ Open a web browser and visit the page `http://<your-host>/wis2box-webapp`:
 
 <img alt="wis2box-webapp.png" src="../../assets/img/wis2box-webapp.png" width="600">
 
-This is the (new) wis2box web-application to enable you to interact with your wis2box:
+This is the (new) wis2box web application to enable you to interact with your wis2box:
 
 - ingest ASCII and CSV data
 - update/review your station metadata
 - monitor notifications published on your wis2box-broker
 
-We will use this web-application in a later session.
+We will use this web application in a later session.
 
 ## wis2box UI
 
@@ -232,21 +232,21 @@ Open a web browser and visit the page `http://<your-host>`:
 
 The wis2box UI will display your configured datasets. For the surface-weather-observations/synop dataset, you can `explore` the data that has been ingested.
 
-Right now the UI is empty, as datasets have not yet been configured.
+The UI is currently empty, as datasets have not yet been configured.
 
 ## wis2box-broker
 
 Open the MQTT Explorer on your computer and prepare a new connection to connect to your broker (running via the **wis2box-broker** container).
 
-Click '+' to add a new connection:
+Click `+` to add a new connection:
 
 <img alt="mqtt-explorer-new-connection.png" src="../../assets/img/mqtt-explorer-new-connection.png" width="300">
 
 Click on the 'ADVANCED' button and add the following topics to subscribe to:
 
-- $SYS/#
-- origin/a/wis2/#
-- wis2box/#
+- `$SYS/#`
+- `origin/a/wis2/#`
+- `wis2box/#`
 
 <img alt="mqtt-explorer-topics.png" src="../../assets/img/mqtt-explorer-topics.png" width="550">
 
@@ -258,7 +258,7 @@ Click on the 'ADVANCED' button and add the following topics to subscribe to:
 
     The messages published under topics starting with `wis2box` are internal messages between the various components of the wis2box software stack.
 
-Use the following connection details, making sure to replace the value of `<your-host>` with your hostname and `<WIS2BOX_BROKER_PASSWORD>` with the value from your wis2box.env file:
+Use the following connection details, making sure to replace the value of `<your-host>` with your hostname and `<WIS2BOX_BROKER_PASSWORD>` with the value from your `wis2box.env` file:
 
 - **Protocol: mqtt://**
 - **Host: `<your-host>`**
@@ -272,7 +272,7 @@ Use the following connection details, making sure to replace the value of `<your
 
 Make sure to click "SAVE" to store your connection details.
 
-Then click "CONNECT" to connect to your wis2box-broker.
+Then click "CONNECT" to connect to your **wis2box-broker**.
 
 <img alt="mqtt-explorer-wis2box-broker.png" src="../../assets/img/mqtt-explorer-wis2box-broker.png" width="600">
 
@@ -288,7 +288,7 @@ Open a web browser and visit the page `http://<your-host>:9001`:
 
 This is the MinIO UI (running via the **wis2box-storage** container).
 
-The username and password are defined in the wis2box.env file in your wis2box data directory by the environment variables `WIS2BOX_STORAGE_USERNAME` and `WIS2BOX_STORAGE_PASSWORD`.
+The username and password are defined in the `wis2box.env` file in your wis2box data directory by the environment variables `WIS2BOX_STORAGE_USERNAME` and `WIS2BOX_STORAGE_PASSWORD`.
 
 Use the command below to check the values of these environment variables from the command line in your SSH session:
 
@@ -300,15 +300,15 @@ Or check the content of the file via WinSCP.
 
 Try to login to your MinIO UI. You will see that there 3 buckets already defined:
 
-- wis2box-incoming: used to receive incoming data
-- wis2box-public: used to store data that is made available in the WIS2-notifications, the content of this bucket is proxied as /data on your WIS2BOX_URL via the nginx container
-- wis2box-archive: used to archive data from wis2box-incoming on a daily basis
+- `wis2box-incoming`: used to receive incoming data
+- `wis2box-public`: used to store data that is made available in the WIS2 notifications, the content of this bucket is proxied as `/data` on your `WIS2BOX_URL` via the nginx container
+- `wis2box-archive`: used to archive data from `wis2box-incoming` on a daily basis
 
 <img alt="minio-ui-buckets.png" src="../../assets/img/wis2box-minio-buckets.png" width="600">
 
 !!! note
 
-    The wis2box-storage container will send a notification on the wis2box-broker when data is received. The wis2box-management container is subscribed to all messages on wis2box/# and will receive these notifications, triggering the data pipelines defined in your data-mappings.yml.
+    The **wis2box-storage** container will send a notification on the **wis2box-broker** when data is received. The **wis2box-management** container is subscribed to all messages on `wis2box/#` and will receive these notifications, triggering the data pipelines defined in your `data-mappings.yml`.
 
 ## Grafana UI
 
@@ -323,7 +323,7 @@ This is the Grafana UI, where you can view the wis2box workflow monitoring dashb
 !!! success "Congratulations!"
     In this practical session, you learned how to:
 
-    - Run the wis2box-create-config script to create the initial configuration
+    - Run the `wis2box-create-config.py` script to create the initial configuration
     - Start wis2box and check the status of its components
-    - Access the wis2box-webapp, API, MinIO UI and Grafana dashboard in a browser
-    - Connect to the wis2box-broker using MQTT Explorer
+    - Access the **wis2box-webapp**, API, MinIO UI and Grafana dashboard in a browser
+    - Connect to the **wis2box-broker** using MQTT Explorer
