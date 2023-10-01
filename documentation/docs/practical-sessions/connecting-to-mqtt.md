@@ -12,9 +12,9 @@ title: Connecting to WIS2 over MQTT
 
 WIS2 uses the MQTT protocol to advertise the availability of weather/climate/water data. The WIS2 Global Broker subscribes to all WIS2 Nodes in the network and republishes the messages it receives. The Global Cache subscribes to the Global Broker, downloads the data in the message and then republishes the message on the `cache` topic with a new URL.  The Global Discovery Catalogue publishes discovery metadata from the Broker and provides a search API.
 
-As part of the WIS2 Pilot Phase in 2023, two Global Brokers are available, one hosted by CMA and one hosted by Meteo-France.
+As part of the WIS2 Pilot Phase in 2023, two Global Brokers are available (hosted by China Meteorological Administration and Météo-France).
 
-This is an example of the WIS2-notification message structure for a message received on the topic `origin/a/wis2/arg/sabm/data/core/weather/surface-based-observations/synop`:	
+This is an example of the WIS2 notification message structure for a message received on the topic `origin/a/wis2/arg/sabm/data/core/weather/surface-based-observations/synop`:	
 
 ```json
 {
@@ -57,15 +57,15 @@ This is an example of the WIS2-notification message structure for a message rece
 
 In this practical session you will learn how to use the MQTT Explorer tool to review the topics available on this Global Broker and be able to display WIS2 notification messages.
 
-MQTT Explorer is a helpful tool to review the topic structure for a given MQTT broker and visually work with the MQTT protocol. There exist many MQTT client and server software. 
+MQTT Explorer is a helpful tool to browse and review the topic structure for a given MQTT broker and visually interact with the MQTT protocol. There exist numerous other MQTT client and server software, depending on your requirements and technical environment.
     
-To work with MQTT programmatically (for example, in Python), you can use MQTT client libraries such as [paho-mqtt](https://pypi.org/project/paho-mqtt/) to connect to an MQTT broker and process incoming messages.
+To work with MQTT programmatically (for example, in Python), you can use MQTT client libraries such as [paho-mqtt](https://pypi.org/project/paho-mqtt) to connect to an MQTT broker and process incoming messages.
 
 ## Using MQTT Explorer to connect to the Global Broker
 
 One way to view messages published by this Global Broker is using the MQTT Explorer which can be downloaded from the [MQTT Explorer website](https://mqtt-explorer.com).
 
-Open MQTT Explorer and add a new connection to the Global Broker hosted by CMA using the following details:
+Open MQTT Explorer and add a new connection to the Global Broker hosted by China Meteorological Administration using the following details:
 
 - host: gb.wis.cma.cn
 - port: 8883
@@ -76,8 +76,8 @@ Open MQTT Explorer and add a new connection to the Global Broker hosted by CMA u
 
 Click on the 'ADVANCED' button and add the following topics to subscribe to:
 
-- origin/#
-- cache/#
+- `origin/#`
+- `cache/#`
 
 <img alt="mqtt-explorer-global-broker-advanced" src="../../assets/img/mqtt-explorer-global-broker-advanced.png" width="600">
 
@@ -89,7 +89,7 @@ Click on the 'ADVANCED' button and add the following topics to subscribe to:
 
 Click 'BACK', then 'SAVE' to save your connection and subscription details.  Then click 'CONNECT':
 
-Wait a little a bit and messages should start appearing in your MQTT Explorer session:
+Messages should start appearing in your MQTT Explorer session as follows:
 
 <img alt="mqtt-explorer-global-broker-topics" src="../../assets/img/mqtt-explorer-global-broker-topics.png" width="600">
 
@@ -130,15 +130,15 @@ Use MQTT to browse topic structure under the `origin` and `cache` topics.
 
 Disconnect from MQTT Explorer and update the 'Advanced' sections to change the subscription to the following:
 
-* origin/a/wis2/+/+/data/core/weather/surface-based-observations/synop
-* cache/a/wis2/+/+/data/core/weather/surface-based-observations/synop
+* `origin/a/wis2/+/+/data/core/weather/surface-based-observations/synop`
+* `cache/a/wis2/+/+/data/core/weather/surface-based-observations/synop`
 
 <img alt="mqtt-explorer-global-broker-topics-exercise2" src="../../assets/img/mqtt-explorer-global-broker-topics-exercise2.png" width="600">
 
 !!! note
-    The `+` wildcard is used to subscribe to all countries (fourth level) and centres (fifth level) while the remaining topic structure is fixed to ensure we subscribe to sub-topics `data/core/weather/surface-based-observations/synop`.	
+    The `+` wildcard is used to subscribe to all countries (fourth level) and centres (fifth level) while the remaining topic structure is fixed to ensure we subscribe to subtopics `data/core/weather/surface-based-observations/synop`.	
 
-Wait for a bit until messages start appearing again.
+Messages should start to appear again.
 
 You can view the content of the WIS2 message in the "Value" section on the right hand side.
 
@@ -148,9 +148,9 @@ You can view the content of the WIS2 message in the "Value" section on the right
 
 ??? note "Click to reveal answer"
 
-    The timestamp that the data was published is contained in the "properties"-section of the message with a key of "pubtime".
+    The timestamp that the data was published is contained in the `properties` section of the message with a key of `pubtime`.
 
-    The timestamp that the data was collected is contained in the "properties"-section of the message with a key of "datetime".
+    The timestamp that the data was collected is contained in the `properties` section of the message with a key of `datetime`.
 
 !!! question
 
@@ -158,7 +158,7 @@ You can view the content of the WIS2 message in the "Value" section on the right
 
 ??? note "Click to reveal answer"
 
-    The URL is contained in the "links"-section with "rel"="canonical" and defined by the "href"-key.
+    The URL is contained in the `links` section with `rel="canonical"` and defined by the `href` key.
 
     You can copy the URL and paste it into a web browser to download the data.
 
