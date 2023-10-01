@@ -120,7 +120,7 @@ Use MQTT to browse topic structure under the `origin` and `cache` topics.
 
 ??? note "Click to reveal answer"
 
-    We can distinguish the data type by looking at the ninth of the topic structure.  For example, the following topic:
+    We can distinguish the data type by looking at the ninth level of the topic structure.  For example, the following topic:
 
     `origin/a/wis2/zmb/zambia_met_service/data/core/weather/surface-based-observations/synop`
 
