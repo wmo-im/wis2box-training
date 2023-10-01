@@ -18,7 +18,7 @@ Your student VM has the following software pre-installed:
 - Python 3.10.12
 - Docker 24.0.6
 - Docker Compose 2.21.0
-- Editors: vim, nano
+- Text editors: vim, nano
 
 !!! note
 
@@ -29,9 +29,8 @@ Your student VM has the following software pre-installed:
     - Azure (Microsoft) Azure Virtual Machine `standard_b2s`
 
     Select Ubuntu Server 22.0.4 LTS as OS and run setup instructions as described at https://docs.wis2box.wis.wmo.int/en/latest/user/getting-started.html#software-dependencies
-
-
-    You can get the release-archive for the wis2box-release used in this training as follows:
+    
+    The release archive for wis2box as used in this training can be downloaded as follows:
 
     ```bash
     wget https://github.com/wmo-im/wis2box/releases/download/1.0b5/wis2box-setup-1.0b5.zip
@@ -40,7 +39,7 @@ Your student VM has the following software pre-installed:
     
     You can always find the latest 'wis2box-setup' archive at [https://github.com/wmo-im/wis2box/releases](https://github.com/wmo-im/wis2box/releases).
 
-    You can get the exercise materials for this training as follows:
+    The exercise material as used in this training can be downloaded as follows:
 
     ```bash
     wget https://training.wis2box.wis.wmo.int/exercise-materials.zip
@@ -79,9 +78,9 @@ passwd: password updated successfully
 
 ## Verify software versions
 
-To be able to practice conversion to BUFR, the student VM comes with ecCodes, synop2bufr and csv2bufr pre-installed:
+To be able to practice data conversion to BUFR, the student VM comes with ecCodes, synop2bufr and csv2bufr pre-installed.
 
-To be able to run wis2box, the student VM comes with Python, Docker and Docker Compose pre-installed. 
+To be able to run wis2box, the student VM is provided with with Python, Docker and Docker Compose pre-installed. 
 
 Check Python version:
 ```bash
@@ -110,7 +109,7 @@ returns:
 Docker Compose version v2.21.0
 ```
 
-To ensure your user can run docker commands your user has been added to the `docker` group. 
+To ensure your user can run Docker commands your user has been added to the `docker` group. 
 
 To test that your user can run docker hello-world, run the following command:
 ```bash
