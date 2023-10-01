@@ -10,21 +10,21 @@ title: Configuring station metadata
 
 ## Introduction
 
-The wis2box has a collection of station metadata that is used to publish data on WIS2.
+wis2box has a collection of station metadata that is used to publish data on WIS2.
 Only data for stations configured in the wis2box station list will be published on your wis2box broker.
 The **WIGOS Station Identifier (WSI)** is used as the unique reference of the station which produced a specific set of observation data.
 
 ## Create an authorization token for collections/stations
 
-To edit stations via the wis2box-webapp you will first to need create an authorization token.
+To edit stations via the **wis2box-webapp** you will first to need create an authorization token.
 
-Login to your student VM and ensure you are in the wis2box-1.0b5 directory:
+Login to your student VM and ensure you are in the `wis2box-1.0b5` directory:
 
 ```bash
 cd ~/wis2box-1.0b5
 ```
 
-Then login into the wis2box-management container with the following command:
+Then login into the **wis2box-management** container with the following command:
 
 ```bash
 python3 wis2box-ctl.py login
@@ -64,9 +64,9 @@ Token successfully created
 
 ## add station metadata using the wis2box-webapp
 
-The wis2box-webapp provides a graphical user interface to edit station metadata.
+The **wis2box-webapp** provides a graphical user interface to edit station metadata.
 
-Open the wis2box-webapp in your browser: `http://<your-host>/wis2box-app`:
+Open the **wis2box-webapp** in your browser by navigating to `http://<your-host>/wis2box-app`:
 
 <img alt="wis2box-webapp" src="../../assets/img/wis2box-webapp.png" width="800">
 
@@ -78,9 +78,9 @@ When you click add 'add new station' you are asked to provide the WIGOS-station-
 
 <img alt="wis2box-webapp-import-station-from-oscar" src="../../assets/img/wis2box-webapp-import-station-from-oscar.png" width="800">
 
-When you click search the station data is retrieved from OSCAR, please note that this can take a few seconds.
+When you click search the station data is retrieved from OSCAR/Surface, please note that this can take a few seconds.
 
-Review the data returned by OSCAR and add missing data where required. Select a topic for the station and provide your authorization token for the `collections/stations` endpoint and click 'save' and the station will be saved:
+Review the data returned by OSCAR/Surface and add missing data where required. Select a topic for the station and provide your authorization token for the `collections/stations` endpoint and click 'save':
 
 <img alt="wis2box-webapp-create-station-save" src="../../assets/img/wis2box-webapp-create-station-save.png" width="800">
 
@@ -102,27 +102,50 @@ Go back to the station list and you will see the station you added:
     - 0-20000-0-96323 (note missing station elevation in OSCAR)
     - 0-20000-0-96749 (note missing station elevation in OSCAR)
 
+!!! note "Deriving elevation information"
+
+If your station elevation is missing, there are online services that allow the lookup of the elevation using open elevation data. One such example is the [Open Topo Data API](https://www.opentopodata.org).
+
+For example, to get the elevation of the BMKG auditorium one would query the Open Topo Data API as follows:
+
+```bash
+ wget -q -O - "https://api.opentopodata.org/v1/aster30m?locations=-6.15558,106.84204"
+{
+  "results": [
+    {
+      "dataset": "aster30m", 
+      "elevation": 7.0, 
+      "location": {
+        "lat": -6.15558, 
+        "lng": 106.84204
+      }
+    }
+  ], 
+  "status": "OK"
+}
+```
+
 ## Review your station metadata
 
-After saving your station metadata, you can review the content of your station metadata in the wis2box-webapp:
+After saving your station metadata, you can review the content of your station metadata in the **wis2box-webapp**:
 
-You can verify the updated stations are available in the wis2box-api:
+You can verify the updated stations are available in the **wis2box-api**:
 
 <img alt="wis2box-api-stations" src="../../assets/img/wis2box-api-stations.png" width="800">
 
-You can also visit the wis2box-ui at `http://<your-host>` and select "explore" on your dataset and you will see the stations you added:
+You can also visit the **wis2box-ui** at `http://<your-host>` and select "EXPLORE" on your dataset and you will see the stations you added:
 
 <img alt="wis2box-ui-explore-stations" src="../../assets/img/wis2box-ui-explore-stations.png" width="800">
 
 !!! note "Exercise 3: Review your station metadata"
 
-    Verify the stations you added are associated to your dataset by visiting the wis2box-api and wis2box-ui endpoints for your host in your browser.
+    Verify the stations you added are associated to your dataset by visiting the **wis2box-api** and **wis2box-ui** endpoints for your host in your browser.
 
-You also have the option to view/update/delete the station in the wis2box-webapp. Note that you are required to provide your authorization token for the `collections/stations` endpoint to update/delete the station.
+You also have the option to view/update/delete the station in the **wis2box-webapp**. Note that you are required to provide your authorization token for the `collections/stations` endpoint to update/delete the station.
 
 !!! note "Exercise 4: Update/delete station metadata"
 
-    Please update/delete the station metadata for one of the stations you added using the wis2box-webapp.
+    Please update/delete the station metadata for one of the stations you added using the **wis2box-webapp**.
 
 ## Conclusion
 
@@ -131,5 +154,5 @@ You also have the option to view/update/delete the station in the wis2box-webapp
 
     - create an authorization token for the `collections/stations` endpoint
     - add station metadata to the wis2box
-    - review stations associated to datasets in the wis2box-ui
-    - update/delete station metadata using the wis2box-webapp
+    - review stations associated to datasets in the **wis2box-ui**
+    - update/delete station metadata using the **wis2box-webapp**
