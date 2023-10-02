@@ -29,12 +29,12 @@ as the relationship between the information contained in the FM-12 SYNOP reports
 !!! warning "Prerequisites"
     - Ensure that your WIS2box has been configured and started, including the setting execution tokens 
       for the ``processes/wis2box`` and ``collections/stations``paths. Confirm the status by visiting 
-      the WIS2box API (``http://<your-host-name>/oapi``) and verifying that the API is running.
-    - Ensure that you are able to access the wis2box management container using a file transfer
-      tool such as WinSCP.
+      the WIS2box API (``http://<your-host-name>/oapi``) and verifying that the API is running
+    - Ensure that you are able to access the **wis2box-management container using a file transfer
+      tool such as WinSCP
     - For practical purposes the exercises in this session use data from Romania, import the 
       station ``0-20000-0-15015`` into your station list and associate it with the topic
-      for your "Surface weather observations collection". This will be removed at the end of the session.
+      for your "Surface weather observations collection". This will be removed at the end of the session
 
 
 ## Inspecting SYNOP data and BUFR conversion
@@ -190,7 +190,7 @@ AAXX 21121
     In this first example the "end of text" symbol (=), or record delimiter, is missing between the
     first and second weather reports. Consequently, lines 2 and 3 are treated as a single report, 
     leading to errors in the parsing of the message. The final line is also missing the end of 
-    text symbol but the wis2box is able to handle this case.
+    text symbol but wis2box is able to handle this case.
 
     The station 15090 should have been registered as part of the previous exercise. If not you will
     also receive a warning that the station can not be found.  If this is the case, register the

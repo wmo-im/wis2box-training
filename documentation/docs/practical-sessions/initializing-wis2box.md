@@ -254,7 +254,7 @@ Click on the 'ADVANCED' button and add the following topics to subscribe to:
 
     The messages published under the `$SYS` topic are system messages published by the mosquitto service itself.
 
-    The messages published under topics starting with `origin/a/wis2/#` are the WIS2 data notifications published by the wis2box-broker.
+    The messages published under topics starting with `origin/a/wis2/#` are the WIS2 data notifications published by the **wis2box-broker**.
 
     The messages published under topics starting with `wis2box` are internal messages between the various components of the wis2box software stack.
 

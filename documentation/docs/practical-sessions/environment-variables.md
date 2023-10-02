@@ -17,7 +17,7 @@ Login to your student VM using WinSCP (using SCP-protocol) and PuTTY.
 Stop your wis2box:
 
 ```bash
-cd ~/wis2box-1.0b4/
+cd ~/wis2box-1.0b5/
 python3 wis2box-ctl.py stop
 ```
 
@@ -58,10 +58,10 @@ docker volume ls
 
 The wis2box setup reads environment variables from `dev.env`. 
 
-Make sure you are in the wis2box-directory and the check the current content of your `dev.env`.
+Make sure you are in the wis2box directory and the check the current content of your `dev.env`.
 
 ```bash
-cd ~/wis2box-1.0b4/
+cd ~/wis2box-1.0b5/
 cat dev.env
 ```
 
@@ -74,7 +74,7 @@ This setup was using the pre-defined configuration stored in `~/exercise-materia
     
     Make sure you keep these values when editing your `dev.env`
 
-In the next few steps we will review how to update some of key environment variables used in wis2box by editing `dev.env` in the directory `wis2box-1.0b4`.
+In the next few steps we will review how to update some of key environment variables used in wis2box by editing `dev.env` in the directory `wis2box-1.0b5`.
 
 You can use WinSCP to connect to your instance and edit this file or you can edit the file from the command line using PuTTY.
 
@@ -162,7 +162,7 @@ The content of you `dev.env` should now look as follows (except for your own pas
 
 ## Restart wis2box
 
-Start the wis2box and check the status:
+Start wis2box and check the status:
 ```bash
 python3 wis2box-ctl.py start
 python3 wis2box-ctl.py status

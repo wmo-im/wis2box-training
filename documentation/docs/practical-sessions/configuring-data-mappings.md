@@ -20,7 +20,7 @@ Login to your student VM
 Here's how to add data mapping for wis2box to process CSV data.  Inspect the contents of the sample SYNOP CSV data mapping:
 
 ```bash
-cat ~/wis2box-1.0b4/synop-csv-mappings.yml
+cat ~/wis2box-1.0b5/synop-csv-mappings.yml
 ```
 
 !!! question

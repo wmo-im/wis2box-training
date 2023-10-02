@@ -30,7 +30,7 @@ Then login into the **wis2box-management** container with the following command:
 python3 wis2box-ctl.py login
 ```
 
-Within the wis2box-container your can create an authorization token for a specific endpoint using the command: `wis2box auth add-token --path <my-endpoint>`.
+Within the **wis2box-management** container your can create an authorization token for a specific endpoint using the command: `wis2box auth add-token --path <my-endpoint>`.
 
 For example, to use a random automatically generated token for the `collections/stations` endpoint:
 
@@ -62,7 +62,7 @@ Token successfully created
 
     Please create an authorization token for the `collections/stations` endpoint using the instructions above.
 
-## add station metadata using the wis2box-webapp
+## add station metadata using the **wis2box-webapp**
 
 The **wis2box-webapp** provides a graphical user interface to edit station metadata.
 
@@ -153,6 +153,6 @@ You also have the option to view/update/delete the station in the **wis2box-weba
     In this practical session, you learned how to:
 
     - create an authorization token for the `collections/stations` endpoint
-    - add station metadata to the wis2box
+    - add station metadata to wis2box
     - review stations associated to datasets in the **wis2box-ui**
     - update/delete station metadata using the **wis2box-webapp**
