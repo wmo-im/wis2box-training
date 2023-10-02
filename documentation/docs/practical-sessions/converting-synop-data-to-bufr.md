@@ -7,9 +7,9 @@ title: Converting SYNOP data to BUFR
 !!! abstract "Learning outcomes"
     By the end of this session you will be able to:
 
-    - Submit valid FM-12 SYNOP bulletins via the WIS2box web app for conversion to BUFR and exchange over the WIS2.0.
+    - Submit valid FM-12 SYNOP bulletins via the wis2box web application for conversion to BUFR and exchange over the WIS2.0.
     - Validate, diagnose and fix simple coding errors in an FM-12 SYNOP bulletin prior to format conversion and exchange.
-    - Ensure that the required station metadata is available in the WIS2box.
+    - Ensure that the required station metadata is available in the wis2box.
     - Confirm and inspect successfully converted bulletins.
 
 ## Introduction
@@ -27,14 +27,15 @@ as the relationship between the information contained in the FM-12 SYNOP reports
 ## Preparation
 
 !!! warning "Prerequisites"
-    - Ensure that your WIS2box has been configured and started, including the setting execution tokens 
+    - Ensure that your wis2box has been configured and started, including the setting execution tokens 
       for the ``processes/wis2box`` and ``collections/stations``paths. Confirm the status by visiting 
-      the WIS2box API (``http://<your-host-name>/oapi``) and verifying that the API is running
-    - Ensure that you are able to access the **wis2box-management container using a file transfer
-      tool such as WinSCP
+      the wis2box API (``http://<your-host-name>/oapi``) and verifying that the API is running.
+    - Ensure that you are able to transfer data to the **wis2box-management container using a file transfer
+      tool such as WinSCP. See the practical session on 
+      [accessing your student VM for more information](https://training.wis2box.wis.wmo.int/practical-sessions/accessing-your-student-vm).
     - For practical purposes the exercises in this session use data from Romania, import the 
       station ``0-20000-0-15015`` into your station list and associate it with the topic
-      for your "Surface weather observations collection". This will be removed at the end of the session
+      for your "Surface weather observations collection". This will be removed at the end of the session.
 
 
 ## Inspecting SYNOP data and BUFR conversion
@@ -49,7 +50,7 @@ AAXX 21121
 ``` 
 
 Identify the key components of the FM-12 SYNOP message and confirm that the station(s) is (are) registered
-within the WIS2box. The station(s) should be discoverable via the station list page
+within the wis2box. The station(s) should be discoverable via the station list page
 (``http://<your-host-name>/wis2box-webapp/station``) or via the API directly
 (``http://<your-host-name>/oapi/collections/stations``). 
 
@@ -81,32 +82,33 @@ Identify the number of weather reports in the message.
     the ``=`` symbol.
 
 !!! question "Bonus question"
-    What is the WIGOS identifier for the station and what topics have been configured?
+    What is the WIGOS station identifier for the station and what topics have been configured?
 
 ??? success "Click to reveal the answer"
-    The WIGOS identifier of the station can be found via the station list. The screen shot
+    The WIGOS station identifier of the station can be found via the station list. The screen shot
     below shows an example of the station information.
 
     <center><img alt="Station metadata viewer"
          src="../../assets/img/synop2bufr-ex1.png" width="600"></center>
 
-    In this example, the WIGOS identifier for the station "OCNA SUGATAG" is 0-20000-0-15015. 
+    In this example, the WIGOS station identifier for the station "OCNA SUGATAG" is 0-20000-0-15015. 
     Further information can be found by scrolling down the station page, the station
     is configured to publish on topic  ``origin/a/wis2/rou/rnimh/data/core/weather/surface-based-observations/synop``.
 
 ### Exercise 2 - converting your first message
 Now that you have confirmed that there is one weather report in the file and that the station
-is registered in the WIS2box you are ready to convert the data to BUFR.
+is registered in the wis2box you are ready to convert the data to BUFR.
 
-Open the WIS2box web app and navigate to the synop2bufr page using the left navigation drawer. 
+Open the wis2box web application and navigate to the synop2bufr page using the left navigation drawer. 
 Select the date using the date picker and copy and paste the FM-12 SYNOP message into the text 
 entry box. Assume today's date for demonstration purposes. Once the message has been copied, select 
 the appropriate topic to publish the data on, enter the "processes/wis2box" token and select submit.
-The data will now be converted to BUFR and the result returned to the web app.
+The data will now be converted to BUFR and the result returned to the web application.
 
 ??? tip
     The result section of the page should show a single converted BUFR message with zero warnings 
     or errors. The download button allows the BUFR data to be downloaded directly to your computer.
+    Click the down arrow / chevron to reveal download and inspect buttons. 
     The inspect button runs a process to convert and extract the data from BUFR.
 
     <center><img alt="Dialog showing result of successfully submitting a message"
@@ -145,19 +147,19 @@ AAXX 21121
 ??? warning "Click to reveal the answer"
     In order for a weather report to be converted to BUFR the basic metadata contained in the 
     station list is required. Whilst the above example includes three weather reports two of the
-    three stations reporting have not been registered in the WIS2box. As a result, only one
+    three stations reporting have not been registered in the wis2box. As a result, only one
     weather report has been converted two BUFR.
 
 !!! hint
     Take note of the relationship between the WIGOS Identifier and the traditional station 
     identifier included in the BUFR output. In many cases, for stations listed in WMO-No. 9
-    Volume A at the time of migrating to WIGOS identifiers, the WIGOS station
+    Volume A at the time of migrating to WIGOS station identifiers, the WIGOS station
     identifier is given by the traditional station identifier with ``0-20000-0`` prepended,
     e.g. ``15015`` has become ``0-20000-0-15015``.
 
-Using the station list page from the web app import the missing stations from OSCAR/Surface 
-into the WIS2box and repeat the exercise. Three BUFR files should be generated and there 
-should be no warnings or errors listed in the web app. In addition to the basic station
+Using the station list page from the web application import the missing stations from OSCAR/Surface 
+into the wis2box and repeat the exercise. Three BUFR files should be generated and there 
+should be no warnings or errors listed in the web application. In addition to the basic station
 information additional metadata such as the station elevation above sea level and the
 barometer height above sea level are required for encoding to BUFR. The fields are included
 in the station list and station editor pages.
@@ -168,10 +170,10 @@ In this final exercise you will identify and correct two of the most common prob
 using this tool to convert FM-12 SYNOP to BUFR. 
 
 Example data is shown in the box below, examine the data and try and resolve any issues that there 
-may be prior to submitting the data through the web app. 
+may be prior to submitting the data through the web application. 
 
 !!! hint
-    You can edit the data in the entry box on the web app page. If you miss any issues 
+    You can edit the data in the entry box on the web application page. If you miss any issues 
     these should be detected and highlighted as a warning or error once the submit button 
     has been clicked.
 
@@ -194,10 +196,10 @@ AAXX 21121
 
     The station 15090 should have been registered as part of the previous exercise. If not you will
     also receive a warning that the station can not be found.  If this is the case, register the
-    station in the WIS2box and repeat the exercise.
+    station in the wis2box and repeat the exercise.
 
 The second example below contains several common issue found in FM-12 SYNOP reports. Examine the
-data and try to identify the issues and then submit the corrected data through the web app.
+data and try to identify the issues and then submit the corrected data through the web application.
 
 ```{.copy}
 AAXX 21121
@@ -220,10 +222,10 @@ AAXX 21121
 
 
 ### Exercise 5 - command line tools
-In addition to the web app, the WIS2box management container includes command lines tools for working with BUFR.
+In addition to the web application, the wis2box management container includes command lines tools for working with BUFR.
 The first of these, `bufr_bump` from the ECMWF ecCodes software, allows the contents of a BUFR file to be decoded
 and inspected. In this exercise we will use this tool and the wis2box management container (on day 2 you should 
-have configured a WIS2box and have been able to log in).
+have configured a wis2box and have been able to log in).
 
 Before starting the exercise we need to transfer some data to the wis2box. Download one of the BUFR files
 you created in the previous exercise and transfer this to your wis2box using WinSCP (or file transfer tool
@@ -259,16 +261,16 @@ bufr_dump -p my_bufr.bufr4
 ```
 
 This will display BUFR content to your screen.  If you are interested in the values taken by a variable in 
-particular, use the `egrep` command:
+particular, use the `grep` command:
 
 ```bash
-bufr_dump -p my_bufr.bufr4 | egrep -i temperature
+bufr_dump -p my_bufr.bufr4 | grep -i temperature
 ```
 
 This will display variables related to temperature in your BUFR data. If you want to do this for multiple types of variables, filter the output using a pipe (`|`):
 
 ```bash
-bufr_dump -p my_bufr.bufr4 | egrep -i 'temperature|wind'
+bufr_dump -p my_bufr.bufr4 | grep -i 'temperature|wind'
 ```
 
 ## Housekeeping

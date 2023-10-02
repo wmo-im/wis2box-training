@@ -52,7 +52,6 @@ csv2bufr, version 0.7.4
 
 You are now ready to start using the BUFR tools.
 
-
 ## Using the BUFR command line tools
 
 ### Exercise 1 - bufr_ls
@@ -73,7 +72,7 @@ contents of the file. The following headers are included in a BUFR file:
 | Minute                            | typicalMinute (typicalTime)  | Most typical time for the BUFR message contents                                                                                                       |
 | BUFR descriptors                  | unexpandedDescriptors        | List of one, or more, BUFR descriptors defining the data contained in the file                                                                        |
 
-Download the example file from the link below and copy the file to your student VM: 
+Download the example file from the link below and copy the file to the wis2box management container: 
 
 Example file: [bufr-cli-ex1.bufr4](/sample-data/bufr-cli-ex1.bufr4)
 
@@ -92,15 +91,95 @@ bufr_ls bufr-cli-ex1.bufr4
 ```
 You should see the following output:
 
-Various options can be passed to `bufr_ls`, use `bufr_ls` without and arguments to view the options. Now run the same
-command to output the information in JSON.
+```
+>> bufr_ls bufr-cli-ex1.bufr4
+bufr-cli-ex1.bufr4
+centre                     masterTablesVersionNumber  localTablesVersionNumber   typicalDate                typicalTime                numberOfSubsets
+cnmc                       29                         0                          20231002                   000000                     1
+1 of 1 messages in bufr-cli-ex1.bufr4
+
+1 of 1 total messages in 1 files
+```
+
+On its own this information is not very informative, with only limited information on the file contents provided. 
+The default output does not provide information on the observation, or data, type and is in a format that is not
+very easy to read. However, various options can be passed to `bufr_ls` to change both the format and header fields 
+printed.  Use `bufr_ls` without any arguments to view the options:
+
+```{.copy}
+bufr_ls
+```
+
+You should see the following output:
+
+```
+NAME    bufr_ls
+
+DESCRIPTION
+        List content of BUFR files printing values of some header keys.
+        Only scalar keys can be printed.
+        It does not fail when a key is not found.
+
+USAGE
+        bufr_ls [options] bufr_file bufr_file ...
+
+OPTIONS
+        -p key[:{s|d|i}],key[:{s|d|i}],...
+                Declaration of keys to print.
+                For each key a string (key:s), a double (key:d) or an integer (key:i)
+                type can be requested. Default type is string.
+        -F format
+                C style format for floating-point values.
+        -P key[:{s|d|i}],key[:{s|d|i}],...
+                As -p adding the declared keys to the default list.
+        -w key[:{s|d|i}]{=|!=}value,key[:{s|d|i}]{=|!=}value,...
+                Where clause.
+                Messages are processed only if they match all the key/value constraints.
+                A valid constraint is of type key=value or key!=value.
+                For each key a string (key:s), a double (key:d) or an integer (key:i)
+                type can be specified. Default type is string.
+                In the value you can also use the forward-slash character '/' to specify an OR condition (i.e. a logical disjunction)
+                Note: only one -w clause is allowed.
+        -j      JSON output
+        -s key[:{s|d|i}]=value,key[:{s|d|i}]=value,...
+                Key/values to set.
+                For each key a string (key:s), a double (key:d) or an integer (key:i)
+                type can be defined. By default the native type is set.
+        -n namespace
+                All the keys belonging to the given namespace are printed.
+        -m      Mars keys are printed.
+        -V      Version.
+        -W width
+                Minimum width of each column in output. Default is 10.
+        -g      Copy GTS header.
+        -7      Does not fail when the message has wrong length
+
+SEE ALSO
+        Full documentation and examples at:
+        <https://confluence.ecmwf.int/display/ECC/bufr_ls>
+```
+
+Now run the same command on the example file but output the information in JSON.
 
 !!! question
     What flag do you pass to the `bufr_ls` command to view the output in JSON format?
 
 ??? success "Click to reveal answer"
     You can change the output format to json using the `-j` flag, i.e.
-    `bufr_ls -j <input-file>`. This can be more readable than the default output format.
+    `bufr_ls -j <input-file>`. This can be more readable than the default output format. See the example output below:
+
+    ```
+    { "messages" : [
+      {
+        "centre": "cnmc",
+        "masterTablesVersionNumber": 29,
+        "localTablesVersionNumber": 0,
+        "typicalDate": 20231002,
+        "typicalTime": "000000",
+        "numberOfSubsets": 1
+      }
+    ]}
+    ```
 
 When examining a BUFR file we often want to determine the type of data contained in the file and the typical date / time
 of the data in the file. This information can be listed using the `-p` flag to select the headers to output. Multiple
@@ -108,19 +187,60 @@ headers can be included using a comma separated list. Using the `bufr_ls` comman
 the type of data contained in the file and the typical date and time for that data.
 
 ??? hint
-    The ecCodes keys are given in the table above.
+    The ecCodes keys are given in the table above. We can use the following to list the dataCategory and
+    internationalDataSubCategory of the BUFR data:
+
+    ```
+    bufr_ls -p dataCategory,internationalDataSubCategory bufr-cli-ex1.bufr4
+    ```
+
+    Additional keys can be added as required.
 
 !!! question
     What type of data (date category and sub category) are contained in the file? What is the typical date and time
     for the data?
 
 ??? success "Click to reveal the answer"
-    answer to follow
+    The command you need to run should have been similar to:
+    
+    ```
+    bufr_ls -p dataCategory,internationalDataSubCategory,typicalDate,typicalTime -j bufr-cli-ex1.bufr4
+    ```
+
+    You may have additional keys, or listed the year, month, day etc individually. The output should
+    be similar to below, depending on whether you selected JSON or default output.
+
+    ```
+    { "messages" : [
+      {
+        "dataCategory": 2,
+        "internationalDataSubCategory": 4,
+        "typicalDate": 20231002,
+        "typicalTime": "000000"
+      }
+    ]}
+    ```
+
+    From this we see that:
+
+    - The data category is 2, from BUFR Table A we can see that this file contains 
+      "Vertical soundings (other than satellite)" data.
+    - The international sub category is 4, indicating 
+      "Upper-level temperature/humidity/wind reports from fixed-land stations (TEMP)" data.
+    - The typical date and time are 2023/10/02 and 00:00:00z respectively.
+
+    
 
 ### Exercise 2 - bufr_dump
 
 The `bufr_dump` command can be used to list and examine the contents of a BUFR file, including the data itself.
-Use the second file from the previous exercise and list the contents using:
+In this exercise we will use the BUFR file created from the first csv2bufr practical session. This can be downloaded 
+to the wis2box management container directly with the following command:
+
+``` {.copy}
+curl https://training.wis2box.wis.wmo.int/sample-data/bufr-cli-ex2.bufr4 --output bufr-cli-ex2.bufr4
+```
+
 
 ```{.copy}
 bufr_dump -p bufr-cli-ex1b.bufr4

@@ -85,19 +85,19 @@ station is a fictional station located on the island of Sicily in Italy. Navigat
 click add station and then search (leave the WIGOS Station Identifier box empty). Click create new station and
 enter the fictional station details, suggested details are below:
 
-| Field | Value |
-| ----- | ----- |
- | Station name | Monte Genuardo |
+| Field | Value           |
+| ----- |-----------------|
+ | Station name | Monte Genuardo  |
 | WIGOS station identifier | 0-20000-0-99100 |
-| Traditional identifier | 99100 |
-| Longitude | 12.12425 |
-| Latitude | 37.7 |
-| Station elevation | 552 |
-| Facility type | Land (fixed) |
-| Barometer height above sea level | 553 |
-| WMO Region | VI |
-| Territory or member operating the station | Italy |
-| Operating status | operational |
+| Traditional identifier | 99100           |
+| Longitude | 13.12425        |
+| Latitude | 37.7            |
+| Station elevation | 552             |
+| Facility type | Land (fixed)    |
+| Barometer height above sea level | 553             |
+| WMO Region | VI              |
+| Territory or member operating the station | Italy           |
+| Operating status | operational     |
 
 Select the appropriate topic, enter the ``collections/stations`` token previously created and click save. You are now
 ready to process data from this station. Navigate to CSV to BUFR submission page on the the wis2box web-application 
