@@ -39,9 +39,11 @@ However, to facilitate and make the use of this tool easier a standardised CSV f
 at data from AWS stations and in support of the GBON reporting requirements. The table below lists the parameters 
 included in the format:
 
-Table to follow
+{{ read_csv('docs/assets/tables/aws-minimal.csv') }}
 
-Download the example for this exercise from the link below:
+The full file can be downloaded from: [aws-full.csv](/assets/tables/aws.full.csv)
+
+Now download the example for this exercise from the link below:
 
 [csv2bufr-ex1.csv](/sample-data/csv2bufr-ex1.csv)
 
