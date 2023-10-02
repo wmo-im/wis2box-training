@@ -227,7 +227,11 @@ The first of these, `bufr_bump` from the ECMWF ecCodes software, allows the cont
 and inspected. In this exercise we will use this tool and the wis2box management container (on day 2 you should 
 have configured a wis2box and have been able to log in).
 
-Before starting the exercise we need to transfer some data to the wis2box. Download one of the BUFR files
+Before starting the exercise we need to transfer some data to the wis2box. 
+
+    
+
+Download one of the BUFR files
 you created in the previous exercise and transfer this to your wis2box using WinSCP (or file transfer tool
 of your choice). Files placed under the ``/home/wis2box-data`` path will be available on the wis2box under
 ``/data/wis2box``.
