@@ -21,7 +21,7 @@ Login to your student VM using your SSH-client.
 Copy the test discovery metadata into your own file (you may name the file whatever you wish):
 
 ```bash
-cd ~/wis2box-1.0b4/
+cd ~/wis2box-1.0b5/
 cp examples/config/surface-weather-observations.yml ~/wis2box-data/my-discovery-metadata.yml
 ```
 

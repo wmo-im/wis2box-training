@@ -23,6 +23,9 @@ Let's use the [pywis-pubsub](https://github.com/wmo-im/pywis-pubsub) to subscrib
 pywis-pubsub subscribe --help
 ```
 
+!!! note
+    pywis-pubsub is pre-installed on the local training environment, but can be installed from anywhere with `pip3 pywis-pubsub`
+
 Update the sample configuration (see the sections marked **TBD**) to connect to the Météo-France Global Broker:
 
 ```bash
@@ -72,6 +75,13 @@ pywis-pubsub subscribe -c ~/exercise-materials/pywis-pubsub-exercises/config.yml
 ## Finding data with pywiscat
 
 Let's use [pywiscat](https://github.com/wmo-im/pywiscat) to query the GDC
+
+```bash
+pywiscat wis2 search --help
+```
+
+!!! note
+    pywiscat is pre-installed on the local training environment, but can be installed from anywhere with `pip3 pywiscat`
 
 ```bash
 pywiscat wis2 search

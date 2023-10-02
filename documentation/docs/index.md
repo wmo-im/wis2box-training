@@ -83,6 +83,8 @@ Snippets which need to be typed in a on a terminal/console are indicated as:
 echo 'Hello world'
 ```
 
+Container names (running images) are denoted in **bold**.
+
 ## Training location and materials
 
 This training is always provided live at [https://training.wis2box.wis.wmo.int](https://training.wis2box.wis.wmo.int).

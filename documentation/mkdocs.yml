@@ -14,7 +14,7 @@ nav:
     - Practical sessions:
         - Connecting to WIS2 over MQTT: practical-sessions/connecting-to-mqtt.md
         - Accessing your student VM: practical-sessions/accessing-your-student-vm.md
-        - Initializing the wis2box: practical-sessions/wis2box-introduction.md
+        - Initializing wis2box: practical-sessions/initializing-wis2box.md
         - Creating WIS2 discovery metadata: practical-sessions/configuring-wis2-discovery-metadata.md
         - Creating wis2box station metadata: practical-sessions/configuring-station-metadata.md
         - Converting SYNOP data to BUFR: practical-sessions/converting-synop-data-to-bufr.md
@@ -22,7 +22,7 @@ nav:
         - BUFR command line tools: practical-sessions/bufr-cli.md
         - Automating data ingestion: practical-sessions/data-ingest-and-monitoring.md
         - Downloading and finding data from WIS2: practical-sessions/downloading-and-finding-data-from-wis2.md
-        - Querying data using the WIS2Box-api: practical-sessions/data-api-usage-and-queries.md
+        - Querying data using the wis2box API: practical-sessions/data-api-usage-and-queries.md
     - Cheatsheets:
         - Linux: cheatsheets/linux.md
         - Docker: cheatsheets/docker.md
