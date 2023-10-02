@@ -15,7 +15,7 @@ Login to you student VM using your SSH client.
 Make sure wis2box is up and running:
 
 ```bash
-cd ~/wis2box-1.0b4
+cd ~/wis2box-1.0b5/
 python3 wis2box-ctl.py start
 python3 wis2box-ctl.py status
 ```
@@ -110,10 +110,10 @@ Upload the file `WIGOS_0-454-2-AWSBILIRA_new.csv` to `wis2box-incoming/mwi/mwi_w
 
 To allow your data to be accessible over FTP you can use the **wis2box-ftp** container, which provides a service that forwards data received over FTP to MinIO.
 
-For the purpose of this training you can use your predefined configuration in `~/wis2box-1.0b4/ftp.env` to start your wis2box-ftp as follows:
+For the purpose of this training you can use your predefined configuration in `~/wis2box-1.0b5/ftp.env` to start your wis2box-ftp as follows:
 
 ```bash
-cd ~/wis2box-1.0b4/
+cd ~/wis2box-1.0b5/
 docker-compose -f docker-compose.wis2box-ftp.yml --env-file ftp.env up -d
 ```
 
@@ -148,7 +148,7 @@ Check your Grafana dashboard and MQTT Explorer to review the result of copying t
     You can view ftp-configuration in `ftp.env` from the command line:
 
     ```bash
-    cat ~/wis2box-1.0b4/ftp.env
+    cat ~/wis2box-1.0b5/ftp.env
     ```
 
     ```console
