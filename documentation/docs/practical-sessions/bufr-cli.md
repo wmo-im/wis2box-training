@@ -525,8 +525,15 @@ Once the containers have restarted log in to the management container and verify
 been updated:
 
 ``` {.copy}
-command to follow!
+ wis2box data ingest \
+    --topic-hierarchy <your-topic> \
+    --path $WIS2BOX_DATADIR/observations/<your-data>    
 ```
+
+## Housekeeping
+
+Clean up your working directory by removing files you no longer need and clean up your station list to remove any
+example stations you may have created and that are no longer needed.
 
 ## Conclusion
 

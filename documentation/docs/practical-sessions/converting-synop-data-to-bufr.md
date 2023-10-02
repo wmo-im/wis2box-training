@@ -30,9 +30,8 @@ as the relationship between the information contained in the FM-12 SYNOP reports
     - Ensure that your wis2box has been configured and started, including the setting execution tokens 
       for the ``processes/wis2box`` and ``collections/stations``paths. Confirm the status by visiting 
       the wis2box API (``http://<your-host-name>/oapi``) and verifying that the API is running.
-    - Ensure that you are able to transfer data to the **wis2box-management container using a file transfer
-      tool such as WinSCP. See the practical session on 
-      [accessing your student VM for more information](https://training.wis2box.wis.wmo.int/practical-sessions/accessing-your-student-vm).
+    - The tokens can be checked with ``wis2box auth has-access-path --path processes/wis2box <your-token>``
+      and ``wis2box auth has-access-path --path collections/stations <your-token>`` if configured properly.
     - For practical purposes the exercises in this session use data from Romania, import the 
       station ``0-20000-0-15015`` into your station list and associate it with the topic
       for your "Surface weather observations collection". This will be removed at the end of the session.
@@ -227,54 +226,49 @@ The first of these, `bufr_bump` from the ECMWF ecCodes software, allows the cont
 and inspected. In this exercise we will use this tool and the wis2box management container (on day 2 you should 
 have configured a wis2box and have been able to log in).
 
-Before starting the exercise we need to transfer some data to the wis2box. 
+Before starting the exercise we need to transfer some data to the wis2box, we will use the BUFR file created
+ in the first exercise. First log in to the wis2box management container: 
 
-    
+```{.copy}
+cd ~/wis2box
+python3 wis2box-ctl.py login
+```
 
-Download one of the BUFR files
-you created in the previous exercise and transfer this to your wis2box using WinSCP (or file transfer tool
-of your choice). Files placed under the ``/home/wis2box-data`` path will be available on the wis2box under
-``/data/wis2box``.
+Next create a directory to work from and transfer the sample data to that directory:
 
-!!! hint
-    Create a new directory, e.g. ``/home/wis2box-data/practicals/synop2bufr``, to transfer the files to rather 
-    than putting them directly in ``/home/wis2box-data/``.
-
-You are now ready to begin the exercise, start by logging in to the wis2box management container and navigate
-to the wis2box data directory:
-
-```bash
-cd /data/wis2box/praticals/synop2bufr
+```{.copy}
+cd /data/wis2box
+mkdir working
+cd working
+curl https://training.wis2box.wis.wmo.int/sample-data/bufr-cli-ex1.bufr4 --output synop2bufr-ex5.bufr4
 ```
 
 Confirm that ecCodes and bufr_dump are available, these will have been automatically installed as part of the
 wis2box configuration process.
-
 
 ```bash
 >> bufr_dump -V
 ecCodes Version 2.28.0
 ```    
 
-
 Now experiment using ``bufr_dump`` to decode and extract data from the file. Some examples are given below, you will
 need to update the filename to that of the file transferred to the wis2box.
 
 ```bash
-bufr_dump -p my_bufr.bufr4
+bufr_dump -p synop2bufr-ex5.bufr4
 ```
 
 This will display BUFR content to your screen.  If you are interested in the values taken by a variable in 
 particular, use the `grep` command:
 
 ```bash
-bufr_dump -p my_bufr.bufr4 | grep -i temperature
+bufr_dump -p synop2bufr-ex5.bufr4 | grep -i temperature
 ```
 
 This will display variables related to temperature in your BUFR data. If you want to do this for multiple types of variables, filter the output using a pipe (`|`):
 
 ```bash
-bufr_dump -p my_bufr.bufr4 | grep -i 'temperature|wind'
+bufr_dump -p synop2bufr-ex5.bufr4 | grep -i 'temperature|wind'
 ```
 
 ## Housekeeping
