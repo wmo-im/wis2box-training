@@ -4,251 +4,235 @@ title: Converting CSV data to BUFR
 
 # Converting CSV data to BUFR
 
+!!! abstract
+    By the end of this practical session you will have:
+
+    - learnt to format CSV data for use with the default automatic weather station BUFR template;
+    - learnt to use the wis2box web-application to validate and convert sample data;
+    - and learnt about some of the common issues that can occur, such as incorrect units.
+
 ## Introduction
 
-CSV data is a commonly used format for recording tabular data.  `csv2bufr` is a tool to help
-convert CSV to BUFR data.
-
-In this session you will learn to create BUFR data from CSV, using custom and flexible
-configuration (mappings) in support of meeting WMO GBON requirements.
+Comma-separated values (CSV) data files are often used for recording observational and other data in a tabular format. 
+Most data loggers used to record sensor output are able to export the observations in delimited files, including in CSV.
+Similarly, when data are ingested into a database it is easy to export the required data in CSV formatted files. 
+To aid the exchange of data originally stored in tabular data formats a CSV to BUFR converted has been implemented in 
+the wis2box using the same software as for SYNOP to BUFR. In this session you will learn about using this tool
+through the wis2box web-application. Command line usage and customisation will be covered in a later session.
 
 ## Preparation
-!!! warning
-    Ensure that you are logged into your student VM.
 
-Navigate to the `exercise-materials/csv2bufr-exercises` directory and make sure that the exercises directories are there.
-
-```bash
-cd ~/exercise-materials/csv2bufr-exercises
-ls
-```
-
-!!! tip
-    You should be able to see the following directories `answers  ex_1  ex_2  ex_3  ex_4  ex_5`
-
-
-## csv2bufr primer
-
-### Necessary CSV data
-
-There are some requirements on the data that must be present in the CSV file:
-
-- WIGOS Station Identifier, either in 1 column or split over 4 columns for each component as follows:
-- Observation year
-- Observation month
-- Observation day
-- Observation hour
-- Observation minute
-- Latitude
-- Longitude
-- Station height
-- Barometer height
-
-!!! note
-    Notice that the datetime of the observation is split into 5 different columns (from most to least significant).
-
-Below are essential `csv2bufr` commands and configurations:
-
-### mappings Create
-
-The `mappings create` command creates an empty BUFR mapping template JSON file, which maps CSV column headers to their corresponding ecCodes element:
-
-```bash
-csv2bufr mappings create <BUFR descriptors> --output <my_template.json>
-```
-
-For more information, see the following [example](https://csv2bufr.readthedocs.io/en/latest/example.html#creating-a-new-mapping-file).
-
-### data transform
-
-The `data transform` command converts a CSV file to BUFR format:
-
-```bash
-csv2bufr data transform --bufr-template <my_template.json> --output-dir <./my_directory> <my_data.csv>
-```
-
-!!! note
-    The output directory is not required, and by default is the current working directory.
-
-
-## ecCodes BUFR refresher
-
-### bufr_dump
-
-The `bufr_dump` function will allow you to inspect the BUFR files created from the conversion. It has numerous options, the following will be most applicable to the exercises:
-
-```bash
-bufr_dump -p <my_bufr.bufr4>
-```
-
-This will display the content of your BUFR on screen.  If you are interested in the values taken by a variable in particular, use the `egrep` command:
-
-```bash
-bufr_dump -p <my_bufr.bufr4> | egrep -i temperature
-```
-
-This will display the variables related to temperature in your BUFR data.  If you want to do this for multiple types of variables, filter the output using a pipe (`|`):
-
-```bash
-bufr_dump -p <my_bufr.bufr4> | egrep -i 'temperature|wind'
-```
+!!! warning "Prerequisites"
+    - Ensure that your wis2box has been configured and started, including the setting execution tokens 
+      for the ``processes/wis2box`` and ``collections/stations``paths. Confirm the status by visiting 
+      the wis2box API (``http://<your-host-name>/oapi``) and verifying that the API is running.
+    - The tokens can be checked by logging in to the wis2box management container and entering the 
+      command: ``wis2box auth has-access-path --path processes/wis2box <your-token>`` where 
+      ``<your-token>`` is the token you entered.
 
 ## Inspecting CSV data and BUFR conversion
 
-### Exercise 1: Converting a CSV file to BUFR
-In this exercise we will look at a pre-configured mapping file for the CSV data, and will use this to convert the data to BUFR.
+### Exercise 1 - the basics
 
-Navigate to the `ex_1` directory:
+The csv2bufr converter used in the wis2box can be configured to map between various tabulated input files, including CSV.
+However, to facilitate and make the use of this tool easier a standardised CSV format has been developed, targeted
+at data from AWS stations and in support of the GBON reporting requirements. The table below lists the parameters 
+included in the format:
 
-```bash
-cd ~/exercise-materials/csv2bufr-exercises/ex_1
-```
+Table to follow
 
-and open the CSV data `ex_1.csv`.
+Download the example for this exercise from the link below:
 
-1. How many header rows are there in this data?
-2. Which row contains the column names?
+[csv2bufr-ex1.csv](/sample-data/csv2bufr-ex1.csv)
 
-Now open the mappings file `mappings_1.json`.
+Inspect the expected columns from the table above and compare to the example data file.
 
-!!! note
+!!! question
+    Examining the date, time and identify fields (WIGOS and traditional identifiers) what do
+    you notice? How would today's date be represented?
 
-    csv2bufr mappings files have no set file extension, however it recommended to use `.json`.
+??? success "Click to reveal the answer"
+    Each column contains a single piece of information. For example the date is split into
+    year, month and day, mirroring how the data are stored in BUFR. Todays date would be 
+    split across the columns "year", "month" and "day". Similarly, the time needs to be
+    split into "hour" and "minute" and the WIGOS station identifier into its respective components.
 
-3. Verify that `"number_header_rows"` and `"column_names_row"` are the same as your answers above.
+!!! question
+    Looking at the data file how are missing data encoded?
+    
+??? success "Click to reveal the answer"
+    Missing data within the file are represented by empty cells. In a CSV file this would be
+    encoded by ``,,``. Note that this is an empty cell and not encoded as a zero length string, 
+    e.g. ``,"",``.
 
-4. Locate each of the CSV column names in this mappings file.
+!!! hint "Missing data"
+    It is recognised that data may be missing for a variety of reasons, whether due to sensor 
+    failure or the parameter not being observed. In these cases missing data can be encoded
+    as per the above answer, the other data in the report remain valid.
 
-5. By the `data transform` command, use the mappings file to convert this CSV data to BUFR.
+!!! bug "Station metadata"
+    The CSV to BUFR conversion tool has been developed as a standalone tool separate from the wis2box.
+    As such, all the data to be encoded in BUFR must be present in the CSV file, including the station metadata
+    like the location and sensor heights. In future versions the web-application will be updated to load the metadata
+    from the wis2box API and to insert the values into the CSV, similar to the process used in FM-12 SYNOP to BUFR.
 
-6. Use bufr_dump to find the latitude and longitude value stored in the output BUFR file. Verify these values using the CSV file.
 
-### Exercise 2: Correcting the datetime format
-In this exercise we will investigate the correct format to present the datetime of an observation in the CSV file.
+### Exercise 2 - converting your first message
 
-Navigate to the `ex_2` directory:
+Now that you have familiarised yourself with the input data file and specified CSV format you will convert this 
+example file to BUFR using the wis2box web-application. First we need to register the station in the wis2box, in this case the
+station is a fictional station located on the island of Sicily in Italy. Navigate to the station list page,
+click add station and then search (leave the WIGOS Station Identifier box empty). Click create new station and
+enter the fictional station details, suggested details are below:
 
-```bash
-cd ~/exercise-materials/csv2bufr-exercises/ex_2
-```
+| Field | Value |
+| ----- | ----- |
+ | Station name | Monte Genuardo |
+| WIGOS station identifier | 0-20000-0-99100 |
+| Traditional identifier | 99100 |
+| Longitude | 12.12425 |
+| Latitude | 37.7 |
+| Station elevation | 552 |
+| Facility type | Land (fixed) |
+| Barometer height above sea level | 553 |
+| WMO Region | VI |
+| Territory or member operating the station | Italy |
+| Operating status | operational |
 
-and open the CSV data `ex_2.csv`.
+Select the appropriate topic, enter the ``collections/stations`` token previously created and click save. You are now
+ready to process data from this station. Navigate to CSV to BUFR submission page on the the wis2box web-application 
+(``http://<your-host-name>/wis2box-webapp/csv2bufr_form``).
+Click the entry box or drag and drop the test file you have downloaded to the entry box. 
+You should now be able to click next to preview and validate the file.
 
-1. What are the differences in the way that the datetime is represented in this CSV file compared to the previous one?
+<center><img alt="Image showing CSV to BUFR upload screen" src="../../assets/img/csv2bufr-ex1.png"/></center>
 
-Now open the mappings file `mappings_2.json`. By looking at the eccodes keys related to dates and times, it should seem clear that it is not possible to map the datetime with the CSV in its current state.
+Clicking the next button loads the file into the browser and validates the contents against a predefined schema. 
+No data has yet been converted or published.  On the preview / validate tab you should be presented with a list of warnings 
+about missing data but in this exercise these can be ignored. 
 
-2. Create new columns in the CSV file for each component of the datetime: `Year`, `Month`, `Day`, `Hour`, `Minute`.
+<center><img alt="Image showing CSV to BUFR example validation page with warnings" src="../../assets/img/csv2bufr-warnings.png"/></center>
 
-3. By the `data transform` command, use the mappings file to convert this CSV data to BUFR.
+The next button will take you to the topic selection page,
+as with the FM-12 SYNOP to BUFR page select the topic configured for "surface weather observations" on your wis2box 
+and click next. You should now be on an authorisation page where you will be asked to enter the ``processes/wis2box`` 
+token you have previously created. Enter this token and click next. You should see the following screen:
 
-### Exercise 3: Handling changes to the CSV data
-In this exercise we consider the following scenario: given the same CSV data but with different column names, how can we adjust the mappings file to convert this data to BUFR? For simplicity, we will only look at one column name change.
+<center><img alt="Image showing CSV to BUFR example success screen" src="../../assets/img/csv2bufr-success.png"/></center>
 
-Navigate to the `ex_3` directory
+Clicking the down arrow tn the right of  ``Output BUFR files`` should reveal the ``Download`` and ``Inspect`` buttons.
+!!! success
+    Congratulations you have published you first csv data converted to BUFR via the wis2box.
 
-```bash
-cd ~/exercise-materials/csv2bufr-exercises/ex_3
-```
+!!! info
+    Whilst BUFR data has been published on the wis2box the global broker has not subscribed to your box and the
+    data remain local.
 
-1. By the `data transform` command, attempt to convert the CSV data to BUFR. What error appears?
+### Exercise 3 - debugging the input data
 
-Open the CSV data `ex_3.csv`.
+In this exercise we will examine what happens with invalid input data. Download the next example file by clicking the 
+link below. This contains the same data as the first file but with the columns containing missing data removed. 
+Follow the same process to convert the data to BUFR.
 
-2. What column name has been changed?
+[csv2bufr-ex3a.csv](/sample-data/csv2bufr-ex3a.csv)
 
-Open the mappings file `mappings_3.json`.
+!!! question
+    With the columns missing from the file were you able to convert the data to BUFR?
+    Did you notice anything different on the validation page?
 
-3. Find the original column name in this mapping file, and change it to the new name.
-4. By the `data transform` command, use the mappings file to convert this CSV data to BUFR.
-5. Use `bufr_dump` to verify that `relativeHumidity` has the same value as the CSV data.
+??? success "Click to reveal the answer"
+    You should have still been able to convert the data to BUFR but the warning messages will have been updated
+    to indicate that the columns were missing completely rather than containing a missing value.
 
-### Exercise 4: Unit conversion
-In this exercise, we expand on the work above by not only handling changes to column names, but also the units of the data. We achieve this by using `offset` and `scale` in the mappings file.
+In this next example an additional column has been added to the CSV file.
 
-Navigate to the `ex_4` directory:
+[csv2bufr-ex3b.csv](/sample-data/csv2bufr-ex3b.csv)
 
-```bash
-cd ~/exercise-materials/csv2bufr-exercises/ex_4
-```
+!!! question
+    Without uploading or submitting the file can you predict what will happen when you do?
 
-and open the CSV data `ex_4.csv`.
+??? success "Click to reveal the answer"
+    When the file is validated you should now receive a warning that the column ``index``
+    is not found in the schema and that the data will be skipped. You should be able to click
+    through and convert to BUFR as with the previous example.
 
-1. Which row are the units of the variables written?
+In the final example in the exercise the data has been modified. Examine the contents of the CSV file.
 
-You should notice that `BP` now has units hPa instead of Pa. Moreover, the air temperature and dewpoint temperature now have column names `AirTempC` and `DewPointTempC`, with units C instead of K.
+[csv2bufr-ex3c.csv](/sample-data/csv2bufr-ex3c.csv)
 
-2. What power of 10 is needed to convert hPa to Pa?
-3. What constant must be added to convert degrees C to K?
+!!! question
+    What has changed in the file and what do you think will happen?
 
-Open the mappings file `mappings_4.json`. Find the lines corresponding to the variables above.
+??? warning "Click to real the answer"
+    The pressure fields have been converted from Pa to hPa in the input data. However, the CSV to BUFR
+    converter expects the same units as BUFR (Pa) and, as a result, these fields fail the validation due to being
+    out of range. You should be able to edit the CSV to correct the issue and to resubmit the data by
+    returning to the first screen and re-uploading.
 
-4. Convert `BP` to Pa by adding the following line to the right of `"data:BP"`:
+!!! hint
+    The wis2box web-application can be used to test and validate sample data for the automated workflow. This will identify
+    some common issues, such as the incorrect units (hPa vs Pa and C vs K) and missing columns. Care should be taken 
+    that the units in the CSV data match those indicated above.
 
-    ```bash
-    "offset": "const:0", "scale": "const:x"
-    ```
+!!! bug
+    Please note, due to a bug in the current version of the web-application you may need to reload the page before resubmitting
+    the data.
 
-    where `x` is your answer in part 3.
+### Exercise 4 - potential web-application and API issues
 
-5. Change the column names of air temperature and dewpoint temperature in the mappings file to match that of the CSV file, as you did in the previous exercise.
+Before the web-application can be used to submit data the topic hierarchy, on which to publish, the authorisation
+token and the stations need to be configured. This can be demonstrated with several simple exercises.
 
-6. Convert `AirTempC` to K by adding the following line to the right of `"data:AirTempC"`:
+For the first example in this exercise download the example file via the link below and publish using the web-application.
 
-    ```bash
-    "offset": "const:y", "scale": "const:0"
-    ```
+[csv2bufr-ex4a.csv](/sample-data/csv2bufr-ex4a.csv)
 
-    where `y` is your answer in part 4.
+!!! question
+    What result do you receive on the "Review page"?
 
-7. Convert `DewPointTempC` to K by adding the following line to the right of `"data:DewPointTempC"`:
+??? success "Click to reveal the answer"
+    The second row in the file contains data from a station (again fictional) that has not been registered
+    in the wis2box. As a result a warning is given that the station has not been found and that the data
+    have not been published.
 
-    ```bash
-    "offset": "const:y", "scale": "const:0"
-    ```
+    <center><img alt="Image showing CSV to BUFR invalid WSi warning" src="../../assets/img/csv2bufr-skip-wsi.png"/></center>
 
-    where `y` is your answer in part 4.
+For the next  example, try submitting the data but without selecting a topic hierarchy on which to publish.
 
-8. By running the `csv2bufr data transform` command, use the mappings file to convert this CSV data to BUFR.
+[csv2bufr-ex4b.csv](/sample-data/csv2bufr-ex4b.csv)
 
-9. Use the `bufr_dump` command to verify that `nonCoordinatePressure`, `airTemperature` and `dewpointTemperature` have the values you would expect after conversion.
+!!! question
+    What happens when you try and click next?
 
-### Exercise 5: Implementing quality control
-In this exercise, we will implement some minimum and maximum tolerable values to prevent data of certain variables from being encoded into BUFR. To do this, we will use `valid_min` and `valid_max` in the mappings file.
+??? warning "Click to reveal the answer"
+    You should find the next button greyed out until a valid topic is selected. The options for the topic hierarchy
+    are set based on the discovery metadata registered within the box
 
-Navigate to the `ex_5` directory:
+For the final example, try entering a token that has not been registered and observe what happens when you click next.
 
-```bash
-cd ~/exercise-materials/csv2bufr-exercises/ex_5
-```
+!!! question
+    What do you expect will happen if you enter an invalid token?
 
-1. By running the `csv2bufr data transform` command, use the mappings file to convert this CSV data to BUFR. What error occurs? Is a BUFR file created?
+??? warning "Click to reveal the answer"
+    When you click next you should be taken to the Review page but receive a message that the token is invalid. 
+    Navigate to the previous step, enter a valid token and try again.
 
-2. Use the `bufr_dump` command to check the values of `pressureReducedToMeanSeaLevel`, `airTemperature` and `dewpointTemperature`. Which variables are missing, and why?
+## Housekeeping
 
-Open the mappings file `mappings_5.json`. Find the lines corresponding to the variables above. You will find the following on these lines:
-
-```bash
-"valid_min": "const:a", "valid_max": "const:b"
-```
-
-where `a` and `b` are values. These values represent the minimum and maximum tolerable extremes for encoding into BUFR. 
-
-3. Change `a` and `b` on each line to form a less tight range of tolerance for these variables.
-
-    !!! note
-    The valid minimum and maximum values should take the same units as the CSV data.
-
-4. By running the `csv2bufr data transform` command, use this mappings file to convert this CSV data to BUFR again. Do you notice any errors this time?
+As with the FM-12 SYNOP to BUFR exercise you will have registered some new stations within the wis2box. Navigate to the
+station list and delete those stations as they are no longer required.
 
 ## Conclusion
 
-!!! success "Congratulations!"
+!!! success "Congratulations"
+    In this practical session you have learned:
 
-    In this practical session, you learned:
+    - how to format a CSV file for use with wis2box web-application
+    - and how to validate a sample CSV file and to correct for common issues.  
 
-    - The basic usage of `csv2bufr`
-    - The required structure of CSV data for conversion to BUFR
-    - How to update a simple csv2bufr mapping file for a variety of scenarios, including for GBON requirements, unit conversion, and quality control/range checking
-    - How to use `csv2bufr` on a test data file and convert to BUFR format
-    - How to use `bufr_dump` to verify the values of BUFR encoded variables
+!!! info "Next steps"
+    The csv2bufr converter used in the wis2box has been designed to be configurable for use with any row based 
+    tabular data. The column names, delimiters, quotation style and limited quality control can all be configured
+    according to user needs. In this page only the basics have been covered, with a standardised CSV template
+    developed based on user feedback. Advanced configuration will be covered as part of the BUFR command line tools
+    session.

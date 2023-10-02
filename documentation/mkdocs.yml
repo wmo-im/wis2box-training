@@ -19,6 +19,7 @@ nav:
         - Creating wis2box station metadata: practical-sessions/configuring-station-metadata.md
         - Converting SYNOP data to BUFR: practical-sessions/converting-synop-data-to-bufr.md
         - Converting CSV data to BUFR: practical-sessions/converting-csv-data-to-bufr.md
+        - BUFR command line tools: practical-sessions/bufr-cli.md
         - Automating data ingestion: practical-sessions/data-ingest-and-monitoring.md
         - Downloading and finding data from WIS2: practical-sessions/downloading-and-finding-data-from-wis2.md
         - Querying data using the WIS2Box-api: practical-sessions/data-api-usage-and-queries.md
@@ -38,21 +39,24 @@ theme:
         scheme: default
     features:
         - navigation.indexes
+        - content.code.copy
     favicon: https://public.wmo.int/sites/all/themes/wmo/favicon.ico
     logo: assets/img/wmo-logo.png
 
 plugins:
     - search
+    - table-reader
     - print-site
 
 markdown_extensions:
-    - meta
     - admonition
+    - attr_list
+    - footnotes
+    - md_in_html
+    - meta
     - pymdownx.details
     - pymdownx.superfences
-    - footnotes
-    - attr_list
-    - md_in_html
+    - tables
 
 extra_css:
     - assets/css/custom.css
