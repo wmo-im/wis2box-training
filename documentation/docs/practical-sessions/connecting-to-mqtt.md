@@ -4,9 +4,13 @@ title: Connecting to WIS2 over MQTT
 
 # Connecting to WIS2 over MQTT
 
-!!! abstract
+!!! Learning outcomes
 
-    In this session you will practice connecting to the WIS2 Global Broker using MQTT Explorer.
+    By the end of this session, you will be able to:
+
+    - connect to the WIS2 Global Broker using MQTT Explorer
+    - review the WIS2 topic structure
+    - review the WIS2 notification message structure
 
 ## Introduction
 

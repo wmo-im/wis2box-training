@@ -4,9 +4,13 @@ title: Accessing your student VM
 
 # Accessing your student VM
 
-!!! abstract
+!!! abstract "Learning outcomes"
 
-    In this session you will practice accessing your student VM using SSH and WinSCP.
+    By the end of this session, you will be able to:
+
+    - access your student VM over SSH and WinSCP
+    - verify the required software for the practical exercises is installed
+    - verify you have access to exercise materials for this training on your local student VM
 
 ## Introduction
 
@@ -22,7 +26,7 @@ Your student VM has the following software pre-installed:
 
 !!! note
 
-    If you want to run this training outside of a local training session, you can provide your own instance using any Cloud Provider:
+    If you want to run this training outside of a local training session, you can provide your own instance using any Cloud Provider, for example:
 
     - GCP (Google Cloud Platform) VM instance `e2-medium`
     - AWS (Amazon Web Services)  ec2-instance `t3a.medium` 
@@ -39,11 +43,19 @@ Your student VM has the following software pre-installed:
     
     You can always find the latest 'wis2box-setup' archive at [https://github.com/wmo-im/wis2box/releases](https://github.com/wmo-im/wis2box/releases).
 
-    The exercise material as used in this training can be downloaded as follows:
+    The exercise material used in this training can be downloaded as follows:
 
     ```bash
     wget https://training.wis2box.wis.wmo.int/exercise-materials.zip
     unzip exercise-materials.zip
+    ```
+
+    The following additional python modules are required to run the exercise materials:
+
+    ```bash
+    pip3 install minio
+    pip3 install pywiscat
+    pip3 install pywis-pubsub
     ```
 
     If you are using the student VM provided during local WIS2 training sessions, the required software will already be installed.

@@ -4,13 +4,24 @@ title: Data ingest and monitoring
 
 # Data ingest and monitoring
 
+!!! abstract "Learning outcomes"
+
+    By the end of this session you will be able to:
+    
+    - trigger different wis2box data pipelines using different file types
+    - monitor the status of your data ingest and publishing
+
 ## Introduction
 
-In this session you will learn various ways to ingest data into your wis2box and learn how you can monitor if your data is being ingested without errors.
+The wis2box-management container listen to events from the MinIO storage service to trigger data ingestion based on the configuration of the data-mappings.yml. This allows you to upload data into MinIO and have wis2box automatically ingest and publish data in real-time.
+
+For the purpose of next few exercises we will use the MinIO admin interface to upload data into MinIO. 
+
+The same steps can be done programmatically by using any MinIO or S3 client software, allowing you to automate your data ingestion as part of your operational workflows.
 
 ## Preparation
 
-Login to you student VM using your SSH client.
+Login to you student VM using your SSH client (PuTTy or other).
 
 Make sure wis2box is up and running:
 
@@ -22,154 +33,196 @@ python3 wis2box-ctl.py status
 
 Make sure your have MQTT Explorer running and connected to your instance.
 
-### Open the Grafana dashboard
+Make sure you have a browser open with the Grafana dashboard for your instance by going to `http://<your-host>:3000`
 
-Open the Grafana dashboard home-page at `http://<your-host>:3000`
+<img alt="grafana-homepage" src="../../assets/img/grafana-homepage.png" width="800">
 
-<img alt="grafana-homepage" src="../../assets/img/grafana-homepage.png" width="600">
+And make sure you have a second tab open with the MinIO user interface at `http://<your-host>:9001`. Remember you need to login with the WIS2BOX_STORAGE_USER and WIS2BOX_STORAGE_PASSWORD defined in your `wis2box.env` file:
 
-!!! question
+<img alt="minio-second-tab" src="../../assets/img/minio-second-tab.png" width="800">
 
-    Are there any errors reported so far?
+## Ingesting CSV data
 
-    Have there been any WIS2 notifications published in the last 24 hours?
+First we will use a test sample in the CSV format using the aws-template. The data-mappings.yml on your wis2box are configured to use the plugin 'wis2box.data.csv2bufr.ObservationDataCSV2BUFR' for files with the extension '.csv':
 
-Keep a web browser tab open with the Grafana dashboard during the next few exercises to monitor the status of your data publishing.
-
-## Ingesting your data into wis2box
-
-You can use multiple methods to ingest data into wis2box and start publishing notifications to WIS2. 
-
-Previously you used the `wis2box data ingest` command from within the **wis2box-management** container, which requires the data to be available on the wis2box instance.
-
-Another method for manually ingesting data is to use the `MinIO` admin interface to upload a file into the `wis2box-incoming` bucket. 
-
-If your data-collection software supports sending data to an FTP endpoint you could use the optional **wis2box-ftp** container setup.
-
-You can also automate data ingest using a script to copy data into the `wis2box-incoming` bucket at regular intervals, for example using Python and the MinIO-client.
-
-### Download test data
-
-Click on the two links below and download two new data samples on your computer:
-
-<a href="../../sample-data/WIGOS_0-454-2-AWSBILIRA_new.csv">WIGOS_0-454-2-AWSBILIRA_new.csv</a>
-
-<a href="../../sample-data/WIGOS_0-454-2-AWSCHIKANGAWA_new.csv">WIGOS_0-454-2-AWSCHIKANGAWA_new.csv</a>
-
-### MinIO admin interface
-
-Open a new tab in your web browser and visit the page `http://<your-host>:9001`. You should see the login screen for MinIO. 
-You can login with username `minio` and password `minio123`:
-
-<img alt="minio-admin-buckets" src="../../assets/img/minio-login.png" width="600">
-
-You should be see the buckets 'wis2box-archive', 'wis2box-incoming', 'wis2box-public'.
-
-You can click 'browse' to view the contents of the buckets. 
-
-Navigate to the **wis2box-incoming** bucket:
-
-<img alt="minio-admin-buckets" src="../../assets/img/minio-admin-buckets.png" width="600">
-
-Click the **Create new path** button and create the new folder path: `/test/data/`.
-
-<img alt="minio-admin-create-new-path" src="../../assets/img/minio-admin-create-new-path.png" width="600">
-
-And then upload the file `WIGOS_0-454-2-AWSBILIRA_new.csv` into the folder `wis2box-incoming/test/data`.
-
-!!! question "View the Grafana dashboard"
-    Go back to the Grafana dashboard on your instance at port 3000.
-
-    You should see the following error:
-
-    <img alt="grafana_error" src="../../assets/img/grafana_error.png" width="600">
-
-Navigate the directory structure until you are in the folder `wis2box-incoming/mwi/mwi_wmo_demo/data/core/weather/surface-based-observations/synop`
-
-Upload the file `WIGOS_0-454-2-AWSBILIRA_new.csv` to `wis2box-incoming/mwi/mwi_wmo_demo/data/core/weather/surface-based-observations/synop`
-
-!!! question "View the Grafana dashboard"
-    Check the Grafana dashboard; can you confirm the wis2box workflow was initiated after you uploaded your data?
-
-!!! question "View new messages on your wis2box-broker"
-    Check MQTT Explorer, can you confirm that new messages were successfully published on your wis2box broker?
-
-!!! note
-
-    The wis2box interprets the folder-structure in the `wis2box-incoming` bucket as the corresponding topic-hierarchy for the file.
-    
-    `mwi.mwi_wmo_demo.data.core.weather.surface-based-observations.synop`
-    
-    corresponds to the path:
-    
-    `mwi/mwi_wmo_demo/data/core/weather/surface-based-observations/synop`
-
-    If there are no data-mappings defined for the topic-hierarchy corresponding to the directory that received data, wis2box will not initiate the workflow.
-
-### wis2box FTP
-
-To allow your data to be accessible over FTP you can use the **wis2box-ftp** container, which provides a service that forwards data received over FTP to MinIO.
-
-For the purpose of this training you can use your predefined configuration in `~/wis2box-1.0b5/ftp.env` to start your wis2box-ftp as follows:
-
-```bash
-cd ~/wis2box-1.0b5/
-docker-compose -f docker-compose.wis2box-ftp.yml --env-file ftp.env up -d
+```{.copy}
+            csv:
+                - plugin: wis2box.data.csv2bufr.ObservationDataCSV2BUFR
+                  template: aws-template
+                  notify: true
+                  buckets:
+                    - ${WIS2BOX_STORAGE_INCOMING}
+                  file-pattern: '^.*\.csv$'
 ```
 
-To test the FTP service, you can use WinSCP on your local laptop and prepare the connection to the **wis2box-ftp** container as follows (password=`wis2box`)
+Download the following sample data files to your local machine:
 
-<img alt="winscp-new-session" src="../../assets/img/winscp-new-session.png" width="400">
+[aws-example.csv](/sample-data/aws-example.csv)
 
-Once you have established the connection you will land in an empty directory. 
+Now go back to MinIO in your browser and navigate to the 'wis2box-incoming' bucket and click 'create new path' to create the following directory:
 
-Select the option to create a 'new directory':
+`xyz/test/data/core/weather/surface-based-observations/synop`
 
-<img alt="winscp-empty" src="../../assets/img/winscp-empty.png" width="500">
+<img alt="minio-admin-create-new-path" src="../../assets/img/minio-admin-create-new-path.png" width="800">
 
-Create the directory `mwi/mwi_wmo_demo/data/core/weather/surface-based-observations/synop`
+Upload the file `aws-example.csv` to the directory you just created:
 
-Enter the new directory you created and you can copy the file `WIGOS_0-454-2-AWSCHIKANGAWA_new.csv` from your host machine on the wis2box-ftp:
+<img alt="minio-admin-uploaded-file" src="../../assets/img/minio-admin-uploaded-file.png" width="800">
 
-<img alt="winscp-after-file-upload" src="../../assets/img/winscp-after-file-upload.png" width="600">
+!!! question "Exercise 1: check for errors"
+    Do you see any errors reported on the Grafana dashboard?
 
-Check your Grafana dashboard and MQTT Explorer to review the result of copying the file in the wis2box-ftp.
+??? success "Click to reveal answer"
+    The 'wis2box ERRORs' displayed at the bottom of the Grafana home dashboard should report the following error:    
+    
+    * ERROR - handle() error: Topic Hierarchy validation error: No plugins for http://minio:9000/wis2box-incoming/xyz/test/data/core/weather/surface-based-observations/synop/aws-example.csv in data mappings. Did not match any of the following: ...
 
-!!! Question
+    The 'data'-definition in the data-mappings.yml uses . instead of / to separate the path elements.
 
-    Did you manage to successfully publish WIS2 notifications for your new data?
+    If there are no data-mappings defined for to the directory that received the data, wis2box will not initiate the workflow.
 
-    If not, review the errors reported and try to determine what went wrong.
+!!! question "Exercise 2: correct your input path and repeat the data ingest"
 
-!!! Note
-    You can run `docker logs wis2box-ftp` to check if the FTP service is running correctly.
+    Go back to MinIO and to the root of the 'wis2box-incoming' bucket. Then click 'create new path' and define the correct path for wis2box. For example if your country-code is 'idn' and your center-id is 'bmkg', you should create the following path:
 
-!!! Note
-    You can view ftp-configuration in `ftp.env` from the command line:
+    * idn/bmkg/data/core/weather/surface-based-observations/synop
+    
+    Now upload the sample data file 'aws-example.csv' to the new path. Do you see any errors reported on the Grafana dashboard?
 
-    ```bash
-    cat ~/wis2box-1.0b5/ftp.env
+??? success "Click to reveal answer"
+    The Grafana dashboard should report the following errors:
+
+    * ... {/app/wis2box/data/csv2bufr.py:98} ERROR - Station 0-20000-0-60360 not in station list; skipping
+    * ... {/app/wis2box/data/csv2bufr.py:98} ERROR - Station 0-20000-0-60355 not in station list; skipping
+	* ... {/app/wis2box/data/csv2bufr.py:98} ERROR - Station 0-20000-0-60351 not in station list; skipping
+
+    As the stations in the test-data are not defined in your wis2box metadata, the data ingest workflow will not be triggered.
+
+    If instead you again see the error 'Topic Hierarchy validation error: No plugins for ... in data mappings', check that you have defined the correct path in MinIO and repeat the data ingest.
+
+!!! question "Exercise 3: add the test stations and repeat the data ingest"
+
+    Add the following stations to your wis2box using the station-editor in wis2box-webapp:
+
+    - 0-20000-0-60351
+    - 0-20000-0-60355
+    - 0-20000-0-60360
+
+    Now re-upload the sample data file 'aws-example.csv' to the same path in MinIO you used in the previous exercise.
+
+    Check the Grafana dashboard, are there any new errors ? How can you see that the test-data was successfully ingested and published ?
+
+??? success "Click to reveal answer"
+
+    If you were subscribed with MQTT Explorer to your wis2box-broker, you should have received notifications for the test-data when the data was successfully published.
+
+    You can also check the charts on the Grafana home dashboard to see if the test-data was successfully ingested and published.
+
+    <img alt="grafana_success" src="../../assets/img/grafana_success.png" width="800">
+
+    The chart "Number of WIS2.0 notifications published by wis2box" indicates that notifications were successfully published on the MQTT broker in wis2box.
+
+## Ingesting binary data
+
+wis2box can ingest binary data in BUFR format using the 'ObservationDataBUFR' plugin included in wis2box.
+
+You can verify that the plugin is configured in your wis2box by checking the contents of your data-mappings.yml from the SSH command-line: 
+
+```bash
+cat ~/wis2box-data/data-mappings.yml
+```
+
+And you should see it contains an entry that specifies that files with the extension '.bin' should be processed by the 'ObservationDataBUFR' plugin:
+
+```{.copy}
+            bin:
+                - plugin: wis2box.data.bufr4.ObservationDataBUFR
+                  notify: true
+                  buckets:
+                    - ${WIS2BOX_STORAGE_INCOMING}
+                  file-pattern: '^.*\.bin$'
+```
+
+This plugin will split the BUFR file into individual BUFR messages and publish each message to the MQTT broker. If the station for the corresponding BUFR message is not defined in the wis2box metadata, the message will not be published.
+
+Please download the following sample data file to your local machine:
+
+[bufr-example.bin](/sample-data/bufr-example.bin)
+
+!!! question "Exercise 4: ingest binary data in BUFR format"
+
+    Upload the sample data file 'bufr-example.bin' to the same path in MinIO you used in the previous exercise:
+
+    <img alt="minio-admin-uploaded-bufr-file" src="../../assets/img/minio-admin-uploaded-bufr-file.png" width="800">
+
+    Check the Grafana dashboard and MQTT Explorer to see if the test-data was successfully ingested and published.
+
+    How many messages were published to the MQTT broker for this data sample?
+
+??? success "Click to reveal answer"
+
+    If you successfully ingested and published the last data sample, you should have received 10 new notifications on the wis2box MQTT broker. Each notification correspond to data for one station for one observation timestamp.
+
+## Ingesting SYNOP data in ASCII format
+
+In the previous session we used the SYNOP form in the wis2box-webapp to ingest SYNOP data in ASCII format. You can also ingest SYNOP data in ASCII format by uploading the data into MinIO. The data-mappings.yml on your wis2box are configured to use the plugin 'wis2box.data.synop2bufr.ObservationDataSYNOP2BUFR' for files with the extension '.txt':
+
+```{.copy}
+            txt:
+                - plugin: wis2box.data.synop2bufr.ObservationDataSYNOP2BUFR
+                  notify: true
+                  buckets:
+                    - ${WIS2BOX_STORAGE_INCOMING}
+                  file-pattern: '^.*-(\d{4})(\d{2}).*\.txt$'
+```
+
+Download the following two sample data files to your local machine:
+
+[synop-202307.txt](/sample-data/synop-202307.txt)
+
+[synop-202308.txt](/sample-data/synop-202308.txt)
+
+(click 'save as' in your browser to download the files)
+
+Note that the 2 files contain the same content, but the file name is different. The file name is used to determine the date of the data sample.
+
+The file-pattern in the data-mappings.yml specifies that the regular expression '^.*-(\d{4})(\d{2}).*\.txt$' that is used to extract the date from the file name. The first group in the regular expression is used to extract the year and the second group is used to extract the month.
+
+!!! question "Exercise 5: ingest SYNOP data in ASCII format"
+
+    Go back to the MinIO interface in your browse and navigate to the 'wis2box-incoming' bucket and into the path where you uploaded the test-data in the previous exercise.
+    
+    Upload the new files in the correct path in the "wis2box-incoming" bucket in MinIO to trigger the data ingest workflow.
+
+    Check the Grafana dashboard and MQTT Explorer to see if the test-data was successfully ingested and published.
+
+    What is the difference in the "datetime" between the two messages published to the MQTT broker?
+
+??? success "Click to reveal answer"
+
+    Check the properties of the last 2 notifications in MQTT explorer and you will note that one notification has:
+
+    ```{.copy}
+    "properties": {
+        "data_id": "wis2/rou/test/data/core/weather/surface-based-observations/synop/WIGOS_0-20000-0-60355_20230703T090000",
+        "datetime": "2023-07-03T09:00:00Z",
+        ...
     ```
 
-    ```console
-    FTP_USER=wis2box
-    FTP_PASS=wis2box
-    FTP_HOST=testuser.wis2.training
-    WIS2BOX_STORAGE_ENDPOINT=http://testuser.wis2.training:9000
-    WIS2BOX_STORAGE_USER=minio
-    WIS2BOX_STORAGE_PASSWORD=minio123
-    LOGGING_LEVEL=WARNING
+    and the other notification has:
+
+    ```{.copy}
+    "properties": {
+        "data_id": "wis2/rou/test/data/core/weather/surface-based-observations/synop/WIGOS_0-20000-0-60355_20230803T090000",
+        "datetime": "2023-08-03T09:00:00Z",
+        ...
     ```
 
-    To change the username/password for the wis2box FTP service, edit the file `ftp.env` and update `FTP_USER` and `FTP_PASS`.
+    The filename was used to determine the year and month of the data sample.
 
-    If you you update your storage credentials from the default `minio`/`minio123`, you will also need to update the values in `ftp.env`.
+## MinIO Python client (optional)
 
-    See [wis2box-ftp documentation](https://docs.wis2box.wis.wmo.int/en/latest/user/data-ingest.html#wis2box-ftp) for more information on how to use the wis2box-ftp service.
-
-### MinIO Python client (optional exercise)
-
-You may want to automate data ingest from your system into wis2box using Python tools.
+In this exercise we will use the MinIO Python client to copy data into MinIO.
 
 MinIO provides a Python client which can be installed as follows:
 
@@ -202,7 +255,19 @@ The sample script provides the basic structure for copying a file into MinIO. Tr
     - define the correct path in MinIO for the topics defined in your `data-mappings.yml`
     - determine the correct local path where the script can access the data to ingest
 
-    Ensure that the script runs correctly and new data notifications are published on your wis2box broker. Review and correct any errors reported on the Grafana dashboard:
+You can verify that the data was uploaded correctly by checking the MinIO user interface and seeing if the sample data is available in the correct directory in the "wis2box-incoming" bucket.
+
+To check the data ingest status, you can use the Grafana dashboard to check the status of the data ingest workflow.
+
+Finally you can use MQTT Explorer to check if the data was published to the MQTT broker.
+
+## Cleaning up
+
+You can now delete the following stations you have created in your wis2box using the station-editor in wis2box-webapp:
+
+- 0-20000-0-60351
+- 0-20000-0-60355
+- 0-20000-0-60360
 
 ## Conclusion
 
