@@ -4,7 +4,7 @@ title: Data ingest and monitoring
 
 # Data ingest and monitoring
 
-!!! Learning outcomes
+!!! abstract "Learning outcomes"
 
     By the end of this session you will be able to:
     
@@ -57,7 +57,7 @@ First we will use a test sample in the CSV format using the aws-template. The da
 
 Download the following sample data files to your local machine:
 
-<a href="../../sample-data/aws-example.csv">aws-example.csv</a>
+[aws-example.csv](/sample-data/aws-example.csv)
 
 Now go back to MinIO in your browser and navigate to the 'wis2box-incoming' bucket and click 'create new path' to create the following directory:
 
@@ -72,7 +72,7 @@ Upload the file `aws-example.csv` to the directory you just created:
 !!! question "Exercise 1: check for errors"
     Do you see any errors reported on the Grafana dashboard?
 
-??? note "Click to revel answer"
+??? success "Click to reveal answer"
     The 'wis2box ERRORs' displayed at the bottom of the Grafana home dashboard should report the following error:    
     
     * ERROR - handle() error: Topic Hierarchy validation error: No plugins for http://minio:9000/wis2box-incoming/xyz/test/data/core/weather/surface-based-observations/synop/aws-example.csv in data mappings. Did not match any of the following: ...
@@ -89,7 +89,7 @@ Upload the file `aws-example.csv` to the directory you just created:
     
     Now upload the sample data file 'aws-example.csv' to the new path. Do you see any errors reported on the Grafana dashboard?
 
-??? note "Click to revel answer"
+??? success "Click to reveal answer"
     The Grafana dashboard should report the following errors:
 
     * ... {/app/wis2box/data/csv2bufr.py:98} ERROR - Station 0-20000-0-60360 not in station list; skipping
@@ -112,7 +112,7 @@ Upload the file `aws-example.csv` to the directory you just created:
 
     Check the Grafana dashboard, are there any new errors ? How can you see that the test-data was successfully ingested and published ?
 
-??? note "Click to revel answer"
+??? success "Click to reveal answer"
 
     If you were subscribed with MQTT Explorer to your wis2box-broker, you should have received notifications for the test-data when the data was successfully published.
 
@@ -147,7 +147,7 @@ This plugin will split the BUFR file into individual BUFR messages and publish e
 
 Please download the following sample data file to your local machine:
 
-<a href="../../sample-data/bufr-example.bin">bufr-example.bin</a>
+[bufr-example.bin](/sample-data/bufr-example.bin)
 
 !!! question "Exercise 4: ingest binary data in BUFR format"
 
@@ -159,7 +159,7 @@ Please download the following sample data file to your local machine:
 
     How many messages were published to the MQTT broker for this data sample?
 
-??? note "Click to reveal answer"
+??? success "Click to reveal answer"
 
     If you successfully ingested and published the last data sample, you should have received 10 new notifications on the wis2box MQTT broker. Each notification correspond to data for one station for one observation timestamp.
 
@@ -178,9 +178,9 @@ In the previous session we used the SYNOP form in the wis2box-webapp to ingest S
 
 Download the following two sample data files to your local machine:
 
-<a href="../../sample-data/synop-202307.txt">synop-202307.txt</a>
+[synop-202307.txt](/sample-data/synop-202307.txt)
 
-<a href="../../sample-data/synop-202308.txt">synop-202308.txt</a>
+[synop-202308.txt](/sample-data/synop-202308.txt)
 
 (click 'save as' in your browser to download the files)
 
@@ -198,7 +198,7 @@ The file-pattern in the data-mappings.yml specifies that the regular expression 
 
     What is the difference in the "datetime" between the two messages published to the MQTT broker?
 
-??? note "Click to reveal answer"
+??? success "Click to reveal answer"
 
     Check the properties of the last 2 notifications in MQTT explorer and you will note that one notification has:
 

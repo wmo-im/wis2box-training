@@ -188,7 +188,7 @@ This is the wis2box API (running via the **wis2box-api** container).
      
      What collections are currently available?
 
-??? note "Click to reveal answer"
+??? success "Click to reveal answer"
     
     To view collections currently available through the API, click `View the collections in this service`:
 
@@ -204,7 +204,7 @@ This is the wis2box API (running via the **wis2box-api** container).
 
     How many data notifications have been published?
 
-??? note "Click to reveal answer"
+??? success "Click to reveal answer"
 
     Click on "Data notifications", then click on `Browse through the items of "Data Notifications"`. 
     

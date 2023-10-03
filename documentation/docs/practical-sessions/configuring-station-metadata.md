@@ -4,7 +4,7 @@ title: Configuring station metadata
 
 # Configuring station metadata
 
-!!! Learning outcomes
+!!! abstract "Learning outcomes"
 
     By the end of this session, you will be able to:
 

@@ -4,7 +4,7 @@ title: Accessing your student VM
 
 # Accessing your student VM
 
-!!! Learning outcomes
+!!! abstract "Learning outcomes"
 
     By the end of this session, you will be able to:
 
