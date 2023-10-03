@@ -4,9 +4,14 @@ title: Configuring station metadata
 
 # Configuring station metadata
 
-!!! abstract
+!!! Learning outcomes
 
-    In this session you will practice configuring station metadata for your dataset.
+    By the end of this session, you will be able to:
+
+    - create an authorization token for the `collections/stations` endpoint
+    - add station metadata to wis2box
+    - review stations associated to datasets in the **wis2box-ui**
+    - update/delete station metadata using the **wis2box-webapp**
 
 ## Introduction
 
