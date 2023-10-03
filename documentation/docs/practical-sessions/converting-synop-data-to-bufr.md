@@ -44,7 +44,7 @@ as the relationship between the information contained in the FM-12 SYNOP reports
     - For practical purposes the exercises in this session use data from Romania, import the 
       station ``0-20000-0-15015`` into your station list and associate it with the topic
       for your "Surface weather observations collection". This will be removed at the end of the session.
-    - Make sure that you have MQTT explorer open and connected to your broker.
+    - Make sure that you have MQTT Explorer open and connected to your broker.
 
 
 ## Inspecting SYNOP data and BUFR conversion
@@ -111,8 +111,8 @@ is registered in the wis2box you are ready to convert the data to BUFR.
 Open the wis2box web application and navigate to the synop2bufr page using the left navigation drawer. 
 Select the date using the date picker and copy and paste the FM-12 SYNOP message into the text 
 entry box. Assume today's date for demonstration purposes. Once the message has been copied, select 
-the appropriate topic to publish the data on, enter the "processes/wis2box" token and make sure the "publish to WIS2" 
-has been selected. 
+the appropriate topic to publish the data on, enter the "processes/wis2box" token and click the "Publish on WIS2" 
+toggle to ensure "Publish to WIS2" is selected. 
 
 <center><img alt="Dialog showing synop2bufr page, including toggle button" src="../../assets/img/synop2bufr-toggle.png"></center>
 
@@ -150,7 +150,7 @@ As a final step navigate to the monitoring page from the left menu and confirm t
 <center><img alt="Image showing monitoring page and published data" src="../../assets/img/synop2bufr-monitoring.png"/></center>
 <center><caption>Screenshot showing the monitoring dashboard and the item published in this exercise</caption></center>
 
-You should also be able to see these notifications in MQTT explorer.
+You should also be able to see these notifications in MQTT Explorer.
 
 ### Exercise 3 - understanding the station list
 

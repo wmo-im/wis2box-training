@@ -37,7 +37,7 @@ through the wis2box web-application. Command line usage and customisation will b
         ```
       where token is the value of the token. This can be left blank to automatically generate
       a random token (recommended).
-    - Make sure that you have MQTT explorer open and connected to your broker.
+    - Make sure that you have MQTT Explorer open and connected to your broker.
     
 
 ## Inspecting CSV data and BUFR conversion
@@ -131,7 +131,8 @@ about missing data but in this exercise these can be ignored.
 The next button will take you to the topic selection page,
 as with the FM-12 SYNOP to BUFR page select the topic configured for "surface weather observations" on your wis2box 
 and click next. You should now be on an authorisation page where you will be asked to enter the ``processes/wis2box`` 
-token you have previously created. Enter this token and click the "Publish on WIS2" toggle (see screenshot below).
+token you have previously created. Enter this token and click the "Publish on WIS2" toggle to ensure 
+"Publish to WIS2" is selected (see screenshot below).
 
 <center><img alt="csv2bufr auth and publish screen" src="../../assets/img/csv2bufr-toggle-publish.png"/></center>
 
@@ -156,7 +157,7 @@ you have just published (and possibly notifications from the synop2bufr session)
 !!! success
     Congratulations you have published you first csv data converted to BUFR via the wis2box.
 
-You should also be able to see these notifications in MQTT explorer.
+You should also be able to see these notifications in MQTT Explorer.
 
 
 ### Exercise 3 - debugging the input data

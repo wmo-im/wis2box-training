@@ -27,7 +27,7 @@ the ecCodes software package and advanced configuration of the csv2bufr tool.
 
 In order to use the BUFR command line tools you will need to be logged in to the wis2box management container
 and unless specified otherwise all commands should be run on this container. You will also need to have
-MQTT explorer open and connected to your broker.
+MQTT Explorer open and connected to your broker.
 
 First connect to your student VM via your ssh client and then log in the to management container: 
 
@@ -563,7 +563,7 @@ Once the containers have restarted log in to the management container and verify
 been updated:
 
 !!! hint
-    Before entering the last command make sure you are listening to your broker with MQTT explorer. You should see
+    Before entering the last command make sure you are listening to your broker with MQTT Explorer. You should see
     the notification being sent for the data you have just ingested.
 
 ``` {.copy}
@@ -581,7 +581,7 @@ that the originating center has been updated.
     The file URL to download is given by the "href" property in the canonical link. See the screenshot below (you may 
     need to right click and open the image in a new tab to view the details).
     
-    <center><img alt="Image showing notification in MQTT explorer, with href highlighted" 
+    <center><img alt="Image showing notification in MQTT Explorer, with href highlighted" 
     src="../../assets/img/bufr-cli-mqtt-ex.png"/></center>
 
 ## Housekeeping
