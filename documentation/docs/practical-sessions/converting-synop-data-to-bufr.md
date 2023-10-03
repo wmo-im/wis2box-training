@@ -258,7 +258,7 @@ python3 wis2box-ctl.py login
 Next create a directory to work from and transfer the sample data to that directory:
 
 ```{.copy}
-cd ~
+cd /data/wis2box
 mkdir working working/synop2bufr
 cd working/synop2bufr
 curl https://training.wis2box.wis.wmo.int/sample-data/bufr-cli-ex1.bufr4 --output synop2bufr-ex5.bufr4
