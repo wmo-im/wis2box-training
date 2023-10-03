@@ -1,8 +1,8 @@
 ---
-title: Data API usage and queries
+title: Querying data using the wis2box API
 ---
 
-# Data API usage and queries
+# Querying data using the wis2box API
 
 ## Introduction
 
