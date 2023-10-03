@@ -37,6 +37,7 @@ through the wis2box web-application. Command line usage and customisation will b
         ```
       where token is the value of the token. This can be left blank to automatically generate
       a random token (recommended).
+    - Make sure that you have MQTT explorer open and connected to your broker.
     
 
 ## Inspecting CSV data and BUFR conversion
@@ -155,9 +156,8 @@ you have just published (and possibly notifications from the synop2bufr session)
 !!! success
     Congratulations you have published you first csv data converted to BUFR via the wis2box.
 
-!!! info
-    Whilst BUFR data has been published on the wis2box the global broker has not subscribed to your box and the
-    data remain local.
+You should also be able to see these notifications in MQTT explorer.
+
 
 ### Exercise 3 - debugging the input data
 

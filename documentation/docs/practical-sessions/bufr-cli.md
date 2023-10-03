@@ -26,7 +26,9 @@ the ecCodes software package and advanced configuration of the csv2bufr tool.
 ## Preparation
 
 In order to use the BUFR command line tools you will need to be logged in to the wis2box management container
-and unless specified otherwise all commands should be run on this container. 
+and unless specified otherwise all commands should be run on this container. You will also need to have
+MQTT explorer open and connected to your broker.
+
 First connect to your student VM via your ssh client and then log in the to management container: 
 
 ```{.copy}
@@ -57,19 +59,20 @@ You should get the following response:
 csv2bufr, version 0.7.4
 ```
 
-Finally, creating a working directory to work in:
+Finally, create a working directory to work in:
 
 ```{.copy}
 cd /data/wis2box
 mkdir working working/bufr-cli
 cd working/bufr-cli
 ```
-!!! warning
+??? warning
     Note that the working directory may exist from the synop2bufr session. If this is the case
     you will get a warning message that the "working" already exists ("File exists") and cannot be created.
     Ignore this message but verify the bufr-cli directory has been created.
 
 You are now ready to start using the BUFR tools.
+
 
 ## Using the BUFR command line tools
 
@@ -574,6 +577,12 @@ wis2box data ingest \
 Download the data from the notification and inspect the contents using ``bufr_ls`` and confirm
 that the originating center has been updated.
 
+!!! hint
+    The file URL to download is given by the "href" property in the canonical link. See the screenshot below (you may 
+    need to right click and open the image in a new tab to view the details).
+    
+    <center><img alt="Image showing notification in MQTT explorer, with href highlighted" 
+    src="../../assets/img/bufr-cli-mqtt-ex.png"/></center>
 
 ## Housekeeping
 

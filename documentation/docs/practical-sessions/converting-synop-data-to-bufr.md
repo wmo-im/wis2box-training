@@ -44,6 +44,7 @@ as the relationship between the information contained in the FM-12 SYNOP reports
     - For practical purposes the exercises in this session use data from Romania, import the 
       station ``0-20000-0-15015`` into your station list and associate it with the topic
       for your "Surface weather observations collection". This will be removed at the end of the session.
+    - Make sure that you have MQTT explorer open and connected to your broker.
 
 
 ## Inspecting SYNOP data and BUFR conversion
@@ -148,6 +149,8 @@ As a final step navigate to the monitoring page from the left menu and confirm t
 
 <center><img alt="Image showing monitoring page and published data" src="../../assets/img/synop2bufr-monitoring.png"/></center>
 <center><caption>Screenshot showing the monitoring dashboard and the item published in this exercise</caption></center>
+
+You should also be able to see these notifications in MQTT explorer.
 
 ### Exercise 3 - understanding the station list
 
