@@ -29,6 +29,15 @@ through the wis2box web-application. Command line usage and customisation will b
     - The tokens can be checked by logging in to the wis2box management container and entering the 
       command: ``wis2box auth has-access-path --path processes/wis2box <your-token>`` where 
       ``<your-token>`` is the token you entered.
+    - If the tokens are missing they can be generated with the following commands:
+    
+        ```{.copy}
+        wis2box auth add-token --path processes/wis2box <token>
+        wis2box auth add-token --path collections/stations <token>
+        ```
+      where token is the value of the token. This can be left blank to automatically generate
+      a random token (recommended).
+    
 
 ## Inspecting CSV data and BUFR conversion
 
@@ -78,6 +87,9 @@ Inspect the expected columns from the table above and compare to the example dat
     like the location and sensor heights. In future versions the web-application will be updated to load the metadata
     from the wis2box API and to insert the values into the CSV, similar to the process used in FM-12 SYNOP to BUFR.
 
+    Even though all the metadata is contained within the CSV file the station metadata must still be registered in the
+    wis2box for the message to be procesed.
+
 
 ### Exercise 2 - converting your first message
 
@@ -118,11 +130,28 @@ about missing data but in this exercise these can be ignored.
 The next button will take you to the topic selection page,
 as with the FM-12 SYNOP to BUFR page select the topic configured for "surface weather observations" on your wis2box 
 and click next. You should now be on an authorisation page where you will be asked to enter the ``processes/wis2box`` 
-token you have previously created. Enter this token and click next. You should see the following screen:
+token you have previously created. Enter this token and click the "Publish on WIS2" toggle (see screenshot below).
+
+<center><img alt="csv2bufr auth and publish screen" src="../../assets/img/csv2bufr-toggle-publish.png"/></center>
+
+Click next to transform to BUFR and publish, you should then see the following screen:
 
 <center><img alt="Image showing CSV to BUFR example success screen" src="../../assets/img/csv2bufr-success.png"/></center>
 
 Clicking the down arrow tn the right of  ``Output BUFR files`` should reveal the ``Download`` and ``Inspect`` buttons.
+Click inspect to view the data and confirm the values are as expected.
+
+<center><img alt="Image showing CSV to BUFR inspect output" src="../../assets/img/csv2bufr-inspect.png"/></center>
+
+As a final step navigate to the monitoring page from the left menu.
+
+<center><img alt="Image showing monitoring tab in on the left menu" src="../../assets/img/csv2bufr-monitoring.png"/></center>
+
+Select the topic you have been publishing on from the dropdown menu and click update, you should see the message 
+you have just published (and possibly notifications from the synop2bufr session). An example screenshot is shown below:
+
+<center><img alt="Image showing notifications published over the last 24 hours" src="../../assets/img/csv2bufr-monitoring2.png"/></center>
+
 !!! success
     Congratulations you have published you first csv data converted to BUFR via the wis2box.
 

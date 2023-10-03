@@ -16,7 +16,7 @@ title: Converting SYNOP data to BUFR
 
 Surface weather reports from land surface stations have historically been reported hourly or at the main 
 (00, 06, 12 and 18 UTC) and intermediate (03, 09, 15, 21 UTC) synoptic hours. Prior to the migration
-to BUFR these reports were encoded in the FM-12 SYNOP code form. Whilst the migration to BUFR
+to BUFR these reports were encoded in the plain text FM-12 SYNOP code form. Whilst the migration to BUFR
 was scheduled to be complete by 2012 a large number of reports are still exchanged in the legacy 
 FM-12 SYNOP format. 
 
@@ -30,8 +30,17 @@ as the relationship between the information contained in the FM-12 SYNOP reports
     - Ensure that your wis2box has been configured and started, including the setting execution tokens 
       for the ``processes/wis2box`` and ``collections/stations``paths. Confirm the status by visiting 
       the wis2box API (``http://<your-host-name>/oapi``) and verifying that the API is running.
-    - The tokens can be checked with ``wis2box auth has-access-path --path processes/wis2box <your-token>``
-      and ``wis2box auth has-access-path --path collections/stations <your-token>`` if configured properly.
+    - The tokens can be checked by logging in to the wis2box management container and entering the 
+      command: ``wis2box auth has-access-path --path processes/wis2box <your-token>`` where 
+      ``<your-token>`` is the token you have previously entered.
+    - If the tokens are missing they can be generated with the following commands:
+    
+        ```{.copy}
+        wis2box auth add-token --path processes/wis2box <token>
+        wis2box auth add-token --path collections/stations <token>
+        ```
+      where ``<token>`` is the value of the token. This can be left blank to automatically generate
+      a random token (recommended).
     - For practical purposes the exercises in this session use data from Romania, import the 
       station ``0-20000-0-15015`` into your station list and associate it with the topic
       for your "Surface weather observations collection". This will be removed at the end of the session.
@@ -101,8 +110,12 @@ is registered in the wis2box you are ready to convert the data to BUFR.
 Open the wis2box web application and navigate to the synop2bufr page using the left navigation drawer. 
 Select the date using the date picker and copy and paste the FM-12 SYNOP message into the text 
 entry box. Assume today's date for demonstration purposes. Once the message has been copied, select 
-the appropriate topic to publish the data on, enter the "processes/wis2box" token and select submit.
-The data will now be converted to BUFR and the result returned to the web application.
+the appropriate topic to publish the data on, enter the "processes/wis2box" token and make sure the "publish to WIS2" 
+has been selected. 
+
+<center><img alt="Dialog showing synop2bufr page, including toggle button" src="../../assets/img/synop2bufr-toggle.png"></center>
+
+Click submit. The data will now be converted to BUFR and the result returned to the web application.
 
 ??? tip
     The result section of the page should show a single converted BUFR message with zero warnings 
@@ -111,7 +124,7 @@ The data will now be converted to BUFR and the result returned to the web applic
     The inspect button runs a process to convert and extract the data from BUFR.
 
     <center><img alt="Dialog showing result of successfully submitting a message"
-         src="../../assets/img/synop2bufr-ex2-success.png" width="600"></center>
+         src="../../assets/img/synop2bufr-ex2-success.png"></center>
 
 !!! question
     The FM-12 SYNOP format does not include the station location, elevation or barometer height. 
@@ -121,12 +134,20 @@ The data will now be converted to BUFR and the result returned to the web applic
     Clicking the inspect button should bring up a dialog like that shown below.
 
     <center><img alt="Results of the inspect button showing the basic station metadata, the station location and the observed properteis"
-         src="../../assets/img/synop2bufr-ex2.png" width="600"></center>
+         src="../../assets/img/synop2bufr-ex2.png"></center>
 
     This includes the station location shown on a map and basic metadata, as well as the observations, 
     extracted from the BUFR message. As part of the transformation from FM-12 SYNOP to BUFR this information
     is merged from the station metadata. The BUFR file can also be inspected by downloading the file
     and validating using a tool as as the ECMWF ecCodes BUFR validator.
+
+As a final step navigate to the monitoring page from the left menu and confirm that the data have been published.
+
+<center><img alt="Image showing monitoring tab in on the left menu" src="../../assets/img/csv2bufr-monitoring.png"/></center>
+<center><caption>Screenshot showing the monitoring menu item</caption></center>
+
+<center><img alt="Image showing monitoring page and published data" src="../../assets/img/synop2bufr-monitoring.png"/></center>
+<center><caption>Screenshot showing the monitoring dashboard and the item published in this exercise</caption></center>
 
 ### Exercise 3 - understanding the station list
 
@@ -230,24 +251,29 @@ Before starting the exercise we need to transfer some data to the wis2box, we wi
  in the first exercise. First log in to the wis2box management container: 
 
 ```{.copy}
-cd ~/wis2box
+cd ~/wis2box-1.0b5
 python3 wis2box-ctl.py login
 ```
 
 Next create a directory to work from and transfer the sample data to that directory:
 
 ```{.copy}
-cd /data/wis2box
-mkdir working
-cd working
+cd ~
+mkdir working working/synop2bufr
+cd working/synop2bufr
 curl https://training.wis2box.wis.wmo.int/sample-data/bufr-cli-ex1.bufr4 --output synop2bufr-ex5.bufr4
 ```
 
 Confirm that ecCodes and bufr_dump are available, these will have been automatically installed as part of the
 wis2box configuration process.
 
-```bash
->> bufr_dump -V
+```bash 
+bufr_dump -V
+```
+
+You should see the following output:
+
+```
 ecCodes Version 2.28.0
 ```    
 
@@ -259,16 +285,16 @@ bufr_dump -p synop2bufr-ex5.bufr4
 ```
 
 This will display BUFR content to your screen.  If you are interested in the values taken by a variable in 
-particular, use the `grep` command:
+particular, use the `egrep` command:
 
 ```bash
-bufr_dump -p synop2bufr-ex5.bufr4 | grep -i temperature
+bufr_dump -p synop2bufr-ex5.bufr4 | egrep -i temperature
 ```
 
 This will display variables related to temperature in your BUFR data. If you want to do this for multiple types of variables, filter the output using a pipe (`|`):
 
 ```bash
-bufr_dump -p synop2bufr-ex5.bufr4 | grep -i 'temperature|wind'
+bufr_dump -p synop2bufr-ex5.bufr4 | egrep -i 'temperature|wind'
 ```
 
 ## Housekeeping
@@ -280,7 +306,7 @@ the stations removed from the list after deleting.
 <center><img alt="Station metadata viewer"
          src="../../assets/img/synop2bufr-trash.png" width="600"></center>
 
-You can also delete the files used in the final exercise as this will no longer be required.
+You can also delete the file used in the final exercise as this will no longer be required.
 
 ## Conclusion
 
