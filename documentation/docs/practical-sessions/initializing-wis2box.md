@@ -8,10 +8,10 @@ title: Initializing wis2box
 
     By the end of this practical session, you will be able to:
 
-    * Run the `wis2box-create-config.py` script to create the initial configuration
-    * Start wis2box and check the status of its components
-    * Access the **wis2box-webapp**, API, MinIO UI and Grafana dashboard in a browser
-    * Connect to the local **wis2box-broker** using MQTT Explorer
+    - run the `wis2box-create-config.py` script to create the initial configuration
+    - start wis2box and check the status of its components
+    - access the **wis2box-webapp**, API, MinIO UI and Grafana dashboard in a browser
+    - connect to the local **wis2box-broker** using MQTT Explorer
 
 !!! note
 
@@ -323,7 +323,7 @@ This is the Grafana UI, where you can view the wis2box workflow monitoring dashb
 !!! success "Congratulations!"
     In this practical session, you learned how to:
 
-    - Run the `wis2box-create-config.py` script to create the initial configuration
-    - Start wis2box and check the status of its components
-    - Access the **wis2box-webapp**, API, MinIO UI and Grafana dashboard in a browser
-    - Connect to the **wis2box-broker** using MQTT Explorer
+    - run the `wis2box-create-config.py` script to create the initial configuration
+    - start wis2box and check the status of its components
+    - access the **wis2box-webapp**, API, MinIO UI and Grafana dashboard in a browser
+    - connect to the **wis2box-broker** using MQTT Explorer

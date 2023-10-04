@@ -221,7 +221,7 @@ the type of data contained in the file and the typical date and time for that da
     What type of data (date category and sub category) are contained in the file? What is the typical date and time
     for the data?
 
-??? success "Click to reveal the answer"
+??? success "Click to reveal answer"
     The command you need to run should have been similar to:
     
     ```
@@ -301,7 +301,7 @@ After downloading, examine the input csv file and how compare to the BUFR output
     would filter the contents of `bufr_dump`to only those lines containing the word pressure. Alternatively, 
     the output could be filtered on a value.
 
-??? success "Click to reveal the answer"
+??? success "Click to reveal answer"
     The key "pressureReducedToMeanSeaLevel" corresponds to the msl_pressure column in the input CSV file.
 
 Spend a few minutes examining the rest of the output, comparing to the input CSV file before moving on to the next
@@ -347,7 +347,7 @@ for these can be set to a column from the CSV input file, a constant value or an
     Look at the example header section above. How would you specify a constant value, a value from the input CSV data
     file and an array of constants?
 
-??? success "Click to reveal the answer"
+??? success "Click to reveal answer"
     - Constant values can be set by setting the `value` property to `"value": "const:<your-constant>"`.
     - Values can be set to a column from the input CSV by setting the `value` property to `"value": "data:<your-column>"`.
     - Arrays can be set by setting the `value` property to `"value": "array:<comma-seperated-values>"`.
@@ -386,7 +386,7 @@ mean sea level pressure.
     Can you identify the row in the data section that performs the mapping between the CSV input file and ecCodes key
     used to encode the mean sea level pressure data?
 
-??? success "Click to reveal the answer"
+??? success "Click to reveal answer"
     You will have hopefully identified the line below:
     
     ```
@@ -398,7 +398,7 @@ mean sea level pressure.
 !!! question "Bonus question"
     Can you guess what the `valid_min` and `valid_max` properties do?
  
-??? success "Click to reveal the answer" 
+??? success "Click to reveal answer" 
     These specify the valid minimum and maximum values for the different elements. Values falling outside of the 
     range specified will result in a warning message and the data set to missing in the output BUFR file.
 

@@ -71,7 +71,7 @@ within the wis2box. The station(s) should be discoverable via the station list p
     What is the traditional station identifier of the station included in the message and 
     where is the station located?
 
-??? success "Click to reveal the answer"
+??? success "Click to reveal answer"
     The five digit group, ``15015``, gives the 5 digit traditional station identifier. In 
     this case for the station "OCNA SUGATAG" located in Romania.
 
@@ -81,7 +81,7 @@ Identify the number of weather reports in the message.
 !!! question
     How many weather reports are in the message?
 
-??? success "Click to reveal the answer"
+??? success "Click to reveal answer"
     One, the report contains a single message.
     
     The first line ``AAXX 21121`` indicates that this is an FM-12 SYNOP message (``AAXX``), 
@@ -93,7 +93,7 @@ Identify the number of weather reports in the message.
 !!! question "Bonus question"
     What is the WIGOS station identifier for the station and what topics have been configured?
 
-??? success "Click to reveal the answer"
+??? success "Click to reveal answer"
     The WIGOS station identifier of the station can be found via the station list. The screen shot
     below shows an example of the station information.
 
@@ -131,7 +131,7 @@ Click submit. The data will now be converted to BUFR and the result returned to 
     The FM-12 SYNOP format does not include the station location, elevation or barometer height. 
     Confirm that these are in the output BUFR data, where do these come from?
 
-??? success "Click to reveal the answer"
+??? success "Click to reveal answer"
     Clicking the inspect button should bring up a dialog like that shown below.
 
     <center><img alt="Results of the inspect button showing the basic station metadata, the station location and the observed properteis"
@@ -167,7 +167,7 @@ AAXX 21121
     Based on the prior exercise, look at the FM-12 SYNOP message and predict how many output BUFR
     messages will be generated. Does the number match your expection, and if not, why not?
 
-??? warning "Click to reveal the answer"
+??? warning "Click to reveal answer"
     In order for a weather report to be converted to BUFR the basic metadata contained in the 
     station list is required. Whilst the above example includes three weather reports two of the
     three stations reporting have not been registered in the wis2box. As a result, only one
@@ -211,7 +211,7 @@ AAXX 21121
     What issues did you expect to encounter when converting the data to BUFR and how did you
     overcome them? Where there any issues you were not expecting?
 
-??? success "Click to reveal the answer"
+??? success "Click to reveal answer"
     In this first example the "end of text" symbol (=), or record delimiter, is missing between the
     first and second weather reports. Consequently, lines 2 and 3 are treated as a single report, 
     leading to errors in the parsing of the message. The final line is also missing the end of 
@@ -232,7 +232,7 @@ AAXX 21121
 !!! question
     What issues did you find and how did you resolve these?
 
-??? success "Click to reveal the answer"
+??? success "Click to reveal answer"
     There are two issues in the weather report. 
     
     The first, in the signed air temperature group, has the tens character set to missing (/), 
