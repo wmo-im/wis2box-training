@@ -8,3 +8,5 @@ update_topics_bucket_old.py
 site
 upload_training_materials.py
 .vscode/settings.json
+
+.DS_Store
