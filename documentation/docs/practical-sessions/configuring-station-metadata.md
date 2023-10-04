@@ -6,7 +6,7 @@ title: Configuring station metadata
 
 !!! abstract "Learning outcomes"
 
-    By the end of this session, you will be able to:
+    By the end of this practical session, you will be able to:
 
     - create an authorization token for the `collections/stations` endpoint
     - add station metadata to wis2box

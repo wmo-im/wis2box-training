@@ -5,12 +5,12 @@ title: Converting SYNOP data to BUFR
 # Converting SYNOP data to BUFR
 
 !!! abstract "Learning outcomes"
-    By the end of this session you will be able to:
+    By the end of this practical session, you will be able to:
 
-    - Submit valid FM-12 SYNOP bulletins via the wis2box web application for conversion to BUFR and exchange over the WIS2.0.
-    - Validate, diagnose and fix simple coding errors in an FM-12 SYNOP bulletin prior to format conversion and exchange.
-    - Ensure that the required station metadata is available in the wis2box.
-    - Confirm and inspect successfully converted bulletins.
+    - Submit valid FM-12 SYNOP bulletins via the wis2box web application for conversion to BUFR and exchange over the WIS2.0
+    - Validate, diagnose and fix simple coding errors in an FM-12 SYNOP bulletin prior to format conversion and exchange
+    - Ensure that the required station metadata is available in the wis2box
+    - Confirm and inspect successfully converted bulletins
 
 ## Introduction
 

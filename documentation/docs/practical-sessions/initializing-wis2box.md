@@ -6,7 +6,7 @@ title: Initializing wis2box
 
 !!! abstract "Learning outcomes"
 
-    By the end of this session you will be able to:
+    By the end of this practical session, you will be able to:
 
     * Run the `wis2box-create-config.py` script to create the initial configuration
     * Start wis2box and check the status of its components

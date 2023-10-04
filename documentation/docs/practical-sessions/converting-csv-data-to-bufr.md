@@ -4,12 +4,12 @@ title: Converting CSV data to BUFR
 
 # Converting CSV data to BUFR
 
-!!! abstract
-    By the end of this practical session you will have:
+!!! abstract "Learning outcomes"
+    By the end of this practical session, you will have:
 
-    - learnt to format CSV data for use with the default automatic weather station BUFR template;
-    - learnt to use the wis2box web-application to validate and convert sample data;
-    - and learnt about some of the common issues that can occur, such as incorrect units.
+    - learnt to format CSV data for use with the default automatic weather station BUFR template
+    - learnt to use **wis2box webapp** to validate and convert sample data
+    - learnt about some of the common issues that can occur, such as incorrect units
 
 ## Introduction
 

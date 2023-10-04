@@ -2,17 +2,16 @@
 title: BUFR command line tools
 ---
 
-# BUFR command line tools and configuring csv2bufr
+# BUFR command line tools
 
-!!! abstract
-    In this session you will be introduced to some of the BUFR command line tools included in the wis2box
-    management container. You will learn:
+!!! abstract "Learning outcomes"
+    In this practical session you will be introduced to some of the BUFR command line tools included in the **wis2box-management** container. You will learn:
 
-    - how to inspect the headers in the BUFR file using the `bufr_ls` command;
-    - how to extract and inspect the data within a bufr file using `bufr_dump`;
-    - the basic structure of the bufr templats used in csv2bufr and how to use the command line tool;
+    - how to inspect the headers in the BUFR file using the `bufr_ls` command
+    - how to extract and inspect the data within a bufr file using `bufr_dump`
+    - the basic structure of the bufr templats used in csv2bufr and how to use the command line tool
     - and how to make basic changes to the bufr templates and how to update the wis2box to use the revised
-      version.
+      version
 
 ## Introduction
 
@@ -465,7 +464,7 @@ You should see the following output:
 
 ### Exercise 4 - installing new csv2bufr templates
 
-The `bufr-template` used by csv2bufr can be specified by providing a file name to the command, as per the above example,
+The `bufr-template` used by csv2bufr can be specified by providing a filename to the command, as per the above example,
 or by setting a search path with an environment variable and by specifying the template name. The template name must match
 the filename but without the extension, with the file located on the search path. Try the commands from the block below:
 
