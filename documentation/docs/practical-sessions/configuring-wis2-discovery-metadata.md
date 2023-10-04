@@ -4,6 +4,13 @@ title: Configuring WIS2 discovery metadata
 
 # Configuring WIS2 discovery metadata
 
+!!! abstract "Learning outcomes"
+    By the end of this practical session, you will be able to:
+
+    - create discovery metadata
+    - publish discovery metadata
+    - update and re-publish discovery metadata
+
 ## Introduction
 
 As described in the [overviews](../../overviews), WIS2 requires discovery metadata to be provided describing
@@ -36,6 +43,9 @@ more ~/wis2box-data/my-discovery-metadata.yml
 
 !!! question
     How does line 3 of your discovery metadata file relate to the new data mapping in the previous session?
+
+??? success "Click to reveal answer"
+    Line 3 of the discovery metadata configuration file should be equal to one of the data mappings defined in `data-mappings.yml`.
 
 Update the following values in the discovery metadata configuration:
 
@@ -84,6 +94,9 @@ Ensure that your discovery metadata was also published to the broker, by looking
 !!! question
     Do you see your new discovery metadata in the API?
 
+??? success "Click to reveal answer"
+    You should see your published discovery metadata in the API, under the `http://<your-host>/oapi/collections/discovery-metadata/items` link.
+
 Click on your discovery metadata record and inspect the content, noting how it relates to the discovery metadata configuration created earlier in this session.
 
 Update the title of your discovery metadata, and re-publish:
@@ -97,6 +110,9 @@ Ensure that your discovery metadata updates were published to the API, by refres
 
 !!! question
     Are you able to see the updates you made in the configuration?
+
+??? success "Click to reveal answer"
+    You should see your published discovery metadata update in the API, under the `http://<your-host>/oapi/collections/discovery-metadata/items` link.
 
 Feel free to update additional values and re-publishing your discovery metadata to get a better idea of how and where discovery metadata content is updated.
 
@@ -113,8 +129,14 @@ Ensure that your dataset was published to the API, by navigating to `http://<you
 !!! question
     Do you see your new dataset in the API?
 
+??? success "Click to reveal answer"
+    You should see the new dataset published to the API.
+
 !!! question
     Do you see any data coming from your new dataset in the API?  If not, why not?
+
+??? success "Click to reveal answer"
+    If you do not see new data, this means that data has not been ingested yet against your new dataset.
 
 ## Conclusion
 

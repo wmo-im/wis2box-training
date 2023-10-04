@@ -4,6 +4,13 @@ title: wis2box environment variables
 
 #  wis2box environment variables
 
+!!! abstract "Learning outcomes"
+    By the end of this practical session, you will be able to:
+
+    - reinitialize wis2box services
+    - set the wis2box data directory
+    - set custom passwords for your broker and storage
+
 ## Introduction
 
 In this session you will customize your wis2box environment variables and re-initialize your wis2box.

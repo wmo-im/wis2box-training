@@ -4,6 +4,14 @@ title: Converting DAYCLI data to BUFR
 
 # Converting DAYCLI data to BUFR
 
+!!! abstract "Learning outcomes"
+
+    By the end of this practical session, you will be able to:
+
+    - verify the structure of a typical DAYCLI CSV file
+    - convert this DAYCLI CSV file into BUFR using csv2bufr and the built-in daycli mapping template
+    - inspect the contents of the DAYCLI BUFR files created
+
 ## Introduction
 
 Daily climate reports (DAYCLI) are a requirement for daily climate observations to monitor extremes, such as daily maximum and minimum temperature, daily total precipitation, and more. 

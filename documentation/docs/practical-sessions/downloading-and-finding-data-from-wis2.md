@@ -4,6 +4,13 @@ title: Downloading and finding data from WIS2
 
 # Downloading and finding data from WIS2
 
+!!! abstract "Learning outcomes!"
+
+    By the end of this practical session, you will be able to:
+
+    - use pywis-pubsub to subscribe to a Global Broker and download data to your local system
+    - use pywiscat to discover datasets from the Global Discovery Catalogue
+
 ## Introduction
 
 In this session you will learn how to discover data from the WIS2 Global Discovery Catalogue (GDC) and download data from a WIS2 Global Broker (GB).
@@ -55,9 +62,15 @@ pywis-pubsub subscribe -c ~/exercise-materials/pywis-pubsub-exercises/config.yml
 
     What is the format of the data notifications that are displayed on the screen?
 
+??? success "Click to reveal answer"
+    The format is GeoJSON
+
 !!! question
 
     Is there data being downloaded?  How can we run the `pywis-pubsub` command to be able to download the data (hint: review the options when running the `pywis-pubsub subscribe --help` command)?
+
+??? success "Click to reveal answer"
+    Add the `-d` or `--download` flag to the `pywis-pubsub` command
 
 Stop the `pywis-pubsub` command (CTRL-C) and update the configuration to be able to download the data
 to `/tmp/wis2-data`.
@@ -91,16 +104,39 @@ pywiscat wis2 search
 
     How many records are returned from the search?
 
+??? success "Click to reveal answer"
+    There should be 40 records returned
+
+    ```
+    Querying WIS2 GDC 🗃️ ...
+
+    Results: 40 records
+    ...
+    ```
 
 Let's try querying the GDC with a keyword:
 
 ```bash
-pywiscat wis2 search -q radar
+pywiscat wis2 search -q observations
 ```
 
 !!! question
 
     What is the data policy of the results?
+
+??? success "Click to reveal answer"
+    All data returned should specify "core" data
+
+    ```
+    +---------------------------------------------------------------------------+------------------------------+-------------------------------------------------------+-------------+
+    | id                                                                        | centre                       | title                                                 | data policy |
+    +---------------------------------------------------------------------------+------------------------------+-------------------------------------------------------+-------------+
+    | urn:x-wmo:md:dma:dominica_met_wis2node:surface-weather-observations       | dominica_met_wis2node        | Surface weather observations from Dominica Meteoro... | core        |
+    | urn:x-wmo:md:gin:conakry_met_centre:surface-weather-observations          | conakry_met_centre           | Surface weather observations from gin.conakry_met_... | core        |
+    | urn:x-wmo:md:atg:antigua_met_wis2node:surface-weather-observations        | antigua_met_wis2node         | Surface weather observations from Antigua and Barb... | core        |
+    | urn:x-wmo:md:bfa:ouagadougou_met_centre:surface-weather-observations      | ouagadougou_met_centre       | Surface weather observations from bfa.ouagadougou_... | core        |
+    ...
+    ```
 
 Try additional queries with `-q`
 
@@ -108,14 +144,14 @@ Try additional queries with `-q`
 
     The `-q` flag allows for the following syntax:
 
-    - `-q sea`: find all records with the word "sea"
-    - `-q "NOT sea"`: find all records that do not contain the word "sea"
-    - `-q "sea AND ice"`: find all records with both "sea" and "ice"
-    - `-q "sea OR ice"`: find all records with both "sea" and "ice"
-    - `-q "sea NOT ice"`: find all records with "sea" but not "ice"
-    - `-q "sea~"`: fuzzy search
+    - `-q synop`: find all records with the word "synop"
+    - `-q temp`: find all records with the word "temp"
+    - `-q "observations AND malawi"`: find all records with the words "observations" and "malawi"
+    - `-q "observations NOT malawi"`: find all records that contain the word "observations" but not the word "malawi"
+    - `-q "synop OR temp"`: find all records with both "synop" or "temp"
+    - `-q "obs~"`: fuzzy search
 
-    If searching for terms with spaces, enclose in double quotes.
+    When searching for terms with spaces, enclose in double quotes.
 
 Let's get more details on a specific search result that we are interested in:
 

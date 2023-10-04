@@ -4,12 +4,12 @@ title: Converting CSV data to BUFR
 
 # Converting CSV data to BUFR
 
-!!! abstract
-    By the end of this practical session you will have:
+!!! abstract "Learning outcomes"
+    By the end of this practical session, you will have:
 
-    - learnt to format CSV data for use with the default automatic weather station BUFR template;
-    - learnt to use the wis2box web-application to validate and convert sample data;
-    - and learnt about some of the common issues that can occur, such as incorrect units.
+    - learnt to format CSV data for use with the default automatic weather station BUFR template
+    - learnt to use **wis2box webapp** to validate and convert sample data
+    - learnt about some of the common issues that can occur, such as incorrect units
 
 ## Introduction
 
@@ -63,7 +63,7 @@ Inspect the expected columns from the table above and compare to the example dat
     Examining the date, time and identify fields (WIGOS and traditional identifiers) what do
     you notice? How would today's date be represented?
 
-??? success "Click to reveal the answer"
+??? success "Click to reveal answer"
     Each column contains a single piece of information. For example the date is split into
     year, month and day, mirroring how the data are stored in BUFR. Todays date would be 
     split across the columns "year", "month" and "day". Similarly, the time needs to be
@@ -72,7 +72,7 @@ Inspect the expected columns from the table above and compare to the example dat
 !!! question
     Looking at the data file how are missing data encoded?
     
-??? success "Click to reveal the answer"
+??? success "Click to reveal answer"
     Missing data within the file are represented by empty cells. In a CSV file this would be
     encoded by ``,,``. Note that this is an empty cell and not encoded as a zero length string, 
     e.g. ``,"",``.
@@ -172,7 +172,7 @@ Follow the same process to convert the data to BUFR.
     With the columns missing from the file were you able to convert the data to BUFR?
     Did you notice anything different on the validation page?
 
-??? success "Click to reveal the answer"
+??? success "Click to reveal answer"
     You should have still been able to convert the data to BUFR but the warning messages will have been updated
     to indicate that the columns were missing completely rather than containing a missing value.
 
@@ -183,7 +183,7 @@ In this next example an additional column has been added to the CSV file.
 !!! question
     Without uploading or submitting the file can you predict what will happen when you do?
 
-??? success "Click to reveal the answer"
+??? success "Click to reveal answer"
     When the file is validated you should now receive a warning that the column ``index``
     is not found in the schema and that the data will be skipped. You should be able to click
     through and convert to BUFR as with the previous example.
@@ -195,7 +195,7 @@ In the final example in the exercise the data has been modified. Examine the con
 !!! question
     What has changed in the file and what do you think will happen?
 
-??? warning "Click to real the answer"
+??? warning "Click to real answer"
     The pressure fields have been converted from Pa to hPa in the input data. However, the CSV to BUFR
     converter expects the same units as BUFR (Pa) and, as a result, these fields fail the validation due to being
     out of range. You should be able to edit the CSV to correct the issue and to resubmit the data by
@@ -222,7 +222,7 @@ For the first example in this exercise download the example file via the link be
 !!! question
     What result do you receive on the "Review page"?
 
-??? success "Click to reveal the answer"
+??? success "Click to reveal answer"
     The second row in the file contains data from a station (again fictional) that has not been registered
     in the wis2box. As a result a warning is given that the station has not been found and that the data
     have not been published.
@@ -236,7 +236,7 @@ For the next  example, try submitting the data but without selecting a topic hie
 !!! question
     What happens when you try and click next?
 
-??? warning "Click to reveal the answer"
+??? warning "Click to reveal answer"
     You should find the next button greyed out until a valid topic is selected. The options for the topic hierarchy
     are set based on the discovery metadata registered within the box
 
@@ -245,7 +245,7 @@ For the final example, try entering a token that has not been registered and obs
 !!! question
     What do you expect will happen if you enter an invalid token?
 
-??? warning "Click to reveal the answer"
+??? warning "Click to reveal answer"
     When you click next you should be taken to the Review page but receive a message that the token is invalid. 
     Navigate to the previous step, enter a valid token and try again.
 

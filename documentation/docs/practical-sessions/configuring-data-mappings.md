@@ -4,6 +4,14 @@ title: Configuring data mappings
 
 # Configuring data mappings
 
+!!! abstract "Learning outcomes"
+    By the end of this this practical session, you will be able to:
+
+    - inspect the live wis2box data mappings
+    - add a new data mapping
+    - update the `country` and `centre_id` values add a new data mapping
+    - update the `file-pattern` value to match your data filename convention
+
 ## Introduction
 
 wis2box uses a number of configuration files to allow for a simple setup of the system.  At the heart of wis2box
