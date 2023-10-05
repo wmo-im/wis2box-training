@@ -96,15 +96,20 @@ Ensure that your discovery metadata was also published to the broker, by looking
 
 Click on your discovery metadata record and inspect the content, noting how it relates to the discovery metadata configuration created earlier in this session.
 
-Update the title of your discovery metadata, and re-publish:
+Update the title of your discovery metadata:
 
 ```bash
-vi /data/metadata/discovery/metadata-synop.yml
-wis2box metadata discovery publish /data/metadata/discovery/metadata-synop.yml
+vi ~/wis2box-data/metadata/discovery/metadata-temp.yml
 ```
 
 !!! tip
     You can also use WinSCP to connect to your instance and edit this file.
+
+Now re-publish (from inside the **wis2box-management** container):
+
+```bash
+wis2box metadata discovery publish /data/metadata/discovery/metadata-synop.yml
+```
 
 Ensure that your discovery metadata updates were published to the API, by refreshing the page to your discovery metadata.
 
