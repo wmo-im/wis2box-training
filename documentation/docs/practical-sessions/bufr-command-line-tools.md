@@ -549,62 +549,35 @@ csv2bufr data transform --bufr-template aws-template-custom csv2bufr-ex1.csv
 
 Inspect the output file using `bufr_ls` and confirm that the originating centre in the headers is updated.
 
-You can use this custom mappings in your automated workflow by updating your data-mappings.yml and updating the environment variable for CSV2BUFR_TEMPLATES.
+!!! note
 
-Edit your `data-mappings.yml` file to use this new file by updating the template name:
+    You can use the custom mappings in your automated workflow by updating your data-mappings.yml and updating the environment variable for CSV2BUFR_TEMPLATES.
 
-```
-            csv:
-                - plugin: wis2box.data.csv2bufr.ObservationDataCSV2BUFR
-                  template: aws-template-custom
-                  notify: true
-                  file-pattern: '^.*\.csv$'
-```
+    Edit your `data-mappings.yml` file to use this new file by updating the template name:
 
-Now log out and return to the student VM. The final steps are to update the environment variables and to 
-restart the wis2box containers.
+    ```
+                csv:
+                    - plugin: wis2box.data.csv2bufr.ObservationDataCSV2BUFR
+                    template: aws-template-custom
+                    notify: true
+                    file-pattern: '^.*\.csv$'
+    ```
 
-```{.copy}
-cd ~/wis2box-1.0b5/
-echo "export CSV2BUFR_TEMPLATES=/data/wis2box/bufr-templates" >> wis2box.env
-python3 wis2box-ctl.py restart
-```
+    Add the environment variable to your `wis2box.env` file:
 
-Once the containers have restarted log in to the management container and verify that the mappings and templates have
-been updated.
+    ```{.copy}
+    cd ~/wis2box-1.0b5/
+    echo "export CSV2BUFR_TEMPLATES=/data/wis2box/bufr-templates" >> wis2box.env
+    ```
 
-!!! hint
-    Before entering the last command make sure you are listening to your broker with MQTT Explorer. You should see
-    the notification being sent for the data you have just ingested.
+    And restart the wis2box-stack:
 
-First login to the container and re-download the test data, this was modified during the last exercise.
+    ```{.copy}
+    python3 wis2box-ctl.py stop
+    python3 wis2box-ctl.py start
+    ```
 
-```
-cd ~/wis2box-1.0b5/
-python3 wis2box-ctl.py login
-cd /data/wis2box/working/bufr-cli
-curl https://training.wis2box.wis.wmo.int/sample-data/csv2bufr-ex1.csv --output csv2bufr-ex1.csv
-```
-
-Now ingest the data (note, you will need to update the topic in the code below):
-
-```
-wis2box data ingest \
-    --topic-hierarchy <your-topic> \
-    --path /data/wis2box/working/bufr-cli/    
-```
-
-Download the data from the notification and inspect the contents using ``bufr_ls`` and confirm
-that the originating center has been updated.
-
-!!! hint
-    The file URL to download is given by the "href" property in the canonical link. See the screenshot below (you may 
-    need to right click and open the image in a new tab to view the details).
-    
-    <center><img alt="Image showing notification in MQTT Explorer, with href highlighted" 
-    src="../../assets/img/bufr-cli-mqtt-ex.png"/></center>
-
-Finally, navigate to the notifications page on the web-application and inspect the data. 
+    The new template should now be used in the automated workflow.
 
 ## Housekeeping
 
