@@ -52,7 +52,7 @@ Update the following values in the discovery metadata configuration:
 
 - `identification.title`: a human readable title describing your data
 - `identification.abstract`: a human readable description describing your data
-- `identification.extents.temporal (begin)`: the begin (`BEGIN_DATE`) and end time of your data (keeping the end time to `null` is suitable to ongoing observations)
+- `identification.extents.temporal (begin)`: the begin (`BEGIN_DATE`) (`YYYY-MM-DD`) and end time of your data (keeping the end time to `null` is suitable to ongoing observations)
 - `contact.pointOfContact`: your organization's point of contact information
 
 !!! note
