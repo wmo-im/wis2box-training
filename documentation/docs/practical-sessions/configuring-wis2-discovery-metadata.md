@@ -104,7 +104,7 @@ wis2box metadata discovery publish /data/metadata/discovery/metadata-synop.yml
 ```
 
 !!! tip
-   You can also use WinSCP to connect to your instance and edit this file.
+    You can also use WinSCP to connect to your instance and edit this file.
 
 Ensure that your discovery metadata updates were published to the API, by refreshing the page to your discovery metadata.
 
