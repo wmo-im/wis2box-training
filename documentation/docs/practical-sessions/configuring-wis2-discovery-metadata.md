@@ -81,7 +81,7 @@ python3 wis2box-ctl.py login
 Run the following command to publish your discovery metadata:
 
 ```bash
-wis2box metadata discovery publish /data/metadata/discovery/metadata-synop.yml
+wis2box metadata discovery publish /data/wis2box/metadata/discovery/metadata-synop.yml
 ```
 
 Ensure that your discovery metadata was published to the API, by navigating to `http://<your-host>/oapi/collections/discovery-metadata`.
@@ -99,7 +99,7 @@ Click on your discovery metadata record and inspect the content, noting how it r
 Update the title of your discovery metadata:
 
 ```bash
-vi ~/wis2box-data/metadata/discovery/metadata-temp.yml
+vi /data/wis2box/metadata/discovery/metadata-synop.yml
 ```
 
 !!! tip
@@ -108,7 +108,7 @@ vi ~/wis2box-data/metadata/discovery/metadata-temp.yml
 Now re-publish (from inside the **wis2box-management** container):
 
 ```bash
-wis2box metadata discovery publish /data/metadata/discovery/metadata-synop.yml
+wis2box metadata discovery publish /data/wis2box/metadata/discovery/metadata-synop.yml
 ```
 
 Ensure that your discovery metadata updates were published to the API, by refreshing the page to your discovery metadata.
@@ -126,7 +126,7 @@ Feel free to update additional values and re-publishing your discovery metadata 
 Run the below command to add the data to the API:
 
 ```bash
-wis2box data add-collection /data/metadata/discovery/metadata-synop.yml
+wis2box data add-collection /data/wis2box/metadata/discovery/metadata-synop.yml
 ```
 
 Ensure that your dataset was published to the API, by navigating to `http://<your-host>/oapi/collections/<metadata.identifier>`.
