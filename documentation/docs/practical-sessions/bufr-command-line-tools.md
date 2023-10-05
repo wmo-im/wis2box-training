@@ -559,15 +559,24 @@ python3 wis2box-ctl.py restart
 ```
 
 Once the containers have restarted log in to the management container and verify that the mappings and templates have
-been updated:
+been updated.
 
 !!! hint
     Before entering the last command make sure you are listening to your broker with MQTT Explorer. You should see
     the notification being sent for the data you have just ingested.
 
-``` {.copy}
+First login to the container and re-download the test data, this was modified during the last exercise.
+
+```
 cd ~/wis2box-1.0b5/
 python3 wis2box-ctl.py login
+cd /data/wis2box/working/bufr-cli
+curl https://training.wis2box.wis.wmo.int/sample-data/csv2bufr-ex1.csv --output csv2bufr-ex1.csv
+```
+
+Now ingest the data (note, you will need to update the topic in the code below):
+
+```
 wis2box data ingest \
     --topic-hierarchy <your-topic> \
     --path /data/wis2box/working/bufr-cli/    
@@ -582,6 +591,8 @@ that the originating center has been updated.
     
     <center><img alt="Image showing notification in MQTT Explorer, with href highlighted" 
     src="../../assets/img/bufr-cli-mqtt-ex.png"/></center>
+
+Finally, navigate to the notifications page on the web-application and inspect the data. 
 
 ## Housekeeping
 
