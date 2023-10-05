@@ -51,7 +51,7 @@ included in the format:
 
 {{ read_csv('docs/assets/tables/aws-minimal.csv') }}
 
-The full file can be downloaded from: [aws-full.csv](/assets/tables/aws.full.csv)
+The full file can be downloaded from: [aws-full.csv](/assets/tables/aws-full.csv)
 
 Now download the example for this exercise from the link below:
 
@@ -163,14 +163,14 @@ You should also be able to see these notifications in MQTT Explorer.
 ### Exercise 3 - debugging the input data
 
 In this exercise we will examine what happens with invalid input data. Download the next example file by clicking the 
-link below. This contains the same data as the first file but with the columns containing missing data removed. 
-Follow the same process to convert the data to BUFR.
+link below. This contains the same data as the first file but with the empty columns removed.
+Examine the file and confirm which columns have been removed and then follow the same process to convert the data to BUFR.
 
 [csv2bufr-ex3a.csv](/sample-data/csv2bufr-ex3a.csv)
 
 !!! question
     With the columns missing from the file were you able to convert the data to BUFR?
-    Did you notice anything different on the validation page?
+    Did you notice any change to the warnings on the validation page?
 
 ??? success "Click to reveal answer"
     You should have still been able to convert the data to BUFR but the warning messages will have been updated
@@ -183,17 +183,21 @@ In this next example an additional column has been added to the CSV file.
 !!! question
     Without uploading or submitting the file can you predict what will happen when you do?
 
+Now upload and confirm whether your prediction was correct.
+
 ??? success "Click to reveal answer"
     When the file is validated you should now receive a warning that the column ``index``
     is not found in the schema and that the data will be skipped. You should be able to click
     through and convert to BUFR as with the previous example.
 
-In the final example in the exercise the data has been modified. Examine the contents of the CSV file.
+In the final example in this exercise the data has been modified. Examine the contents of the CSV file.
 
 [csv2bufr-ex3c.csv](/sample-data/csv2bufr-ex3c.csv)
 
 !!! question
     What has changed in the file and what do you think will happen?
+
+Now upload the file and confirm whether you were correct.
 
 ??? warning "Click to real answer"
     The pressure fields have been converted from Pa to hPa in the input data. However, the CSV to BUFR
