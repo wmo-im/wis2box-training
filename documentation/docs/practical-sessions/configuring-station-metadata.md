@@ -53,13 +53,13 @@ Token successfully created
 Or, if you want to define your own token for the `collections/stations` endpoint, you can use the following example:
 
 ```{.copy}
-wis2box auth add-token --path collections/stations MyCatIsCalledJessie!
+wis2box auth add-token --path collections/stations DataIsMagic
 ```
 
 Output:
     
 ```{.copy}
-Continue with token: MyCatIsCalledJessie! [y/N]? y
+Continue with token: DataIsMagic [y/N]? y
 Token successfully created
 ```
 
