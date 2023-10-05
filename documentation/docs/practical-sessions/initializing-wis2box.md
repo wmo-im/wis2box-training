@@ -41,6 +41,10 @@ Run the script as follows:
 python3 wis2box-create-config.py
 ```
 
+### wis2box-data directory
+
+The script will ask you to enter the directory where your configuration and data will be stored.
+
 We recommend you use the directory `wis2box-data` in your home directory to store your configuration and data. 
 Note that you need to define the full path to this directory.
 
@@ -57,6 +61,8 @@ y
 The directory /home/mlimper/wis2box-data has been created.
 ```
 
+### wis2box URL
+
 Next, you will be asked to enter the URL for your wis2box. This is the URL that will be used to access the wis2box web application, API and UI.
 
 Please use `http://<your-hostname>` as the URL. Remember that your hostname is defined by your `username.wis2.training`
@@ -71,7 +77,13 @@ The URL of the wis2box will be set to:
 Is this correct? (y/n/exit)
 ```
 
-We recommend that you use the option of random password generation when prompted for `WIS2BOX_STORAGE_PASSWORD` and `WIS2BOX_BROKER_PASSWORD`.
+### STORAGE and BROKER passwords
+
+You can use the option of random password generation when prompted for `WIS2BOX_STORAGE_PASSWORD` and `WIS2BOX_BROKER_PASSWORD` or define your own.
+
+Don't worry about remembering these passwords, they will be stored in the `wis2box.env` file in your wis2box-1.0b5 directory.
+
+### Country code and centre-id
 
 Next you will be asked for the 3-letter ISO code for your country and centre-id for your wis2box. The centre-id can be a string of your choosing for the purpose of this training.
 
@@ -86,6 +98,8 @@ The centre-id will be set to:
   maaike_test
 Is this correct? (y/n/exit)
 ```
+
+### Discovery metadata
 
 Next you will answer a set of question to generate discovery metadata templates for your wis2box. The answers do not need to be correct for the purpose of this training.
 
@@ -121,6 +135,8 @@ Created new metadata file: /home/mlimper/wis2box-data/metadata/discovery/metadat
 
 We will review the discovery metadata templates in a later session.
 
+### review configuration
+
 Once the scripts is completed check the contents of the `wis2box.env` file in your current directory:
 
 ```bash
@@ -129,17 +145,47 @@ cat ~/wis2box-1.0b5/wis2box.env
 
 Or check the content of the file via WinSCP.
 
+!!! question 
+
+    What is the value of the WIS2BOX_STORAGE_DATA_RETENTION_DAYS environment variable in the wis2box.env file?
+
+??? success "Click to reveal answer"
+
+    The default value for WIS2BOX_STORAGE_DATA_RETENTION_DAYS is 30 days. You can change this value to a different number of days if you wish.
+    
+    The wis2box-management container runs a cronjob on a daily basis to remove data older than the number of days defined by WIS2BOX_STORAGE_DATA_RETENTION_DAYS from the `wis2box-public` bucket and the API backend:
+    
+    ```{.copy}
+    0 0 * * * su wis2box -c "wis2box data clean --days=$WIS2BOX_STORAGE_DATA_RETENTION_DAYS"
+    ```
+
 !!! note
 
     The `wis2box.env` file contains environment variables defining the configuration of your wis2box. For more information consult the [wis2box-documentation](https://docs.wis2box.wis.wmo.int/en/latest/reference/configuration.html)
 
-You can also check the contents of the `data-mappings.yml` file in your wis2box data directory:
+Next, check the contents of the `data-mappings.yml` file in your wis2box data directory:
 
 ```bash
 cat ~/wis2box-data/data-mappings.yml
 ```
 
-Or check the content of the file via WinSCP.
+Or check the content of the data-mappings.yml via WinSCP by browsing to the new directory 'wis2box-data' (click refresh if you don't see it yet)
+
+!!! question 
+
+    How many different keys are defined for 'data' in the data-mappings.yml file?
+
+??? success "Click to reveal answer"
+
+    There are 2 different 'data'-keys defined in the data-mappings.yml file, one for surface-based observations and one for upper-air observations:
+    
+    - nld.maaike_test.data.core.weather.surface-based-observations.synop
+    - nld.maaike_test.data.core.weather.upper-air-observations.temp
+
+    The country-code and centre-id will be different from the example above, they will be set to the values you entered during the `wis2box-create-config.py` script.
+
+    You can also note that different 'plugins' are defined for the different data types. The use of these plugins in the wis2box data pipeline architecture will be discussed in a later session.
+    
 
 !!! note
 
@@ -180,7 +226,7 @@ Repeat this command until all services are up and running.
 
 Open a new tab and navigate to the page `http://<your-host>/oapi`.
 
-<img alt="wis2box-api.png" src="../../assets/img/wis2box-api.png" width="600">
+<img alt="wis2box-api.png" src="../../assets/img/wis2box-api.png" width="800">
 
 This is the wis2box API (running via the **wis2box-api** container).
 
@@ -230,9 +276,7 @@ Open a web browser and visit the page `http://<your-host>`:
 
 <img alt="wis2box-ui.png" src="../../assets/img/wis2box-ui-empty.png" width="600">
 
-The wis2box UI will display your configured datasets. For the surface-weather-observations/synop dataset, you can `explore` the data that has been ingested.
-
-The UI is currently empty, as datasets have not yet been configured.
+The wis2box UI will display your configured datasets. The UI is currently empty, as datasets have not yet been configured.
 
 ## wis2box-broker
 
