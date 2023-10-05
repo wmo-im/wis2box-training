@@ -32,9 +32,11 @@ Your student VM has the following software pre-installed:
     - AWS (Amazon Web Services)  ec2-instance `t3a.medium` 
     - Azure (Microsoft) Azure Virtual Machine `standard_b2s`
 
-    Select Ubuntu Server 22.0.4 LTS as OS and run setup instructions as described at https://docs.wis2box.wis.wmo.int/en/latest/user/getting-started.html#software-dependencies
+    Select Ubuntu Server 22.0.4 LTS as OS.
     
-    The release archive for wis2box as used in this training can be downloaded as follows:
+    After creating your VM ensure you have installed python, docker and docker compose, as described at [wis2box-software-dependencies](https://docs.wis2box.wis.wmo.int/en/latest/user/getting-started.html#software-dependencies).
+    
+    The release archive for wis2box used in this training can be downloaded as follows:
 
     ```bash
     wget https://github.com/wmo-im/wis2box/releases/download/1.0b5/wis2box-setup-1.0b5.zip
@@ -149,9 +151,11 @@ exercise-materials  wis2box-1.0b5
 
 You can use WinSCP to connect to your instance and inspect the contents of your home directory and download or upload files between your VM and your local PC.
 
-Using WinSCP, you can create a new SCP connection to your VM as follows:
+Open WinSCP and click on the "New Site". You can create a new SCP connection to your VM as follows:
 
 <img alt="winscp-student-vm-scp.png" src="../../assets/img/winscp-student-vm-scp.png" width="400">
+
+Click 'Save' and then 'Login' to connect to your VM.
 
 And you should be able to see the following content:
 

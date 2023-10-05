@@ -53,13 +53,13 @@ Token successfully created
 Or, if you want to define your own token for the `collections/stations` endpoint, you can use the following example:
 
 ```{.copy}
-wis2box auth add-token --path collections/stations MyCatIsCalledJessie!
+wis2box auth add-token --path collections/stations DataIsMagic
 ```
 
 Output:
     
 ```{.copy}
-Continue with token: MyCatIsCalledJessie! [y/N]? y
+Continue with token: DataIsMagic [y/N]? y
 Token successfully created
 ```
 
@@ -107,28 +107,33 @@ Go back to the station list and you will see the station you added:
     - 0-20000-0-96323 (note missing station elevation in OSCAR)
     - 0-20000-0-96749 (note missing station elevation in OSCAR)
 
-!!! note "Deriving elevation information"
+!!! tip "Deriving missing elevation information"
 
-If your station elevation is missing, there are online services that allow the lookup of the elevation using open elevation data. One such example is the [Open Topo Data API](https://www.opentopodata.org).
+    If your station elevation is missing, there are online services to help lookup the elevation using open elevation data. One such example is the [Open Topo Data API](https://www.opentopodata.org).
 
-For example, to get the elevation of the BMKG auditorium one would query the Open Topo Data API as follows:
+    For example, to get the elevation of the BMKG auditorium, one would query the Open Topo Data API as follows:
 
-```bash
- wget -q -O - "https://api.opentopodata.org/v1/aster30m?locations=-6.15558,106.84204"
-{
-  "results": [
+    ```bash
+    wget -q -O - "https://api.opentopodata.org/v1/aster30m?locations=-6.15558,106.84204"
+    ```
+
+    Output:
+
+    ```{.copy}
     {
-      "dataset": "aster30m", 
-      "elevation": 7.0, 
-      "location": {
-        "lat": -6.15558, 
-        "lng": 106.84204
-      }
+      "results": [
+        {
+          "dataset": "aster30m", 
+          "elevation": 7.0, 
+          "location": {
+            "lat": -6.15558, 
+            "lng": 106.84204
+          }
+        }
+      ], 
+      "status": "OK"
     }
-  ], 
-  "status": "OK"
-}
-```
+    ```
 
 ## Review your station metadata
 
