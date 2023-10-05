@@ -13,9 +13,15 @@ title: Configuring WIS2 discovery metadata
 
 ## Introduction
 
-As described in the [overviews](../../overviews), WIS2 requires discovery metadata to be provided describing
+WIS2 requires discovery metadata to be provided describing
 your data to be shared to WIS2 Global Services.  This session will walk you through creating and publishing
 discovery metadata from wis2box from a configuration file.
+
+!!! note
+    While this practical session uses discovery metadata to publish SYNOP, feel free to use another dataset (such as TEMP).
+
+    The discovery metadata configuration file for TEMP can be found in `~/wis2box-data/metadata/discovery/metadata-temp.yml`.
+
 
 ## Preparation
 
@@ -25,17 +31,12 @@ Login to your student VM using your SSH-client.
 
 ## Creating discovery metadata
 
-Copy the test discovery metadata into your own file (you may name the file whatever you wish):
+Let's start by using the file generated during the [Initializing wis2box](../initializing-wis2box) practical session.
+
+Inspect the sample SYNOP discovery metadata:
 
 ```bash
-cd ~/wis2box-1.0b5/
-cp examples/config/surface-weather-observations.yml ~/wis2box-data/my-discovery-metadata.yml
-```
-
-Inspect the sample discovery metadata:
-
-```bash
-more ~/wis2box-data/my-discovery-metadata.yml
+more ~/wis2box-data/metadata/discovery/metadata-synop.yml
 ```
 
 !!! note
@@ -49,24 +50,20 @@ more ~/wis2box-data/my-discovery-metadata.yml
 
 Update the following values in the discovery metadata configuration:
 
-- `wis2box.topic_hierarchy`: the topic hierarchy that categorizes the data (this value should be the same as the definition in your newly created data mapping).
-- `wis2box.country`: 3-letter country code in lower case
-- `wis2box.centre_id`: your centre id as defined in the previous exercise
-- `metadata.identifier`: a unique identifier consisting of `urn:x-wmo:md:[country]:[centre_id]:[dataset_name]`, where `[dataset-name]` can be any name of your choosing.  Remember this value for API validation later on in this exercise
 - `identification.title`: a human readable title describing your data
 - `identification.abstract`: a human readable description describing your data
-- `identification.dates.creation`: when the discovery metadata was created (today's date)
-- `identification.extents.spatial (bbox)`: the bounding box coordinates of your data (minimum longitude, minimum latitude, maximum longitude, maximum latitude), in decimal degrees
-- `identification.extents.temporal (begin)`: the begin and end time of your data (keeping the end time to `null` is suitable to ongoing observations)
+- `identification.extents.temporal (begin)`: the begin (`BEGIN_DATE`) (`YYYY-MM-DD`) and end time of your data (keeping the end time to `null` is suitable to ongoing observations)
 - `contact.pointOfContact`: your organization's point of contact information
+
+!!! note
+    Many values have been pre-populated as part of the [Initializing wis2box](../initializing-wis2box) practical session, however you will want to ensure they are correct / accurate for your dataset.
 
 !!! tip
     The configuration is based on the YAML format.  Consult the [YAML cheatsheet](../cheatsheets/yaml.md) for more information.
 
 !!! tip
-    Ensure that bbox values are correctly signed (for example, use the minus sign [`-`] for southern or western hemispheres.
+    As the `identification.extents.spatial.bbox` coordinates are pre-populated, you may want to update the coordinates if the dataset coordinates are not based on your country's administrative boundaries.  Feel free to update this value accordingly, ensuring that values are correctly signed (for example, use the minus sign [`-`] for southern or western hemispheres.
 
-!!! tip
     The following tools can be valuable for deriving your `identification.extents.spatial.bbox`:
 
     - [https://gist.github.com/graydon/11198540](https://gist.github.com/graydon/11198540)
@@ -84,7 +81,7 @@ python3 wis2box-ctl.py login
 Run the following command to publish your discovery metadata:
 
 ```bash
-wis2box metadata discovery publish /data/wis2box/my-discovery-metadata.yml
+wis2box metadata discovery publish /data/wis2box/metadata/discovery/metadata-synop.yml
 ```
 
 Ensure that your discovery metadata was published to the API, by navigating to `http://<your-host>/oapi/collections/discovery-metadata`.
@@ -99,11 +96,19 @@ Ensure that your discovery metadata was also published to the broker, by looking
 
 Click on your discovery metadata record and inspect the content, noting how it relates to the discovery metadata configuration created earlier in this session.
 
-Update the title of your discovery metadata, and re-publish:
+Update the title of your discovery metadata:
 
 ```bash
-vi /data/wis2box/my-discovery-metadata.yml
-wis2box metadata discovery publish /data/wis2box/my-discovery-metadata.yml
+vi /data/wis2box/metadata/discovery/metadata-synop.yml
+```
+
+!!! tip
+    You can also use WinSCP to connect to your instance and edit this file.
+
+Now re-publish (from inside the **wis2box-management** container):
+
+```bash
+wis2box metadata discovery publish /data/wis2box/metadata/discovery/metadata-synop.yml
 ```
 
 Ensure that your discovery metadata updates were published to the API, by refreshing the page to your discovery metadata.
@@ -121,7 +126,7 @@ Feel free to update additional values and re-publishing your discovery metadata 
 Run the below command to add the data to the API:
 
 ```bash
-wis2box data add-collection /data/wis2box/my-discovery-metadata.yml
+wis2box data add-collection /data/wis2box/metadata/discovery/metadata-synop.yml
 ```
 
 Ensure that your dataset was published to the API, by navigating to `http://<your-host>/oapi/collections/<metadata.identifier>`.
