@@ -32,6 +32,8 @@ python3 wis2box-ctl.py status
 ```
 
 Make sure your have MQTT Explorer running and connected to your instance.
+If you are still connected from the previous session, clear any previous messages you may have received from the queue.
+This can be done by either by disconnecting and reconnecting or by clicking the trash can for the topic.
 
 Make sure you have a web browser open with the Grafana dashboard for your instance by going to `http://<your-host>:3000`
 
@@ -77,7 +79,8 @@ Upload the file `aws-example.csv` to the directory you just created:
     
     * `ERROR - handle() error: Topic Hierarchy validation error: No plugins for http://minio:9000/wis2box-incoming/xyz/test/data/core/weather/surface-based-observations/synop/aws-example.csv in data mappings. Did not match any of the following: ...`
 
-    The `data` definition in `data-mappings.yml` uses `.` instead of `/` to separate the path elements.
+    Note, the `data` definition in `data-mappings.yml` uses `.` instead of `/` to separate the path elements.
+    However the path using `.` in the `data-mappings.yml` and `/` in MinIO are equivalent.
 
     If there are no data mappings defined for the directory that received the data, wis2box will not initiate any workflow.
 
