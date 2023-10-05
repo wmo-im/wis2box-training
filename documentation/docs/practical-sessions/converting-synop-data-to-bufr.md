@@ -52,6 +52,12 @@ Please record the token that is generated, you will need this later in the sessi
 
 For practical purposes the exercises in this session use data from Romania, import the station ``0-20000-0-15015`` into your station list and associate it with the topic for your "Surface weather observations collection". You can remove this station at the end of the session.
 
+If you have forgotten your auth token for "collections/stations" you can create a new one with:
+
+```bash
+wis2box auth add-token --path collections/stations
+```
+
 ## Inspecting SYNOP data and BUFR conversion
 
 ### Exercise 1 - the basics
@@ -225,12 +231,7 @@ AAXX 21121
 ??? success "Click to reveal answer"
     In this first example the "end of text" symbol (=), or record delimiter, is missing between the
     first and second weather reports. Consequently, lines 2 and 3 are treated as a single report, 
-    leading to errors in the parsing of the message. The final line is also missing the end of 
-    text symbol but wis2box is able to handle this case.
-
-    The station 15090 should have been registered as part of the previous exercise. If not you will
-    also receive a warning that the station can not be found.  If this is the case, register the
-    station in the wis2box and repeat the exercise.
+    leading to errors in the parsing of the message.
 
 The second example below contains several common issue found in FM-12 SYNOP reports. Examine the
 data and try to identify the issues and then submit the corrected data through the web application.
