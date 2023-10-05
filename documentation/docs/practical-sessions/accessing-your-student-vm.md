@@ -32,9 +32,11 @@ Your student VM has the following software pre-installed:
     - AWS (Amazon Web Services)  ec2-instance `t3a.medium` 
     - Azure (Microsoft) Azure Virtual Machine `standard_b2s`
 
-    Select Ubuntu Server 22.0.4 LTS as OS and run setup instructions as described at https://docs.wis2box.wis.wmo.int/en/latest/user/getting-started.html#software-dependencies
+    Select Ubuntu Server 22.0.4 LTS as OS.
     
-    The release archive for wis2box as used in this training can be downloaded as follows:
+    After creating your VM ensure you have installed python, docker and docker compose, as described at [wis2box-software-dependencies](https://docs.wis2box.wis.wmo.int/en/latest/user/getting-started.html#software-dependencies).
+    
+    The release archive for wis2box used in this training can be downloaded as follows:
 
     ```bash
     wget https://github.com/wmo-im/wis2box/releases/download/1.0b5/wis2box-setup-1.0b5.zip
