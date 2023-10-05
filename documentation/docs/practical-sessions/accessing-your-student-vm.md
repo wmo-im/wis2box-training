@@ -149,9 +149,11 @@ exercise-materials  wis2box-1.0b5
 
 You can use WinSCP to connect to your instance and inspect the contents of your home directory and download or upload files between your VM and your local PC.
 
-Using WinSCP, you can create a new SCP connection to your VM as follows:
+Open WinSCP and click on the "New Site". You can create a new SCP connection to your VM as follows:
 
 <img alt="winscp-student-vm-scp.png" src="../../assets/img/winscp-student-vm-scp.png" width="400">
+
+Click 'Save' and then 'Login' to connect to your VM.
 
 And you should be able to see the following content:
 

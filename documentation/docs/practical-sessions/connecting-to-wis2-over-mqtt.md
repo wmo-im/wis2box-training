@@ -107,7 +107,7 @@ Use MQTT to browse topic structure under the `origin` and `cache` topics.
     
     How can we distinguish the originating country providing the data? 
 
-??? note "Click to reveal answer"
+??? success "Click to reveal answer"
 
     We can distinguish the originating country by looking at the fourth level of the topic structure.  For example, the following topic:
 
@@ -122,7 +122,7 @@ Use MQTT to browse topic structure under the `origin` and `cache` topics.
 
     How can we distinguish the data type?
 
-??? note "Click to reveal answer"
+??? success "Click to reveal answer"
 
     We can distinguish the data type by looking at the ninth level of the topic structure.  For example, the following topic:
 
@@ -150,7 +150,7 @@ You can view the content of the WIS2 message in the "Value" section on the right
 
     How can we identify the timestamp that the data was published? And how can we identify the timestamp that the data was collected?
 
-??? note "Click to reveal answer"
+??? success "Click to reveal answer"
 
     The timestamp that the data was published is contained in the `properties` section of the message with a key of `pubtime`.
 
@@ -160,7 +160,7 @@ You can view the content of the WIS2 message in the "Value" section on the right
 
     How can we download the data from the URL provided in the message?
 
-??? note "Click to reveal answer"
+??? success "Click to reveal answer"
 
     The URL is contained in the `links` section with `rel="canonical"` and defined by the `href` key.
 
@@ -174,7 +174,7 @@ The same message is published on both the `origin` and `cache` topics. Find a me
 
     What is the difference between the messages published on the `origin` and `cache` topics?
 
-??? note "Click to reveal answer"
+??? success "Click to reveal answer"
 
     The message published on the `origin` topic contains a URL to the original data.  The message published on the `cache` topic contains a URL to the data cached by the Global Cache.
 
