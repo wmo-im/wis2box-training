@@ -1,3 +1,0 @@
-What is incorrect about this SYNOP file?
-= sign is missing at the end of some reports
-synop2bufr was not able to detect the missing = error. It continued to decode the SYNOP report encountering unexpected and undecodable groups.

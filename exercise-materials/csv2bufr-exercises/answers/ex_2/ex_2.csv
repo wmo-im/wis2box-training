@@ -1,5 +1,0 @@
-CR300,14306,CR310-CELL215.Std.10.04,CPU:CR310_Malawi_Mulanje_V1R9_19012022_T3.CR300,5568,SYNOP,,,,,,,,,,,,,,,
-WMO_Block,Station_ID,Station_Name,WMO_Station_Type,M_Year,M_Month,M_DayOfMonth,M_HourOfDay,M_Minutes,Latitude,Longitude,Elevation,BP_Elevation,BP,QNH,BP_Change,BP_Tendency,Temp_H,AirTempK,DewPointTempK,RH
-,,,,,,,,,,,,m,,hPa,Pa,,m,K,K,%
-Smp,Smp,Smp,Smp,Smp,Smp,Smp,Smp,Smp,Smp,Smp,Smp,Smp,Smp,Smp,Smp,Smp,Smp,Smp,Smp,Smp
-6,0-454-2-AWSMULANJE,Mulanje,0,2023,5,26,0,55,-16.03,35.51,649,650,94417.67,102043.2,-35.4375,7,1.5,299,289.1,54.09
