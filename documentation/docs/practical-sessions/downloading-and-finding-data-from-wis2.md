@@ -50,8 +50,10 @@ Update the following values in the configuration:
 Run the `pywis-pubsub` command:
 
 ```bash
-pywis-pubsub subscribe -c ~/exercise-materials/pywis-pubsub-exercises/config.yml --verbosity INFO -d
+pywis-pubsub subscribe -c ~/exercise-materials/pywis-pubsub-exercises/config.yml --verbosity DEBUG
 ```
+
+At this point you should see a number of ongoing messages on your screen.  Hit `Crtl-C` to stop messages from arriving/download to help analyze the content.
 
 !!! note
 
@@ -94,7 +96,7 @@ pywiscat wis2 search --help
 ```
 
 !!! note
-    pywiscat is pre-installed on the local training environment, but can be installed from anywhere with `pip3 pywiscat`
+    pywiscat is pre-installed on the local training environment, but can be installed from anywhere with `pip3 install pywiscat`
 
 ```bash
 pywiscat wis2 search
