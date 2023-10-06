@@ -239,30 +239,31 @@ Go to the directory `exercise-materials/data-ingest` and run the example script 
 
 ```bash
 cd ~/exercise-materials/data-ingest
-python3 examples/scripts/copy_to_incoming.py
+python3 copy_data_to_incoming.py
 ```
 
 !!! note
-    The sample script needs to be modified before it can be used. 
+    
+    You will get an error as the script is not configured to access the MinIO endpoint on your wis2box yet.
 
 The script needs to know the correct endpoint for accessing MinIO on your wis2box. If wis2box is running on your host, the MinIO endpoint is available at `http://<your-host>:9000`.
 
-The sample script provides the basic structure for copying a file into MinIO. Try to ingest a data sample of your choosing using this script.
+The sample script provides the basic structure for copying a file into MinIO.
 
 !!! question "ingest data using Python"
-    Use the Python example provided to create your own Python script to ingest data into your wis2box.  
+    Use the Python example provided to create to ingest data into your wis2box.  
     
     Ensure that you:
 
     - define the correct MinIO endpoint for your host
     - define the correct path in MinIO for the topics defined in your `data-mappings.yml`
-    - determine the correct local path where the script can access the data to ingest
+    - provide the correct storage credentials for your MinIO instance
 
 You can verify that the data was uploaded correctly by checking the MinIO user interface and seeing if the sample data is available in the correct directory in the `wis2box-incoming` bucket.
 
-To check the data ingest status, you can use the Grafana dashboard to check the status of the data ingest workflow.
+You can use the Grafana dashboard to check the status of the data ingest workflow.
 
-Finally you can use MQTT Explorer to check if the data was published to the MQTT broker.
+Finally you can use MQTT Explorer to check if notifications were published for the data you ingested.
 
 ## Cleaning up
 
