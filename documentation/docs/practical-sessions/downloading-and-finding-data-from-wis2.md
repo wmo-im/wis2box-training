@@ -50,7 +50,7 @@ Update the following values in the configuration:
 Run the `pywis-pubsub` command:
 
 ```bash
-pywis-pubsub subscribe -c ~/exercise-materials/pywis-pubsub-exercises/config.yml --verbosity DEBUG -d
+pywis-pubsub subscribe -c ~/exercise-materials/pywis-pubsub-exercises/config.yml --verbosity DEBUG
 ```
 
 At this point you should see a number of ongoing messages on your screen.  Hit `Crtl-C` to stop messages from arriving/download to help analyze the content.
