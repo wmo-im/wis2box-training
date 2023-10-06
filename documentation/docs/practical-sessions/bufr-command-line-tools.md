@@ -15,12 +15,15 @@ title: BUFR command line tools
 
 ## Introduction
 
-The wis2box management container contains some tools for working with BUFR files from the command line. 
+The wis2box-management container contains some tools for working with BUFR files from the command line. 
+
 These include the tools developed by ECMWF and included in the ecCodes software, more information on these can be 
-found on the [ecCodes website](https://confluence.ecmwf.int/display/ECC/BUFR+tools). Other tools include those
-developed as part of the wis2box development, including csv2bufr and synop2bufr that you have previously used
-but via the wis2box web-application. In this session you will be introduced to the `bufr_ls` and `bufr_dump` from
-the ecCodes software package and advanced configuration of the csv2bufr tool.
+found on the [ecCodes website](https://confluence.ecmwf.int/display/ECC/BUFR+tools). 
+
+Other tools include thosedeveloped as part of the wis2box development, including csv2bufr and synop2bufr that you have previously used
+but via the wis2box web-application. 
+
+In this session you will be introduced to the `bufr_ls` and `bufr_dump` from the ecCodes software package and advanced configuration of the csv2bufr tool.
 
 ## Preparation
 
@@ -62,13 +65,9 @@ Finally, create a working directory to work in:
 
 ```{.copy}
 cd /data/wis2box
-mkdir working working/bufr-cli
+mkdir -p working/bufr-cli
 cd working/bufr-cli
 ```
-??? warning
-    Note that the working directory may exist from the synop2bufr session. If this is the case
-    you will get a warning message that the "working" already exists ("File exists") and cannot be created.
-    Ignore this message but verify the bufr-cli directory has been created.
 
 You are now ready to start using the BUFR tools.
 
@@ -93,27 +92,21 @@ contents of the file. The following headers are included in a BUFR file:
 | Minute                            | typicalMinute (typicalTime)  | Most typical time for the BUFR message contents                                                                                                       |
 | BUFR descriptors                  | unexpandedDescriptors        | List of one, or more, BUFR descriptors defining the data contained in the file                                                                        |
 
-Download the example file from the link below and copy the file to the wis2box management container: 
+Download the example file directly into the wis2box-management container using the following command:
 
-Example file: [bufr-cli-ex1.bufr4](/sample-data/bufr-cli-ex1.bufr4)
+``` {.copy}
+curl https://training.wis2box.wis.wmo.int/sample-data/bufr-cli-ex1.bufr4 --output bufr-cli-ex1.bufr4
+```
 
-!!! hint
-    You can also download the file directly on your student VM. Log in to the wis2box management container, navigate to 
-    your working directory and use `curl`, e.g. 
-    
-    ``` {.copy}
-    curl https://training.wis2box.wis.wmo.int/sample-data/bufr-cli-ex1.bufr4 --output bufr-cli-ex1.bufr4
-    ```
+Now use the following command to run `bufr_ls` on this file:
 
-Now run the command `bufr_ls` on the file.
-
-```{.copy}
+```bash
 bufr_ls bufr-cli-ex1.bufr4
 ```
+
 You should see the following output:
 
-```
->> bufr_ls bufr-cli-ex1.bufr4
+```bash
 bufr-cli-ex1.bufr4
 centre                     masterTablesVersionNumber  localTablesVersionNumber   typicalDate                typicalTime                numberOfSubsets
 cnmc                       29                         0                          20231002                   000000                     1
@@ -123,9 +116,12 @@ cnmc                       29                         0                         
 ```
 
 On its own this information is not very informative, with only limited information on the file contents provided. 
+
 The default output does not provide information on the observation, or data, type and is in a format that is not
 very easy to read. However, various options can be passed to `bufr_ls` to change both the format and header fields 
-printed.  Use `bufr_ls` without any arguments to view the options:
+printed.  
+
+Use `bufr_ls` without any arguments to view the options:
 
 ```{.copy}
 bufr_ls
@@ -204,8 +200,9 @@ Now run the same command on the example file but output the information in JSON.
 
 When examining a BUFR file we often want to determine the type of data contained in the file and the typical date / time
 of the data in the file. This information can be listed using the `-p` flag to select the headers to output. Multiple
-headers can be included using a comma separated list. Using the `bufr_ls` command inspect the test file and identify
-the type of data contained in the file and the typical date and time for that data.
+headers can be included using a comma separated list. 
+
+Using the `bufr_ls` command inspect the test file and identify the type of data contained in the file and the typical date and time for that data.
 
 ??? hint
     The ecCodes keys are given in the table above. We can use the following to list the dataCategory and
@@ -257,22 +254,22 @@ the type of data contained in the file and the typical date and time for that da
 ### Exercise 2 - bufr_dump
 
 The `bufr_dump` command can be used to list and examine the contents of a BUFR file, including the data itself.
-In this exercise we will use the BUFR file created from the first csv2bufr practical session. This can be downloaded 
-to the wis2box management container directly with the following command:
+
+In this exercise we will use a BUFR file that is the same as your created during the initial csv2bufr practical session using the wis2box-webapp.
+
+Download the sample-file to the wis2box management container directly with the following command:
 
 ``` {.copy}
 curl https://training.wis2box.wis.wmo.int/sample-data/bufr-cli-ex2.bufr4 --output bufr-cli-ex2.bufr4
 ```
 
-Now run the `bufr_dump` command on the file:
+Now run the `bufr_dump` command on the file, using the `-p` flag to output the data in plain text (key=value format):
 
 ```{.copy}
 bufr_dump -p bufr-cli-ex2.bufr4
 ```
 
-The `-p` flag instructs bufr_dump to output the decoded data in plain text and as a list of key / value pairs,
-with one key/value pair per line. You should see around 240 keys output, many of which are missing. This is typical
-with real world data.
+You should see around 240 keys output, many of which are missing. This is typical with real world data as not all the eccodes keys are populated with reported data.
 
 !!! hint
     The missing values can be filtered using tools such as `grep`:
@@ -280,16 +277,26 @@ with real world data.
     bufr_dump -p bufr-cli-ex2.bufr4 | grep -v MISSING
     ```
 
+The example BUFR file for this exercise comes from the csv2bufr practical session. Please download the original CSV file into your current location as follows:
 
-The example BUFR file for this exercise comes from the csv2bufr practical session,
-the input file can be re-downloaded from the link below. 
+```{.copy}
+curl https://training.wis2box.wis.wmo.int/sample-data/csv2bufr-ex1.csv --output csv2bufr-ex1.csv
+```
 
-Example file: [csv2bufr-ex1.csv](/sample-data/csv2bufr-ex1.csv)
+And display the content of the file with:
 
-After downloading, examine the input csv file and how compare to the BUFR output.
+```{.copy}
+more csv2bufr-ex1.csv
+```
 
 !!! question
-    Which key in the BUFR output corresponds to the mean sea level pressure (msl_pressure) in the CSV file?
+    Use the following command to display column 18 in the CSV file and you will find the reported mean sea level pressure (msl_pressure):
+
+    ```{.copy}
+    more csv2bufr-ex1.csv | cut -d ',' -f 18
+    ```
+    
+    Which key in the BUFR output corresponds to the mean sea level pressure ?
 
 ??? hint
     Tools such as `grep` can be used in combination with `bufr_dump`. For example:
@@ -305,18 +312,23 @@ After downloading, examine the input csv file and how compare to the BUFR output
     The key "pressureReducedToMeanSeaLevel" corresponds to the msl_pressure column in the input CSV file.
 
 Spend a few minutes examining the rest of the output, comparing to the input CSV file before moving on to the next
-exercise. Look at the correspondence between the column names in the CSV and the ecCodes keys.
+exercise. For example, you can try to find the keys in the BUFR output that correspond to relative humidity (column 23 in the CSV file) and air temperature (column 21 in the CSV file).
 
 ### Exercise 3 - csv2bufr mapping files
 
-The csv2bufr tool can be configured to process tabular data with different columns and BUFR sequences. This is done by
-the way of a configuration file written in the JSON format. Like BUFR data itself, the JSON file contains a header section
-and a data section, with these broadly corresponding to the same sections in BUFR. Additionally, some formatting options
-are specified within the JSON file. The JSON file for the default mapping can be downloading via the link below:
+The csv2bufr tool can be configured to process tabular data with different columns and BUFR sequences. 
+
+This is done by the way of a configuration file written in the JSON format. 
+
+Like BUFR data itself, the JSON file contains a header section and a data section, with these broadly corresponding to the same sections in BUFR. 
+
+Additionally, some formatting options are specified within the JSON file. 
+
+The JSON file for the default mapping can be view via the link below (right-click and open in new tab):
 
 [aws-template.json](https://raw.githubusercontent.com/wmo-im/csv2bufr/main/csv2bufr/templates/resources/aws-template.json)
 
-Examiner the `header` section of the mapping file (shown below) and compare to the table from exercise 1 (ecCodes key column):
+Examine the `header` section of the mapping file (shown below) and compare to the table from exercise 1 (ecCodes key column):
 
 ```
 "header":[
@@ -414,10 +426,9 @@ Now modify the file to change the limits for air temperature, for example set to
         {"eccodes_key": "#1#airTemperature", "value": "data:air_temperature", "valid_min": "const:-60", "valid_max": "const:60"},
 ```
 
-Now use `csv2bufr` to transform the example CSV data file to BUFR. You may need to download the input csv data first:
+Now use `csv2bufr` to transform the example CSV data file to BUFR using the modified mapping file:
 
 ```{.copy}
-curl https://training.wis2box.wis.wmo.int/sample-data/csv2bufr-ex1.csv --output csv2bufr-ex1.csv  # skip this step if already downloaded
 csv2bufr data transform --bufr-template aws-template.json csv2bufr-ex1.csv
 ```
 
@@ -431,8 +442,13 @@ CLI:    ..... 384 bytes written to ./WIGOS_0-20000-0-99100_20230929T090000.bufr4
 CLI:    End of processing, exiting.
 ```
 
-This suggests a mismatch between the units in the input data and that expected by the mapping file.  
-Use the `bufr_dump` command to confirm that the first air temperature value has been set to missing.
+This suggests a mismatch between the units in the input data and that expected by the mapping file.
+
+Use the `bufr_dump` command to confirm that the first air temperature value has been set to missing in the file that was produced:
+
+```{.copy}
+bufr_dump -p WIGOS_0-20000-0-99100_20230929T090000.bufr4 | grep airTemperature
+```
 
 !!! note
     Note that the units used in BUFR are fixed, Kelvin for temperature, Pascals for pressure etc. However,
@@ -445,14 +461,18 @@ airTemperature line.
         {"eccodes_key": "#1#airTemperature", "value": "data:air_temperature", "valid_min": "const:-60", "valid_max": "const:60", "scale": "const:0", "offset":"const:273.15"},
 ```
 
-Now update the air_temperature column in the input CSV file to be in Celsius rather than Kelvin and rerun the BUFR
-conversion. Run BUFR dump and confirm that the airTemperature is correctly encoded.
+And edit  the air_temperature column in the 'csv2bufr-ex1.csv' to be in Celsius rather than Kelvin: 301.25 K = 28.1 degrees C.
 
-??? hint
-    Subtract 273.15 from the air temperature to convert to Kelvin, 301.25 K = 28.1 degrees C.
+Rerun the conversion:
 
 ```{.copy}
- bufr_dump -p WIGOS_0-20000-0-99100_20230929T090000.bufr4 | grep airTemperature
+csv2bufr data transform --bufr-template aws-template.json csv2bufr-ex1.csv
+```
+ 
+Run BUFR dump and confirm that the airTemperature is correctly encoded.
+    
+```{.copy}
+bufr_dump -p WIGOS_0-20000-0-99100_20230929T090000.bufr4 | grep airTemperature
 ```
 
 You should see the following output:
@@ -466,36 +486,7 @@ You should see the following output:
 
 The `bufr-template` used by csv2bufr can be specified by providing a filename to the command, as per the above example,
 or by setting a search path with an environment variable and by specifying the template name. The template name must match
-the filename but without the extension, with the file located on the search path. Try the commands from the block below:
-
-```{.copy}
-export CSV2BUFR_TEMPLATES=/data/wis2box/working/bufr-cli
-csv2bufr data transform --bufr-template aws-template csv2bufr-ex1.csv
-```
-
-The first line sets the search path whilst the second runs the csv2bufr command. Note the removal of the file extension
-from the `bufr-template`.
-
-!!! note
-    This assumes that you are working in a directory called ``/data/wis2box/working/bufr-cli`` in the management container.
-    You may need to update the paths as appropriate.
-
-When configuring the wis2box data mappings file (data-mappings.yml) the csv2bufr plugin can be configured to use
-different templates, see the example below:
-
-```
-            csv:
-                - plugin: wis2box.data.csv2bufr.ObservationDataCSV2BUFR
-                  template: aws-template
-                  notify: true
-                  file-pattern: '^.*\.csv$'
-```
-
-This is a snippet from a `data-mappings.yml` file and the template name can be seen in the line:
-
-```
-                  template: aws-template
-```
+the filename but without the extension, with the file located on the search path. 
 
 !!! bug
     Currently, the default mapping file used in the csv2bufr automated workflow sets the originating centre
@@ -537,62 +528,56 @@ Navigate to the directory and download the default bufr-template:
 ```{.copy}
 cd bufr-templates
 curl https://raw.githubusercontent.com/wmo-im/csv2bufr/main/csv2bufr/templates/resources/aws-template.json \
-    --output aws-template-<your-country-code>.json
+    --output aws-template-custom.json
 ```
 
-Where you have replaced `<your-country-code>` with your country code. 
-Editor the file using `vi` or your favourite text editor and update the value of the `originatingCentre`.
-Next edit your `data-mappings.yml` file to use this new file.
-
-```
-cd /data/wis2box
-vi data-mappings.yml
-```
-
-Now log out and return to the student VM. The final steps are to update the environment variables and to 
-restart the wis2box containers.
+Make sure the file 'aws-template-custom.json' is in the directory '/data/wis2box/bufr-templates':
 
 ```{.copy}
-cd ~/wis2box-1.0b5/
-echo "export CSV2BUFR_TEMPLATES=/data/wis2box/bufr-templates" >> wis2box.env
-python3 wis2box-ctl.py restart
+ls /data/wis2box/bufr-templates
 ```
 
-Once the containers have restarted log in to the management container and verify that the mappings and templates have
-been updated.
+Edit the file using `vi` or your favourite text editor and update the value of the `bufrHeaderCentre`.
 
-!!! hint
-    Before entering the last command make sure you are listening to your broker with MQTT Explorer. You should see
-    the notification being sent for the data you have just ingested.
+Now try the commands from the block below:
 
-First login to the container and re-download the test data, this was modified during the last exercise.
-
-```
-cd ~/wis2box-1.0b5/
-python3 wis2box-ctl.py login
-cd /data/wis2box/working/bufr-cli
+```{.copy}
 curl https://training.wis2box.wis.wmo.int/sample-data/csv2bufr-ex1.csv --output csv2bufr-ex1.csv
+export CSV2BUFR_TEMPLATES=/data/wis2box/bufr-templates
+csv2bufr data transform --bufr-template aws-template-custom csv2bufr-ex1.csv
 ```
 
-Now ingest the data (note, you will need to update the topic in the code below):
+Inspect the output file using `bufr_ls` and confirm that the originating centre in the headers is updated.
 
-```
-wis2box data ingest \
-    --topic-hierarchy <your-topic> \
-    --path /data/wis2box/working/bufr-cli/    
-```
+!!! note
 
-Download the data from the notification and inspect the contents using ``bufr_ls`` and confirm
-that the originating center has been updated.
+    You can use the custom mappings in your automated workflow by updating your data-mappings.yml and updating the environment variable for CSV2BUFR_TEMPLATES.
 
-!!! hint
-    The file URL to download is given by the "href" property in the canonical link. See the screenshot below (you may 
-    need to right click and open the image in a new tab to view the details).
-    
-    <center><img alt="Image showing notification in MQTT Explorer, with href highlighted" 
-    src="../../assets/img/bufr-cli-mqtt-ex.png"/></center>
+    Edit your `data-mappings.yml` file to use this new file by updating the template name:
 
-Finally, navigate to the notifications page on the web-application and inspect the data. 
+    ```
+                csv:
+                    - plugin: wis2box.data.csv2bufr.ObservationDataCSV2BUFR
+                    template: aws-template-custom
+                    notify: true
+                    file-pattern: '^.*\.csv$'
+    ```
+
+    Add the environment variable to your `wis2box.env` file:
+
+    ```{.copy}
+    cd ~/wis2box-1.0b5/
+    echo "export CSV2BUFR_TEMPLATES=/data/wis2box/bufr-templates" >> wis2box.env
+    ```
+
+    And restart the wis2box-stack:
+
+    ```{.copy}
+    python3 wis2box-ctl.py stop
+    python3 wis2box-ctl.py start
+    ```
+
+    The new template should now be used in the automated workflow.
 
 ## Housekeeping
 
