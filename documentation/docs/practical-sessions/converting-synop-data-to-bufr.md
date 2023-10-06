@@ -204,7 +204,7 @@ Three BUFR files should be generated and there should be no warnings or errors l
 In addition to the basic station information, additional metadata such as the station elevation above sea level and the
 barometer height above sea level are required for encoding to BUFR. The fields are included in the station list and station editor pages.
     
-### Excercise 4 - debugging
+### Exercise 4 - debugging
 
 In this final exercise you will identify and correct two of the most common problems encountered when
 using this tool to convert FM-12 SYNOP to BUFR. 
@@ -221,7 +221,7 @@ may be prior to submitting the data through the web application.
 AAXX 21121
 15015 02999 02501 10103 21090 39765 42952 57020 60001
 15020 02997 23104 10130 21075 30177 40377 58020 60001 81041=
-15090 02997 53102 10139 21075 30271 40364 58031 60001 82046
+15090 02997 53102 10139 21075 30271 40364 58031 60001 82046=
 ```
 
 !!! question
@@ -233,7 +233,7 @@ AAXX 21121
     first and second weather reports. Consequently, lines 2 and 3 are treated as a single report, 
     leading to errors in the parsing of the message.
 
-The second example below contains several common issue found in FM-12 SYNOP reports. Examine the
+The second example below contains several common issues found in FM-12 SYNOP reports. Examine the
 data and try to identify the issues and then submit the corrected data through the web application.
 
 ```{.copy}
@@ -273,7 +273,7 @@ You can also delete the file used in the final exercise as this will no longer b
     In this practical session, you learned:
 
     - how to submit a FM-12 SYNOP report through the web-app;
-    - how to diagnose and correct simple errors in an FM-12SYNOP report;
+    - how to diagnose and correct simple errors in an FM-12 SYNOP report;
     - the importance of registering stations in the wis2box (and OSCAR/Surface);
-    - and how to use `bufr_dump` to inspect the content of BUFR data.
+    - and the use of the inspect button to view the content of BUFR data.
 
