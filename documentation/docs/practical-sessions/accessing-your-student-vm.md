@@ -92,9 +92,7 @@ passwd: password updated successfully
 
 ## Verify software versions
 
-To be able to practice data conversion to BUFR, the student VM comes with ecCodes, synop2bufr and csv2bufr pre-installed.
-
-To be able to run wis2box, the student VM is provided with with Python, Docker and Docker Compose pre-installed. 
+To be able to run wis2box, the student VM should have Python, Docker and Docker Compose pre-installed. 
 
 Check Python version:
 ```bash
