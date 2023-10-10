@@ -71,7 +71,7 @@ Token successfully created
 
 The **wis2box-webapp** provides a graphical user interface to edit station metadata.
 
-Open the **wis2box-webapp** in your browser by navigating to `http://<your-host>/wis2box-app`:
+Open the **wis2box-webapp** in your browser by navigating to `http://<your-host>/wis2box-webapp`:
 
 <img alt="wis2box-webapp" src="../../assets/img/wis2box-webapp.png" width="800">
 
@@ -79,7 +79,7 @@ And select stations:
 
 <img alt="wis2box-webapp-select-stations" src="../../assets/img/wis2box-webapp-select-stations.png" width="250">
 
-When you click add 'add new station' you are asked to provide the WIGOS-station-identifier for the station you want to add:
+When you click add 'add new station' you are asked to provide the WIGOS station identifier for the station you want to add:
 
 <img alt="wis2box-webapp-import-station-from-oscar" src="../../assets/img/wis2box-webapp-import-station-from-oscar.png" width="800">
 
@@ -101,7 +101,7 @@ Go back to the station list and you will see the station you added:
     
     Please use stations from your country if possible, especially if you brought your own data.
     
-    Otherwise, you can use the following WIGOS-station-identifiers for testing purposes:
+    Otherwise, you can use the following WIGOS station identifiers for testing purposes:
 
     - 0-20000-0-91334
     - 0-20000-0-96323 (note missing station elevation in OSCAR)
