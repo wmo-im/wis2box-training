@@ -1,7 +1,7 @@
 # Training environment
 
 The wis2box portable training environment consists of the following components:
-- One (1) Nighthawk WiFi router
+- One (1) Nighthawk Wi-Fi router
 - Three (3) ZOTAX ZBOX Mini PCs (M Series Edge MI623)
 
 Each ZOTAX ZBOX Mini PC has been fitted with:
@@ -12,29 +12,32 @@ The ZOTAX ZBOX Mini PCs are running virtualization software: ProxMox version 7.3
 
 The 3 PCs together are setup in a ProxMox cluster to provide VMs for participants during the training.
 
-The Nighthawk is setup to broadcast a password-protected WiFi network with SSID **WIS2-training**.
+The Nighthawk is setup to broadcast a password-protected Wi-Fi network with SSID **WIS2-training**.
 The local network is defined by 10.0.0.1/22
 
 Adminstrators can access training environment from the following locations:
 
-- Nighthawk WiFi router interface at https://10.0.0.1
+- Nighthawk Wi-Fi router interface at https://10.0.0.1
 - ProxMox cluster interface at https://10.0.1.1:8006
 
-Each VM host has a 'vm-clone-base'-template from which new VMs can be created.
+Each VM host has a 'vm-clone-base' template from which new VMs can be created.
 
 The 'vm-clone-base' template consists of:
 
 - 2 vCPUs
 - 48 GB local storage
 - 4 GB RAM
-- Ubuntu 20.0.4 with the following tools installed
+- Ubuntu 20.0.4 with the following system packages installed:
     - Docker CE
     - mosquitto-clients
     - python3
     - python3-pip
     - unzip
     - docker-compose
-    - minio pywis-pubsub (installed via `pip3`)
+    - packages installed via `pip3`:
+      - minio
+      - pywis-pubsub
+      - pywiscat
 - `/etc/docker/daemon.json` with a Docker registry mirror pointing to http://10.0.2.222:5000
 
 ### VM naming convention

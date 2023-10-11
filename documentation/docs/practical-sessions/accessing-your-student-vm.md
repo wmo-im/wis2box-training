@@ -64,7 +64,7 @@ Your student VM has the following software pre-installed:
 
 ## Connect to your student VM on the local training network
 
-Use the following configuration to connect your PC on the local WiFi broadcasted in the room during WIS2 training:
+Use the following configuration to connect your PC on the local Wi-Fi broadcasted in the room during WIS2 training:
 
 - **SSID: WIS2-training**
 - **password: dataismagic!**
