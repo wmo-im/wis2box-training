@@ -286,10 +286,10 @@ Click `+` to add a new connection:
 
 <img alt="mqtt-explorer-new-connection.png" src="../../assets/img/mqtt-explorer-new-connection.png" width="300">
 
-Click on the 'ADVANCED' button and add the following topics to subscribe to:
+Click on the 'ADVANCED' button make sure you have subscriptions to the the following topics:
 
 - `$SYS/#`
-- `origin/a/wis2/#`
+- `origin/#`
 - `wis2box/#`
 
 <img alt="mqtt-explorer-topics.png" src="../../assets/img/mqtt-explorer-topics.png" width="550">
