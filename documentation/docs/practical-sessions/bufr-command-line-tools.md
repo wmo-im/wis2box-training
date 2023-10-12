@@ -570,7 +570,7 @@ Inspect the output file using `bufr_ls` and confirm that the originating centre 
     echo "export CSV2BUFR_TEMPLATES=/data/wis2box/bufr-templates" >> wis2box.env
     ```
 
-    And restart the wis2box-stack:
+    And restart the wis2box stack:
 
     ```{.copy}
     python3 wis2box-ctl.py stop
