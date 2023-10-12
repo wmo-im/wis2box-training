@@ -44,10 +44,10 @@ From the landing page, click on the 'Collections' link, then click on the 'Stati
 Click on the 'Browse' link, then click on the 'json' link.
 
 !!! question
-    How many stations are returned? Compare this number to the station list in `/data/wis2box/metadata/station/station_list.csv` file when logged into wis2box (`python3 wis2box-ctl.py login`).
+    How many stations are returned? Compare this number to the station list in `http://<your-host>/wis2box-webapp/station`
 
 ??? success "Click to reveal answer"
-    The number of stations from the API should be equal to the number of stations in `/data/wis2box/metadata/station/station_list.csv`.
+    The number of stations from the API should be equal to the number of stations you see in the wis2box webapp.
 
 !!! question
     How can we query for a single station (e.g. `Balaka`)?
