@@ -92,7 +92,7 @@ Let's use [pywiscat](https://github.com/wmo-im/pywiscat) to query the GDC
 At the moment, the available GDCs are as follows:
 
 - Environment and Climate Change Canada, Meteorological Service of Canada: https://api.weather.gc.ca/collections/wis2-discovery-metadata
-- China Meteorological Administration: https://api.weather.gc.ca/collections/wis2-discovery-metadata
+- China Meteorological Administration: https://api.weather.gc.ca/api/collections/wis2-discovery-metadata
 
 ```bash
 pywiscat wis2 search --help
