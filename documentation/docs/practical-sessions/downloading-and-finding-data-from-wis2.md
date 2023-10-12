@@ -39,12 +39,10 @@ Update the sample configuration (see the sections marked **TBD**) to connect to 
 vi ~/exercise-materials/pywis-pubsub-exercises/config.yml
 ```
 
-Open MQTT Explorer and connect to the Météo-France Global Broker.
-
 Update the following values in the configuration:
 
 - **broker**: `mqtts://everyone:everyone@globalbroker.meteo.fr:8883`
-- **subscribe_topics**: fill in one to many topics `origin/#` and `cache/#` (on separate lines)
+- **subscribe_topics**: fill in one to many topics `cache/#` (on separate lines)
 - **storage.option.path**: add a directory to where data should be downloaded
 
 Run the `pywis-pubsub` command:
