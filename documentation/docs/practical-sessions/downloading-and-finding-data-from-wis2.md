@@ -31,7 +31,7 @@ pywis-pubsub subscribe --help
 ```
 
 !!! note
-    pywis-pubsub is pre-installed on the local training environment, but can be installed from anywhere with `pip3 pywis-pubsub`
+    pywis-pubsub is pre-installed on the local training environment, but can be installed from anywhere with `pip3 install pywis-pubsub`
 
 Update the sample configuration (see the sections marked **TBD**) to connect to the Météo-France Global Broker:
 
@@ -89,12 +89,21 @@ pywis-pubsub subscribe -c ~/exercise-materials/pywis-pubsub-exercises/config.yml
 
 Let's use [pywiscat](https://github.com/wmo-im/pywiscat) to query the GDC
 
+At the moment, the available GDCs are as follows:
+
+- Environment and Climate Change Canada, Meteorological Service of Canada: https://api.weather.gc.ca/collections/wis2-discovery-metadata
+- China Meteorological Administration: https://api.weather.gc.ca/collections/wis2-discovery-metadata
+
 ```bash
 pywiscat wis2 search --help
 ```
 
 !!! note
     pywiscat is pre-installed on the local training environment, but can be installed from anywhere with `pip3 install pywiscat`
+
+!!! note
+    by default, pywiscat connects to Canada's Global Discovery Catalogue.  To set to a different catalogue, set the `PYWISCAT_GDC_URL`
+    environment variable
 
 ```bash
 pywiscat wis2 search
