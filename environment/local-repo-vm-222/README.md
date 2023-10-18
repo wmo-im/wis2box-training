@@ -2,9 +2,9 @@
 
 This is the stack to be run on the VM with IP 10.0.2.222
 
-This stack is used to make a local set of services available within the WIS2-training network:
+This stack is used to make a local set of services available within the **WIS2-training** network:
 
-- docker-registry-mirror: to cache docker-images and reduce build time
+- docker-registry-mirror: to cache Docker images and reduce build time
 - MinIO bucket: to make training materials locally available over HTTP
 - mosquitto broker: to demonstrate MQTT and/or to act as potential local GB
 

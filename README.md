@@ -8,7 +8,7 @@ The `environment` directory provides documentation and materials used to run the
 
 The wis2box training is designed to be run on a local network containing all data, images and configurations.
 
-A set of hardware (WiFi router and 3 mini PCs) is brought along to local training sessions. The hardware setup will provide a dedicate student VM with Ubuntu and docker to each participant.
+A set of hardware (Wi-Fi router and 3 mini PCs) is brought along to local training sessions. The hardware setup will provide a dedicate student VM with Ubuntu and docker to each participant.
 
 A local registry mirroring Docker Hub is setup on the local hardware to reduce the time needed to download large Docker images in a low bandwidth environment.
 

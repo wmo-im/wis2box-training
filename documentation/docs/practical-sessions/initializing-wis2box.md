@@ -173,7 +173,7 @@ Or check the content of the data-mappings.yml via WinSCP by browsing to the new 
 
 !!! question 
 
-    How many different keys are defined for 'data' in the data-mappings.yml file?
+    How many different keys are defined for `data` in the `data-mappings.yml` file?
 
 ??? success "Click to reveal answer"
 
@@ -189,7 +189,7 @@ Or check the content of the data-mappings.yml via WinSCP by browsing to the new 
 
 !!! note
 
-    The `data-mappings.yml` define the plugins used to transform your data. For more information see [data pipeline plugins in the wis2box-documentation](https://docs.wis2box.wis.wmo.int/en/latest/reference/running/data-pipeline-plugins.html)
+    The `data-mappings.yml` file defines the plugins used to transform your data. For more information see [data pipeline plugins in the wis2box-documentation](https://docs.wis2box.wis.wmo.int/en/latest/reference/running/data-pipeline-plugins.html)
 
 
 ## wis2box start and status

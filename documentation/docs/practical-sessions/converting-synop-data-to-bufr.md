@@ -18,7 +18,10 @@ Surface weather reports from land surface stations have historically been report
 (00, 06, 12 and 18 UTC) and intermediate (03, 09, 15, 21 UTC) synoptic hours. Prior to the migration
 to BUFR these reports were encoded in the plain text FM-12 SYNOP code form. Whilst the migration to BUFR
 was scheduled to be complete by 2012 a large number of reports are still exchanged in the legacy 
-FM-12 SYNOP format. 
+FM-12 SYNOP format. Further information on the FM-12 SYNOP format can be found in the WMO Manual on Codes, 
+Volume I.1 (WMO-No. 306, Volume I.1).
+
+[WMO Manual on Codes, Volume I.1](https://library.wmo.int/records/item/35713-manual-on-codes-international-codes-volume-i-1)
 
 To aid with completing migration to BUFR some tools have been developed for
 encoding FM-12 SYNOP reports to BUFR, in this session you will learn how to use these tools as well
@@ -196,7 +199,7 @@ AAXX 21121
     identifier is given by the traditional station identifier with ``0-20000-0`` prepended,
     e.g. ``15015`` has become ``0-20000-0-15015``.
 
-Using the station list page from the web application import the missing stations from OSCAR/Surface 
+Using the station list page from the web application import the missing stations from [OSCAR/Surface](https://oscar.wmo.int/surface/) 
 into the wis2box and repeat the exercise. 
 
 Three BUFR files should be generated and there should be no warnings or errors listed in the web application. 

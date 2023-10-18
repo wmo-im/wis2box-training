@@ -1,0 +1,75 @@
+!DOCTYPE html>
+<html>
+    <head>
+        <title>wis2box training live data and metadata notifications</title>
+        <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+        <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+        <script src="https://unpkg.com/mqtt@4.0.1/dist/mqtt.min.js"></script>
+        <script>
+
+            const host = 'ws://tbd.wis2.training:8884/ws';
+            const options = {
+                username: 'everyone',
+                password: 'everyone',
+                keepalive: 60,
+                protocolVersion: 5,
+                reconnectPeriod: 1000,
+                connectTimeout: 30 * 1000,
+            };
+
+            console.log('Connecting mqtt client');
+            const client = mqtt.connect(host, options);
+
+            client.on('connect', function () {
+                client.subscribe('origin/#', function (err) {
+                    if (!err) {
+                        console.log('Connected!')
+                    }
+                })
+            })
+
+            client.on('error', (err) => {
+                console.log('Connection error: ', err)
+                client.end()
+            });
+
+            client.on('reconnect', () => {
+                console.log('Reconnecting...')
+            });
+
+        </script>
+    </head>
+
+    <body>
+        <header>
+            <h1>wis2box training live data and metadata notifications</h1>
+        </header>
+        <div id="map" style="height: 600px;"></div>
+        <footer>
+            Powered by WIS2
+        </footer>
+    </body>
+    <script>
+        var map = L.map('map').setView([0, 0], 2);
+        var tiles = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Shaded_Relief/MapServer/tile/{z}/{y}/{x}', {
+          maxZoom: 19,
+          attributionControl: false
+        }).addTo(map);
+        map.attributionControl.setPrefix('');
+
+        client.on('message', function (topic, message) {
+            const content = JSON.parse(message.toString())
+            addMarker(content);
+            console.log(content);
+        })
+
+        function addMarker(feature) {
+            var marker = L.geoJSON(feature).addTo(map);
+            marker.bindPopup('<h1><a target="_blank" href="' + feature.links[0].href + '">' + feature.id + '</a>');
+            setTimeout(removeMarker, 5000, marker);
+        }
+        function removeMarker(feature) {
+            feature.removeFrom(map);
+        }
+    </script>
+</html>
