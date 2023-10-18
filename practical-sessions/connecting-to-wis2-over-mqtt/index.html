@@ -1,0 +1,1032 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="WIS2 in a box (wis2box) is a Free and Open Source (FOSS) Reference Implementation of a WMO WIS2 Node. The project provides a plug and play toolset to ingest, process, and publish weather/climate/water data using standards-based approaches in alignment with the WIS2 principles. wis2box also provides access to all data in the WIS2 network. wis2box is designed to have a low barrier to entry for data providers, providing enabling infrastructure and services for data discovery, access, and visualization.">
+      
+      
+        <meta name="author" content="World Meteorological Organization">
+      
+      
+        <link rel="canonical" href="https://training.wis2box.wis.wmo.int/practical-sessions/connecting-to-wis2-over-mqtt/">
+      
+      
+        <link rel="prev" href="../..">
+      
+      
+        <link rel="next" href="../accessing-your-student-vm/">
+      
+      
+      <link rel="icon" href="https://public.wmo.int/sites/all/themes/wmo/favicon.ico">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.6">
+    
+    
+      
+        <title>Connecting to WIS2 over MQTT - WIS2 in a box training</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.35e1ed30.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.356b1318.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../css/print-site-enum-headings1.css">
+    
+      <link rel="stylesheet" href="../../css/print-site-enum-headings2.css">
+    
+      <link rel="stylesheet" href="../../css/print-site-enum-headings3.css">
+    
+      <link rel="stylesheet" href="../../css/print-site-enum-headings4.css">
+    
+      <link rel="stylesheet" href="../../css/print-site-enum-headings5.css">
+    
+      <link rel="stylesheet" href="../../css/print-site-enum-headings6.css">
+    
+      <link rel="stylesheet" href="../../css/print-site.css">
+    
+      <link rel="stylesheet" href="../../css/print-site-material.css">
+    
+      <link rel="stylesheet" href="../../assets/css/custom.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#connecting-to-wis2-over-mqtt" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="WIS2 in a box training" class="md-header__button md-logo" aria-label="WIS2 in a box training" data-md-component="logo">
+      
+  <img src="../../assets/img/wmo-logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            WIS2 in a box training
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Connecting to WIS2 over MQTT
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="WIS2 in a box training" class="md-nav__button md-logo" aria-label="WIS2 in a box training" data-md-component="logo">
+      
+  <img src="../../assets/img/wmo-logo.png" alt="logo">
+
+    </a>
+    WIS2 in a box training
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Practical sessions
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Practical sessions
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Connecting to WIS2 over MQTT
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Connecting to WIS2 over MQTT
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    Introduction
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-mqtt-explorer-to-connect-to-the-global-broker" class="md-nav__link">
+    Using MQTT Explorer to connect to the Global Broker
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise-1-review-the-wis2-topic-structure" class="md-nav__link">
+    Exercise 1: Review the WIS2 topic structure
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise-2-review-the-wis2-message-structure" class="md-nav__link">
+    Exercise 2: Review the WIS2 message structure
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise-3-cache-vs-origin-topics" class="md-nav__link">
+    Exercise 3: cache vs origin topics
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusion" class="md-nav__link">
+    Conclusion
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../accessing-your-student-vm/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Accessing your student VM
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../initializing-wis2box/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Initializing wis2box
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../configuring-wis2-discovery-metadata/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Configuring WIS2 discovery metadata
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../configuring-station-metadata/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Configuring station metadata
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../converting-synop-data-to-bufr/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Converting SYNOP data to BUFR
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../converting-csv-data-to-bufr/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Converting CSV data to BUFR
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../bufr-command-line-tools/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    BUFR command line tools
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../automating-data-ingestion/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Automating data ingestion
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../downloading-and-finding-data-from-wis2/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Downloading and finding data from WIS2
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../querying-data-using-the-wis2box-api/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Querying data using the wis2box API
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Cheatsheets
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Cheatsheets
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cheatsheets/linux/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Linux
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cheatsheets/docker/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Docker
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cheatsheets/yaml/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    YAML
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cheatsheets/wis2box/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    WIS2 in a box
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    Introduction
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-mqtt-explorer-to-connect-to-the-global-broker" class="md-nav__link">
+    Using MQTT Explorer to connect to the Global Broker
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise-1-review-the-wis2-topic-structure" class="md-nav__link">
+    Exercise 1: Review the WIS2 topic structure
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise-2-review-the-wis2-message-structure" class="md-nav__link">
+    Exercise 2: Review the WIS2 message structure
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise-3-cache-vs-origin-topics" class="md-nav__link">
+    Exercise 3: cache vs origin topics
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusion" class="md-nav__link">
+    Conclusion
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="connecting-to-wis2-over-mqtt">Connecting to WIS2 over MQTT</h1>
+<div class="admonition abstract">
+<p class="admonition-title">Learning outcomes</p>
+<p>By the end of this practical session, you will be able to:</p>
+<ul>
+<li>connect to the WIS2 Global Broker using MQTT Explorer</li>
+<li>review the WIS2 topic structure</li>
+<li>review the WIS2 notification message structure</li>
+</ul>
+</div>
+<h2 id="introduction">Introduction</h2>
+<p>WIS2 uses the MQTT protocol to advertise the availability of weather/climate/water data. The WIS2 Global Broker subscribes to all WIS2 Nodes in the network and republishes the messages it receives. The Global Cache subscribes to the Global Broker, downloads the data in the message and then republishes the message on the <code>cache</code> topic with a new URL.  The Global Discovery Catalogue publishes discovery metadata from the Broker and provides a search API.</p>
+<p>As part of the WIS2 Pilot Phase in 2023, two Global Brokers are available (hosted by China Meteorological Administration and Météo-France).</p>
+<p>This is an example of the WIS2 notification message structure for a message received on the topic <code>origin/a/wis2/arg/sabm/data/core/weather/surface-based-observations/synop</code>:  </p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;fa587559-b02e-40a2-9fd5-2c141c39b130&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Feature&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;v04&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;geometry&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Point&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;coordinates&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">      </span><span class="mf">-56.625</span><span class="p">,</span>
+<span class="w">      </span><span class="mf">-64.24139</span><span class="p">,</span>
+<span class="w">      </span><span class="mi">208</span>
+<span class="w">    </span><span class="p">]</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;properties&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;data_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;wis2/arg/sabm/data/core/weather/surface-based-observations/synop/WIGOS_0-20000-0-89055_20230926T190000&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;datetime&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2023-09-26T19:00:00Z&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;pubtime&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2023-09-26T18:48:51Z&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;integrity&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;method&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;sha512&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;value&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;5a239b5d2ba7a04bd3b2fa44a73a9fb98167d0d4424d7fd19c0a83c75a7715212e2b97b5db6581bb3e1895b92232614d4cc4841ee9164baf47183c8403668dbd&quot;</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;wigos_station_identifier&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;0-20000-0-89055&quot;</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;links&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;rel&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;canonical&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;application/x-bufr&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;href&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;http://w2b.smn.gov.ar/data/2023-09-26/wis/arg/sabm/data/core/weather/surface-based-observations/synop/WIGOS_0-20000-0-89055_20230926T190000.bufr4&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;length&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">254</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;rel&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;via&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;text/html&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;href&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://oscar.wmo.int/surface/#/search/station/stationReportDetails/0-20000-0-89055&quot;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">]</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>In this practical session you will learn how to use the MQTT Explorer tool to review the topics available on this Global Broker and be able to display WIS2 notification messages.</p>
+<p>MQTT Explorer is a helpful tool to browse and review the topic structure for a given MQTT broker and visually interact with the MQTT protocol. There exist numerous other MQTT client and server software, depending on your requirements and technical environment.</p>
+<p>To work with MQTT programmatically (for example, in Python), you can use MQTT client libraries such as <a href="https://pypi.org/project/paho-mqtt">paho-mqtt</a> to connect to an MQTT broker and process incoming messages.</p>
+<h2 id="using-mqtt-explorer-to-connect-to-the-global-broker">Using MQTT Explorer to connect to the Global Broker</h2>
+<p>One way to view messages published by this Global Broker is using the MQTT Explorer which can be downloaded from the <a href="https://mqtt-explorer.com">MQTT Explorer website</a>.</p>
+<p>Open MQTT Explorer and add a new connection to the Global Broker hosted by China Meteorological Administration using the following details:</p>
+<ul>
+<li>host: gb.wis.cma.cn</li>
+<li>port: 8883</li>
+<li>username: everyone</li>
+<li>password: everyone</li>
+</ul>
+<p><img alt="mqtt-explorer-global-broker-connection" src="../../assets/img/mqtt-explorer-global-broker-connection-china.png" width="600"></p>
+<p>Click on the 'ADVANCED' button and add the following topics to subscribe to:</p>
+<ul>
+<li><code>origin/#</code></li>
+<li><code>cache/#</code></li>
+</ul>
+<p><img alt="mqtt-explorer-global-broker-advanced" src="../../assets/img/mqtt-explorer-global-broker-advanced.png" width="600"></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>When setting up MQTT subscriptions you can use the following wildcards:</p>
+<ul>
+<li><strong>Single-level (+)</strong>: a single-level wildcard replaces one topic level</li>
+<li><strong>Multi-level (#)</strong>: a multi-level wildcard replaces multiple topic levels</li>
+</ul>
+</div>
+<p>Click 'BACK', then 'SAVE' to save your connection and subscription details.  Then click 'CONNECT':</p>
+<p>Messages should start appearing in your MQTT Explorer session as follows:</p>
+<p><img alt="mqtt-explorer-global-broker-topics" src="../../assets/img/mqtt-explorer-global-broker-topics.png" width="600"></p>
+<p>You are now ready to start exploring the WIS2 topics and message structure.</p>
+<h2 id="exercise-1-review-the-wis2-topic-structure">Exercise 1: Review the WIS2 topic structure</h2>
+<p>Use MQTT to browse topic structure under the <code>origin</code> and <code>cache</code> topics.</p>
+<div class="admonition question">
+<p class="admonition-title">Question</p>
+<p>How can we distinguish the originating country providing the data? </p>
+</div>
+<details class="success">
+<summary>Click to reveal answer</summary>
+<p>We can distinguish the originating country by looking at the fourth level of the topic structure.  For example, the following topic:</p>
+<p><code>origin/a/wis2/zmb/zambia_met_service/data/core/weather/surface-based-observations/synop</code></p>
+<p>tells us that the data was published by Zambia (zmb). </p>
+<p>The fifth level of the topic structure provides the id of the centre where the data originated from
+(in this case, the Zambia Meteorological Service).</p>
+</details>
+<div class="admonition question">
+<p class="admonition-title">Question</p>
+<p>How can we distinguish the data type?</p>
+</div>
+<details class="success">
+<summary>Click to reveal answer</summary>
+<p>We can distinguish the data type by looking at the ninth level of the topic structure.  For example, the following topic:</p>
+<p><code>origin/a/wis2/zmb/zambia_met_service/data/core/weather/surface-based-observations/synop</code></p>
+<p>tells us that the data type is surface-based observations (synop).</p>
+</details>
+<h2 id="exercise-2-review-the-wis2-message-structure">Exercise 2: Review the WIS2 message structure</h2>
+<p>Disconnect from MQTT Explorer and update the 'Advanced' sections to change the subscription to the following:</p>
+<ul>
+<li><code>origin/a/wis2/+/+/data/core/weather/surface-based-observations/synop</code></li>
+<li><code>cache/a/wis2/+/+/data/core/weather/surface-based-observations/synop</code></li>
+</ul>
+<p><img alt="mqtt-explorer-global-broker-topics-exercise2" src="../../assets/img/mqtt-explorer-global-broker-topics-exercise2.png" width="600"></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <code>+</code> wildcard is used to subscribe to all countries (fourth level) and centres (fifth level) while the remaining topic structure is fixed to ensure we subscribe to subtopics <code>data/core/weather/surface-based-observations/synop</code>.  </p>
+</div>
+<p>Messages should start to appear again.</p>
+<p>You can view the content of the WIS2 message in the "Value" section on the right hand side.</p>
+<div class="admonition question">
+<p class="admonition-title">Question</p>
+<p>How can we identify the timestamp that the data was published? And how can we identify the timestamp that the data was collected?</p>
+</div>
+<details class="success">
+<summary>Click to reveal answer</summary>
+<p>The timestamp that the data was published is contained in the <code>properties</code> section of the message with a key of <code>pubtime</code>.</p>
+<p>The timestamp that the data was collected is contained in the <code>properties</code> section of the message with a key of <code>datetime</code>.</p>
+</details>
+<div class="admonition question">
+<p class="admonition-title">Question</p>
+<p>How can we download the data from the URL provided in the message?</p>
+</div>
+<details class="success">
+<summary>Click to reveal answer</summary>
+<p>The URL is contained in the <code>links</code> section with <code>rel="canonical"</code> and defined by the <code>href</code> key.</p>
+<p>You can copy the URL and paste it into a web browser to download the data.</p>
+</details>
+<h2 id="exercise-3-cache-vs-origin-topics">Exercise 3: cache vs origin topics</h2>
+<p>The same message is published on both the <code>origin</code> and <code>cache</code> topics. Find a message that has been published on both topics and compare the content.</p>
+<div class="admonition question">
+<p class="admonition-title">Question</p>
+<p>What is the difference between the messages published on the <code>origin</code> and <code>cache</code> topics?</p>
+</div>
+<details class="success">
+<summary>Click to reveal answer</summary>
+<p>The message published on the <code>origin</code> topic contains a URL to the original data.  The message published on the <code>cache</code> topic contains a URL to the data cached by the Global Cache.</p>
+</details>
+<h2 id="conclusion">Conclusion</h2>
+<div class="admonition success">
+<p class="admonition-title">Congratulations!</p>
+<p>In this practical session, you learned:</p>
+<ul>
+<li>how to subscribe to WIS2 Global Broker services using MQTT Explorer</li>
+<li>the WIS2 topic structure</li>
+<li>the WIS2 notification message structure</li>
+<li>the difference between Global Broker messages published on the <code>origin</code> and <code>cache</code> topics</li>
+</ul>
+</div>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      &copy; 2023 World Meteorological Organization
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.indexes", "content.code.copy"], "search": "../../assets/javascripts/workers/search.f886a092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.aecac24b.min.js"></script>
+      
+        <script src="../../js/print-site.js"></script>
+      
+    
+  </body>
+</html>

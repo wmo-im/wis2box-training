@@ -1,0 +1,1490 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="WIS2 in a box (wis2box) is a Free and Open Source (FOSS) Reference Implementation of a WMO WIS2 Node. The project provides a plug and play toolset to ingest, process, and publish weather/climate/water data using standards-based approaches in alignment with the WIS2 principles. wis2box also provides access to all data in the WIS2 network. wis2box is designed to have a low barrier to entry for data providers, providing enabling infrastructure and services for data discovery, access, and visualization.">
+      
+      
+        <meta name="author" content="World Meteorological Organization">
+      
+      
+        <link rel="canonical" href="https://training.wis2box.wis.wmo.int/practical-sessions/converting-csv-data-to-bufr/">
+      
+      
+        <link rel="prev" href="../converting-synop-data-to-bufr/">
+      
+      
+        <link rel="next" href="../bufr-command-line-tools/">
+      
+      
+      <link rel="icon" href="https://public.wmo.int/sites/all/themes/wmo/favicon.ico">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.6">
+    
+    
+      
+        <title>Converting CSV data to BUFR - WIS2 in a box training</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.35e1ed30.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.356b1318.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../css/print-site-enum-headings1.css">
+    
+      <link rel="stylesheet" href="../../css/print-site-enum-headings2.css">
+    
+      <link rel="stylesheet" href="../../css/print-site-enum-headings3.css">
+    
+      <link rel="stylesheet" href="../../css/print-site-enum-headings4.css">
+    
+      <link rel="stylesheet" href="../../css/print-site-enum-headings5.css">
+    
+      <link rel="stylesheet" href="../../css/print-site-enum-headings6.css">
+    
+      <link rel="stylesheet" href="../../css/print-site.css">
+    
+      <link rel="stylesheet" href="../../css/print-site-material.css">
+    
+      <link rel="stylesheet" href="../../assets/css/custom.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#converting-csv-data-to-bufr" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="WIS2 in a box training" class="md-header__button md-logo" aria-label="WIS2 in a box training" data-md-component="logo">
+      
+  <img src="../../assets/img/wmo-logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            WIS2 in a box training
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Converting CSV data to BUFR
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="WIS2 in a box training" class="md-nav__button md-logo" aria-label="WIS2 in a box training" data-md-component="logo">
+      
+  <img src="../../assets/img/wmo-logo.png" alt="logo">
+
+    </a>
+    WIS2 in a box training
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Practical sessions
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Practical sessions
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../connecting-to-wis2-over-mqtt/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Connecting to WIS2 over MQTT
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../accessing-your-student-vm/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Accessing your student VM
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../initializing-wis2box/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Initializing wis2box
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../configuring-wis2-discovery-metadata/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Configuring WIS2 discovery metadata
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../configuring-station-metadata/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Configuring station metadata
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../converting-synop-data-to-bufr/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Converting SYNOP data to BUFR
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Converting CSV data to BUFR
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Converting CSV data to BUFR
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    Introduction
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#preparation" class="md-nav__link">
+    Preparation
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#inspecting-csv-data-and-bufr-conversion" class="md-nav__link">
+    Inspecting CSV data and BUFR conversion
+  </a>
+  
+    <nav class="md-nav" aria-label="Inspecting CSV data and BUFR conversion">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#exercise-1-the-basics" class="md-nav__link">
+    Exercise 1 - the basics
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exercise-2-converting-your-first-message" class="md-nav__link">
+    Exercise 2 - converting your first message
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exercise-3-debugging-the-input-data" class="md-nav__link">
+    Exercise 3 - debugging the input data
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exercise-4-potential-web-application-and-api-issues" class="md-nav__link">
+    Exercise 4 - potential web-application and API issues
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#housekeeping" class="md-nav__link">
+    Housekeeping
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusion" class="md-nav__link">
+    Conclusion
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../bufr-command-line-tools/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    BUFR command line tools
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../automating-data-ingestion/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Automating data ingestion
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../downloading-and-finding-data-from-wis2/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Downloading and finding data from WIS2
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../querying-data-using-the-wis2box-api/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Querying data using the wis2box API
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Cheatsheets
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Cheatsheets
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cheatsheets/linux/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Linux
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cheatsheets/docker/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Docker
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cheatsheets/yaml/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    YAML
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cheatsheets/wis2box/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    WIS2 in a box
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    Introduction
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#preparation" class="md-nav__link">
+    Preparation
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#inspecting-csv-data-and-bufr-conversion" class="md-nav__link">
+    Inspecting CSV data and BUFR conversion
+  </a>
+  
+    <nav class="md-nav" aria-label="Inspecting CSV data and BUFR conversion">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#exercise-1-the-basics" class="md-nav__link">
+    Exercise 1 - the basics
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exercise-2-converting-your-first-message" class="md-nav__link">
+    Exercise 2 - converting your first message
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exercise-3-debugging-the-input-data" class="md-nav__link">
+    Exercise 3 - debugging the input data
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exercise-4-potential-web-application-and-api-issues" class="md-nav__link">
+    Exercise 4 - potential web-application and API issues
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#housekeeping" class="md-nav__link">
+    Housekeeping
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusion" class="md-nav__link">
+    Conclusion
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="converting-csv-data-to-bufr">Converting CSV data to BUFR</h1>
+<div class="admonition abstract">
+<p class="admonition-title">Learning outcomes</p>
+<p>By the end of this practical session, you will have:</p>
+<ul>
+<li>learnt to format CSV data for use with the default automatic weather station BUFR template</li>
+<li>learnt to use <strong>wis2box webapp</strong> to validate and convert sample data</li>
+<li>learnt about some of the common issues that can occur, such as incorrect units</li>
+</ul>
+</div>
+<h2 id="introduction">Introduction</h2>
+<p>Comma-separated values (CSV) data files are often used for recording observational and other data in a tabular format. 
+Most data loggers used to record sensor output are able to export the observations in delimited files, including in CSV.
+Similarly, when data are ingested into a database it is easy to export the required data in CSV formatted files. 
+To aid the exchange of data originally stored in tabular data formats a CSV to BUFR converted has been implemented in 
+the wis2box using the same software as for SYNOP to BUFR. In this session you will learn about using this tool
+through the wis2box web-application. Command line usage and customisation will be covered in a later session.</p>
+<h2 id="preparation">Preparation</h2>
+<div class="admonition warning">
+<p class="admonition-title">Prerequisites</p>
+<ul>
+<li>Ensure that your wis2box has been configured and started, including the setting execution tokens 
+  for the <code>processes/wis2box</code> and <code>collections/stations</code>paths. Confirm the status by visiting 
+  the wis2box API (<code>http://&lt;your-host-name&gt;/oapi</code>) and verifying that the API is running.</li>
+<li>The tokens can be checked by logging in to the wis2box management container and entering the 
+  command: <code>wis2box auth has-access-path --path processes/wis2box &lt;your-token&gt;</code> where 
+  <code>&lt;your-token&gt;</code> is the token you entered.</li>
+<li>
+<p>If the tokens are missing they can be generated with the following commands:</p>
+<div class="highlight"><pre><span></span><code>wis2box auth add-token --path processes/wis2box &lt;token&gt;
+wis2box auth add-token --path collections/stations &lt;token&gt;
+</code></pre></div>
+</li>
+</ul>
+<p>where token is the value of the token. This can be left blank to automatically generate
+  a random token (recommended).
+- Make sure that you have MQTT Explorer open and connected to your broker.</p>
+</div>
+<h2 id="inspecting-csv-data-and-bufr-conversion">Inspecting CSV data and BUFR conversion</h2>
+<h3 id="exercise-1-the-basics">Exercise 1 - the basics</h3>
+<p>The csv2bufr converter used in the wis2box can be configured to map between various tabulated input files, including CSV.
+However, to facilitate and make the use of this tool easier a standardised CSV format has been developed, targeted
+at data from AWS stations and in support of the GBON reporting requirements. The table below lists the parameters 
+included in the format:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Column</th>
+<th style="text-align: left;">Units</th>
+<th style="text-align: left;">Data type</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">wsi_series</td>
+<td style="text-align: left;">nan</td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;">WIGOS identifier series</td>
+</tr>
+<tr>
+<td style="text-align: left;">wsi_issuer</td>
+<td style="text-align: left;">nan</td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;">WIGOS issuer of identifier</td>
+</tr>
+<tr>
+<td style="text-align: left;">wsi_issue_number</td>
+<td style="text-align: left;">nan</td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;">WIGOS issue number</td>
+</tr>
+<tr>
+<td style="text-align: left;">wsi_local</td>
+<td style="text-align: left;">nan</td>
+<td style="text-align: left;">Character</td>
+<td style="text-align: left;">WIGOS local identifier</td>
+</tr>
+<tr>
+<td style="text-align: left;">wmo_block_number</td>
+<td style="text-align: left;">nan</td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;">WMO block number</td>
+</tr>
+<tr>
+<td style="text-align: left;">wmo_station_number</td>
+<td style="text-align: left;">nan</td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;">WMO station number</td>
+</tr>
+<tr>
+<td style="text-align: left;">station_type</td>
+<td style="text-align: left;">nan</td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;">Type of observing station, encoding using code table 0 02 001 (set to 0, automatic)</td>
+</tr>
+<tr>
+<td style="text-align: left;">year</td>
+<td style="text-align: left;">nan</td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;">Year (UTC), the time of observation (based on the actual time the barometer is read)</td>
+</tr>
+<tr>
+<td style="text-align: left;">month</td>
+<td style="text-align: left;">nan</td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;">Month (UTC), the time of observation (based on the actual time the barometer is read)</td>
+</tr>
+<tr>
+<td style="text-align: left;">day</td>
+<td style="text-align: left;">nan</td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;">Day (UTC), the time of observation (based on the actual time the barometer is read)</td>
+</tr>
+<tr>
+<td style="text-align: left;">hour</td>
+<td style="text-align: left;">nan</td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;">Hour (UTC), the time of observation (based on the actual time the barometer is read)</td>
+</tr>
+<tr>
+<td style="text-align: left;">minute</td>
+<td style="text-align: left;">nan</td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;">Minute (UTC), the time of observation (based on the actual time the barometer is read)</td>
+</tr>
+<tr>
+<td style="text-align: left;">latitude</td>
+<td style="text-align: left;">degrees</td>
+<td style="text-align: left;">Decimal</td>
+<td style="text-align: left;">Latitude of the station (to 5 decimal places)</td>
+</tr>
+<tr>
+<td style="text-align: left;">longitude</td>
+<td style="text-align: left;">degrees</td>
+<td style="text-align: left;">Decimal</td>
+<td style="text-align: left;">Longitude of the station (to 5 decimal places)</td>
+</tr>
+<tr>
+<td style="text-align: left;">station_height_above_msl</td>
+<td style="text-align: left;">meters</td>
+<td style="text-align: left;">Decimal</td>
+<td style="text-align: left;">Height of the station ground above mean sea level (to 1 decimal place)</td>
+</tr>
+<tr>
+<td style="text-align: left;">barometer_height_above_msl</td>
+<td style="text-align: left;">meters</td>
+<td style="text-align: left;">Decimal</td>
+<td style="text-align: left;">Height of the barometer above mean sea level (to 1 decimal place), typically height of station ground plus the height of the sensor above local ground</td>
+</tr>
+<tr>
+<td style="text-align: left;">station_pressure</td>
+<td style="text-align: left;">Pa</td>
+<td style="text-align: left;">Decimal</td>
+<td style="text-align: left;">Pressure observed at the station level to the nearest 10 pascals</td>
+</tr>
+<tr>
+<td style="text-align: left;">msl_pressure</td>
+<td style="text-align: left;">Pa</td>
+<td style="text-align: left;">Decimal</td>
+<td style="text-align: left;">Pressure reduced to mean sea level to the nearest 10 pascals</td>
+</tr>
+<tr>
+<td style="text-align: left;">geopotential_height</td>
+<td style="text-align: left;">gpm</td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;">Geoptential height expressed in geopotential meters (gpm) to 0 decimal places</td>
+</tr>
+<tr>
+<td style="text-align: left;">thermometer_height</td>
+<td style="text-align: left;">meters</td>
+<td style="text-align: left;">Decimal</td>
+<td style="text-align: left;">Height of thermometer or temperature sensor above the local ground to 2 decimal places</td>
+</tr>
+<tr>
+<td style="text-align: left;">air_temperature</td>
+<td style="text-align: left;">Kelvin</td>
+<td style="text-align: left;">Decimal</td>
+<td style="text-align: left;">Instantaneous air temperature to 2 decimal places</td>
+</tr>
+<tr>
+<td style="text-align: left;">dewpoint_temperature</td>
+<td style="text-align: left;">Kelvin</td>
+<td style="text-align: left;">Decimal</td>
+<td style="text-align: left;">Instantaneous dewpoint temperature to 2 decimal places</td>
+</tr>
+<tr>
+<td style="text-align: left;">relative_humidity</td>
+<td style="text-align: left;">%</td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;">Instantaneous relative humidity to zero decimal places</td>
+</tr>
+<tr>
+<td style="text-align: left;">method_of_ground_state_measurement</td>
+<td style="text-align: left;">code table</td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;">Method of observing the state of the ground, encoded using code table 0 02 176</td>
+</tr>
+<tr>
+<td style="text-align: left;">ground_state</td>
+<td style="text-align: left;">code table</td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;">State of the ground encoded using code table 0 20 062</td>
+</tr>
+<tr>
+<td style="text-align: left;">method_of_snow_depth_measurement</td>
+<td style="text-align: left;">code table</td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;">Method of observing the snow depth encoded using code table 0 02 177</td>
+</tr>
+<tr>
+<td style="text-align: left;">snow_depth</td>
+<td style="text-align: left;">meters</td>
+<td style="text-align: left;">Decimal</td>
+<td style="text-align: left;">Snow depth at time of observation to 2 decimal places</td>
+</tr>
+<tr>
+<td style="text-align: left;">precipitation_intensity</td>
+<td style="text-align: left;">kg m-2 h-1</td>
+<td style="text-align: left;">Decimal</td>
+<td style="text-align: left;">Intensity of precipitation at time of observation to 5 decimal places</td>
+</tr>
+<tr>
+<td style="text-align: left;">anemometer_height</td>
+<td style="text-align: left;">meters</td>
+<td style="text-align: left;">Decimal</td>
+<td style="text-align: left;">Height of the anemometer above local ground  to 2 decimal place</td>
+</tr>
+<tr>
+<td style="text-align: left;">time_period_of_wind</td>
+<td style="text-align: left;">minutes</td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;">Time period over which the wind speed and direction have been averegd. 10 minutes in normal cases or the number of minutes since a significant change occuring in the preceeding 10 minutes.</td>
+</tr>
+<tr>
+<td style="text-align: left;">wind_direction</td>
+<td style="text-align: left;">degrees</td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;">Wind direction (at anemometer height) averaged from the caterisan components over the indicated time period, 0 decimal places</td>
+</tr>
+<tr>
+<td style="text-align: left;">wind_speed</td>
+<td style="text-align: left;">ms-1</td>
+<td style="text-align: left;">Decimal</td>
+<td style="text-align: left;">Wind speed (at anemometer height) averaged from the cartesian components over the indicated time period, 1 decimal place</td>
+</tr>
+<tr>
+<td style="text-align: left;">maximum_wind_gust_direction_10_minutes</td>
+<td style="text-align: left;">degrees</td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;">Highest 3 second average over the preceeding 10 minutes, 0 decimal places</td>
+</tr>
+<tr>
+<td style="text-align: left;">maximum_wind_gust_speed_10_minutes</td>
+<td style="text-align: left;">ms-1</td>
+<td style="text-align: left;">Decimal</td>
+<td style="text-align: left;">Highest 3 second average over the preceeding 10 minutes, 1 decimal place</td>
+</tr>
+<tr>
+<td style="text-align: left;">maximum_wind_gust_direction_1_hour</td>
+<td style="text-align: left;">degrees</td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;">Highest 3 second average over the preceeding hour, 0 decimal places</td>
+</tr>
+<tr>
+<td style="text-align: left;">maximum_wind_gust_speed_1_hour</td>
+<td style="text-align: left;">ms-1</td>
+<td style="text-align: left;">Decimal</td>
+<td style="text-align: left;">Highest 3 second average over the preceeding hour, 1 decimal place</td>
+</tr>
+<tr>
+<td style="text-align: left;">maximum_wind_gust_direction_3_hours</td>
+<td style="text-align: left;">degrees</td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;">Highest 3 second average over the preceeding 3 hours, 0 decimal places</td>
+</tr>
+<tr>
+<td style="text-align: left;">maximum_wind_gust_speed_3_hours</td>
+<td style="text-align: left;">ms-1</td>
+<td style="text-align: left;">Decimal</td>
+<td style="text-align: left;">Highest 3 second average over the preceeding 3 hours, 1 decimal place</td>
+</tr>
+<tr>
+<td style="text-align: left;">rain_sensor_height</td>
+<td style="text-align: left;">meters</td>
+<td style="text-align: left;">Decimal</td>
+<td style="text-align: left;">Height of the rain gauge above local ground to 2 decimal place</td>
+</tr>
+<tr>
+<td style="text-align: left;">total_precipitation_1_hour</td>
+<td style="text-align: left;">kg m-2</td>
+<td style="text-align: left;">Decimal</td>
+<td style="text-align: left;">Total precipitation over the past hour, 1 decimal place</td>
+</tr>
+<tr>
+<td style="text-align: left;">total_precipitation_3_hours</td>
+<td style="text-align: left;">kg m-2</td>
+<td style="text-align: left;">Decimal</td>
+<td style="text-align: left;">Total precipitation over the past 3 hours, 1 decimal place</td>
+</tr>
+<tr>
+<td style="text-align: left;">total_precipitation_6_hours</td>
+<td style="text-align: left;">kg m-2</td>
+<td style="text-align: left;">Decimal</td>
+<td style="text-align: left;">Total precipitation over the past 6 hours, 1 decimal place</td>
+</tr>
+<tr>
+<td style="text-align: left;">total_precipitation_12_hours</td>
+<td style="text-align: left;">kg m-2</td>
+<td style="text-align: left;">Decimal</td>
+<td style="text-align: left;">Total precipitation over the past 12 hours, 1 decimal place</td>
+</tr>
+<tr>
+<td style="text-align: left;">total_precipitation_24_hours</td>
+<td style="text-align: left;">kg m-2</td>
+<td style="text-align: left;">Decimal</td>
+<td style="text-align: left;">Total precipitation over the past 24 hours, 1 decimal place</td>
+</tr>
+</tbody>
+</table>
+<p>The full file can be downloaded from: <a href="/assets/tables/aws-full.csv">aws-full.csv</a></p>
+<p>Now download the example for this exercise from the link below:</p>
+<p><a href="/sample-data/csv2bufr-ex1.csv">csv2bufr-ex1.csv</a></p>
+<p>Inspect the expected columns from the table above and compare to the example data file.</p>
+<div class="admonition question">
+<p class="admonition-title">Question</p>
+<p>Examining the date, time and identify fields (WIGOS and traditional identifiers) what do
+you notice? How would today's date be represented?</p>
+</div>
+<details class="success">
+<summary>Click to reveal answer</summary>
+<p>Each column contains a single piece of information. For example the date is split into
+year, month and day, mirroring how the data are stored in BUFR. Todays date would be 
+split across the columns "year", "month" and "day". Similarly, the time needs to be
+split into "hour" and "minute" and the WIGOS station identifier into its respective components.</p>
+</details>
+<div class="admonition question">
+<p class="admonition-title">Question</p>
+<p>Looking at the data file how are missing data encoded?</p>
+</div>
+<details class="success">
+<summary>Click to reveal answer</summary>
+<p>Missing data within the file are represented by empty cells. In a CSV file this would be
+encoded by <code>,,</code>. Note that this is an empty cell and not encoded as a zero length string, 
+e.g. <code>,"",</code>.</p>
+</details>
+<div class="admonition hint">
+<p class="admonition-title">Missing data</p>
+<p>It is recognised that data may be missing for a variety of reasons, whether due to sensor 
+failure or the parameter not being observed. In these cases missing data can be encoded
+as per the above answer, the other data in the report remain valid.</p>
+</div>
+<div class="admonition bug">
+<p class="admonition-title">Station metadata</p>
+<p>The CSV to BUFR conversion tool has been developed as a standalone tool separate from the wis2box.
+As such, all the data to be encoded in BUFR must be present in the CSV file, including the station metadata
+like the location and sensor heights. In future versions the web-application will be updated to load the metadata
+from the wis2box API and to insert the values into the CSV, similar to the process used in FM-12 SYNOP to BUFR.</p>
+<p>Even though all the metadata is contained within the CSV file the station metadata must still be registered in the
+wis2box for the message to be procesed.</p>
+</div>
+<h3 id="exercise-2-converting-your-first-message">Exercise 2 - converting your first message</h3>
+<p>Now that you have familiarised yourself with the input data file and specified CSV format you will convert this 
+example file to BUFR using the wis2box web-application. First we need to register the station in the wis2box, in this case the
+station is a fictional station located on the island of Sicily in Italy. Navigate to the station list page,
+click add station and then search (leave the WIGOS Station Identifier box empty). Click create new station and
+enter the fictional station details, suggested details are below:</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Station name</td>
+<td>Monte Genuardo</td>
+</tr>
+<tr>
+<td>WIGOS station identifier</td>
+<td>0-20000-0-99100</td>
+</tr>
+<tr>
+<td>Traditional identifier</td>
+<td>99100</td>
+</tr>
+<tr>
+<td>Longitude</td>
+<td>13.12425</td>
+</tr>
+<tr>
+<td>Latitude</td>
+<td>37.7</td>
+</tr>
+<tr>
+<td>Station elevation</td>
+<td>552</td>
+</tr>
+<tr>
+<td>Facility type</td>
+<td>Land (fixed)</td>
+</tr>
+<tr>
+<td>Barometer height above sea level</td>
+<td>553</td>
+</tr>
+<tr>
+<td>WMO Region</td>
+<td>VI</td>
+</tr>
+<tr>
+<td>Territory or member operating the station</td>
+<td>Italy</td>
+</tr>
+<tr>
+<td>Operating status</td>
+<td>operational</td>
+</tr>
+</tbody>
+</table>
+<p>Select the appropriate topic, enter the <code>collections/stations</code> token previously created and click save. You are now
+ready to process data from this station. Navigate to CSV to BUFR submission page on the the wis2box web-application 
+(<code>http://&lt;your-host-name&gt;/wis2box-webapp/csv2bufr_form</code>).
+Click the entry box or drag and drop the test file you have downloaded to the entry box. 
+You should now be able to click next to preview and validate the file.</p>
+<p><center><img alt="Image showing CSV to BUFR upload screen" src="../../assets/img/csv2bufr-ex1.png"/></center></p>
+<p>Clicking the next button loads the file into the browser and validates the contents against a predefined schema. 
+No data has yet been converted or published.  On the preview / validate tab you should be presented with a list of warnings 
+about missing data but in this exercise these can be ignored. </p>
+<p><center><img alt="Image showing CSV to BUFR example validation page with warnings" src="../../assets/img/csv2bufr-warnings.png"/></center></p>
+<p>The next button will take you to the topic selection page,
+as with the FM-12 SYNOP to BUFR page select the topic configured for "surface weather observations" on your wis2box 
+and click next. You should now be on an authorisation page where you will be asked to enter the <code>processes/wis2box</code> 
+token you have previously created. Enter this token and click the "Publish on WIS2" toggle to ensure 
+"Publish to WIS2" is selected (see screenshot below).</p>
+<p><center><img alt="csv2bufr auth and publish screen" src="../../assets/img/csv2bufr-toggle-publish.png"/></center></p>
+<p>Click next to transform to BUFR and publish, you should then see the following screen:</p>
+<p><center><img alt="Image showing CSV to BUFR example success screen" src="../../assets/img/csv2bufr-success.png"/></center></p>
+<p>Clicking the down arrow tn the right of  <code>Output BUFR files</code> should reveal the <code>Download</code> and <code>Inspect</code> buttons.
+Click inspect to view the data and confirm the values are as expected.</p>
+<p><center><img alt="Image showing CSV to BUFR inspect output" src="../../assets/img/csv2bufr-inspect.png"/></center></p>
+<p>As a final step navigate to the monitoring page from the left menu.</p>
+<p><center><img alt="Image showing monitoring tab in on the left menu" src="../../assets/img/csv2bufr-monitoring.png"/></center></p>
+<p>Select the topic you have been publishing on from the dropdown menu and click update, you should see the message 
+you have just published (and possibly notifications from the synop2bufr session). An example screenshot is shown below:</p>
+<p><center><img alt="Image showing notifications published over the last 24 hours" src="../../assets/img/csv2bufr-monitoring2.png"/></center></p>
+<div class="admonition success">
+<p class="admonition-title">Success</p>
+<p>Congratulations you have published you first csv data converted to BUFR via the wis2box.</p>
+</div>
+<p>You should also be able to see these notifications in MQTT Explorer.</p>
+<h3 id="exercise-3-debugging-the-input-data">Exercise 3 - debugging the input data</h3>
+<p>In this exercise we will examine what happens with invalid input data. Download the next example file by clicking the 
+link below. This contains the same data as the first file but with the empty columns removed.
+Examine the file and confirm which columns have been removed and then follow the same process to convert the data to BUFR.</p>
+<p><a href="/sample-data/csv2bufr-ex3a.csv">csv2bufr-ex3a.csv</a></p>
+<div class="admonition question">
+<p class="admonition-title">Question</p>
+<p>With the columns missing from the file were you able to convert the data to BUFR?
+Did you notice any change to the warnings on the validation page?</p>
+</div>
+<details class="success">
+<summary>Click to reveal answer</summary>
+<p>You should have still been able to convert the data to BUFR but the warning messages will have been updated
+to indicate that the columns were missing completely rather than containing a missing value.</p>
+</details>
+<p>In this next example an additional column has been added to the CSV file.</p>
+<p><a href="/sample-data/csv2bufr-ex3b.csv">csv2bufr-ex3b.csv</a></p>
+<div class="admonition question">
+<p class="admonition-title">Question</p>
+<p>Without uploading or submitting the file can you predict what will happen when you do?</p>
+</div>
+<p>Now upload and confirm whether your prediction was correct.</p>
+<details class="success">
+<summary>Click to reveal answer</summary>
+<p>When the file is validated you should now receive a warning that the column <code>index</code>
+is not found in the schema and that the data will be skipped. You should be able to click
+through and convert to BUFR as with the previous example.</p>
+</details>
+<p>In the final example in this exercise the data has been modified. Examine the contents of the CSV file.</p>
+<p><a href="/sample-data/csv2bufr-ex3c.csv">csv2bufr-ex3c.csv</a></p>
+<div class="admonition question">
+<p class="admonition-title">Question</p>
+<p>What has changed in the file and what do you think will happen?</p>
+</div>
+<p>Now upload the file and confirm whether you were correct.</p>
+<details class="warning">
+<summary>Click to real answer</summary>
+<p>The pressure fields have been converted from Pa to hPa in the input data. However, the CSV to BUFR
+converter expects the same units as BUFR (Pa) and, as a result, these fields fail the validation due to being
+out of range. You should be able to edit the CSV to correct the issue and to resubmit the data by
+returning to the first screen and re-uploading.</p>
+</details>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>The wis2box web-application can be used to test and validate sample data for the automated workflow. This will identify
+some common issues, such as the incorrect units (hPa vs Pa and C vs K) and missing columns. Care should be taken 
+that the units in the CSV data match those indicated above.</p>
+</div>
+<div class="admonition bug">
+<p class="admonition-title">Bug</p>
+<p>Please note, due to a bug in the current version of the web-application you may need to reload the page before resubmitting
+the data.</p>
+</div>
+<h3 id="exercise-4-potential-web-application-and-api-issues">Exercise 4 - potential web-application and API issues</h3>
+<p>Before the web-application can be used to submit data the topic hierarchy, on which to publish, the authorisation
+token and the stations need to be configured. This can be demonstrated with several simple exercises.</p>
+<p>For the first example in this exercise download the example file via the link below and publish using the web-application.</p>
+<p><a href="/sample-data/csv2bufr-ex4a.csv">csv2bufr-ex4a.csv</a></p>
+<div class="admonition question">
+<p class="admonition-title">Question</p>
+<p>What result do you receive on the "Review page"?</p>
+</div>
+<details class="success">
+<summary>Click to reveal answer</summary>
+<p>The second row in the file contains data from a station (again fictional) that has not been registered
+in the wis2box. As a result a warning is given that the station has not been found and that the data
+have not been published.</p>
+<p><center><img alt="Image showing CSV to BUFR invalid WSi warning" src="../../assets/img/csv2bufr-skip-wsi.png"/></center></p>
+</details>
+<p>For the next  example, try submitting the data but without selecting a topic hierarchy on which to publish.</p>
+<p><a href="/sample-data/csv2bufr-ex4b.csv">csv2bufr-ex4b.csv</a></p>
+<div class="admonition question">
+<p class="admonition-title">Question</p>
+<p>What happens when you try and click next?</p>
+</div>
+<details class="warning">
+<summary>Click to reveal answer</summary>
+<p>You should find the next button greyed out until a valid topic is selected. The options for the topic hierarchy
+are set based on the discovery metadata registered within the box</p>
+</details>
+<p>For the final example, try entering a token that has not been registered and observe what happens when you click next.</p>
+<div class="admonition question">
+<p class="admonition-title">Question</p>
+<p>What do you expect will happen if you enter an invalid token?</p>
+</div>
+<details class="warning">
+<summary>Click to reveal answer</summary>
+<p>When you click next you should be taken to the Review page but receive a message that the token is invalid. 
+Navigate to the previous step, enter a valid token and try again.</p>
+</details>
+<h2 id="housekeeping">Housekeeping</h2>
+<p>As with the FM-12 SYNOP to BUFR exercise you will have registered some new stations within the wis2box. Navigate to the
+station list and delete those stations as they are no longer required.</p>
+<h2 id="conclusion">Conclusion</h2>
+<div class="admonition success">
+<p class="admonition-title">Congratulations</p>
+<p>In this practical session you have learned:</p>
+<ul>
+<li>how to format a CSV file for use with wis2box web-application</li>
+<li>and how to validate a sample CSV file and to correct for common issues.  </li>
+</ul>
+</div>
+<div class="admonition info">
+<p class="admonition-title">Next steps</p>
+<p>The csv2bufr converter used in the wis2box has been designed to be configurable for use with any row based 
+tabular data. The column names, delimiters, quotation style and limited quality control can all be configured
+according to user needs. In this page only the basics have been covered, with a standardised CSV template
+developed based on user feedback. Advanced configuration will be covered as part of the BUFR command line tools
+session.</p>
+</div>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      &copy; 2023 World Meteorological Organization
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.indexes", "content.code.copy"], "search": "../../assets/javascripts/workers/search.f886a092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.aecac24b.min.js"></script>
+      
+        <script src="../../js/print-site.js"></script>
+      
+    
+  </body>
+</html>

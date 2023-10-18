@@ -1,0 +1,1488 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="WIS2 in a box (wis2box) is a Free and Open Source (FOSS) Reference Implementation of a WMO WIS2 Node. The project provides a plug and play toolset to ingest, process, and publish weather/climate/water data using standards-based approaches in alignment with the WIS2 principles. wis2box also provides access to all data in the WIS2 network. wis2box is designed to have a low barrier to entry for data providers, providing enabling infrastructure and services for data discovery, access, and visualization.">
+      
+      
+        <meta name="author" content="World Meteorological Organization">
+      
+      
+        <link rel="canonical" href="https://training.wis2box.wis.wmo.int/practical-sessions/bufr-command-line-tools/">
+      
+      
+        <link rel="prev" href="../converting-csv-data-to-bufr/">
+      
+      
+        <link rel="next" href="../automating-data-ingestion/">
+      
+      
+      <link rel="icon" href="https://public.wmo.int/sites/all/themes/wmo/favicon.ico">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.6">
+    
+    
+      
+        <title>BUFR command line tools - WIS2 in a box training</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.35e1ed30.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.356b1318.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../css/print-site-enum-headings1.css">
+    
+      <link rel="stylesheet" href="../../css/print-site-enum-headings2.css">
+    
+      <link rel="stylesheet" href="../../css/print-site-enum-headings3.css">
+    
+      <link rel="stylesheet" href="../../css/print-site-enum-headings4.css">
+    
+      <link rel="stylesheet" href="../../css/print-site-enum-headings5.css">
+    
+      <link rel="stylesheet" href="../../css/print-site-enum-headings6.css">
+    
+      <link rel="stylesheet" href="../../css/print-site.css">
+    
+      <link rel="stylesheet" href="../../css/print-site-material.css">
+    
+      <link rel="stylesheet" href="../../assets/css/custom.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#bufr-command-line-tools" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="WIS2 in a box training" class="md-header__button md-logo" aria-label="WIS2 in a box training" data-md-component="logo">
+      
+  <img src="../../assets/img/wmo-logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            WIS2 in a box training
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              BUFR command line tools
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="WIS2 in a box training" class="md-nav__button md-logo" aria-label="WIS2 in a box training" data-md-component="logo">
+      
+  <img src="../../assets/img/wmo-logo.png" alt="logo">
+
+    </a>
+    WIS2 in a box training
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Practical sessions
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Practical sessions
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../connecting-to-wis2-over-mqtt/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Connecting to WIS2 over MQTT
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../accessing-your-student-vm/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Accessing your student VM
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../initializing-wis2box/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Initializing wis2box
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../configuring-wis2-discovery-metadata/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Configuring WIS2 discovery metadata
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../configuring-station-metadata/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Configuring station metadata
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../converting-synop-data-to-bufr/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Converting SYNOP data to BUFR
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../converting-csv-data-to-bufr/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Converting CSV data to BUFR
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    BUFR command line tools
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    BUFR command line tools
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    Introduction
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#preparation" class="md-nav__link">
+    Preparation
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-the-bufr-command-line-tools" class="md-nav__link">
+    Using the BUFR command line tools
+  </a>
+  
+    <nav class="md-nav" aria-label="Using the BUFR command line tools">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#exercise-1-bufr_ls" class="md-nav__link">
+    Exercise 1 - bufr_ls
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exercise-2-bufr_dump" class="md-nav__link">
+    Exercise 2 - bufr_dump
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exercise-3-csv2bufr-mapping-files" class="md-nav__link">
+    Exercise 3 - csv2bufr mapping files
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exercise-4-installing-new-csv2bufr-templates" class="md-nav__link">
+    Exercise 4 - installing new csv2bufr templates
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#housekeeping" class="md-nav__link">
+    Housekeeping
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusion" class="md-nav__link">
+    Conclusion
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../automating-data-ingestion/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Automating data ingestion
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../downloading-and-finding-data-from-wis2/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Downloading and finding data from WIS2
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../querying-data-using-the-wis2box-api/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Querying data using the wis2box API
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Cheatsheets
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Cheatsheets
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cheatsheets/linux/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Linux
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cheatsheets/docker/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Docker
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cheatsheets/yaml/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    YAML
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cheatsheets/wis2box/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    WIS2 in a box
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    Introduction
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#preparation" class="md-nav__link">
+    Preparation
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-the-bufr-command-line-tools" class="md-nav__link">
+    Using the BUFR command line tools
+  </a>
+  
+    <nav class="md-nav" aria-label="Using the BUFR command line tools">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#exercise-1-bufr_ls" class="md-nav__link">
+    Exercise 1 - bufr_ls
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exercise-2-bufr_dump" class="md-nav__link">
+    Exercise 2 - bufr_dump
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exercise-3-csv2bufr-mapping-files" class="md-nav__link">
+    Exercise 3 - csv2bufr mapping files
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exercise-4-installing-new-csv2bufr-templates" class="md-nav__link">
+    Exercise 4 - installing new csv2bufr templates
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#housekeeping" class="md-nav__link">
+    Housekeeping
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusion" class="md-nav__link">
+    Conclusion
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="bufr-command-line-tools">BUFR command line tools</h1>
+<div class="admonition abstract">
+<p class="admonition-title">Learning outcomes</p>
+<p>In this practical session you will be introduced to some of the BUFR command line tools included in the <strong>wis2box-management</strong> container. You will learn:</p>
+<ul>
+<li>how to inspect the headers in the BUFR file using the <code>bufr_ls</code> command</li>
+<li>how to extract and inspect the data within a bufr file using <code>bufr_dump</code></li>
+<li>the basic structure of the bufr templats used in csv2bufr and how to use the command line tool</li>
+<li>and how to make basic changes to the bufr templates and how to update the wis2box to use the revised
+  version</li>
+</ul>
+</div>
+<h2 id="introduction">Introduction</h2>
+<p>The wis2box-management container contains some tools for working with BUFR files from the command line. </p>
+<p>These include the tools developed by ECMWF and included in the ecCodes software, more information on these can be 
+found on the <a href="https://confluence.ecmwf.int/display/ECC/BUFR+tools">ecCodes website</a>. </p>
+<p>Other tools include thosedeveloped as part of the wis2box development, including csv2bufr and synop2bufr that you have previously used
+but via the wis2box web-application. </p>
+<p>In this session you will be introduced to the <code>bufr_ls</code> and <code>bufr_dump</code> from the ecCodes software package and advanced configuration of the csv2bufr tool.</p>
+<h2 id="preparation">Preparation</h2>
+<p>In order to use the BUFR command line tools you will need to be logged in to the wis2box management container
+and unless specified otherwise all commands should be run on this container. You will also need to have
+MQTT Explorer open and connected to your broker.</p>
+<p>First connect to your student VM via your ssh client and then log in the to management container: </p>
+<div class="highlight"><pre><span></span><code>cd ~/wis2box-1.0b5
+python3 wis2box-ctl.py login
+</code></pre></div>
+<p>Confirm the that tools are available, starting with ecCodes:</p>
+<p><div class="highlight"><pre><span></span><code>bufr_dump -V
+</code></pre></div>
+You should get the following response:</p>
+<div class="highlight"><pre><span></span><code>ecCodes Version 2.28.0
+</code></pre></div>
+<p>Next check csv2bufr:</p>
+<div class="highlight"><pre><span></span><code>csv2bufr --version
+</code></pre></div>
+<p>You should get the following response:</p>
+<div class="highlight"><pre><span></span><code>csv2bufr, version 0.7.4
+</code></pre></div>
+<p>Finally, create a working directory to work in:</p>
+<div class="highlight"><pre><span></span><code>cd /data/wis2box
+mkdir -p working/bufr-cli
+cd working/bufr-cli
+</code></pre></div>
+<p>You are now ready to start using the BUFR tools.</p>
+<h2 id="using-the-bufr-command-line-tools">Using the BUFR command line tools</h2>
+<h3 id="exercise-1-bufr_ls">Exercise 1 - bufr_ls</h3>
+<p>In this first exercise you will use the <code>bufr_ls</code> command to inspect the headers of a BUFR file and to determine the 
+contents of the file. The following headers are included in a BUFR file:</p>
+<table>
+<thead>
+<tr>
+<th>header</th>
+<th>ecCodes key</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>originating/generating centre</td>
+<td>centre</td>
+<td>The originating / generating centre for the data</td>
+</tr>
+<tr>
+<td>originating/generating sub-centre</td>
+<td>bufrHeaderSubCentre</td>
+<td>The originating / generating sub centre for the data</td>
+</tr>
+<tr>
+<td>Update sequence number</td>
+<td>updateSequenceNumber</td>
+<td>Whether this is the first version of the data (0) or an update (&gt;0)</td>
+</tr>
+<tr>
+<td>Data category</td>
+<td>dataCategory</td>
+<td>The type of data contained in the BUFR message, e.g. suface data. See <a href="https://github.com/wmo-im/BUFR4/blob/master/BUFR_TableA_en.csv">BUFR Table A</a></td>
+</tr>
+<tr>
+<td>International data sub-category</td>
+<td>internationalDataSubCategory</td>
+<td>The sub-type of data contained in the BUFR message, e.g. suface data. See <a href="https://github.com/wmo-im/CCT/blob/master/C13.csv">Common Code Table C-13</a></td>
+</tr>
+<tr>
+<td>Year</td>
+<td>typicalYear (typicalDate)</td>
+<td>Most typical time for the BUFR message contents</td>
+</tr>
+<tr>
+<td>Month</td>
+<td>typicalMonth (typicalDate)</td>
+<td>Most typical time for the BUFR message contents</td>
+</tr>
+<tr>
+<td>Day</td>
+<td>typicalDay (typicalDate)</td>
+<td>Most typical time for the BUFR message contents</td>
+</tr>
+<tr>
+<td>Hour</td>
+<td>typicalHour (typicalTime)</td>
+<td>Most typical time for the BUFR message contents</td>
+</tr>
+<tr>
+<td>Minute</td>
+<td>typicalMinute (typicalTime)</td>
+<td>Most typical time for the BUFR message contents</td>
+</tr>
+<tr>
+<td>BUFR descriptors</td>
+<td>unexpandedDescriptors</td>
+<td>List of one, or more, BUFR descriptors defining the data contained in the file</td>
+</tr>
+</tbody>
+</table>
+<p>Download the example file directly into the wis2box-management container using the following command:</p>
+<div class="highlight"><pre><span></span><code>curl https://training.wis2box.wis.wmo.int/sample-data/bufr-cli-ex1.bufr4 --output bufr-cli-ex1.bufr4
+</code></pre></div>
+<p>Now use the following command to run <code>bufr_ls</code> on this file:</p>
+<div class="highlight"><pre><span></span><code>bufr_ls<span class="w"> </span>bufr-cli-ex1.bufr4
+</code></pre></div>
+<p>You should see the following output:</p>
+<div class="highlight"><pre><span></span><code>bufr-cli-ex1.bufr4
+centre<span class="w">                     </span>masterTablesVersionNumber<span class="w">  </span>localTablesVersionNumber<span class="w">   </span>typicalDate<span class="w">                </span>typicalTime<span class="w">                </span>numberOfSubsets
+cnmc<span class="w">                       </span><span class="m">29</span><span class="w">                         </span><span class="m">0</span><span class="w">                          </span><span class="m">20231002</span><span class="w">                   </span><span class="m">000000</span><span class="w">                     </span><span class="m">1</span>
+<span class="m">1</span><span class="w"> </span>of<span class="w"> </span><span class="m">1</span><span class="w"> </span>messages<span class="w"> </span><span class="k">in</span><span class="w"> </span>bufr-cli-ex1.bufr4
+
+<span class="m">1</span><span class="w"> </span>of<span class="w"> </span><span class="m">1</span><span class="w"> </span>total<span class="w"> </span>messages<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="m">1</span><span class="w"> </span>files
+</code></pre></div>
+<p>On its own this information is not very informative, with only limited information on the file contents provided. </p>
+<p>The default output does not provide information on the observation, or data, type and is in a format that is not
+very easy to read. However, various options can be passed to <code>bufr_ls</code> to change both the format and header fields 
+printed.  </p>
+<p>Use <code>bufr_ls</code> without any arguments to view the options:</p>
+<div class="highlight"><pre><span></span><code>bufr_ls
+</code></pre></div>
+<p>You should see the following output:</p>
+<div class="highlight"><pre><span></span><code>NAME    bufr_ls
+
+DESCRIPTION
+        List content of BUFR files printing values of some header keys.
+        Only scalar keys can be printed.
+        It does not fail when a key is not found.
+
+USAGE
+        bufr_ls [options] bufr_file bufr_file ...
+
+OPTIONS
+        -p key[:{s|d|i}],key[:{s|d|i}],...
+                Declaration of keys to print.
+                For each key a string (key:s), a double (key:d) or an integer (key:i)
+                type can be requested. Default type is string.
+        -F format
+                C style format for floating-point values.
+        -P key[:{s|d|i}],key[:{s|d|i}],...
+                As -p adding the declared keys to the default list.
+        -w key[:{s|d|i}]{=|!=}value,key[:{s|d|i}]{=|!=}value,...
+                Where clause.
+                Messages are processed only if they match all the key/value constraints.
+                A valid constraint is of type key=value or key!=value.
+                For each key a string (key:s), a double (key:d) or an integer (key:i)
+                type can be specified. Default type is string.
+                In the value you can also use the forward-slash character &#39;/&#39; to specify an OR condition (i.e. a logical disjunction)
+                Note: only one -w clause is allowed.
+        -j      JSON output
+        -s key[:{s|d|i}]=value,key[:{s|d|i}]=value,...
+                Key/values to set.
+                For each key a string (key:s), a double (key:d) or an integer (key:i)
+                type can be defined. By default the native type is set.
+        -n namespace
+                All the keys belonging to the given namespace are printed.
+        -m      Mars keys are printed.
+        -V      Version.
+        -W width
+                Minimum width of each column in output. Default is 10.
+        -g      Copy GTS header.
+        -7      Does not fail when the message has wrong length
+
+SEE ALSO
+        Full documentation and examples at:
+        &lt;https://confluence.ecmwf.int/display/ECC/bufr_ls&gt;
+</code></pre></div>
+<p>Now run the same command on the example file but output the information in JSON.</p>
+<div class="admonition question">
+<p class="admonition-title">Question</p>
+<p>What flag do you pass to the <code>bufr_ls</code> command to view the output in JSON format?</p>
+</div>
+<details class="success">
+<summary>Click to reveal answer</summary>
+<p>You can change the output format to json using the <code>-j</code> flag, i.e.
+<code>bufr_ls -j &lt;input-file&gt;</code>. This can be more readable than the default output format. See the example output below:</p>
+<div class="highlight"><pre><span></span><code>{ &quot;messages&quot; : [
+  {
+    &quot;centre&quot;: &quot;cnmc&quot;,
+    &quot;masterTablesVersionNumber&quot;: 29,
+    &quot;localTablesVersionNumber&quot;: 0,
+    &quot;typicalDate&quot;: 20231002,
+    &quot;typicalTime&quot;: &quot;000000&quot;,
+    &quot;numberOfSubsets&quot;: 1
+  }
+]}
+</code></pre></div>
+</details>
+<p>When examining a BUFR file we often want to determine the type of data contained in the file and the typical date / time
+of the data in the file. This information can be listed using the <code>-p</code> flag to select the headers to output. Multiple
+headers can be included using a comma separated list. </p>
+<p>Using the <code>bufr_ls</code> command inspect the test file and identify the type of data contained in the file and the typical date and time for that data.</p>
+<details class="hint">
+<summary>Hint</summary>
+<p>The ecCodes keys are given in the table above. We can use the following to list the dataCategory and
+internationalDataSubCategory of the BUFR data:</p>
+<div class="highlight"><pre><span></span><code>bufr_ls -p dataCategory,internationalDataSubCategory bufr-cli-ex1.bufr4
+</code></pre></div>
+<p>Additional keys can be added as required.</p>
+</details>
+<div class="admonition question">
+<p class="admonition-title">Question</p>
+<p>What type of data (date category and sub category) are contained in the file? What is the typical date and time
+for the data?</p>
+</div>
+<details class="success">
+<summary>Click to reveal answer</summary>
+<p>The command you need to run should have been similar to:</p>
+<div class="highlight"><pre><span></span><code>bufr_ls -p dataCategory,internationalDataSubCategory,typicalDate,typicalTime -j bufr-cli-ex1.bufr4
+</code></pre></div>
+<p>You may have additional keys, or listed the year, month, day etc individually. The output should
+be similar to below, depending on whether you selected JSON or default output.</p>
+<div class="highlight"><pre><span></span><code>{ &quot;messages&quot; : [
+  {
+    &quot;dataCategory&quot;: 2,
+    &quot;internationalDataSubCategory&quot;: 4,
+    &quot;typicalDate&quot;: 20231002,
+    &quot;typicalTime&quot;: &quot;000000&quot;
+  }
+]}
+</code></pre></div>
+<p>From this we see that:</p>
+<ul>
+<li>The data category is 2, from <a href="https://github.com/wmo-im/BUFR4/blob/master/BUFR_TableA_en.csv">BUFR Table A</a>
+  we can see that this file contains "Vertical soundings (other than satellite)" data.</li>
+<li>The international sub category is 4, indicating 
+  "Upper-level temperature/humidity/wind reports from fixed-land stations (TEMP)" data. This information can be looked
+  up in <a href="https://github.com/wmo-im/CCT/blob/master/C13.csv">Common Code Table C-13</a> (row 33). Note the combination
+  of category and sub category.</li>
+<li>The typical date and time are 2023/10/02 and 00:00:00z respectively.</li>
+</ul>
+</details>
+<h3 id="exercise-2-bufr_dump">Exercise 2 - bufr_dump</h3>
+<p>The <code>bufr_dump</code> command can be used to list and examine the contents of a BUFR file, including the data itself.</p>
+<p>In this exercise we will use a BUFR file that is the same as your created during the initial csv2bufr practical session using the wis2box-webapp.</p>
+<p>Download the sample-file to the wis2box management container directly with the following command:</p>
+<div class="highlight"><pre><span></span><code>curl https://training.wis2box.wis.wmo.int/sample-data/bufr-cli-ex2.bufr4 --output bufr-cli-ex2.bufr4
+</code></pre></div>
+<p>Now run the <code>bufr_dump</code> command on the file, using the <code>-p</code> flag to output the data in plain text (key=value format):</p>
+<div class="highlight"><pre><span></span><code>bufr_dump -p bufr-cli-ex2.bufr4
+</code></pre></div>
+<p>You should see around 240 keys output, many of which are missing. This is typical with real world data as not all the eccodes keys are populated with reported data.</p>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>The missing values can be filtered using tools such as <code>grep</code>:
+<div class="highlight"><pre><span></span><code>bufr_dump -p bufr-cli-ex2.bufr4 | grep -v MISSING
+</code></pre></div></p>
+</div>
+<p>The example BUFR file for this exercise comes from the csv2bufr practical session. Please download the original CSV file into your current location as follows:</p>
+<div class="highlight"><pre><span></span><code>curl https://training.wis2box.wis.wmo.int/sample-data/csv2bufr-ex1.csv --output csv2bufr-ex1.csv
+</code></pre></div>
+<p>And display the content of the file with:</p>
+<div class="highlight"><pre><span></span><code>more csv2bufr-ex1.csv
+</code></pre></div>
+<div class="admonition question">
+<p class="admonition-title">Question</p>
+<p>Use the following command to display column 18 in the CSV file and you will find the reported mean sea level pressure (msl_pressure):</p>
+<div class="highlight"><pre><span></span><code>more csv2bufr-ex1.csv | cut -d &#39;,&#39; -f 18
+</code></pre></div>
+<p>Which key in the BUFR output corresponds to the mean sea level pressure ?</p>
+</div>
+<details class="hint">
+<summary>Hint</summary>
+<p>Tools such as <code>grep</code> can be used in combination with <code>bufr_dump</code>. For example:</p>
+<div class="highlight"><pre><span></span><code>bufr_dump -p bufr-cli-ex2.bufr4 | grep -i &quot;pressure&quot;
+</code></pre></div>
+<p>would filter the contents of <code>bufr_dump</code>to only those lines containing the word pressure. Alternatively, 
+the output could be filtered on a value.</p>
+</details>
+<details class="success">
+<summary>Click to reveal answer</summary>
+<p>The key "pressureReducedToMeanSeaLevel" corresponds to the msl_pressure column in the input CSV file.</p>
+</details>
+<p>Spend a few minutes examining the rest of the output, comparing to the input CSV file before moving on to the next
+exercise. For example, you can try to find the keys in the BUFR output that correspond to relative humidity (column 23 in the CSV file) and air temperature (column 21 in the CSV file).</p>
+<h3 id="exercise-3-csv2bufr-mapping-files">Exercise 3 - csv2bufr mapping files</h3>
+<p>The csv2bufr tool can be configured to process tabular data with different columns and BUFR sequences. </p>
+<p>This is done by the way of a configuration file written in the JSON format. </p>
+<p>Like BUFR data itself, the JSON file contains a header section and a data section, with these broadly corresponding to the same sections in BUFR. </p>
+<p>Additionally, some formatting options are specified within the JSON file. </p>
+<p>The JSON file for the default mapping can be view via the link below (right-click and open in new tab):</p>
+<p><a href="https://raw.githubusercontent.com/wmo-im/csv2bufr/main/csv2bufr/templates/resources/aws-template.json">aws-template.json</a></p>
+<p>Examine the <code>header</code> section of the mapping file (shown below) and compare to the table from exercise 1 (ecCodes key column):</p>
+<div class="highlight"><pre><span></span><code>&quot;header&quot;:[
+    {&quot;eccodes_key&quot;: &quot;edition&quot;, &quot;value&quot;: &quot;const:4&quot;},
+    {&quot;eccodes_key&quot;: &quot;masterTableNumber&quot;, &quot;value&quot;: &quot;const:0&quot;},
+    {&quot;eccodes_key&quot;: &quot;bufrHeaderCentre&quot;, &quot;value&quot;: &quot;const:0&quot;},
+    {&quot;eccodes_key&quot;: &quot;bufrHeaderSubCentre&quot;, &quot;value&quot;: &quot;const:0&quot;},
+    {&quot;eccodes_key&quot;: &quot;updateSequenceNumber&quot;, &quot;value&quot;: &quot;const:0&quot;},
+    {&quot;eccodes_key&quot;: &quot;dataCategory&quot;, &quot;value&quot;: &quot;const:0&quot;},
+    {&quot;eccodes_key&quot;: &quot;internationalDataSubCategory&quot;, &quot;value&quot;: &quot;const:2&quot;},
+    {&quot;eccodes_key&quot;: &quot;masterTablesVersionNumber&quot;, &quot;value&quot;: &quot;const:30&quot;},
+    {&quot;eccodes_key&quot;: &quot;numberOfSubsets&quot;, &quot;value&quot;: &quot;const:1&quot;},
+    {&quot;eccodes_key&quot;: &quot;observedData&quot;, &quot;value&quot;: &quot;const:1&quot;},
+    {&quot;eccodes_key&quot;: &quot;compressedData&quot;, &quot;value&quot;: &quot;const:0&quot;},
+    {&quot;eccodes_key&quot;: &quot;typicalYear&quot;, &quot;value&quot;: &quot;data:year&quot;},
+    {&quot;eccodes_key&quot;: &quot;typicalMonth&quot;, &quot;value&quot;: &quot;data:month&quot;},
+    {&quot;eccodes_key&quot;: &quot;typicalDay&quot;, &quot;value&quot;: &quot;data:day&quot;},
+    {&quot;eccodes_key&quot;: &quot;typicalHour&quot;, &quot;value&quot;: &quot;data:hour&quot;},
+    {&quot;eccodes_key&quot;: &quot;typicalMinute&quot;, &quot;value&quot;: &quot;data:minute&quot;},
+    {&quot;eccodes_key&quot;: &quot;unexpandedDescriptors&quot;, &quot;value&quot;:&quot;array:301150, 307096&quot;}
+],
+</code></pre></div>
+<p>Here you can see the same headers as available in the output from the <code>bufr_ls</code> command. In the mapping file the value 
+for these can be set to a column from the CSV input file, a constant value or an array of constant values.</p>
+<div class="admonition question">
+<p class="admonition-title">Question</p>
+<p>Look at the example header section above. How would you specify a constant value, a value from the input CSV data
+file and an array of constants?</p>
+</div>
+<details class="success">
+<summary>Click to reveal answer</summary>
+<ul>
+<li>Constant values can be set by setting the <code>value</code> property to <code>"value": "const:&lt;your-constant&gt;"</code>.</li>
+<li>Values can be set to a column from the input CSV by setting the <code>value</code> property to <code>"value": "data:&lt;your-column&gt;"</code>.</li>
+<li>Arrays can be set by setting the <code>value</code> property to <code>"value": "array:&lt;comma-seperated-values&gt;"</code>.</li>
+</ul>
+</details>
+<p>Now examine the data section of the JSON mapping file (note, the output has been truncated):</p>
+<div class="highlight"><pre><span></span><code>    &quot;data&quot;: [
+        {&quot;eccodes_key&quot;: &quot;#1#wigosIdentifierSeries&quot;, &quot;value&quot;:&quot;data:wsi_series&quot;, &quot;valid_min&quot;: &quot;const:0&quot;, &quot;valid_max&quot;: &quot;const:0&quot;},
+        {&quot;eccodes_key&quot;: &quot;#1#wigosIssuerOfIdentifier&quot;, &quot;value&quot;:&quot;data:wsi_issuer&quot;, &quot;valid_min&quot;: &quot;const:0&quot;, &quot;valid_max&quot;: &quot;const:65534&quot;},
+        {&quot;eccodes_key&quot;: &quot;#1#wigosIssueNumber&quot;, &quot;value&quot;:&quot;data:wsi_issue_number&quot;, &quot;valid_min&quot;: &quot;const:0&quot;, &quot;valid_max&quot;: &quot;const:65534&quot;},
+        {&quot;eccodes_key&quot;: &quot;#1#wigosLocalIdentifierCharacter&quot;, &quot;value&quot;:&quot;data:wsi_local&quot;},
+        {&quot;eccodes_key&quot;: &quot;#1#latitude&quot;, &quot;value&quot;: &quot;data:latitude&quot;, &quot;valid_min&quot;: &quot;const:-90.0&quot;, &quot;valid_max&quot;: &quot;const:90.0&quot;},
+        {&quot;eccodes_key&quot;: &quot;#1#longitude&quot;, &quot;value&quot;: &quot;data:longitude&quot;, &quot;valid_min&quot;: &quot;const:-180.0&quot;, &quot;valid_max&quot;: &quot;const:180.0&quot;},
+        {&quot;eccodes_key&quot;: &quot;#1#heightOfStationGroundAboveMeanSeaLevel&quot;, &quot;value&quot;:&quot;data:station_height_above_msl&quot;, &quot;valid_min&quot;: &quot;const:-400&quot;, &quot;valid_max&quot;: &quot;const:9000&quot;},
+        {&quot;eccodes_key&quot;: &quot;#1#heightOfBarometerAboveMeanSeaLevel&quot;, &quot;value&quot;:&quot;data:barometer_height_above_msl&quot;, &quot;valid_min&quot;: &quot;const:-400&quot;, &quot;valid_max&quot;: &quot;const:9000&quot;},
+        {&quot;eccodes_key&quot;: &quot;#1#blockNumber&quot;, &quot;value&quot;: &quot;data:wmo_block_number&quot;, &quot;valid_min&quot;: &quot;const:0&quot;, &quot;valid_max&quot;: &quot;const:99&quot;},
+        {&quot;eccodes_key&quot;: &quot;#1#stationNumber&quot;, &quot;value&quot;: &quot;data:wmo_station_number&quot;, &quot;valid_min&quot;: &quot;const:0&quot;, &quot;valid_max&quot;: &quot;const:999&quot;},
+        {&quot;eccodes_key&quot;: &quot;#1#stationType&quot;, &quot;value&quot;: &quot;data:station_type&quot;, &quot;valid_min&quot;: &quot;const:0&quot;, &quot;valid_max&quot;: &quot;const:3&quot;},
+        {&quot;eccodes_key&quot;: &quot;#1#year&quot;, &quot;value&quot;: &quot;data:year&quot;, &quot;valid_min&quot;: &quot;const:1600&quot;, &quot;valid_max&quot;: &quot;const:2200&quot;},
+        {&quot;eccodes_key&quot;: &quot;#1#month&quot;, &quot;value&quot;: &quot;data:month&quot;, &quot;valid_min&quot;: &quot;const:1&quot;, &quot;valid_max&quot;: &quot;const:12&quot;},
+        {&quot;eccodes_key&quot;: &quot;#1#day&quot;, &quot;value&quot;: &quot;data:day&quot;, &quot;valid_min&quot;: &quot;const:1&quot;, &quot;valid_max&quot;: &quot;const:31&quot;},
+        {&quot;eccodes_key&quot;: &quot;#1#hour&quot;, &quot;value&quot;: &quot;data:hour&quot;, &quot;valid_min&quot;: &quot;const:0&quot;, &quot;valid_max&quot;: &quot;const:23&quot;},
+        {&quot;eccodes_key&quot;: &quot;#1#minute&quot;, &quot;value&quot;: &quot;data:minute&quot;, &quot;valid_min&quot;: &quot;const:0&quot;, &quot;valid_max&quot;: &quot;const:59&quot;},
+        {&quot;eccodes_key&quot;: &quot;#1#nonCoordinatePressure&quot;, &quot;value&quot;: &quot;data:station_pressure&quot;, &quot;valid_min&quot;: &quot;const:50000&quot;, &quot;valid_max&quot;: &quot;const:150000&quot;},
+        {&quot;eccodes_key&quot;: &quot;#1#pressureReducedToMeanSeaLevel&quot;, &quot;value&quot;: &quot;data:msl_pressure&quot;, &quot;valid_min&quot;: &quot;const:50000&quot;, &quot;valid_max&quot;: &quot;const:150000&quot;},
+        {&quot;eccodes_key&quot;: &quot;#1#nonCoordinateGeopotentialHeight&quot;, &quot;value&quot;: &quot;data:geopotential_height&quot;, &quot;valid_min&quot;: &quot;const:-1000&quot;, &quot;valid_max&quot;: &quot;const:130071&quot;},
+        ...
+    ]
+</code></pre></div>
+<p>Refer back to exercise 2 in this practical session and the task identifying the ecCodes key corresponding to the
+mean sea level pressure.</p>
+<div class="admonition question">
+<p class="admonition-title">Question</p>
+<p>Can you identify the row in the data section that performs the mapping between the CSV input file and ecCodes key
+used to encode the mean sea level pressure data?</p>
+</div>
+<details class="success">
+<summary>Click to reveal answer</summary>
+<p>You will have hopefully identified the line below:</p>
+<div class="highlight"><pre><span></span><code>{&quot;eccodes_key&quot;: &quot;#1#pressureReducedToMeanSeaLevel&quot;, &quot;value&quot;: &quot;data:msl_pressure&quot;, &quot;valid_min&quot;: &quot;const:50000&quot;, &quot;valid_max&quot;: &quot;const:150000&quot;},
+</code></pre></div>
+<p>This instructs the csv2bufr tool to map the data from the <code>msl_pressure</code> column to the <code>#1#pressureReducedToMeanSeaLevel</code> element in BUFR.</p>
+</details>
+<div class="admonition question">
+<p class="admonition-title">Bonus question</p>
+<p>Can you guess what the <code>valid_min</code> and <code>valid_max</code> properties do?</p>
+</div>
+<details class="success">
+<summary>Click to reveal answer</summary>
+<p>These specify the valid minimum and maximum values for the different elements. Values falling outside of the 
+range specified will result in a warning message and the data set to missing in the output BUFR file.</p>
+</details>
+<p>Download the csv2bufr mapping file to the wis2box management container:</p>
+<div class="highlight"><pre><span></span><code>curl https://raw.githubusercontent.com/wmo-im/csv2bufr/main/csv2bufr/templates/resources/aws-template.json --output aws-template.json 
+</code></pre></div>
+<p>Now modify the file to change the limits for air temperature, for example set to realistic limits but in degrees Celsius:</p>
+<div class="highlight"><pre><span></span><code>        {&quot;eccodes_key&quot;: &quot;#1#airTemperature&quot;, &quot;value&quot;: &quot;data:air_temperature&quot;, &quot;valid_min&quot;: &quot;const:-60&quot;, &quot;valid_max&quot;: &quot;const:60&quot;},
+</code></pre></div>
+<p>Now use <code>csv2bufr</code> to transform the example CSV data file to BUFR using the modified mapping file:</p>
+<div class="highlight"><pre><span></span><code>csv2bufr data transform --bufr-template aws-template.json csv2bufr-ex1.csv
+</code></pre></div>
+<p>You should see the following output:</p>
+<div class="highlight"><pre><span></span><code>CLI:    ... Transforming ex1.csv to BUFR ...
+CLI:    ... Processing subsets:
+#1#airTemperature: Value (301.25) out of valid range (-60 - 60).; Element set to missing
+CLI:    ..... 384 bytes written to ./WIGOS_0-20000-0-99100_20230929T090000.bufr4
+CLI:    End of processing, exiting.
+</code></pre></div>
+<p>This suggests a mismatch between the units in the input data and that expected by the mapping file.</p>
+<p>Use the <code>bufr_dump</code> command to confirm that the first air temperature value has been set to missing in the file that was produced:</p>
+<div class="highlight"><pre><span></span><code>bufr_dump -p WIGOS_0-20000-0-99100_20230929T090000.bufr4 | grep airTemperature
+</code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Note that the units used in BUFR are fixed, Kelvin for temperature, Pascals for pressure etc. However,
+csv2bufr can perform simple unit conversions by scaling and adding an offset.</p>
+</div>
+<p>As the final part of this exercise, edit the the mapping file again and add a scale and offset to the 
+airTemperature line.</p>
+<div class="highlight"><pre><span></span><code><span class="w">        </span><span class="p">{</span><span class="nt">&quot;eccodes_key&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;#1#airTemperature&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;value&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;data:air_temperature&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;valid_min&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;const:-60&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;valid_max&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;const:60&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;scale&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;const:0&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;offset&quot;</span><span class="p">:</span><span class="s2">&quot;const:273.15&quot;</span><span class="p">},</span>
+</code></pre></div>
+<p>And edit  the air_temperature column in the 'csv2bufr-ex1.csv' to be in Celsius rather than Kelvin: 301.25 K = 28.1 degrees C.</p>
+<p>Rerun the conversion:</p>
+<div class="highlight"><pre><span></span><code>csv2bufr data transform --bufr-template aws-template.json csv2bufr-ex1.csv
+</code></pre></div>
+<p>Run BUFR dump and confirm that the airTemperature is correctly encoded.</p>
+<div class="highlight"><pre><span></span><code>bufr_dump -p WIGOS_0-20000-0-99100_20230929T090000.bufr4 | grep airTemperature
+</code></pre></div>
+<p>You should see the following output:</p>
+<div class="highlight"><pre><span></span><code>#1#airTemperature=301.25
+#2#airTemperature=MISSING
+</code></pre></div>
+<h3 id="exercise-4-installing-new-csv2bufr-templates">Exercise 4 - installing new csv2bufr templates</h3>
+<p>The <code>bufr-template</code> used by csv2bufr can be specified by providing a filename to the command, as per the above example,
+or by setting a search path with an environment variable and by specifying the template name. The template name must match
+the filename but without the extension, with the file located on the search path. </p>
+<div class="admonition bug">
+<p class="admonition-title">Bug</p>
+<p>Currently, the default mapping file used in the csv2bufr automated workflow sets the originating centre
+header to indicate that the data have originating with the WMO Secretariat, see the JSON snippet 
+from the default <code>bufr-template</code> below:</p>
+<div class="highlight"><pre><span></span><code>    {&quot;eccodes_key&quot;: &quot;bufrHeaderCentre&quot;, &quot;value&quot;: &quot;const:0&quot;}, 
+</code></pre></div>
+</div>
+<p>In this final exercise you will download the template used, correct with the appropriate centre code and install 
+in the wis2box management container. Suggested originating centre codes are listed below, these will need to be
+confirmed with your WIS focal points prior to data exchange.</p>
+<table>
+<thead>
+<tr>
+<th>Centre</th>
+<th>Code</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Melbourne (RSMC), Australia</td>
+<td>67</td>
+</tr>
+<tr>
+<td>Brasilia (RSMC), Brazil</td>
+<td>43</td>
+</tr>
+<tr>
+<td>Beijing (RSMC), China</td>
+<td>38</td>
+</tr>
+<tr>
+<td>New Delhi (RSMC), India</td>
+<td>28</td>
+</tr>
+<tr>
+<td>Indonesia (NMC)</td>
+<td>195</td>
+</tr>
+<tr>
+<td>Malaysia (NMC)</td>
+<td>73</td>
+</tr>
+<tr>
+<td>Federated States of Micronesia</td>
+<td>197</td>
+</tr>
+<tr>
+<td>Wellington (RSMC), New Zealand</td>
+<td>69</td>
+</tr>
+<tr>
+<td>Oman (NMC)</td>
+<td>127</td>
+</tr>
+<tr>
+<td>Philippines (NMC)</td>
+<td>201</td>
+</tr>
+<tr>
+<td>Seoul, Republic of Korea</td>
+<td>40</td>
+</tr>
+<tr>
+<td>Dili (NMC), Timor-Leste</td>
+<td>TBC</td>
+</tr>
+</tbody>
+</table>
+<p>For this exercise, first create a directory in which to store the mappings:</p>
+<div class="highlight"><pre><span></span><code>cd /data/wis2box
+mkdir bufr-templates
+</code></pre></div>
+<p>Navigate to the directory and download the default bufr-template:</p>
+<div class="highlight"><pre><span></span><code>cd bufr-templates
+curl https://raw.githubusercontent.com/wmo-im/csv2bufr/main/csv2bufr/templates/resources/aws-template.json \
+    --output aws-template-custom.json
+</code></pre></div>
+<p>Make sure the file 'aws-template-custom.json' is in the directory '/data/wis2box/bufr-templates':</p>
+<div class="highlight"><pre><span></span><code>ls /data/wis2box/bufr-templates
+</code></pre></div>
+<p>Edit the file using <code>vi</code> or your favourite text editor and update the value of the <code>bufrHeaderCentre</code>.</p>
+<p>Now try the commands from the block below:</p>
+<div class="highlight"><pre><span></span><code>curl https://training.wis2box.wis.wmo.int/sample-data/csv2bufr-ex1.csv --output csv2bufr-ex1.csv
+export CSV2BUFR_TEMPLATES=/data/wis2box/bufr-templates
+csv2bufr data transform --bufr-template aws-template-custom csv2bufr-ex1.csv
+</code></pre></div>
+<p>Inspect the output file using <code>bufr_ls</code> and confirm that the originating centre in the headers is updated.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You can use the custom mappings in your automated workflow by updating your data-mappings.yml and updating the environment variable for CSV2BUFR_TEMPLATES.</p>
+<p>Edit your <code>data-mappings.yml</code> file to use this new file by updating the template name:</p>
+<div class="highlight"><pre><span></span><code>            csv:
+                - plugin: wis2box.data.csv2bufr.ObservationDataCSV2BUFR
+                template: aws-template-custom
+                notify: true
+                file-pattern: &#39;^.*\.csv$&#39;
+</code></pre></div>
+<p>Add the environment variable to your <code>wis2box.env</code> file:</p>
+<div class="highlight"><pre><span></span><code>cd ~/wis2box-1.0b5/
+echo &quot;export CSV2BUFR_TEMPLATES=/data/wis2box/bufr-templates&quot; &gt;&gt; wis2box.env
+</code></pre></div>
+<p>And restart the wis2box stack:</p>
+<div class="highlight"><pre><span></span><code>python3 wis2box-ctl.py stop
+python3 wis2box-ctl.py start
+</code></pre></div>
+<p>The new template should now be used in the automated workflow.</p>
+</div>
+<h2 id="housekeeping">Housekeeping</h2>
+<p>Clean up your working directory by removing files you no longer need and clean up your station list to remove any
+example stations you may have created and that are no longer needed.</p>
+<h2 id="conclusion">Conclusion</h2>
+<div class="admonition success">
+<p class="admonition-title">Congratulations</p>
+<p>In this practical session you have learned:</p>
+<ul>
+<li>how to use some of the BUFR command line tools available in the wis2box management container;</li>
+<li>how to make basic changes to the mapping file used in the csv2bufr tool;</li>
+<li>and how to install new csv2bufr mappping templates in wis2box.</li>
+</ul>
+</div>
+<div class="admonition info">
+<p class="admonition-title">Next steps</p>
+<p>In this session we have covered only a small part of the csv2bufr and ecCodes BUFR tools functionality. 
+For example, the csv2bufr tool includes the ability to create new 'bufr-template' files provided different BUFR 
+sequences. As an example, the template for BUFR sequence (301150, 307096), used by the default 
+<code>aws-template</code>, can be generated with the command:</p>
+<div class="highlight"><pre><span></span><code>csv2bufr mappings create 301150 307096 &gt; bufr-template.json
+</code></pre></div>
+<p>This file can be modified to add and map additional variables from the CSV data file, use different quality 
+control values (valid_min and valid_max) and perform some basic (linear) unit conversions. Further information
+is available via the csv2bufr documentation pages: </p>
+<p><a href="https://csv2bufr.readthedocs.io/en/latest/">https://csv2bufr.readthedocs.io/en/latest/</a>.</p>
+<p>Further information on the ecCodes BUFR tools can be found at: </p>
+<p><a href="https://confluence.ecmwf.int/display/ECC/BUFR+tools">https://confluence.ecmwf.int/display/ECC/BUFR+tools</a>.</p>
+</div>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      &copy; 2023 World Meteorological Organization
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.indexes", "content.code.copy"], "search": "../../assets/javascripts/workers/search.f886a092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.aecac24b.min.js"></script>
+      
+        <script src="../../js/print-site.js"></script>
+      
+    
+  </body>
+</html>
