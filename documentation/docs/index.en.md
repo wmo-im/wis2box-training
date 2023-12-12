@@ -2,7 +2,7 @@
 title: Home
 ---
 
-<img alt="WMO logo" src="assets/img/wmo-logo.png" width="200">
+<img alt="WMO logo" src="../assets/img/wmo-logo.png" width="200">
 # WIS2 in a box training
 
 WIS2 in a box ([wis2box](https://docs.wis2box.wis.wmo.int)) is a Free and Open Source (FOSS) Reference Implementation of a WMO WIS2 Node. The project provides a plug and play toolset to ingest, process, and publish weather/climate/water data using standards-based approaches in alignment with the WIS2 principles. wis2box also provides access to all data in the WIS2 network. wis2box is designed to have a low barrier to entry for data providers, providing enabling infrastructure and services for data discovery, access, and visualization.
@@ -87,7 +87,7 @@ Container names (running images) are denoted in **bold**.
 
 ## Training location and materials
 
-This training is always provided live at [https://training.wis2box.wis.wmo.int](https://training.wis2box.wis.wmo.int).
+This training is always provided live at [https://maaikelimper.github.io/wis2box-training-test](https://maaikelimper.github.io/wis2box-training-test).
 
 The training contents, wiki and issue tracker are managed on GitHub at [https://github.com/wmo-im/wis2box-training](https://github.com/wmo-im/wis2box-training).
 
@@ -98,7 +98,7 @@ File > Print > Save as PDF.
 
 ## Exercise materials
 
-Exercise materials can be downloaded from the [exercise-materials.zip](https://training.wis2box.wis.wmo.int/exercise-materials.zip) zipfile.
+Exercise materials can be downloaded from the [exercise-materials.zip](https://maaikelimper.github.io/wis2box-training-test/exercise-materials.zip) zipfile.
 
 
 ## Support
