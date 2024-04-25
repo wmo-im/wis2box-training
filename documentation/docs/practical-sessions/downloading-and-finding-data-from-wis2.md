@@ -95,7 +95,7 @@ At the moment, the available GDCs are as follows:
 - China Meteorological Administration: https://api.weather.gc.ca/api/collections/wis2-discovery-metadata
 
 ```bash
-pywiscat wis2 search --help
+pywiscat search --help
 ```
 
 !!! note
@@ -106,7 +106,7 @@ pywiscat wis2 search --help
     environment variable
 
 ```bash
-pywiscat wis2 search
+pywiscat search
 ```
 
 !!! question
@@ -126,7 +126,7 @@ pywiscat wis2 search
 Let's try querying the GDC with a keyword:
 
 ```bash
-pywiscat wis2 search -q observations
+pywiscat search -q observations
 ```
 
 !!! question
@@ -165,7 +165,7 @@ Try additional queries with `-q`
 Let's get more details on a specific search result that we are interested in:
 
 ```bash
-pywiscat wis2 get <id>
+pywiscat get <id>
 ```
 
 !!! tip
