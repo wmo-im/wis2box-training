@@ -28,7 +28,7 @@
 "snow_depth","meters","Decimal","Snow depth at time of observation to 2 decimal places"
 "precipitation_intensity","kg m-2 h-1","Decimal","Intensity of precipitation at time of observation to 5 decimal places"
 "anemometer_height","meters","Decimal","Height of the anemometer above local ground  to 2 decimal place"
-"time_period_of_wind","minutes","Integer","Time period over which the wind speed and direction have been averegd. 10 minutes in normal cases or the number of minutes since a significant change occuring in the preceeding 10 minutes."
+"time_period_of_wind","minutes","Integer","Defines the time period over which the wind speed and direction have been averaged. Set to -10 to indicate a measurement period over the preceeding 10 minutes."
 "wind_direction","degrees","Integer","Wind direction (at anemometer height) averaged from the caterisan components over the indicated time period, 0 decimal places"
 "wind_speed","ms-1","Decimal","Wind speed (at anemometer height) averaged from the cartesian components over the indicated time period, 1 decimal place"
 "maximum_wind_gust_direction_10_minutes","degrees","Integer","Highest 3 second average over the preceeding 10 minutes, 0 decimal places"
