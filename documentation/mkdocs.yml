@@ -72,3 +72,9 @@ plugins:
         - locale: es
           name: Español
           build: true
+        - locale: fr
+          name: Français
+          build: true
+        - locale: ru
+          name: Русский
+          build: true
