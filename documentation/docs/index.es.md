@@ -85,8 +85,6 @@ Los nombres de los contenedores (imágenes en ejecución) se indican en **negrit
 
 ## Ubicación y materiales de entrenamiento
 
-Este entrenamiento siempre se proporciona en vivo en [https://maaikelimper.github.io/wis2box-training-test](https://maaikelimper.github.io/wis2box-training-test).
-
 Los contenidos del entrenamiento, la wiki y el rastreador de problemas son gestionados en GitHub en [https://github.com/wmo-im/wis2box-training](https://github.com/wmo-im/wis2box-training).
 
 ## Imprimir el material
@@ -95,7 +93,7 @@ Este entrenamiento se puede exportar a PDF. Para guardar o imprimir este materia
 
 ## Materiales de ejercicio
 
-Los materiales de ejercicio se pueden descargar desde el archivo [exercise-materials.zip](https://maaikelimper.github.io/wis2box-training-test/exercise-materials.zip).
+Los materiales de ejercicio se pueden descargar desde el archivo [exercise-materials.zip](exercise-materials.zip) zipfile.
 
 ## Soporte
 

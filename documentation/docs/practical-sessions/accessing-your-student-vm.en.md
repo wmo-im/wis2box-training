@@ -39,7 +39,7 @@ Your student VM has the following software pre-installed:
     The release archive for wis2box used in this training can be downloaded as follows:
 
     ```bash
-    wget https://github.com/wmo-im/wis2box/releases/download/1.0b5/wis2box-setup-1.0b5.zip
+    wget https://github.com/wmo-im/wis2box/releases/download/1.0b7/wis2box-setup-1.0b7.zip
     unzip wis2box-setup-1.0b5.zip
     ```
     
@@ -58,6 +58,7 @@ Your student VM has the following software pre-installed:
     pip3 install minio
     pip3 install pywiscat
     pip3 install pywis-pubsub
+    pip3 install pywis-downloader
     ```
 
     If you are using the student VM provided during local WIS2 training sessions, the required software will already be installed.
@@ -144,7 +145,7 @@ ls ~/
 ```
 returns:
 ```console
-exercise-materials  wis2box-1.0b5
+exercise-materials  wis2box-1.0b7
 ```
 
 You can use WinSCP to connect to your instance and inspect the contents of your home directory and download or upload files between your VM and your local PC.
