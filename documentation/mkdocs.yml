@@ -26,7 +26,6 @@ nav:
     - Cheatsheets:
         - Linux: cheatsheets/linux.md
         - Docker: cheatsheets/docker.md
-        - YAML: cheatsheets/yaml.md
         - WIS2 in a box: cheatsheets/wis2box.md
 
 strict: true
