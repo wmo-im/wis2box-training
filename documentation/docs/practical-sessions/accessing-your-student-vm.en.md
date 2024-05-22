@@ -40,7 +40,7 @@ Your student VM has the following software pre-installed:
 
     ```bash
     wget https://github.com/wmo-im/wis2box/releases/download/1.0b7/wis2box-setup-1.0b7.zip
-    unzip wis2box-setup-1.0b5.zip
+    unzip wis2box-setup-1.0b7.zip
     ```
     
     You can always find the latest 'wis2box-setup' archive at [https://github.com/wmo-im/wis2box/releases](https://github.com/wmo-im/wis2box/releases).

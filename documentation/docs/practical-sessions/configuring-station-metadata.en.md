@@ -23,10 +23,10 @@ The **WIGOS Station Identifier (WSI)** is used as the unique reference of the st
 
 To edit stations via the **wis2box-webapp** you will first to need create an authorization token.
 
-Login to your student VM and ensure you are in the `wis2box-1.0b5` directory:
+Login to your student VM and ensure you are in the `wis2box-1.0b7` directory:
 
 ```bash
-cd ~/wis2box-1.0b5
+cd ~/wis2box-1.0b7
 ```
 
 Then login into the **wis2box-management** container with the following command:

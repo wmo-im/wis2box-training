@@ -40,7 +40,7 @@ In order to submit data to be processed in the wis2box-webapp you will need an a
 You can generate this token by logging in to the wis2box management container and using the `wis2box auth add-token` command:
 
 ```bash
-cd ~/wis2box-1.0b5
+cd ~/wis2box-1.0b7
 python3 wis2box-ctl.py login
 wis2box auth add-token --path processes/wis2box
 ```

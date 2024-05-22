@@ -26,7 +26,7 @@ Login to you student VM using your SSH client (PuTTY or other).
 Make sure wis2box is up and running:
 
 ```bash
-cd ~/wis2box-1.0b5/
+cd ~/wis2box-1.0b7/
 python3 wis2box-ctl.py start
 python3 wis2box-ctl.py status
 ```

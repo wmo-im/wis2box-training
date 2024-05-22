@@ -9,7 +9,7 @@ title: BUFR command line tools
 
     - how to inspect the headers in the BUFR file using the `bufr_ls` command
     - how to extract and inspect the data within a bufr file using `bufr_dump`
-    - the basic structure of the bufr templats used in csv2bufr and how to use the command line tool
+    - the basic structure of the bufr templates used in csv2bufr and how to use the command line tool
     - and how to make basic changes to the bufr templates and how to update the wis2box to use the revised
       version
 
@@ -34,7 +34,7 @@ MQTT Explorer open and connected to your broker.
 First connect to your student VM via your ssh client and then log in the to management container: 
 
 ```{.copy}
-cd ~/wis2box-1.0b5
+cd ~/wis2box-1.0b7
 python3 wis2box-ctl.py login
 ```
 
@@ -566,7 +566,7 @@ Inspect the output file using `bufr_ls` and confirm that the originating centre 
     Add the environment variable to your `wis2box.env` file:
 
     ```{.copy}
-    cd ~/wis2box-1.0b5/
+    cd ~/wis2box-1.0b7/
     echo "export CSV2BUFR_TEMPLATES=/data/wis2box/bufr-templates" >> wis2box.env
     ```
 

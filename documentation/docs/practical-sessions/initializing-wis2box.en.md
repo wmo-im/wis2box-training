@@ -15,16 +15,16 @@ title: Initializing wis2box
 
 !!! note
 
-    The current training materials are using wis2box-1.0b5. 
+    The current training materials are using wis2box-1.0b7. 
     
     See [accessing-your-student-vm](accessing-your-student-vm.md) for instructions on how to download and install the wis2box software stack if you are running this training outside of a local training session.
 
 ## Preparation
 
-Login to your designated VM with your username and password and ensure you are in the `wis2box-1.0b5` directory:
+Login to your designated VM with your username and password and ensure you are in the `wis2box-1.0b7` directory:
 
 ```bash
-cd ~/wis2box-1.0b5
+cd ~/wis2box-1.0b7
 ```
 
 ## `wis2box-create-config.py`
@@ -51,7 +51,7 @@ Note that you need to define the full path to this directory.
 For example if your username is `mlimper`, the full path to the directory is `/home/mlimper/wis2box-data`:
 
 ```{.copy}
-mlimper@student-vm-mlimper:~/wis2box-1.0b5$ python3 wis2box-create-config.py
+mlimper@student-vm-mlimper:~/wis2box-1.0b7$ python3 wis2box-create-config.py
 Please enter the directory on the host where wis2box-configuration-files are to be stored:
 /home/mlimper/wis2box-data
 Configuration-files will be stored in the following directory:
@@ -81,7 +81,7 @@ Is this correct? (y/n/exit)
 
 You can use the option of random password generation when prompted for `WIS2BOX_STORAGE_PASSWORD` and `WIS2BOX_BROKER_PASSWORD` or define your own.
 
-Don't worry about remembering these passwords, they will be stored in the `wis2box.env` file in your wis2box-1.0b5 directory.
+Don't worry about remembering these passwords, they will be stored in the `wis2box.env` file in your wis2box-1.0b7 directory.
 
 ### Country code and centre-id
 
@@ -140,7 +140,7 @@ We will review the discovery metadata templates in a later session.
 Once the scripts is completed check the contents of the `wis2box.env` file in your current directory:
 
 ```bash
-cat ~/wis2box-1.0b5/wis2box.env
+cat ~/wis2box-1.0b7/wis2box.env
 ```
 
 Or check the content of the file via WinSCP.
@@ -197,7 +197,7 @@ Or check the content of the data-mappings.yml via WinSCP by browsing to the new 
 Ensure you are in the directory containing the wis2box software stack:
 
 ```{.copy}
-cd ~/wis2box-1.0b5
+cd ~/wis2box-1.0b7
 ```
 
 Start wis2box with the following command:
@@ -218,7 +218,7 @@ Repeat this command until all services are up and running.
 !!! note "wis2box and Docker"
     wis2box runs as a set of Docker containers managed by docker-compose.
     
-    The services are defined in the various `docker-compose*.yml` which can be found in the `~/wis2box-1.0b5/` directory.
+    The services are defined in the various `docker-compose*.yml` which can be found in the `~/wis2box-1.0b7/` directory.
     
     The Python script `wis2box-ctl.py` is used to run the underlying Docker Compose commands that control the wis2box services.
 
@@ -337,7 +337,7 @@ The username and password are defined in the `wis2box.env` file in your wis2box 
 Use the command below to check the values of these environment variables from the command line in your SSH session:
 
 ```{.copy}
-cat ~/wis2box-1.0b5/wis2box.env
+cat ~/wis2box-1.0b7/wis2box.env
 ```
 
 Or check the content of the file via WinSCP.
