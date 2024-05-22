@@ -96,7 +96,7 @@ File > Print > Save as PDF.
 
 ## Exercise materials
 
-Exercise materials can be downloaded from the [exercise-materials.zip](exercise-materials.zip) zipfile.
+Exercise materials can be downloaded from the [exercise-materials.zip](/exercise-materials.zip) zipfile.
 
 ## Support
 

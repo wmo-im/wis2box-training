@@ -93,7 +93,7 @@ Este entrenamiento se puede exportar a PDF. Para guardar o imprimir este materia
 
 ## Materiales de ejercicio
 
-Los materiales de ejercicio se pueden descargar desde el archivo [exercise-materials.zip](exercise-materials.zip) zipfile.
+Los materiales de ejercicio se pueden descargar desde el archivo [exercise-materials.zip](/exercise-materials.zip) zipfile.
 
 ## Soporte
 
