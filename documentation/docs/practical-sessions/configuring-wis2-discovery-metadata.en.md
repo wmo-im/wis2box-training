@@ -59,9 +59,6 @@ Update the following values in the discovery metadata configuration:
     Many values have been pre-populated as part of the [Initializing wis2box](../initializing-wis2box) practical session, however you will want to ensure they are correct / accurate for your dataset.
 
 !!! tip
-    The configuration is based on the YAML format.  Consult the [YAML cheatsheet](../cheatsheets/yaml.md) for more information.
-
-!!! tip
     As the `identification.extents.spatial.bbox` coordinates are pre-populated, you may want to update the coordinates if the dataset coordinates are not based on your country's administrative boundaries.  Feel free to update this value accordingly, ensuring that values are correctly signed (for example, use the minus sign [`-`] for southern or western hemispheres.
 
     The following tools can be valuable for deriving your `identification.extents.spatial.bbox`:
