@@ -16,8 +16,6 @@ title: Connecting to WIS2 over MQTT
 
 WIS2 uses the MQTT protocol to advertise the availability of weather/climate/water data. The WIS2 Global Broker subscribes to all WIS2 Nodes in the network and republishes the messages it receives. The Global Cache subscribes to the Global Broker, downloads the data in the message and then republishes the message on the `cache` topic with a new URL.  The Global Discovery Catalogue publishes discovery metadata from the Broker and provides a search API.
 
-As part of the WIS2 Pilot Phase in 2023, two Global Brokers are available (hosted by China Meteorological Administration and Météo-France).
-
 This is an example of the WIS2 notification message structure for a message received on the topic `origin/a/wis2/arg/sabm/data/core/weather/surface-based-observations/synop`:	
 
 ```json
