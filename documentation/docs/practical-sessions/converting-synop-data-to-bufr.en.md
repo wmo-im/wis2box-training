@@ -11,6 +11,7 @@ title: Converting SYNOP data to BUFR
     - validate, diagnose and fix simple coding errors in an FM-12 SYNOP bulletin prior to format conversion and exchange
     - ensure that the required station metadata is available in the wis2box
     - confirm and inspect successfully converted bulletins
+    - upload FM-12 SYNOP data using the MinIO UI ensure the plugin is working correctly
 
 ## Introduction
 
@@ -119,7 +120,7 @@ Open the wis2box web application and navigate to the synop2bufr page using the l
 
 - Paste the content you have copied in the text entry box.
 - Select the month and year using the date picker, assume the current month for this exercise.
-- Select a topic from the drop down menu (the options are based on the metadata configured in the wis2box)
+- Select a topic from the drop down menu (the options are based on the datasets configured in the wis2box).
 - Enter the "processes/wis2box" auth token you generated earlier
 - Ensure "Publish on WIS2" is toggled ON
 - Click "SUBMIT"

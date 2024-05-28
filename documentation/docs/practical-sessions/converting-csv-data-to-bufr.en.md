@@ -5,11 +5,12 @@ title: Converting CSV data to BUFR
 # Converting CSV data to BUFR
 
 !!! abstract "Learning outcomes"
-    By the end of this practical session, you will have:
+    By the end of this practical session, you will be able to:
 
-    - learnt to format CSV data for use with the default automatic weather station BUFR template
-    - learnt to use **wis2box webapp** to validate and convert sample data
-    - learnt about some of the common issues that can occur, such as incorrect units
+    - format CSV data for use with the default automatic weather station BUFR template
+    - use **wis2box webapp** to validate and convert sample data for AWS stations to BUFR
+    - use the MinIO UI to upload input CSV data files
+    - use the dataset editor to use a different template for CSV to BUFR conversion
 
 ## Introduction
 

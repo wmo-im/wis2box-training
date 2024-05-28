@@ -1,15 +1,15 @@
 ---
-title: Data ingest and monitoring
+title: Automating data ingestion
 ---
 
-# Data ingest and monitoring
+# Automating data ingestion
 
 !!! abstract "Learning outcomes"
 
     By the end of this practical session, you will be able to:
     
-    - trigger different wis2box data pipelines using different file types
-    - monitor the status of your data ingest and publishing
+    - ingest data into wis2box using a script using the MinIO Python client
+    - ingest data into wis2box using the wis2box-ftp service
 
 ## Introduction
 
