@@ -77,63 +77,11 @@ The URL of the wis2box will be set to:
 Is this correct? (y/n/exit)
 ```
 
-### STORAGE and BROKER passwords
+### STORAGE, BROKER and WEBAPP passwords
 
-You can use the option of random password generation when prompted for `WIS2BOX_STORAGE_PASSWORD` and `WIS2BOX_BROKER_PASSWORD` or define your own.
+You can use the option of random password generation when prompted for `WIS2BOX_STORAGE_PASSWORD`, `WIS2BOX_BROKER_PASSWORD` and `WIS2BOX_WEBAPP_PASSWORD` or define your own.
 
 Don't worry about remembering these passwords, they will be stored in the `wis2box.env` file in your wis2box-1.0b7 directory.
-
-### Country code and centre-id
-
-Next you will be asked for the 3-letter ISO code for your country and centre-id for your wis2box. The centre-id can be a string of your choosing for the purpose of this training.
-
-```{.copy}
-Please enter your 3-letter ISO country code:
-nld
-Please enter the centre-id for your wis2box:
-maaike_test
-The country-code will be set to:
-  nld
-The centre-id will be set to:
-  maaike_test
-Is this correct? (y/n/exit)
-```
-
-### Discovery metadata
-
-Next you will answer a set of question to generate discovery metadata templates for your wis2box. The answers do not need to be correct for the purpose of this training.
-
-```{.copy}
-********************************************************************************
-Creating initial configuration for surface and upper-air data.
-********************************************************************************
-Please enter the email address of the wis2box administrator:
-mlimper@wmo.int
-The email address of the wis2box administrator will be set to:
-    mlimper@wmo.int
-Is this correct? (y/n/exit)
-n
-Please enter the email address of the wis2box administrator:
-me@gmail.com
-The email address of the wis2box administrator will be set to:
-    me@gmail.com
-Is this correct? (y/n/exit)
-y
-Please enter the name of your organization:
-Maaike-TEST
-Your organization name will be set to:
-    Maaike-TEST
-Is this correct? (y/n/exit)
-y
-Getting bounding box for "nld".
-bounding box: -68.6255319,11.825,7.2274985,53.744395.
-Do you want to use this bounding box? (y/n/exit)
-y
-Created new metadata file: /home/mlimper/wis2box-data/metadata/discovery/metadata-synop.yml
-Created new metadata file: /home/mlimper/wis2box-data/metadata/discovery/metadata-temp.yml
-```
-
-We will review the discovery metadata templates in a later session.
 
 ### review configuration
 
@@ -162,34 +110,6 @@ Or check the content of the file via WinSCP.
 !!! note
 
     The `wis2box.env` file contains environment variables defining the configuration of your wis2box. For more information consult the [wis2box-documentation](https://docs.wis2box.wis.wmo.int/en/latest/reference/configuration.html)
-
-Next, check the contents of the `data-mappings.yml` file in your wis2box data directory:
-
-```bash
-cat ~/wis2box-data/data-mappings.yml
-```
-
-Or check the content of the data-mappings.yml via WinSCP by browsing to the new directory 'wis2box-data' (click refresh if you don't see it yet)
-
-!!! question 
-
-    How many different keys are defined for `data` in the `data-mappings.yml` file?
-
-??? success "Click to reveal answer"
-
-    There are 2 different 'data'-keys defined in the data-mappings.yml file, one for surface-based observations and one for upper-air observations:
-    
-    - nld.maaike_test.data.core.weather.surface-based-observations.synop
-    - nld.maaike_test.data.core.weather.upper-air-observations.temp
-
-    The country-code and centre-id will be different from the example above, they will be set to the values you entered during the `wis2box-create-config.py` script.
-
-    You can also note that different 'plugins' are defined for the different data types. The use of these plugins in the wis2box data pipeline architecture will be discussed in a later session.
-    
-
-!!! note
-
-    The `data-mappings.yml` file defines the plugins used to transform your data. For more information see [data pipeline plugins in the wis2box-documentation](https://docs.wis2box.wis.wmo.int/en/latest/reference/running/data-pipeline-plugins.html)
 
 
 ## wis2box start and status
@@ -258,14 +178,17 @@ This is the wis2box API (running via the **wis2box-api** container).
 
 ## wis2box webapp
 
-Open a web browser and visit the page `http://<your-host>/wis2box-webapp`:
+Open a web browser and visit the page `http://<your-host>/wis2box-webapp`.
+
+You will see a pop-up asking for your username and password. Use the default username `wis2box-user` and the `WIS2BOX_WEBAPP_PASSWORD` defined in the `wis2box.env` file.
 
 <img alt="wis2box-webapp.png" src="../../assets/img/wis2box-webapp.png" width="600">
 
-This is the (new) wis2box web application to enable you to interact with your wis2box:
+This is the wis2box web application to enable you to interact with your wis2box:
 
-- ingest ASCII and CSV data
+- create and manage datasets
 - update/review your station metadata
+- ingest ASCII and CSV data
 - monitor notifications published on your wis2box-broker
 
 We will use this web application in a later session.
@@ -354,6 +277,28 @@ Try to login to your MinIO UI. You will see that there 3 buckets already defined
 
     The **wis2box-storage** container will send a notification on the **wis2box-broker** when data is received. The **wis2box-management** container is subscribed to all messages on `wis2box/#` and will receive these notifications, triggering the data pipelines defined in your `data-mappings.yml`.
 
+Try to upload a file to the `wis2box-incoming` bucket in the filepath `testing/mywis2box/'.
+
+First click on "browse" for the `wis2box-incoming` bucket, then click on "Create new path" and enter the path `testing/upload/`:
+
+<img alt="minio-ui-create-path.png" src="../../assets/img/minio-ui-create-path.png" width="600">
+
+Then click on "Upload" and select a file from your local machine to upload to the `wis2box-incoming` bucket
+
+You should now see the file in the `wis2box-incoming` bucket:
+
+<img alt="minio-ui-upload-file.png" src="../../assets/img/minio-ui-upload-file.png" width="600">
+
+!!! question
+
+    Did you see a message published on your MQTT-broker in MQTT Explorer?
+
+??? success "Click to reveal answer"
+
+    If you are connected to your wis2box-broker, you will note that a message has been published on the `wis2box/storage` topic. This is how MinIO informs the wis2box-management service that there is new data to process. Note that this is *not* a WIS2 notification, but an internal message between the various components of the wis2box software stack.
+
+The wis2box is not yet configured to process any files you upload, so the wis2box-management container will generate an error that you can view in Grafana.
+
 ## Grafana UI
 
 Open a web browser and visit the page `http://<your-host>:3000`:
@@ -361,6 +306,16 @@ Open a web browser and visit the page `http://<your-host>:3000`:
 <img alt="wis2box-grafana-ui.png" src="../../assets/img/wis2box-grafana-ui.png" width="600">
 
 This is the Grafana UI, where you can view the wis2box workflow monitoring dashboard. You can also access the logs of the various containers in the wis2box software stack via the 'Explore' option in the menu.
+
+!!! question
+
+    Are there any errors or warnings displayed in the your dashboard ?
+
+??? success "Click to reveal answer"
+
+    You will see an error message indicating that the wis2box could not process the file you uploaded.
+
+    This is expected as we have not yet configured any data mappings in the wis2box, you will do this in a later session.
 
 ## Conclusion
 
@@ -371,3 +326,5 @@ This is the Grafana UI, where you can view the wis2box workflow monitoring dashb
     - start wis2box and check the status of its components
     - access the **wis2box-webapp**, API, MinIO UI and Grafana dashboard in a browser
     - connect to the **wis2box-broker** using MQTT Explorer
+    - upload a file to the `wis2box-incoming` bucket in MinIO
+    - view the Grafana dashboard to monitor the wis2box workflow
