@@ -140,10 +140,10 @@ pywiscat search -q observations
     +---------------------------------------------------------------------------+------------------------------+-------------------------------------------------------+-------------+
     | id                                                                        | centre                       | title                                                 | data policy |
     +---------------------------------------------------------------------------+------------------------------+-------------------------------------------------------+-------------+
-    | urn:x-wmo:md:dma:dominica_met_wis2node:surface-weather-observations       | dominica_met_wis2node        | Surface weather observations from Dominica Meteoro... | core        |
-    | urn:x-wmo:md:gin:conakry_met_centre:surface-weather-observations          | conakry_met_centre           | Surface weather observations from gin.conakry_met_... | core        |
-    | urn:x-wmo:md:atg:antigua_met_wis2node:surface-weather-observations        | antigua_met_wis2node         | Surface weather observations from Antigua and Barb... | core        |
-    | urn:x-wmo:md:bfa:ouagadougou_met_centre:surface-weather-observations      | ouagadougou_met_centre       | Surface weather observations from bfa.ouagadougou_... | core        |
+    | urn:wmo:md:dma:dominica_met_wis2node:surface-weather-observations       | dominica_met_wis2node        | Surface weather observations from Dominica Meteoro... | core        |
+    | urn:wmo:md:gin:conakry_met_centre:surface-weather-observations          | conakry_met_centre           | Surface weather observations from gin.conakry_met_... | core        |
+    | urn:wmo:md:atg:antigua_met_wis2node:surface-weather-observations        | antigua_met_wis2node         | Surface weather observations from Antigua and Barb... | core        |
+    | urn:wmo:md:bfa:ouagadougou_met_centre:surface-weather-observations      | ouagadougou_met_centre       | Surface weather observations from bfa.ouagadougou_... | core        |
     ...
     ```
 

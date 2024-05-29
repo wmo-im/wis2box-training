@@ -27,7 +27,12 @@ Login to your designated VM with your username and password and ensure you are i
 cd ~/wis2box-1.0b7
 ```
 
-## `wis2box-create-config.py`
+## creating the initial configuration
+
+The initial configuration for the wis2box requires:
+
+- an environment file `wis2box.env` containing the configuration parameters
+- a directory on the host-machine to share between the host machine and the wis2box containers defined by the `WIS2BOX_HOST_DATADIR` environment variable
 
 The `wis2box-create-config.py` script can be used to create the initial configuration of your wis2box. 
 
@@ -43,16 +48,15 @@ python3 wis2box-create-config.py
 
 ### wis2box-data directory
 
-The script will ask you to enter the directory where your configuration and data will be stored.
+The script will ask you to enter the directory to be used for the `WIS2BOX_HOST_DATADIR` environment variable.
 
-We recommend you use the directory `wis2box-data` in your home directory to store your configuration and data. 
 Note that you need to define the full path to this directory.
 
 For example if your username is `mlimper`, the full path to the directory is `/home/mlimper/wis2box-data`:
 
 ```{.copy}
 mlimper@student-vm-mlimper:~/wis2box-1.0b7$ python3 wis2box-create-config.py
-Please enter the directory on the host where wis2box-configuration-files are to be stored:
+Please enter the directory on the host to be used for WIS2BOX_HOST_DATADIR:
 /home/mlimper/wis2box-data
 Configuration-files will be stored in the following directory:
     /home/mlimper/wis2box-data
@@ -77,9 +81,9 @@ The URL of the wis2box will be set to:
 Is this correct? (y/n/exit)
 ```
 
-### STORAGE, BROKER and WEBAPP passwords
+### WEBAPP, STORAGE and BROKER passwords
 
-You can use the option of random password generation when prompted for `WIS2BOX_STORAGE_PASSWORD`, `WIS2BOX_BROKER_PASSWORD` and `WIS2BOX_WEBAPP_PASSWORD` or define your own.
+You can use the option of random password generation when prompted for and `WIS2BOX_WEBAPP_PASSWORD`, `WIS2BOX_STORAGE_PASSWORD`, `WIS2BOX_BROKER_PASSWORD` and define your own.
 
 Don't worry about remembering these passwords, they will be stored in the `wis2box.env` file in your wis2box-1.0b7 directory.
 
@@ -142,6 +146,15 @@ Repeat this command until all services are up and running.
     
     The Python script `wis2box-ctl.py` is used to run the underlying Docker Compose commands that control the wis2box services.
 
+## wis2box UI
+
+Open a web browser and visit the page `http://<your-host>`:
+
+<img alt="wis2box-ui.png" src="../../assets/img/wis2box-ui-empty.png" width="600">
+
+The wis2box UI will display your configured datasets. The UI is currently empty, as datasets have not yet been configured.
+
+
 ## wis2box API
 
 Open a new tab and navigate to the page `http://<your-host>/oapi`.
@@ -192,14 +205,6 @@ This is the wis2box web application to enable you to interact with your wis2box:
 - monitor notifications published on your wis2box-broker
 
 We will use this web application in a later session.
-
-## wis2box UI
-
-Open a web browser and visit the page `http://<your-host>`:
-
-<img alt="wis2box-ui.png" src="../../assets/img/wis2box-ui-empty.png" width="600">
-
-The wis2box UI will display your configured datasets. The UI is currently empty, as datasets have not yet been configured.
 
 ## wis2box-broker
 

@@ -77,7 +77,7 @@ Click on the 'Queryables' link.
 ??? success "Click to reveal answer"
     The `wigos_station_identifer` is the correct queryable.
 
-Navigate to the previous page (i.e. `http://<your-host>/oapi/collections/urn:x-wmo:md:mwi:mwi_met_centre:surface-weather-observations`)
+Navigate to the previous page (i.e. `http://<your-host>/oapi/collections/urn:wmo:md:mwi:mwi_met_centre:surface-weather-observations`)
 
 Click on the 'Browse' link.
 
