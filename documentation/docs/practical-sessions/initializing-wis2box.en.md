@@ -193,9 +193,21 @@ This is the wis2box API (running via the **wis2box-api** container).
 
 Open a web browser and visit the page `http://<your-host>/wis2box-webapp`.
 
-You will see a pop-up asking for your username and password. Use the default username `wis2box-user` and the `WIS2BOX_WEBAPP_PASSWORD` defined in the `wis2box.env` file.
+You will see a pop-up asking for your username and password. Use the default username `wis2box-user` and the `WIS2BOX_WEBAPP_PASSWORD` defined in the `wis2box.env` file and click "Sign in":
 
-<img alt="wis2box-webapp.png" src="../../assets/img/wis2box-webapp.png" width="600">
+<img alt="wis2box-webapp-sign-in.png" src="../../assets/img/wis2box-webapp-credentials.png" width="400">
+
+!!! note 
+
+    Check you wis2box.env for the value of your WIS2BOX_WEBAPP_PASSWORD. You can use the following command to check the value of this environment variable:
+
+    ```{.copy}
+    cat ~/wis2box-1.0b7/wis2box.env | grep WIS2BOX_WEBAPP_PASSWORD
+    ```
+
+Once logged in, you move your mouse to the menu on the left to see the options available in the wis2box web application:
+
+<img alt="wis2box-webapp-menu.png" src="../../assets/img/wis2box-webapp-meny.png" width="400">
 
 This is the wis2box web application to enable you to interact with your wis2box:
 
@@ -214,21 +226,18 @@ Click `+` to add a new connection:
 
 <img alt="mqtt-explorer-new-connection.png" src="../../assets/img/mqtt-explorer-new-connection.png" width="300">
 
-Click on the 'ADVANCED' button make sure you have subscriptions to the the following topics:
+You can click on the 'ADVANCED' button and verify you have subscriptions to the the following topics:
 
+- `#`
 - `$SYS/#`
-- `origin/#`
-- `wis2box/#`
 
 <img alt="mqtt-explorer-topics.png" src="../../assets/img/mqtt-explorer-topics.png" width="550">
 
 !!! note
 
+    The `#` topic is a wildcard subscription that will subscribe to all topics published on the broker.
+
     The messages published under the `$SYS` topic are system messages published by the mosquitto service itself.
-
-    The messages published under topics starting with `origin/a/wis2/#` are the WIS2 data notifications published by the **wis2box-broker**.
-
-    The messages published under topics starting with `wis2box` are internal messages between the various components of the wis2box software stack.
 
 Use the following connection details, making sure to replace the value of `<your-host>` with your hostname and `<WIS2BOX_BROKER_PASSWORD>` with the value from your `wis2box.env` file:
 
@@ -240,7 +249,13 @@ Use the following connection details, making sure to replace the value of `<your
 
 !!! note 
 
-    Check you wis2box.env for the value of your WIS2BOX_BROKER_PASSWORD.
+    You can check your wis2box.env for the value of your WIS2BOX_BROKER_PASSWORD. You can use the following command to check the value of this environment variable:
+
+    ```{.copy}
+    cat ~/wis2box-1.0b7/wis2box.env | grep WIS2BOX_BROKER_PASSWORD
+    ```
+
+    Note that this your **internal** broker password, the Global Broker will use different (read-only) credentials to subscribe to your broker. Never share this password with anyone.
 
 Make sure to click "SAVE" to store your connection details.
 
@@ -250,7 +265,7 @@ Then click "CONNECT" to connect to your **wis2box-broker**.
 
 Once you are connected, you should see statistics being published by your broker on the `$SYS/#`.
 
-Later during the training you will use the MQTT connection you saved to view notifications published by your wis2box-broker.
+Keep the MQTT Explorer open, as we will use it to monitor the messages published on the broker.
 
 ## MinIO UI
 
@@ -260,15 +275,17 @@ Open a web browser and visit the page `http://<your-host>:9001`:
 
 This is the MinIO UI (running via the **wis2box-storage** container).
 
-The username and password are defined in the `wis2box.env` file in your wis2box data directory by the environment variables `WIS2BOX_STORAGE_USERNAME` and `WIS2BOX_STORAGE_PASSWORD`.
+The username and password are defined in the `wis2box.env` file in your wis2box data directory by the environment variables `WIS2BOX_STORAGE_USERNAME` and `WIS2BOX_STORAGE_PASSWORD`. The default username is `wis2box`.
 
-Use the command below to check the values of these environment variables from the command line in your SSH session:
+!!! note 
 
-```{.copy}
-cat ~/wis2box-1.0b7/wis2box.env
-```
+    You can check your wis2box.env for the value of your WIS2BOX_STORAGE_PASSWORD. You can use the following command to check the value of this environment variable:
 
-Or check the content of the file via WinSCP.
+    ```{.copy}
+    cat ~/wis2box-1.0b7/wis2box.env | grep WIS2BOX_STORAGE_PASSWORD
+    ```
+
+    Note that these are the read-write credentials for your MinIO instance. Never share these credentials with anyone. The Global Services can only download data from your MinIO instance using the web-proxy on the wis2box-public bucket.
 
 Try to login to your MinIO UI. You will see that there 3 buckets already defined:
 
@@ -280,11 +297,11 @@ Try to login to your MinIO UI. You will see that there 3 buckets already defined
 
 !!! note
 
-    The **wis2box-storage** container will send a notification on the **wis2box-broker** when data is received. The **wis2box-management** container is subscribed to all messages on `wis2box/#` and will receive these notifications, triggering the data pipelines defined in your `data-mappings.yml`.
+    The **wis2box-storage** container (provided by MinIO) will send a notification on the **wis2box-broker** when data is received. The **wis2box-management** container is subscribed to all messages on `wis2box/#` and will receive these notifications, triggering the data pipelines defined in your `data-mappings.yml`.
 
-Try to upload a file to the `wis2box-incoming` bucket in the filepath `testing/mywis2box/'.
+### Using the MinIO UI to test data ingestion
 
-First click on "browse" for the `wis2box-incoming` bucket, then click on "Create new path" and enter the path `testing/upload/`:
+First click on "browse" for the `wis2box-incoming` bucket, then click on "Create new path" and enter the path `/testing/upload/`:
 
 <img alt="minio-ui-create-path.png" src="../../assets/img/minio-ui-create-path.png" width="600">
 
@@ -300,9 +317,11 @@ You should now see the file in the `wis2box-incoming` bucket:
 
 ??? success "Click to reveal answer"
 
-    If you are connected to your wis2box-broker, you will note that a message has been published on the `wis2box/storage` topic. This is how MinIO informs the wis2box-management service that there is new data to process. Note that this is *not* a WIS2 notification, but an internal message between the various components of the wis2box software stack.
+    If you are connected to your wis2box-broker, you should note that a message has been published on the `wis2box/storage` topic. This is how MinIO informs the wis2box-management service that there is new data to process. Note that this is *not* a WIS2 notification, but an internal message between components within the wis2box software stack.
 
-The wis2box is not yet configured to process any files you upload, so the wis2box-management container will generate an error that you can view in Grafana.
+The wis2box is not yet configured to process any files you upload, so the file will not be processed and no WIS2 notification will be published
+
+We will check the error message produced by the wis2box-management container in the Grafana dashboard in the next step.
 
 ## Grafana UI
 
@@ -329,7 +348,7 @@ This is the Grafana UI, where you can view the wis2box workflow monitoring dashb
 
     - run the `wis2box-create-config.py` script to create the initial configuration
     - start wis2box and check the status of its components
-    - access the **wis2box-webapp**, API, MinIO UI and Grafana dashboard in a browser
     - connect to the **wis2box-broker** using MQTT Explorer
-    - upload a file to the `wis2box-incoming` bucket in MinIO
+    - access the wis2box-UI, wis2box-webapp and wis2box-API in a browser
+    - upload a file to the `wis2box-incoming` bucket in the MinIO UI
     - view the Grafana dashboard to monitor the wis2box workflow
