@@ -138,13 +138,29 @@ python3 wis2box-ctl.py status
 
 Repeat this command until all services are up and running.
 
-
 !!! note "wis2box and Docker"
     wis2box runs as a set of Docker containers managed by docker-compose.
     
     The services are defined in the various `docker-compose*.yml` which can be found in the `~/wis2box-1.0b7/` directory.
     
     The Python script `wis2box-ctl.py` is used to run the underlying Docker Compose commands that control the wis2box services.
+
+To login to the wis2box-management container, use the following command:
+
+```{.copy}
+python3 wis2box-ctl.py login
+```
+
+Inside the wis2box-management container you can run various commands to manage your wis2box, such as:
+
+- `wis2box auth add-token --path processes/wis2box` : to create an authorization token for the `processes/wis2box` endpoint
+- `wis2box data clean --days=<number-of-days>` : to clean up data older than a certain number of days from the `wis2box-public` bucket
+
+To exit the container and go back to the host machine, use the following command:
+
+```{.copy}
+exit
+```
 
 ## wis2box UI
 
@@ -153,7 +169,6 @@ Open a web browser and visit the page `http://<your-host>`:
 <img alt="wis2box-ui.png" src="../../assets/img/wis2box-ui-empty.png" width="600">
 
 The wis2box UI will display your configured datasets. The UI is currently empty, as datasets have not yet been configured.
-
 
 ## wis2box API
 
