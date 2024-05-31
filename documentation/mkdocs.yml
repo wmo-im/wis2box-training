@@ -21,10 +21,10 @@ nav:
         - Converting SYNOP data to BUFR: practical-sessions/converting-synop-data-to-bufr.md
         - Converting CSV data to BUFR: practical-sessions/converting-csv-data-to-bufr.md
         - Automating data ingestion: practical-sessions/automating-data-ingestion.md
-        - Adding GTS-headers to WIS2 notifications: practical-sessions/adding-gts-headers-to-wis2-notifications.md
+        #- Adding GTS-headers to WIS2 notifications: practical-sessions/adding-gts-headers-to-wis2-notifications.md
         - Downloading and finding data from WIS2: practical-sessions/downloading-and-finding-data-from-wis2.md
-        - BUFR command line tools: practical-sessions/bufr-command-line-tools.md
         - Querying data using the wis2box API: practical-sessions/querying-data-using-the-wis2box-api.md
+        - Working with BUFR data: practical-sessions/bufr-command-line-tools.md
     - Cheatsheets:
         - Linux: cheatsheets/linux.md
         - Docker: cheatsheets/docker.md

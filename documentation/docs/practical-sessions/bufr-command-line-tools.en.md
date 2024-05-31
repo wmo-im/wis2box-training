@@ -1,11 +1,13 @@
 ---
-title: BUFR command line tools
+title: Working with BUFR data
 ---
 
-# BUFR command line tools
+# Working with BUFR data
 
 !!! abstract "Learning outcomes"
-    In this practical session you will be introduced to some of the BUFR command line tools included in the **wis2box-management** container. You will learn:
+    In this practical session you will be introduced to some of the BUFR tools included in the **wis2box-api** container that are used to transform data to BUFR format and to read the content encoded in BUFR.
+    
+    You will learn:
 
     - how to inspect the headers in the BUFR file using the `bufr_ls` command
     - how to extract and inspect the data within a bufr file using `bufr_dump`
@@ -15,27 +17,26 @@ title: BUFR command line tools
 
 ## Introduction
 
-The wis2box-management container contains some tools for working with BUFR files from the command line. 
+The plugins that produces notifications with BUFR-data use processes in the wis2box-api to work with BUFR data, for example to transform the data from CSV to BUFR or from BUFR to geojson.
+
+The wis2box-api container includes a number of tools to work with BUFR data.
 
 These include the tools developed by ECMWF and included in the ecCodes software, more information on these can be 
 found on the [ecCodes website](https://confluence.ecmwf.int/display/ECC/BUFR+tools). 
-
-Other tools include thosedeveloped as part of the wis2box development, including csv2bufr and synop2bufr that you have previously used
-but via the wis2box web-application. 
 
 In this session you will be introduced to the `bufr_ls` and `bufr_dump` from the ecCodes software package and advanced configuration of the csv2bufr tool.
 
 ## Preparation
 
-In order to use the BUFR command line tools you will need to be logged in to the wis2box management container
+In order to use the BUFR command line tools you will need to be logged in to the wis2box-api container
 and unless specified otherwise all commands should be run on this container. You will also need to have
 MQTT Explorer open and connected to your broker.
 
-First connect to your student VM via your ssh client and then log in the to management container: 
+First connect to your student VM via your ssh client and then log in the to wis2box-api container: 
 
 ```{.copy}
 cd ~/wis2box-1.0b7
-python3 wis2box-ctl.py login
+python3 wis2box-ctl.py login wis2box-api
 ```
 
 Confirm the that tools are available, starting with ecCodes:
