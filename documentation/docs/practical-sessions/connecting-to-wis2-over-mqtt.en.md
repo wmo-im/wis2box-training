@@ -57,24 +57,24 @@ This is an example of the WIS2 notification message structure for a message rece
 }
 ``` 
 
-In this practical session you will learn how to use the MQTT Explorer tool to review the topics available on this Global Broker and be able to display WIS2 notification messages.
+In this practical session you will learn how to use the MQTT Explorer tool to setup an MQTT-client connection to a WIS2 Global Broker and be able to display WIS2 notification messages.
 
-MQTT Explorer is a helpful tool to browse and review the topic structure for a given MQTT broker and visually interact with the MQTT protocol. There exist numerous other MQTT client and server software, depending on your requirements and technical environment.
-    
-To work with MQTT programmatically (for example, in Python), you can use MQTT client libraries such as [paho-mqtt](https://pypi.org/project/paho-mqtt) to connect to an MQTT broker and process incoming messages.
+MQTT Explorer is a helpful tool to browse and review the topic structure for a given MQTT broker to review data being published.
+
+Note that MQTT is primarily used for "machine-to-machine" communication; meaning that there would normally be a client automatically parsing the messages as they are received. To work with MQTT programmatically (for example, in Python), you can use MQTT client libraries such as [paho-mqtt](https://pypi.org/project/paho-mqtt) to connect to an MQTT broker and process incoming messages. There exist numerous MQTT client and server software, depending on your requirements and technical environment.
 
 ## Using MQTT Explorer to connect to the Global Broker
 
-One way to view messages published by this Global Broker is using the MQTT Explorer which can be downloaded from the [MQTT Explorer website](https://mqtt-explorer.com).
+To view messages published by a WIS2 Global Broker you can "MQTT Explorer" which can be downloaded from the [MQTT Explorer website](https://mqtt-explorer.com).
 
 Open MQTT Explorer and add a new connection to the Global Broker hosted by China Meteorological Administration using the following details:
 
-- host: gb.wis.cma.cn
+- host: globalbroker.meteo.fr
 - port: 8883
 - username: everyone
 - password: everyone
 
-<img alt="mqtt-explorer-global-broker-connection" src="../../assets/img/mqtt-explorer-global-broker-connection-china.png" width="600">
+<img alt="mqtt-explorer-global-broker-connection" src="../../assets/img/mqtt-explorer-global-broker-connection.png" width="600">
 
 Click on the 'ADVANCED' button and add the following topics to subscribe to:
 
@@ -103,44 +103,44 @@ Use MQTT to browse topic structure under the `origin` and `cache` topics.
 
 !!! question
     
-    How can we distinguish the originating country providing the data? 
+    How can we distinguish the WIS centre that published the data?
 
 ??? success "Click to reveal answer"
 
-    We can distinguish the originating country by looking at the fourth level of the topic structure.  For example, the following topic:
+    We can distinguish the WIS centre that published the data by looking at the fourth level of the topic structure.  For example, the following topic:
 
-    `origin/a/wis2/zmb/zambia_met_service/data/core/weather/surface-based-observations/synop`
+    `origin/a/wis2/zm-zmd/data/core/weather/surface-based-observations/synop`
 
-    tells us that the data was published by Zambia (zmb). 
-    
-    The fifth level of the topic structure provides the id of the centre where the data originated from
-    (in this case, the Zambia Meteorological Service).
+    tells us that the data was published a WIS centre with the centre-id `zm-zmd` (in this case, the Zambia Meteorological Service).
 
 !!! question
 
-    How can we distinguish the data type?
+    How can we distinguish between core and recommended data?
 
 ??? success "Click to reveal answer"
 
-    We can distinguish the data type by looking at the ninth level of the topic structure.  For example, the following topic:
+    We can distinguish the data type by looking at the fifth level of the topic structure.  For example, the following topic:
 
-    `origin/a/wis2/zmb/zambia_met_service/data/core/weather/surface-based-observations/synop`
+    `origin/a/wis2/zm-zmd/data/core/weather/surface-based-observations/synop`
 
-    tells us that the data type is surface-based observations (synop).
+    tells us that the data is a core dataset.  If the topic was:
+
+    `origin/a/wis2/zm-zmd/data/recommended/weather/surface-based-observations/synop`
+
+    then the data would be a recommended dataset.
 
 ## Exercise 2: Review the WIS2 message structure
 
 Disconnect from MQTT Explorer and update the 'Advanced' sections to change the subscription to the following:
 
-* `origin/a/wis2/+/+/data/core/weather/surface-based-observations/synop`
-* `cache/a/wis2/+/+/data/core/weather/surface-based-observations/synop`
+* `origin/a/wis2/+/data/core/weather/surface-based-observations/#`
 
 <img alt="mqtt-explorer-global-broker-topics-exercise2" src="../../assets/img/mqtt-explorer-global-broker-topics-exercise2.png" width="600">
 
 !!! note
-    The `+` wildcard is used to subscribe to all countries (fourth level) and centres (fifth level) while the remaining topic structure is fixed to ensure we subscribe to subtopics `data/core/weather/surface-based-observations/synop`.	
+    The `+` wildcard is used to subscribe to all WIS-centres. The `#` wildcard is used to subscribe to all sub-topics under the `surface-based-observations` topic.
 
-Messages should start to appear again.
+Re-connect to the Global Broker and wait for messages to appear. 
 
 You can view the content of the WIS2 message in the "Value" section on the right hand side.
 
@@ -164,9 +164,24 @@ You can view the content of the WIS2 message in the "Value" section on the right
 
     You can copy the URL and paste it into a web browser to download the data.
 
-## Exercise 3: cache vs origin topics
+## Exercise 3: Review the WIS2 topic structure for the GTS-to-WIS2 gateway
 
-The same message is published on both the `origin` and `cache` topics. Find a message that has been published on both topics and compare the content.
+Disconnect from MQTT Explorer and update the 'Advanced' sections to change the subscription to the following:
+
+* `origin/a/de-dwd-gts-to-wis2/#`
+* `cache/a/de-dwd-gts-to-wis2/#`
+
+<img alt="mqtt-explorer-global-broker-topics-exercise4" src="../../assets/img/mqtt-explorer-global-broker-topics-exercise4.png" width="600">
+
+Re-connect to the Global Broker and wait for messages to appear.
+
+!!! question
+
+    What is the difference between the topic structure for the GTS-to-WIS2 gateway and the WIS2 topics?
+
+??? success "Click to reveal answer"
+
+    The topic structure for the GTS-to-WIS2 gateway is different from the WIS2 topics. The postfix 'gts-to-wis2' indicates that this data-publisher is a GTS-to-WIS2 gateway, serving as a bridge between the GTS and WIS2. The GTS-to-WIS2 gateway uses a topic-hierarchy composed by the TTAAii CCCC headers for the GTS messages.
 
 !!! question
 
@@ -174,7 +189,7 @@ The same message is published on both the `origin` and `cache` topics. Find a me
 
 ??? success "Click to reveal answer"
 
-    The message published on the `origin` topic contains a URL to the original data.  The message published on the `cache` topic contains a URL to the data cached by the Global Cache.
+    The messages published on the `origin` topics are the original messages received by the Global Broker. The messages published on the `cache` topics are the messages that have been downloaded by the Global Cache and republished with a new URL. Note that the Global Cache will only download and republish messages that were published on the `../data/core/...` topic hierarchy.
 
 ## Conclusion
 
@@ -184,4 +199,6 @@ The same message is published on both the `origin` and `cache` topics. Find a me
     - how to subscribe to WIS2 Global Broker services using MQTT Explorer
     - the WIS2 topic structure
     - the WIS2 notification message structure
+    - the difference between core and recommended data
+    - the topic structure used by the GTS-to-WIS2 gateway
     - the difference between Global Broker messages published on the `origin` and `cache` topics
