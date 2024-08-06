@@ -10,7 +10,7 @@ title: Configuring datasets in wis2box
     - create a new dataset
     - create discovery metadata for a dataset
     - configure data mappings for a dataset
-    - publish a WIS2 notifications with a WCMP2 record
+    - publish a WIS2 notification with a WCMP2 record
     - update and re-publish your dataset
 
 ## Introduction
@@ -42,7 +42,7 @@ You will need an authorization token for the 'processes/wis2box' endpoint to pub
 To create an authorization token first login to the wis2box-management container:
 
 ```bash
-cd ~/wis2box-1.0b7
+cd ~/wis2box-1.0b8
 python3 wis2box-ctl.py login
 ```
 

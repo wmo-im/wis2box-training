@@ -52,7 +52,7 @@ ssh wmo_admin@`echo $HOST_IP` "echo "WIS2BOX_STORAGE_ENDPOINT=http://`echo $USER
 ssh wmo_admin@`echo $HOST_IP` "echo WIS2BOX_STORAGE_USERNAME=minio >> /tmp/ftp.env"
 ssh wmo_admin@`echo $HOST_IP` "echo WIS2BOX_STORAGE_PASSWORD=minio123 >> /tmp/ftp.env"
 ssh wmo_admin@`echo $HOST_IP` "echo LOGGING_LEVEL=WARNING >> /tmp/ftp.env"
-ssh wmo_admin@`echo $HOST_IP` "sudo cp /tmp/ftp.env /home/`echo $USERNAME`/wis2box-1.0b7/"
+ssh wmo_admin@`echo $HOST_IP` "sudo cp /tmp/ftp.env /home/`echo $USERNAME`/wis2box-1.0b8/"
 # remove /tmp/ftp.env
 ssh wmo_admin@`echo $HOST_IP` "rm -rf /tmp/ftp.env"
 

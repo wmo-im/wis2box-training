@@ -144,7 +144,7 @@ ls ~/
 ```
 returns:
 ```console
-exercise-materials  wis2box-1.0b7
+exercise-materials  wis2box-1.0b8
 ```
 
 You can use WinSCP to connect to your instance and inspect the contents of your home directory and download or upload files between your VM and your local PC.

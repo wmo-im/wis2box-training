@@ -35,7 +35,7 @@ MQTT Explorer open and connected to your broker.
 First connect to your student VM via your ssh client and then log in the to wis2box-api container: 
 
 ```{.copy}
-cd ~/wis2box-1.0b7
+cd ~/wis2box-1.0b8
 python3 wis2box-ctl.py login wis2box-api
 ```
 
@@ -567,7 +567,7 @@ Inspect the output file using `bufr_ls` and confirm that the originating centre 
     Add the environment variable to your `wis2box.env` file:
 
     ```{.copy}
-    cd ~/wis2box-1.0b7/
+    cd ~/wis2box-1.0b8/
     echo "export CSV2BUFR_TEMPLATES=/data/wis2box/bufr-templates" >> wis2box.env
     ```
 
