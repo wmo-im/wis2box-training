@@ -11,7 +11,6 @@ title: Converting SYNOP data to BUFR
     - validate, diagnose and fix simple coding errors in an FM-12 SYNOP bulletin prior to format conversion and exchange
     - ensure that the required station metadata is available in the wis2box
     - confirm and inspect successfully converted bulletins
-    - upload FM-12 SYNOP data using the MinIO UI ensure the plugin is working correctly
 
 ## Introduction
 
@@ -34,7 +33,223 @@ as the relationship between the information contained in the FM-12 SYNOP reports
 
     - Ensure that your wis2box has been configured and started.
     - Confirm the status by visiting the wis2box API (``http://<your-host-name>/oapi``) and verifying that the API is running.
-    - Make sure that you have MQTT Explorer open and connected to your broker.
+
+## synop2bufr primer
+
+Below are essential `synop2bufr` commands and configurations:
+
+### transform
+The `transform` function converts a SYNOP message to BUFR:
+
+```bash
+synop2bufr data transform --metadata my_file.csv --output-dir ./my_directory --year message_year --month message_month my_SYNOP.txt
+```
+
+Note that if the metadata, output directory, year and month options are not specified, they will assume their default values:
+
+| Option      | Default |
+| ----------- | ----------- |
+| --metadata | station_list.csv |
+| --output-dir | The current working directory. |
+| --year | The current year. |
+| --month | The current month. |
+
+!!! note
+    One must be cautious using the default year and month, as the day of the month specified in the report may not correspond (e.g. June does not have 31 days).
+
+In the examples, the year and month are not given, so feel free to specify a date yourself or use the default values.
+
+## ecCodes primer
+
+ecCodes provides both command line tools and can be embedded in your own applications.  Below are some useful command
+line utilities to work with BUFR data.
+
+### bufr_dump
+
+The `bufr_dump` command is a generic BUFR information tool.  It has many options, but the following will be the most applicable to the exercises:
+
+```bash
+bufr_dump -p my_bufr.bufr4
+```
+
+This will display BUFR content to your screen.  If you are interested in the values taken by a variable in particular, use the `egrep` command:
+
+```bash
+bufr_dump -p my_bufr.bufr4 | egrep -i temperature
+```
+
+This will display variables related to temperature in your BUFR data. If you want to do this for multiple types of variables, filter the output using a pipe (`|`):
+
+```bash
+bufr_dump -p my_bufr.bufr4 | egrep -i 'temperature|wind'
+```
+
+## Converting FM-12 SYNOP to BUFR using synop2bufr from the command line
+
+The eccodes library and synop2bufr module are installed in the wis2box-api container. In order to do the next few exercises we will copy the synop2bufr-exercises directory to the wis2box-api container and run the exercises from there.
+
+```bash
+docker cp ~/exercise-materials/synop2bufr-exercises wis2box-api:/root
+```
+
+Now we can enter the container and run the exercises:
+
+```bash
+docker exec -it wis2box-api /bin/bash
+```
+
+### Exercise 1
+Navigate to the `/root/synop2bufr-exercises/ex_1` directory and inspect the SYNOP message file message.txt:
+
+```bash
+cd /root/synop2bufr-exercises/ex_1
+more message.txt
+```
+
+!!! question
+
+    How many SYNOP reports are in this file?
+
+Inspect the station list:
+
+```bash
+more station_list.csv
+```
+
+!!! question
+
+    How many stations are listed in the station list?
+
+!!! question
+    Convert `message.txt` to BUFR format.
+
+!!! tip
+
+    See the [synop2bufr primer](#synop2bufr-primer) section.
+
+Inspect the resulting BUFR data using `bufr_dump`.
+!!! question
+     Compare the latitude and longitude values to those in the station list.
+
+!!! tip
+
+    See the [ecCodes primer](#eccodes-primer) section.
+
+### Exercise 2
+Navigate to the `exercise-materials/synop2bufr-exercises/ex_2` directory and inspect the SYNOP message file message.txt:
+
+```bash
+cd /root/synop2bufr-exercises/ex_2
+more message.txt
+```
+
+!!! question
+
+    How many SYNOP reports are in this file?
+
+Inspect the station list:
+
+```bash
+more station_list.csv
+```
+
+!!! question
+
+    How many stations are listed in the station list?
+
+!!! question
+    Convert `message.txt` to BUFR format.
+
+!!! question
+
+    Based on the results of the exercises in this and the previous exercise, how would you predict the number of
+    resulting BUFR files based upon the number of SYNOP reports and stations listed in the station metadata file?
+
+Inspect the resulting BUFR data using `bufr_dump`.
+
+!!! question
+    Check each of the output BUFR files contain different WIGOS Station Identifiers (WSI).
+
+### Exercise 3
+Navigate to the `exercise-materials/synop2bufr-exercises/ex_3` directory and inspect the SYNOP message file message.txt:
+
+```bash
+cd /root/synop2bufr-exercises/ex_3
+more message.txt
+```
+
+This SYNOP message only contains one longer report with more sections.
+
+Inspect the station list:
+
+
+```bash
+more station_list.csv
+```
+
+!!! question
+
+    Is it problematic that this file contains more stations than there are reports in the SYNOP message?
+
+!!! note
+
+    The station list file is a source of metadata for `synop2bufr` to provide the information missing in the alphanumeric SYNOP report and required in the BUFR SYNOP.
+
+!!! question
+    Convert `message.txt` to BUFR format.
+
+Inspect the resulting BUFR data using `bufr_dump`.
+
+!!! question
+
+    Find the following variables:
+
+    - Air temperature (K) of the report
+    - Total cloud cover (%) of the report
+    - Total period of sunshine (mins) of the report
+    - Wind speed (m/s) of the report
+
+!!! tip
+
+    You may find the last command of the [ecCodes primer](#eccodes-primer) section useful.
+
+
+### Exercise 4
+Navigate to the `exercise-materials/synop2bufr-exercises/ex_4` directory and inspect the SYNOP message file message.txt:
+
+```bash
+cd /root/synop2bufr-exercises/ex_4
+more message_incorrect.txt
+```
+
+!!! question
+
+    What is incorrect about this SYNOP file?
+
+Attempt to convert `message_incorrect.txt` using `station_list.csv`
+
+!!! question
+
+    What problem(s) did you encounter with this conversion?
+
+### Exercise 5
+Navigate to the `exercise-materials/synop2bufr-exercises/ex_5` directory and inspect the SYNOP message file message.txt:
+
+```bash
+cd /root/synop2bufr-exercises/ex_5
+more message.txt
+```
+
+Attempt to convert `message.txt` to BUFR format using `station_list_incorrect.csv` 
+
+!!! question
+
+    What problem(s) did you encounter with this conversion?  
+    Considering the error presented, justify the number of BUFR files produced.
+
+## Using the wis2box-webapp to convert FM-12 SYNOP to BUFR
+
+### Exercise 1 - Creating an auth token for the wis2box-webapp
 
 In order to submit data to be processed in the wis2box-webapp you will need an auth token for "processes/wis2box".
 
@@ -62,54 +277,11 @@ If you have forgotten your auth token for "collections/stations" you can create 
 wis2box auth add-token --path collections/stations
 ```
 
-## Inspecting SYNOP data and BUFR conversion
+### Exercise 2 - using the wis2box-webapp to convert FM-12 SYNOP to BUFR
 
-### Exercise 1 - the basics
+Make sure you have the auth token for "processes/wis2box" that you generated in the previous exercise and that you are connected to your wis2box broker in MQTT Explorer.
 
-Review the FM-12 SYNOP message below:
-
-``` {.copy}
-AAXX 21121
-15015 02999 02501 10103 21090 39765 42952 57020 60001=
-``` 
-
-Identify the key components of the FM-12 SYNOP message and confirm that the station(s) is (are) registered
-within the wis2box. The station(s) should be discoverable via the station list page
-(``http://<your-host-name>/wis2box-webapp/station``) or via the API directly
-(``http://<your-host-name>/oapi/collections/stations``). 
-
-!!! hint
-    The traditional station identifier (2 digit block number and 3 digit station number) are included
-    in the FM-12 SYNOP report. These can be used to find the station.
-
-!!! question
-    What is the traditional station identifier of the station included in the message and 
-    where is the station located?
-
-??? success "Click to reveal answer"
-    The five digit group, ``15015``, gives the 5 digit traditional station identifier. In 
-    this case for the station "OCNA SUGATAG" located in Romania.
-
-
-Identify the number of weather reports in the message.
-
-!!! question
-    How many weather reports are in the message?
-
-??? success "Click to reveal answer"
-    One, the report contains a single message.
-    
-    The first line ``AAXX 21121`` indicates that this is an FM-12 SYNOP message (``AAXX``), 
-    the 2112 indicates that the weather observation was made on the 21st day of the month at 12 UTC.
-    The final digit of the row, ``1``, indicates the source and units of the wind speed. The second line
-    contains a single weather report, beginning with the 5 digit group ``15015`` and ending with 
-    the ``=`` symbol.
-
-### Exercise 2 - converting your first message
-
-Now that you have reviewed the message, you are ready to convert the data to BUFR.
-
-Copy the message you have just reviewed:
+Copy the following message:
     
 ``` {.copy}
 AAXX 21121
@@ -126,6 +298,14 @@ Open the wis2box web application and navigate to the synop2bufr page using the l
 - Click "SUBMIT"
 
 <center><img alt="Dialog showing synop2bufr page, including toggle button" src="../../assets/img/synop2bufr-toggle.png"></center>
+
+Click submit. You will receive an error message as the station is not registered in the wis2box. Go to the station-editor and import the following station:
+
+``` {.copy}
+0-20000-0-15015
+```
+
+Ensure the station is associated with the topic you selected in the previous step and then return to the synop2bufr page and repeat the process.
 
 Click submit. The data will now be converted to BUFR and the result returned to the web application.
 
@@ -200,10 +380,16 @@ AAXX 21121
     identifier is given by the traditional station identifier with ``0-20000-0`` prepended,
     e.g. ``15015`` has become ``0-20000-0-15015``.
 
-Using the station list page from the web application import the missing stations from [OSCAR/Surface](https://oscar.wmo.int/surface/) 
-into the wis2box and repeat the exercise. 
+Using the station list page, import the following stations:
 
-Three BUFR files should be generated and there should be no warnings or errors listed in the web application. 
+``` {.copy}
+0-20000-0-15020
+0-20000-0-15090
+```
+
+Ensure that the stations are associated with the topic you selected in the previous exercise and then return to the synop2bufr page and repeat the process.
+
+Three BUFR files should now be generated and there should be no warnings or errors listed in the web application. 
 
 In addition to the basic station information, additional metadata such as the station elevation above sea level and the
 barometer height above sea level are required for encoding to BUFR. The fields are included in the station list and station editor pages.
@@ -268,14 +454,13 @@ the stations removed from the list after deleting.
 <center><img alt="Station metadata viewer"
          src="../../assets/img/synop2bufr-trash.png" width="600"></center>
 
-You can also delete the file used in the final exercise as this will no longer be required.
-
 ## Conclusion
 
 !!! success "Congratulations!"
 
     In this practical session, you learned:
 
+    - how the synop2bufr tool can be used to convert FM-12 SYNOP reports to BUFR;
     - how to submit a FM-12 SYNOP report through the web-app;
     - how to diagnose and correct simple errors in an FM-12 SYNOP report;
     - the importance of registering stations in the wis2box (and OSCAR/Surface);

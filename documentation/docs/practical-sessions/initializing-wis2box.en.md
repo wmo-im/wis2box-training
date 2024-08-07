@@ -210,8 +210,6 @@ Open a web browser and visit the page `http://<your-host>/wis2box-webapp`.
 
 You will see a pop-up asking for your username and password. Use the default username `wis2box-user` and the `WIS2BOX_WEBAPP_PASSWORD` defined in the `wis2box.env` file and click "Sign in":
 
-<img alt="wis2box-webapp-sign-in.png" src="../../assets/img/wis2box-webapp-credentials.png" width="400">
-
 !!! note 
 
     Check you wis2box.env for the value of your WIS2BOX_WEBAPP_PASSWORD. You can use the following command to check the value of this environment variable:
@@ -222,7 +220,7 @@ You will see a pop-up asking for your username and password. Use the default use
 
 Once logged in, you move your mouse to the menu on the left to see the options available in the wis2box web application:
 
-<img alt="wis2box-webapp-menu.png" src="../../assets/img/wis2box-webapp-meny.png" width="400">
+<img alt="wis2box-webapp-menu.png" src="../../assets/img/wis2box-webapp-menu.png" width="400">
 
 This is the wis2box web application to enable you to interact with your wis2box:
 

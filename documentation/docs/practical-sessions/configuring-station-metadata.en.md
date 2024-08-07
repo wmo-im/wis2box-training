@@ -159,7 +159,7 @@ You also have the option to view/update/delete the station in the **wis2box-weba
 
 ## Bulk station metadata upload
 
-wis2box also has the ability to perform "bulk" loading of station metadata from a CSV file.  See the official [wis2box documentation](https://docs.wis2box.wis.wmo.int/en/1.0b5/reference/running/station-metadata.html) for more information.
+wis2box also has the ability to perform "bulk" loading of station metadata from a CSV file using command line tools provided in the **wis2box-management** container. See the official [wis2box documentation](https://docs.wis2box.wis.wmo.int) for more information on how to use this feature.
 
 ## Conclusion
 
