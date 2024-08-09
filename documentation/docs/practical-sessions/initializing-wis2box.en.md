@@ -352,7 +352,7 @@ This is the Grafana UI, where you can view the wis2box workflow monitoring dashb
 
     You will see an error message indicating that the wis2box could not process the file you uploaded.
 
-    This is expected as we have not yet configured any data mappings in the wis2box, you will do this in a later session.
+    This is expected as we have not yet configured any datasets in the wis2box, you will learn how to do this in the next practical session.
 
 ## Conclusion
 

@@ -35,31 +35,42 @@ Connect to your broker using MQTT Explorer. Instead of using your internal broke
 
 Open a browser and open a page to `http://<your-host>/wis2box-webapp`. Make sure you are logged in and can access the 'dataset editor' page.
 
-See the section on [Initializing wis2box](/practical-sessions/initializing-wis2box)
-if you need to remember how to connect to the broker or access the wis2box-webapp.
+See the section on [Initializing wis2box](/practical-sessions/initializing-wis2box) if you need to remember how to connect to the broker or access the wis2box-webapp.
+
+## Create an authorization token for collections/stations
 
 You will need an authorization token for the 'processes/wis2box' endpoint to publish your dataset. 
 
-To create an authorization token first login to the wis2box-management container:
+To create an authorization token, access your training VM over SSH and use the following commands to login to the wis2box-management container:
 
 ```bash
 cd ~/wis2box-1.0b8
 python3 wis2box-ctl.py login
 ```
 
-Then run the following command to create an authorization token for the 'processes/wis2box' endpoint:
+Then run the following command to create a randomly generated authorization token for the 'processes/wis2box' endpoint:
 
 ```bash
 wis2box auth add-token --path processes/wis2box
 ```
 
-Then exit the container:
+You can also create a token with a specific value by providing the token as an argument to the command:
+
+```bash
+wis2box auth add-token --path processes/wis2box MyS3cretToken
+```
+
+Make sure to copy the token value and store it on your local machine, as you will need it later.
+
+Once you have your token, you can exit the wis2box-management container:
 
 ```bash
 exit
 ```
 
-## Initializing the dataset editor form using a template
+## Creating a new dataset in the wis2box-webapp
+
+Navigate to the 'dataset editor' page in the wis2box-webapp of your wis2box instance by going to `http://<your-host>/wis2box-webapp` and selecting 'dataset editor' from the menu on the left hand side.
 
 On the 'dataset editor' page, under the 'Datasets' tab, click on "Create New ...":
 
@@ -67,8 +78,8 @@ On the 'dataset editor' page, under the 'Datasets' tab, click on "Create New ...
 
 A pop-up window will appear, asking you to provide:
 
-- `Centre Id' : this is the agency acronym (in lower case and no spaces), as specified by the WMO Member, that identifies the data centre responsible for publishing the data.
-- Data Type: The type of data you are creating metadata for. You can choose between using a predefined template or selecting 'other'.  If 'other' is selected, more fields will have to be manually filled.
+- `Centre ID' : this is the agency acronym (in lower case and no spaces), as specified by the WMO Member, that identifies the data centre responsible for publishing the data.
+- Data Type: The type of data you are creating metadata for. You can choose between using a predefined template or selecting 'other'.  If 'other' is selected, more fields will have to be manually filled. 
 
 !!! Note
 
@@ -78,7 +89,7 @@ Please choose a centre-id appropriate for your organization. For 'Data Type', se
 
 <img alt="Create New Dataset Form: Initial information" src="../../assets/img/wis2box-create-new-dataset-form-initial.png" width="800">
 
-Click 'continue to form' to proceed, you will now be presented with the 'Dataset Editor Form'.
+Click 'continue to form' to proceed, you will now be presented with the 'Dataset Editor Form'. Since you selected the 'weather/surface-based-observations/synop' data type, the form will be pre-populated with some initial values related to this data type.
 
 ## Creating discovery metadata
 
@@ -86,11 +97,11 @@ The 'Dataset Editor Form' allows you to provide the Discovery Metadata for your 
 
 Since you have selected the 'weather/surface-based-observations/synop' data type, the form will be pre-populated with some default values.
 
-Review the title, description, and keywords, and update them as necessary:
+Review the title and keywords, and update them as necessary, and provide a description for your dataset:
 
-<img alt="Metadata Editor: title, description, keywords" src=""../../assets/img/wis2box-metadata-editor-part1.png" width="800">
+<img alt="Metadata Editor: title, description, keywords" src="../../assets/img/wis2box-metadata-editor-part1.png" width="800">
 
-Note there are options to change the 'WMO Data Policy' from 'core' to 'recommended' or to modify your default Metadata Identifier, please leave these as they are.
+Note there are options to change the 'WMO Data Policy' from 'core' to 'recommended' or to modify your default Metadata Identifier, please keep data-policy as 'core' and use the default Metadata Identifier.
 
 Next, review the section defining your 'Temporal Properties' and 'Spatial Properties'. You can adjust the bounding box by updating the 'North Latitude', 'South Latitude', 'East Longitude', and 'West Longitude' fields:
 
@@ -106,27 +117,27 @@ Once you are done filling out all the sections, click 'VALIDATE FORM' and check 
 
 <img alt="Metadata Editor: validation" src="../../assets/img/wis2box-metadata-validation-error.png" width="800">
 
+If there are any errors, correct them and click 'VALIDATE FORM' again.
+
 Making sure you have no errors and that you get a pop-up indication your form has been validated:
 
 <img alt="Metadata Editor: validation success" src="../../assets/img/wis2box-metadata-validation-success.png" width="800">
 
-This finishes the creation of the discovery metadata for your dataset. Next you will configure the data mappings.
+Next, before submitting your dataset, review the data mappings for your dataset.
 
 ## Configuring data mappings
 
-Since you used a template to create your dataset, several data mappings have already been created for you:
+Since you used a template to create your dataset, the dataset mappings have been pre-populated with the defaults plugins for the 'weather/surface-based-observations/synop' data type. Data plugins are used in the wis2box to transform data before it is published using the WIS2 notification.
 
 <img alt="Data Mappings: update plugin" src="../../assets/img/wis2box-data-mappings.png" width="800">
 
-You can click on the "update"-button to change settings for the plugin such as file-extension and the file-pattern.
-
-You can leave the default settings for now. 
+Note that you can click on the "update"-button to change settings for the plugin such as file-extension and the file-pattern, you can leave the default settings for now. In a later session, you will learn more about BUFR and the transformation of data into BUFR format.
 
 ## Submitting your dataset
 
 Finally, you can click 'submit' to publish your dataset. 
 
-You will need to provide the authorization token for 'processes/wis2box' that you created earlier.
+You will need to provide the authorization token for 'processes/wis2box' that you created earlier. If you have not done so, you can create a new token by following the instructions in the preparation section.
 
 Check that you get the following message after submitting your dataset, indicating that the dataset was successfully submitted:
 

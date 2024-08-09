@@ -1,3 +1,0 @@
-station_name,wigos_station_identifier,traditional_station_identifier,facility_type,latitude,longitude,elevation,barometer_height,territory_name,wmo_region
-BOTOSANI,0-20000-0-15020,15020,landFixed,47.7356532437,26.6455501701,161.0,162.1,ROU,europe
-IASI,0-20000-0-15090,15090,landFixed,47.163333333,27.6272222222,74.29,72.39,ROU,europe
