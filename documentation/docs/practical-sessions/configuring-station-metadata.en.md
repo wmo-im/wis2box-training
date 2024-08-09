@@ -110,10 +110,10 @@ Repeat this process until you have at least 3 stations configured.
 
     If your station elevation is missing, there are online services to help lookup the elevation using open elevation data. One such example is the [Open Topo Data API](https://www.opentopodata.org).
 
-    For example, to get the elevation at longitude 106.84204 and latitude -6.15558, one would query the Open Topo Data API as follows:
+    For example, to get the elevation at latitude -6.15558 and longitude 106.84204, you can copy-paste the following URL in a new browser-tab:
 
-    ```bash
-    wget -q -O - "https://api.opentopodata.org/v1/aster30m?locations=-6.15558,106.84204"
+    ```copy
+    https://api.opentopodata.org/v1/aster30m?locations=-6.15558,106.84204
     ```
 
     Output:

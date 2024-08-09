@@ -20,7 +20,7 @@ To see the content of the WIS2-notifications that are being published on differe
 
 ## Preparation
 
-This section will use the datasets previously created in the [Configuring datasets in wis2box](/practical-sessions/configuring-wis2box-datasets) practical session. 
+This section will use the "surface-based-observations/synop" dataset previously created in the [Configuring datasets in wis2box](/practical-sessions/configuring-wis2box-datasets) practical session. 
 
 Login to you student VM using your SSH client (PuTTY or other).
 
