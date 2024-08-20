@@ -73,11 +73,7 @@ Download the following sample data file to your local machine:
 
 - [gts-example-FTAE31-VTBB.csv](/sample-data/A_SMRO01YRBK171200_C_EDZW_20240717120502.txt)
 
-- [gts-example-FTAE31-VTBB.csv](/sample-data/gts-example-FTAE31-VTBB.csv)
-- [gts-example-FTAE31-VTBB-2.csv](/sample-data/gts-example-FTAE31-VTBB-2.csv)
-
 Access the MinIO console in your web browser and navigate to the `wis2box-incoming` bucket and click 'Create new path' to create the following directory:
-
 
 
 ## Conclusion

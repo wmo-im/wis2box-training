@@ -1,15 +1,17 @@
 from minio import Minio
 
-# replace with location of your data
-local_file = 'bufr-example.bin'
-# define path tp match desired topic-hierarchy for your data
-minio_path = 'xyz/test/data/core/weather/surface-based-observations/synop'
+# define the local file path from the first argument provided to the script
+import sys
+local_file = sys.argv[1]
+
+# the path in the MinIO storage, this should match the dataset_id to trigger wis2box workflow
+minio_path = 'urn:wmo:md:nl-knmi-test:surface-based-observations.synop'
 
 # replace with your host
 STORAGE_ENDPOINT = 'http://<your-host>:9000'
 # your MinIO storage credentials
 STORAGE_USER = 'wis2box'
-STORAGE_PASSWORD = 'changetoyourpassword'
+STORAGE_PASSWORD = 'mystoragepassword'
 
 BUCKET_INCOMING = 'wis2box-incoming'
 if STORAGE_ENDPOINT.startswith('https://'):

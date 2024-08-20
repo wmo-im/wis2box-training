@@ -162,14 +162,6 @@ To exit the container and go back to the host machine, use the following command
 exit
 ```
 
-## wis2box UI
-
-Open a web browser and visit the page `http://<your-host>`:
-
-<img alt="wis2box-ui.png" src="../../assets/img/wis2box-ui-empty.png" width="600">
-
-The wis2box UI will display your configured datasets. The UI is currently empty, as datasets have not yet been configured.
-
 ## wis2box API
 
 Open a new tab and navigate to the page `http://<your-host>/oapi`.

@@ -22,7 +22,7 @@ Ensure you have SSH access to your student VM and that your wis2box instance is 
 
 Make sure that you are connected to the MQTT-broker of your wis2box-instance using MQTT Explorer. You can use the public credentials `everyone/everyone` to connect to the broker.
 
-Ensure you have a web browser open with the wis2box-webapp for your instance by going to `http://<your-host>/wis2box-webapp`, open another tab with the wis2box-ui at `http://<your-host>/wis2box-ui`.
+Ensure you have a web browser open with the wis2box-webapp for your instance by going to `http://<your-host>/wis2box-webapp`.
 
 ## create a new dataset with data-policy 'recommended'
 
@@ -31,8 +31,6 @@ Go to the 'dataset editor' page in the wis2box-webapp and create a new dataset. 
 In the dataset editor, set the data-policy to 'recommended' and fill all the required fields.
 
 Ensure the dataset is published and the WIS2 Notification Message announcing the new Discovery Metadata record is published.
-
-Open the wis2box-ui and verify that you now have two datasets, one for core and for recommended.
 
 Add the following stations to your "recommended" dataset to ensure the test data can be ingested and published:
 

@@ -10,7 +10,6 @@ title: Configuring station metadata
 
     - create an authorization token for the `collections/stations` endpoint
     - add station metadata to wis2box
-    - review stations associated to datasets in the **wis2box-ui**
     - update/delete station metadata using the **wis2box-webapp**
 
 ## Introduction
@@ -142,13 +141,9 @@ If you open a browser and navigate to `http://<your-host>/oapi/collections/stati
 
 <img alt="wis2box-api-stations" src="../../assets/img/wis2box-api-stations.png" width="800">
 
-You can also visit the **wis2box-ui** at `http://<your-host>` and select "EXPLORE" on your dataset and you will see the stations you added:
-
-<img alt="wis2box-ui-explore-stations" src="../../assets/img/wis2box-ui-explore-stations.png" width="800">
-
 !!! note "Review your station metadata"
 
-    Verify the stations you added are associated to your dataset by visiting the **wis2box-api** and **wis2box-ui** endpoints for your host in your browser.
+    Verify the stations you added are associated to your dataset by visiting `http://<your-host>/oapi/collections/stations/items` in your browser.
 
 You also have the option to view/update/delete the station in the **wis2box-webapp**. Note that you are required to provide your authorization token for the `collections/stations` endpoint to update/delete the station.
 
@@ -167,5 +162,4 @@ Note that wis2box also has the ability to perform "bulk" loading of station meta
 
     - create an authorization token for the `collections/stations` endpoint
     - add station metadata to wis2box
-    - review stations associated to datasets in the **wis2box-ui**
     - update/delete station metadata using the **wis2box-webapp**

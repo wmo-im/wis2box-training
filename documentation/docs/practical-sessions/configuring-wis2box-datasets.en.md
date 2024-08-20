@@ -165,18 +165,6 @@ Inspect the content of the WIS2 notification you published. You should see a JSO
     
     The WIS2 notification contains a canonical link to the WCMP2 record that was published. If you copy-paste this link into a browser, you will download the WCMP2 record and see the title, description, and keywords you provided.
 
-## Reviewing your dataset in the wis2box-ui
-
-Navigate to `http://<your-host>` you should now see some new content:
-
-<img alt="wis2box-ui: new dataset" src="../../assets/img/wis2box-ui-new-dataset.png" width="800">
-
-If you click on "discovery metadata" a new page will open showing the metadata you provided in the wis2box-api:
-
-<img alt="wis2box-ui: discovery metadata" src="../../assets/img/wis2box-api-discovery-metadata.png" width="800">
-
-Note that the "explore"-option or clicking on the map will lead to an error being shown, as there are no stations associated with this dataset yet.
-
 ## Conclusion
 
 !!! success "Congratulations!"
