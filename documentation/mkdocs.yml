@@ -18,7 +18,8 @@ nav:
         - Configuring datasets in wis2box: practical-sessions/configuring-wis2box-datasets.md
         - Configuring station metadata: practical-sessions/configuring-station-metadata.md
         - Monitoring WIS2 notifications: practical-sessions/monitoring-wis2-notifications.md
-        - Converting SYNOP data to BUFR: practical-sessions/converting-synop-data-to-bufr.md
+        - Converting SYNOP data to BUFR from the command line: practical-sessions/converting-synop-data-to-bufr.md
+        - Converting SYNOP data to BUFR using the wis2box-webapp: practical-sessions/converting-synop-data-to-bufr-form.md
         - Converting CSV data to BUFR: practical-sessions/converting-csv-data-to-bufr.md
         - Automating data ingestion: practical-sessions/automating-data-ingestion.md
         - Adding GTS-headers to WIS2 notifications: practical-sessions/adding-gts-headers-to-wis2-notifications.md
