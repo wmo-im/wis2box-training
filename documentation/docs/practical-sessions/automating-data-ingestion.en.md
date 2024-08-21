@@ -9,6 +9,7 @@ title: Automating data ingestion
     By the end of this practical session, you will be able to:
     
     - understand how the data-plugins of your dataset determine the data-ingest workflow
+    - ingest data into wis2box using the MinIO console
     - ingest data into wis2box using a script using the MinIO Python client
     - ingest data into wis2box using the wis2box-ftp service
 
@@ -24,7 +25,8 @@ In the previous exercise you should have created a dataset using the template `s
 
 When a file is uploaded to MinIO, the wis2box will match the file to a dataset when the filepath contains the dataset-id (metadata_id) and it will determine the data-plugins to use based on the file extension and file pattern defined in the dataset mappings.
 
-In the previous sessions, we triggered the data ingest workflow by using the MinIO user interface to upload data files.
+In the previous sessions, we triggered the data ingest workflow by using the wis2box command line functionality, which uploads data to the MinIO storage in the correct path.
+
 The same steps can be done programmatically by using any MinIO or S3 client software, allowing you to automate your data ingestion as part of your operational workflows. 
 
 If you are unable to adapt your system to upload data to MinIO directly, you can also use the **wis2box-ftp** service to forward data to the MinIO storage service.
@@ -48,7 +50,46 @@ Make sure you have a web browser open with the Grafana dashboard for your instan
 
 And make sure you have a second tab open with the MinIO user interface at `http://<your-host>:9001`. Remember you need to login with the `WIS2BOX_STORAGE_USER` and `WIS2BOX_STORAGE_PASSWORD` defined in your `wis2box.env` file/
 
-## Exercise 1: setup a python script to ingest data into MinIO
+## Exercise 1: Ingesting data using MinIO console
+
+Download the following sample data files to your local machine:
+
+[aws-example.csv](/sample-data/aws-example.csv)
+
+Access the MinIO console in your web browser and navigate to the `wis2box-incoming` bucket and click 'Create new path' to create the following directory:
+
+`urn:wmo:md:nl-knmi-test.synop`
+
+<img alt="minio-admin-create-new-path" src="../../assets/img/minio-admin-create-new-path.png" width="800">
+
+Upload the file `aws-example.csv` to the directory you just created:
+
+<img alt="minio-admin-uploaded-file" src="../../assets/img/minio-admin-uploaded-file.png" width="800">
+
+!!! question "Check for errors in Grafana"
+    Do you see any errors reported on the Grafana dashboard?
+
+??? success "Click to reveal answer"
+ 
+    In the panel displayed at the bottom of the Grafana home dashboard you should see the following error:    
+    
+    * `ERROR - Path validation error: Could not match http://minio:9000/wis2box-incoming/urn:wmo:md:nl-knmi-test.synop/aws-example.csv to dataset, path should include one of the following:: ...`
+
+    This error indicates that the wis2box-management container could not match the path of the uploaded file to a dataset configured in your wis2box-instance.
+
+!!! question "Resolve the error and repeat the data ingest"
+
+    Go back to MinIO to the root of the `wis2box-incoming` bucket. Then click 'Create new path' and define the path matching the dataset-id you used when creating the dataset in the previous practical session.
+    
+    Now upload the sample data file `aws-example.csv` to the new path. Do you see any errors reported on the Grafana dashboard?
+
+??? success "Click to reveal answer"
+
+    If you correctly defined the path in MinIO to match the dataset-id you used when creating the dataset in the previous practical session, you should not see any errors reported on the Grafana dashboard.
+
+Note that the MinIO console is a useful tool to manually upload data to your wis2box instance, but it is not practical for automating data ingest workflows. In the next exercise you will use the MinIO Python client to automate the data ingest workflow.
+
+## Exercise 2: setup a python script to ingest data into MinIO
 
 In this exercise we will use the MinIO Python client to copy data into MinIO.
 
@@ -101,7 +142,7 @@ You can use the Grafana dashboard to check the status of the data ingest workflo
 
 Finally you can use MQTT Explorer to check if notifications were published for the data you ingested. You should see that the CSV data was transformed into BUFR format and that a WIS2 data notification was published with a "canonical" url to enable downloading the BUFR data.
 
-## Exercise 2: Ingesting binary data
+## Exercise 3: Ingesting binary data
 
 Next you will ingest binary data in BUFR format using the MinIO Python client.
 
@@ -131,7 +172,7 @@ Check the Grafana dashboard and MQTT Explorer to see if the test-data was succes
 
     The plugin `wis2box.data.bufr4.ObservationDataBUFR` splits the BUFR file into individual BUFR messages and publishes one message for each station and observation timestamp.
 
-## Exercise 3: Ingesting SYNOP data in ASCII format
+## Exercise 4: Ingesting SYNOP data in ASCII format
 
 In the previous session we used the SYNOP form in the **wis2box-webapp** to ingest SYNOP data in ASCII format. You can also ingest SYNOP data in ASCII format by uploading the data into MinIO. 
 
@@ -179,23 +220,7 @@ The file pattern in `data-mappings.yml` specifies that the regular expression `^
 
     The filename was used to determine the year and month of the data sample.
 
-## Exercise 4: ingesting bufr data using the MinIO Python client
-
-This plugin will split the BUFR file into individual BUFR messages and publish each message to the MQTT broker. If the station for the corresponding BUFR message is not defined in the wis2box station metadata, the message will not be published.
-
-Please download the following sample data file to your local machine:
-
-[bufr-example.bin](/sample-data/bufr-example.bin)
-
-!!! question "Exercise 4: ingest binary data in BUFR format"
-
-    How many messages were published to the MQTT broker for this data sample?
-
-??? success "Click to reveal answer"
-
-    If you successfully ingested and published the last data sample, you should have received 10 new notifications on the wis2box MQTT broker. Each notification correspond to data for one station for one observation timestamp.
-
-## Exercise 3: ingesting data using the wis2box-ftp service
+## Exercise 5: ingesting data using the wis2box-ftp service
 
 You can add an additional service that adds an ftp-endpoint on your wis2box-instance. This service will forward data uploaded via ftp to the MinIO storage service, preserving the directory structure of the uploaded data.
 

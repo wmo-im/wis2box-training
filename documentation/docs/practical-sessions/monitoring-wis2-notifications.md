@@ -32,33 +32,39 @@ python3 wis2box-ctl.py start
 python3 wis2box-ctl.py status
 ```
 
-Make sure your have MQTT Explorer running and connected to your instance.
-If you are still connected from the previous session, clear any previous messages you may have received from the queue by disconnecting and reconnecting.
+Make sure your have MQTT Explorer running and connected to your instance using the public credentials `everyone/everyone` with a subscription to the topic `origin/a/wis2/#`.
 
 Make sure you have a web browser open with the Grafana dashboard for your instance by going to `http://<your-host>:3000`
 
 <img alt="grafana-homepage" src="../../assets/img/grafana-homepage.png" width="800">
 
-And make sure you have a second tab open with the MinIO user interface at `http://<your-host>:9001`. Remember you need to login with the `WIS2BOX_STORAGE_USER` and `WIS2BOX_STORAGE_PASSWORD` defined in your `wis2box.env` file:
-
-<img alt="minio-second-tab" src="../../assets/img/minio-second-tab.png" width="800">
-
 ## Ingesting some data
 
+Copy the sample data file `aws-example.csv` to the the directory you defined as the WI2BOX_HOST_DATADIR in your `wis2box.env` file.
 
-Download the following sample data files to your local machine:
+```bash
+cp ~/exercise-materials/monitoring-exercise/aws-example.csv ~/wis2box-data
+```
 
-[aws-example.csv](/sample-data/aws-example.csv)
+Make sure you are in the `wis2box-1.0b8` directory and login to the **wis2box-management** container:
 
-Access the MinIO console in your web browser and navigate to the `wis2box-incoming` bucket and click 'Create new path' to create the following directory:
+```bash
+cd ~/wis2box-1.0b8
+python3 wis2box-ctl.py login
+```
 
-`not-my-centre/data/core/weather/surface-based-observations/synop`
+From the wis2box command line we can ingest the sample data file `aws-example.csv` into a specific dataset as follows:
 
-<img alt="minio-admin-create-new-path" src="../../assets/img/minio-admin-create-new-path.png" width="800">
+```bash
+wis2box data ingest -p /data/wis2box/aws-example.csv --metadata-identifier urn:wmo:md:not-my-centre:surface-based-observations.synop
+```
 
-Upload the file `aws-example.csv` to the directory you just created:
+!!! note
+    The `WIS2BOX_HOST_DATADIR` is mounted as `/data/wis2box/` inside the wis2box-management container by the docker-compose.yml file included in the wis2box-1.0b8 directory.
+    
+    This allows you to share data between the host and the container.
 
-<img alt="minio-admin-uploaded-file" src="../../assets/img/minio-admin-uploaded-file.png" width="800">
+Go to the Grafana dashboard in your browser and check the status of the data ingest.
 
 !!! question "Exercise 1: check for errors"
     Do you see any errors reported on the Grafana dashboard?
@@ -66,20 +72,17 @@ Upload the file `aws-example.csv` to the directory you just created:
 ??? success "Click to reveal answer"
     The 'wis2box ERRORs' displayed at the bottom of the Grafana home dashboard should report the following error:    
     
-    * `ERROR - Path validation error: Could not match http://minio:9000/wis2box-incoming/not-my-centre/data/core/weather/surface-based-observations/synop/aws-example.csv to dataset, path should include one of the following:: ...`
+    * `ERROR - Path validation error: Could not match http://minio:9000/wis2box-incoming/urn:wmo:md:not-my-centre:surface-based-observations.synop/aws-example.csv to dataset, path should include one of the following:: ...`
 
     This error indicates that the wis2box-management container could not match the path of the uploaded file to a dataset configured in your wis2box-instance.
 
 !!! question "Exercise 2: correct your input path and repeat the data ingest"
 
-    Go back to MinIO to the root of the `wis2box-incoming` bucket. Then click 'Create new path' and define the correct path for wis2box by replacing 'not-my-centre' with the centre-id you used when creating the dataset in the previous practical session. For example, if your centre-id is `fr-meteofrance`, the path should be:
-
-    * `fr-meteofrance/data/core/weather/surface-based-observations/synop`
-    
-    Now upload the sample data file `aws-example.csv` to the new path. Do you see any errors reported on the Grafana dashboard?
+    Find the correct metadata identifier for the dataset you created in the previous practical session and repeat the data ingest command with the correct path.
 
 ??? success "Click to reveal answer"
-    The Grafana dashboard should report the following warnings:
+
+    If you provided the correct metadata identifier for the dataset you created in the previous practical session, the Grafana dashboard should report the following warnings:
 
     * ... WARNING - input=aws-example.csv warning=Station 0-20000-0-60360 not in station list; skipping
     * ... WARNING - input=aws-example.csv warning=Station 0-20000-0-60355 not in station list; skipping
@@ -87,7 +90,7 @@ Upload the file `aws-example.csv` to the directory you just created:
 
     As the stations in the test data are not defined in your wis2box metadata, the data ingest workflow will not be triggered.
 
-    If instead you still see the error `ERROR - Path validation error: Could not match ...`, check that you have defined the correct path in MinIO and repeat the data ingest until you see the warnings above.
+    If instead you still see the error `ERROR - Path validation error: Could not match ...`, check that you have defined the correct metadata identifier and repeat the data ingest command.
 
 !!! question "Exercise 3: add the test stations and repeat the data ingest"
 
@@ -111,7 +114,23 @@ Upload the file `aws-example.csv` to the directory you just created:
 
     The chart "Number of WIS2.0 notifications published by wis2box" indicates that notifications were successfully published on the MQTT broker in wis2box.
 
-    Also, if you were subscribed with MQTT Explorer to your **wis2box-broker**, you should have received WIS2 notifications for the test data when the data was successfully published.
+!!! question "Exercise 4: check the MQTT broker for WIS2 notifications"
+    
+    Go to the MQTT Explorer and check if you can see the WIS2 Notification Message for the data you just ingested.
+    
+    How many WIS2 data notifications were published by your wis2box?
+    
+    How do you access the content of the data being published?
+
+??? success "Click to reveal answer"
+
+    You should see 3 WIS2 data notifications published by your wis2box.
+
+    To access the content of the data being published, you can expand the topic structure to see the different levels of the message until you reach the last level and review message content of one of the messages.
+
+    The message content has a "links" section with a "rel" key of "canonical" and a "href" key with the URL to download the data. The URL will be in the format `http://<your-host>/data/...`. 
+    
+    The web-proxy service in the wis2box-stack has proxied '/data' to the "wis2box-public" bucket in MinIO, providing a public HTTP endpoint to download the data.
 
 ## Viewing the data content you have published
 
@@ -123,7 +142,7 @@ Open the **wis2box-webapp** in your browser by navigating to `http://<your-host>
 
 In the monitoring-tab select to the topic hierarchy for your dataset and click "UPDATE"
 
-??? question "Exercise 4: view the WIS2 notifications"
+??? question "Exercise 5: view the WIS2 notifications in the wis2box-webapp"
     
     How many WIS2 data notifications were published by your wis2box? 
 
@@ -134,6 +153,9 @@ In the monitoring-tab select to the topic hierarchy for your dataset and click "
     If you have successfully ingested the test data, you should see 3 WIS2 data notifications published by your wis2box.
 
     To see the air-temperature measured for the station with WIGOS-identifier=0-20000-0-60351, click on the "INSPECT"-button next to the file for that station to open a pop-up window displaying the parsed content of the data file. The air-temperature measured at this station was 25.0 degrees Celsius.
+
+!!! Note
+    The wis2box-api container includes tools to parse BUFR files and display the content in a human-readable format. This is a not a core requirements for the WIS2.0 implementation, but was included in the wis2box to aid data-publishers in checking the content of the data they are publishing.
 
 ## Conclusion
 

@@ -55,10 +55,9 @@ The CSV file should be named (exactly) "gts_headers_mapping.csv" and should be p
     
 Copy the file `exercise-materials/gts-headers-exercises/gts_headers_mappings.csv` to your wis2box instance and place it in the directory defined by WIS2BOX_HOST_DATADIR in your wis2box.env.
 
-For example if your WIS2BOX_HOST_DATADIR is set to /home/mlimper/wis2box-data, you can use the following command:
 
 ```bash
-cp exercise-materials/gts-headers-exercises/gts_headers_mappings.csv /home/mlimper/wis2box-data
+cp exercise-materials/gts-headers-exercises/gts_headers_mappings.csv ~/wis2box-data
 ```
 
 Then restart the wis2box stack to apply the changes:
@@ -69,12 +68,32 @@ python3 wis2box-ctl.py restart
 
 ## Exercise 2: Ingesting data with GTS headers
 
-Download the following sample data file to your local machine:
+Copy the file `exercise-materials/gts-headers-exercises/FTAE31_VTBB_20220101T000000Z.csv` to the directory defined by WIS2BOX_HOST_DATADIR in your wis2box.env:
 
-- [gts-example-FTAE31-VTBB.csv](/sample-data/A_SMRO01YRBK171200_C_EDZW_20240717120502.txt)
+```bash
+cp exercise-materials/gts-headers-exercises/FTAE31_VTBB_20220101T000000Z.csv ~/wis2box-data
+```
 
-Access the MinIO console in your web browser and navigate to the `wis2box-incoming` bucket and click 'Create new path' to create the following directory:
+Then login to the **wis2box-management** container:
 
+```bash
+cd ~/wis2box-1.0b8
+python3 wis2box-ctl.py login
+```
+
+From the wis2box command line we can ingest the sample data file `FTAE31_VTBB_20220101T000000Z.csv` into a specific dataset as follows:
+
+```bash
+wis2box data ingest -p /data/wis2box/FTAE31_VTBB_20220101T000000Z.csv --metadata-identifier urn:wmo:md:not-my-centre:surface-based-observations.synop
+```
+
+Make sure to replace the metadata-identifier with the correct identifier for your dataset.
+
+## Exercise 3: Viewing the GTS headers in the WIS2 Notification
+
+Go to the MQTT Explorer and check if you can see the WIS2 Notification Message for the data you just ingested.
+
+The WIS2 Notification Message should contain the GTS headers you provided in the gts_headers_mapping.csv file.
 
 ## Conclusion
 

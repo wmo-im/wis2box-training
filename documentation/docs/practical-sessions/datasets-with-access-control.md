@@ -52,9 +52,28 @@ wis2box auth add-token --mdi urn:md:wmo:mydataset --token S3cr3tT0k3n
 
 ## publish some data to the dataset
 
-Publish to the test-data to the new recommended dataset.
+Copy the file `exercise-materials/access-control/exercises/aws-example2.csv` to the directory defined by WIS2BOX_HOST_DATADIR in your wis2box.env:
 
-Check the canonical-link in the WIS2 Notification Message and copy-paste the link to the browser.
+```bash
+cp exercise-materials/access-control/exercises/aws-example2.csv ~/wis2box-data
+```
+
+Then login to the **wis2box-management** container:
+
+```bash
+cd ~/wis2box-1.0b8
+python3 wis2box-ctl.py login
+```
+
+From the wis2box command line we can ingest the sample data file `aws-example2.csv` into a specific dataset as follows:
+
+```bash
+wis2box data ingest -p /data/wis2box/aws-example2.csv--metadata-identifier urn:md:wmo:mydataset
+```
+
+Make sure to provide the correct metadata-identifier for your dataset and check that you receive WIS2 data-notifications in MQTT Explorer.
+
+Check the canonical-link in the WIS2 Notification Message and copy-paste the link to the browser to try and download the data.
 
 You should see a 403 Forbidden error.
 
