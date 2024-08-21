@@ -62,7 +62,7 @@ Make sure you have the auth token for "processes/wis2box" that you generated in 
 Copy the following message:
     
 ``` {.copy}
-AAXX 21121
+AAXX 27031
 15015 02999 02501 10103 21090 39765 42952 57020 60001=
 ``` 
 
@@ -127,7 +127,7 @@ You should also be able to see these notifications in MQTT Explorer.
 For this next exercise you will convert a file containing multiple reports, see the data below:
 
 ``` {.copy}
-AAXX 21121
+AAXX 27031
 15015 02999 02501 10103 21090 39765 42952 57020 60001=
 15020 02997 23104 10130 21075 30177 40377 58020 60001 81041=
 15090 02997 53102 10139 21075 30271 40364 58031 60001 82046=
@@ -186,7 +186,7 @@ may be prior to submitting the data through the web application.
     has been clicked.
 
 ``` {.copy}
-AAXX 21121
+AAXX 27031
 15015 02999 02501 10103 21090 39765 42952 57020 60001
 15020 02997 23104 10130 21075 30177 40377 58020 60001 81041=
 15090 02997 53102 10139 21075 30271 40364 58031 60001 82046=
@@ -205,7 +205,7 @@ The second example below contains several common issues found in FM-12 SYNOP rep
 data and try to identify the issues and then submit the corrected data through the web application.
 
 ```{.copy}
-AAXX 21121
+AAXX 27031
 15020 02997 23104 10/30 21075 30177 40377 580200 60001 81041=
 ```
 
