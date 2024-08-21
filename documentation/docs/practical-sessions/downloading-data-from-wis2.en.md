@@ -26,7 +26,7 @@ Before starting please login to your student VM and ensure your wis2box instance
 
 Open a web browser and navigate to the Grafana dashboard for your wis2box instance by going to `http://<your-host>:3000`.
 
-Click on dashboards in the left-hand menu and select the "wis2downloader" dashboard.
+Click on dashboards in the left-hand menu, and then select the **wis2downloader dashboard**.
 
 You should see the following dashboard:
 
