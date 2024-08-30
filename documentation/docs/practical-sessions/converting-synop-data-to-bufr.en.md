@@ -31,6 +31,7 @@ as the relationship between the information contained in the FM-12 SYNOP reports
 
     - Ensure that your wis2box has been configured and started.
     - Confirm the status by visiting the wis2box API (``http://<your-host-name>/oapi``) and verifying that the API is running.
+    - Make sure to read the **synop2bufr primer** and **ecCodes primer** sections before starting the exercises.
 
 ## synop2bufr primer
 

@@ -29,7 +29,7 @@ The GTS property in the WIS2 Notification Message needs to be added as an additi
 }
 ```
 
-Within wis2box you can add this to WIS2 Notifications automatically by providing an additional file "gts_headers_mappings.csv" that contains the required information to map the GTS headers to the incoming filenames.
+Within wis2box you can add this to WIS2 Notifications automatically by providing an additional file `gts_headers_mappings.csv` that contains the required information to map the GTS headers to the incoming filenames.
 
 This file should be placed in the directory defined by WIS2BOX_HOST_DATADIR in your wis2box.env and should have the following columns:
 
@@ -45,7 +45,7 @@ Make sure that you are connected to the MQTT-broker of your wis2box-instance usi
 
 Make sure you have a web browser open with the Grafana dashboard for your instance by going to `http://<your-host>:3000`
 
-## creating gts_headers_mappings.csv
+## creating `gts_headers_mappings.csv`
 
 To add GTS headers to your WIS2 notifications, a CSV file is required that maps GTS headers to incoming filenames.
 
@@ -57,12 +57,13 @@ Copy the file `exercise-materials/gts-headers-exercises/gts_headers_mappings.csv
 
 
 ```bash
-cp exercise-materials/gts-headers-exercises/gts_headers_mappings.csv ~/wis2box-data
+cp ~/exercise-materials/gts-headers-exercises/gts_headers_mappings.csv ~/wis2box-data
 ```
 
 Then restart the wis2box stack to apply the changes:
 
 ```bash
+cd ~/wis2box-1.0b8
 python3 wis2box-ctl.py restart
 ```
 
@@ -84,10 +85,10 @@ python3 wis2box-ctl.py login
 From the wis2box command line we can ingest the sample data file `FTAE31_VTBB_20220101T000000Z.csv` into a specific dataset as follows:
 
 ```bash
-wis2box data ingest -p /data/wis2box/FTAE31_VTBB_20220101T000000Z.csv --metadata-identifier urn:wmo:md:not-my-centre:surface-based-observations.synop
+wis2box data ingest -p /data/wis2box/FTAE31_VTBB_20220101T000000Z.csv --metadata-id urn:wmo:md:not-my-centre:core.surface-based-observations.synop
 ```
 
-Make sure to replace the metadata-identifier with the correct identifier for your dataset.
+Make sure to replace the metadata-id with the correct identifier for your dataset.
 
 ## Exercise 3: Viewing the GTS headers in the WIS2 Notification
 

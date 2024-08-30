@@ -27,7 +27,7 @@ Login to your designated VM with your username and password and ensure you are i
 cd ~/wis2box-1.0b8
 ```
 
-## creating the initial configuration
+## Creating the initial configuration
 
 The initial configuration for the wis2box requires:
 
@@ -46,23 +46,23 @@ Run the script as follows:
 python3 wis2box-create-config.py
 ```
 
-### wis2box-data directory
+### wis2box-host-data directory
 
 The script will ask you to enter the directory to be used for the `WIS2BOX_HOST_DATADIR` environment variable.
 
 Note that you need to define the full path to this directory.
 
-For example if your username is `mlimper`, the full path to the directory is `/home/mlimper/wis2box-data`:
+For example if your username is `username`, the full path to the directory is `/home/username/wis2box-data`:
 
 ```{.copy}
-mlimper@student-vm-mlimper:~/wis2box-1.0b8$ python3 wis2box-create-config.py
-Please enter the directory on the host to be used for WIS2BOX_HOST_DATADIR:
-/home/mlimper/wis2box-data
-Configuration-files will be stored in the following directory:
-    /home/mlimper/wis2box-data
+username@student-vm-username:~/wis2box-1.0b8$ python3 wis2box-create-config.py
+Please enter the directory to be used for WIS2BOX_HOST_DATADIR:
+/home/username/wis2box-data
+The directory to be used for WIS2BOX_HOST_DATADIR will be set to:
+    /home/username/wis2box-data
 Is this correct? (y/n/exit)
 y
-The directory /home/mlimper/wis2box-data has been created.
+The directory /home/username/wis2box-data has been created.
 ```
 
 ### wis2box URL
@@ -75,9 +75,9 @@ Please use `http://<your-hostname>` as the URL. Remember that your hostname is d
 Please enter the URL of the wis2box:
  For local testing the URL is http://localhost
  To enable remote access, the URL should point to the public IP address or domain name of the server hosting the wis2box.
-http://mlimper.wis2.training
+http://username.wis2.training
 The URL of the wis2box will be set to:
-  http://mlimper.wis2.training
+  http://username.wis2.training
 Is this correct? (y/n/exit)
 ```
 
@@ -87,7 +87,7 @@ You can use the option of random password generation when prompted for and `WIS2
 
 Don't worry about remembering these passwords, they will be stored in the `wis2box.env` file in your wis2box-1.0b8 directory.
 
-### review configuration
+### Review `wis2box.env`
 
 Once the scripts is completed check the contents of the `wis2box.env` file in your current directory:
 
@@ -96,6 +96,16 @@ cat ~/wis2box-1.0b8/wis2box.env
 ```
 
 Or check the content of the file via WinSCP.
+
+!!! question
+
+    What is the value of WISBOX_BASEMAP_URL in the wis2box.env file?
+
+??? success "Click to reveal answer"
+
+    The default value for WIS2BOX_BASEMAP_URL is `https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png`.
+
+    This URL refers to the OpenStreetMap tile server. If you want to use a different map provider, you can change this URL to point to a different tile server.
 
 !!! question 
 
@@ -113,12 +123,16 @@ Or check the content of the file via WinSCP.
 
 !!! note
 
-    The `wis2box.env` file contains environment variables defining the configuration of your wis2box. For more information consult the [wis2box-documentation](https://docs.wis2box.wis.wmo.int/en/latest/reference/configuration.html)
+    The `wis2box.env` file contains environment variables defining the configuration of your wis2box. For more information consult the [wis2box-documentation](https://docs.wis2box.wis.wmo.int/en/latest/reference/configuration.html).
+
+    Do not edit the `wis2box.env` file unless you are sure of the changes you are making. Incorrect changes can cause your wis2box to stop working.
+
+    Do not share the contents of your `wis2box.env` file with anyone, as it contains sensitive information such as passwords.
 
 
-## wis2box start and status
+## Start wis2box
 
-Ensure you are in the directory containing the wis2box software stack:
+Ensure you are in the directory containing the wis2box software stack definition files:
 
 ```{.copy}
 cd ~/wis2box-1.0b8
@@ -145,6 +159,8 @@ Repeat this command until all services are up and running.
     
     The Python script `wis2box-ctl.py` is used to run the underlying Docker Compose commands that control the wis2box services.
 
+    You don't need to know the details of the Docker containers to run the wis2box software stack, but you can inspect the `docker-compose*.yml` and files to see how the services are defined. If you are interested in learning more about Docker, you can find more information in the [Docker documentation](https://docs.docker.com/).
+
 To login to the wis2box-management container, use the following command:
 
 ```{.copy}
@@ -162,13 +178,59 @@ To exit the container and go back to the host machine, use the following command
 exit
 ```
 
+Run the following command to see the docker containers running on your host machine:
+
+```{.copy}
+docker ps
+```
+
+You should see the following containers running:
+
+- wis2box-management
+- wis2box-api
+- wis2box-minio
+- wis2box-webapp
+- wis2box-auth
+- wis2box-ui
+- wis2downloader
+- elasticsearch
+- elasticsearch-exporter
+- nginx
+- mosquitto
+- prometheus
+- grafana
+- loki
+
+These containers are part of the wis2box software stack and provide the various services required to run the wis2box.
+
+Run the following command to see the docker volumes running on your host machine:
+
+```{.copy}
+docker volume ls
+```
+
+You should see the following volumes:
+
+- wis2box_project_auth-data
+- wis2box_project_es-data
+- wis2box_project_htpasswd
+- wis2box_project_minio-data
+- wis2box_project_prometheus-data
+- wis2box_project_loki-data
+
+As well as some anonymous volumes used by the various containers.
+
+The volumes starting with `wis2box_project_` are used to store persistent data for the various services in the wis2box software stack.
+
 ## wis2box API
+
+The wis2box contains an API (Application Programming Interface) that provide data access and processes for interactive visualization, data transformation and publication.
 
 Open a new tab and navigate to the page `http://<your-host>/oapi`.
 
 <img alt="wis2box-api.png" src="../../assets/img/wis2box-api.png" width="800">
 
-This is the wis2box API (running via the **wis2box-api** container).
+This is the landing page of the wis2box API (running via the **wis2box-api** container).
 
 !!! question
      
@@ -268,7 +330,9 @@ Then click "CONNECT" to connect to your **wis2box-broker**.
 
 <img alt="mqtt-explorer-wis2box-broker.png" src="../../assets/img/mqtt-explorer-wis2box-broker.png" width="600">
 
-Once you are connected, you should see statistics being published by your broker on the `$SYS/#`.
+Once you are connected, verify that your the internal mosquitto statistics being published by your broker under the `$SYS` topic:
+
+<img alt="mqtt-explorer-sys-topic.png" src="../../assets/img/mqtt-explorer-sys-topic.png" width="400">
 
 Keep the MQTT Explorer open, as we will use it to monitor the messages published on the broker.
 
@@ -276,7 +340,7 @@ Keep the MQTT Explorer open, as we will use it to monitor the messages published
 
 Open a web browser and visit the page `http://<your-host>:9001`:
 
-<img alt="minio-ui.png" src="../../assets/img/minio-ui.png" width="600">
+<img alt="minio-ui.png" src="../../assets/img/minio-ui.png" width="400">
 
 This is the MinIO UI (running via the **wis2box-storage** container).
 
@@ -298,7 +362,7 @@ Try to login to your MinIO UI. You will see that there 3 buckets already defined
 - `wis2box-public`: used to store data that is made available in the WIS2 notifications, the content of this bucket is proxied as `/data` on your `WIS2BOX_URL` via the nginx container
 - `wis2box-archive`: used to archive data from `wis2box-incoming` on a daily basis
 
-<img alt="minio-ui-buckets.png" src="../../assets/img/wis2box-minio-buckets.png" width="600">
+<img alt="minio-ui-buckets.png" src="../../assets/img/wis2box-minio-buckets.png" width="800">
 
 !!! note
 
@@ -306,15 +370,21 @@ Try to login to your MinIO UI. You will see that there 3 buckets already defined
 
 ### Using the MinIO UI to test data ingestion
 
-First click on "browse" for the `wis2box-incoming` bucket, then click on "Create new path" and enter the path `/testing/upload/`:
+First click on "browse" for the `wis2box-incoming` bucket, then click on "Create new path":
+
+<img alt="minio-ui-create-new-path.png" src="../../assets/img/minio-ui-create-new-path.png" width="800">
+
+And enter the path `/testing/upload/`:
 
 <img alt="minio-ui-create-path.png" src="../../assets/img/minio-ui-create-path.png" width="600">
 
-Then click on "Upload" and select a file from your local machine to upload to the `wis2box-incoming` bucket
+Right-click on this link and select 'save link as' : [randomfile.txt](/sample-data/randomfile.txt), to download the file to your local machine.
+
+Then click on "Upload" and select the randomfile.txt you downloaded from your local machine and upload it to the `wis2box-incoming` bucket
 
 You should now see the file in the `wis2box-incoming` bucket:
 
-<img alt="minio-ui-upload-file.png" src="../../assets/img/minio-ui-upload-file.png" width="600">
+<img alt="minio-ui-upload-file.png" src="../../assets/img/minio-ui-upload-file.png" width="700">
 
 !!! question
 
@@ -322,9 +392,15 @@ You should now see the file in the `wis2box-incoming` bucket:
 
 ??? success "Click to reveal answer"
 
-    If you are connected to your wis2box-broker, you should note that a message has been published on the `wis2box/storage` topic. This is how MinIO informs the wis2box-management service that there is new data to process. Note that this is *not* a WIS2 notification, but an internal message between components within the wis2box software stack.
+    If you are connected to your wis2box-broker, you should note that a message has been published on the `wis2box/storage` topic:
+    
+    <img alt="mqtt-explorer-wis2box-storage.png" src="../../assets/img/mqtt-explorer-wis2box-storage.png" width="600">
 
-The wis2box is not yet configured to process any files you upload, so the file will not be processed and no WIS2 notification will be published
+    This is how MinIO informs the wis2box-management service that there is new data to process. 
+    
+    Note: this is **not** a WIS2 notification, but an internal message between components within the wis2box software stack.
+
+The wis2box is not yet configured to process any files you upload, so the file will not be processed and no WIS2 notification will be published.
 
 We will check the error message produced by the wis2box-management container in the Grafana dashboard in the next step.
 
@@ -332,17 +408,17 @@ We will check the error message produced by the wis2box-management container in 
 
 Open a web browser and visit the page `http://<your-host>:3000`:
 
-<img alt="wis2box-grafana-ui.png" src="../../assets/img/wis2box-grafana-ui.png" width="600">
+<img alt="wis2box-grafana-ui.png" src="../../assets/img/wis2box-grafana-ui.png" width="800">
 
 This is the Grafana UI, where you can view the wis2box workflow monitoring dashboard. You can also access the logs of the various containers in the wis2box software stack via the 'Explore' option in the menu.
 
 !!! question
 
-    Are there any errors or warnings displayed in the your dashboard ?
+    Can you find the error message produced by the wis2box-management container when you uploaded the file to the `wis2box-incoming` bucket?
 
 ??? success "Click to reveal answer"
 
-    You will see an error message indicating that the wis2box could not process the file you uploaded.
+    You will should see an error message indicating that the wis2box could not process the file you uploaded.
 
     This is expected as we have not yet configured any datasets in the wis2box, you will learn how to do this in the next practical session.
 
@@ -353,7 +429,7 @@ This is the Grafana UI, where you can view the wis2box workflow monitoring dashb
 
     - run the `wis2box-create-config.py` script to create the initial configuration
     - start wis2box and check the status of its components
-    - connect to the **wis2box-broker** using MQTT Explorer
+    - connect to the MQTT-broker on your student-VM using MQTT Explorer
     - access the wis2box-UI, wis2box-webapp and wis2box-API in a browser
-    - upload a file to the `wis2box-incoming` bucket in the MinIO UI
+    - upload a file to the "wis2box-incoming"-bucket in the MinIO UI
     - view the Grafana dashboard to monitor the wis2box workflow

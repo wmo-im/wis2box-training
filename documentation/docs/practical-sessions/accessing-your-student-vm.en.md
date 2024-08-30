@@ -56,8 +56,6 @@ Your student VM has the following software pre-installed:
 
     ```bash
     pip3 install minio
-    pip3 install pywis-pubsub
-    pip3 install pywiscat
     ```
 
     If you are using the student VM provided during local WIS2 training sessions, the required software will already be installed.

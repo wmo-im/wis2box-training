@@ -50,46 +50,7 @@ Make sure you have a web browser open with the Grafana dashboard for your instan
 
 And make sure you have a second tab open with the MinIO user interface at `http://<your-host>:9001`. Remember you need to login with the `WIS2BOX_STORAGE_USER` and `WIS2BOX_STORAGE_PASSWORD` defined in your `wis2box.env` file/
 
-## Exercise 1: Ingesting data using MinIO console
-
-Download the following sample data files to your local machine:
-
-[aws-example.csv](/sample-data/aws-example.csv)
-
-Access the MinIO console in your web browser and navigate to the `wis2box-incoming` bucket and click 'Create new path' to create the following directory:
-
-`urn:wmo:md:nl-knmi-test.synop`
-
-<img alt="minio-admin-create-new-path" src="../../assets/img/minio-admin-create-new-path.png" width="800">
-
-Upload the file `aws-example.csv` to the directory you just created:
-
-<img alt="minio-admin-uploaded-file" src="../../assets/img/minio-admin-uploaded-file.png" width="800">
-
-!!! question "Check for errors in Grafana"
-    Do you see any errors reported on the Grafana dashboard?
-
-??? success "Click to reveal answer"
- 
-    In the panel displayed at the bottom of the Grafana home dashboard you should see the following error:    
-    
-    * `ERROR - Path validation error: Could not match http://minio:9000/wis2box-incoming/urn:wmo:md:nl-knmi-test.synop/aws-example.csv to dataset, path should include one of the following:: ...`
-
-    This error indicates that the wis2box-management container could not match the path of the uploaded file to a dataset configured in your wis2box-instance.
-
-!!! question "Resolve the error and repeat the data ingest"
-
-    Go back to MinIO to the root of the `wis2box-incoming` bucket. Then click 'Create new path' and define the path matching the dataset-id you used when creating the dataset in the previous practical session.
-    
-    Now upload the sample data file `aws-example.csv` to the new path. Do you see any errors reported on the Grafana dashboard?
-
-??? success "Click to reveal answer"
-
-    If you correctly defined the path in MinIO to match the dataset-id you used when creating the dataset in the previous practical session, you should not see any errors reported on the Grafana dashboard.
-
-Note that the MinIO console is a useful tool to manually upload data to your wis2box instance, but it is not practical for automating data ingest workflows. In the next exercise you will use the MinIO Python client to automate the data ingest workflow.
-
-## Exercise 2: setup a python script to ingest data into MinIO
+## Exercise 1: setup a python script to ingest data into MinIO
 
 In this exercise we will use the MinIO Python client to copy data into MinIO.
 
@@ -106,7 +67,7 @@ Go to the directory `exercise-materials/data-ingest`, this directory contains a 
 Try to run the script to copy the sample data file `csv-aws-example.csv` into the `wis2box-incoming` bucket in MinIO" as follows:
 
 ```bash
-cd ~/exercise-materials/data-ingest
+cd ~/exercise-materials/data-ingest-exercises
 python3 copy_file_to_incoming.py csv-aws-example.csv
 ```
 
@@ -118,9 +79,9 @@ The script needs to know the correct endpoint for accessing MinIO on your wis2bo
 
 !!! question "Update the script and ingest the CSV data"
     
-    Edit the script `copy_file_to_incoming.py` to address the errors. 
-    
-    You can edit the file from the command line using `nano` or `vim` or you can use WinSCP to connect your Student VM, browse to the `exercise-materials/data-ingest` directory and edit `copy_data_to_incoming.py` using a local text editor.  
+    Edit the script `copy_file_to_incoming.py` to address the errors, using one of the following methods:
+    - From the command line: use the `nano` or `vim` text editor to edit the script
+    - Using WinSCP: start a new connection using File Protocol `SCP` and the same credentials as your SSH client. Navigate to the directory `exercise-materials/data-ingest-exercises` and edit `copy_data_to_incoming.py` using the built-in text editor
     
     Ensure that you:
 
@@ -142,9 +103,9 @@ You can use the Grafana dashboard to check the status of the data ingest workflo
 
 Finally you can use MQTT Explorer to check if notifications were published for the data you ingested. You should see that the CSV data was transformed into BUFR format and that a WIS2 data notification was published with a "canonical" url to enable downloading the BUFR data.
 
-## Exercise 3: Ingesting binary data
+## Exercise 2: Ingesting binary data
 
-Next you will ingest binary data in BUFR format using the MinIO Python client.
+Next, we try to ingest binary data in BUFR format using the MinIO Python client.
 
 wis2box can ingest binary data in BUFR format using the `wis2box.data.bufr4.ObservationDataBUFR` plugin included in wis2box.
 
@@ -172,7 +133,7 @@ Check the Grafana dashboard and MQTT Explorer to see if the test-data was succes
 
     The plugin `wis2box.data.bufr4.ObservationDataBUFR` splits the BUFR file into individual BUFR messages and publishes one message for each station and observation timestamp.
 
-## Exercise 4: Ingesting SYNOP data in ASCII format
+## Exercise 3: Ingesting SYNOP data in ASCII format
 
 In the previous session we used the SYNOP form in the **wis2box-webapp** to ingest SYNOP data in ASCII format. You can also ingest SYNOP data in ASCII format by uploading the data into MinIO. 
 

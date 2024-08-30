@@ -77,29 +77,31 @@ Open the wis2box web application and navigate to the synop2bufr page using the l
 
 <center><img alt="Dialog showing synop2bufr page, including toggle button" src="../../assets/img/synop2bufr-toggle.png"></center>
 
-Click submit. You will receive an error message as the station is not registered in the wis2box. Go to the station-editor and import the following station:
+Click submit. You will receive an warning message as the station is not registered in the wis2box. Go to the station-editor and import the following station:
 
 ``` {.copy}
 0-20000-0-15015
 ```
 
-Ensure the station is associated with the topic you selected in the previous step and then return to the synop2bufr page and repeat the process.
+Ensure the station is associated with the topic you selected in the previous step and then return to the synop2bufr page and repeat the process with the same data as before.
 
-Click submit. The data will now be converted to BUFR and the result returned to the web application.
+!!! question
+    How can you see the result of the conversion from FM-12 SYNOP to BUFR?
 
-Click on "Output BUFR files" to see a list of the files that have been generated.
+??? success "Click to reveal answer"
+    The result section of the page shows Warnings, Errors and Output BUFR files.
 
-??? tip
-    The result section of the page should show a single converted BUFR message with zero warnings 
-    or errors. The download button allows the BUFR data to be downloaded directly to your computer.
-    Click the down arrow / chevron to reveal download and inspect buttons. 
+    Click on "Output BUFR files" to see a list of the files that have been generated. You should see one file listed.
+
+    The download button allows the BUFR data to be downloaded directly to your computer.
+
     The inspect button runs a process to convert and extract the data from BUFR.
 
     <center><img alt="Dialog showing result of successfully submitting a message"
          src="../../assets/img/synop2bufr-ex2-success.png"></center>
 
 !!! question
-    The FM-12 SYNOP format does not include the station location, elevation or barometer height. 
+    The FM-12 SYNOP input data did not include the station location, elevation or barometer height. 
     Confirm that these are in the output BUFR data, where do these come from?
 
 ??? success "Click to reveal answer"
@@ -114,13 +116,7 @@ Click on "Output BUFR files" to see a list of the files that have been generated
     
     The BUFR file can also be inspected by downloading the file and validating using a tool such as as the ECMWF ecCodes BUFR validator.
 
-As a final step navigate to the monitoring page from the left menu and confirm that the data have been published.
-
-<center><img alt="Image showing monitoring tab in on the left menu" src="../../assets/img/csv2bufr-monitoring.png"/></center>
-
-<center><img alt="Image showing monitoring page and published data" src="../../assets/img/synop2bufr-monitoring.png"/></center>
-
-You should also be able to see these notifications in MQTT Explorer.
+Go to MQTT explorer and check the WIS2 notifications topic to see the WIS2 notifications that have been published.
 
 ### Exercise 3 - understanding the station list
 

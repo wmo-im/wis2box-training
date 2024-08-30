@@ -30,7 +30,7 @@ Click on dashboards in the left-hand menu, and then select the **wis2downloader 
 
 You should see the following dashboard:
 
-![wis2downloader dashboard](../../assets/img/wis2downloader-dashboard.png)
+![wis2downloader dashboard](../assets/img/wis2downloader-dashboard.png)
 
 This dashboard is based on metrics published by the wis2downloader service and will show you the status of the downloads that are currently in progress.
 
@@ -118,6 +118,16 @@ The wis2downloader-service in the wis2box-stack downloads the data in the 'downl
 ```bash
 ls -l ~/wis2box-data/downloads
 ```
+
+## Exercise 5: removing subscriptions from the wis2downloader
+
+To remove a subscription from the wis2downloader, you can use the following command:
+
+```bash
+wis2downloader subscriptions remove --topic cache/a/wis2/de-dwd-gts-to-wis2/#
+```
+
+Check the wis2downloader dashboard in Grafana to see the subscription removed. 
 
 ## Conclusion
 

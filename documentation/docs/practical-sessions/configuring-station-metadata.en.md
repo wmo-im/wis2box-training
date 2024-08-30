@@ -153,13 +153,26 @@ You also have the option to view/update/delete the station in the **wis2box-weba
 
 ## Bulk station metadata upload
 
-Note that wis2box also has the ability to perform "bulk" loading of station metadata from a CSV file using command line tools provided in the **wis2box-management** container. See the official [wis2box documentation](https://docs.wis2box.wis.wmo.int) for more information on how to use this feature.
+Note that wis2box also has the ability to perform "bulk" loading of station metadata from a CSV file using the command-line in the **wis2box-management** container.
+
+```bash
+python3 wis2box-ctl.py login
+wis2box metadata station publish-collection -p /data/wis2box/station_list.csv -th origin/a/wis2/centre-id/weather/surface-based-observations/synop
+```
+
+This allows you to upload a large number of stations at once and associate them with a specific topic.
+
+You can create the CSV file using Excel or a text editor and then upload it to wis2box-host-datadir to make it available to the **wis2box-management** container in the `/data/wis2box/` directory.
+
+After doing a bulk upload of stations, it is recommended to review the stations in the **wis2box-webapp** to ensure the data was uploaded correctly.
+
+See the official [wis2box documentation](https://docs.wis2box.wis.wmo.int) for more information on how to use this feature.
 
 ## Conclusion
 
 !!! success "Congratulations!"
     In this practical session, you learned how to:
 
-    - create an authorization token for the `collections/stations` endpoint
-    - add station metadata to wis2box
-    - update/delete station metadata using the **wis2box-webapp**
+    - create an authorization token for the `collections/stations` endpoint to be used with the **wis2box-webapp**
+    - add station metadata to wis2box using the **wis2box-webapp**
+    - view/update/delete station metadata using the **wis2box-webapp**

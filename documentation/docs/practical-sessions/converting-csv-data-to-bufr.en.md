@@ -79,7 +79,7 @@ Inspect the expected columns from the table above and compare to the example dat
     e.g. ``,"",``.
 
 !!! hint "Missing data"
-    It is recognised that data may be missing for a variety of reasons, whether due to sensor 
+    It is recognized that data may be missing for a variety of reasons, whether due to sensor 
     failure or the parameter not being observed. In these cases missing data can be encoded
     as per the above answer, the other data in the report remain valid.
 
@@ -90,12 +90,12 @@ Inspect the expected columns from the table above and compare to the example dat
     from the wis2box API and to insert the values into the CSV, similar to the process used in FM-12 SYNOP to BUFR.
 
     Even though all the metadata is contained within the CSV file the station metadata must still be registered in the
-    wis2box for the message to be procesed.
+    wis2box for the message to be processed.
 
 
 ### Exercise 2 - converting your first message
 
-Now that you have familiarised yourself with the input data file and specified CSV format you will convert this 
+Now that you have familiarized yourself with the input data file and specified CSV format you will convert this 
 example file to BUFR using the wis2box web-application. First we need to register the station in the wis2box, in this case the
 station is a fictional station located on the island of Sicily in Italy. Navigate to the station list page,
 click add station and then search (leave the WIGOS Station Identifier box empty). Click create new station and

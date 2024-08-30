@@ -4,8 +4,8 @@ from minio import Minio
 import sys
 local_file = sys.argv[1]
 
-# the path in the MinIO storage, this should match the dataset_id to trigger wis2box workflow
-minio_path = 'urn:wmo:md:nl-knmi-test:surface-based-observations.synop'
+# the path in the MinIO storage, matching dataset-id or topic
+minio_path = 'urn:wmo:md:nl-knmi-test:core.surface-based-observations.synop'
 
 # replace with your host
 STORAGE_ENDPOINT = 'http://<your-host>:9000'
@@ -26,6 +26,6 @@ client = Minio(
     access_key=STORAGE_USER,
     secret_key=STORAGE_PASSWORD,
     secure=is_secure)
-identifier = minio_path+local_file.split('/')[-1]
+identifier = minio_path+'/'+local_file.split('/')[-1]
 print(f"Put into {BUCKET_INCOMING} : {local_file} as {identifier}")
 client.fput_object(BUCKET_INCOMING, identifier, local_file)

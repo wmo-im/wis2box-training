@@ -17,7 +17,7 @@ title: Configuring datasets in wis2box
 
 The wis2box uses datasets that are associated with discovery metadata and data mappings.
 
-The discovery metadata is used to create a WCMP2 record that is shared using a WIS2 notification published on your wis2box-broker.
+The discovery metadata is used to create a WCMP2 (WMO Core Metadata Profile 2) record that is shared using a WIS2 notification published on your wis2box-broker.
 
 The data mappings are used to associate a data plugin to your input data, allowing your data to be transformed prior to being published using the WIS2 notification.
 
@@ -25,14 +25,20 @@ This session will walk you through creating a new dataset, creating discovery me
 
 ## Preparation
 
-Connect to your broker using MQTT Explorer. Instead of using your internal broker credentials, use the public credentials `everyone/everyone`:
+Connect to your broker using MQTT Explorer. 
+
+Instead of using your internal broker credentials, use the public credentials `everyone/everyone`:
 
 <img alt="MQTT Explorer: Connect to broker" src="../../assets/img/mqtt-explorer-wis2box-broker-everyone-everyone.png" width="800">
 
 !!! Note
 
-    The `everyone/everyone` credentials enable read-only access on the topic 'origin/a/wis2/#'. This is the topic where the WIS2 notifications are published. The Global Broker can subscribe with these public credentials to receive the notifications. The 'everyone' user will not see internal topics or be able to publish messages.
+    You never need to share the credentials of your internal broker with external users. The 'everyone' user is a public user to enable sharing of WIS2 notifications.
 
+    The `everyone/everyone` credentials has read-only access on the topic 'origin/a/wis2/#'. This is the topic where the WIS2 notifications are published. The Global Broker can subscribe with these public credentials to receive the notifications.
+    
+    The 'everyone' user will not see internal topics or be able to publish messages.
+    
 Open a browser and open a page to `http://<your-host>/wis2box-webapp`. Make sure you are logged in and can access the 'dataset editor' page.
 
 See the section on [Initializing wis2box](/practical-sessions/initializing-wis2box) if you need to remember how to connect to the broker or access the wis2box-webapp.
@@ -78,22 +84,26 @@ On the 'dataset editor' page, under the 'Datasets' tab, click on "Create New ...
 
 A pop-up window will appear, asking you to provide:
 
-- `Centre ID' : this is the agency acronym (in lower case and no spaces), as specified by the WMO Member, that identifies the data centre responsible for publishing the data.
-- Data Type: The type of data you are creating metadata for. You can choose between using a predefined template or selecting 'other'.  If 'other' is selected, more fields will have to be manually filled. 
+- **Centre ID** : this is the agency acronym (in lower case and no spaces), as specified by the WMO Member, that identifies the data centre responsible for publishing the data.
+- **Data Type**: The type of data you are creating metadata for. You can choose between using a predefined template or selecting 'other'.  If 'other' is selected, more fields will have to be manually filled. 
 
 !!! Note
 
     Your centre-id should start with the ccTLD of your country, followed by a - and an abbreviated name of your organization, for example fr-meteofrance. The centre-id has to be lowercase and use alphanumeric characters only. The dropdown list shows all currently registered centre-ids on WIS2 as well as any centre-id you have already created in wis2box.
 
-Please choose a centre-id appropriate for your organization. For 'Data Type', select 'weather/surface-based-observations/synop':
+Please choose a centre-id appropriate for your organization.
 
-<img alt="Create New Dataset Form: Initial information" src="../../assets/img/wis2box-create-new-dataset-form-initial.png" width="800">
+For **Data Type**, select **weather/surface-based-observations/synop**:
 
-Click 'continue to form' to proceed, you will now be presented with the 'Dataset Editor Form'. Since you selected the 'weather/surface-based-observations/synop' data type, the form will be pre-populated with some initial values related to this data type.
+<img alt="Create New Dataset Form: Initial information" src="../../assets/img/wis2box-create-new-dataset-form-initial.png" width="450">
+
+Click *continue to form* to proceed, you will now be presented with the **Dataset Editor Form**.
+
+Since you selected the **weather/surface-based-observations/synop** data type, the form will be pre-populated with some initial values related to this data type.
 
 ## Creating discovery metadata
 
-The 'Dataset Editor Form' allows you to provide the Discovery Metadata for your dataset that the wis2box-management container will use to publish a WCMP2 record.
+The Dataset Editor Form allows you to provide the Discovery Metadata for your dataset that the wis2box-management container will use to publish a WCMP2 record.
 
 Since you have selected the 'weather/surface-based-observations/synop' data type, the form will be pre-populated with some default values.
 
@@ -156,13 +166,25 @@ Go to MQTT-explorer, if you were connected to the broker, you should see a new W
 Inspect the content of the WIS2 notification you published. You should see a JSON with a structure corresponding to the WIS Notification Message (WNM) format.
 
 !!! question
+
+    On what topic is the WIS2 notification published?
+
+??? success "Click to reveal answer"
+
+    The WIS2 notification is published on the topic 'origin/a/wis2/<your-centre-id>/metadata'.
+
+!!! question
     
     Try to find the title, description and keywords you provided in the discovery metadata in the WIS2 notification.  Can you find them?
 
 ??? success "Click to reveal answer"
 
-    The title, description, and keywords you provided in the discovery metadata are not present in the WIS2 notification !
+    Note that the title, description, and keywords you provided in the discovery metadata are **not** present in the WIS2 notification payload! 
     
+    Instead, try to look for the canonical link  in the "links"-section in the WIS2 notification:
+
+    <img alt="WIS2 notification for metadata, links sections" src="../../assets/img/wis2-notification-metadata-links.png" width="800">
+
     The WIS2 notification contains a canonical link to the WCMP2 record that was published. If you copy-paste this link into a browser, you will download the WCMP2 record and see the title, description, and keywords you provided.
 
 ## Conclusion
