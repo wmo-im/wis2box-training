@@ -550,36 +550,6 @@ csv2bufr data transform --bufr-template aws-template-custom csv2bufr-ex1.csv
 
 Inspect the output file using `bufr_ls` and confirm that the originating centre in the headers is updated.
 
-!!! note
-
-    You can use the custom mappings in your automated workflow by updating your data-mappings.yml and updating the environment variable for CSV2BUFR_TEMPLATES.
-
-    Edit your `data-mappings.yml` file to use this new file by updating the template name:
-
-    ```
-                csv:
-                    - plugin: wis2box.data.csv2bufr.ObservationDataCSV2BUFR
-                    template: aws-template-custom
-                    notify: true
-                    file-pattern: '^.*\.csv$'
-    ```
-
-    Add the environment variable to your `wis2box.env` file:
-
-    ```{.copy}
-    cd ~/wis2box-1.0b8/
-    echo "export CSV2BUFR_TEMPLATES=/data/wis2box/bufr-templates" >> wis2box.env
-    ```
-
-    And restart the wis2box stack:
-
-    ```{.copy}
-    python3 wis2box-ctl.py stop
-    python3 wis2box-ctl.py start
-    ```
-
-    The new template should now be used in the automated workflow.
-
 ## Housekeeping
 
 Clean up your working directory by removing files you no longer need and clean up your station list to remove any

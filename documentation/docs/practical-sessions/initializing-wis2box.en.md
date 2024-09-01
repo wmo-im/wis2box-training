@@ -366,7 +366,7 @@ Try to login to your MinIO UI. You will see that there 3 buckets already defined
 
 !!! note
 
-    The **wis2box-storage** container (provided by MinIO) will send a notification on the **wis2box-broker** when data is received. The **wis2box-management** container is subscribed to all messages on `wis2box/#` and will receive these notifications, triggering the data pipelines defined in your `data-mappings.yml`.
+    The **wis2box-storage** container (provided by MinIO) will send a notification on the **wis2box-broker** when data is received. The **wis2box-management** container is subscribed to all messages on `wis2box/#` and will receive these notifications, triggering the data plugins defined in the datasets.
 
 ### Using the MinIO UI to test data ingestion
 

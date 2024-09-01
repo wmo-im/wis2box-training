@@ -139,7 +139,7 @@ In the previous session we used the SYNOP form in the **wis2box-webapp** to inge
 
 In the previous session you should have created a dataset which included the plugin 'FM-12 data converted to BUFR' for the dataset mappings:
 
-<img alt="dataset-mappings" src="../../assets/img/dataset-mappings.png" width="800">
+<img alt="dataset-mappings" src="../../assets/img/wis2box-data-mappings.png" width="800">
 
 This plugin loads the module `wis2box.data.synop2bufr.ObservationDataSYNOP2BUFR` to ingest the data.
 
@@ -147,7 +147,7 @@ Try to use the MinIO Python client to ingest the test data `synop-202307.txt` an
 
 Note that the 2 files contain the same content, but the filename is different. The filename is used to determine the date of the data sample.
 
-The file pattern in `data-mappings.yml` specifies that the regular expression `^.*-(\d{4})(\d{2}).*\.txt$` that is used to extract the date from the filename. The first group in the regular expression is used to extract the year and the second group is used to extract the month.
+The synop2bufr plugin relies on a file-pattern to extract the date from the filename. The first group in the regular expression is used to extract the year and the second group is used to extract the month.
 
 !!! question "Exercise 5: ingest SYNOP data in ASCII format"
 
