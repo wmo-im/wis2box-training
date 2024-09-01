@@ -187,24 +187,33 @@ You can add an additional service that adds an ftp-endpoint on your wis2box-inst
 
 To use the docker-compose.wis2box-ftp.yml template included in wis2box, you need to pass some additional environment variables to the wis2box-ftp service.
 
-You can use the file wis2box-ftp.env from the exercise-materials directory to define the required environment variables. To view the content of the file, use the following command:
+You can use the file wis2box-ftp.env from the exercise-materials directory to define the required environment variables. Start by copying the file to the wis2box-1.0b8 directory:
 
 ```bash
-cd ~/exercise-materials/data-ingest/
-cat wis2box-ftp.env
+cp ~/exercise-materials/data-ingest-exercises/wis2box-ftp.env ~/wis2box-1.0b8/
 ```
 
 !!! question "Start the wis2box-ftp service"
 
-    Edit the file `wis2box-ftp.env` to define the required environment variables. 
+    Edit the file `wis2box-ftp.env` to define the required environment variables:
 
-    Replace `username.wis2.training` with the hostname of your wis2box instance, and `mystoragepassword` with the WIS2BOX_STORAGE_PASSWORD password defined in your `wis2box.env` file.
+    - `FTP_USER`: the username for the ftp-endpoint
+    - `FTP_PASS`: the password for the ftp-endpoint
+    - `FTP_HOST`: the hostname of your wis2box-instance (e.g. `username.wis2.training`)
+    - `WIS2BOX_STORAGE_USERNAME`: the MinIO storage user (e.g. `wis2box`)
+    - `WIS2BOX_STORAGE_PASSWORD`: the MinIO storage password (see your `wis2box.env` file)
+    - `WIS2BOX_STORAGE_ENDPOINT`: the MinIO storage endpoint, you can leave this set to `http://minio:9000` when running the wis2box-ftp on the same docker network as the MinIO service.
+
+    You can use the `nano` or `vim` text editor to edit the file or the built-in text editor of WinSCP.
 
     Then start the wis2box-ftp service using the following command:
 
     ```bash
-    docker-compose -f docker-compose.wis2box-ftp.yml up -d --env-file wis2box-ftp.env
+    cd ~/wis2box-1.0b8/
+    docker compose -f docker-compose.wis2box-ftp.yml -p wis2box_project --env-file wis2box-ftp.env up -d
     ```
+
+    NOTE: the option `-p wis2box_project` is used to ensure the wis2box-ftp service is started in the same docker network as the MinIO service for wis2box.
 
     You can check if the wis2box-ftp service is running using the following command:
 
@@ -216,15 +225,19 @@ To test the wis2box-ftp service, you can use an ftp client to upload a file to t
 
 For example to connect to FTP using WinSCP, your connection would look like this:
 
-<img alt="winscp-ftp-connection" src="../../assets/img/winscp-ftp-connection.png" width="800">
+<img alt="winscp-ftp-connection" src="../../assets/img/winscp-ftp-connection.png" width="450">
 
 !!! Question "Upload a file using FTP"
 
-    Use an FTP client to upload a file to the ftp-endpoint on your wis2box-instance. 
+    Use an FTP client (such as WinSCP) to connect to the ftp-endpoint on your wis2box-instance.
 
-    Check the MinIO user interface to see if the file was uploaded correctly and check the Grafana dashboard to see if the data ingest workflow was triggered.
+    Create a directory matching your dataset-id and upload a file to the directory.
 
-    If you don't see the file in MinIO you can check the logs of the wis2box-ftp service to see if there were any errors.
+    Check the MinIO user interface to see if the file was uploaded to the correct path in the `wis2box-incoming` bucket. If you don't see the file in MinIO you can check the logs of the wis2box-ftp service to see if there were any errors in the process forwarding the data to MinIO.
+    
+    Check the Grafana dashboard to see if the data ingest workflow was triggered or if there were any errors.
+
+The wis2box-ftp service will forward the data to the MinIO storage service, preserving the directory structure of the uploaded data. To ensure your data is ingested correctly, make sure the file is uploaded to a directory that matches the dataset-id or topic of your dataset.
 
 ## Conclusion
 
@@ -232,4 +245,5 @@ For example to connect to FTP using WinSCP, your connection would look like this
     In this practical session, you learned how to:
 
     - trigger wis2box workflow using a Python script and the MinIO Python client
+    - use different data-plugins to ingest different data formats
     - forward data to wis2box using the wis2box-ftp service
