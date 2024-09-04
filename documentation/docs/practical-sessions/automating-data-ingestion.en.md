@@ -181,7 +181,7 @@ The synop2bufr plugin relies on a file-pattern to extract the date from the file
 
     The filename was used to determine the year and month of the data sample.
 
-## Exercise 5: ingesting data using the wis2box-ftp service
+## Exercise 4: ingesting data using the wis2box-ftp service
 
 You can add an additional service that adds an ftp-endpoint on your wis2box-instance. This service will forward data uploaded via ftp to the MinIO storage service, preserving the directory structure of the uploaded data.
 

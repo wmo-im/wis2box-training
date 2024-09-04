@@ -68,7 +68,7 @@ Note that MQTT is primarily used for "machine-to-machine" communication; meaning
 
 To view messages published by a WIS2 Global Broker you can "MQTT Explorer" which can be downloaded from the [MQTT Explorer website](https://mqtt-explorer.com).
 
-Open MQTT Explorer and add a new connection to the Global Broker hosted by China Meteorological Administration using the following details:
+Open MQTT Explorer and add a new connection to the Global Broker hosted by MeteoFrance using the following details:
 
 - host: globalbroker.meteo.fr
 - port: 8883
