@@ -29,7 +29,7 @@ The GTS property in the WIS2 Notification Message needs to be added as an additi
 }
 ```
 
-Within wis2box you can add this to WIS2 Notifications automatically by providing an additional file `gts_headers_mappings.csv` that contains the required information to map the GTS headers to the incoming filenames.
+Within wis2box you can add this to WIS2 Notifications automatically by providing an additional file `gts_headers_mapping.csv` that contains the required information to map the GTS headers to the incoming filenames.
 
 This file should be placed in the directory defined by WIS2BOX_HOST_DATADIR in your wis2box.env and should have the following columns:
 
@@ -45,7 +45,7 @@ Make sure that you are connected to the MQTT-broker of your wis2box-instance usi
 
 Make sure you have a web browser open with the Grafana dashboard for your instance by going to `http://<your-host>:3000`
 
-## creating `gts_headers_mappings.csv`
+## creating `gts_headers_mapping.csv`
 
 To add GTS headers to your WIS2 notifications, a CSV file is required that maps GTS headers to incoming filenames.
 
@@ -53,11 +53,11 @@ The CSV file should be named (exactly) "gts_headers_mapping.csv" and should be p
 
 ## Exercise 1: providing a gts_headers_mapping.csv file
     
-Copy the file `exercise-materials/gts-headers-exercises/gts_headers_mappings.csv` to your wis2box instance and place it in the directory defined by WIS2BOX_HOST_DATADIR in your wis2box.env.
+Copy the file `exercise-materials/gts-headers-exercises/gts_headers_mapping.csv` to your wis2box instance and place it in the directory defined by WIS2BOX_HOST_DATADIR in your wis2box.env.
 
 
 ```bash
-cp ~/exercise-materials/gts-headers-exercises/gts_headers_mappings.csv ~/wis2box-data
+cp ~/exercise-materials/gts-headers-exercises/gts_headers_mapping.csv ~/wis2box-data
 ```
 
 Then restart the wis2box stack to apply the changes:
@@ -69,10 +69,10 @@ python3 wis2box-ctl.py restart
 
 ## Exercise 2: Ingesting data with GTS headers
 
-Copy the file `exercise-materials/gts-headers-exercises/FTAE31_VTBB_20220101T000000Z.csv` to the directory defined by WIS2BOX_HOST_DATADIR in your wis2box.env:
+Copy the file `exercise-materials/gts-headers-exercises/A_SMRO01YRBK171200_C_EDZW_20240717120502.txt` to the directory defined by WIS2BOX_HOST_DATADIR in your wis2box.env:
 
 ```bash
-cp exercise-materials/gts-headers-exercises/FTAE31_VTBB_20220101T000000Z.csv ~/wis2box-data
+cp ~/exercise-materials/gts-headers-exercises/A_SMRO01YRBK171200_C_EDZW_20240717120502.txt ~/wis2box-data
 ```
 
 Then login to the **wis2box-management** container:
@@ -82,10 +82,10 @@ cd ~/wis2box-1.0b8
 python3 wis2box-ctl.py login
 ```
 
-From the wis2box command line we can ingest the sample data file `FTAE31_VTBB_20220101T000000Z.csv` into a specific dataset as follows:
+From the wis2box command line we can ingest the sample data file `A_SMRO01YRBK171200_C_EDZW_20240717120502.txt` into a specific dataset as follows:
 
 ```bash
-wis2box data ingest -p /data/wis2box/FTAE31_VTBB_20220101T000000Z.csv --metadata-id urn:wmo:md:not-my-centre:core.surface-based-observations.synop
+wis2box data ingest -p /data/wis2box/A_SMRO01YRBK171200_C_EDZW_20240717120502.txt --metadata-id urn:wmo:md:not-my-centre:core.surface-based-observations.synop
 ```
 
 Make sure to replace the metadata-id with the correct identifier for your dataset.
