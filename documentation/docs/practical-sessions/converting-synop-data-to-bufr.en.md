@@ -109,6 +109,10 @@ more message.txt
 
     How many SYNOP reports are in this file?
 
+??? success "Click to reveal answer"
+    
+    There is 1 SYNOP report, as there is only 1 delimiter (=) at the end of the message.
+
 Inspect the station list:
 
 ```bash
@@ -119,16 +123,39 @@ more station_list.csv
 
     How many stations are listed in the station list?
 
+??? success "Click to reveal answer"
+
+    There is 1 station, the station_list.csv contains one row of station metadata.
+
 !!! question
-    Convert `message.txt` to BUFR format.
+    Try to convert `message.txt` to BUFR format.
+
+??? success "Click to reveal answer"
+
+    To convert the SYNOP message to BUFR format, use the following command:
+
+    ```bash
+    synop2bufr data transform --metadata station_list.csv --output-dir ./ --year 2024 --month 09 message.txt
+    ```
 
 !!! tip
 
     See the [synop2bufr primer](#synop2bufr-primer) section.
 
 Inspect the resulting BUFR data using `bufr_dump`.
+
 !!! question
-     Compare the latitude and longitude values to those in the station list.
+     Find how to compare the latitude and longitude values to those in the station list.
+
+??? success "Click to reveal answer"
+
+    To compare the latitude and longitude values in the BUFR data to those in the station list, use the following command:
+
+    ```bash
+    bufr_dump -p WIGOS_0-20000-0-15015_20240921T120000.bufr4 | egrep -i 'latitude|longitude'
+    ```
+
+    This will display the latitude and longitude values in the BUFR data.
 
 !!! tip
 
@@ -146,6 +173,10 @@ more message.txt
 
     How many SYNOP reports are in this file?
 
+??? success "Click to reveal answer"
+
+    There are 3 SYNOP reports, as there are 3 delimiters (=) at the end of the message.
+
 Inspect the station list:
 
 ```bash
@@ -156,18 +187,62 @@ more station_list.csv
 
     How many stations are listed in the station list?
 
+??? success "Click to reveal answer"
+
+    There are 3 stations, the station_list.csv contains three rows of station metadata.
+
 !!! question
     Convert `message.txt` to BUFR format.
+
+??? success "Click to reveal answer"
+
+    To convert the SYNOP message to BUFR format, use the following command:
+
+    ```bash
+    synop2bufr data transform --metadata station_list.csv --output-dir ./ --year 2024 --month 09 message.txt
+    ```
 
 !!! question
 
     Based on the results of the exercises in this and the previous exercise, how would you predict the number of
     resulting BUFR files based upon the number of SYNOP reports and stations listed in the station metadata file?
 
+??? success "Click to reveal answer"
+
+    To see the produced BUFR-files run the following command:
+
+    ```bash
+    ls -l *.bufr4
+    ```
+
+    The number of BUFR files produced will be equal to the number of SYNOP reports in the message file.
+
 Inspect the resulting BUFR data using `bufr_dump`.
 
 !!! question
-    Check each of the output BUFR files contain different WIGOS Station Identifiers (WSI).
+    How can you check the WIGOS Station ID encoded inside the BUFR data of each file produced?
+
+??? success "Click to reveal answer"
+
+    This can be done using the following commands:
+
+    ```bash
+    bufr_dump -p WIGOS_0-20000-0-15015_20240921T120000.bufr4 | egrep -i 'wigos'
+    ```
+
+    ```bash
+    bufr_dump -p WIGOS_0-20000-0-15020_20240921T120000.bufr4 | egrep -i 'wigos'
+    ```
+
+    ```bash
+    bufr_dump -p WIGOS_0-20000-0-15090_20240921T120000.bufr4 | egrep -i 'wigos'
+    ```
+
+    Note that if you have a directory with just these 3 BUFR files, you can use Linux wildcards as follows:
+
+    ```bash
+    bufr_dump -p *.bufr4 | egrep -i 'wigos'
+    ```
 
 ### Exercise 3
 Navigate to the `exercise-materials/synop2bufr-exercises/ex_3` directory and inspect the SYNOP message file message.txt:
@@ -181,7 +256,6 @@ This SYNOP message only contains one longer report with more sections.
 
 Inspect the station list:
 
-
 ```bash
 more station_list.csv
 ```
@@ -190,12 +264,24 @@ more station_list.csv
 
     Is it problematic that this file contains more stations than there are reports in the SYNOP message?
 
+??? success "Click to reveal answer"
+
+    No, this is not a problem provided that there exists a row in the station list file with a station TSI matching that of the SYNOP report we are trying to convert.
+
 !!! note
 
     The station list file is a source of metadata for `synop2bufr` to provide the information missing in the alphanumeric SYNOP report and required in the BUFR SYNOP.
 
 !!! question
     Convert `message.txt` to BUFR format.
+
+??? success "Click to reveal answer"
+
+    This is done using the `transform` command, for example:
+
+    ```bash
+    synop2bufr data transform --metadata station_list.csv --output-dir ./ --year 2024 --month 09 message.txt
+    ```
 
 Inspect the resulting BUFR data using `bufr_dump`.
 
@@ -207,6 +293,20 @@ Inspect the resulting BUFR data using `bufr_dump`.
     - Total cloud cover (%) of the report
     - Total period of sunshine (mins) of the report
     - Wind speed (m/s) of the report
+
+??? success "Click to reveal answer"
+
+    To find the variables by keyword in the BUFR data, you can use the following commands:
+
+    ```bash
+    bufr_dump -p WIGOS_0-20000-0-15260_20240921T115500.bufr4 | egrep -i 'temperature'
+    ```
+
+    You can use the following command to search for multiple keywords:
+
+    ```bash
+    bufr_dump -p WIGOS_0-20000-0-15260_20240921T115500.bufr4 | egrep -i 'temperature|cover|sunshine|wind'
+    ```
 
 !!! tip
 
@@ -225,11 +325,28 @@ more message_incorrect.txt
 
     What is incorrect about this SYNOP file?
 
+??? success "Click to reveal answer"
+
+    The SYNOP report for 15015 is missing the delimiter (`=`) that allows `synop2bufr` to distinguish this report from the next.
+
 Attempt to convert `message_incorrect.txt` using `station_list.csv`
 
 !!! question
 
     What problem(s) did you encounter with this conversion?
+
+??? success "Click to reveal answer"
+
+    To convert the SYNOP message to BUFR format, use the following command:
+
+    ```bash
+    synop2bufr data transform --metadata station_list.csv --output-dir ./ --year 2024 --month 09 message_incorrect.txt
+    ```
+
+    Attempting to convert should raise the following errors:
+    
+    - `[ERROR] Unable to decode the SYNOP message`
+    - `[ERROR] Error parsing SYNOP report: AAXX 21121 15015 02999 02501 10103 21090 39765 42952 57020 60001 15020 02997 23104 10130 21075 30177 40377 58020 60001 81041. 10130 is not a valid group!`
 
 ### Exercise 5
 Navigate to the `exercise-materials/synop2bufr-exercises/ex_5` directory and inspect the SYNOP message file message.txt:
@@ -246,6 +363,27 @@ Attempt to convert `message.txt` to BUFR format using `station_list_incorrect.cs
     What problem(s) did you encounter with this conversion?  
     Considering the error presented, justify the number of BUFR files produced.
 
+??? success "Click to reveal answer"
+
+    To convert the SYNOP message to BUFR format, use the following command:
+
+    ```bash
+    synop2bufr data transform --metadata station_list_incorrect.csv --output-dir ./ --year 2024 --month 09 message.txt
+    ```
+
+    One of the station TSIs (`15015`) has no corresponding metadata in the station-list, which will prohibit synop2bufr from accessing additional necessary metadata to convert the first SYNOP report to BUFR.
+
+    You will see the following warning:
+
+    - `[WARNING] Station 15015 not found in station file`
+
+    You can see the number of BUFR files produced by running the following command:
+
+    ```bash
+    ls -l *.bufr4
+    ```
+
+    There are 3 SYNOP reports in message.txt but only 2 BUFR files have been produced. This is because one of the SYNOP reports lacked the necessary metadata as mentioned above.
 
 ## Conclusion
 
