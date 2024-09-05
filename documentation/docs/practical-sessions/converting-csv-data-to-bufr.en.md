@@ -83,23 +83,17 @@ Inspect the expected columns from the table above and compare to the example dat
     failure or the parameter not being observed. In these cases missing data can be encoded
     as per the above answer, the other data in the report remain valid.
 
-!!! bug "Station metadata"
-    The CSV to BUFR conversion tool has been developed as a standalone tool separate from the wis2box.
-    As such, all the data to be encoded in BUFR must be present in the CSV file, including the station metadata
-    like the location and sensor heights. In future versions the web-application will be updated to load the metadata
-    from the wis2box API and to insert the values into the CSV, similar to the process used in FM-12 SYNOP to BUFR.
-
-    Even though all the metadata is contained within the CSV file the station metadata must still be registered in the
-    wis2box for the message to be processed.
-
-
 ### Exercise 2 - converting your first message
 
-Now that you have familiarized yourself with the input data file and specified CSV format you will convert this 
-example file to BUFR using the wis2box web-application. First we need to register the station in the wis2box, in this case the
-station is a fictional station located on the island of Sicily in Italy. Navigate to the station list page,
-click add station and then search (leave the WIGOS Station Identifier box empty). Click create new station and
-enter the fictional station details, suggested details are below:
+Now that you have familiarized yourself with the input data file and specified CSV format you will convert this example file to BUFR using the wis2box web-application. 
+
+First you need to register the station referred to in the input-data in your wis2box-instance. However, if you try to import *0-20000-0-99100* from OSCAR/Surface using the wis2box web-app you will find that the station does not exist:
+
+<center><img alt="Image showing station not found in OSCAR/Surface" src="../../assets/img/csv2bufr-station-not-found.png"/></center>
+
+Click the button 'CREATE NEW STATION' and you will be allowed to enter the station details manually.
+
+Enter the fictional station details, suggested details are below:
 
 | Field | Value           |
 | ----- |-----------------|
@@ -115,8 +109,11 @@ enter the fictional station details, suggested details are below:
 | Territory or member operating the station | Italy           |
 | Operating status | operational     |
 
-Select the appropriate topic, enter the ``collections/stations`` token previously created and click save. You are now
-ready to process data from this station. Navigate to CSV to BUFR submission page on the the wis2box web-application 
+Select the appropriate topic, enter the ``collections/stations`` token previously created and click save. 
+
+You are now ready to process data from this station.
+
+Navigate to CSV to BUFR submission page on the the wis2box web-application 
 (``http://<your-host-name>/wis2box-webapp/csv2bufr_form``).
 Click the entry box or drag and drop the test file you have downloaded to the entry box. 
 You should now be able to click next to preview and validate the file.
@@ -129,9 +126,9 @@ about missing data but in this exercise these can be ignored.
 
 <center><img alt="Image showing CSV to BUFR example validation page with warnings" src="../../assets/img/csv2bufr-warnings.png"/></center>
 
-The next button will take you to the topic selection page,
-as with the FM-12 SYNOP to BUFR page select the topic configured for "surface weather observations" on your wis2box 
-and click next. You should now be on an authorisation page where you will be asked to enter the ``processes/wis2box`` 
+Click *next* to proceed and you will be asked to provide a dataset-id for the data to be published. Select the dataset-id you create previously and click *next*.
+
+You should now be on an authorization page where you will be asked to enter the ``processes/wis2box`` 
 token you have previously created. Enter this token and click the "Publish on WIS2" toggle to ensure 
 "Publish to WIS2" is selected (see screenshot below).
 

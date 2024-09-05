@@ -66,14 +66,6 @@ ls -lh /data/wis2box/aws-example.csv
     
     This allows you to share data between the host and the container.
 
-You will see the following output:
-
-```bash
-Error: metadata_id=urn:wmo:md:not-my-centre:core.surface-based-observations.synop not found in data mappings
-```
-
-This is because the metadata identifier you provided does not match any of the datasets you have configured in your wis2box-instance.
-
 !!! question "Exercise 1: ingesting data using `wis2box data ingest`"
 
     Execute the following command to ingest the sample data file `aws-example.csv` to your wis2box-instance:

@@ -244,9 +244,10 @@ This is the landing page of the wis2box API (running via the **wis2box-api** con
 
     The following collections are currently available:
 
-    - Discovery metadata
-    - Station metadata
+    - Stations
     - Data notifications
+    - Discovery metadata
+
 
 !!! question
 

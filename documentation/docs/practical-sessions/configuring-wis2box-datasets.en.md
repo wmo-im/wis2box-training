@@ -159,7 +159,7 @@ After you click 'OK', you are redirected to the Dataset Editor home page. Now if
 
 ## Reviewing the WIS2-notification for your discovery metadata
 
-Go to MQTT-explorer, if you were connected to the broker, you should see a new WIS2 notification published on the topic 'origin/a/wis2/<your-centre-id>/metadata':
+Go to MQTT-explorer, if you were connected to the broker, you should see a new WIS2 notification published on the topic `origin/a/wis2/<your-centre-id>/metadata`:
 
 <img alt="MQTT Explorer: WIS2 notification" src="../../assets/img/mqtt-explorer-wis2-notification-metadata.png" width="800">
 
@@ -171,7 +171,7 @@ Inspect the content of the WIS2 notification you published. You should see a JSO
 
 ??? success "Click to reveal answer"
 
-    The WIS2 notification is published on the topic 'origin/a/wis2/<your-centre-id>/metadata'.
+    The WIS2 notification is published on the topic `origin/a/wis2/<your-centre-id>/metadata`.
 
 !!! question
     

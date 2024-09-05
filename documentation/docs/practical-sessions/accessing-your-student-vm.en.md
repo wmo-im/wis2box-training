@@ -126,8 +126,12 @@ To test that your user can run docker hello-world, run the following command:
 docker run hello-world
 ```
 
-returns:
+This should pull the hello-world image and run a container that prints a message. 
+
+Check that you see the following in the output:
+
 ```console
+...
 Hello from Docker!
 This message shows that your installation appears to be working correctly.
 ...

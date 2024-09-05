@@ -157,7 +157,7 @@ Note that wis2box also has the ability to perform "bulk" loading of station meta
 
 ```bash
 python3 wis2box-ctl.py login
-wis2box metadata station publish-collection -p /data/wis2box/station_list.csv -th origin/a/wis2/centre-id/weather/surface-based-observations/synop
+wis2box metadata station publish-collection -p /data/wis2box/metadata/station/station_list.csv -th origin/a/wis2/centre-id/weather/surface-based-observations/synop
 ```
 
 This allows you to upload a large number of stations at once and associate them with a specific topic.

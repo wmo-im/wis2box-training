@@ -27,35 +27,7 @@ To allow manual observers to submit data directly to the WIS2.0, the wis2box-web
 
 ## Using the wis2box-webapp to convert FM-12 SYNOP to BUFR
 
-### Exercise 1 - Creating an auth token for the wis2box-webapp
-
-In order to submit data to be processed in the wis2box-webapp you will need an auth token for "processes/wis2box".
-
-You can generate this token by logging in to the wis2box management container and using the `wis2box auth add-token` command:
-
-```bash
-cd ~/wis2box-1.0b8
-python3 wis2box-ctl.py login
-wis2box auth add-token --path processes/wis2box
-```
-
-Or if you want to define your own token:
-
-```bash
-wis2box auth add-token --path processes/wis2box DataIsMagic
-```
-
-Please record the token that is generated, you will need this later in the session.
-
-For practical purposes the exercises in this session use data from Romania, import the station ``0-20000-0-15015`` into your station list and associate it with the topic for your "Surface weather observations collection". You can remove this station at the end of the session.
-
-If you have forgotten your auth token for "collections/stations" you can create a new one with:
-
-```bash
-wis2box auth add-token --path collections/stations
-```
-
-### Exercise 2 - using the wis2box-webapp to convert FM-12 SYNOP to BUFR
+### Exercise 1 - using the wis2box-webapp to convert FM-12 SYNOP to BUFR
 
 Make sure you have the auth token for "processes/wis2box" that you generated in the previous exercise and that you are connected to your wis2box broker in MQTT Explorer.
 
@@ -83,7 +55,7 @@ Click submit. You will receive an warning message as the station is not register
 0-20000-0-15015
 ```
 
-Ensure the station is associated with the topic you selected in the previous step and then return to the synop2bufr page and repeat the process with the same data as before.
+Ensure the station is associated with the topic you selected in the previous step and then return to the synop2bufr page and repeat the process with the same data as before. 
 
 !!! question
     How can you see the result of the conversion from FM-12 SYNOP to BUFR?
@@ -118,7 +90,7 @@ Ensure the station is associated with the topic you selected in the previous ste
 
 Go to MQTT explorer and check the WIS2 notifications topic to see the WIS2 notifications that have been published.
 
-### Exercise 3 - understanding the station list
+### Exercise 2 - understanding the station list
 
 For this next exercise you will convert a file containing multiple reports, see the data below:
 
@@ -168,7 +140,7 @@ Three BUFR files should now be generated and there should be no warnings or erro
 In addition to the basic station information, additional metadata such as the station elevation above sea level and the
 barometer height above sea level are required for encoding to BUFR. The fields are included in the station list and station editor pages.
     
-### Exercise 4 - debugging
+### Exercise 3 - debugging
 
 In this final exercise you will identify and correct two of the most common problems encountered when
 using this tool to convert FM-12 SYNOP to BUFR. 
