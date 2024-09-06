@@ -62,7 +62,7 @@ pip3 install minio
 
 On your student VM the 'minio' package for Python will already be installed.
 
-Go to the directory `exercise-materials/data-ingest`, this directory contains a sample script `copy_file_to_incoming.py` that uses the MinIO Python client to copy a file into MinIO.
+Go to the directory `exercise-materials/data-ingest-exercises`, this directory contains a sample script `copy_file_to_incoming.py` that uses the MinIO Python client to copy a file into MinIO.
 
 Try to run the script to copy the sample data file `csv-aws-example.csv` into the `wis2box-incoming` bucket in MinIO" as follows:
 
@@ -81,7 +81,7 @@ The script needs to know the correct endpoint for accessing MinIO on your wis2bo
     
     Edit the script `copy_file_to_incoming.py` to address the errors, using one of the following methods:
     - From the command line: use the `nano` or `vim` text editor to edit the script
-    - Using WinSCP: start a new connection using File Protocol `SCP` and the same credentials as your SSH client. Navigate to the directory `exercise-materials/data-ingest-exercises` and edit `copy_data_to_incoming.py` using the built-in text editor
+    - Using WinSCP: start a new connection using File Protocol `SCP` and the same credentials as your SSH client. Navigate to the directory `exercise-materials/data-ingest-exercises` and edit `copy_file_to_incoming.py` using the built-in text editor
     
     Ensure that you:
 
@@ -118,7 +118,7 @@ Since you used the `surface-based-observations/synop` template in the previous s
     Run the following command to copy the binary data file `bufr-example.bin` into the `wis2box-incoming` bucket in MinIO:
 
     ```bash
-    python3 copy_data_to_incoming.py bufr-example.bin
+    python3 copy_file_to_incoming.py bufr-example.bin
     ```
 
 Check the Grafana dashboard and MQTT Explorer to see if the test-data was successfully ingested and published and if you see any errors, try to resolve them.
@@ -197,8 +197,8 @@ cp ~/exercise-materials/data-ingest-exercises/wis2box-ftp.env ~/wis2box-1.0b8/
 
     Edit the file `wis2box-ftp.env` to define the required environment variables:
 
-    - `FTP_USER`: the username for the ftp-endpoint
-    - `FTP_PASS`: the password for the ftp-endpoint
+    - `FTP_USER`: the username for the ftp-endpoint (to be defined by the user)
+    - `FTP_PASS`: the password for the ftp-endpoint (to be defined by the user)
     - `FTP_HOST`: the hostname of your wis2box-instance (e.g. `username.wis2.training`)
     - `WIS2BOX_STORAGE_USERNAME`: the MinIO storage user (e.g. `wis2box`)
     - `WIS2BOX_STORAGE_PASSWORD`: the MinIO storage password (see your `wis2box.env` file)

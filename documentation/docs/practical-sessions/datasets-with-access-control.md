@@ -28,7 +28,13 @@ Ensure you have a web browser open with the wis2box-webapp for your instance by 
 
 Go to the 'dataset editor' page in the wis2box-webapp and create a new dataset. Use the same centre-id as in the previous practical sessions and use the template='surface-weather-observations/synop'. 
 
-In the dataset editor, set the data-policy to 'recommended' and fill all the required fields.
+You may get a pop-up message that there already is a dataset with the same metadata-identifier:
+
+<img alt="provide-a-new-dataset-id" src="../../assets/img/popup-existing-dataset-id.png" width="450">
+
+Click 'OK' to proceed.
+
+In the dataset editor, set the data-policy to 'recommended' (note that this will update the identifier and replace 'core' with 'reco') and fill all the required fields.
 
 Ensure the dataset is published and the WIS2 Notification Message announcing the new Discovery Metadata record is published.
 
@@ -40,22 +46,26 @@ Add the following stations to your "recommended" dataset to ensure the test data
 
 ## add an access token to the dataset
 
-Login to the wis2box-management container and add an access token to the dataset.
+Login to the wis2box-management container,
 
 ```bash
 docker exec -it wis2box-management bash
 ```
 
+From command-line inside the container you can secure a dataset using the `wis2box auth add-token` command, using the flag `--mdi` to specify the metadata-identifier of the dataset and the access token as an argument.
+
+For example, to add the access token `S3cr3tT0k3n` to the dataset with metadata-identifier `urn:md:wmo:mydataset`:	
+
 ```bash
-wis2box auth add-token --mdi urn:md:wmo:mydataset --token S3cr3tT0k3n
+wis2box auth add-token --mdi urn:md:wmo:mydataset S3cr3tT0k3n
 ```
 
 ## publish some data to the dataset
 
-Copy the file `exercise-materials/access-control/exercises/aws-example2.csv` to the directory defined by WIS2BOX_HOST_DATADIR in your wis2box.env:
+Copy the file `exercise-materials/access-control-exercises/aws-example2.csv` to the directory defined by WIS2BOX_HOST_DATADIR in your wis2box.env:
 
 ```bash
-cp exercise-materials/access-control/exercises/aws-example2.csv ~/wis2box-data
+cp ~/exercise-materials/access-control-exercises/aws-example2.csv ~/wis2box-data
 ```
 
 Then login to the **wis2box-management** container:
@@ -68,7 +78,7 @@ python3 wis2box-ctl.py login
 From the wis2box command line we can ingest the sample data file `aws-example2.csv` into a specific dataset as follows:
 
 ```bash
-wis2box data ingest -p /data/wis2box/aws-example2.csv--metadata-identifier urn:md:wmo:mydataset
+wis2box data ingest -p /data/wis2box/aws-example2.csv--metadata-id urn:md:wmo:mydataset
 ```
 
 Make sure to provide the correct metadata-identifier for your dataset and check that you receive WIS2 data-notifications in MQTT Explorer.

@@ -90,6 +90,8 @@ wis2box data ingest -p /data/wis2box/A_SMRO01YRBK171200_C_EDZW_20240717120502.tx
 
 Make sure to replace the metadata-id with the correct identifier for your dataset.
 
+Check the Grafana dashboard to see if the data was ingested correctly. If you see any WARNINGS or ERRORS, try to fix them and repeat the exercise the `wis2box data ingest` command.
+
 ## Exercise 3: Viewing the GTS headers in the WIS2 Notification
 
 Go to the MQTT Explorer and check if you can see the WIS2 Notification Message for the data you just ingested.
