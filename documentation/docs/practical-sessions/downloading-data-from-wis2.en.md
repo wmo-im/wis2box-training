@@ -14,9 +14,11 @@ title: Downloading data from WIS2 notifications
 
 In this session you will learn how to setup a subscription to a WIS2 Broker and automatically download data to your local system using the "wis2downloader"-service included in the wis2box. 
 
-!!! note "About wis2downlaoder"
+!!! note "About wis2downloader"
      
      The wis2downloader is also available as a standalone service that can be run on a different system from the one that is publishing the WIS2 notifications. See [wis2downloader](https://pypi.org/project/wis2downloader/) for more information for using the wis2downloader as a standalone service.
+
+     If you like to develop your own service for subscribing to WIS2 notifications and downloading data, you can use the [wis2downloader source code](https://github.com/wmo-im/wis2downloader) as a reference.
 
 ## Preparation
 
@@ -59,13 +61,13 @@ To review the current configuration of the wis2downloader, you can use the follo
 cat ~/wis2box-1.0b8/wis2box.env | grep DOWNLOAD
 ```
 
-??? question "Review the configuration of the wis2downloader"
+!!! question "Review the configuration of the wis2downloader"
     
     What is the default MQTT-broker that the wis2downloader connects to?
 
     What is the default retention period for the downloaded data?
 
-!!! success "Click to reveal the answers"
+??? success "Click to reveal answer"
 
     The default MQTT-broker that the wis2downloader connects to is `globalbroker.meteo.fr`.
 
@@ -96,7 +98,7 @@ python3 wis2box-ctl.py login wis2downloader
 Then use the following command to list the subscriptions that are currently active:
 
 ```bash
-wis2downloader subscriptions list
+wis2downloader list-subscriptions
 ```
 
 This command returns an empty list since no subscriptions are currently active.
@@ -106,8 +108,10 @@ For the purpose of this exercise, we will subscribe to the following topic `cach
 To add this subscription, use the following command:
 
 ```bash
-wis2downloader subscriptions add --topic cache/a/wis2/de-dwd-gts-to-wis2/#
+wis2downloader add-subscription --topic cache/a/wis2/de-dwd-gts-to-wis2/#
 ```
+
+Then exit the **wis2downloader** container by typing `exit`.
 
 Check the wis2downloader dashboard in Grafana to see the new subscription added. Wait a few minutes and you should see the first downloads starting. Go to he next exercise once you have confirmed that the downloads are starting.
 
@@ -116,18 +120,20 @@ Check the wis2downloader dashboard in Grafana to see the new subscription added.
 The wis2downloader-service in the wis2box-stack downloads the data in the 'downloads' directory in the directory you defined as the WIS2BOX_HOST_DATADIR in your wis2box.env file. To view the contents of the downloads directory, you can use the following command:
 
 ```bash
-ls -l ~/wis2box-data/downloads
+ls -R ~/wis2box-data/downloads
 ```
+
+Note that the downloaded data is stored in directories named after the topic the WIS2 Notification was published on.
 
 ## Exercise 5: removing subscriptions from the wis2downloader
 
-To remove a subscription from the wis2downloader, you can use the following command:
+Next, the remove the subscription you made from the wis2downloader, using the following command:
 
 ```bash
-wis2downloader subscriptions remove --topic cache/a/wis2/de-dwd-gts-to-wis2/#
+wis2downloader remove-subscription --topic cache/a/wis2/de-dwd-gts-to-wis2/#
 ```
 
-Check the wis2downloader dashboard in Grafana to see the subscription removed. 
+Check the wis2downloader dashboard in Grafana to see the subscription removed. You should see the downloads stopping.
 
 ## Conclusion
 

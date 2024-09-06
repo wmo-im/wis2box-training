@@ -9,7 +9,6 @@ title: Automating data ingestion
     By the end of this practical session, you will be able to:
     
     - understand how the data-plugins of your dataset determine the data-ingest workflow
-    - ingest data into wis2box using the MinIO console
     - ingest data into wis2box using a script using the MinIO Python client
     - ingest data into wis2box using the wis2box-ftp service
 
@@ -149,7 +148,7 @@ Note that the 2 files contain the same content, but the filename is different. T
 
 The synop2bufr plugin relies on a file-pattern to extract the date from the filename. The first group in the regular expression is used to extract the year and the second group is used to extract the month.
 
-!!! question "Exercise 5: ingest SYNOP data in ASCII format"
+!!! question "Ingest FM-12 SYNOP data in ASCII format"
 
     Go back to the MinIO interface in your browse and navigate to the `wis2box-incoming` bucket and into the path where you uploaded the test data in the previous exercise.
     
@@ -193,7 +192,7 @@ You can use the file wis2box-ftp.env from the exercise-materials directory to de
 cp ~/exercise-materials/data-ingest-exercises/wis2box-ftp.env ~/wis2box-1.0b8/
 ```
 
-!!! question "Start the wis2box-ftp service"
+!!! question "Configuring and starting the wis2box-ftp service"
 
     Edit the file `wis2box-ftp.env` to define the required environment variables:
 
@@ -221,17 +220,44 @@ cp ~/exercise-materials/data-ingest-exercises/wis2box-ftp.env ~/wis2box-1.0b8/
     docker logs wis2box-ftp
     ```
 
-To test the wis2box-ftp service, you can use an ftp client to upload a file to the ftp-endpoint on your wis2box-instance. The credentials for the ftp-endpoint are defined in the `wis2box-ftp.env` file by the `FTP_USER` and `FTP_PASS` environment variables. If you did not edit the `wis2box-ftp.env` file, the default username is `wis2box` and the default password is `wis2box123`.
+To test the wis2box-ftp service, you can use an ftp client to upload a file to the ftp-endpoint on your wis2box-instance. The credentials for the ftp-endpoint are the ones you defined in the `wis2box-ftp.env` file by the `FTP_USER` and `FTP_PASS` environment variables.
 
-For example to connect to FTP using WinSCP, your connection would look like this:
+Using WinSCP, your connection would look like this:
 
-<img alt="winscp-ftp-connection" src="../../assets/img/winscp-ftp-connection.png" width="450">
+<img alt="winscp-ftp-connection" src="../../assets/img/winscp-ftp-connection.png" width="400">
 
-!!! Question "Upload a file using FTP"
+In WinSCP you can right-click and select *New*->*Directory* to create a new directory on the ftp-endpoint. 
 
-    Use an FTP client (such as WinSCP) to connect to the ftp-endpoint on your wis2box-instance.
+Uploading *randomfile.txt* to the directory *not-a-valid-path*:
 
-    Create a directory matching your dataset-id and upload a file to the directory.
+<img alt="FTP-not-a-valid-path" src="../../assets/img/FTP-not-a-valid-path.png" width="600">
+
+will result in the following message on the wis2box Grafana dashboard:
+
+*ERROR - Path validation error: Could not match http://minio:9000/wis2box-incoming/not-a-valid-path/randomfile.txt to dataset, path should include one of the following: ...*
+
+The file was forwarded by the wis2box-ftp service to the 'wis2box-incoming' bucket in MinIO, but the path did not match any of the dataset-ids defined in your wis2box instance, resulting in an error.
+
+You can try to same using `ftp` from the command line:
+
+```bash
+ftp username.wis2.training
+```
+Login using the credentials you defined in the `wis2box-ftp.env` for the `FTP_USER` and `FTP_PASS` environment variables, and then you can create a directory and upload a file as follows:
+
+```bash
+mkdir not-a-valid-path
+cd not-a-valid-path
+put ~/exercise-materials/data-ingest-exercises/synop.txt synop.txt
+```
+
+This will result a "Path validation error" in the Grafana dashboard indicating that the file was uploaded to MinIO.
+
+To exit the ftp client, type `exit`. 
+
+!!! Question "Test the wis2box-ftp service"
+
+    Try to ingest the file `synop.txt` into your wis2box-instance using the wis2box-ftp service to trigger the data ingest workflow.
 
     Check the MinIO user interface to see if the file was uploaded to the correct path in the `wis2box-incoming` bucket. If you don't see the file in MinIO you can check the logs of the wis2box-ftp service to see if there were any errors in the process forwarding the data to MinIO.
     

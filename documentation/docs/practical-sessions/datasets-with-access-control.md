@@ -97,7 +97,7 @@ From the command line in your student VM, use the `wget` command with the canoni
 wget <canonical-link>
 ```
 
-You should see a 403 Forbidden error.
+You should see that the HTTP request returns with *401 Unauthorized* and the data is not downloaded.
 
 Now add the access token to the HTTP headers to access the dataset.
 
@@ -105,7 +105,7 @@ Now add the access token to the HTTP headers to access the dataset.
 wget --header="Authorization: Bearer S3cr3tT0k3n" <canonical-link>
 ```
 
-You should see the data being downloaded.
+Now the data should be downloaded successfully.
 
 ## clean up
 
