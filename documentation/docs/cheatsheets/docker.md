@@ -6,37 +6,26 @@ title: Docker cheatsheet
 
 ## Overview
 
-Docker allows for creating virtual envronments in an isolated manner in support
+Docker allows for creating virtual environments in an isolated manner in support
 of virtualization of computing resources.  The basic concept behind Docker is containerization,
 where software can run as services, interacting with other software containers, for example.
 
 The typical Docker workflow involves creating and building **images**, which are then run as live **containers**.
+
+Docker is used to run the suite of services that make up wis2box using pre-built images.
 
 ### Image management
 
 * List available images
 
 ```bash
-docker images
+docker image ls
 ```
 
-* Build an image from a Dockerfile:
+* Update an image:
 
 ```bash
-cat << EOF > Dockerfile
-FROM ubuntu:latest
-
-RUN apt-get update
-RUN apt-get install –y nginx
-
-CMD ["echo", "Hello from my first Docker setup!"]
-EOF
-```
-
-* Building the image:
-
-```bash
-docker build -t my-image:local .
+docker pull my-image:latest
 ```
 
 * Removing an image:
@@ -51,12 +40,6 @@ docker rmi my-image:local
 
 ```bash
 docker volume ls
-```
-
-* Create a volume:
-
-```bash
-docker volume create my-volume
 ```
 
 * Display detailed information on a volume:
@@ -79,12 +62,6 @@ docker volume prune
 
 ### Container Management
 
-* Create a container from an image, with an interactive terminal (`-it`) and a mounted volume (`v`):
-
-```bash
-docker run -it -v ${pwd}:/app my-image:local
-```
-
 * Display a list of currently running containers:
 
 ```bash
@@ -95,12 +72,6 @@ docker ps
 
 ```bash
 docker ps -a
-```
-
-* Start a container:
-
-```bash
-docker start my-image:local  # starts a new container
 ```
 
 * Enter the interactive terminal of a running container:

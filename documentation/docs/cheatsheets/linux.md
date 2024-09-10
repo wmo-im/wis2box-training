@@ -79,6 +79,12 @@ touch foo.txt
 echo "hi there" > test-file.txt
 ```
 
+* View the contents of a file:
+
+```bash
+cat test-file.txt
+```
+
 * Copy a file:
 
 ```bash
