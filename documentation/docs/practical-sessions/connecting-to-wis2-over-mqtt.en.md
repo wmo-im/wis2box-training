@@ -19,7 +19,6 @@ WIS2 uses the MQTT protocol to advertise the availability of weather/climate/wat
 This is an example of the WIS2 notification message structure for a message received on the topic `origin/a/wis2/br-inmet/data/core/weather/surface-based-observations/synop`:	
 
 ```json
-
 {
   "id": "59f9b013-c4b3-410a-a52d-fff18f3f1b47",
   "type": "Feature",
@@ -58,9 +57,9 @@ This is an example of the WIS2 notification message structure for a message rece
 }
 ``` 
 
-In this practical session you will learn how to use the MQTT Explorer tool to setup an MQTT-client connection to a WIS2 Global Broker and be able to display WIS2 notification messages.
+In this practical session you will learn how to use the MQTT Explorer tool to setup an MQTT client connection to a WIS2 Global Broker and be able to display WIS2 notification messages.
 
-MQTT Explorer is a helpful tool to browse and review the topic structure for a given MQTT broker to review data being published.
+MQTT Explorer is a useful tool to browse and review the topic structure for a given MQTT broker to review data being published.
 
 Note that MQTT is primarily used for "machine-to-machine" communication; meaning that there would normally be a client automatically parsing the messages as they are received. To work with MQTT programmatically (for example, in Python), you can use MQTT client libraries such as [paho-mqtt](https://pypi.org/project/paho-mqtt) to connect to an MQTT broker and process incoming messages. There exist numerous MQTT client and server software, depending on your requirements and technical environment.
 
@@ -141,7 +140,7 @@ Disconnect from MQTT Explorer and update the 'Advanced' sections to change the s
 !!! note
     The `+` wildcard is used to subscribe to all WIS-centres.
 
-Re-connect to the Global Broker and wait for messages to appear. 
+Reconnect to the Global Broker and wait for messages to appear. 
 
 You can view the content of the WIS2 message in the "Value" section on the right hand side. Try to expand the topic structure to see the different levels of the message until you reach the last level and review message content of one of the messages.
 

@@ -8,7 +8,7 @@ title: Automating data ingestion
 
     By the end of this practical session, you will be able to:
     
-    - understand how the data-plugins of your dataset determine the data-ingest workflow
+    - understand how the data plugins of your dataset determine the data ingest workflow
     - ingest data into wis2box using a script using the MinIO Python client
     - ingest data into wis2box using the wis2box-ftp service
 
@@ -22,7 +22,7 @@ In the previous exercise you should have created a dataset using the template `s
 
 <img alt="data-mappings" src="../../assets/img/wis2box-data-mappings.png" width="800">
 
-When a file is uploaded to MinIO, the wis2box will match the file to a dataset when the filepath contains the dataset-id (metadata_id) and it will determine the data-plugins to use based on the file extension and file pattern defined in the dataset mappings.
+When a file is uploaded to MinIO, wis2box will match the file to a dataset when the filepath contains the dataset id (`metadata_id`) and it will determine the data plugins to use based on the file extension and file pattern defined in the dataset mappings.
 
 In the previous sessions, we triggered the data ingest workflow by using the wis2box command line functionality, which uploads data to the MinIO storage in the correct path.
 
@@ -42,14 +42,14 @@ python3 wis2box-ctl.py start
 python3 wis2box-ctl.py status
 ```
 
-Make sure your have MQTT Explorer running and connected to your instance. If you are still connected from the previous session, clear any previous messages you may have received from the queue.
-This can be done by either by disconnecting and reconnecting or by clicking the trash can for the topic.
+Make sure MQTT Explorer is running and connected to your instance. If you are still connected from the previous session, clear any previous messages you may have received from the queue.
+This can be done by either by disconnecting and reconnecting or by clicking the trash can icon for the given topic.
 
 Make sure you have a web browser open with the Grafana dashboard for your instance by going to `http://<your-host>:3000`
 
-And make sure you have a second tab open with the MinIO user interface at `http://<your-host>:9001`. Remember you need to login with the `WIS2BOX_STORAGE_USER` and `WIS2BOX_STORAGE_PASSWORD` defined in your `wis2box.env` file/
+And make sure you have a second tab open with the MinIO user interface at `http://<your-host>:9001`. Remember you need to login with the `WIS2BOX_STORAGE_USER` and `WIS2BOX_STORAGE_PASSWORD` defined in your `wis2box.env` file.
 
-## Exercise 1: setup a python script to ingest data into MinIO
+## Exercise 1: setup a Python script to ingest data into MinIO
 
 In this exercise we will use the MinIO Python client to copy data into MinIO.
 
@@ -61,7 +61,7 @@ pip3 install minio
 
 On your student VM the 'minio' package for Python will already be installed.
 
-Go to the directory `exercise-materials/data-ingest-exercises`, this directory contains a sample script `copy_file_to_incoming.py` that uses the MinIO Python client to copy a file into MinIO.
+Go to the directory `exercise-materials/data-ingest-exercises`; this directory contains a sample script `copy_file_to_incoming.py` that uses the MinIO Python client to copy a file into MinIO.
 
 Try to run the script to copy the sample data file `csv-aws-example.csv` into the `wis2box-incoming` bucket in MinIO" as follows:
 
@@ -184,9 +184,9 @@ The synop2bufr plugin relies on a file-pattern to extract the date from the file
 
 You can add an additional service that adds an ftp-endpoint on your wis2box-instance. This service will forward data uploaded via ftp to the MinIO storage service, preserving the directory structure of the uploaded data.
 
-To use the docker-compose.wis2box-ftp.yml template included in wis2box, you need to pass some additional environment variables to the wis2box-ftp service.
+To use the `docker-compose.wis2box-ftp.yml` template included in wis2box, you need to pass some additional environment variables to the wis2box-ftp service.
 
-You can use the file wis2box-ftp.env from the exercise-materials directory to define the required environment variables. Start by copying the file to the wis2box-1.0b8 directory:
+You can use the file `wis2box-ftp.env` file from the `exercise-materials/` directory to define the required environment variables. Start by copying the file to the `wis2box-1.0b8` directory:
 
 ```bash
 cp ~/exercise-materials/data-ingest-exercises/wis2box-ftp.env ~/wis2box-1.0b8/
@@ -222,11 +222,11 @@ cp ~/exercise-materials/data-ingest-exercises/wis2box-ftp.env ~/wis2box-1.0b8/
 
 To test the wis2box-ftp service, you can use an ftp client to upload a file to the ftp-endpoint on your wis2box-instance. The credentials for the ftp-endpoint are the ones you defined in the `wis2box-ftp.env` file by the `FTP_USER` and `FTP_PASS` environment variables.
 
-Using WinSCP, your connection would look like this:
+Using WinSCP, your connection would look as follows:
 
 <img alt="winscp-ftp-connection" src="../../assets/img/winscp-ftp-connection.png" width="400">
 
-In WinSCP you can right-click and select *New*->*Directory* to create a new directory on the ftp-endpoint. 
+In WinSCP, right-click and select *New*->*Directory* to create a new directory on the FTP endpoint. 
 
 Uploading *randomfile.txt* to the directory *not-a-valid-path*:
 
@@ -236,14 +236,14 @@ will result in the following message on the wis2box Grafana dashboard:
 
 *ERROR - Path validation error: Could not match http://minio:9000/wis2box-incoming/not-a-valid-path/randomfile.txt to dataset, path should include one of the following: ...*
 
-The file was forwarded by the wis2box-ftp service to the 'wis2box-incoming' bucket in MinIO, but the path did not match any of the dataset-ids defined in your wis2box instance, resulting in an error.
+The file was forwarded by the wis2box-ftp service to the 'wis2box-incoming' bucket in MinIO, but the path did not match any of the dataset identifiers defined in your wis2box instance, resulting in an error.
 
-You can try to same using `ftp` from the command line:
+You can also use `ftp` from the command line:
 
 ```bash
 ftp username.wis2.training
 ```
-Login using the credentials you defined in the `wis2box-ftp.env` for the `FTP_USER` and `FTP_PASS` environment variables, and then you can create a directory and upload a file as follows:
+Login using the credentials defined in `wis2box-ftp.env` for the `FTP_USER` and `FTP_PASS` environment variables, and then create a directory and upload a file as follows:
 
 ```bash
 mkdir not-a-valid-path
@@ -257,7 +257,7 @@ To exit the ftp client, type `exit`.
 
 !!! Question "Test the wis2box-ftp service"
 
-    Try to ingest the file `synop.txt` into your wis2box-instance using the wis2box-ftp service to trigger the data ingest workflow.
+    Try to ingest the file `synop.txt` into your wis2box instance using the wis2box-ftp service to trigger the data ingest workflow.
 
     Check the MinIO user interface to see if the file was uploaded to the correct path in the `wis2box-incoming` bucket. If you don't see the file in MinIO you can check the logs of the wis2box-ftp service to see if there were any errors in the process forwarding the data to MinIO.
     
@@ -271,5 +271,5 @@ The wis2box-ftp service will forward the data to the MinIO storage service, pres
     In this practical session, you learned how to:
 
     - trigger wis2box workflow using a Python script and the MinIO Python client
-    - use different data-plugins to ingest different data formats
+    - use different data plugins to ingest different data formats
     - forward data to wis2box using the wis2box-ftp service

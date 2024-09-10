@@ -16,7 +16,7 @@ title: Configuring station metadata
 
 For sharing data internationally between WMO Members, it is important to have a common understanding of the stations that are producing the data. The WMO Integrated Global Observing System (WIGOS) provides a framework for the integration of observing systems and data management systems. The **WIGOS Station Identifier (WSI)** is used as the unique reference of the station which produced a specific set of observation data.
 
-wis2box has a collection of station metadata that is used to describe the stations that are producing the observation data and should be retrieved from the **OSCAR/Surface** database. The station metadata in wis2box is used by the BUFR-transformation tools to check input data contains a WIGOS Station Identifier (WSI) and to provide a mapping between the WSI and the station metadata.
+wis2box has a collection of station metadata that is used to describe the stations that are producing the observation data and should be retrieved from **OSCAR/Surface**. The station metadata in wis2box is used by the BUFR transformation tools to check that input data contains a valid WIGOS Station Identifier (WSI) and to provide a mapping between the WSI and the station metadata.
 
 ## Create an authorization token for collections/stations
 
@@ -111,7 +111,7 @@ Repeat this process until you have at least 3 stations configured.
 
     For example, to get the elevation at latitude -6.15558 and longitude 106.84204, you can copy-paste the following URL in a new browser-tab:
 
-    ```copy
+    ```{.copy}
     https://api.opentopodata.org/v1/aster30m?locations=-6.15558,106.84204
     ```
 
@@ -153,7 +153,7 @@ You also have the option to view/update/delete the station in the **wis2box-weba
 
 ## Bulk station metadata upload
 
-Note that wis2box also has the ability to perform "bulk" loading of station metadata from a CSV file using the command-line in the **wis2box-management** container.
+Note that wis2box also has the ability to perform "bulk" loading of station metadata from a CSV file using the command line in the **wis2box-management** container.
 
 ```bash
 python3 wis2box-ctl.py login

@@ -14,15 +14,15 @@ title: Monitoring WIS2 Notifications
 
 ## Introduction
 
-The **Grafana dashboard** uses data from Prometheus and Loki to display the status of your wis2box. Prometheus store time-series data from the metrics collected, while Loki store the logs from the containers running on your wis2box-instance. This data allows you to check how much data is received on MinIO and how many WIS2 notifications are published, and if there are any errors detected in the logs.
+The **Grafana dashboard** uses data from Prometheus and Loki to display the status of your wis2box. Prometheus store time-series data from the metrics collected, while Loki store the logs from the containers running on your wis2box instance. This data allows you to check how much data is received on MinIO and how many WIS2 notifications are published, and if there are any errors detected in the logs.
 
-To see the content of the WIS2-notifications that are being published on different topics of your wis2box you can use the 'Monitor' tab in the **wis2box-webapp**.
+To see the content of the WIS2 notifications that are being published on different topics of your wis2box you can use the 'Monitor' tab in the **wis2box-webapp**.
 
 ## Preparation
 
 This section will use the "surface-based-observations/synop" dataset previously created in the [Configuring datasets in wis2box](/practical-sessions/configuring-wis2box-datasets) practical session. 
 
-Login to you student VM using your SSH client (PuTTY or other).
+Login to your student VM using your SSH client (PuTTY or other).
 
 Make sure wis2box is up and running:
 
@@ -42,7 +42,7 @@ Make sure you have a web browser open with the Grafana dashboard for your instan
 
 Please execute the following commands from your SSH-client session:
 
-Copy the sample data file `aws-example.csv` to the the directory you defined as the WI2BOX_HOST_DATADIR in your `wis2box.env` file.
+Copy the sample data file `aws-example.csv` to the the directory you defined as the `WI2BOX_HOST_DATADIR` in your `wis2box.env` file.
 
 ```bash
 cp ~/exercise-materials/monitoring-exercises/aws-example.csv ~/wis2box-data/
@@ -62,7 +62,7 @@ ls -lh /data/wis2box/aws-example.csv
 ```
 
 !!! note
-    The `WIS2BOX_HOST_DATADIR` is mounted as `/data/wis2box/` inside the wis2box-management container by the docker-compose.yml file included in the wis2box-1.0b8 directory.
+    The `WIS2BOX_HOST_DATADIR` is mounted as `/data/wis2box/` inside the wis2box-management container by the `docker-compose.yml` file included in the `wis2box-1.0b8` directory.
     
     This allows you to share data between the host and the container.
 
@@ -173,7 +173,7 @@ In the monitoring-tab select your dataset-id and click "UPDATE"
     To see the air-temperature measured for the station with WIGOS-identifier=0-20000-0-60355, click on the "INSPECT"-button next to the file for that station to open a pop-up window displaying the parsed content of the data file. The air-temperature measured at this station was 25.0 degrees Celsius.
 
 !!! Note
-    The wis2box-api container includes tools to parse BUFR files and display the content in a human-readable format. This is a not a core requirements for the WIS2.0 implementation, but was included in the wis2box to aid data-publishers in checking the content of the data they are publishing.
+    The wis2box-api container includes tools to parse BUFR files and display the content in a human-readable format. This is a not a core requirements for the WIS2.0 implementation, but was included in the wis2box to aid data publishers in checking the content of the data they are publishing.
 
 ## Conclusion
 

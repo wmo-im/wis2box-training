@@ -46,11 +46,11 @@ The wis2downloader-service started by the wis2box-stack can be configured using 
 
 The following environment variables are used by the wis2downloader:
 
-    - DOWNLOAD_BROKER_HOST: The hostname of the MQTT-broker to connect to. Defaults to globalbroker.meteo.fr
-    - DOWNLOAD_BROKER_PORT: The port of the MQTT-broker to connect to. Defaults to 443 (HTTPS for websockets)
-    - DOWNLOAD_BROKER_USERNAME: The username to use to connect to the MQTT-broker. Defaults to everyone
-    - DOWNLOAD_BROKER_PASSWORD: The password to use to connect to the MQTT-broker. Defaults to everyone
-    - DOWNLOAD_BROKER_TRANSPORT: websockets or tcp, the transport-mechanism to use to connect to the MQTT-broker. Defaults to websockets,
+    - DOWNLOAD_BROKER_HOST: The hostname of the MQTT broker to connect to. Defaults to globalbroker.meteo.fr
+    - DOWNLOAD_BROKER_PORT: The port of the MQTT broker to connect to. Defaults to 443 (HTTPS for websockets)
+    - DOWNLOAD_BROKER_USERNAME: The username to use to connect to the MQTT broker. Defaults to everyone
+    - DOWNLOAD_BROKER_PASSWORD: The password to use to connect to the MQTT broker. Defaults to everyone
+    - DOWNLOAD_BROKER_TRANSPORT: websockets or tcp, the transport-mechanism to use to connect to the MQTT broker. Defaults to websockets,
     - DOWNLOAD_RETENTION_PERIOD_HOURS: The retention period in hours for the downloaded data. Defaults to 24
     - DOWNLOAD_WORKERS: The number of download workers to use. Defaults to 8. Determines the number of parallel downloads.
     - DOWNLOAD_MIN_FREE_SPACE_GB: The minimum free space in GB to keep on the volume hosting the downloads. Defaults to 1.
@@ -63,13 +63,13 @@ cat ~/wis2box-1.0b8/wis2box.env | grep DOWNLOAD
 
 !!! question "Review the configuration of the wis2downloader"
     
-    What is the default MQTT-broker that the wis2downloader connects to?
+    What is the default MQTT broker that the wis2downloader connects to?
 
     What is the default retention period for the downloaded data?
 
 ??? success "Click to reveal answer"
 
-    The default MQTT-broker that the wis2downloader connects to is `globalbroker.meteo.fr`.
+    The default MQTT broker that the wis2downloader connects to is `globalbroker.meteo.fr`.
 
     The default retention period for the downloaded data is 24 hours.
 
@@ -134,6 +134,14 @@ wis2downloader remove-subscription --topic cache/a/wis2/de-dwd-gts-to-wis2/#
 ```
 
 Check the wis2downloader dashboard in Grafana to see the subscription removed. You should see the downloads stopping.
+
+!!! More command line tools
+
+    The following tools can also be used to discover and access data from WIS2:
+
+    - [pywiscat](https://github.com/wmo-im/pywiscat) provides search capability atop the WIS2 Global Discovery Catalogue in support of reporting and analysis of the WIS2 Catalogue and its associated discovery metadata
+    - [pywis-pubsub](https://github.com/wmo-im/pywis-pubsub) provides subscription and download capability of WMO data from WIS2 infrastructure services
+
 
 ## Conclusion
 

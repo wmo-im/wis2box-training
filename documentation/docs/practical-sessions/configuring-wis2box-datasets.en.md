@@ -15,9 +15,9 @@ title: Configuring datasets in wis2box
 
 ## Introduction
 
-The wis2box uses datasets that are associated with discovery metadata and data mappings.
+wis2box uses datasets that are associated with discovery metadata and data mappings.
 
-The discovery metadata is used to create a WCMP2 (WMO Core Metadata Profile 2) record that is shared using a WIS2 notification published on your wis2box-broker.
+Discovery metadata is used to create a WCMP2 (WMO Core Metadata Profile 2) record that is shared using a WIS2 notification published on your wis2box-broker.
 
 The data mappings are used to associate a data plugin to your input data, allowing your data to be transformed prior to being published using the WIS2 notification.
 
@@ -89,7 +89,7 @@ A pop-up window will appear, asking you to provide:
 
 !!! Note
 
-    Your centre-id should start with the ccTLD of your country, followed by a - and an abbreviated name of your organization, for example fr-meteofrance. The centre-id has to be lowercase and use alphanumeric characters only. The dropdown list shows all currently registered centre-ids on WIS2 as well as any centre-id you have already created in wis2box.
+    Your centre-id should start with the TLD of your country, followed by a dash (`-`) and an abbreviated name of your organization (for example `fr-meteofrance`). The centre-id must be lowercase and use alphanumeric characters only. The dropdown list shows all currently registered centre-ids on WIS2 as well as any centre-id you have already created in wis2box.
 
 Please choose a centre-id appropriate for your organization.
 
@@ -159,7 +159,7 @@ After you click 'OK', you are redirected to the Dataset Editor home page. Now if
 
 ## Reviewing the WIS2-notification for your discovery metadata
 
-Go to MQTT-explorer, if you were connected to the broker, you should see a new WIS2 notification published on the topic `origin/a/wis2/<your-centre-id>/metadata`:
+Go to MQTT Explorer, if you were connected to the broker, you should see a new WIS2 notification published on the topic `origin/a/wis2/<your-centre-id>/metadata`:
 
 <img alt="MQTT Explorer: WIS2 notification" src="../../assets/img/mqtt-explorer-wis2-notification-metadata.png" width="800">
 

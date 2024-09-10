@@ -12,7 +12,7 @@ where software can run as services, interacting with other software containers, 
 
 The typical Docker workflow involves creating and building **images**, which are then run as live **containers**.
 
-When running the wis2box software, Docker is used to run the suite of services that make up the WIS2 software using pre-built images.
+Docker is used to run the suite of services that make up wis2box using pre-built images.
 
 ### Image management
 

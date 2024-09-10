@@ -17,7 +17,7 @@ title: Working with BUFR data
 
 ## Introduction
 
-The plugins that produces notifications with BUFR-data use processes in the wis2box-api to work with BUFR data, for example to transform the data from CSV to BUFR or from BUFR to geojson.
+The plugins that produces notifications with BUFR data use processes in the wis2box-api to work with BUFR data, for example to transform the data from CSV to BUFR or from BUFR to geojson.
 
 The wis2box-api container includes a number of tools to work with BUFR data.
 

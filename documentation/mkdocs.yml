@@ -49,6 +49,22 @@ theme:
 plugins:
     - search
     - table-reader
+    - i18n:
+        docs_structure: suffix
+        languages:
+          - locale: en
+            default: true
+            name: English
+            build: true
+          - locale: es
+            name: Español
+            build: true
+          - locale: fr
+            name: Français
+            build: true
+          - locale: ru
+            name: Русский
+            build: true
     - print-site
 
 markdown_extensions:
@@ -63,21 +79,3 @@ markdown_extensions:
 
 extra_css:
     - assets/css/custom.css
-
-plugins:
-  - i18n:
-      docs_structure: suffix
-      languages:
-        - locale: en
-          default: true
-          name: English
-          build: true
-        - locale: es
-          name: Español
-          build: true
-        - locale: fr
-          name: Français
-          build: true
-        - locale: ru
-          name: Русский
-          build: true

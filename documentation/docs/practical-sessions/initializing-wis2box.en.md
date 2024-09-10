@@ -389,7 +389,7 @@ You should now see the file in the `wis2box-incoming` bucket:
 
 !!! question
 
-    Did you see a message published on your MQTT-broker in MQTT Explorer?
+    Did you see a message published on your MQTT broker in MQTT Explorer?
 
 ??? success "Click to reveal answer"
 
@@ -430,7 +430,7 @@ This is the Grafana UI, where you can view the wis2box workflow monitoring dashb
 
     - run the `wis2box-create-config.py` script to create the initial configuration
     - start wis2box and check the status of its components
-    - connect to the MQTT-broker on your student-VM using MQTT Explorer
+    - connect to the MQTT broker on your student-VM using MQTT Explorer
     - access the wis2box-UI, wis2box-webapp and wis2box-API in a browser
     - upload a file to the "wis2box-incoming"-bucket in the MinIO UI
     - view the Grafana dashboard to monitor the wis2box workflow

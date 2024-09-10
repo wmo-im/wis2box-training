@@ -88,7 +88,7 @@ Ensure the station is associated with the topic you selected in the previous ste
     
     The BUFR file can also be inspected by downloading the file and validating using a tool such as as the ECMWF ecCodes BUFR validator.
 
-Go to MQTT explorer and check the WIS2 notifications topic to see the WIS2 notifications that have been published.
+Go to MQTT Explorer and check the WIS2 notifications topic to see the WIS2 notifications that have been published.
 
 ### Exercise 2 - understanding the station list
 
