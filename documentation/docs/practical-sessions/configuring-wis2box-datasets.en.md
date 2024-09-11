@@ -101,7 +101,7 @@ For **Data Type**, select **weather/surface-based-observations/synop**:
 
     For the purpose of the training we will use the **weather/surface-based-observations/synop** data type which includes data plugins that ensure the data is transformed into BUFR format before being published.
 
-    Another example of a template is **weather/advisories-warnings** for publishing CAP alerts to a wis2box. This template includes a data plugin that verifies the input data is a valid CAP alert before publishing. For more information about connecting wis2box to CAP Composer see [here](https://docs.wis2box.wis.wmo.int/en/latest/user/cap-alerts.html).
+    If you want to publish CAP alerts using wis2box, use the template **weather/advisories-warnings**. This template includes a data plugin that verifies the input data is a valid CAP alert before publishing. For more information about connecting wis2box to CAP Composer see [Connecting wis2box and CAP Composer](https://docs.wis2box.wis.wmo.int/en/latest/user/cap-alerts.html).
 
 <img alt="Create New Dataset Form: Initial information" src="../../assets/img/wis2box-create-new-dataset-form-initial.png" width="450">
 
