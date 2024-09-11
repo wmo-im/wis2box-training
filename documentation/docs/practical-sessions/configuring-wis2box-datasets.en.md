@@ -97,7 +97,7 @@ For **Data Type**, select **weather/surface-based-observations/synop**:
 
 !!! Note "Data Type Templates"
 
-    There are multiple templates available in the wis2box-webapp dataset editor. A template will pre-populate the form with suggested default values appropriate for the data type. This includes suggested title and keywords for the metadata and pre-configured data mappings. The topic will be fixed to the default topic for the data type.
+    There are multiple templates available in the wis2box-webapp dataset editor. A template will pre-populate the form with suggested default values appropriate for the data type. This includes suggested title and keywords for the metadata and pre-configured data plugins. The topic will be fixed to the default topic for the data type.
 
     For the purpose of the training we will use the **weather/surface-based-observations/synop** data type which includes data plugins that ensure the data is transformed into BUFR format before being published.
 
