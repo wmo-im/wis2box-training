@@ -95,6 +95,14 @@ Please choose a centre-id appropriate for your organization.
 
 For **Data Type**, select **weather/surface-based-observations/synop**:
 
+!!! Note
+
+    There are multiple templates available in the wis2box-webapp dataset editor. A template will pre-populate the form with suggested default values appropriate for the data type. This includes suggested title and keywords for the metadata and pre-configured data mappings. The topic will be fixed to the default topic for the data type.
+
+    For the purpose of the training we will use the **weather/surface-based-observations/synop** data type which includes data plugins that ensure the data is transformed into BUFR format before being published.
+
+    Another example of a template is **weather/advisories-warnings** for publishing CAP alerts to a wis2box. This template includes a data plugin that verifies the input data is a valid CAP alert before publishing. For more information about connecting wis2box to CAP Composer see [here](https://docs.wis2box.wis.wmo.int/en/latest/user/cap-alerts.html).
+
 <img alt="Create New Dataset Form: Initial information" src="../../assets/img/wis2box-create-new-dataset-form-initial.png" width="450">
 
 Click *continue to form* to proceed, you will now be presented with the **Dataset Editor Form**.
