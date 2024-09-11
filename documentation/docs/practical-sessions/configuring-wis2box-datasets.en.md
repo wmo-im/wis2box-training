@@ -91,17 +91,17 @@ A pop-up window will appear, asking you to provide:
 
     Your centre-id should start with the TLD of your country, followed by a dash (`-`) and an abbreviated name of your organization (for example `fr-meteofrance`). The centre-id must be lowercase and use alphanumeric characters only. The dropdown list shows all currently registered centre-ids on WIS2 as well as any centre-id you have already created in wis2box.
 
+!!! Note "Data Type Templates"
+
+    The *Data Type* field allows you to select from a list of templates available in the wis2box-webapp dataset editor. A template will pre-populate the form with suggested default values appropriate for the data type. This includes suggested title and keywords for the metadata and pre-configured data plugins. The topic will be fixed to the default topic for the data type.
+
+    For the purpose of the training we will use the *weather/surface-based-observations/synop* data type which includes data plugins that ensure the data is transformed into BUFR format before being published.
+
+    If you want to publish CAP alerts using wis2box, use the template *weather/advisories-warnings*. This template includes a data plugin that verifies the input data is a valid CAP alert before publishing. To create CAP alerts and publish them via wis2box you can use [CAP Composer](https://github.com/wmo-raf/cap-composer).
+
 Please choose a centre-id appropriate for your organization.
 
 For **Data Type**, select **weather/surface-based-observations/synop**:
-
-!!! Note "Data Type Templates"
-
-    There are multiple templates available in the wis2box-webapp dataset editor. A template will pre-populate the form with suggested default values appropriate for the data type. This includes suggested title and keywords for the metadata and pre-configured data plugins. The topic will be fixed to the default topic for the data type.
-
-    For the purpose of the training we will use the **weather/surface-based-observations/synop** data type which includes data plugins that ensure the data is transformed into BUFR format before being published.
-
-    If you want to publish CAP alerts using wis2box, use the template **weather/advisories-warnings**. This template includes a data plugin that verifies the input data is a valid CAP alert before publishing. To create CAP alerts and publish them via wis2box you can use [CAP Composer](https://github.com/wmo-raf/cap-composer).
 
 <img alt="Create New Dataset Form: Initial information" src="../../assets/img/wis2box-create-new-dataset-form-initial.png" width="450">
 
