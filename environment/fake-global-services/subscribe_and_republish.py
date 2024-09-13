@@ -11,22 +11,32 @@ import threading
 import urllib3
 import uuid
 
+# use dotenv to load environment variables
+from dotenv import load_dotenv
+load_dotenv()
+
 logging.basicConfig(level=logging.DEBUG)
 LOGGER = logging.getLogger(__name__)
 
 tictoc = 0
 nworkers = 4
 
-# MinIO bucket for saving data to
-MINIO_BUCKET = os.getenv("MINIO_BUCKET")
+# MinIO storage for saving data to
+MINIO_HOST = os.getenv("MINIO_HOST")
 MINIO_KEY = os.getenv('MINIO_KEY')
 MINIO_SECRET = os.getenv('MINIO_SECRET')
 # Fake global cache url
-GC_URL = os.getenv('FAKE_GC_URL')
+GC_URL = os.getenv('GC_URL')
 # Fake global broker
-GB_HOST = os.getenv('FAKE_GB_HOST')
-GB_UID = os.getenv('FAKE_GB_USER')
-GB_PWD = os.getenv('FAKE_GB_PASSWORD')
+GB_HOST = os.getenv('GB_HOST')
+GB_UID = os.getenv('GB_UID')
+GB_PWD = os.getenv('GB_PWD')
+
+print(f"MINIO_HOST={MINIO_HOST}")
+print(f"MINIO_KEY={MINIO_KEY}")
+print(f"GC_URL={GC_URL}")
+print(f"GB_HOST={GB_HOST}")
+print(f"GB_UID={GB_UID}")
 
 def on_connect(client, userdata, flags, rc):
     client.subscribe("origin/a/wis2/#")
@@ -34,6 +44,27 @@ def on_connect(client, userdata, flags, rc):
 def on_message(client, userdata, msg):
     payload = json.loads(msg.payload)
     print(json.dumps(payload, indent=4))
+    # if topic contains metadata or data, republish on original topic, else do nothing
+    if 'metadata' in msg.topic:
+        print("Republishing metadata")
+    elif 'data' in msg.topic:
+        print("Republishing data")
+    else:
+        print(f"Not republishing data with topic {msg.topic}")
+        return
+    pub.single(
+        topic = msg.topic,
+        payload = json.dumps(payload),
+        hostname = GB_HOST,
+        auth={"username": GB_UID, "password": GB_PWD}
+    )
+    # if topic contains data/core or metadata, download to cache
+    if 'data/core' in msg.topic:
+        print("Downloading core data")
+    elif 'metadata' in msg.topic:
+        print("Downloading metadata")
+    else:
+        print(f"Not downloading data with topic {msg.topic}")
     # download and save to data dir
     canonical = None
     canonical_idx = None
@@ -124,20 +155,22 @@ def subscribe(**kwargs):
     try:
         client.connect(host=host, port=port)
     except Exception as e:
-        LOGGER.error(e)
-
+        msg = f'failed to connect to host={host}'
+        LOGGER.error(msg)
+        return
+    print(f"Connected to host={host}")
     with open(f"{host}.log", "w") as fh:
         fh.write("connected")
 
     try:
         client.loop_forever()
     except Exception as e:
+        msg = f'failed to run loop_forever on host={host}'
         LOGGER.error(e)
-
 
 # Load configurations
 idx = 0
-with open("brokers.json") as fh:
+with open("wis2nodes.json") as fh:
     brokers = json.load(fh)
 
     # set up clients
