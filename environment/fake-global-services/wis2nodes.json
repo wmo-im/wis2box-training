@@ -1,0 +1,6 @@
+[
+    {"host": "haddouch.wis2.training", "port": 1883, "pwd": "everyone", "uid": "everyone", "protocol": "tcp"},
+    {"host": "mlimper.wis2.training", "port": 1883, "pwd": "everyone", "uid": "everyone", "protocol": "tcp"},
+    {"host": "dberry.wis2.training", "port": 1883, "pwd": "everyone", "uid": "everyone", "protocol": "tcp"},
+    {"host": "tkralidis.wis2.training", "port": 1883, "pwd": "everyone", "uid": "everyone", "protocol": "tcp"}
+]
