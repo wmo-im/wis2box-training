@@ -43,7 +43,7 @@ Open a browser and open a page to `http://<your-host>/wis2box-webapp`. Make sure
 
 See the section on [Initializing wis2box](/practical-sessions/initializing-wis2box) if you need to remember how to connect to the broker or access the wis2box-webapp.
 
-## Create an authorization token for collections/stations
+## Create an authorization token for processes/wis2box
 
 You will need an authorization token for the 'processes/wis2box' endpoint to publish your dataset. 
 
