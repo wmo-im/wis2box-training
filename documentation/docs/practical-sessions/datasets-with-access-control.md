@@ -52,12 +52,12 @@ Login to the wis2box-management container,
 docker exec -it wis2box-management bash
 ```
 
-From command line inside the container you can secure a dataset using the `wis2box auth add-token` command, using the flag `--mdi` to specify the metadata-identifier of the dataset and the access token as an argument.
+From command line inside the container you can secure a dataset using the `wis2box auth add-token` command, using the flag `-mdi` to specify the metadata-identifier of the dataset and the access token as an argument.
 
-For example, to add the access token `S3cr3tT0k3n` to the dataset with metadata-identifier `urn:md:wmo:mydataset`:	
+For example, to add the access token `S3cr3tT0k3n` to the dataset with metadata-identifier `urn:wmo:md:not-my-centre:core.surface-based-observations.synop`:	
 
 ```bash
-wis2box auth add-token --mdi urn:md:wmo:mydataset S3cr3tT0k3n
+wis2box auth add-token -mdi urn:wmo:md:not-my-centre:core.surface-based-observations.synop S3cr3tT0k3n
 ```
 
 ## publish some data to the dataset
@@ -78,7 +78,7 @@ python3 wis2box-ctl.py login
 From the wis2box command line we can ingest the sample data file `aws-example2.csv` into a specific dataset as follows:
 
 ```bash
-wis2box data ingest -p /data/wis2box/aws-example2.csv--metadata-id urn:md:wmo:mydataset
+wis2box data ingest -p /data/wis2box/aws-example2.csv --metadata-id urn:wmo:md:not-my-centre:core.surface-based-observations.synop
 ```
 
 Make sure to provide the correct metadata-identifier for your dataset and check that you receive WIS2 data-notifications in MQTT Explorer.
