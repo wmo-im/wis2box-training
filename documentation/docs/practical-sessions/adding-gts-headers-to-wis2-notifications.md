@@ -60,11 +60,10 @@ Copy the file `exercise-materials/gts-headers-exercises/gts_headers_mapping.csv`
 cp ~/exercise-materials/gts-headers-exercises/gts_headers_mapping.csv ~/wis2box-data
 ```
 
-Then restart wis2box to apply the changes:
+Then restart the wis2box-management container to apply the changes:
 
 ```bash
-cd ~/wis2box-1.0b8
-python3 wis2box-ctl.py restart
+docker restart wis2box-management
 ```
 
 ## Exercise 2: Ingesting data with GTS headers
