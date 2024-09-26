@@ -72,9 +72,23 @@ Open the file you downloaded in an editor and inspect the content:
     failure or the parameter not being observed. In these cases missing data can be encoded
     as per the above answer, the other data in the report remain valid.
 
-### Uploading the data to MinIO
+### Upload the data to MinIO and check the result
 
 Navigate to the MinIO UI and log in using the credentials from the `wis2box.env` file.
+
+Create a new folder in the MinIO bucket that matches the dataset-id for the dataset you created with the template='weather/surface-weather-observations/synop':
+
+<center><img alt="Image showing MinIO UI with the create folder button highlighted" src="../../assets/img/minio-create-folder.png"/></center>
+
+Upload the example file you downloaded to the folder you created in the MinIO bucket:
+
+<center><img alt="Image showing MinIO UI with the upload button highlighted" src="../../assets/img/minio-upload.png"/></center>
+
+Check the Grafana dashboard to see if there are any WARNINGS or ERRORS. If you see any, try to fix them and repeat the exercise.
+
+Check the MQTT Explorer to see if the data has been published to the broker.
+
+Check the Monitoring page in the wis2box web-application to see if you can find the notification you have just published. Try to 'Inspect' the notification to see the content of the BUFR data.
 
 ## Exercise 2 - Using the 'DayCLI' template
 
@@ -102,6 +116,8 @@ Open the file you downloaded in an editor and inspect the content:
 ??? success "Click to reveal answer"
     The daycli template includes fields for the maximum and minimum temperature, the precipitation 
     and the snow depth.
+
+
 
 ## Exercise 3 - uploading and converting the data using the CSV-form in wis2box-webapp (optional)
 
