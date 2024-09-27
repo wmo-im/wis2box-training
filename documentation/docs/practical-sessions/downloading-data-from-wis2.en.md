@@ -20,6 +20,13 @@ In this session you will learn how to setup a subscription to a WIS2 Broker and 
 
      If you like to develop your own service for subscribing to WIS2 notifications and downloading data, you can use the [wis2downloader source code](https://github.com/wmo-im/wis2downloader) as a reference.
 
+!!! Other tools for accessing WIS2 data
+
+    The following tools can also be used to discover and access data from WIS2:
+
+    - [pywiscat](https://github.com/wmo-im/pywiscat) provides search capability atop the WIS2 Global Discovery Catalogue in support of reporting and analysis of the WIS2 Catalogue and its associated discovery metadata
+    - [pywis-pubsub](https://github.com/wmo-im/pywis-pubsub) provides subscription and download capability of WMO data from WIS2 infrastructure services
+
 ## Preparation
 
 Before starting please login to your student VM and ensure your wis2box instance is up and running.
@@ -135,12 +142,89 @@ wis2downloader remove-subscription --topic cache/a/wis2/de-dwd-gts-to-wis2/#
 
 Check the wis2downloader dashboard in Grafana to see the subscription removed. You should see the downloads stopping.
 
-!!! More command line tools
+## Exercise 6: subscribe to the wis2training-broker and setup a new subscription
 
-    The following tools can also be used to discover and access data from WIS2:
+For the next exercise we will subscribe to the wis2training-broker.
 
-    - [pywiscat](https://github.com/wmo-im/pywiscat) provides search capability atop the WIS2 Global Discovery Catalogue in support of reporting and analysis of the WIS2 Catalogue and its associated discovery metadata
-    - [pywis-pubsub](https://github.com/wmo-im/pywis-pubsub) provides subscription and download capability of WMO data from WIS2 infrastructure services
+This demonstrates how to subscribe to a broker that is not the default broker and will allow you to download some data published from the WIS2 Training Broker.
+
+Edit the wis2box.env file and change the DOWNLOAD_BROKER_HOST to `wis2training-broker.wis2dev.io`.
+
+```copy
+DOWNLOAD_BROKER_HOST=wis2training-broker.wis2dev.io
+```
+
+Then restart the wis2downloader service to apply the changes:
+
+```bash
+python3 wis2box-ctl.py restart wis2downloader
+```
+
+Check the logs of the wis2downloader to see if the connection to the new broker was successful:
+
+```bash
+docker logs wis2downloader
+```
+
+You should see the following log message:
+
+```copy
+...
+INFO - Connecting...
+INFO - Host: wis2training-broker.wis2dev.io, port: 1883
+INFO - Connected successfully
+```
+
+Now we will setup a new subscription to the topic to downloaded cyclone-track data from the WIS2 Training Broker.
+
+Login to the **wis2downloader** container:
+
+```bash
+python3 wis2box-ctl.py login wis2downloader
+```
+
+Then add the subscription to the topic `origin/a/wis2/int-wis2-training/data/core/weather/prediction/forecast/medium-range/deterministic/trajectory`:
+
+```bash
+wis2downloader add-subscription --topic origin/a/wis2/int-wis2-training/data/core/weather/prediction/forecast/medium-range/deterministic/trajectory
+```
+
+Exit the **wis2downloader** container by typing `exit`.
+
+Wait until you see the downloads starting in the wis2downloader dashboard in Grafana.
+
+!!! note "Downloading data from the WIS2 Training Broker"
+
+    The WIS2 Training Broker is a test broker that is used for training purposes and may not publish data all the time.
+
+    During the in-person training sessions, the local training will publish data to the WIS2 Training Broker for you to download.
+
+    If you are doing this exercise outside of a training session, you may not see any data being downloaded.
+
+Check that the data was downloaded by listing the contents of the downloads directory:
+
+```bash
+ls -R ~/wis2box-data/downloads
+```
+
+## Exercise 7: decoded the downloaded data
+
+In order to demonstrate how you can decode the downloaded data, we will start a new container using 'decode-bufr-jupyter' image.
+
+This container will be start Jupiter notebook server on your instance that include the eccodes library that you can use to decode the downloaded data.
+
+We will the example notebooks included in `~/exercise-materials/notebook-examples` to decode the downloaded data for the cyclone tracks.
+
+To start the container, use the following command:
+
+```bash
+docker run -d --name decode-bufr-jupyter -v ~/wis2box-data/downloads:/root/downloads \
+    -v ~/exercise-materials/notebook-examples:/root/notebooks \
+    -p 8888:8888 \
+    mlimper/decode-bufr-jupyter
+```
+
+Then open a web browser and navigate to `http://<your-host>:8888` to access the Jupyter notebook server.
 
 
 ## Conclusion
