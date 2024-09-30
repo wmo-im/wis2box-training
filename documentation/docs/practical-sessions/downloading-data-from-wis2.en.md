@@ -221,8 +221,20 @@ To start the container, use the following command:
 docker run -d --name decode-bufr-jupyter -v ~/wis2box-data/downloads:/root/downloads \
     -v ~/exercise-materials/notebook-examples:/root/notebooks \
     -p 8888:8888 \
+    -e JUPYTER_TOKEN=dataismagic! \
     mlimper/decode-bufr-jupyter
 ```
+
+!!! note "About the decode-bufr-jupyter container"
+
+    The `decode-bufr-jupyter` container is a custom container that includes the eccodes library and Jupyter notebook server. The container is based on a image that includes the `eccodes` library for decoding BUFR data, along
+
+    The container is started with two volumes mounted:
+
+    - The `~/wis2box-data/downloads` directory is mounted to `/root/downloads` in the container. This is where the downloaded data is stored.
+    - The `~/exercise-materials/notebook-examples` directory is mounted to `/root/notebooks` in the container. This is where the example notebooks are stored.
+
+    The container is started with the Jupyter notebook server listening on port 8888 and the token `dataismagic!` is used to authenticate to the server.
 
 Then open a web browser and navigate to `http://<your-host>:8888` to access the Jupyter notebook server.
 
