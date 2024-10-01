@@ -39,13 +39,13 @@ Make sure that you have MQTT Explorer open and connected to your broker using th
 
 The 'AWS' template provides a predefined mapping template to convert CSV data from AWS stations in support of the GBON reporting requirements. 
 
-The full list of columns used in the AWS template is described in this file: [aws-full.csv](/assets/tables/aws-full.csv)
+The description of the AWS template can be found [here](/csv2bufr-templates/aws-template).
 
 ### Review the aws-example input data
 
 Download the example for this exercise from the link below:
 
-[csv2bufr-ex1.csv](/sample-data/aws-example.csv)
+[aws-example.csv](/sample-data/aws-example.csv)
 
 Open the file you downloaded in an editor and inspect the content:
 
@@ -72,41 +72,83 @@ Open the file you downloaded in an editor and inspect the content:
     failure or the parameter not being observed. In these cases missing data can be encoded
     as per the above answer, the other data in the report remain valid.
 
+!!! question
+    What are the WIGOS station identifiers for the stations reporting data in the example file? How is it defined in the input file?
+
+??? success "Click to reveal answer"
+
+    The WIGOS station identifier is defined by 4 separate columns in the file:
+
+    - **wsi_series**: WIGOS identifier series
+    - **wsi_issuer**: WIGOS issuer of identifier
+    - **wsi_issue_number**: WIGOS issue number
+    - **wsi_local**: WIGOS local identifier
+
+    The WIGOS station identifiers used in the example file are `0-20000-0-60351`, `0-20000-0-60355` and `0-20000-0-60360`.	
+
+### Update the example file
+
+Update the example file you downloaded to use today's date and time and change the WIGOS station identifiers to use stations you have registered in the wis2box-webapp.
+
 ### Upload the data to MinIO and check the result
 
 Navigate to the MinIO UI and log in using the credentials from the `wis2box.env` file.
 
+Navigate to the **wis2box-incoming** and click the button "Create new path":
+
+<img alt="Image showing MinIO UI with the create folder button highlighted" src="../../assets/img/minio-create-new-path.png"/>
+
 Create a new folder in the MinIO bucket that matches the dataset-id for the dataset you created with the template='weather/surface-weather-observations/synop':
 
-<center><img alt="Image showing MinIO UI with the create folder button highlighted" src="../../assets/img/minio-create-folder.png"/></center>
+<img alt="Image showing MinIO UI with the create folder button highlighted" src="../../assets/img/minio-create-new-path-metadata_id.png"/>
 
 Upload the example file you downloaded to the folder you created in the MinIO bucket:
 
-<center><img alt="Image showing MinIO UI with the upload button highlighted" src="../../assets/img/minio-upload.png"/></center>
+<img alt="Image showing MinIO UI with aws-example uploaded" src="../../assets/img/minio-upload-aws-example.png"/></center>
 
-Check the Grafana dashboard to see if there are any WARNINGS or ERRORS. If you see any, try to fix them and repeat the exercise.
+Check the Grafana dashboard at `http://<your-host>:3000` to see if there are any WARNINGS or ERRORS. If you see any, try to fix them and repeat the exercise.
 
-Check the MQTT Explorer to see if the data has been published to the broker.
+Check the MQTT Explorer to see if you receive WIS2 data-notifications.
 
-Check the Monitoring page in the wis2box web-application to see if you can find the notification you have just published. Try to 'Inspect' the notification to see the content of the BUFR data.
+Open the wis2box-webapp in a browser by going to `http://<your-host-name>/wis2box-webapp` and open the "Monitoring"-page using the left menu. 
+
+<img alt="Image showing monitoring tab in on the left menu" src="../../assets/img/csv2bufr-monitoring.png"/>
+
+Select the dataset you have been publishing on from the dropdown menu and click 'Update'. If you successfully ingested the data you should see 3 notifications for the stations you have just published:
+
+<img alt="Image showing notifications published over the last 24 hours" src="../../assets/img/monitoring-aws-template-success.png"/>
+
+You can click the 'INSPECT'-button for each notification to see the content of the BUFR data that was published.
 
 ## Exercise 2 - Using the 'DayCLI' template
 
 In the previous exercise we used the dataset you created with Data-type='weather/surface-weather-observations/synop', which has pre-configured the CSV to BUFR conversion template to the AWS template.
 
-In the next exercise we will use the 'DayCLI' template to convert daily climate data to BUFR. The table below lists the parameters included in the format:
+In the next exercise we will use the 'DayCLI' template to convert daily climate data to BUFR.
 
-{{ read_csv('docs/assets/tables/daycli-minimal.csv') }}
+The description of the DAYCLI template can be found [here](/docs/csv2bufr-templates/daycli-template).
 
 ### Creating a wis2box dataset of publishing DAYCLI messages
 
-Go to the dataset editor in the wis2box-webapp and create a new dataset. Use the same centre-id as in the previous practical sessions and use the template='climate/daily-climate-observations/daycli'.
+Go to the dataset editor in the wis2box-webapp and create a new dataset. Use the same centre-id as in the previous practical sessions and select **Data Type='climate/surface-based-observations/daily'**:
+
+<img alt="Create a new dataset in the wis2box-webapp for DAYCLI" src="../../assets/img/wis2box-webapp-create-dataset-daycli.png"/>
+
+Click "CONTINUE TO FORM" and add a description for your dataset, set the bounding box and provide the contact information for the dataset. Once you are done filling out all the sections, click 'VALIDATE FORM' and check the form.
+
+Review the data-plugins for the datasets. Click on "UPDATE" next to the plugin with name "CSV data converted to BUFR" and you will see the template is set to **DayCLI**:
+
+<img alt="Update the data plugin for the dataset to use the DAYCLI template" src="../../assets/img/wis2box-webapp-update-data-plugin-daycli.png"/>
+
+Close the plugin configuration and submit the form using the authentication token you created in the previous practical session.
+
+You should know have a second dataset in the wis2box-webapp that is configured to use the DAYCLI template for converting CSV data to BUFR.
 
 ### Review the daycli-example input data
 
 Download the example for this exercise from the link below:
 
-[daycli.csv](/sample-data/daycli-example.csv)
+[daycli-example.csv](/sample-data/daycli-example.csv)
 
 Open the file you downloaded in an editor and inspect the content:
 
@@ -117,9 +159,13 @@ Open the file you downloaded in an editor and inspect the content:
     The daycli template includes fields for the maximum and minimum temperature, the precipitation 
     and the snow depth.
 
+### Update the example file
 
+As before, you will need to update the example file you downloaded to use today's date and time and to change the WIGOS station identifiers to use stations you have registered in the wis2box-webapp.
 
-## Exercise 3 - uploading and converting the data using the CSV-form in wis2box-webapp (optional)
+### Upload the data to MinIO and check the result
+
+## Exercise 3 - using the CSV-form in wis2box-webapp (optional)
 
 The wis2box web-application provides an interface for uploading CSV data and converting it to BUFR before publishing it to the WIS2, using the AWS template.
 
@@ -157,9 +203,7 @@ Click inspect to view the data and confirm the values are as expected.
 
 <center><img alt="Image showing CSV to BUFR inspect output" src="../../assets/img/csv2bufr-inspect.png"/></center>
 
-As a final step navigate to the monitoring page from the left menu.
-
-<center><img alt="Image showing monitoring tab in on the left menu" src="../../assets/img/csv2bufr-monitoring.png"/></center>
+As a final step check the monitoring page in the wis2box-webapp.
 
 Select the dataset-id you have been publishing on from the dropdown menu and click update, you should see the message 
 you have just published (and possibly notifications from the synop2bufr session). An example screenshot is shown below:
@@ -218,17 +262,14 @@ Now upload the file and confirm whether you were correct.
     some common issues, such as the incorrect units (hPa vs Pa and C vs K) and missing columns. Care should be taken 
     that the units in the CSV data match those indicated above.
 
-!!! bug
-    Please note, due to a bug in the current version of the web-application you may need to reload the page before resubmitting
-    the data.
-
 ## Conclusion
 
 !!! success "Congratulations"
     In this practical session you have learned:
 
-    - how to format a CSV file for use with wis2box web-application
-    - and how to validate a sample CSV file and to correct for common issues.  
+    - about the csv2bufr converter in the wis2box
+    - how to use the AWS and DAYCLI templates to convert CSV data to BUFR
+    - and how to validate a sample CSV file using the csv2bufr form in the wis2box web-application
 
 !!! info "Next steps"
     The csv2bufr converter used in the wis2box has been designed to be configurable for use with any row based 
