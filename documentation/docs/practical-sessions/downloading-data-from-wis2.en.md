@@ -199,7 +199,7 @@ wis2downloader add-subscription --topic origin/a/wis2/int-wis2-training/data/cor
 
 Exit the **wis2downloader** container by typing `exit`.
 
-Wait until you see the downloads starting in the wis2downloader dashboard in Grafana.
+Wait until you see the downloads starting in the wis2downloader dashboard in Grafana. The training-instructor will push some data to the WIS2 Training Broker for you to download.
 
 !!! note "Downloading data from the WIS2 Training Broker"
 
