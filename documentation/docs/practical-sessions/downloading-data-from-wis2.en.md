@@ -162,10 +162,10 @@ DOWNLOAD_BROKER_PASSWORD=everyone
 DOWNLOAD_BROKER_TRANSPORT=tcp
 ```
 
-Then restart the wis2downloader service to apply the changes:
+Then restart the wis2box-stack to apply the changes:
 
 ```bash
-python3 wis2box-ctl.py restart wis2downloader
+python3 wis2box-ctl.py start
 ```
 
 Check the logs of the wis2downloader to see if the connection to the new broker was successful:
