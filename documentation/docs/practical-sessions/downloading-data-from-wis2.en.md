@@ -185,10 +185,10 @@ Login to the **wis2downloader** container:
 python3 wis2box-ctl.py login wis2downloader
 ```
 
-Then add the subscription to the topic `origin/a/wis2/int-wis2-training/data/core/weather/prediction/forecast/medium-range/deterministic/trajectory`:
+Then add the subscription to the topic `origin/a/wis2/int-wis2-training/data/core/weather/prediction/forecast/medium-range/probabilistic/trajectory`:
 
 ```bash
-wis2downloader add-subscription --topic origin/a/wis2/int-wis2-training/data/core/weather/prediction/forecast/medium-range/deterministic/trajectory
+wis2downloader add-subscription --topic origin/a/wis2/int-wis2-training/data/core/weather/prediction/forecast/medium-range/probabilistic/trajectory
 ```
 
 Exit the **wis2downloader** container by typing `exit`.
