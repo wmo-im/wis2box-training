@@ -209,10 +209,17 @@ Wait until you see the downloads starting in the wis2downloader dashboard in Gra
 
     If you are doing this exercise outside of a training session, you may not see any data being downloaded.
 
-Check that the data was downloaded by listing the contents of the downloads directory:
+Check that the data was downloaded by checking the wis2downloader logs again with:
 
 ```bash
-ls -R ~/wis2box-data/downloads
+docker logs wis2downloader
+```
+
+And you should see a log message similar to the following:
+
+```copy
+[...] INFO - Message received under topic origin/a/wis2/int-wis2-training/data/core/weather/prediction/forecast/medium-range/probabilistic/trajectory
+[...] INFO - Downloaded A_JSXX05ECEP020000_C_ECMP_...
 ```
 
 ## Exercise 7: decoding the downloaded data
