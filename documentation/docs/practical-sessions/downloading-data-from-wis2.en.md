@@ -150,10 +150,16 @@ For the next exercise we will subscribe to the wis2training-broker.
 
 This demonstrates how to subscribe to a broker that is not the default broker and will allow you to download some data published from the WIS2 Training Broker.
 
-Edit the wis2box.env file and change the DOWNLOAD_BROKER_HOST to `wis2training-broker.wis2dev.io`.
+Edit the wis2box.env file and change the DOWNLOAD_BROKER_HOST to `wis2training-broker.wis2dev.io`, change DOWNLOAD_BROKER_PORT to `1883` and change DOWNLOAD_BROKER_TRANSPORT to `tcp`:
 
 ```copy
+# downloader settings
 DOWNLOAD_BROKER_HOST=wis2training-broker.wis2dev.io
+DOWNLOAD_BROKER_PORT=1883
+DOWNLOAD_BROKER_USERNAME=everyone
+DOWNLOAD_BROKER_PASSWORD=everyone
+# download transport mechanism (tcp or websockets)
+DOWNLOAD_BROKER_TRANSPORT=tcp
 ```
 
 Then restart the wis2downloader service to apply the changes:
