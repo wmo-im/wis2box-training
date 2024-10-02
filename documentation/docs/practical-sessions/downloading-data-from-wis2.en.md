@@ -8,7 +8,9 @@ title: Downloading data from WIS2 notifications
 
     By the end of this practical session, you will be able to:
 
-    - use the "wis2downloader" to subscribe to WIS2 data notifications and download data to your local system.
+    - use the "wis2downloader" to subscribe to WIS2 data notifications and download data to your local system
+    - view the status of the downloads in the Grafana dashboard
+    - decode some downloaded data using the "decode-bufr-jupyter" container
 
 ## Introduction
 
@@ -207,7 +209,7 @@ Check that the data was downloaded by listing the contents of the downloads dire
 ls -R ~/wis2box-data/downloads
 ```
 
-## Exercise 7: decoded the downloaded data
+## Exercise 7: decoding the downloaded data
 
 In order to demonstrate how you can decode the downloaded data, we will start a new container using 'decode-bufr-jupyter' image.
 
@@ -218,8 +220,8 @@ We will the example notebooks included in `~/exercise-materials/notebook-example
 To start the container, use the following command:
 
 ```bash
-docker run -d --name decode-bufr-jupyter -v ~/wis2box-data/downloads:/root/downloads \
-    -v ~/exercise-materials/notebook-examples:/root/notebooks \
+docker run -d --name decode-bufr-jupyter \
+    -v ~/wis2box-data/downloads:/root/downloads \
     -p 8888:8888 \
     -e JUPYTER_TOKEN=dataismagic! \
     mlimper/decode-bufr-jupyter
@@ -227,16 +229,61 @@ docker run -d --name decode-bufr-jupyter -v ~/wis2box-data/downloads:/root/downl
 
 !!! note "About the decode-bufr-jupyter container"
 
-    The `decode-bufr-jupyter` container is a custom container that includes the eccodes library and Jupyter notebook server. The container is based on a image that includes the `eccodes` library for decoding BUFR data, along
+    The `decode-bufr-jupyter` container is a custom container that includes the eccodes library and Jupyter notebook server. The container is based on a image that includes the `eccodes` library for decoding BUFR data, along with libraries for plotting and data analysis.
 
-    The container is started with two volumes mounted:
+    The command above starts the container in detached mode, with the name `decode-bufr-jupyter`, the port 8888 is mapped to the host system and the environment variable `JUPYTER_TOKEN` is set to `dataismagic!`.
+    
+    The command above also mounts the `~/wis2box-data/downloads` directory to `/root/downloads` in the container. This ensures that the downloaded data is available to the Jupyter notebook server.
+    
+Once the container is started, you can access the Jupyter notebook server by navigating to `http://<your-host>:8888` in your web browser.
 
-    - The `~/wis2box-data/downloads` directory is mounted to `/root/downloads` in the container. This is where the downloaded data is stored.
-    - The `~/exercise-materials/notebook-examples` directory is mounted to `/root/notebooks` in the container. This is where the example notebooks are stored.
+You will see a screen requesting you to enter a "Password or token".
 
-    The container is started with the Jupyter notebook server listening on port 8888 and the token `dataismagic!` is used to authenticate to the server.
+Provide the token `dataismagic!` to login to the Jupyter notebook server.
 
-Then open a web browser and navigate to `http://<your-host>:8888` to access the Jupyter notebook server.
+After you login, you should see the following screen listing the directories in the container:
+
+![Jupyter notebook home](../assets/img/jupyter-files-screen1.png)
+
+Double click on the `example-notebooks` directory to open it.
+
+You should see the following screen listing the example notebooks, double click on the `tropical_cyclone_track.ipynb` notebook to open it:
+
+![Jupyter notebook example notebooks](../assets/img/jupyter-files-screen2.png)
+
+You should now be in the Jupyter notebook for decoding the tropical cyclone track data:
+
+![Jupyter notebook tropical cyclone track](../assets/img/jupyter-tropical-cyclone-track.png)
+
+Read the instructions in the notebook and run the cells to decode the downloaded data for the tropical cyclone tracks. Run each cell by clicking on the cell and then clicking the run button in the toolbar or by pressing `Shift+Enter`.
+
+At the end you should see a plot of the strike probability for the tropical cyclone tracks:
+
+![Tropical cyclone tracks](../assets/img/tropical-cyclone-track-map.png)
+
+!!! question 
+
+    The result displays the predicted probability of tropical storm track within 200 km. How would you update the notebook to display the predicted probability of tropical storm track within 300 km ?
+
+??? success "Click to reveal answer"
+
+    To update the notebook to display the predicted probability of tropical storm track within a different distance, you can update the `distance_threshold` variable in the code-block that calculates the strike probability.
+
+    To display the predicted probability of tropical storm track within 300 km, 
+
+    ```python
+    # set distance threshold (meters)
+    distance_threshold = 300000  # 300 km in meters
+    ```
+
+    Then re-run the cells in the notebook to see the updated plot.
+
+!!! note "Decoding BUFR data"
+
+    The exercise you just did provided one specific example of how you can decode BUFR data using the eccodes library. Different data types may require different decoding steps and you may need to refer to the documentation for the data type you are working with.
+    
+    For more information please consult the [ECCODES documentation](https://confluence.ecmwf.int/display/ECC).
+
 
 
 ## Conclusion
@@ -246,3 +293,5 @@ Then open a web browser and navigate to `http://<your-host>:8888` to access the 
     In this practical session, you learned how to:
 
     - use the 'wis2downloader' to subscribe to a WIS2 Broker and download data to your local system
+    - view the status of the downloads in the Grafana dashboard
+    - decode some downloaded data using the 'decode-bufr-jupyter' container
