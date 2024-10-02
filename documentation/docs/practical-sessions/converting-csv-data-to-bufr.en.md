@@ -110,15 +110,9 @@ Check the Grafana dashboard at `http://<your-host>:3000` to see if there are any
 
 Check the MQTT Explorer to see if you receive WIS2 data-notifications.
 
-Open the wis2box-webapp in a browser by going to `http://<your-host-name>/wis2box-webapp` and open the "Monitoring"-page using the left menu. 
+If you successfully ingested the data you should see 3 notifications in MQTT explorer on the topic `origin/a/wis2/<centre-id>/data/weather/surface-weather-observations/synop` for the 3 stations you reported data for:
 
-<img alt="Image showing monitoring tab in on the left menu" src="../../assets/img/csv2bufr-monitoring.png"/>
-
-Select the dataset you have been publishing on from the dropdown menu and click 'Update'. If you successfully ingested the data you should see 3 notifications for the stations you have just published:
-
-<img alt="Image showing notifications published over the last 24 hours" src="../../assets/img/monitoring-aws-template-success.png"/>
-
-You can click the 'INSPECT'-button for each notification to see the content of the BUFR data that was published.
+<img width="450" alt="Image showing MQTT explorer after uploading AWS" src="../../assets/img/mqtt-explorer-aws-upload.png"/>
 
 ## Exercise 2 - Using the 'DayCLI' template
 
@@ -161,9 +155,19 @@ Open the file you downloaded in an editor and inspect the content:
 
 ### Update the example file
 
-As before, you will need to update the example file you downloaded to use today's date and time and to change the WIGOS station identifiers to use stations you have registered in the wis2box-webapp.
+The example file contains one row of data for each day in a month, and reports data for one station. Update the example file you downloaded to use today's date and time and change the WIGOS station identifiers to use a station you have registered in the wis2box-webapp.
 
 ### Upload the data to MinIO and check the result
+
+As before, you will need to upload the data to the 'wis2box-incoming' bucket in MinIO to be processed by the csv2bufr converter. This time you will need to create a new folder in the MinIO bucket that matches the dataset-id for the dataset you created with the template='climate/surface-based-observations/daily' which will be different from the dataset-id you used in the previous exercise:
+
+<img alt="Image showing MinIO UI with DAYCLI-example uploaded" src="../../assets/img/minio-upload-daycli-example.png"/></center>
+
+After uploading the data check there are no WARNINGS or ERRORS in the Grafana dashboard and check the MQTT Explorer to see if you receive WIS2 data-notifications.
+
+If you successfully ingested the data you should see 30 notifications in MQTT explorer on the topic `origin/a/wis2/<centre-id>/data/climate/surface-based-observations/daily` for the 30 days in the month you reported data for:
+
+<img width="450" alt="Image showing MQTT explorer after uploading DAYCLI" src="../../assets/img/mqtt-daycli-template-success.png"/>
 
 ## Exercise 3 - using the CSV-form in wis2box-webapp (optional)
 
@@ -202,15 +206,6 @@ Clicking the down arrow tn the right of  ``Output BUFR files`` should reveal the
 Click inspect to view the data and confirm the values are as expected.
 
 <center><img alt="Image showing CSV to BUFR inspect output" src="../../assets/img/csv2bufr-inspect.png"/></center>
-
-As a final step check the monitoring page in the wis2box-webapp.
-
-Select the dataset-id you have been publishing on from the dropdown menu and click update, you should see the message 
-you have just published (and possibly notifications from the synop2bufr session). An example screenshot is shown below:
-
-<center><img alt="Image showing notifications published over the last 24 hours" src="../../assets/img/csv2bufr-monitoring2.png"/></center>
-
-You should also be able to see these notifications in MQTT Explorer.
 
 ### Debugging invalid input data
 
