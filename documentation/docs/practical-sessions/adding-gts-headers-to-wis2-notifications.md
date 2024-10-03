@@ -63,7 +63,7 @@ cp ~/exercise-materials/gts-headers-exercises/gts_headers_mapping.csv ~/wis2box-
 Then restart the wis2box-management container to apply the changes:
 
 ```bash
-docker restart wis2box-managment
+docker restart wis2box-management
 ```
 
 ## Exercise 2: Ingesting data with GTS headers

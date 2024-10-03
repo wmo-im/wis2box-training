@@ -31,6 +31,9 @@ nav:
         - Linux: cheatsheets/linux.md
         - Docker: cheatsheets/docker.md
         - WIS2 in a box: cheatsheets/wis2box.md
+    - csv2bufr templates:
+        - AWS hourly: csv2bufr-templates/aws-template.md
+        - DAYCLI: csv2bufr-templates/daycli-template.md
 
 strict: true
 
