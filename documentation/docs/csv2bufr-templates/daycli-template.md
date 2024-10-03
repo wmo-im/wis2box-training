@@ -17,6 +17,9 @@ This templates maps daily observations of:
 
 This template requires additional metadata with respect to the simplified AWS-template: method of calculating average temperature; sensor and station heights; exposure and measurement quality classification.
 
+!!! Note "About the DAYCLI template"
+    Please note that the DAYCLI BUFR sequence will be updated during 2025 to include additional information and revised QC flags. The DAYCLI template included the wis2box will be updated to reflect these changes. WMO will communicate when the wis2box-software is updated to include the new DAYCLI template, to allow users to update their systems accordingly.
+
 ## CSV columns and description
 
 {{ read_csv("docs/assets/tables/daycli-table.csv") }}

@@ -122,6 +122,9 @@ In the next exercise we will use the 'DayCLI' template to convert daily climate 
 
 The description of the DAYCLI template can be found [here](/docs/csv2bufr-templates/daycli-template).
 
+!!! Note "About the DAYCLI template"
+    Please note that the DAYCLI BUFR sequence will be updated during 2025 to include additional information and revised QC flags. The DAYCLI template included the wis2box will be updated to reflect these changes. WMO will communicate when the wis2box-software is updated to include the new DAYCLI template, to allow users to update their systems accordingly.
+
 ### Creating a wis2box dataset of publishing DAYCLI messages
 
 Go to the dataset editor in the wis2box-webapp and create a new dataset. Use the same centre-id as in the previous practical sessions and select **Data Type='climate/surface-based-observations/daily'**:
@@ -147,11 +150,10 @@ Download the example for this exercise from the link below:
 Open the file you downloaded in an editor and inspect the content:
 
 !!! question
-    What weather variables are included in the daycli template?
+    What additional variables are included in the daycli template?
 
 ??? success "Click to reveal answer"
-    The daycli template includes fields for the maximum and minimum temperature, the precipitation 
-    and the snow depth.
+    The daycli template includes important metadata on the instrument siting and measurement quality classifications for temperature and humidity, quality control flags and information on how the daily average temperature has been calculated.
 
 ### Update the example file
 
