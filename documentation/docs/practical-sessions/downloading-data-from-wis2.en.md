@@ -1,8 +1,8 @@
 ---
-title: Downloading data from WIS2 notifications
+title: Downloading and decoding data from WIS2
 ---
 
-# Downloading data from WIS2 notifications
+# Downloading and decoding data from WIS2
 
 !!! abstract "Learning outcomes!"
 
@@ -205,7 +205,7 @@ Wait until you see the downloads starting in the wis2downloader dashboard in Gra
 
     The WIS2 Training Broker is a test broker that is used for training purposes and may not publish data all the time.
 
-    During the in-person training sessions, the local training will publish data to the WIS2 Training Broker for you to download.
+    During the in-person training sessions, the local trainer will ensure the WIS2 Training Broker will publish data for you to download.
 
     If you are doing this exercise outside of a training session, you may not see any data being downloaded.
 
@@ -226,9 +226,9 @@ And you should see a log message similar to the following:
 
 In order to demonstrate how you can decode the downloaded data, we will start a new container using 'decode-bufr-jupyter' image.
 
-This container will be start Jupiter notebook server on your instance that include the eccodes library that you can use to decode the downloaded data.
+This container will be start Jupiter notebook server on your instance which includes the "ecCodes" library that you can use to decode BUFR data.
 
-We will the example notebooks included in `~/exercise-materials/notebook-examples` to decode the downloaded data for the cyclone tracks.
+We will use the example notebooks included in `~/exercise-materials/notebook-examples` to decode the downloaded data for the cyclone tracks.
 
 To start the container, use the following command:
 
@@ -242,7 +242,7 @@ docker run -d --name decode-bufr-jupyter \
 
 !!! note "About the decode-bufr-jupyter container"
 
-    The `decode-bufr-jupyter` container is a custom container that includes the eccodes library and Jupyter notebook server. The container is based on a image that includes the `eccodes` library for decoding BUFR data, along with libraries for plotting and data analysis.
+    The `decode-bufr-jupyter` container is a custom container that includes the ecCodes library and runs a Jupyter notebook server. The container is based on a image that includes the `ecCodes` library for decoding BUFR data, along with libraries for plotting and data analysis.
 
     The command above starts the container in detached mode, with the name `decode-bufr-jupyter`, the port 8888 is mapped to the host system and the environment variable `JUPYTER_TOKEN` is set to `dataismagic!`.
     
@@ -293,9 +293,9 @@ At the end you should see a plot of the strike probability for the tropical cycl
 
 !!! note "Decoding BUFR data"
 
-    The exercise you just did provided one specific example of how you can decode BUFR data using the eccodes library. Different data types may require different decoding steps and you may need to refer to the documentation for the data type you are working with.
+    The exercise you just did provided one specific example of how you can decode BUFR data using the ecCodes library. Different data types may require different decoding steps and you may need to refer to the documentation for the data type you are working with.
     
-    For more information please consult the [ECCODES documentation](https://confluence.ecmwf.int/display/ECC).
+    For more information please consult the [ecCodes documentation](https://confluence.ecmwf.int/display/ECC).
 
 
 
