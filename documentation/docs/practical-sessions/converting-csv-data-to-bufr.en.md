@@ -120,7 +120,7 @@ In the previous exercise we used the dataset you created with Data-type='weather
 
 In the next exercise we will use the 'DayCLI' template to convert daily climate data to BUFR.
 
-The description of the DAYCLI template can be found [here](/docs/csv2bufr-templates/daycli-template).
+The description of the DAYCLI template can be found [here](/csv2bufr-templates/daycli-template).
 
 !!! Note "About the DAYCLI template"
     Please note that the DAYCLI BUFR sequence will be updated during 2025 to include additional information and revised QC flags. The DAYCLI template included the wis2box will be updated to reflect these changes. WMO will communicate when the wis2box-software is updated to include the new DAYCLI template, to allow users to update their systems accordingly.
