@@ -191,7 +191,7 @@ Login to the **wis2downloader** container:
 python3 wis2box-ctl.py login wis2downloader
 ```
 
-Then add the subscription to the topic `origin/a/wis2/int-wis2-training/data/core/weather/prediction/forecast/medium-range/probabilistic/trajectory`:
+And execute the following command (copy-paste this to avoid typo's):
 
 ```bash
 wis2downloader add-subscription --topic origin/a/wis2/int-wis2-training/data/core/weather/prediction/forecast/medium-range/probabilistic/trajectory
@@ -199,7 +199,7 @@ wis2downloader add-subscription --topic origin/a/wis2/int-wis2-training/data/cor
 
 Exit the **wis2downloader** container by typing `exit`.
 
-Wait until you see the downloads starting in the wis2downloader dashboard in Grafana. The training-instructor will push some data to the WIS2 Training Broker for you to download.
+Wait until you see the downloads starting in the wis2downloader dashboard in Grafana.
 
 !!! note "Downloading data from the WIS2 Training Broker"
 
@@ -215,7 +215,7 @@ Check that the data was downloaded by checking the wis2downloader logs again wit
 docker logs wis2downloader
 ```
 
-And you should see a log message similar to the following:
+You should see a log message similar to the following:
 
 ```copy
 [...] INFO - Message received under topic origin/a/wis2/int-wis2-training/data/core/weather/prediction/forecast/medium-range/probabilistic/trajectory
