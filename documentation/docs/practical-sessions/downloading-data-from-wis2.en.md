@@ -136,7 +136,7 @@ Note that the downloaded data is stored in directories named after the topic the
 
 ## Exercise 5: removing subscriptions from the wis2downloader
 
-Next, the remove the subscription you made from the wis2downloader, using the following command:
+Next, log in to the wis2downloader container and remove the subscription you made from the wis2downloader, using the following command:
 
 ```bash
 wis2downloader remove-subscription --topic cache/a/wis2/de-dwd-gts-to-wis2/#
