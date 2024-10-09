@@ -25,6 +25,7 @@ nav:
         - Adding GTS-headers to WIS2 notifications: practical-sessions/adding-gts-headers-to-wis2-notifications.md
         - Setting up a recommended dataset with access control: practical-sessions/datasets-with-access-control.md
         - Downloading data from WIS2: practical-sessions/downloading-data-from-wis2.md
+        - Discovering datasets from the WIS2 Global Discovery Catalogue: practical-sessions/discovering-datasets-from-wis2-gdc.md
         #- Querying data using the wis2box API: practical-sessions/querying-data-using-the-wis2box-api.md
         #- Working with BUFR data: practical-sessions/bufr-command-line-tools.md
     - Cheatsheets:
