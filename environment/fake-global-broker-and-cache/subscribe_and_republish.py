@@ -52,12 +52,6 @@ def on_message(client, userdata, msg):
     else:
         print(f"Not republishing data with topic {msg.topic}")
         return
-    pub.single(
-        topic = msg.topic,
-        payload = json.dumps(payload),
-        hostname = GB_HOST,
-        auth={"username": GB_UID, "password": GB_PWD}
-    )
     # if topic contains data/core or metadata, download to cache
     if 'data/core' in msg.topic:
         print("Downloading core data")
@@ -88,7 +82,7 @@ def on_message(client, userdata, msg):
         print("Downloading")
         http = urllib3.PoolManager()
         response = http.request("GET", canonical)
-        # save to temporaray file
+        # save to tempory file
         temp = tempfile.NamedTemporaryFile(mode="w")
         print(f"Saving to {temp.name}")
         with open(temp.name, "wb") as fh:
@@ -96,7 +90,7 @@ def on_message(client, userdata, msg):
         print("Data written, now putting to minio")
         # connect to MinIO
         try:
-            minio_client = Minio(MINIO_BUCKET, access_key=MINIO_KEY,
+            minio_client = Minio(MINIO_HOST, access_key=MINIO_KEY,
                            secret_key=MINIO_SECRET, secure=False)
         except Exception as e:
             print("Error connecting to Minio")
