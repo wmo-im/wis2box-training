@@ -34,6 +34,23 @@ Use the `pip3` Python package installer to install pywiscat on your VM:
 pip3 install pywiscat
 ```
 
+!!! note
+
+    If you encounter the following error:
+
+    ```
+    WARNING: The script pywiscat is installed in '/home/tkralidis/.local/bin' which is not on PATH.
+    Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+    ```
+
+    Then run the following command:
+
+    ```bash
+    export PATH=$PATH:/home/$USER/.local/bin
+    ```
+
+    ...where `$USER` is your username on your VM.
+
 Verify that the installation was successful:
 
 ```bash
