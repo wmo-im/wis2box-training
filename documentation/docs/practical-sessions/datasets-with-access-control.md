@@ -36,20 +36,15 @@ Click 'OK' to proceed.
 
 In the dataset editor, set the data policy to 'recommended' (note that this will update the identifier and replace 'core' with 'reco') and fill all the required fields.
 
-Ensure the dataset is published and the WIS2 Notification Message announcing the new Discovery Metadata record is published.
-
-Add the following stations to your "recommended" dataset to ensure the test data can be ingested and published:
-
-- 0-20000-0-60351
-- 0-20000-0-60355
-- 0-20000-0-60360
+Ensure the dataset is published and that you receive the WIS2 Notification Message announcing the new Discovery Metadata record is published.
 
 ## add an access token to the dataset
 
 Login to the wis2box-management container,
 
 ```bash
-docker exec -it wis2box-management bash
+cd ~/wis2box-1.0b8
+python3 wis2box-ctl.py login
 ```
 
 From command line inside the container you can secure a dataset using the `wis2box auth add-token` command, using the flag `-mdi` to specify the metadata-identifier of the dataset and the access token as an argument.
@@ -57,8 +52,20 @@ From command line inside the container you can secure a dataset using the `wis2b
 For example, to add the access token `S3cr3tT0k3n` to the dataset with metadata-identifier `urn:wmo:md:not-my-centre:core.surface-based-observations.synop`:	
 
 ```bash
-wis2box auth add-token -mdi urn:wmo:md:not-my-centre:core.surface-based-observations.synop S3cr3tT0k3n
+wis2box auth add-token -mdi urn:wmo:md:not-my-centre:reco.surface-based-observations.synop S3cr3tT0k3n
 ```
+
+Exit the wis2box-management container:
+
+```bash
+exit
+```
+
+Go the station-editor in the wis2box-webapp and update the stations to include the 'topic' of the dataset you just created:
+
+<img alt="edit-stations-add-topics" src="../../assets/img/edit-stations-add-topics.png" width="450">
+
+Use your token for `collections/stations` to submit the updated station data.
 
 ## publish some data to the dataset
 
@@ -67,6 +74,8 @@ Copy the file `exercise-materials/access-control-exercises/aws-example2.csv` to 
 ```bash
 cp ~/exercise-materials/access-control-exercises/aws-example2.csv ~/wis2box-data
 ```
+
+Then use WinSCP or a command line editor to edit the file `aws-example2.csv` and update the stations in the input-data to match one of the stations in your dataset. 
 
 Then login to the **wis2box-management** container:
 
@@ -78,10 +87,12 @@ python3 wis2box-ctl.py login
 From the wis2box command line we can ingest the sample data file `aws-example2.csv` into a specific dataset as follows:
 
 ```bash
-wis2box data ingest -p /data/wis2box/aws-example2.csv --metadata-id urn:wmo:md:not-my-centre:core.surface-based-observations.synop
+wis2box data ingest -p /data/wis2box/aws-example2.csv --metadata-id urn:wmo:md:not-my-centre:reco.surface-based-observations.synop
 ```
 
-Make sure to provide the correct metadata-identifier for your dataset and check that you receive WIS2 data-notifications in MQTT Explorer.
+Make sure to provide the correct metadata-identifier for your dataset and check that you receive WIS2 data-notifications in MQTT Explorer, on the topic `origin/a/wis2/<your-centre-id>/data/recommended/surface-based-observations/synop`:
+
+<img alt="mqtt-explorer-recommended" src="../../assets/img/mqtt-explorer-recommended.png" width="450">
 
 Check the canonical link in the WIS2 Notification Message and copy/paste the link to the browser to try and download the data.
 
