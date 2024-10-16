@@ -7,7 +7,7 @@ if [ $# -eq 0 ]
   then
     echo "No arguments supplied"
     echo "Usage: ./setup_student_vm.sh <USERNAME> <HOST_IP>"
-    exit 1
+    return 1
 fi
 
 # first argument of the script is the username
@@ -16,9 +16,9 @@ USERNAME=$1
 HOST_IP=$2
 
 echo "USERNAME=`echo $USERNAME`"
-read -p "Continue? (Y/N): " confirm && [[ $confirm == [yY] || $confirm == [yY][eE][sS] ]] || exit 1
+read -p "Continue? (Y/N): " confirm && [[ $confirm == [yY] || $confirm == [yY][eE][sS] ]] || return 1
 echo "HOST_IP=`echo $HOST_IP`"
-read -p "Continue? (Y/N): " confirm && [[ $confirm == [yY] || $confirm == [yY][eE][sS] ]] || exit 1
+read -p "Continue? (Y/N): " confirm && [[ $confirm == [yY] || $confirm == [yY][eE][sS] ]] || return 1
 
 # execute commands over ssh
 
@@ -37,7 +37,7 @@ ssh -o StrictHostKeyChecking=no wmo_admin@`echo $HOST_IP` "sudo unzip -o /tmp/wi
 ssh -o StrictHostKeyChecking=no wmo_admin@`echo $HOST_IP` "rm -rf /tmp/wis2box-setup-1.0b8.zip"
 
 # copy the latest exercise materials to the student-vm
-ssh -o StrictHostKeyChecking=no wmo_admin@`echo $HOST_IP` "wget https://training.wis2box.wis2dev.io/exercise-materials.zip -O /tmp/exercise-materials.zip"
+ssh -o StrictHostKeyChecking=no wmo_admin@`echo $HOST_IP` "wget https://training.wis2box.wis.wmo.int/exercise-materials.zip -O /tmp/exercise-materials.zip"
 # unzip the exercise-materials.zip
 ssh -o StrictHostKeyChecking=no wmo_admin@`echo $HOST_IP` "sudo unzip -o /tmp/exercise-materials.zip -d /home/`echo $USERNAME`/"
 # remove the exercise-materials.zip

@@ -198,7 +198,7 @@ cp ~/exercise-materials/data-ingest-exercises/wis2box-ftp.env ~/wis2box-1.0b8/
 
     - `FTP_USER`: the username for the ftp-endpoint (to be defined by the user)
     - `FTP_PASS`: the password for the ftp-endpoint (to be defined by the user)
-    - `FTP_HOST`: the hostname of your wis2box-instance (e.g. `username.wis2.training`)
+    - `FTP_HOST`: the hostname or host-IP of your wis2box-instance
     - `WIS2BOX_STORAGE_USERNAME`: the MinIO storage user (e.g. `wis2box`)
     - `WIS2BOX_STORAGE_PASSWORD`: the MinIO storage password (see your `wis2box.env` file)
     - `WIS2BOX_STORAGE_ENDPOINT`: the MinIO storage endpoint, you can leave this set to `http://minio:9000` when running the wis2box-ftp on the same docker network as the MinIO service.
@@ -241,7 +241,7 @@ The file was forwarded by the wis2box-ftp service to the 'wis2box-incoming' buck
 You can also use `ftp` from the command line:
 
 ```bash
-ftp username.wis2.training
+ftp <my-hostname-or-ip>
 ```
 Login using the credentials defined in `wis2box-ftp.env` for the `FTP_USER` and `FTP_PASS` environment variables, and then create a directory and upload a file as follows:
 

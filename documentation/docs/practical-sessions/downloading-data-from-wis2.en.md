@@ -120,7 +120,11 @@ To add this subscription, use the following command:
 wis2downloader add-subscription --topic cache/a/wis2/de-dwd-gts-to-wis2/#
 ```
 
-Then exit the **wis2downloader** container by typing `exit`.
+Then exit the **wis2downloader** container by typing `exit`:
+
+```bash
+exit
+```
 
 Check the wis2downloader dashboard in Grafana to see the new subscription added. Wait a few minutes and you should see the first downloads starting. Go to he next exercise once you have confirmed that the downloads are starting.
 
@@ -136,10 +140,22 @@ Note that the downloaded data is stored in directories named after the topic the
 
 ## Exercise 5: removing subscriptions from the wis2downloader
 
-Next, log in to the wis2downloader container and remove the subscription you made from the wis2downloader, using the following command:
+Next, log back in to the wis2downloader container:
+
+```bash
+python3 wis2box-ctl.py login wis2downloader
+```
+
+and remove the subscription you made from the wis2downloader, using the following command:
 
 ```bash
 wis2downloader remove-subscription --topic cache/a/wis2/de-dwd-gts-to-wis2/#
+```
+
+And exit the wis2downloader container by typing `exit`:
+    
+```bash
+exit
 ```
 
 Check the wis2downloader dashboard in Grafana to see the subscription removed. You should see the downloads stopping.

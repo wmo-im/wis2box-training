@@ -8,7 +8,7 @@ title: Discovering datasets from the WIS2 Global Discovery Catalogue
 
     By the end of this practical session, you will be able to:
 
-    - use pywiscat to discover datasets from the Global Discovery Catalogue
+    - use pywiscat to discover datasets from the Global Discovery Catalogue (GDC)
 
 ## Introduction
 
@@ -20,7 +20,8 @@ At the moment, the following GDCs are available:
 - China Meteorological Administration: <https://gdc.wis.cma.cn/api>
 - Deutscher Wetterdienst: <https://wis2.dwd.de/gdc>
 
-For this exercise, we will use the WIS2 GDC setup as part of the training, found at <http://192.168.7.153>.
+
+During local training sessions, a local GDC is set up to allow participants to query the GDC for the metadata they published from their wis2box-instances. In this case the trainers will provide the URL to the local GDC.
 
 ## Preparation
 
@@ -39,7 +40,7 @@ pip3 install pywiscat
     If you encounter the following error:
 
     ```
-    WARNING: The script pywiscat is installed in '/home/tkralidis/.local/bin' which is not on PATH.
+    WARNING: The script pywiscat is installed in '/home/username/.local/bin' which is not on PATH.
     Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
     ```
 
@@ -62,7 +63,7 @@ pywiscat --version
 By default, pywiscat connects to Canada's Global Discovery Catalogue.  Let's configure pywiscat to query the training GDC by setting the `PYWISCAT_GDC_URL` environment variable:
 
 ```bash
-export PYWISCAT_GDC_URL=http://192.168.7.153
+export PYWISCAT_GDC_URL=http://<local-gdc-host-or-ip>
 ```
 
 Let's use [pywiscat](https://github.com/wmo-im/pywiscat) to query the GDC setup as part of the training.
@@ -82,7 +83,7 @@ pywiscat search
     How many records are returned from the search?
 
 ??? success "Click to reveal answer"
-    There should be over 40 records returned
+    The number of records depends on the GDC you are querying. When using the local training GDC, you should see that the number of records is equal to the number of datasets that have been ingested into the GDC during the other practical sessions.
 
 Let's try querying the GDC with a keyword:
 

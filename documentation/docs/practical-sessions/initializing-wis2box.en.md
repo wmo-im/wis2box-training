@@ -69,7 +69,7 @@ The directory /home/username/wis2box-data has been created.
 
 Next, you will be asked to enter the URL for your wis2box. This is the URL that will be used to access the wis2box web application, API and UI.
 
-Please use `http://<your-hostname>` as the URL. Remember that your hostname is defined by your `username.wis2.training`
+Please use `http://<your-hostname-or-ip>` as the URL.
 
 ```{.copy}
 Please enter the URL of the wis2box:
