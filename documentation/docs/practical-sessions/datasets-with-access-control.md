@@ -24,7 +24,7 @@ Make sure you are connected to the MQTT broker of your wis2box instance using MQ
 
 Ensure you have a web browser open with the wis2box-webapp for your instance by going to `http://<your-host>/wis2box-webapp`.
 
-## create a new dataset with data policy 'recommended'
+## Exercise 1: create a new dataset with data policy 'recommended'
 
 Go to the 'dataset editor' page in the wis2box-webapp and create a new dataset. Use the same centre-id as in the previous practical sessions and use the template='surface-weather-observations/synop'. 
 
@@ -36,9 +36,11 @@ Click 'OK' to proceed.
 
 In the dataset editor, set the data policy to 'recommended' (note that this will update the identifier and replace 'core' with 'reco') and fill all the required fields.
 
-Ensure the dataset is published and that you receive the WIS2 Notification Message announcing the new Discovery Metadata record is published.
+Submit the dataset and check that the new dataset is created in the wis2box-webapp.
 
-## add an access token to the dataset
+Check MQTT-explorer to see that you receive the WIS2 Notification Message announcing the new Discovery Metadata record on the topic `origin/a/wis2/<your-centre-id>/metadata`.	
+
+## Exercise 2: add an access token to the dataset
 
 Login to the wis2box-management container,
 
@@ -61,13 +63,7 @@ Exit the wis2box-management container:
 exit
 ```
 
-Go the station-editor in the wis2box-webapp and update the stations to include the 'topic' of the dataset you just created:
-
-<img alt="edit-stations-add-topics" src="../../assets/img/edit-stations-add-topics.png" width="450">
-
-Use your token for `collections/stations` to submit the updated station data.
-
-## publish some data to the dataset
+## Exercise 3: publish some data to the dataset
 
 Copy the file `exercise-materials/access-control-exercises/aws-example2.csv` to the directory defined by `WIS2BOX_HOST_DATADIR` in your `wis2box.env`:
 
@@ -75,9 +71,17 @@ Copy the file `exercise-materials/access-control-exercises/aws-example2.csv` to 
 cp ~/exercise-materials/access-control-exercises/aws-example2.csv ~/wis2box-data
 ```
 
-Then use WinSCP or a command line editor to edit the file `aws-example2.csv` and update the stations in the input-data to match one of the stations in your dataset. 
+Then use WinSCP or a command line editor to edit the file `aws-example2.csv` and update the WIGOS-station-identifiers in the input-data to match the stations you have in your wis2box instance. 
 
-Then login to the **wis2box-management** container:
+Next, go to the station-editor in the wis2box-webapp. For each station you used in `aws-example2.csv`, update the 'topic' field to match the 'topic' of the dataset you created in the previous exercise.
+
+This station will now be associated to 2 topics, one for the 'core' dataset and one for the 'recommended' dataset:
+
+<img alt="edit-stations-add-topics" src="../../assets/img/edit-stations-add-topics.png" width="600">
+
+You will need to use your token for `collections/stations` to save the updated station data.
+
+Next, login to the wis2box-management container:
 
 ```bash
 cd ~/wis2box-1.0b8
@@ -90,15 +94,13 @@ From the wis2box command line we can ingest the sample data file `aws-example2.c
 wis2box data ingest -p /data/wis2box/aws-example2.csv --metadata-id urn:wmo:md:not-my-centre:reco.surface-based-observations.synop
 ```
 
-Make sure to provide the correct metadata-identifier for your dataset and check that you receive WIS2 data-notifications in MQTT Explorer, on the topic `origin/a/wis2/<your-centre-id>/data/recommended/surface-based-observations/synop`:
-
-<img alt="mqtt-explorer-recommended" src="../../assets/img/mqtt-explorer-recommended.png" width="450">
+Make sure to provide the correct metadata-identifier for your dataset and **check that you receive WIS2 data-notifications in MQTT Explorer**, on the topic `origin/a/wis2/<your-centre-id>/data/recommended/surface-based-observations/synop`.
 
 Check the canonical link in the WIS2 Notification Message and copy/paste the link to the browser to try and download the data.
 
 You should see a 403 Forbidden error.
 
-## add the access token to HTTP headers to access the dataset
+## Exercise 5: add the access token to HTTP headers to access the dataset
 
 In order to demonstrate that the access token is required to access the dataset we will reproduce the error you saw in the browser using the command line function `wget`.
 
@@ -117,10 +119,6 @@ wget --header="Authorization: Bearer S3cr3tT0k3n" <canonical-link>
 ```
 
 Now the data should be downloaded successfully.
-
-## clean up
-
-Delete the dataset using the dataset editor.
 
 ## Conclusion
 
