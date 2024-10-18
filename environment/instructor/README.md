@@ -1,19 +1,24 @@
 # Instructor helpers
 
 This directory contains resources that may be valuable for instructors as part of
-delivery of the training.  Note that the below need to be run while connected to
-the **WIS2-training** Wi-Fi network.
+delivery of the training. 
 
-# Local global services
+## terminal display when projecting
 
-Local global services provide a test environment to simulate WIS2 workflows using
-the classroom as a network of WIS2 nodes.
+* `instructor_bashrc.sh`: sample bash prompt to help with screen readability while
+  displaying a terminal during a practical session.
 
-## Global Broker
+## Local global services
 
-TBD
+Local global services provide a test environment to simulate WIS2 workflows using the classroom as a network of WIS2 nodes. 
+See the `fake-global-broker-and-cache` and `fake-global-discovery-catalogue` directory.
 
-### Live map (`live.html`)
+During the training instructors can have:
+
+- an MQTT-explorer session open to the local broker to demonstrate the flow of messages between the nodes
+- a web browser open to the Global Discovery Catalogue to demonstrate the datasets cached in the local GDC
+
+## Live map (`live.html`) (deprecated)
 
 Serve this webpage via HTTP on your VM.  Ensure that the following line:
 
@@ -22,20 +27,3 @@ const host = 'ws://tbd.wis2.training:8884/ws';
 ```
 
 ...is updated to point to the Global Broker installed above.
-
-## Global Cache
-
-[wis2-gc](https://github.com/wmo-im/wis2-gc) is a Reference Implememtation of
-a WIS2 Global Cache (GC).  Follow the setup instructions, pointing
-to the Global Broker installed above.
-
-## Global Discovery Catalogue
-
-[wis2-gdc](https://github.com/wmo-im/wis2-gdc) is a Reference Implememtation of
-a WIS2 Global Discovery Catalogue (GDC).  Follow the setup instructions, pointing
-to the Global Broker installed above.
-
-# Other
-
-* `instructor_bashrc.sh`: sample bash prompt to help with screen readability while
-  displaying a termnial during a practical session.

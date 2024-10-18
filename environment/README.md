@@ -1,5 +1,11 @@
 # Training environment
 
+The training environment requires one student VM per participant, matching the [wis2box system requirements](https://docs.wis2box.wis.wmo.int/en/latest/user/getting-started.html#system-requirements).
+
+The VMs can be provided either by the portable training environment or by the local organizer providing VMs on their own infrastructure.
+
+## Portable training environment
+
 The wis2box portable training environment consists of the following components:
 - One (1) Nighthawk Wi-Fi router
 - Three (3) ZOTAX ZBOX Mini PCs (M Series Edge MI623)
@@ -15,7 +21,7 @@ The 3 PCs together are setup in a ProxMox cluster to provide VMs for participant
 The Nighthawk is setup to broadcast a password-protected Wi-Fi network with SSID **WIS2-training**.
 The local network is defined by 10.0.0.1/22
 
-Adminstrators can access training environment from the following locations:
+Administrators can access training environment from the following locations:
 
 - Nighthawk Wi-Fi router interface at https://10.0.0.1
 - ProxMox cluster interface at https://10.0.1.1:8006
@@ -32,7 +38,6 @@ The 'vm-clone-base' template consists of:
     - docker compose 24.0.6
     - packages installed via `pip3`:
       - minio
-      - pywis-pubsub
       - pywiscat
 
 ### VM naming convention
@@ -73,3 +78,6 @@ http://10.0.2.111:5380/
 The DNS server UI can be used to check the status of the DNS-server and/or to add additional A-records. The DNS server is preconfigured with A-records naming each host for each local training participants. 
 
 The DNS-server is hosted on a VM on vm-host-2. If vm-host-2 is lost during transit or broken a backup is available on vm-host-1. If the DNS-server for some reason does not work at all, participants can just use the IP as hostname.
+
+
+

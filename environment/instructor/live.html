@@ -21,7 +21,7 @@
             const client = mqtt.connect(host, options);
 
             client.on('connect', function () {
-                client.subscribe('origin/#', function (err) {
+                client.subscribe('origin/a/wis2/#', function (err) {
                     if (!err) {
                         console.log('Connected!')
                     }
