@@ -49,7 +49,7 @@ This is an example of the WIS2 notification message structure for a message rece
   "links": [
     {
       "rel": "canonical",
-      "type": "application/x-bufr",
+      "type": "application/bufr",
       "href": "http://wis2bra.inmet.gov.br/data/2024-08-15/wis/br-inmet/data/core/weather/surface-based-observations/synop/WIGOS_0-76-2-2900801000W83499_20240815T060000.bufr4",
       "length": 250
     }
