@@ -68,7 +68,7 @@ The WiFi router has pre-configured mac-to-IP settings. After cloning the base te
 
 ### local DNS
 
-A local DNS-server is setup on a VM with IP 10.0.2.111. 
+A local DNS server is setup on a VM with IP 10.0.2.111. 
 
 DNS server UI
 http://dns-server.wis2.training:5380/
@@ -77,7 +77,4 @@ http://10.0.2.111:5380/
 
 The DNS server UI can be used to check the status of the DNS-server and/or to add additional A-records. The DNS server is preconfigured with A-records naming each host for each local training participants. 
 
-The DNS-server is hosted on a VM on vm-host-2. If vm-host-2 is lost during transit or broken a backup is available on vm-host-1. If the DNS-server for some reason does not work at all, participants can just use the IP as hostname.
-
-
-
+The DNS server is hosted on a VM on vm-host-2. If vm-host-2 is lost during transit or broken a backup is available on vm-host-1. If the DNS-server for some reason does not work at all, participants can just use the IP as hostname.
