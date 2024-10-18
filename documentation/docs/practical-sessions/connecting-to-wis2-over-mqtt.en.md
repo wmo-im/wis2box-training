@@ -78,7 +78,7 @@ Open MQTT Explorer and add a new connection to the Global Broker hosted by Meteo
 
 Click on the 'ADVANCED' button, remove the pre-configured topics and add the following topics to subscribe to:
 
-- `origin/#`
+- `origin/a/wis2/#`
 
 <img alt="mqtt-explorer-global-broker-advanced" src="../../assets/img/mqtt-explorer-global-broker-sub-origin.png" width="800">
 
@@ -88,7 +88,7 @@ Click on the 'ADVANCED' button, remove the pre-configured topics and add the fol
     - **Single-level (+)**: a single-level wildcard replaces one topic level
     - **Multi-level (#)**: a multi-level wildcard replaces multiple topic levels
 
-    In this case `origin/#` will subscribe to all topics under the `origin` topic.
+    In this case `origin/a/wis2/#` will subscribe to all topics under the `origin/a/wis2` topic.
 
 Click 'BACK', then 'SAVE' to save your connection and subscription details.  Then click 'CONNECT':
 
