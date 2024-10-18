@@ -10,12 +10,12 @@ delivery of the training.
 
 ## Local global services
 
-Local global services provide a test environment to simulate WIS2 workflows using the classroom as a network of WIS2 nodes. 
-See the `fake-global-broker-and-cache` and `fake-global-discovery-catalogue` directory.
+Local global services provide a test environment to simulate WIS2 workflows using the classroom as a network of WIS2 Nodes. 
+See the `fake-global-broker-and-cache` and `fake-global-discovery-catalogue` directories.
 
 During the training instructors can have:
 
-- an MQTT-explorer session open to the local broker to demonstrate the flow of messages between the nodes
+- an MQTT Explorer session open to the local broker to demonstrate the flow of messages between the nodes
 - a web browser open to the Global Discovery Catalogue to demonstrate the datasets cached in the local GDC
 
 ## Live map (`live.html`) (deprecated)
