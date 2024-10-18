@@ -1,0 +1,1313 @@
+
+<!doctype html>
+<html lang="es" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="WIS2 in a box (wis2box) is a Free and Open Source (FOSS) Reference Implementation of a WMO WIS2 Node. The project provides a plug and play toolset to ingest, process, and publish weather/climate/water data using standards-based approaches in alignment with the WIS2 principles. wis2box also provides access to all data in the WIS2 network. wis2box is designed to have a low barrier to entry for data providers, providing enabling infrastructure and services for data discovery, access, and visualization.">
+      
+      
+        <meta name="author" content="World Meteorological Organization">
+      
+      
+        <link rel="canonical" href="https://training.wis2box.wis.wmo.int/es/practical-sessions/automating-data-ingestion/">
+      
+      
+        <link rel="prev" href="../converting-csv-data-to-bufr/">
+      
+      
+        <link rel="next" href="../adding-gts-headers-to-wis2-notifications/">
+      
+      
+      <link rel="icon" href="https://public.wmo.int/sites/all/themes/wmo/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.41">
+    
+    
+      
+        <title>Automating data ingestion - WIS2 in a box training</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.0253249f.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../css/print-site-enum-headings1.css">
+    
+      <link rel="stylesheet" href="../../../css/print-site-enum-headings2.css">
+    
+      <link rel="stylesheet" href="../../../css/print-site-enum-headings3.css">
+    
+      <link rel="stylesheet" href="../../../css/print-site-enum-headings4.css">
+    
+      <link rel="stylesheet" href="../../../css/print-site-enum-headings5.css">
+    
+      <link rel="stylesheet" href="../../../css/print-site-enum-headings6.css">
+    
+      <link rel="stylesheet" href="../../../css/print-site.css">
+    
+      <link rel="stylesheet" href="../../../css/print-site-material.css">
+    
+      <link rel="stylesheet" href="../../../css/print-site-enum-headings1.css">
+    
+      <link rel="stylesheet" href="../../../css/print-site-enum-headings2.css">
+    
+      <link rel="stylesheet" href="../../../css/print-site-enum-headings3.css">
+    
+      <link rel="stylesheet" href="../../../css/print-site-enum-headings4.css">
+    
+      <link rel="stylesheet" href="../../../css/print-site-enum-headings5.css">
+    
+      <link rel="stylesheet" href="../../../css/print-site-enum-headings6.css">
+    
+      <link rel="stylesheet" href="../../../css/print-site.css">
+    
+      <link rel="stylesheet" href="../../../css/print-site-material.css">
+    
+      <link rel="stylesheet" href="../../../assets/css/custom.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#automating-data-ingestion" class="md-skip">
+          Saltar a contenido
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Cabecera">
+    <a href="../../" title="WIS2 in a box training" class="md-header__button md-logo" aria-label="WIS2 in a box training" data-md-component="logo">
+      
+  <img src="../../../assets/img/wmo-logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            WIS2 in a box training
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Automating data ingestion
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+      <div class="md-header__option">
+  <div class="md-select">
+    
+    <button class="md-header__button md-icon" aria-label="Seleccionar idioma">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12.87 15.07-2.54-2.51.03-.03A17.5 17.5 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2zm-2.62 7 1.62-4.33L19.12 17z"/></svg>
+    </button>
+    <div class="md-select__inner">
+      <ul class="md-select__list">
+        
+          <li class="md-select__item">
+            <a href="../../../practical-sessions/automating-data-ingestion/" hreflang="en" class="md-select__link">
+              English
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="./" hreflang="es" class="md-select__link">
+              Español
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="../../../fr/practical-sessions/automating-data-ingestion/" hreflang="fr" class="md-select__link">
+              Français
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="../../../ru/practical-sessions/automating-data-ingestion/" hreflang="ru" class="md-select__link">
+              Русский
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</div>
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Búsqueda" placeholder="Búsqueda" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Buscar">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Limpiar" aria-label="Limpiar" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Inicializando búsqueda
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navegación" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../" title="WIS2 in a box training" class="md-nav__button md-logo" aria-label="WIS2 in a box training" data-md-component="logo">
+      
+  <img src="../../../assets/img/wmo-logo.png" alt="logo">
+
+    </a>
+    WIS2 in a box training
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Practical sessions
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Practical sessions
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../connecting-to-wis2-over-mqtt/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Connecting to WIS2 over MQTT
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../accessing-your-student-vm/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Accessing your student VM
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../initializing-wis2box/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Initializing wis2box
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../configuring-wis2box-datasets/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Configuring datasets in wis2box
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../configuring-station-metadata/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Configuring station metadata
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../monitoring-wis2-notifications/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Monitoring WIS2 notifications
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../converting-synop-data-to-bufr/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Converting SYNOP data to BUFR from the command line
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../converting-synop-data-to-bufr-form/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Converting SYNOP data to BUFR using the wis2box-webapp
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../converting-csv-data-to-bufr/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Converting CSV data to BUFR
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Automating data ingestion
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Automating data ingestion
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      Introduction
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#preparation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Preparation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise-1-setup-a-python-script-to-ingest-data-into-minio" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exercise 1: setup a Python script to ingest data into MinIO
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise-2-ingesting-binary-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exercise 2: Ingesting binary data
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise-3-ingesting-synop-data-in-ascii-format" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exercise 3: Ingesting SYNOP data in ASCII format
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise-4-ingesting-data-using-the-wis2box-ftp-service" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exercise 4: ingesting data using the wis2box-ftp service
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusion" class="md-nav__link">
+    <span class="md-ellipsis">
+      Conclusion
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../adding-gts-headers-to-wis2-notifications/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Adding GTS-headers to WIS2 notifications
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../datasets-with-access-control/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Setting up a recommended dataset with access control
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../downloading-data-from-wis2/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Downloading data from WIS2
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../discovering-datasets-from-wis2-gdc/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Discovering datasets from the WIS2 Global Discovery Catalogue
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Cheatsheets
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Cheatsheets
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cheatsheets/linux/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Linux
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cheatsheets/docker/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Docker
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cheatsheets/wis2box/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    WIS2 in a box
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    csv2bufr templates
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            csv2bufr templates
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../csv2bufr-templates/aws-template/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    AWS hourly
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../csv2bufr-templates/daycli-template/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    DAYCLI
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      Introduction
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#preparation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Preparation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise-1-setup-a-python-script-to-ingest-data-into-minio" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exercise 1: setup a Python script to ingest data into MinIO
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise-2-ingesting-binary-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exercise 2: Ingesting binary data
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise-3-ingesting-synop-data-in-ascii-format" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exercise 3: Ingesting SYNOP data in ASCII format
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise-4-ingesting-data-using-the-wis2box-ftp-service" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exercise 4: ingesting data using the wis2box-ftp service
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusion" class="md-nav__link">
+    <span class="md-ellipsis">
+      Conclusion
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="automating-data-ingestion">Automating data ingestion</h1>
+<div class="admonition abstract">
+<p class="admonition-title">Learning outcomes</p>
+<p>By the end of this practical session, you will be able to:</p>
+<ul>
+<li>understand how the data plugins of your dataset determine the data ingest workflow</li>
+<li>ingest data into wis2box using a script using the MinIO Python client</li>
+<li>ingest data into wis2box using the wis2box-ftp service</li>
+</ul>
+</div>
+<h2 id="introduction">Introduction</h2>
+<p>The <strong>wis2box-management</strong> container listens to events from the MinIO storage service to trigger data ingestion based on the data-plugins configured for your dataset. This allows you to upload data into the MinIO bucket and trigger the wis2box workflow to publish data on the WIS2 broker. </p>
+<p>The data-plugins define the Python modules that are loaded by the <strong>wis2box-management</strong> container and determine how the data is transformed and published.</p>
+<p>In the previous exercise you should have created a dataset using the template <code>surface-based-observations/synop</code> which included the following data-plugins:</p>
+<p><img alt="data-mappings" src="../../assets/img/wis2box-data-mappings.png" width="800"></p>
+<p>When a file is uploaded to MinIO, wis2box will match the file to a dataset when the filepath contains the dataset id (<code>metadata_id</code>) and it will determine the data plugins to use based on the file extension and file pattern defined in the dataset mappings.</p>
+<p>In the previous sessions, we triggered the data ingest workflow by using the wis2box command line functionality, which uploads data to the MinIO storage in the correct path.</p>
+<p>The same steps can be done programmatically by using any MinIO or S3 client software, allowing you to automate your data ingestion as part of your operational workflows. </p>
+<p>If you are unable to adapt your system to upload data to MinIO directly, you can also use the <strong>wis2box-ftp</strong> service to forward data to the MinIO storage service.</p>
+<h2 id="preparation">Preparation</h2>
+<p>Login to you student VM using your SSH client (PuTTY or other).</p>
+<p>Make sure wis2box is up and running:</p>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>~/wis2box-1.0b8/
+python3<span class="w"> </span>wis2box-ctl.py<span class="w"> </span>start
+python3<span class="w"> </span>wis2box-ctl.py<span class="w"> </span>status
+</code></pre></div>
+<p>Make sure MQTT Explorer is running and connected to your instance. If you are still connected from the previous session, clear any previous messages you may have received from the queue.
+This can be done by either by disconnecting and reconnecting or by clicking the trash can icon for the given topic.</p>
+<p>Make sure you have a web browser open with the Grafana dashboard for your instance by going to <code>http://&lt;your-host&gt;:3000</code></p>
+<p>And make sure you have a second tab open with the MinIO user interface at <code>http://&lt;your-host&gt;:9001</code>. Remember you need to login with the <code>WIS2BOX_STORAGE_USER</code> and <code>WIS2BOX_STORAGE_PASSWORD</code> defined in your <code>wis2box.env</code> file.</p>
+<h2 id="exercise-1-setup-a-python-script-to-ingest-data-into-minio">Exercise 1: setup a Python script to ingest data into MinIO</h2>
+<p>In this exercise we will use the MinIO Python client to copy data into MinIO.</p>
+<p>MinIO provides a Python client which can be installed as follows:</p>
+<div class="highlight"><pre><span></span><code>pip3<span class="w"> </span>install<span class="w"> </span>minio
+</code></pre></div>
+<p>On your student VM the 'minio' package for Python will already be installed.</p>
+<p>Go to the directory <code>exercise-materials/data-ingest-exercises</code>; this directory contains a sample script <code>copy_file_to_incoming.py</code> that uses the MinIO Python client to copy a file into MinIO.</p>
+<p>Try to run the script to copy the sample data file <code>csv-aws-example.csv</code> into the <code>wis2box-incoming</code> bucket in MinIO" as follows:</p>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>~/exercise-materials/data-ingest-exercises
+python3<span class="w"> </span>copy_file_to_incoming.py<span class="w"> </span>csv-aws-example.csv
+</code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You will get an error as the script is not configured to access the MinIO endpoint on your wis2box yet.</p>
+</div>
+<p>The script needs to know the correct endpoint for accessing MinIO on your wis2box. If wis2box is running on your host, the MinIO endpoint is available at <code>http://&lt;your-host&gt;:9000</code>. The script also needs to be updated with your storage password and the path in the MinIO bucket to store the data.</p>
+<div class="admonition question">
+<p class="admonition-title">Update the script and ingest the CSV data</p>
+<p>Edit the script <code>copy_file_to_incoming.py</code> to address the errors, using one of the following methods:
+- From the command line: use the <code>nano</code> or <code>vim</code> text editor to edit the script
+- Using WinSCP: start a new connection using File Protocol <code>SCP</code> and the same credentials as your SSH client. Navigate to the directory <code>exercise-materials/data-ingest-exercises</code> and edit <code>copy_file_to_incoming.py</code> using the built-in text editor</p>
+<p>Ensure that you:</p>
+<ul>
+<li>define the correct MinIO endpoint for your host</li>
+<li>provide the correct storage password for your MinIO instance</li>
+<li>provide the correct path in the MinIO bucket to store the data</li>
+</ul>
+<p>Re-run the script to ingest the sample data file <code>csv-aws-example.csv</code> into MinIO:</p>
+<div class="highlight"><pre><span></span><code>python3<span class="w"> </span>copy_file_to_incoming.py<span class="w"> </span>csv-aws-example.csv
+</code></pre></div>
+<p>And make sure the errors are resolved.</p>
+</div>
+<p>You can verify that the data was uploaded correctly by checking the MinIO user interface and seeing if the sample data is available in the correct directory in the <code>wis2box-incoming</code> bucket.</p>
+<p>You can use the Grafana dashboard to check the status of the data ingest workflow.</p>
+<p>Finally you can use MQTT Explorer to check if notifications were published for the data you ingested. You should see that the CSV data was transformed into BUFR format and that a WIS2 data notification was published with a "canonical" url to enable downloading the BUFR data.</p>
+<h2 id="exercise-2-ingesting-binary-data">Exercise 2: Ingesting binary data</h2>
+<p>Next, we try to ingest binary data in BUFR format using the MinIO Python client.</p>
+<p>wis2box can ingest binary data in BUFR format using the <code>wis2box.data.bufr4.ObservationDataBUFR</code> plugin included in wis2box.</p>
+<p>This plugin will split the BUFR file into individual BUFR messages and publish each message to the MQTT broker. If the station for the corresponding BUFR message is not defined in the wis2box station metadata, the message will not be published.</p>
+<p>Since you used the <code>surface-based-observations/synop</code> template in the previous session you data mappings include the plugin <code>FM-12 data converted to BUFR</code> for the dataset mappings. This plugin loads the module <code>wis2box.data.synop2bufr.ObservationDataSYNOP2BUFR</code> to ingest the data.</p>
+<div class="admonition question">
+<p class="admonition-title">Ingesting binary data in BUFR format</p>
+<p>Run the following command to copy the binary data file <code>bufr-example.bin</code> into the <code>wis2box-incoming</code> bucket in MinIO:</p>
+<div class="highlight"><pre><span></span><code>python3<span class="w"> </span>copy_file_to_incoming.py<span class="w"> </span>bufr-example.bin
+</code></pre></div>
+</div>
+<p>Check the Grafana dashboard and MQTT Explorer to see if the test-data was successfully ingested and published and if you see any errors, try to resolve them.</p>
+<div class="admonition question">
+<p class="admonition-title">Verify the data ingest</p>
+<p>How many messages were published to the MQTT broker for this data sample?</p>
+</div>
+<details class="success">
+<summary>Click to reveal answer</summary>
+<p>If you successfully ingested and published the last data sample, you should have received 10 new notifications on the wis2box MQTT broker. Each notification correspond to data for one station for one observation timestamp.</p>
+<p>The plugin <code>wis2box.data.bufr4.ObservationDataBUFR</code> splits the BUFR file into individual BUFR messages and publishes one message for each station and observation timestamp.</p>
+</details>
+<h2 id="exercise-3-ingesting-synop-data-in-ascii-format">Exercise 3: Ingesting SYNOP data in ASCII format</h2>
+<p>In the previous session we used the SYNOP form in the <strong>wis2box-webapp</strong> to ingest SYNOP data in ASCII format. You can also ingest SYNOP data in ASCII format by uploading the data into MinIO. </p>
+<p>In the previous session you should have created a dataset which included the plugin 'FM-12 data converted to BUFR' for the dataset mappings:</p>
+<p><img alt="dataset-mappings" src="../../assets/img/wis2box-data-mappings.png" width="800"></p>
+<p>This plugin loads the module <code>wis2box.data.synop2bufr.ObservationDataSYNOP2BUFR</code> to ingest the data.</p>
+<p>Try to use the MinIO Python client to ingest the test data <code>synop-202307.txt</code> and <code>synop-202308.txt</code> into your wis2box instance.</p>
+<p>Note that the 2 files contain the same content, but the filename is different. The filename is used to determine the date of the data sample.</p>
+<p>The synop2bufr plugin relies on a file-pattern to extract the date from the filename. The first group in the regular expression is used to extract the year and the second group is used to extract the month.</p>
+<div class="admonition question">
+<p class="admonition-title">Ingest FM-12 SYNOP data in ASCII format</p>
+<p>Go back to the MinIO interface in your browse and navigate to the <code>wis2box-incoming</code> bucket and into the path where you uploaded the test data in the previous exercise.</p>
+<p>Upload the new files in the correct path in the <code>wis2box-incoming</code> bucket in MinIO to trigger the data ingest workflow.</p>
+<p>Check the Grafana dashboard and MQTT Explorer to see if the test data was successfully ingested and published.</p>
+<p>What is the difference in the <code>properties.datetime</code> between the two messages published to the MQTT broker?</p>
+</div>
+<details class="success">
+<summary>Click to reveal answer</summary>
+<p>Check the properties of the last 2 notifications in MQTT Explorer and you will note that one notification has:</p>
+<div class="highlight"><pre><span></span><code>&quot;properties&quot;: {
+    &quot;data_id&quot;: &quot;wis2/urn:wmo:md:nl-knmi-test:surface-based-observations.synop/WIGOS_0-20000-0-60355_20230703T090000&quot;,
+    &quot;datetime&quot;: &quot;2023-07-03T09:00:00Z&quot;,
+    ...
+</code></pre></div>
+<p>and the other notification has:</p>
+<div class="highlight"><pre><span></span><code>&quot;properties&quot;: {
+    &quot;data_id&quot;: &quot;wis2/urn:wmo:md:nl-knmi-test:surface-based-observations.synop/WIGOS_0-20000-0-60355_20230803T090000&quot;,
+    &quot;datetime&quot;: &quot;2023-08-03T09:00:00Z&quot;,
+    ...
+</code></pre></div>
+<p>The filename was used to determine the year and month of the data sample.</p>
+</details>
+<h2 id="exercise-4-ingesting-data-using-the-wis2box-ftp-service">Exercise 4: ingesting data using the wis2box-ftp service</h2>
+<p>You can add an additional service that adds an ftp-endpoint on your wis2box-instance. This service will forward data uploaded via ftp to the MinIO storage service, preserving the directory structure of the uploaded data.</p>
+<p>To use the <code>docker-compose.wis2box-ftp.yml</code> template included in wis2box, you need to pass some additional environment variables to the wis2box-ftp service.</p>
+<p>You can use the file <code>wis2box-ftp.env</code> file from the <code>exercise-materials/</code> directory to define the required environment variables. Start by copying the file to the <code>wis2box-1.0b8</code> directory:</p>
+<div class="highlight"><pre><span></span><code>cp<span class="w"> </span>~/exercise-materials/data-ingest-exercises/wis2box-ftp.env<span class="w"> </span>~/wis2box-1.0b8/
+</code></pre></div>
+<div class="admonition question">
+<p class="admonition-title">Configuring and starting the wis2box-ftp service</p>
+<p>Edit the file <code>wis2box-ftp.env</code> to define the required environment variables:</p>
+<ul>
+<li><code>FTP_USER</code>: the username for the ftp-endpoint (to be defined by the user)</li>
+<li><code>FTP_PASS</code>: the password for the ftp-endpoint (to be defined by the user)</li>
+<li><code>FTP_HOST</code>: the hostname or host-IP of your wis2box-instance</li>
+<li><code>WIS2BOX_STORAGE_USERNAME</code>: the MinIO storage user (e.g. <code>wis2box</code>)</li>
+<li><code>WIS2BOX_STORAGE_PASSWORD</code>: the MinIO storage password (see your <code>wis2box.env</code> file)</li>
+<li><code>WIS2BOX_STORAGE_ENDPOINT</code>: the MinIO storage endpoint, you can leave this set to <code>http://minio:9000</code> when running the wis2box-ftp on the same docker network as the MinIO service.</li>
+</ul>
+<p>You can use the <code>nano</code> or <code>vim</code> text editor to edit the file or the built-in text editor of WinSCP.</p>
+<p>Then start the wis2box-ftp service using the following command:</p>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>~/wis2box-1.0b8/
+docker<span class="w"> </span>compose<span class="w"> </span>-f<span class="w"> </span>docker-compose.wis2box-ftp.yml<span class="w"> </span>-p<span class="w"> </span>wis2box_project<span class="w"> </span>--env-file<span class="w"> </span>wis2box-ftp.env<span class="w"> </span>up<span class="w"> </span>-d
+</code></pre></div>
+<p>NOTE: the option <code>-p wis2box_project</code> is used to ensure the wis2box-ftp service is started in the same docker network as the MinIO service for wis2box.</p>
+<p>You can check if the wis2box-ftp service is running using the following command:</p>
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>logs<span class="w"> </span>wis2box-ftp
+</code></pre></div>
+</div>
+<p>To test the wis2box-ftp service, you can use an ftp client to upload a file to the ftp-endpoint on your wis2box-instance. The credentials for the ftp-endpoint are the ones you defined in the <code>wis2box-ftp.env</code> file by the <code>FTP_USER</code> and <code>FTP_PASS</code> environment variables.</p>
+<p>Using WinSCP, your connection would look as follows:</p>
+<p><img alt="winscp-ftp-connection" src="../../assets/img/winscp-ftp-connection.png" width="400"></p>
+<p>In WinSCP, right-click and select <em>New</em>-&gt;<em>Directory</em> to create a new directory on the FTP endpoint. </p>
+<p>Uploading <em>randomfile.txt</em> to the directory <em>not-a-valid-path</em>:</p>
+<p><img alt="FTP-not-a-valid-path" src="../../assets/img/FTP-not-a-valid-path.png" width="600"></p>
+<p>will result in the following message on the wis2box Grafana dashboard:</p>
+<p><em>ERROR - Path validation error: Could not match http://minio:9000/wis2box-incoming/not-a-valid-path/randomfile.txt to dataset, path should include one of the following: ...</em></p>
+<p>The file was forwarded by the wis2box-ftp service to the 'wis2box-incoming' bucket in MinIO, but the path did not match any of the dataset identifiers defined in your wis2box instance, resulting in an error.</p>
+<p>You can also use <code>ftp</code> from the command line:</p>
+<p><div class="highlight"><pre><span></span><code>ftp<span class="w"> </span>&lt;my-hostname-or-ip&gt;
+</code></pre></div>
+Login using the credentials defined in <code>wis2box-ftp.env</code> for the <code>FTP_USER</code> and <code>FTP_PASS</code> environment variables, and then create a directory and upload a file as follows:</p>
+<div class="highlight"><pre><span></span><code>mkdir<span class="w"> </span>not-a-valid-path
+<span class="nb">cd</span><span class="w"> </span>not-a-valid-path
+put<span class="w"> </span>~/exercise-materials/data-ingest-exercises/synop.txt<span class="w"> </span>synop.txt
+</code></pre></div>
+<p>This will result a "Path validation error" in the Grafana dashboard indicating that the file was uploaded to MinIO.</p>
+<p>To exit the ftp client, type <code>exit</code>. </p>
+<div class="admonition question">
+<p class="admonition-title">Test the wis2box-ftp service</p>
+<p>Try to ingest the file <code>synop.txt</code> into your wis2box instance using the wis2box-ftp service to trigger the data ingest workflow.</p>
+<p>Check the MinIO user interface to see if the file was uploaded to the correct path in the <code>wis2box-incoming</code> bucket. If you don't see the file in MinIO you can check the logs of the wis2box-ftp service to see if there were any errors in the process forwarding the data to MinIO.</p>
+<p>Check the Grafana dashboard to see if the data ingest workflow was triggered or if there were any errors.</p>
+</div>
+<p>The wis2box-ftp service will forward the data to the MinIO storage service, preserving the directory structure of the uploaded data. To ensure your data is ingested correctly, make sure the file is uploaded to a directory that matches the dataset-id or topic of your dataset.</p>
+<h2 id="conclusion">Conclusion</h2>
+<div class="admonition success">
+<p class="admonition-title">Congratulations!</p>
+<p>In this practical session, you learned how to:</p>
+<ul>
+<li>trigger wis2box workflow using a Python script and the MinIO Python client</li>
+<li>use different data plugins to ingest different data formats</li>
+<li>forward data to wis2box using the wis2box-ftp service</li>
+</ul>
+</div>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      &copy; 2023 World Meteorological Organization
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.indexes", "content.code.copy"], "search": "../../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copiado al portapapeles", "clipboard.copy": "Copiar al portapapeles", "search.result.more.one": "1 m\u00e1s en esta p\u00e1gina", "search.result.more.other": "# m\u00e1s en esta p\u00e1gina", "search.result.none": "No se encontraron documentos", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.placeholder": "Teclee para comenzar b\u00fasqueda", "search.result.term.missing": "Falta", "select.version": "Seleccionar versi\u00f3n"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.83f73b43.min.js"></script>
+      
+        <script src="../../../js/print-site.js"></script>
+      
+        <script src="../../../js/print-site.js"></script>
+      
+    
+  </body>
+</html>
