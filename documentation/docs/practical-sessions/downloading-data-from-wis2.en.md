@@ -242,7 +242,7 @@ You should see a log message similar to the following:
 
 In order to demonstrate how you can decode the downloaded data, we will start a new container using 'decode-bufr-jupyter' image.
 
-This container will be start Jupiter notebook server on your instance which includes the "ecCodes" library that you can use to decode BUFR data.
+This container will be start Jupyter notebook server on your instance which includes the "ecCodes" library that you can use to decode BUFR data.
 
 We will use the example notebooks included in `~/exercise-materials/notebook-examples` to decode the downloaded data for the cyclone tracks.
 

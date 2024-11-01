@@ -49,12 +49,12 @@ cd ~/wis2box-1.0b8
 python3 wis2box-ctl.py login
 ```
 
-From command line inside the container you can secure a dataset using the `wis2box auth add-token` command, using the flag `-mdi` to specify the metadata-identifier of the dataset and the access token as an argument.
+From command line inside the container you can secure a dataset using the `wis2box auth add-token` command, using the flag `--metadata-id` to specify the metadata-identifier of the dataset and the access token as an argument.
 
 For example, to add the access token `S3cr3tT0k3n` to the dataset with metadata-identifier `urn:wmo:md:not-my-centre:core.surface-based-observations.synop`:	
 
 ```bash
-wis2box auth add-token -mdi urn:wmo:md:not-my-centre:reco.surface-based-observations.synop S3cr3tT0k3n
+wis2box auth add-token --metadata-id urn:wmo:md:not-my-centre:reco.surface-based-observations.synop S3cr3tT0k3n
 ```
 
 Exit the wis2box-management container:
