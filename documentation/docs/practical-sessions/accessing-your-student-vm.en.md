@@ -62,17 +62,14 @@ Your student VM has the following software pre-installed:
 
 ## Connect to your student VM on the local training network
 
-Use the following configuration to connect your PC on the local Wi-Fi broadcasted in the room during WIS2 training:
-
-- **SSID: WIS2-training**
-- **password: dataismagic!**
+Connect your PC on the local Wi-Fi broadcasted in the room during WIS2 training as per the instructions provided by the trainer.
 
 Use an SSH client to connect to your student VM using the following:
 
 - **Host: (provided during in-person training)**
 - **Port: 22**
 - **Username: (provided during in-person training)**
-- **Password: wis2training** (default password to be changed after logging in)
+- **Password: (provided during in-person training)**
 
 !!! tip
     Contact a trainer if you are unsure about the hostname/username or have issues connecting.
