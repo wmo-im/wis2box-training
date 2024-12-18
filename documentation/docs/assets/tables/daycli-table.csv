@@ -8,9 +8,9 @@ wmo_station_number,  ,Integer,WMO station number 0 - 999
 latitude,Degrees,Decimal,Latitude of the station (to 5 decimal places)
 longitude,Degrees,Decimal,Longitude of the station (to 5 decimal places)
 station_height_above_msl,Meters,Decimal,Height of the station ground above mean sea level (to 1 decimal place)
-averaging_method,  ,Integer,Method used to calculate daily average temperature
 temperature_siting_classification,  ,Integer,"Combined sensor siting and measurement quality classification (temperature). See references for siting classification"
 precipitation_siting_classification,  ,Integer,"Combined sensor siting and measurement quality classification (precipitation). See references for siting classification"
+averaging_method,  ,Integer,Method used to calculate daily average temperature
 year,  ,Integer,Year (UTC) of nominal reporting day
 month,  ,Integer,Month (UTC) of nominal reporting day
 day,  ,Integer,Day (UTC) of month for nominal reporting day
