@@ -37,7 +37,7 @@ Login to you student VM using your SSH client (PuTTY or other).
 Make sure wis2box is up and running:
 
 ```bash
-cd ~/wis2box-1.0b8/
+cd ~/wis2box-1.0.0rc1/
 python3 wis2box-ctl.py start
 python3 wis2box-ctl.py status
 ```
@@ -186,10 +186,10 @@ You can add an additional service that adds an ftp-endpoint on your wis2box-inst
 
 To use the `docker-compose.wis2box-ftp.yml` template included in wis2box, you need to pass some additional environment variables to the wis2box-ftp service.
 
-You can use the file `wis2box-ftp.env` file from the `exercise-materials/` directory to define the required environment variables. Start by copying the file to the `wis2box-1.0b8` directory:
+You can use the file `wis2box-ftp.env` file from the `exercise-materials/` directory to define the required environment variables. Start by copying the file to the `wis2box-1.0.0rc1` directory:
 
 ```bash
-cp ~/exercise-materials/data-ingest-exercises/wis2box-ftp.env ~/wis2box-1.0b8/
+cp ~/exercise-materials/data-ingest-exercises/wis2box-ftp.env ~/wis2box-1.0.0rc1/
 ```
 
 !!! question "Configuring and starting the wis2box-ftp service"
@@ -208,7 +208,7 @@ cp ~/exercise-materials/data-ingest-exercises/wis2box-ftp.env ~/wis2box-1.0b8/
     Then start the wis2box-ftp service using the following command:
 
     ```bash
-    cd ~/wis2box-1.0b8/
+    cd ~/wis2box-1.0.0rc1/
     docker compose -f docker-compose.wis2box-ftp.yml -p wis2box_project --env-file wis2box-ftp.env up -d
     ```
 

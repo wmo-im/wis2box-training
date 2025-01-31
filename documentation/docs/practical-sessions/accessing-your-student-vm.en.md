@@ -39,8 +39,8 @@ Your student VM has the following software pre-installed:
     The release archive for wis2box used in this training can be downloaded as follows:
 
     ```bash
-    wget https://github.com/wmo-im/wis2box/releases/download/1.0b8/wis2box-setup-1.0b8.zip
-    unzip wis2box-setup-1.0b8.zip
+    wget https://github.com/wmo-im/wis2box/releases/download/1.0.0rc1/wis2box-setup-1.0.0rc1.zip
+    unzip wis2box-setup-1.0.0rc1.zip
     ```
     
     You can always find the latest 'wis2box-setup' archive at [https://github.com/wmo-im/wis2box/releases](https://github.com/wmo-im/wis2box/releases).
@@ -143,7 +143,7 @@ ls ~/
 ```
 returns:
 ```console
-exercise-materials  wis2box-1.0b8
+exercise-materials  wis2box-1.0.0rc1
 ```
 
 If you have WinSCP installed on your local PC, you can use it to connect to your student VM and inspect the contents of your home directory and download or upload files between your VM and your local PC. 

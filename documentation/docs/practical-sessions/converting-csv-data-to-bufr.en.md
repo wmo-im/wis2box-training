@@ -31,7 +31,7 @@ In this session you will learn about using csv2bufr converter in the wis2box for
 Make sure the wis2box-stack has been started with `python3 wis2box.py start`
 
 Make sure that you have a web browser open with the MinIO UI for your instance by going to `http://<your-host>:9000`
-If you don't remember your MinIO credentials, you can find them in the `wis2box.env` file in the `wis2box-1.0b8` directory on your student VM.
+If you don't remember your MinIO credentials, you can find them in the `wis2box.env` file in the `wis2box-1.0.0rc1` directory on your student VM.
 
 Make sure that you have MQTT Explorer open and connected to your broker using the credentials `everyone/everyone`.
 

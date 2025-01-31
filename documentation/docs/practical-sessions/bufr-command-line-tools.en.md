@@ -35,7 +35,7 @@ MQTT Explorer open and connected to your broker.
 First connect to your student VM via your ssh client and then log in the to wis2box-api container: 
 
 ```{.copy}
-cd ~/wis2box-1.0b8
+cd ~/wis2box-1.0.0rc1
 python3 wis2box-ctl.py login wis2box-api
 ```
 

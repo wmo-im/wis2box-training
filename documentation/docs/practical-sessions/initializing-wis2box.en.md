@@ -15,16 +15,16 @@ title: Initializing wis2box
 
 !!! note
 
-    The current training materials are using wis2box-1.0b8. 
+    The current training materials are using wis2box-1.0.0rc1. 
     
     See [accessing-your-student-vm](accessing-your-student-vm.md) for instructions on how to download and install the wis2box software stack if you are running this training outside of a local training session.
 
 ## Preparation
 
-Login to your designated VM with your username and password and ensure you are in the `wis2box-1.0b8` directory:
+Login to your designated VM with your username and password and ensure you are in the `wis2box-1.0.0rc1` directory:
 
 ```bash
-cd ~/wis2box-1.0b8
+cd ~/wis2box-1.0.0rc1
 ```
 
 ## Creating the initial configuration
@@ -55,7 +55,7 @@ Note that you need to define the full path to this directory.
 For example if your username is `username`, the full path to the directory is `/home/username/wis2box-data`:
 
 ```{.copy}
-username@student-vm-username:~/wis2box-1.0b8$ python3 wis2box-create-config.py
+username@student-vm-username:~/wis2box-1.0.0rc1$ python3 wis2box-create-config.py
 Please enter the directory to be used for WIS2BOX_HOST_DATADIR:
 /home/username/wis2box-data
 The directory to be used for WIS2BOX_HOST_DATADIR will be set to:
@@ -85,14 +85,14 @@ Is this correct? (y/n/exit)
 
 You can use the option of random password generation when prompted for and `WIS2BOX_WEBAPP_PASSWORD`, `WIS2BOX_STORAGE_PASSWORD`, `WIS2BOX_BROKER_PASSWORD` and define your own.
 
-Don't worry about remembering these passwords, they will be stored in the `wis2box.env` file in your wis2box-1.0b8 directory.
+Don't worry about remembering these passwords, they will be stored in the `wis2box.env` file in your wis2box-1.0.0rc1 directory.
 
 ### Review `wis2box.env`
 
 Once the scripts is completed check the contents of the `wis2box.env` file in your current directory:
 
 ```bash
-cat ~/wis2box-1.0b8/wis2box.env
+cat ~/wis2box-1.0.0rc1/wis2box.env
 ```
 
 Or check the content of the file via WinSCP.
@@ -135,7 +135,7 @@ Or check the content of the file via WinSCP.
 Ensure you are in the directory containing the wis2box software stack definition files:
 
 ```{.copy}
-cd ~/wis2box-1.0b8
+cd ~/wis2box-1.0.0rc1
 ```
 
 Start wis2box with the following command:
@@ -155,7 +155,7 @@ Repeat this command until all services are up and running.
 !!! note "wis2box and Docker"
     wis2box runs as a set of Docker containers managed by docker-compose.
     
-    The services are defined in the various `docker-compose*.yml` which can be found in the `~/wis2box-1.0b8/` directory.
+    The services are defined in the various `docker-compose*.yml` which can be found in the `~/wis2box-1.0.0rc1/` directory.
     
     The Python script `wis2box-ctl.py` is used to run the underlying Docker Compose commands that control the wis2box services.
 
@@ -270,7 +270,7 @@ You will see a pop-up asking for your username and password. Use the default use
     Check you wis2box.env for the value of your WIS2BOX_WEBAPP_PASSWORD. You can use the following command to check the value of this environment variable:
 
     ```{.copy}
-    cat ~/wis2box-1.0b8/wis2box.env | grep WIS2BOX_WEBAPP_PASSWORD
+    cat ~/wis2box-1.0.0rc1/wis2box.env | grep WIS2BOX_WEBAPP_PASSWORD
     ```
 
 Once logged in, you move your mouse to the menu on the left to see the options available in the wis2box web application:
@@ -320,7 +320,7 @@ Use the following connection details, making sure to replace the value of `<your
     You can check your wis2box.env for the value of your WIS2BOX_BROKER_PASSWORD. You can use the following command to check the value of this environment variable:
 
     ```{.copy}
-    cat ~/wis2box-1.0b8/wis2box.env | grep WIS2BOX_BROKER_PASSWORD
+    cat ~/wis2box-1.0.0rc1/wis2box.env | grep WIS2BOX_BROKER_PASSWORD
     ```
 
     Note that this your **internal** broker password, the Global Broker will use different (read-only) credentials to subscribe to your broker. Never share this password with anyone.
@@ -352,7 +352,7 @@ The username and password are defined in the `wis2box.env` file in your wis2box 
     You can check your wis2box.env for the value of your WIS2BOX_STORAGE_PASSWORD. You can use the following command to check the value of this environment variable:
 
     ```{.copy}
-    cat ~/wis2box-1.0b8/wis2box.env | grep WIS2BOX_STORAGE_PASSWORD
+    cat ~/wis2box-1.0.0rc1/wis2box.env | grep WIS2BOX_STORAGE_PASSWORD
     ```
 
     Note that these are the read-write credentials for your MinIO instance. Never share these credentials with anyone. The Global Services can only download data from your MinIO instance using the web-proxy on the wis2box-public bucket.

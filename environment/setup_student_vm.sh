@@ -29,12 +29,12 @@ ssh -o StrictHostKeyChecking=no wmo_admin@`echo $HOST_IP` "echo "$USERNAME":wis2
 # rename the hostname to student-vm-<USERNAME>
 ssh -o StrictHostKeyChecking=no wmo_admin@`echo $HOST_IP` "sudo hostnamectl set-hostname student-vm-`echo $USERNAME`"
 
-# copy the latest wis2box-setup-1.0b8.zip to the student-vm
-ssh -o StrictHostKeyChecking=no wmo_admin@`echo $HOST_IP` "wget https://github.com/wmo-im/wis2box/releases/download/1.0b8/wis2box-setup-1.0b8.zip -O /tmp/wis2box-setup-1.0b8.zip"
-# unzip the wis2box-setup-1.0b8.zip
-ssh -o StrictHostKeyChecking=no wmo_admin@`echo $HOST_IP` "sudo unzip -o /tmp/wis2box-setup-1.0b8.zip -d /home/`echo $USERNAME`/"
-# remove the wis2box-setup-1.0b8.zip
-ssh -o StrictHostKeyChecking=no wmo_admin@`echo $HOST_IP` "rm -rf /tmp/wis2box-setup-1.0b8.zip"
+# copy the latest wis2box-setup-1.0.0rc1.zip to the student-vm
+ssh -o StrictHostKeyChecking=no wmo_admin@`echo $HOST_IP` "wget https://github.com/wmo-im/wis2box/releases/download/1.0.0rc1/wis2box-setup-1.0.0rc1.zip -O /tmp/wis2box-setup-1.0.0rc1.zip"
+# unzip the wis2box-setup-1.0.0rc1.zip
+ssh -o StrictHostKeyChecking=no wmo_admin@`echo $HOST_IP` "sudo unzip -o /tmp/wis2box-setup-1.0.0rc1.zip -d /home/`echo $USERNAME`/"
+# remove the wis2box-setup-1.0.0rc1.zip
+ssh -o StrictHostKeyChecking=no wmo_admin@`echo $HOST_IP` "rm -rf /tmp/wis2box-setup-1.0.0rc1.zip"
 
 # copy the latest exercise materials to the student-vm
 ssh -o StrictHostKeyChecking=no wmo_admin@`echo $HOST_IP` "wget https://training.wis2box.wis.wmo.int/exercise-materials.zip -O /tmp/exercise-materials.zip"

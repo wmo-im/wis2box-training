@@ -22,10 +22,10 @@ wis2box has a collection of station metadata that is used to describe the statio
 
 To edit stations via the **wis2box-webapp** you will first to need create an authorization token.
 
-Login to your student VM and ensure you are in the `wis2box-1.0b8` directory:
+Login to your student VM and ensure you are in the `wis2box-1.0.0rc1` directory:
 
 ```bash
-cd ~/wis2box-1.0b8
+cd ~/wis2box-1.0.0rc1
 ```
 
 Then login into the **wis2box-management** container with the following command:

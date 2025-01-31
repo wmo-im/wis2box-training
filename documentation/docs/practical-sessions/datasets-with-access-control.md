@@ -28,15 +28,16 @@ Ensure you have a web browser open with the wis2box-webapp for your instance by 
 
 Go to the 'dataset editor' page in the wis2box-webapp and create a new dataset. Use the same centre-id as in the previous practical sessions and use the template='surface-weather-observations/synop'. 
 
-You may get a pop-up message that there already is a dataset with the same metadata identifier:
-
-<img alt="provide-a-new-dataset-id" src="../../assets/img/popup-existing-dataset-id.png" width="450">
-
 Click 'OK' to proceed.
 
-In the dataset editor, set the data policy to 'recommended' (note that this will update the identifier and replace 'core' with 'reco') and fill all the required fields.
+In the dataset editor, set the data policy to 'recommended' (note that changing the data-policy will update the 'Topic Hierarchy').
+Replace the auto-generated 'Local ID' with a descriptive name for the dataset, e.g. 'recommended-data-with-access-control':
 
-Submit the dataset and check that the new dataset is created in the wis2box-webapp.
+<img alt="create-dataset-recommended" src="../../assets/img/create-dataset-recommended.png" width="800">
+
+Continue to fill the required fields for Spatial Properties and Contact Information, and 'Validate form' to check for any errors.
+
+Finally submit the dataset, using the previously create authentication token, and check that the new dataset is created in the wis2box-webapp.
 
 Check MQTT-explorer to see that you receive the WIS2 Notification Message announcing the new Discovery Metadata record on the topic `origin/a/wis2/<your-centre-id>/metadata`.	
 
@@ -45,7 +46,7 @@ Check MQTT-explorer to see that you receive the WIS2 Notification Message announ
 Login to the wis2box-management container,
 
 ```bash
-cd ~/wis2box-1.0b8
+cd ~/wis2box-1.0.0rc1
 python3 wis2box-ctl.py login
 ```
 
@@ -84,7 +85,7 @@ You will need to use your token for `collections/stations` to save the updated s
 Next, login to the wis2box-management container:
 
 ```bash
-cd ~/wis2box-1.0b8
+cd ~/wis2box-1.0.0rc1
 python3 wis2box-ctl.py login
 ```
 
@@ -100,7 +101,7 @@ Check the canonical link in the WIS2 Notification Message and copy/paste the lin
 
 You should see a 403 Forbidden error.
 
-## Exercise 5: add the access token to HTTP headers to access the dataset
+## Exercise 4: add the access token to HTTP headers to access the dataset
 
 In order to demonstrate that the access token is required to access the dataset we will reproduce the error you saw in the browser using the command line function `wget`.
 
