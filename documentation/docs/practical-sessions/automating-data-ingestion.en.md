@@ -10,7 +10,7 @@ title: Automating data ingestion
     
     - understand how the data plugins of your dataset determine the data ingest workflow
     - ingest data into wis2box using a script using the MinIO Python client
-    - ingest data into wis2box using the wis2box-ftp service
+    - ingest data into wis2box using the wis2box-sftp service
 
 ## Introduction
 
@@ -28,7 +28,7 @@ In the previous sessions, we triggered the data ingest workflow by using the wis
 
 The same steps can be done programmatically by using any MinIO or S3 client software, allowing you to automate your data ingestion as part of your operational workflows. 
 
-If you are unable to adapt your system to upload data to MinIO directly, you can also use the **wis2box-ftp** service to forward data to the MinIO storage service.
+If you are unable to adapt your system to upload data to MinIO directly, you can also use the **wis2box-sftp** service to forward data to the MinIO storage service.
 
 ## Preparation
 
