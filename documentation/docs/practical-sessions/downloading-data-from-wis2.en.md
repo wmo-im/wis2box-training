@@ -67,7 +67,7 @@ The following environment variables are used by the wis2downloader:
 To review the current configuration of the wis2downloader, you can use the following command:
 
 ```bash
-cat ~/wis2box-1.0b8/wis2box.env | grep DOWNLOAD
+cat ~/wis2box-1.0.0rc1/wis2box.env | grep DOWNLOAD
 ```
 
 !!! question "Review the configuration of the wis2downloader"

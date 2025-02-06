@@ -27,7 +27,7 @@ Login to your student VM using your SSH client (PuTTY or other).
 Make sure wis2box is up and running:
 
 ```bash
-cd ~/wis2box-1.0b8/
+cd ~/wis2box-1.0.0rc1/
 python3 wis2box-ctl.py start
 python3 wis2box-ctl.py status
 ```
@@ -48,10 +48,10 @@ Copy the sample data file `aws-example.csv` to the the directory you defined as 
 cp ~/exercise-materials/monitoring-exercises/aws-example.csv ~/wis2box-data/
 ```
 
-Make sure you are in the `wis2box-1.0b8` directory and login to the **wis2box-management** container:
+Make sure you are in the `wis2box-1.0.0rc1` directory and login to the **wis2box-management** container:
 
 ```bash
-cd ~/wis2box-1.0b8
+cd ~/wis2box-1.0.0rc1
 python3 wis2box-ctl.py login
 ```
 
@@ -62,7 +62,7 @@ ls -lh /data/wis2box/aws-example.csv
 ```
 
 !!! note
-    The `WIS2BOX_HOST_DATADIR` is mounted as `/data/wis2box/` inside the wis2box-management container by the `docker-compose.yml` file included in the `wis2box-1.0b8` directory.
+    The `WIS2BOX_HOST_DATADIR` is mounted as `/data/wis2box/` inside the wis2box-management container by the `docker-compose.yml` file included in the `wis2box-1.0.0rc1` directory.
     
     This allows you to share data between the host and the container.
 

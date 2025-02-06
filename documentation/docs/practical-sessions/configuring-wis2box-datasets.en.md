@@ -50,7 +50,7 @@ You will need an authorization token for the 'processes/wis2box' endpoint to pub
 To create an authorization token, access your training VM over SSH and use the following commands to login to the wis2box-management container:
 
 ```bash
-cd ~/wis2box-1.0b8
+cd ~/wis2box-1.0.0rc1
 python3 wis2box-ctl.py login
 ```
 
@@ -115,9 +115,11 @@ The Dataset Editor Form allows you to provide the Discovery Metadata for your da
 
 Since you have selected the 'weather/surface-based-observations/synop' data type, the form will be pre-populated with some default values.
 
-Review the title and keywords, and update them as necessary, and provide a description for your dataset:
+Please make sure to replace the auto-generated 'Local ID' with a descriptive name for your dataset, e.g. 'synop-dataset-wis2training':
 
 <img alt="Metadata Editor: title, description, keywords" src="../../assets/img/wis2box-metadata-editor-part1.png" width="800">
+
+Review the title and keywords, and update them as necessary, and provide a description for your dataset.
 
 Note there are options to change the 'WMO Data Policy' from 'core' to 'recommended' or to modify your default Metadata Identifier, please keep data-policy as 'core' and use the default Metadata Identifier.
 

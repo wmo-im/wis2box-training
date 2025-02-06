@@ -12,9 +12,16 @@ title: Querying data using the wis2box API
 
 ## Introduction
 
-The wis2box API provides discovery and query access in a machine readable manager, which includes the wis2box UI.
+The wis2box API provides discovery and query access in a machine readable manner to the data that has been ingested in wis2box. The API is based on the OGC API - Features standard and is implemented using [pygeoapi](https://pygeoapi.io).
 
-In this practical session you will learn how to use the data API to discovery, browse and query data that has been ingested in wis2box.
+The wis2box API provides access to the following collections:
+
+- Stations
+- Discovery metadata
+- Data notifications
+- plus one collection per dataset configured, which stores the output from bufr2geojson (the plugin `bufr2geojson` needs to be enabled in the data mappings configuration to fill the items in the dataset collection).
+
+In this practical session you will learn how to use the data API to browse and query data that has been ingested in wis2box.
 
 ## Preparation
 
