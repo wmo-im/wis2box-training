@@ -181,7 +181,7 @@ The use of this form is intended for debugging and validation purposes, the reco
 
 Navigate to CSV Form on the the wis2box web-application 
 (``http://<your-host-name>/wis2box-webapp/csv2bufr_form``).
-Click the entry box or drag and drop the test file you have downloaded to the entry box. 
+Use the file [aws-example.csv](/sample-data/aws-example.csv) for this exercise.
 You should now be able to click next to preview and validate the file.
 
 <center><img alt="Image showing CSV to BUFR upload screen" src="../../assets/img/csv2bufr-ex1.png"/></center>
