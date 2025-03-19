@@ -8,19 +8,21 @@ title: Monitoring WIS2 Notifications
 
     By the end of this practical session, you will be able to:
     
-    - trigger the wis2box workflow by uploading data in MinIO using the `wis2box data ingest` command
-    - view warnings and errors displayed in the Grafana dashboard
-    - check the content of the data being published
+    - trigger the wis2box workflow by uploading data in MinIO using the command-line, the MinIO web interface, SFTP or a python script
+    - learn how to access the Grafana dashboard to see the status of the data ingest and the logs of your wis2box instance
+    - view the WIS2 data notifications published by your wis2box using MQTT Explorer
+
 
 ## Introduction
 
-The **Grafana dashboard** uses data from Prometheus and Loki to display the status of your wis2box. Prometheus store time-series data from the metrics collected, while Loki store the logs from the containers running on your wis2box instance. This data allows you to check how much data is received on MinIO and how many WIS2 notifications are published, and if there are any errors detected in the logs.
+In this exercise we will use a sample CSV data file to trigger the wis2box workflow and publish WIS2 notifications using the dataset you configured in the previous practical session. 
+ Note that wis2box will converts CSV into BUFR format before publishing it to the MQTT broker as per the data-mappings pre-configured in your dataset. In the next exercises, you will learn more about how data-conversion in the wis2box works. For this exercise, we will focus on the different methods to upload data to your wis2box instance and how to see if you correctly ingested and published the data.
 
-To see the content of the WIS2 notifications that are being published on different topics of your wis2box you can use the 'Monitor' tab in the **wis2box-webapp**.
+The **Grafana dashboard** uses data from Prometheus and Loki to display the status of your wis2box. Prometheus store time-series data from the metrics collected, while Loki store the logs from the containers running on your wis2box instance. This data allows you to check how much data is received on MinIO and how many WIS2 notifications are published, and if there are any errors detected in the logs.
 
 ## Preparation
 
-This section will use the "surface-based-observations/synop" dataset previously created in the [Configuring datasets in wis2box](/practical-sessions/configuring-wis2box-datasets) practical session. 
+This section will use the dataset for "surface-based-observations/synop" previously created in the [Configuring datasets in wis2box](/practical-sessions/configuring-wis2box-datasets) practical session and requires you to have configured stations in the **wis2box-webapp** as described in the [Configuring station metadata](/practical-sessions/configuring-station-metadata) practical session. 
 
 Login to your student VM using your SSH client (PuTTY or other).
 
@@ -150,30 +152,68 @@ Go to the Grafana dashboard in your browser and check the status of the data ing
     
     Note that the data-format is BUFR and you will need a BUFR parser to view the content of the data. The BUFR format is a binary format used by meteorological services to exchange data. The data-plugins inside wis2box transformed the data from CSV to BUFR before publishing it.
 
-## Viewing the data content you have published
+## Uploading data using the MinIO web interface
 
-You can use the **wis2box-webapp** to view the content of the WIS2 data notifications that have been published by your wis2box.
+In the previous exercises, you uploaded data to MinIO using the `wis2box data ingest` command. You can also upload data using the MinIO web interface.
 
-Open the **wis2box-webapp** in your browser by navigating to `http://<your-host>/wis2box-webapp` and select the **Monitoring** tab:
+!!! question "Exercise 5: upload data using the MinIO web interface"
 
-<img alt="wis2box-webapp-monitor" src="../../assets/img/wis2box-webapp-monitor.png" width="220">
+    Go to the MinIO web interface in your browser and browse to the `wis2box-incoming` bucket. You will see the file `aws-example.csv` you uploaded in the previous exercises.
 
-In the monitoring-tab select your dataset-id and click "UPDATE"
+    You can download this file and re-upload it to the same path in MinIO to re-trigger the wis2box workflow.
 
-??? question "Exercise 5: view the WIS2 notifications in the wis2box-webapp"
-    
-    How many WIS2 data notifications were published by your wis2box? 
-
-    What is the air-temperature reported in the last notification at the station with the WIGOS-identifier=0-20000-0-60355?
+    Check the Grafana dashboard and MQTT Explorer to see if the data was successfully ingested and published.
 
 ??? success "Click to reveal answer"
 
-    If you have successfully ingested the test data, you should see 6 WIS2 data notifications published by your wis2box.
+    You will see a message indicate that the wis2box already published this data. The wis2box will not publish the same data twice. You can change the content of the file and re-upload it to trigger the workflow again.
 
-    To see the air-temperature measured for the station with WIGOS-identifier=0-20000-0-60355, click on the "INSPECT"-button next to the file for that station to open a pop-up window displaying the parsed content of the data file. The air-temperature measured at this station was 25.0 degrees Celsius.
+## Uploading data using SFTP
 
-!!! Note
-    The wis2box-api container includes tools to parse BUFR files and display the content in a human-readable format. This is a not a core requirements for the WIS2.0 implementation, but was included in the wis2box to aid data publishers in checking the content of the data they are publishing.
+The MinIO server also supports SFTP. You can use an SFTP client to upload data to MinIO.
+
+!!! question "Exercise 6: upload data using SFTP"
+
+    Use an SFTP client to connect to your wis2box instance using the credentials `WIS2BOX_STORAGE_USERNAME` and `WIS2BOX_STORAGE_PASSWORD` from your `wis2box.env` file.
+
+    Upload the sample data file `aws-example.csv` to the same path in MinIO you used in the previous exercises.
+
+    Check the Grafana dashboard and MQTT Explorer to see if the data was successfully ingested and published.
+
+??? success "Click to reveal answer"
+
+    If you uploaded the data correctly you will see a message indicating that the wis2box already published this data. If you use the wrong path or bucket name, you will see an error message in the logs of the wis2box-management container.
+
+## Uploading data using a Python script
+
+You can also upload data to MinIO using a Python script. The `minio` library provides a Python API for interacting with MinIO.
+
+!!! question "Exercise 7: upload data using a Python script"
+
+    Use the following Python script to upload the sample data file `aws-example.csv` to the same path in MinIO you used in the previous exercises.
+
+    ```python
+    from minio import Minio
+    from minio.error import ResponseError
+
+    # Create a client with the MinIO server endpoint, access key, and secret key
+    client = Minio("localhost:9000",
+                    access_key="WIS2BOX_STORAGE_USERNAME",
+                    secret_key="WIS2BOX_STORAGE_PASSWORD",
+                    secure=False)
+
+    # Upload the file to the 'wis2box-incoming' bucket
+    try:
+        client.fput_object("wis2box-incoming", "aws-example.csv", "../exercise-materials/monitoring-exercises/aws-example.csv")
+    except ResponseError as err:
+        print(err)
+    ```
+
+    Check the Grafana dashboard and MQTT Explorer to see if the data was successfully ingested and published.
+
+??? success "Click to reveal answer"
+
+    As before, you will see a message indicating that the wis2box already published this data. The wis2box will not publish the same data twice. You can change the content of the file and re-upload it to trigger the workflow again and see a new WIS2 notification published on your MQTT Explorer.
 
 ## Conclusion
 
