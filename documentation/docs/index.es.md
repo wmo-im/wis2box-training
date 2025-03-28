@@ -85,7 +85,7 @@ Los nombres de los contenedores (imágenes en ejecución) se indican en **negrit
 
 ## Ubicación y materiales de entrenamiento
 
-Los contenidos del entrenamiento, la wiki y el rastreador de problemas son gestionados en GitHub en [https://github.com/wmo-im/wis2box-training](https://github.com/wmo-im/wis2box-training).
+Los contenidos del entrenamiento, la wiki y el rastreador de problemas son gestionados en GitHub en [https://github.com/World-Meteorological-Organization/wis2box-training](https://github.com/World-Meteorological-Organization/wis2box-training).
 
 ## Imprimir el material
 
@@ -97,9 +97,9 @@ Los materiales de ejercicio se pueden descargar desde el archivo [exercise-mater
 
 ## Soporte
 
-Para problemas/errores/sugerencias o mejoras/contribuciones a este entrenamiento, utiliza el [rastreador de problemas de GitHub](https://github.com/wmo-im/wis2box-training/issues).
+Para problemas/errores/sugerencias o mejoras/contribuciones a este entrenamiento, utiliza el [rastreador de problemas de GitHub](https://github.com/World-Meteorological-Organization/wis2box-training/issues).
 
-Todos los errores, mejoras y problemas de wis2box se pueden reportar en [GitHub](https://github.com/wmo-im/wis2box/issues).
+Todos los errores, mejoras y problemas de wis2box se pueden reportar en [GitHub](https://github.com/World-Meteorological-Organization/wis2box/issues).
 
 Para soporte adicional o preguntas, por favor contacta a wis@wmo.int.
 

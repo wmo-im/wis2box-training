@@ -49,7 +49,7 @@ This training requires the following tools:
 - An instance running Ubuntu OS (provided by WMO trainers during local training sessions) see [Accessing your student VM](practical-sessions/accessing-your-student-vm.md#introduction)
 - SSH client to access your instance
 - MQTT Explorer on your local machine
-- SCP and FTP client to copy files from your local machine
+- SCP and SFTP client to copy files from your local machine
 
 ## Conventions
 
@@ -87,7 +87,7 @@ Container names (running images) are denoted in **bold**.
 
 ## Training location and materials
 
-The training contents, wiki and issue tracker are managed on GitHub at [https://github.com/wmo-im/wis2box-training](https://github.com/wmo-im/wis2box-training).
+The training contents, wiki and issue tracker are managed on GitHub at [https://github.com/World-Meteorological-Organization/wis2box-training](https://github.com/World-Meteorological-Organization/wis2box-training).
 
 ## Printing the material
 
@@ -100,9 +100,9 @@ Exercise materials can be downloaded from the [exercise-materials.zip](/exercise
 
 ## Support
 
-For issues/bugs/suggestions or improvements/contributions to this training, please use the [GitHub issue tracker](https://github.com/wmo-im/wis2box-training/issues).
+For issues/bugs/suggestions or improvements/contributions to this training, please use the [GitHub issue tracker](https://github.com/World-Meteorological-Organization/wis2box-training/issues).
 
-All wis2box bugs, enhancements and issues can be reported on [GitHub](https://github.com/wmo-im/wis2box/issues).
+All wis2box bugs, enhancements and issues can be reported on [GitHub](https://github.com/World-Meteorological-Organization/wis2box/issues).
 
 For additional support of questions, please contact wis2-support@wmo.int.
 
