@@ -354,28 +354,6 @@ Inspect the resulting BUFR data using `bufr_dump`.
 
     This will display the latitude and longitude values in the BUFR data.
 
-## bufr2bufr conversion
-
-wis2box can ingest binary data in BUFR format using the `wis2box.data.bufr4.ObservationDataBUFR` plugin included in wis2box.
-
-This plugin will split the BUFR file into individual BUFR messages and publish each message to the MQTT broker. If the station for the corresponding BUFR message is not defined in the wis2box station metadata, the message will not be published.
-
-Since you used the `surface-based-observations/synop` template in the previous session you data mappings include the plugin `FM-12 data converted to BUFR` for the dataset mappings. This plugin loads the module `wis2box.data.synop2bufr.ObservationDataSYNOP2BUFR` to ingest the data.
-
-!!! question "Ingesting binary data in BUFR format"
-
-    Run the following command to copy the binary data file `bufr-example.bin` into the `wis2box-incoming` bucket in MinIO:
-
-    ```bash
-    python3 copy_file_to_incoming.py bufr-example.bin
-    ```
-
-Check the Grafana dashboard and MQTT Explorer to see if the test-data was successfully ingested and published and if you see any errors, try to resolve them.
-
-!!! question "Verify the data ingest"
-
-    How many messages were published to the MQTT broker for this data sample?
-
 ??? success "Click to reveal answer"
 
     You will 
@@ -389,185 +367,20 @@ Check the Grafana dashboard and MQTT Explorer to see if the test-data was succes
 Please download the CSV example file into your current location as follows:
 
 ```{.copy}
-curl https://training.wis2box.wis.wmo.int/sample-data/csv2bufr-ex1.csv --output csv2bufr-ex1.csv
+curl https://training.wis2box.wis.wmo.int/sample-data/aws-example.csv --output aws-example.csv
 ```
 
 And display the content of the file with:
 
 ```{.copy}
-more csv2bufr-ex1.csv
+cat csv2bufr-ex1.csv
 ```
 
-### csv2bufr mapping files
-
-The csv2bufr tool can be configured to process tabular data with different columns and BUFR sequences. 
-
-This is done by the way of a configuration file written in the JSON format. 
-
-Like BUFR data itself, the JSON file contains a header section and a data section, with these broadly corresponding to the same sections in BUFR. 
-
-Additionally, some formatting options are specified within the JSON file. 
-
-The JSON file for the default mapping can be view via the link below (right-click and open in new tab):
-
-[aws-template.json](https://raw.githubusercontent.com/wmo-im/csv2bufr/main/csv2bufr/templates/resources/aws-template.json)
-
-Examine the `header` section of the mapping file (shown below) and compare to the table from exercise 1 (ecCodes key column):
-
-```
-"header":[
-    {"eccodes_key": "edition", "value": "const:4"},
-    {"eccodes_key": "masterTableNumber", "value": "const:0"},
-    {"eccodes_key": "bufrHeaderCentre", "value": "const:0"},
-    {"eccodes_key": "bufrHeaderSubCentre", "value": "const:0"},
-    {"eccodes_key": "updateSequenceNumber", "value": "const:0"},
-    {"eccodes_key": "dataCategory", "value": "const:0"},
-    {"eccodes_key": "internationalDataSubCategory", "value": "const:2"},
-    {"eccodes_key": "masterTablesVersionNumber", "value": "const:30"},
-    {"eccodes_key": "numberOfSubsets", "value": "const:1"},
-    {"eccodes_key": "observedData", "value": "const:1"},
-    {"eccodes_key": "compressedData", "value": "const:0"},
-    {"eccodes_key": "typicalYear", "value": "data:year"},
-    {"eccodes_key": "typicalMonth", "value": "data:month"},
-    {"eccodes_key": "typicalDay", "value": "data:day"},
-    {"eccodes_key": "typicalHour", "value": "data:hour"},
-    {"eccodes_key": "typicalMinute", "value": "data:minute"},
-    {"eccodes_key": "unexpandedDescriptors", "value":"array:301150, 307096"}
-],
-```
-
-Here you can see the same headers as available in the output from the `bufr_ls` command. In the mapping file the value 
-for these can be set to a column from the CSV input file, a constant value or an array of constant values.
-
-!!! question
-    Look at the example header section above. How would you specify a constant value, a value from the input CSV data
-    file and an array of constants?
-
-??? success "Click to reveal answer"
-    - Constant values can be set by setting the `value` property to `"value": "const:<your-constant>"`.
-    - Values can be set to a column from the input CSV by setting the `value` property to `"value": "data:<your-column>"`.
-    - Arrays can be set by setting the `value` property to `"value": "array:<comma-seperated-values>"`.
-
-Now examine the data section of the JSON mapping file (note, the output has been truncated):
-
-```
-    "data": [
-        {"eccodes_key": "#1#wigosIdentifierSeries", "value":"data:wsi_series", "valid_min": "const:0", "valid_max": "const:0"},
-        {"eccodes_key": "#1#wigosIssuerOfIdentifier", "value":"data:wsi_issuer", "valid_min": "const:0", "valid_max": "const:65534"},
-        {"eccodes_key": "#1#wigosIssueNumber", "value":"data:wsi_issue_number", "valid_min": "const:0", "valid_max": "const:65534"},
-        {"eccodes_key": "#1#wigosLocalIdentifierCharacter", "value":"data:wsi_local"},
-        {"eccodes_key": "#1#latitude", "value": "data:latitude", "valid_min": "const:-90.0", "valid_max": "const:90.0"},
-        {"eccodes_key": "#1#longitude", "value": "data:longitude", "valid_min": "const:-180.0", "valid_max": "const:180.0"},
-        {"eccodes_key": "#1#heightOfStationGroundAboveMeanSeaLevel", "value":"data:station_height_above_msl", "valid_min": "const:-400", "valid_max": "const:9000"},
-        {"eccodes_key": "#1#heightOfBarometerAboveMeanSeaLevel", "value":"data:barometer_height_above_msl", "valid_min": "const:-400", "valid_max": "const:9000"},
-        {"eccodes_key": "#1#blockNumber", "value": "data:wmo_block_number", "valid_min": "const:0", "valid_max": "const:99"},
-        {"eccodes_key": "#1#stationNumber", "value": "data:wmo_station_number", "valid_min": "const:0", "valid_max": "const:999"},
-        {"eccodes_key": "#1#stationType", "value": "data:station_type", "valid_min": "const:0", "valid_max": "const:3"},
-        {"eccodes_key": "#1#year", "value": "data:year", "valid_min": "const:1600", "valid_max": "const:2200"},
-        {"eccodes_key": "#1#month", "value": "data:month", "valid_min": "const:1", "valid_max": "const:12"},
-        {"eccodes_key": "#1#day", "value": "data:day", "valid_min": "const:1", "valid_max": "const:31"},
-        {"eccodes_key": "#1#hour", "value": "data:hour", "valid_min": "const:0", "valid_max": "const:23"},
-        {"eccodes_key": "#1#minute", "value": "data:minute", "valid_min": "const:0", "valid_max": "const:59"},
-        {"eccodes_key": "#1#nonCoordinatePressure", "value": "data:station_pressure", "valid_min": "const:50000", "valid_max": "const:150000"},
-        {"eccodes_key": "#1#pressureReducedToMeanSeaLevel", "value": "data:msl_pressure", "valid_min": "const:50000", "valid_max": "const:150000"},
-        {"eccodes_key": "#1#nonCoordinateGeopotentialHeight", "value": "data:geopotential_height", "valid_min": "const:-1000", "valid_max": "const:130071"},
-        ...
-    ]
-```
-
-
-!!! question
-    Can you identify the row in the data section that performs the mapping between the CSV input file and ecCodes key
-    used to encode the mean sea level pressure data?
-
-??? success "Click to reveal answer"
-    You can find the line by looking for the ecCodes key `pressureReducedToMeanSeaLevel` in the `eccodes_key` property, note that the value property is set to `data:msl_pressure`:
-    
-    ```
-    {"eccodes_key": "#1#pressureReducedToMeanSeaLevel", "value": "data:msl_pressure", "valid_min": "const:50000", "valid_max": "const:150000"},
-    ```
-    
-    This instructs the csv2bufr tool to map the data from the `msl_pressure` column to the `#1#pressureReducedToMeanSeaLevel` element in BUFR.
-
-!!! question "Bonus question"
-    Can you guess what the `valid_min` and `valid_max` properties do?
- 
-??? success "Click to reveal answer" 
-    These specify the valid minimum and maximum values for the different elements. Values falling outside of the 
-    range specified will result in a warning message and the data set to missing in the output BUFR file.
-
-Download the csv2bufr mapping file to the wis2box management container:
-
-``` {.copy}
-curl https://raw.githubusercontent.com/wmo-im/csv2bufr/main/csv2bufr/templates/resources/aws-template.json --output aws-template.json 
-```
-
-Now modify the file to change the limits for air temperature, for example set to realistic limits but in degrees Celsius:
-
-```
-        {"eccodes_key": "#1#airTemperature", "value": "data:air_temperature", "valid_min": "const:-60", "valid_max": "const:60"},
-```
-
-Now use `csv2bufr` to transform the example CSV data file to BUFR using the modified mapping file:
+Let's attempt to convert the file to BUFR format using the `csv2bufr` command:
 
 ```{.copy}
-csv2bufr data transform --bufr-template aws-template.json csv2bufr-ex1.csv
+csv2bufr data transform --bufr-template aws-template ./aws-example.csv
 ```
-
-You should see the following output:
-
-```
-CLI:    ... Transforming ex1.csv to BUFR ...
-CLI:    ... Processing subsets:
-#1#airTemperature: Value (301.25) out of valid range (-60 - 60).; Element set to missing
-CLI:    ..... 384 bytes written to ./WIGOS_0-20000-0-99100_20230929T090000.bufr4
-CLI:    End of processing, exiting.
-```
-
-This suggests a mismatch between the units in the input data and that expected by the mapping file.
-
-Use the `bufr_dump` command to confirm that the first air temperature value has been set to missing in the file that was produced:
-
-```{.copy}
-bufr_dump -p WIGOS_0-20000-0-99100_20230929T090000.bufr4 | grep airTemperature
-```
-
-!!! note
-    Note that the units used in BUFR are fixed, Kelvin for temperature, Pascals for pressure etc. However,
-    csv2bufr can perform simple unit conversions by scaling and adding an offset.
-
-As the final part of this exercise, edit the the mapping file again and add a scale and offset to the 
-airTemperature line.
-
-```json
-        {"eccodes_key": "#1#airTemperature", "value": "data:air_temperature", "valid_min": "const:-60", "valid_max": "const:60", "scale": "const:0", "offset":"const:273.15"},
-```
-
-And edit  the air_temperature column in the 'csv2bufr-ex1.csv' to be in Celsius rather than Kelvin: 301.25 K = 28.1 degrees C.
-
-Rerun the conversion:
-
-```{.copy}
-csv2bufr data transform --bufr-template aws-template.json csv2bufr-ex1.csv
-```
- 
-Run BUFR dump and confirm that the airTemperature is correctly encoded.
-    
-```{.copy}
-bufr_dump -p WIGOS_0-20000-0-99100_20230929T090000.bufr4 | grep airTemperature
-```
-
-You should see the following output:
-
-```
-#1#airTemperature=301.25
-#2#airTemperature=MISSING
-```
-
-## Housekeeping
-
-Clean up your working directory by removing files you no longer need and clean up your station list to remove any
-example stations you may have created and that are no longer needed.
 
 ## Conclusion
 

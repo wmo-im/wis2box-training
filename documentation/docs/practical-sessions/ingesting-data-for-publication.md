@@ -1,8 +1,8 @@
 ---
-title: Monitoring WIS2 Notifications
+title: Ingesting data for publication
 ---
 
-# Monitoring WIS2 Notifications 
+# Ingesting data for publication
 
 !!! abstract "Learning outcomes"
 
@@ -15,16 +15,17 @@ title: Monitoring WIS2 Notifications
 
 ## Introduction
 
-In this exercise we will use a sample CSV data file to trigger the wis2box workflow and publish WIS2 notifications using the dataset you configured in the previous practical session. 
- Note that wis2box will converts CSV into BUFR format before publishing it to the MQTT broker as per the data-mappings pre-configured in your dataset. In the next exercises, you will learn more about how data-conversion in the wis2box works. For this exercise, we will focus on the different methods to upload data to your wis2box instance and how to see if you correctly ingested and published the data.
+In this exercise we will use some sample data files to trigger the wis2box workflow and **publish WIS2 data-notifications** for the dataset you configured in the previous practical session. 
 
-The **Grafana dashboard** uses data from Prometheus and Loki to display the status of your wis2box. Prometheus store time-series data from the metrics collected, while Loki store the logs from the containers running on your wis2box instance. This data allows you to check how much data is received on MinIO and how many WIS2 notifications are published, and if there are any errors detected in the logs.
+During the exercise we will monitor the status of the data ingest using the **Grafana dashboard** and **MQTT Explorer**. The Grafana dashboard uses data from Prometheus and Loki to display the status of your wis2box, while MQTT Explorer allows you to see the WIS2 data notifications published by your wis2box instance.
+
+Note that wis2box will transform the example data to BUFR format before publishing it to the MQTT broker as per the data-mappings pre-configured in your dataset. For this exercise, we will focus on the different methods to upload data to your wis2box instance and how to see if you correctly ingested and published the data. Data transformation will be covered later in the [Data conversion tools](../data-conversion-tools) practical session.
 
 ## Preparation
 
-This section will use the dataset for "surface-based-observations/synop" previously created in the [Configuring datasets in wis2box](/practical-sessions/configuring-wis2box-datasets) practical session and requires you to have configured stations in the **wis2box-webapp** as described in the [Configuring station metadata](/practical-sessions/configuring-station-metadata) practical session. 
+This section will use the dataset for "surface-based-observations/synop" previously created in the [Configuring datasets in wis2box](/practical-sessions/configuring-wis2box-datasets) practical session and requires you to know how to configure stations in the **wis2box-webapp** as described in the [Configuring station metadata](/practical-sessions/configuring-station-metadata) practical session. 
 
-Login to your student VM using your SSH client (PuTTY or other).
+Make sure you can login to your student VM using your SSH client (PuTTY or other).
 
 Make sure wis2box is up and running:
 
@@ -35,8 +36,6 @@ python3 wis2box-ctl.py status
 ```
 
 Make sure your have MQTT Explorer running and connected to your instance using the public credentials `everyone/everyone` with a subscription to the topic `origin/a/wis2/#`.
-
-Make sure you have access to the MinIO web interface by going to `http://<your-host>:9000` and you are logged (using `WIS2BOX_STORAGE_USERNAME` and `WIS2BOX_STORAGE_PASSWORD` from your `wis2box.env` file).
 
 Make sure you have a web browser open with the Grafana dashboard for your instance by going to `http://<your-host>:3000`.
 
@@ -49,6 +48,11 @@ Copy the sample data file `aws-example.csv` to the the directory you defined as 
 ```bash
 cp ~/exercise-materials/data-ingest-exercises/aws-example.csv ~/wis2box-data/
 ```
+
+!!! note
+    The `WIS2BOX_HOST_DATADIR` is mounted as `/data/wis2box/` inside the wis2box-management container by the `docker-compose.yml` file included in the `wis2box-1.0.0rc1` directory.
+    
+    This allows you to share data between the host and the container.
 
 Make sure you are in the `wis2box-1.0.0rc1` directory and login to the **wis2box-management** container:
 
@@ -70,11 +74,6 @@ nano /data/wis2box/aws-example.csv
 ```
 
 Don't edit the file for now, just check the content and exit the editor.
-
-!!! note
-    The `WIS2BOX_HOST_DATADIR` is mounted as `/data/wis2box/` inside the wis2box-management container by the `docker-compose.yml` file included in the `wis2box-1.0.0rc1` directory.
-    
-    This allows you to share data between the host and the container.
 
 !!! question "Ingesting data using `wis2box data ingest`"
 
@@ -240,6 +239,34 @@ The script needs to know the correct endpoint for accessing MinIO on your wis2bo
     ```
 
     And make sure the errors are resolved.
+
+Once you manage to run the script successfully, you will see a message indicating that the file was copied to MinIO and you should see data-notifications published by your wis2box instance in MQTT Explorer.
+
+You can also check the Grafana dashboard to see if the data was successfully ingested and published.
+
+Now that the script is working you can try to copy other files into MinIO using the same script.
+
+!!! question "Ingesting binary data in BUFR format"
+
+    Run the following command to copy the binary data file `bufr-example.bin` into the `wis2box-incoming` bucket in MinIO:
+
+    ```bash
+    python3 copy_file_to_incoming.py bufr-example.bin
+    ```
+
+Check the Grafana dashboard and MQTT Explorer to see if the test-data was successfully ingested and published and if you see any errors, try to resolve them.
+
+!!! question "Verify the data ingest"
+
+    How many messages were published to the MQTT broker for this data sample?
+
+??? success "Click to reveal answer"
+
+    You will see errors reported in Grafana as the stations in the BUFR file are not defined in the station list of your wis2box instance. 
+    
+    If you all stations used in the BUFR file are defined in your wis2box instance, you should see 10 messages published to the MQTT broker. Each notification correspond to data for one station for one observation timestamp.
+
+    The plugin `wis2box.data.bufr4.ObservationDataBUFR` splits the BUFR file into individual BUFR messages and publishes one message for each station and observation timestamp.
 
 ## Conclusion
 

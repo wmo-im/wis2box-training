@@ -20,13 +20,12 @@ Similarly, when data are ingested into a database it is easy to export the requi
 To aid the exchange of data originally stored in tabular data formats a CSV to BUFR converted has been implemented in 
 the wis2box using the same software as for SYNOP to BUFR.
 
-In this session you will learn about using csv2bufr converter in the wis2box for the following built-in templates:
+In this session you will learn how to create your own mapping template for converting CSV data to BUFR.
+
+You will also learn about the following built-in mapping templates and how to use them:
 
 - **AWS** (aws-template.json) : Mapping template for converting CSV data from simplified automatic weather station file to BUFR sequence 301150, 307096"
 - **DayCLI** (daycli-template.json) : Mapping template for converting daily climate CSV data to BUFR sequence 307075
-
-You will also learn how to create your own mapping template for converting CSV data to BUFR.
-
 
 ## Preparation
 
@@ -36,6 +35,195 @@ Make sure that you have a web browser open with the MinIO UI for your instance b
 If you don't remember your MinIO credentials, you can find them in the `wis2box.env` file in the `wis2box-1.0.0rc1` directory on your student VM.
 
 Make sure that you have MQTT Explorer open and connected to your broker using the credentials `everyone/everyone`.
+
+## Creating a mapping template
+
+The csv2bufr module comes with a command line tool to create your own mapping template using a set of BUFR sequences and/or BUFR element as input.
+
+To find specific BUFR sequences and elements you can refer to the BUFR tables at [https://confluence.ecmwf.int/display/BUFR/BUFR+Tables](https://confluence.ecmwf.int/display/BUFR/BUFR+Tables).
+
+To access the csv2bufr command line tool, you need to login to the wis2box-api container:
+
+```bash
+cd ~/wis2box-1.0.0rc1
+python3 wis2box-ctl.py login wis2box-api
+```
+
+To to print the help page for the command `csv2bufr mapping`:
+
+```bash
+csv2bufr mappings --help
+```
+
+The help page show 2 subcommands:
+
+- `csv2bufr mappings create` : Create a new mapping template
+- `csv2bufr mappings list` : List the mapping templates available in the system
+
+!!! Note "csv2bufr mapping list"
+
+    The `csv2bufr mapping list` command will show you the mapping templates available in the system. 
+    Default templates are stored in the directory `/opt/wis2box/csv2bufr/templates` in the container.
+
+    To share custom mapping templates with the system you can store them in the directory defined by `$CSV2BUFR_TEMPLATES`, which is set to `/data/wis2box/mappings` by default in the container. Since the directory `/data/wis2box/mappings` in the container is mounted to the directory `$WIS2BOX_HOST_DATADIR/mappings` on the host, you will find your custom mapping templates in the directory `$WIS2BOX_HOST_DATADIR/mappings` on the host.
+
+Let's try to create a new custom mapping template using the `csv2bufr mapping create` command using as input BUFR sequence 301150 plus BUFR element 012101.
+
+```bash
+csv2bufr mappings create 301150 012101 --output /data/wis2box/mappings/my_custom_template.json
+```
+
+You can check the content of the mapping template you just created using the `cat` command:
+
+```bash
+cat /data/wis2box/mappings/my_custom_template.json
+```
+
+!!! question "Inspection of the mapping template"
+
+    How many CSV columns are being mapped to BUFR elements? What is the CSV-header for each BUFR element being mapped?
+
+??? success "Click to reveal answer"
+    
+    The mapping template you created maps **5** CSV columns to BUFR elements, namely the 4 BUFR elements in sequence 301150 plus the BUFR element 012101. 
+
+    The following CSV columns are being mapped to BUFR elements:
+
+    - **wigosIdentifierSeries** maps to `"eccodes_key": "#1#wigosIdentifierSeries"` (BUFR element 001125)
+    - **wigosIssuerOfIdentifier** maps to `"eccodes_key": "#1#wigosIssuerOfIdentifier` (BUFR element 001126)
+    - **wigosIssueNumber** maps to `"eccodes_key": "#1#wigosIssueNumber"` (BUFR element 001127)
+    - **wigosLocalIdentifierCharacter** maps to `"eccodes_key": "#1#wigosLocalIdentifierCharacter"` (BUFR element 001128)
+    - **airTemperature** maps to `"eccodes_key": "#1#airTemperature"` (BUFR element 012101)
+
+The mapping template you created misses important metadata about the observation that was made, the date and time of the observation, and the latitude and longitude of the station.
+
+Let's update the mapping template and add the following sequences :
+    
+    - **301011** for Date (Year, month, day)
+    - **301012** for Time (Hour, minute)
+    - **301023** for Location (Latitude/longitude (coarse accuracy))
+
+And also add the followings elements to map the pressure observation and the barometer height above mean sea level :
+
+    - **010004** for Pressure
+    - **007031** for Barometer height above mean sea level
+
+Execute the following command to update the mapping template:
+
+```bash
+csv2bufr mappings create 301150 301011 301012 301023 007031 012101 010004  --output /data/wis2box/mappings/my_custom_template.json
+```
+
+And inspect the content of the mapping template again:
+
+```bash
+cat /data/wis2box/mappings/my_custom_template.json
+```
+
+!!! question "Inspection of the updated mapping template"
+
+    How many CSV columns are now being mapped to BUFR elements? What is the CSV-header for each BUFR element being mapped?
+
+??? success "Click to reveal answer"
+    
+    The mapping template you created now maps **18** CSV columns to BUFR elements:
+    - 4 BUFR elements from BUFR sequence 301150
+    - 3 BUFR elements from BUFR sequence 301011
+    - 2 BUFR elements from BUFR sequence 301012
+    - 2 BUFR elements from BUFR sequence 301023
+    - BUFR element 007031
+    - BUFR element 012101
+
+    The following CSV columns are being mapped to BUFR elements:
+
+    - **wigosIdentifierSeries** maps to `"eccodes_key": "#1#wigosIdentifierSeries"` (BUFR element 001125)
+    - **wigosIssuerOfIdentifier** maps to `"eccodes_key": "#1#wigosIssuerOfIdentifier` (BUFR element 001126)
+    - **wigosIssueNumber** maps to `"eccodes_key": "#1#wigosIssueNumber"` (BUFR element 001127)
+    - **wigosLocalIdentifierCharacter** maps to `"eccodes_key": "#1#wigosLocalIdentifierCharacter"` (BUFR element 001128)
+    - **year** maps to `"eccodes_key": "#1#year"` (BUFR element 004001)
+    - **month** maps to `"eccodes_key": "#1#month"` (BUFR element 004002)
+    - **day** maps to `"eccodes_key": "#1#day"` (BUFR element 004003)
+    - **hour** maps to `"eccodes_key": "#1#hour"` (BUFR element 004004)
+    - **minute** maps to `"eccodes_key": "#1#minute"` (BUFR element 004005)
+    - **latitude** maps to `"eccodes_key": "#1#latitude"` (BUFR element 005002)
+    - **longitude** maps to `"eccodes_key": "#1#longitude"` (BUFR element 006002)
+    - **heightOfBarometerAboveMeanSeaLevel"** maps to `"eccodes_key": "#1#heightOfBarometerAboveMeanSeaLevel"` (BUFR element 007031)
+    - **airTemperature** maps to `"eccodes_key": "#1#airTemperature"` (BUFR element 012101)
+    - **nonCoordinatePressure** maps to `"eccodes_key": "#1#nonCoordinatePressure"` (BUFR element 010004)
+
+To test the new template, first exit the container:
+
+```bash
+exit
+```
+
+Then copy the example CSV file `aws-example.csv` to the directory `~/wis2box-data/mappings`:
+
+```bash
+cp ~/exercise-materials/data-conversion-exercises/custom_template_data.csv ~/wis2box-data/mappings
+```
+
+Login to the wis2box-api container:
+
+```bash
+cd ~/wis2box-1.0.0rc1
+python3 wis2box-ctl.py login wis2box-api
+```
+
+Check that the file `custom_template_data.csv` is present in the directory `/data/wis2box/mappings` and view the content with the `cat` command:
+
+```bash
+ls /data/wis2box/mappings
+cat /data/wis2box/mappings/custom_template_data.csv
+```
+
+Note that the headers of this CSV file are the same as the CSV headers in the mapping template you created.
+
+To test the data conversion we can use the `csv2bufr` command line tool to convert the CSV file to BUFR using the mapping template we created:
+
+```bash
+csv2bufr data transform --bufr-template /data/wis2box/mappings/my_custom_template.json /data/wis2box/mappings/custom_template_data.csv
+```
+
+You should see the following output:
+
+```bash
+CLI:    ... Transforming /data/wis2box/mappings/custom_template_data.csv to BUFR ...
+CLI:    ... Processing subsets:
+CLI:    ..... 94 bytes written to ./WIGOS_0-20000-0-15015_20250412T210000.bufr4
+CLI:    End of processing, exiting.
+```
+
+!!! question "Check the content of the BUFR file"
+    
+    How can you check the content of the BUFR file you just created and verify that it has encoded the data correctly?
+
+??? success "Click to reveal answer"
+
+    You can use the `bufr_dump -p` command to check the content of the BUFR file you just created. 
+    The command will show you the content of the BUFR file in a human readable format.
+
+    ```bash
+    bufr_dump -p ./WIGOS_0-20000-0-15015_20250412T210000.bufr4
+    ```
+
+    In the output you will see values for the BUFR elements you mapped in the template, for example the "airTemperature" will show:
+    
+    ```bash
+    airTemperature=298.15
+    ```
+
+Finally you can check that the new template is available to be used by your data mappings by going to the dataset-editor in the wis2box-webapp.
+
+Click on the dataset you created in the previous practical session and click on "UPDATE" next to the plugin with name "CSV data converted to BUFR":
+
+<img alt="Image showing the dataset editor in the wis2box-webapp" src="../../assets/img/wis2box-webapp-data-mapping-update-csv2bufr.png"/>
+
+You should see the new template you created in the list of available templates:
+
+<img alt="Image showing the dataset editor in the wis2box-webapp" src="../../assets/img/wis2box-webapp-csv2bufr-templates.png"/>
+
+For now keep the default selection of the AWS template (click on the top right to close the plugin configuration).
 
 ## Using the 'AWS' template
 
