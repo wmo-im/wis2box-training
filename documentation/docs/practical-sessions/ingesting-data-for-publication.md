@@ -15,6 +15,10 @@ title: Ingesting data for publication
 
 ## Introduction
 
+In WIS2, data is shared in real-time using WIS2 data notifications that contain a "canonical"-link from which the data can be downloaded. 
+
+To trigger the data-workflow in a WIS2 Node using the wis2box-software, data needs to be uploaded to the **wis2box-incoming** bucket in **MinIO**, which will trigger the wis2box workflow that will result in the data being published via a WIS2 data notification. Depending on the data mappings configured in your wis2box instance, the data will be transformed to BUFR format before being published.
+
 In this exercise we will use some sample data files to trigger the wis2box workflow and **publish WIS2 data-notifications** for the dataset you configured in the previous practical session. 
 
 During the exercise we will monitor the status of the data ingest using the **Grafana dashboard** and **MQTT Explorer**. The Grafana dashboard uses data from Prometheus and Loki to display the status of your wis2box, while MQTT Explorer allows you to see the WIS2 data notifications published by your wis2box instance.
@@ -39,20 +43,35 @@ Make sure your have MQTT Explorer running and connected to your instance using t
 
 Make sure you have a web browser open with the Grafana dashboard for your instance by going to `http://<your-host>:3000`.
 
-## Testing the data ingest from the command line
+### prepare example data
 
-Please execute the following commands from your SSH-client session:
-
-Copy the sample data file `aws-example.csv` to the the directory you defined as the `WI2BOX_HOST_DATADIR` in your `wis2box.env` file.
+Copy the directory `exercise-materials/data-ingest-exercises` to the the directory you defined as the `WI2BOX_HOST_DATADIR` in your `wis2box.env` file.
 
 ```bash
-cp ~/exercise-materials/data-ingest-exercises/aws-example.csv ~/wis2box-data/
+cp -r ~/exercise-materials/data-ingest-exercises ~/wis2box-data/
 ```
-
 !!! note
     The `WIS2BOX_HOST_DATADIR` is mounted as `/data/wis2box/` inside the wis2box-management container by the `docker-compose.yml` file included in the `wis2box-1.0.0rc1` directory.
     
     This allows you to share data between the host and the container.
+
+### add the test station
+
+Add the station with WIGOS identifier `0-20000-0-60355` to your wis2box instance using the station editor in the wis2box-webapp.
+
+Get the station from OSCAR:
+
+<img alt="oscar-station" src="../../assets/img/webapp-test-station-oscar-search.png" width="600">
+
+Add the station to the datasets you created for publishing on ""../surface-based-observations/synop" and save the changes using your authentication token:
+
+<img alt="webapp-test-station" src="../../assets/img/webapp-test-station-save.png" width="800">
+
+Note that you can remove this station from your dataset after the practical session.
+
+## Testing the data ingest from the command line
+
+In this exercise we will use the `wis2box data ingest` command to upload data to MinIO.
 
 Make sure you are in the `wis2box-1.0.0rc1` directory and login to the **wis2box-management** container:
 
@@ -61,33 +80,26 @@ cd ~/wis2box-1.0.0rc1
 python3 wis2box-ctl.py login
 ```
 
-Verify the sample data is available in the directory `/data/wis2box/` within the **wis2box-management** container:
+Verify the following sample data is available in the directory `/data/wis2box/` within the **wis2box-management** container:
 
 ```bash
-ls -lh /data/wis2box/aws-example.csv
+ls -lh /data/wis2box/data-ingest-exercises/synop_202412030900.txt
 ```
 
-You can edit the file using nano or vim:
-
-```bash
-nano /data/wis2box/aws-example.csv
-```
-
-Don't edit the file for now, just check the content and exit the editor.
 
 !!! question "Ingesting data using `wis2box data ingest`"
 
-    Execute the following command to ingest the sample data file `aws-example.csv` to your wis2box-instance:
+    Execute the following command to ingest the sample data file to your wis2box-instance:
 
     ```bash
-    wis2box data ingest -p /data/wis2box/aws-example.csv --metadata-id urn:wmo:md:not-my-centre:core.surface-based-observations.synop
+    wis2box data ingest -p /data/wis2box/data-ingest-exercises/synop_202412030900.txt --metadata-id urn:wmo:md:not-my-centre:core.surface-based-observations.synop
     ```
 
     Was the data successfully ingested? If not, what was the error message and how can you fix it?
 
 ??? success "Click to reveal answer"
 
-    You will see the following output:
+    The data was **not** successfully ingested, you should see the following:
 
     ```bash
     Error: metadata_id=urn:wmo:md:not-my-centre:core.surface-based-observations.synop not found in data mappings
@@ -95,51 +107,35 @@ Don't edit the file for now, just check the content and exit the editor.
 
     The error message indicates that the metadata identifier you provided does not match any of the datasets you have configured in your wis2box-instance.
 
-    Provide the correct metadata-id that matches the dataset you created in the previous practical session and repeat the data ingest command until you should see the following output:
+    Provide the correct metadata-id that matches the dataset you created in the previous practical session and repeat the data ingest command until you see the following output:
 
     ```bash 
-    Processing /data/wis2box/aws-example.csv
+    Processing /data/wis2box/data-ingest-exercises/synop_202412030900.txt
     Done
     ```
 
-Go to the MinIO console in your browser and check if the file `aws-example.csv` was uploaded to the `wis2box-incoming` bucket. You should see there is a new directory with the name of the dataset you provided in the `--metadata-id` option:
+Go to the MinIO console in your browser and check if the file `synop_202412030900.txt` was uploaded to the `wis2box-incoming` bucket. You should see there is a new directory with the name of the dataset you provided in the `--metadata-id` option, and inside this directory you will find the file `synop_202412030900.txt`:
 
-<img alt="minio-wis2box-incoming-dataset-folder" src="../../assets/img/minio-wis2box-incoming-dataset-folder.png" width="800">
+<img alt="minio-wis2box-incoming-dataset-folder" src="../../assets/img/minio-data-ingest-test-data.png" width="800">
 
 !!! note
     The `wis2box data ingest` command uploaded the file to the `wis2box-incoming` bucket in MinIO in a directory named after the metadata identifier you provided.
 
 Go to the Grafana dashboard in your browser and check the status of the data ingest.
 
-!!! question "Check the status of the data ingest"
+!!! question "Check the status of the data ingest on Grafana"
     
-    Go to the Grafana dashboard in your browser and check the status of the data ingest.
+    Go to the Grafana dashboard at **http://your-host:3000** and check the status of the data ingest in your browser and check the status of the data ingest.
     
-    Was the data successfully ingested?
+    How can you see if the data was successfully ingested and published?
 
 ??? success "Click to reveal answer"
-    The panel at the bottom of the Grafana home dashboard reports the following warnings:    
     
-    `WARNING - input=aws-example.csv warning=Station 0-20000-0-60355 not in station list; skipping`
-    `WARNING - input=aws-example.csv warning=Station 0-20000-0-60360 not in station list; skipping`
-
-    This warning indicates that the stations are not defined in the station list of your wis2box. No WIS2 notifications will be published for this station until you add it to the station list and associate it with the topic for your dataset.
-
-!!! question "Update the input data to match the stations in your wis2box instance"
-
-    Edit the example .csv file and update the WIGOS-station-identifiers in the input-data to match the stations you have in your wis2box instance.
-
-    Now re-upload the sample data file `aws-example.csv` to the same path in MinIO you used in the previous exercise.
-
-    Check the Grafana dashboard, are there any new errors or warnings ? How can you see that the test data was successfully ingested and published?
-
-??? success "Click to reveal answer"
-
-    You can check the charts on the Grafana home dashboard to see if the test data was successfully ingested and published.
+    If you successfully ingested the data, you should see the following:
     
-    If successful, you should see the following:
-
-    <img alt="grafana_success" src="../../assets/img/grafana_success.png" width="800">
+    <img alt="grafana_data_ingest" src="../../assets/img/grafana_data-ingest-test.png" width="400">  
+    
+    If you do not see this, please check for WARNING or ERROR messages displayed in the bottom of the dashboard and attempt to resolve them.
 
 !!! question "Check the MQTT broker for WIS2 notifications"
     
@@ -151,13 +147,19 @@ Go to the Grafana dashboard in your browser and check the status of the data ing
 
 ??? success "Click to reveal answer"
 
-    You should see 6 WIS2 data notifications published by your wis2box.
+    You should see 1 WIS2 data notifications was published by your wis2box.
 
     To access the content of the data being published, you can expand the topic structure to see the different levels of the message until you reach the last level and review message content of one of the messages.
 
     The message content has a "links" section with a "rel" key of "canonical" and a "href" key with the URL to download the data. The URL will be in the format `http://<your-host>/data/...`. 
     
-    Note that the data-format is BUFR and you will need a BUFR parser to view the content of the data. The BUFR format is a binary format used by meteorological services to exchange data. The data-plugins inside wis2box transformed the data from CSV to BUFR before publishing it.
+    Note that the data-format is BUFR and you will need a BUFR parser to view the content of the data. The BUFR format is a binary format used by meteorological services to exchange data. The data-plugins inside wis2box transformed the data to BUFR before publishing it.
+
+After completing this exercise, exit the **wis2box-management** container:
+
+```bash
+exit
+```
 
 ## Uploading data using the MinIO web interface
 
@@ -165,9 +167,13 @@ In the previous exercises, you uploaded data available on the wis2box-host to Mi
 
 Next we will use the MinIO web interface, which allows you to download and upload data to MinIO using a web browser.
 
-!!! question "Upload data using the MinIO web interface"
+!!! question "Re-upload data using the MinIO web interface"
 
-    Go to the MinIO web interface in your browser and browse to the `wis2box-incoming` bucket. You will see the file `aws-example.csv` you uploaded in the previous exercises.
+    Go to the MinIO web interface in your browser and browse to the `wis2box-incoming` bucket. You will see the file `synop_202412030900.txt` you uploaded in the previous exercises.
+
+    Click on the file and you will have the option to download it:
+
+    <img alt="minio-wis2box-incoming-dataset-folder" src="../../assets/img/minio-download.png" width="800">
 
     You can download this file and re-upload it to the same path in MinIO to re-trigger the wis2box workflow.
 
@@ -175,23 +181,69 @@ Next we will use the MinIO web interface, which allows you to download and uploa
 
 ??? success "Click to reveal answer"
 
-    You will see a message indicate that the wis2box already published this data. The wis2box will not publish the same data twice. You can change the content of the file and re-upload it to trigger the workflow again. You can also upload a random file from your computer and you will note the Grafana dashboard will show errors indicating could not be ingested.
+    You will see a message indicating that the wis2box already published this data:
+
+    ```bash
+    ERROR - Data already published for WIGOS_0-20000-0-64400_20241203T090000-bufr4; not publishing
+    ``` 
+    
+    This demonstrates the data workflow was triggered but the data was not re-published, the wis2box will not publish the same data twice. 
+    
+!!! question "Upload new data using the MinIO web interface"
+    
+    Download this sample-file [synop_202502040900.txt](/sample-data/synop_202502040900.txt) (right click and select "save as" to download the file)
+    
+    Upload the file you downloaded using the web interface to the same path in MinIO as the previous file.
+
+    Did the data ingest and publish successfully?
+
+??? success "Click to reveal answer"
+
+    Go to the Grafana dashboard and check if the data was successfully ingested and published.
+
+    If you use the wrong path, you will see an error message in the logs.
+
+    If you use the correct path, you will see one more WIS2 data notification was published for test station `0-20000-0-64400` indicating that the data was successfully ingested and published.
+
+    <img alt="grafana_data_ingest" src="../../assets/img/grafana_data-ingest-test2.png" width="400"> 
 
 ## Uploading data using SFTP
 
-The MinIO server also supports SFTP. You can use an SFTP client to upload data to MinIO.
+The MinIO service in wis2box can also be accessed over SFTP. The SFTP-server for MinIO is bound to port 8022 on the host (port 22 is used for SSH).
+
+In this exercise we will demonstrate how the use WinSCP to upload data to MinIO using SFTP.
+
+You can setup a new WinSCP connection as shown in this screenshot:
+
+<img alt="winscp-sftp-connection" src="../../assets/img/winscp-sftp-login.png" width="400">
+
+The credentials for the SFTP connection are defined by `WIS2BOX_STORAGE_USERNAME` and `WIS2BOX_STORAGE_PASSWORD` in your `wis2box.env` file, and are the same as the credentials you used to connect to the MinIO UI.
+
+When you login you will the buckets used by wis2box in MinIO:
+
+<img alt="winscp-sftp-bucket" src="../../assets/img/winscp-buckets.png" width="600">
+
+You can navigate to the `wis2box-incoming` bucket and then to folder for your dataset and you will see the files you uploaded in the previous exercises:
+
+<img alt="winscp-sftp-incoming-path" src="../../assets/img/winscp-incoming-data-path.png" width="600">
 
 !!! question "Upload data using SFTP"
 
-    Use an SFTP client to connect to your wis2box instance using the credentials `WIS2BOX_STORAGE_USERNAME` and `WIS2BOX_STORAGE_PASSWORD` from your `wis2box.env` file.
+    Download this sample file to your local computer:
 
-    Upload the sample data file `aws-example.csv` to the same path in MinIO you used in the previous exercises.
+    [synop_202503030900.txt](/sample-data/synop_202503030900.txt) (right click and select "save as" to download the file)
+
+    And then upload it to the incoming dataset path in MinIO using your SFTP session in WinSCP.
 
     Check the Grafana dashboard and MQTT Explorer to see if the data was successfully ingested and published.
 
 ??? success "Click to reveal answer"
 
-    If you uploaded the data correctly you will see a message indicating that the wis2box already published this data. If you use the wrong path or bucket name, you will see an error message in the logs of the wis2box-management container.
+    You should see a new WIS2 data notification published for the test station `0-20000-0-64400` indicating that the data was successfully ingested and published.
+
+    <img alt="grafana_data_ingest" src="../../assets/img/grafana_data-ingest-test3.png" width="400"> 
+
+    If you use the wrong path, you will see an error message in the logs.
 
 ## Uploading data using a Python script
 
@@ -205,13 +257,13 @@ pip3 install minio
 
 On your student VM the 'minio' package for Python will already be installed.
 
-Go to the directory `exercise-materials/data-ingest-exercises`; this directory contains a sample script `copy_file_to_incoming.py` that uses the MinIO Python client to copy a file into MinIO.
+In the `exercise-materials/data-ingest-exercises` directory you will find an example script `copy_file_to_incoming.py` that can be used to copy files into MinIO.
 
-Try to run the script to copy the sample data file `csv-aws-example.csv` into the `wis2box-incoming` bucket in MinIO" as follows:
+Try to run the script to copy the sample data file `synop_202501030900.txt` into the `wis2box-incoming` bucket in MinIO" as follows:
 
 ```bash
-cd ~/exercise-materials/data-ingest-exercises
-python3 copy_file_to_incoming.py ~/wis2box-data/aws-example.csv
+cd ~/wis2box-data/data-ingest-exercises
+python3 copy_file_to_incoming.py synop_202501030900.txt
 ```
 
 !!! note
@@ -224,7 +276,7 @@ The script needs to know the correct endpoint for accessing MinIO on your wis2bo
     
     Edit the script `copy_file_to_incoming.py` to address the errors, using one of the following methods:
     - From the command line: use the `nano` or `vim` text editor to edit the script
-    - Using WinSCP: start a new connection using File Protocol `SCP` and the same credentials as your SSH client. Navigate to the directory `exercise-materials/data-ingest-exercises` and edit `copy_file_to_incoming.py` using the built-in text editor
+    - Using WinSCP: start a new connection using File Protocol `SCP` and the same credentials as your SSH client. Navigate into the directory `wis2box-data/data-ingest-exercises` and edit `copy_file_to_incoming.py` using the built-in text editor
     
     Ensure that you:
 
@@ -232,10 +284,10 @@ The script needs to know the correct endpoint for accessing MinIO on your wis2bo
     - provide the correct storage password for your MinIO instance
     - provide the correct path in the MinIO bucket to store the data
 
-    Re-run the script to ingest the sample data file `csv-aws-example.csv` into MinIO:
+    Re-run the script to ingest the sample data file `synop_202501030900.txt` into MinIO:
 
     ```bash
-    python3 copy_file_to_incoming.py ~/wis2box-data/aws-example.csv
+    python3 ~/wis2box-data/ ~/wis2box-data/synop_202501030900.txt
     ```
 
     And make sure the errors are resolved.

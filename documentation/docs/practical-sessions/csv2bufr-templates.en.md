@@ -97,16 +97,16 @@ cat /data/wis2box/mappings/my_custom_template.json
 
 The mapping template you created misses important metadata about the observation that was made, the date and time of the observation, and the latitude and longitude of the station.
 
-Let's update the mapping template and add the following sequences :
+Next we will update the mapping template and add the following sequences :
     
-    - **301011** for Date (Year, month, day)
-    - **301012** for Time (Hour, minute)
-    - **301023** for Location (Latitude/longitude (coarse accuracy))
+- **301011** for Date (Year, month, day)
+- **301012** for Time (Hour, minute)
+- **301023** for Location (Latitude/longitude (coarse accuracy))
 
-And also add the followings elements to map the pressure observation and the barometer height above mean sea level :
+And the following elements :
 
-    - **010004** for Pressure
-    - **007031** for Barometer height above mean sea level
+- **010004** for Pressure
+- **007031** for Barometer height above mean sea level
 
 Execute the following command to update the mapping template:
 
