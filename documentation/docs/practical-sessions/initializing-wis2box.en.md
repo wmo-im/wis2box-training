@@ -10,7 +10,8 @@ title: Initializing wis2box
 
     - run the `wis2box-create-config.py` script to create the initial configuration
     - start wis2box and check the status of its components
-    - access the **wis2box-webapp**, API, MinIO UI and Grafana dashboard in a browser
+    - view the contents of the **wis2box-api**
+    - access the **wis2box-webapp**
     - connect to the local **wis2box-broker** using MQTT Explorer
 
 !!! note
@@ -128,7 +129,6 @@ Or check the content of the file via WinSCP.
     Do not edit the `wis2box.env` file unless you are sure of the changes you are making. Incorrect changes can cause your wis2box to stop working.
 
     Do not share the contents of your `wis2box.env` file with anyone, as it contains sensitive information such as passwords.
-
 
 ## Start wis2box
 
@@ -293,7 +293,7 @@ This is the wis2box web application to enable you to interact with your wis2box:
 
 - create and manage datasets
 - update/review your station metadata
-- ingest ASCII and CSV data
+- upload manual observations using FM-12 synop form 
 - monitor notifications published on your wis2box-broker
 
 We will use this web application in a later session.
@@ -349,92 +349,6 @@ Once you are connected, verify that your the internal mosquitto statistics being
 
 Keep the MQTT Explorer open, as we will use it to monitor the messages published on the broker.
 
-## MinIO UI
-
-Open a web browser and visit the page `http://<your-host>:9001`:
-
-<img alt="minio-ui.png" src="../../assets/img/minio-ui.png" width="400">
-
-This is the MinIO UI (running via the **wis2box-storage** container).
-
-The username and password are defined in the `wis2box.env` file in your wis2box data directory by the environment variables `WIS2BOX_STORAGE_USERNAME` and `WIS2BOX_STORAGE_PASSWORD`. The default username is `wis2box`.
-
-!!! note 
-
-    You can check your wis2box.env for the value of your WIS2BOX_STORAGE_PASSWORD. You can use the following command to check the value of this environment variable:
-
-    ```{.copy}
-    cat ~/wis2box-1.0.0rc1/wis2box.env | grep WIS2BOX_STORAGE_PASSWORD
-    ```
-
-    Note that these are the read-write credentials for your MinIO instance. Never share these credentials with anyone. The Global Services can only download data from your MinIO instance using the web-proxy on the wis2box-public bucket.
-
-Try to login to your MinIO UI. You will see that there 3 buckets already defined:
-
-- `wis2box-incoming`: used to receive incoming data
-- `wis2box-public`: used to store data that is made available in the WIS2 notifications, the content of this bucket is proxied as `/data` on your `WIS2BOX_URL` via the nginx container
-- `wis2box-archive`: used to archive data from `wis2box-incoming` on a daily basis
-
-<img alt="minio-ui-buckets.png" src="../../assets/img/wis2box-minio-buckets.png" width="800">
-
-!!! note
-
-    The **wis2box-storage** container (provided by MinIO) will send a notification on the **wis2box-broker** when data is received. The **wis2box-management** container is subscribed to all messages on `wis2box/#` and will receive these notifications, triggering the data plugins defined in the datasets.
-
-### Using the MinIO UI to test data ingestion
-
-First click on "browse" for the `wis2box-incoming` bucket, then click on "Create new path":
-
-<img alt="minio-ui-create-new-path.png" src="../../assets/img/minio-ui-create-new-path.png" width="800">
-
-And enter the path `/testing/upload/`:
-
-<img alt="minio-ui-create-path.png" src="../../assets/img/minio-ui-create-path.png" width="600">
-
-Right-click on this link and select 'save link as' : [randomfile.txt](/sample-data/randomfile.txt), to download the file to your local machine.
-
-Then click on "Upload" and select the randomfile.txt you downloaded from your local machine and upload it to the `wis2box-incoming` bucket
-
-You should now see the file in the `wis2box-incoming` bucket:
-
-<img alt="minio-ui-upload-file.png" src="../../assets/img/minio-ui-upload-file.png" width="700">
-
-!!! question
-
-    Did you see a message published on your MQTT broker in MQTT Explorer?
-
-??? success "Click to reveal answer"
-
-    If you are connected to your wis2box-broker, you should note that a message has been published on the `wis2box/storage` topic:
-    
-    <img alt="mqtt-explorer-wis2box-storage.png" src="../../assets/img/mqtt-explorer-wis2box-storage.png" width="600">
-
-    This is how MinIO informs the wis2box-management service that there is new data to process. 
-    
-    Note: this is **not** a WIS2 notification, but an internal message between components within the wis2box software stack.
-
-The wis2box is not yet configured to process any files you upload, so the file will not be processed and no WIS2 notification will be published.
-
-We will check the error message produced by the wis2box-management container in the Grafana dashboard in the next step.
-
-## Grafana UI
-
-Open a web browser and visit the page `http://<your-host>:3000`:
-
-<img alt="wis2box-grafana-ui.png" src="../../assets/img/wis2box-grafana-ui.png" width="800">
-
-This is the Grafana UI, where you can view the wis2box workflow monitoring dashboard. You can also access the logs of the various containers in the wis2box software stack via the 'Explore' option in the menu.
-
-!!! question
-
-    Can you find the error message produced by the wis2box-management container when you uploaded the file to the `wis2box-incoming` bucket?
-
-??? success "Click to reveal answer"
-
-    You will should see an error message indicating that the wis2box could not process the file you uploaded.
-
-    This is expected as we have not yet configured any datasets in the wis2box, you will learn how to do this in the next practical session.
-
 ## Conclusion
 
 !!! success "Congratulations!"
@@ -442,7 +356,6 @@ This is the Grafana UI, where you can view the wis2box workflow monitoring dashb
 
     - run the `wis2box-create-config.py` script to create the initial configuration
     - start wis2box and check the status of its components
+    - access the wis2box-webapp and wis2box-API in a browser
     - connect to the MQTT broker on your student-VM using MQTT Explorer
-    - access the wis2box-UI, wis2box-webapp and wis2box-API in a browser
-    - upload a file to the "wis2box-incoming"-bucket in the MinIO UI
-    - view the Grafana dashboard to monitor the wis2box workflow
+

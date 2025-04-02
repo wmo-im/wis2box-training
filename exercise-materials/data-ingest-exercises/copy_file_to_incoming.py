@@ -5,7 +5,7 @@ import sys
 local_file = sys.argv[1]
 
 # the path in the MinIO storage, matching dataset-id or topic
-minio_path = 'urn:wmo:md:not-my-centre-id:core.surface-based-observations.synop'
+minio_path = 'urn:wmo:md:not-my-centre-id:synop-test'
 
 # replace with your host
 STORAGE_ENDPOINT = 'http://<your-host>:9000'

@@ -92,7 +92,7 @@ ls -lh /data/wis2box/data-ingest-exercises/synop_202412030900.txt
     Execute the following command to ingest the sample data file to your wis2box-instance:
 
     ```bash
-    wis2box data ingest -p /data/wis2box/data-ingest-exercises/synop_202412030900.txt --metadata-id urn:wmo:md:not-my-centre:core.surface-based-observations.synop
+    wis2box data ingest -p /data/wis2box/data-ingest-exercises/synop_202412030900.txt --metadata-id urn:wmo:md:not-my-centre:synop-test
     ```
 
     Was the data successfully ingested? If not, what was the error message and how can you fix it?
@@ -102,7 +102,7 @@ ls -lh /data/wis2box/data-ingest-exercises/synop_202412030900.txt
     The data was **not** successfully ingested, you should see the following:
 
     ```bash
-    Error: metadata_id=urn:wmo:md:not-my-centre:core.surface-based-observations.synop not found in data mappings
+    Error: metadata_id=urn:wmo:md:not-my-centre:synop-test not found in data mappings
     ```
 
     The error message indicates that the metadata identifier you provided does not match any of the datasets you have configured in your wis2box-instance.
