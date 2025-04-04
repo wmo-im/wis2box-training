@@ -20,14 +20,14 @@ In this session you will learn how to setup a subscription to a WIS2 Broker and 
      
      The wis2downloader is also available as a standalone service that can be run on a different system from the one that is publishing the WIS2 notifications. See [wis2downloader](https://pypi.org/project/wis2downloader/) for more information for using the wis2downloader as a standalone service.
 
-     If you like to develop your own service for subscribing to WIS2 notifications and downloading data, you can use the [wis2downloader source code](https://github.com/wmo-im/wis2downloader) as a reference.
+     If you like to develop your own service for subscribing to WIS2 notifications and downloading data, you can use the [wis2downloader source code](https://github.com/World-Meteorological-Organization/wis2downloader) as a reference.
 
 !!! Other tools for accessing WIS2 data
 
     The following tools can also be used to discover and access data from WIS2:
 
     - [pywiscat](https://github.com/wmo-im/pywiscat) provides search capability atop the WIS2 Global Discovery Catalogue in support of reporting and analysis of the WIS2 Catalogue and its associated discovery metadata
-    - [pywis-pubsub](https://github.com/wmo-im/pywis-pubsub) provides subscription and download capability of WMO data from WIS2 infrastructure services
+    - [pywis-pubsub](https://github.com/World-Meteorological-Organization/pywis-pubsub) provides subscription and download capability of WMO data from WIS2 infrastructure services
 
 ## Preparation
 
