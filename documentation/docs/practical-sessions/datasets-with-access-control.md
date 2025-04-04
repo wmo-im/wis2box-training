@@ -22,7 +22,7 @@ Ensure you have SSH access to your student VM and that your wis2box instance is 
 
 Make sure you are connected to the MQTT broker of your wis2box instance using MQTT Explorer. You can use the public credentials `everyone/everyone` to connect to the broker.
 
-Ensure you have a web browser open with the wis2box-webapp for your instance by going to `http://<your-host>/wis2box-webapp`.
+Ensure you have a web browser open with the wis2box-webapp for your instance by going to `http://YOUR-HOST/wis2box-webapp`.
 
 ## Create a new dataset with data policy 'recommended'
 

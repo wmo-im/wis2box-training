@@ -43,7 +43,7 @@ Ensure you have SSH access to your student VM and that your wis2box instance is 
 
 Make sure that you are connected to the MQTT broker of your wis2box instance using MQTT Explorer. You can use the public credentials `everyone/everyone` to connect to the broker.
 
-Make sure you have a web browser open with the Grafana dashboard for your instance by going to `http://<your-host>:3000`
+Make sure you have a web browser open with the Grafana dashboard for your instance by going to `http://YOUR-HOST:3000`
 
 ## creating `gts_headers_mapping.csv`
 

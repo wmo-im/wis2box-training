@@ -7,31 +7,26 @@ title: CSV-to-BUFR mapping templates
 !!! abstract "Learning outcomes"
     By the end of this practical session, you will be able to:
 
-    - know how to use the "AWS" and "DayCLI" templates for converting CSV data to BUFR
     - create a new BUFR mapping template for your CSV data
     - edit and debug your custom BUFR mapping template from the command line
     - configure the CSV-to-BUFR data plugin to use a custom BUFR mapping template
+    - use the built-in AWS and DAYCLI templates for converting CSV data to BUFR
 
 ## Introduction
 
 Comma-separated values (CSV) data files are often used for recording observational and other data in a tabular format. 
 Most data loggers used to record sensor output are able to export the observations in delimited files, including in CSV.
 Similarly, when data are ingested into a database it is easy to export the required data in CSV formatted files. 
-To aid the exchange of data originally stored in tabular data formats a CSV to BUFR converted has been implemented in 
-the wis2box using the same software as for SYNOP to BUFR.
 
-In this session you will learn how to create your own mapping template for converting CSV data to BUFR.
+The wis2box csv2bufr module provides a command line tool to convert CSV data to BUFR format. When using csv2bufr you need to provide a BUFR mapping template that maps CSV-columns to corresponding BUFR elements. If you don't want to create your own mapping template, you can use the built-in AWS and DAYCLI templates for converting CSV data to BUFR, but you will need to ensure that the CSV data you are using is in the correct format for these templates. If you want to decode parameters that are not included in the AWS and DAYCLI templates, you will need to create your own mapping template.
 
-You will also learn about the following built-in mapping templates and how to use them:
-
-- **AWS** (aws-template.json) : Mapping template for converting CSV data from simplified automatic weather station file to BUFR sequence 301150, 307096"
-- **DayCLI** (daycli-template.json) : Mapping template for converting daily climate CSV data to BUFR sequence 307075
+In this session you will learn how to create your own mapping template for converting CSV data to BUFR. You will also learn how to use the built-in AWS and DAYCLI templates for converting CSV data to BUFR.
 
 ## Preparation
 
 Make sure the wis2box-stack has been started with `python3 wis2box.py start`
 
-Make sure that you have a web browser open with the MinIO UI for your instance by going to `http://<your-host>:9000`
+Make sure that you have a web browser open with the MinIO UI for your instance by going to `http://YOUR-HOST:9000`
 If you don't remember your MinIO credentials, you can find them in the `wis2box.env` file in the `wis2box-1.0.0rc1` directory on your student VM.
 
 Make sure that you have MQTT Explorer open and connected to your broker using the credentials `everyone/everyone`.
@@ -41,6 +36,8 @@ Make sure that you have MQTT Explorer open and connected to your broker using th
 The csv2bufr module comes with a command line tool to create your own mapping template using a set of BUFR sequences and/or BUFR element as input.
 
 To find specific BUFR sequences and elements you can refer to the BUFR tables at [https://confluence.ecmwf.int/display/BUFR/BUFR+Tables](https://confluence.ecmwf.int/display/BUFR/BUFR+Tables).
+
+### csv2bufr mappings command line tool
 
 To access the csv2bufr command line tool, you need to login to the wis2box-api container:
 
@@ -213,7 +210,11 @@ CLI:    End of processing, exiting.
     airTemperature=298.15
     ```
 
-Finally you can check that the new template is available to be used by your data mappings by going to the dataset-editor in the wis2box-webapp.
+### Using the mapping template in the wis2box
+
+To use the mapping template you created in the wis2box, you need to configure your dataset in the wis2box-webapp to use the custom mapping template for the CSV to BUFR conversion plugin.
+
+The wis2box-webapp will automatically detect the mapping template you created and make it available in the list of templates for the CSV to BUFR conversion plugin.
 
 Click on the dataset you created in the previous practical session and click on "UPDATE" next to the plugin with name "CSV data converted to BUFR":
 
@@ -221,15 +222,15 @@ Click on the dataset you created in the previous practical session and click on 
 
 You should see the new template you created in the list of available templates:
 
-<img alt="Image showing the dataset editor in the wis2box-webapp" src="../../assets/img/wis2box-webapp-csv2bufr-templates.png"/>
+<img alt="Image showing the csv2bufr-templates in the wis2box-webapp" src="../../assets/img/wis2box-webapp-csv2bufr-templates.png"/>
 
 For now keep the default selection of the AWS template (click on the top right to close the plugin configuration).
 
 ## Using the 'AWS' template
 
-The 'AWS' template provides a predefined mapping template to convert CSV data from AWS stations in support of the GBON reporting requirements. 
+The 'AWS' template provides mapping template for converting CSV data to BUFR sequence 301150, 307096, in support of minimum GBON requirements.
 
-The description of the AWS template can be found [here](/csv2bufr-templates/aws-template).
+The description of the AWS template can be found here [aws-template](/csv2bufr-templates/aws-template).
 
 ### Review the aws-example input data
 
@@ -282,7 +283,7 @@ Upload the example file you downloaded to the folder you created in the MinIO bu
 
 <img alt="Image showing MinIO UI with aws-example uploaded" src="../../assets/img/minio-upload-aws-example.png"/></center>
 
-Check the Grafana dashboard at `http://<your-host>:3000` to see if there are any WARNINGS or ERRORS. If you see any, try to fix them and repeat the exercise.
+Check the Grafana dashboard at `http://YOUR-HOST:3000` to see if there are any WARNINGS or ERRORS. If you see any, try to fix them and repeat the exercise.
 
 Check the MQTT Explorer to see if you receive WIS2 data-notifications.
 
@@ -292,14 +293,11 @@ If you successfully ingested the data you should see 3 notifications in MQTT exp
 
 ## Using the 'DayCLI' template
 
-In the previous exercise we used the dataset you created with Data-type='weather/surface-weather-observations/synop', which has pre-configured the CSV to BUFR conversion template to the AWS template.
+The **DayCLI** template provides a mapping template for converting daily climate CSV data to BUFR sequence 307075, in support of reporting daily climate data.
 
-In the next exercise we will use the 'DayCLI' template to convert daily climate data to BUFR.
+The description of the DAYCLI template can be found here [daycli-template](/csv2bufr-templates/daycli-template).
 
-The description of the DAYCLI template can be found [here](/csv2bufr-templates/daycli-template).
-
-!!! Note "About the DAYCLI template"
-    Please note that the DAYCLI BUFR sequence will be updated during 2025 to include additional information and revised QC flags. The DAYCLI template included the wis2box will be updated to reflect these changes. WMO will communicate when the wis2box-software is updated to include the new DAYCLI template, to allow users to update their systems accordingly.
+To share this data on WIS2 you will need to create a new dataset in the wis2box-webapp that has the correct WIS2 Topic Hierarchy and that uses the DAYCLI template for converting CSV data to BUFR.
 
 ### Creating a wis2box dataset for publishing DAYCLI messages
 
@@ -347,23 +345,10 @@ If you successfully ingested the data you should see 30 notifications in MQTT ex
 
 <img width="450" alt="Image showing MQTT explorer after uploading DAYCLI" src="../../assets/img/mqtt-daycli-template-success.png"/>
 
-## Creating a custom CSV-to-BUFR mapping template
-
-The csv2bufr module comes with a command line tool to create your own mapping template using a set of BUFR sequences as input.
-
-In this exercise we will demonstrate how to create a new mapping template and use it to convert CSV data to BUFR for a new dataset.
-
 ## Conclusion
 
 !!! success "Congratulations"
     In this practical session you have learned:
 
-    - about the csv2bufr converter in the wis2box
-    - how to use the AWS and DAYCLI templates to convert CSV data to BUFR
-    - and how to validate a sample CSV file using the csv2bufr form in the wis2box web-application
-
-!!! info "Next steps"
-    The csv2bufr converter used in the wis2box has been designed to be configurable for use with any row based 
-    tabular data. The column names, delimiters, quotation style and limited quality control can all be configured
-    according to user needs. In this session you have used the built-in AWS and daycli templates but you can develop
-    your own templates for other data types as required.
+    - how to create a custom mapping template for converting CSV data to BUFR
+    - how to use the built-in AWS and DAYCLI templates for converting CSV data to BUFR

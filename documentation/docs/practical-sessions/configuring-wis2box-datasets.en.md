@@ -39,7 +39,7 @@ Instead of using your internal broker credentials, use the public credentials `e
     
     The 'everyone' user will not see internal topics or be able to publish messages.
     
-Open a browser and open a page to `http://<your-host>/wis2box-webapp`. Make sure you are logged in and can access the 'dataset editor' page.
+Open a browser and open a page to `http://YOUR-HOST/wis2box-webapp`. Make sure you are logged in and can access the 'dataset editor' page.
 
 See the section on [Initializing wis2box](/practical-sessions/initializing-wis2box) if you need to remember how to connect to the broker or access the wis2box-webapp.
 
@@ -76,7 +76,7 @@ exit
 
 ## Creating a new dataset in the wis2box-webapp
 
-Navigate to the 'dataset editor' page in the wis2box-webapp of your wis2box instance by going to `http://<your-host>/wis2box-webapp` and selecting 'dataset editor' from the menu on the left hand side.
+Navigate to the 'dataset editor' page in the wis2box-webapp of your wis2box instance by going to `http://YOUR-HOST/wis2box-webapp` and selecting 'dataset editor' from the menu on the left hand side.
 
 On the 'dataset editor' page, under the 'Datasets' tab, click on "Create New ...":
 

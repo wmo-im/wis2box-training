@@ -35,7 +35,7 @@ Before starting please login to your student VM and ensure your wis2box instance
 
 ## Viewing the wis2download dashboard in Grafana
 
-Open a web browser and navigate to the Grafana dashboard for your wis2box instance by going to `http://<your-host>:3000`.
+Open a web browser and navigate to the Grafana dashboard for your wis2box instance by going to `http://YOUR-HOST:3000`.
 
 Click on dashboards in the left-hand menu, and then select the **wis2downloader dashboard**.
 
@@ -266,7 +266,7 @@ docker run -d --name decode-bufr-jupyter \
     
     The command above also mounts the `~/wis2box-data/downloads` directory to `/root/downloads` in the container. This ensures that the downloaded data is available to the Jupyter notebook server.
     
-Once the container is started, you can access the Jupyter notebook server by navigating to `http://<your-host>:8888` in your web browser.
+Once the container is started, you can access the Jupyter notebook server by navigating to `http://YOUR-HOST:8888` in your web browser.
 
 You will see a screen requesting you to enter a "Password or token".
 

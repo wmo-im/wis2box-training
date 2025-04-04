@@ -238,7 +238,7 @@ The volumes starting with `wis2box_project_` are used to store persistent data f
 
 The wis2box contains an API (Application Programming Interface) that provide data access and processes for interactive visualization, data transformation and publication.
 
-Open a new tab and navigate to the page `http://<your-host>/oapi`.
+Open a new tab and navigate to the page `http://YOUR-HOST/oapi`.
 
 <img alt="wis2box-api.png" src="../../assets/img/wis2box-api.png" width="800">
 
@@ -273,7 +273,7 @@ This is the landing page of the wis2box API (running via the **wis2box-api** con
 
 ## wis2box webapp
 
-Open a web browser and visit the page `http://<your-host>/wis2box-webapp`.
+Open a web browser and visit the page `http://YOUR-HOST/wis2box-webapp`.
 
 You will see a pop-up asking for your username and password. Use the default username `wis2box-user` and the `WIS2BOX_WEBAPP_PASSWORD` defined in the `wis2box.env` file and click "Sign in":
 
@@ -358,4 +358,3 @@ Keep the MQTT Explorer open, as we will use it to monitor the messages published
     - start wis2box and check the status of its components
     - access the wis2box-webapp and wis2box-API in a browser
     - connect to the MQTT broker on your student-VM using MQTT Explorer
-
