@@ -2,7 +2,7 @@
 title: Ingesting Data for Publication
 ---
 
-# Ingesting Data for Publication
+# Ingesting data for publication
 
 !!! abstract "Learning Outcomes"
 
