@@ -46,7 +46,7 @@ Check MQTT-explorer to see that you receive the WIS2 Notification Message announ
 Login to the wis2box-management container,
 
 ```bash
-cd ~/wis2box-1.0.0rc1
+cd ~/wis2box
 python3 wis2box-ctl.py login
 ```
 
@@ -85,7 +85,7 @@ You will need to use your token for `collections/stations` to save the updated s
 Next, login to the wis2box-management container:
 
 ```bash
-cd ~/wis2box-1.0.0rc1
+cd ~/wis2box
 python3 wis2box-ctl.py login
 ```
 

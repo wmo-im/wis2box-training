@@ -58,7 +58,7 @@ docker cp ~/exercise-materials/data-conversion-exercises wis2box-api:/root
 Then log in to the wis2box-api container and change to the directory where the exercise materials are located:
 
 ```bash
-cd ~/wis2box-1.0.0rc1
+cd ~/wis2box
 python3 wis2box-ctl.py login wis2box-api
 cd /root/data-conversions-exercises
 ```

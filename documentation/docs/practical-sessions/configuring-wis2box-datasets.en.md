@@ -50,7 +50,7 @@ You will need an authorization token for the 'processes/wis2box' endpoint to pub
 To create an authorization token, access your training VM over SSH and use the following commands to login to the wis2box-management container:
 
 ```bash
-cd ~/wis2box-1.0.0rc1
+cd ~/wis2box
 python3 wis2box-ctl.py login
 ```
 

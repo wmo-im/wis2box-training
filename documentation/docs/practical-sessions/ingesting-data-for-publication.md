@@ -33,7 +33,7 @@ Ensure you can log in to your student VM using your SSH client (e.g., PuTTY).
 Ensure wis2box is up and running:
 
 ```bash
-cd ~/wis2box-1.0.0rc1/
+cd ~/wis2box/
 python3 wis2box-ctl.py start
 python3 wis2box-ctl.py status
 ```
@@ -51,7 +51,7 @@ cp -r ~/exercise-materials/data-ingest-exercises ~/wis2box-data/
 ```
 
 !!! note
-    The `WIS2BOX_HOST_DATADIR` is mounted as `/data/wis2box/` inside the wis2box-management container by the `docker-compose.yml` file included in the `wis2box-1.0.0rc1` directory.
+    The `WIS2BOX_HOST_DATADIR` is mounted as `/data/wis2box/` inside the wis2box-management container by the `docker-compose.yml` file included in the `wis2box` directory.
     
     This allows you to share data between the host and the container.
 
@@ -73,10 +73,10 @@ Note that you can remove this station from your dataset after the practical sess
 
 In this exercise, we will use the `wis2box data ingest` command to upload data to MinIO.
 
-Ensure you are in the `wis2box-1.0.0rc1` directory and log in to the **wis2box-management** container:
+Ensure you are in the `wis2box` directory and log in to the **wis2box-management** container:
 
 ```bash
-cd ~/wis2box-1.0.0rc1
+cd ~/wis2box
 python3 wis2box-ctl.py login
 ```
 

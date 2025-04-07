@@ -27,7 +27,7 @@ In this session you will learn how to create your own mapping template for conve
 Make sure the wis2box-stack has been started with `python3 wis2box.py start`
 
 Make sure that you have a web browser open with the MinIO UI for your instance by going to `http://YOUR-HOST:9000`
-If you don't remember your MinIO credentials, you can find them in the `wis2box.env` file in the `wis2box-1.0.0rc1` directory on your student VM.
+If you don't remember your MinIO credentials, you can find them in the `wis2box.env` file in the `wis2box` directory on your student VM.
 
 Make sure that you have MQTT Explorer open and connected to your broker using the credentials `everyone/everyone`.
 
@@ -42,7 +42,7 @@ To find specific BUFR sequences and elements you can refer to the BUFR tables at
 To access the csv2bufr command line tool, you need to login to the wis2box-api container:
 
 ```bash
-cd ~/wis2box-1.0.0rc1
+cd ~/wis2box
 python3 wis2box-ctl.py login wis2box-api
 ```
 
@@ -163,7 +163,7 @@ cp ~/exercise-materials/data-conversion-exercises/custom_template_data.csv ~/wis
 Login to the wis2box-api container:
 
 ```bash
-cd ~/wis2box-1.0.0rc1
+cd ~/wis2box
 python3 wis2box-ctl.py login wis2box-api
 ```
 
