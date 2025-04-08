@@ -26,7 +26,7 @@ MINIO_SECRET = os.getenv('MINIO_ROOT_PASSWORD')
 GC_URL = os.getenv('GC_URL')
 # Fake global broker
 GB_HOST = os.getenv('WIS2BOX_BROKER_HOST')
-GB_UID = os.getenv('WIS2BOX_BROKER_USER')
+GB_UID = os.getenv('WIS2BOX_BROKER_USERNAME')
 GB_PWD = os.getenv('WIS2BOX_BROKER_PASSWORD')
 
 print(f"MINIO_HOST={MINIO_HOST}")
