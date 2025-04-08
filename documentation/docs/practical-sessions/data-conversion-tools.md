@@ -7,14 +7,14 @@ title: Data Conversion Tools
 !!! abstract "Learning Outcomes"
     By the end of this practical session, you will be able to:
 
-    - Access ecCodes command-line tools within the wis2box-api container.
-    - Use the synop2bufr tool to convert FM-12 SYNOP reports to BUFR from the command line.
-    - Trigger synop2bufr conversion via the wis2box-webapp.
-    - Use the csv2bufr tool to convert CSV data to BUFR from the command line.
+    - Access ecCodes command-line tools within the wis2box-api container
+    - Use the synop2bufr tool to convert FM-12 SYNOP reports to BUFR from the command line
+    - Trigger synop2bufr conversion via the wis2box-webapp
+    - Use the csv2bufr tool to convert CSV data to BUFR from the command line
 
 ## Introduction
 
-Data published on WIS2 should use a standard format to ensure interoperability. To lower the barriers to data publication for land-based surface observations, the wis2box provides tools to convert data to BUFR format. These tools are available via the wis2box-api container and can be used from the command line to test the data conversion process.
+Data published on WIS2 should meet the requirements and standards defined by the various Earth system discipline / domain expert communities.  To lower the barrier to data publication for land-based surface observations, wis2box provides tools to convert data to BUFR format. These tools are available via the wis2box-api container and can be used from the command line to test the data conversion process.
 
 The main conversions currently supported by wis2box are FM-12 SYNOP reports to BUFR and CSV data to BUFR. FM-12 data is supported as it is still widely used and exchanged in the WMO community, while CSV data is supported to allow the mapping of data produced by automatic weather stations to BUFR format.
 
@@ -35,17 +35,17 @@ In addition to ecCodes, the wis2box uses the following Python modules that work 
 - **csv2bufr**: https://github.com/World-Meteorological-Organization/csv2bufr
 - **synop2bufr**: https://github.com/World-Meteorological-Organization/synop2bufr
 
-These modules can be used standalone or as part of the wis2box-stack. The modules are used to convert CSV and FM-12 SYNOP data to BUFR format. The modules are installed in the wis2box-api container and can be used from the command line.
+These modules can be used standalone or as part of the wis2box stack. The modules are used to convert CSV and FM-12 SYNOP data to BUFR format. The modules are installed in the wis2box-api container and can be used from the command line.
 
 ## Preparation
 
 !!! warning "Prerequisites"
 
-    - Ensure that your wis2box has been configured and started.
-    - Ensure you have set up a dataset and configured at least one station in your wis2box.
-    - Connect to the MQTT broker of your wis2box instance using MQTT Explorer.
-    - Open the wis2box web application (`http://<your-host-name>/wis2box-webapp`) and ensure you are logged in.
-    - Open the Grafana dashboard for your instance by going to `http://YOUR-HOST:3000`.
+    - Ensure that your wis2box has been configured and started
+    - Ensure you have set up a dataset and configured at least one station in your wis2box
+    - Connect to the MQTT broker of your wis2box instance using MQTT Explorer
+    - Open the wis2box web application (`http://<your-host-name>/wis2box-webapp`) and ensure you are logged in
+    - Open the Grafana dashboard for your instance by going to `http://YOUR-HOST:3000`
 
 To use the BUFR command-line tools, you will need to be logged in to the wis2box-api container. Unless specified otherwise, all commands should be run on this container. You will also need to have MQTT Explorer open and connected to your broker.
 
@@ -316,9 +316,9 @@ csv2bufr data transform --bufr-template aws-template ./aws-example.csv
 
 ## Conclusion
 
-!!! success "Congratulations"
+!!! success "Congratulations!"
     In this practical session you have learned:
 
-    - how to use some of the BUFR command line tools available in the wis2box management container;
-    - how to use syn2bufr, csv2bufr and bufr2bufr to convert data to BUFR format;
+    - how to use some of the BUFR command line tools available in the wis2box management container
+    - how to use syn2bufr, csv2bufr and bufr2bufr to convert data to BUFR format
 
