@@ -115,6 +115,7 @@ def on_message(client, userdata, msg):
             topic = msg.topic.replace("origin","cache")
         except Exception as e:
             print(e)
+            raise e
 
         pub.single(
             topic = topic,
