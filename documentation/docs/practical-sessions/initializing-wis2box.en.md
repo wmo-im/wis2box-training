@@ -357,4 +357,4 @@ Keep the MQTT Explorer open, as we will use it to monitor the messages published
     - run the `wis2box-create-config.py` script to create the initial configuration
     - start wis2box and check the status of its components
     - access the wis2box-webapp and wis2box-API in a browser
-    - connect to the MQTT broker on your student-VM using MQTT Explorer
+    - connect to the MQTT broker on your student VM using MQTT Explorer
