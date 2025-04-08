@@ -11,15 +11,15 @@ If you want to use a wis2box-instance to serve the purpose of the fake global ca
 
 # Environment variables
 
-Define these in a local ``.env`` file or in the environment of the VM.
+Environment values are defined `wis2-gb-gc.csv`, no need to update these when using the local training HW
 
-* ``MINIO_HOST`` - MINIO host and port used to act as the fake global cache, e.g. ``instructor.wis2.training:9000`` 
-* ``MINIO_KEY``  - MINIO access key / user ID for writing to the fake cache, e.g. ``wis2box`` when using wis2box
-* ``MINIO_SECRET`` - MINIO secret for writing to the fake cache, corresponds to WIS2BOX_STORAGE_PASSWORD when using wis2box
-* ``GC_URL`` - Base URL used to access files on the fake cache, e.g.  ``http://instructor.wis2.training:9000``
-* ``GB_HOST`` - Host name of the MQTT broker to republish to, e.g. ``instructor.wis2.training``
-* ``GB_UID`` - User ID used for publishing, e.g. ``wis2box`` when using wis2box
-* ``GB_PWD`` - Password used for publishing, corresponds to WIS2BOX_BRIDGE_PASSWORD when using wis2box
+* ``MINIO_HOST`` - MINIO host and port used to act as the fake global cache, e.g. ``global-cache.wis2.training:9000`` 
+* ``MINIO_KEY``  - MINIO access key / user ID for writing to the fake cache, e.g. ``wis2training``
+* ``MINIO_SECRET`` - MINIO secret for writing to the fake cache, corresponds to WIS2BOX_STORAGE_PASSWORD
+* ``GC_URL`` - Base URL used to access files on the fake cache, e.g.  ``http://global-cache.wis2.training:9000``
+* ``GB_HOST`` - Host name of the MQTT broker to republish to, e.g. ``global-cache.wis2.training``
+* ``GB_UID`` - User ID used for publishing, e.g. ``wis2training``
+* ``GB_PWD`` - Password used for publishing, e.g ``wis2training``
 
 # Usage
 
