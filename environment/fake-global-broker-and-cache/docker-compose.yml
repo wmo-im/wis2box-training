@@ -22,6 +22,9 @@ services:
     depends_on:
       mosquitto:
         condition: service_started
+    ports:
+      - "9000:9000"
+      - "9001:9001"
 
   mosquitto:
     container_name: mosquitto
@@ -31,6 +34,8 @@ services:
       - wis2-gb-gc.env
     volumes:
       - mosquitto-config:/mosquitto/config
+    ports:
+      - "1883:1883"
 
   republisher:
     container_name: republisher
