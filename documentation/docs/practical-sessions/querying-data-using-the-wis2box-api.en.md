@@ -28,7 +28,7 @@ In this practical session you will learn how to use the data API to browse and q
 !!! note
     Navigate to the wis2box API landing page in your web browser:
 
-    `http://<your-host>/oapi`
+    `http://YOUR-HOST/oapi`
 
 <img alt="wis2box-api-landing-page" src="../../assets/img/wis2box-api-landing-page.png" width="600">
 
@@ -51,7 +51,7 @@ From the landing page, click on the 'Collections' link, then click on the 'Stati
 Click on the 'Browse' link, then click on the 'json' link.
 
 !!! question
-    How many stations are returned? Compare this number to the station list in `http://<your-host>/wis2box-webapp/station`
+    How many stations are returned? Compare this number to the station list in `http://YOUR-HOST/wis2box-webapp/station`
 
 ??? success "Click to reveal answer"
     The number of stations from the API should be equal to the number of stations you see in the wis2box webapp.
@@ -60,7 +60,7 @@ Click on the 'Browse' link, then click on the 'json' link.
     How can we query for a single station (e.g. `Balaka`)?
 
 ??? success "Click to reveal answer"
-    Query the API with `http://<your-host>/oapi/collections/stations/items?q=Balaka`.
+    Query the API with `http://YOUR-HOST/oapi/collections/stations/items?q=Balaka`.
 
 !!! note
     The above example is based on the Malawi test data.  Try testing against the stations your have ingested as part of the previous exercises.
@@ -84,7 +84,7 @@ Click on the 'Queryables' link.
 ??? success "Click to reveal answer"
     The `wigos_station_identifer` is the correct queryable.
 
-Navigate to the previous page (i.e. `http://<your-host>/oapi/collections/urn:wmo:md:mwi:mwi_met_centre:surface-weather-observations`)
+Navigate to the previous page (i.e. `http://YOUR-HOST/oapi/collections/urn:wmo:md:mwi:mwi_met_centre:surface-weather-observations`)
 
 Click on the 'Browse' link.
 
@@ -127,7 +127,7 @@ Inspect the JSON response of the observations.
     How can we show a single observation (id)?
 
 ??? success "Click to reveal answer"
-    Using the feature identifier from an API request against the observations, query the API for `http://<your-host>/oapi/collections/{collectionId}/items/{featureId}`, where `{collectionId}` is the name of your observations collection and `{itemId}` is the identifier of the single observation of interest.
+    Using the feature identifier from an API request against the observations, query the API for `http://YOUR-HOST/oapi/collections/{collectionId}/items/{featureId}`, where `{collectionId}` is the name of your observations collection and `{itemId}` is the identifier of the single observation of interest.
 
 ## Conclusion
 

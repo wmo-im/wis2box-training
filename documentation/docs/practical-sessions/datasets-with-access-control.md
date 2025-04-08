@@ -22,9 +22,9 @@ Ensure you have SSH access to your student VM and that your wis2box instance is 
 
 Make sure you are connected to the MQTT broker of your wis2box instance using MQTT Explorer. You can use the public credentials `everyone/everyone` to connect to the broker.
 
-Ensure you have a web browser open with the wis2box-webapp for your instance by going to `http://<your-host>/wis2box-webapp`.
+Ensure you have a web browser open with the wis2box-webapp for your instance by going to `http://YOUR-HOST/wis2box-webapp`.
 
-## Exercise 1: create a new dataset with data policy 'recommended'
+## Create a new dataset with data policy 'recommended'
 
 Go to the 'dataset editor' page in the wis2box-webapp and create a new dataset. Use the same centre-id as in the previous practical sessions and use the template='surface-weather-observations/synop'. 
 
@@ -41,12 +41,12 @@ Finally submit the dataset, using the previously create authentication token, an
 
 Check MQTT-explorer to see that you receive the WIS2 Notification Message announcing the new Discovery Metadata record on the topic `origin/a/wis2/<your-centre-id>/metadata`.	
 
-## Exercise 2: add an access token to the dataset
+## Add an access token to the dataset
 
 Login to the wis2box-management container,
 
 ```bash
-cd ~/wis2box-1.0.0rc1
+cd ~/wis2box
 python3 wis2box-ctl.py login
 ```
 
@@ -64,7 +64,7 @@ Exit the wis2box-management container:
 exit
 ```
 
-## Exercise 3: publish some data to the dataset
+## Publish some data to the dataset
 
 Copy the file `exercise-materials/access-control-exercises/aws-example2.csv` to the directory defined by `WIS2BOX_HOST_DATADIR` in your `wis2box.env`:
 
@@ -85,7 +85,7 @@ You will need to use your token for `collections/stations` to save the updated s
 Next, login to the wis2box-management container:
 
 ```bash
-cd ~/wis2box-1.0.0rc1
+cd ~/wis2box
 python3 wis2box-ctl.py login
 ```
 
@@ -101,7 +101,7 @@ Check the canonical link in the WIS2 Notification Message and copy/paste the lin
 
 You should see a 403 Forbidden error.
 
-## Exercise 4: add the access token to HTTP headers to access the dataset
+## Add the access token to HTTP headers to access the dataset
 
 In order to demonstrate that the access token is required to access the dataset we will reproduce the error you saw in the browser using the command line function `wget`.
 

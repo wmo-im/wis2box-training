@@ -30,7 +30,7 @@ and publishing of documentation.  Workshop content is written in Markdown.
 python3 -m venv .
 . bin/activate
 # fork or clone from GitHub
-git clone https://github.com/wmo-im/wis2box-training.git
+git clone https://github.com/World-Meteorological-Organization/wis2box-training.git
 cd wis2box-training/documentation
 # install required dependencies
 pip3 install -r requirements.txt

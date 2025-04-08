@@ -22,10 +22,10 @@ wis2box has a collection of station metadata that is used to describe the statio
 
 To edit stations via the **wis2box-webapp** you will first to need create an authorization token.
 
-Login to your student VM and ensure you are in the `wis2box-1.0.0rc1` directory:
+Login to your student VM and ensure you are in the `wis2box` directory:
 
 ```bash
-cd ~/wis2box-1.0.0rc1
+cd ~/wis2box
 ```
 
 Then login into the **wis2box-management** container with the following command:
@@ -68,7 +68,7 @@ Please create an authorization token for the `collections/stations` endpoint usi
 
 The **wis2box-webapp** provides a graphical user interface to edit station metadata.
 
-Open the **wis2box-webapp** in your browser by navigating to `http://<your-host>/wis2box-webapp`:
+Open the **wis2box-webapp** in your browser by navigating to `http://YOUR-HOST/wis2box-webapp`:
 
 <img alt="wis2box-webapp" src="../../assets/img/wis2box-webapp.png" width="800">
 
@@ -137,13 +137,13 @@ Repeat this process until you have at least 3 stations configured.
 
 The station metadata is stored in the backend of wis2box and made available via the **wis2box-api**. 
 
-If you open a browser and navigate to `http://<your-host>/oapi/collections/stations/items` you will see the station metadata you added:
+If you open a browser and navigate to `http://YOUR-HOST/oapi/collections/stations/items` you will see the station metadata you added:
 
 <img alt="wis2box-api-stations" src="../../assets/img/wis2box-api-stations.png" width="800">
 
 !!! note "Review your station metadata"
 
-    Verify the stations you added are associated to your dataset by visiting `http://<your-host>/oapi/collections/stations/items` in your browser.
+    Verify the stations you added are associated to your dataset by visiting `http://YOUR-HOST/oapi/collections/stations/items` in your browser.
 
 You also have the option to view/update/delete the station in the **wis2box-webapp**. Note that you are required to provide your authorization token for the `collections/stations` endpoint to update/delete the station.
 

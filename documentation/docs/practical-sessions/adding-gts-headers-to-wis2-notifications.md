@@ -43,7 +43,7 @@ Ensure you have SSH access to your student VM and that your wis2box instance is 
 
 Make sure that you are connected to the MQTT broker of your wis2box instance using MQTT Explorer. You can use the public credentials `everyone/everyone` to connect to the broker.
 
-Make sure you have a web browser open with the Grafana dashboard for your instance by going to `http://<your-host>:3000`
+Make sure you have a web browser open with the Grafana dashboard for your instance by going to `http://YOUR-HOST:3000`
 
 ## creating `gts_headers_mapping.csv`
 
@@ -51,7 +51,7 @@ To add GTS headers to your WIS2 notifications, a CSV file is required that maps 
 
 The CSV file should be named (exactly) `gts_headers_mapping.csv` and should be placed in the directory defined by `WIS2BOX_HOST_DATADIR` in your `wis2box.env`. 
 
-## Exercise 1: providing a `gts_headers_mapping.csv` file
+## Providing a `gts_headers_mapping.csv` file
     
 Copy the file `exercise-materials/gts-headers-exercises/gts_headers_mapping.csv` to your wis2box instance and place it in the directory defined by `WIS2BOX_HOST_DATADIR` in your `wis2box.env`.
 
@@ -66,7 +66,7 @@ Then restart the wis2box-management container to apply the changes:
 docker restart wis2box-management
 ```
 
-## Exercise 2: Ingesting data with GTS headers
+## Ingesting data with GTS headers
 
 Copy the file `exercise-materials/gts-headers-exercises/A_SMRO01YRBK171200_C_EDZW_20240717120502.txt` to the directory defined by `WIS2BOX_HOST_DATADIR` in your `wis2box.env`:
 
@@ -77,7 +77,7 @@ cp ~/exercise-materials/gts-headers-exercises/A_SMRO01YRBK171200_C_EDZW_20240717
 Then login to the **wis2box-management** container:
 
 ```bash
-cd ~/wis2box-1.0.0rc1
+cd ~/wis2box
 python3 wis2box-ctl.py login
 ```
 
@@ -91,7 +91,7 @@ Make sure to replace the `metadata-id` option with the correct identifier for yo
 
 Check the Grafana dashboard to see if the data was ingested correctly. If you see any WARNINGS or ERRORS, try to fix them and repeat the exercise the `wis2box data ingest` command.
 
-## Exercise 3: Viewing the GTS headers in the WIS2 Notification
+## Viewing the GTS headers in the WIS2 Notification
 
 Go to the MQTT Explorer and check for the WIS2 Notification Message for the data you just ingested.
 

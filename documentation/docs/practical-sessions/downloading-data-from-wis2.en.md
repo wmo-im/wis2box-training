@@ -20,22 +20,22 @@ In this session you will learn how to setup a subscription to a WIS2 Broker and 
      
      The wis2downloader is also available as a standalone service that can be run on a different system from the one that is publishing the WIS2 notifications. See [wis2downloader](https://pypi.org/project/wis2downloader/) for more information for using the wis2downloader as a standalone service.
 
-     If you like to develop your own service for subscribing to WIS2 notifications and downloading data, you can use the [wis2downloader source code](https://github.com/wmo-im/wis2downloader) as a reference.
+     If you like to develop your own service for subscribing to WIS2 notifications and downloading data, you can use the [wis2downloader source code](https://github.com/World-Meteorological-Organization/wis2downloader) as a reference.
 
 !!! Other tools for accessing WIS2 data
 
     The following tools can also be used to discover and access data from WIS2:
 
     - [pywiscat](https://github.com/wmo-im/pywiscat) provides search capability atop the WIS2 Global Discovery Catalogue in support of reporting and analysis of the WIS2 Catalogue and its associated discovery metadata
-    - [pywis-pubsub](https://github.com/wmo-im/pywis-pubsub) provides subscription and download capability of WMO data from WIS2 infrastructure services
+    - [pywis-pubsub](https://github.com/World-Meteorological-Organization/pywis-pubsub) provides subscription and download capability of WMO data from WIS2 infrastructure services
 
 ## Preparation
 
 Before starting please login to your student VM and ensure your wis2box instance is up and running.
 
-## Exercise 1: viewing the wis2download dashboard in Grafana
+## Viewing the wis2download dashboard in Grafana
 
-Open a web browser and navigate to the Grafana dashboard for your wis2box instance by going to `http://<your-host>:3000`.
+Open a web browser and navigate to the Grafana dashboard for your wis2box instance by going to `http://YOUR-HOST:3000`.
 
 Click on dashboards in the left-hand menu, and then select the **wis2downloader dashboard**.
 
@@ -49,7 +49,7 @@ On the top left corner you can see the subscriptions that are currently active.
 
 Keep this dashboard open as you will use it to monitor the download progress in the next exercise.
 
-## Exercise 2: reviewing the wis2downloader configuration
+## Reviewing the wis2downloader configuration
 
 The wis2downloader-service started by the wis2box-stack can be configured using the environment variables defined in your wis2box.env file.
 
@@ -67,7 +67,7 @@ The following environment variables are used by the wis2downloader:
 To review the current configuration of the wis2downloader, you can use the following command:
 
 ```bash
-cat ~/wis2box-1.0.0rc1/wis2box.env | grep DOWNLOAD
+cat ~/wis2box/wis2box.env | grep DOWNLOAD
 ```
 
 !!! question "Review the configuration of the wis2downloader"
@@ -94,7 +94,7 @@ cat ~/wis2box-1.0.0rc1/wis2box.env | grep DOWNLOAD
 
 You can keep the default configuration for the purpose of this exercise.
 
-## Exercise 3: adding subscriptions to the wis2downloader
+## Adding subscriptions to the wis2downloader
 
 Inside the **wis2downloader** container, you can use the command line to list, add and delete subscriptions.
 
@@ -128,7 +128,7 @@ exit
 
 Check the wis2downloader dashboard in Grafana to see the new subscription added. Wait a few minutes and you should see the first downloads starting. Go to he next exercise once you have confirmed that the downloads are starting.
 
-## Exercise 4: viewing the downloaded data
+## Viewing the downloaded data
 
 The wis2downloader-service in the wis2box-stack downloads the data in the 'downloads' directory in the directory you defined as the WIS2BOX_HOST_DATADIR in your wis2box.env file. To view the contents of the downloads directory, you can use the following command:
 
@@ -138,7 +138,7 @@ ls -R ~/wis2box-data/downloads
 
 Note that the downloaded data is stored in directories named after the topic the WIS2 Notification was published on.
 
-## Exercise 5: removing subscriptions from the wis2downloader
+## Removing subscriptions from the wis2downloader
 
 Next, log back in to the wis2downloader container:
 
@@ -160,9 +160,11 @@ exit
 
 Check the wis2downloader dashboard in Grafana to see the subscription removed. You should see the downloads stopping.
 
-## Exercise 6: subscribe to the wis2training-broker and setup a new subscription
+## Download and decode data for a tropical cyclone track
 
-For the next exercise we will subscribe to the wis2training-broker.
+In this exercise, you will subscribe to the WIS2 Training Broker which is publishing example data for training purposes. You will setup a subscription to download data for a tropical cyclone track. You will then decode the downloaded data using the "decode-bufr-jupyter" container.
+
+### Subscribe to the wis2training-broker and setup a new subscription
 
 This demonstrates how to subscribe to a broker that is not the default broker and will allow you to download some data published from the WIS2 Training Broker.
 
@@ -238,7 +240,7 @@ You should see a log message similar to the following:
 [...] INFO - Downloaded A_JSXX05ECEP020000_C_ECMP_...
 ```
 
-## Exercise 7: decoding the downloaded data
+### Decoding downloaded data
 
 In order to demonstrate how you can decode the downloaded data, we will start a new container using 'decode-bufr-jupyter' image.
 
@@ -264,7 +266,7 @@ docker run -d --name decode-bufr-jupyter \
     
     The command above also mounts the `~/wis2box-data/downloads` directory to `/root/downloads` in the container. This ensures that the downloaded data is available to the Jupyter notebook server.
     
-Once the container is started, you can access the Jupyter notebook server by navigating to `http://<your-host>:8888` in your web browser.
+Once the container is started, you can access the Jupyter notebook server by navigating to `http://YOUR-HOST:8888` in your web browser.
 
 You will see a screen requesting you to enter a "Password or token".
 
