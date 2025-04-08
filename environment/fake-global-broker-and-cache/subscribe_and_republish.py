@@ -40,7 +40,6 @@ def on_connect(client, userdata, flags, rc):
 
 def on_message(client, userdata, msg):
     payload = json.loads(msg.payload)
-    print(json.dumps(payload, indent=4))
     # if topic contains metadata or data, republish on original topic, else do nothing
     if 'metadata' in msg.topic:
         print("Republishing metadata")
@@ -49,6 +48,14 @@ def on_message(client, userdata, msg):
     else:
         print(f"Not republishing data with topic {msg.topic}")
         return
+    # republish using the origin topic on this broker
+    pub.single(
+            topic = msg.topic,
+            payload = json.dumps(payload),
+            hostname = GB_HOST,
+            auth={"username": GB_UID, "password": GB_PWD}
+        )
+    print(f"Republished to {topic}")
     # if topic contains data/core or metadata, download to cache
     if 'data/core' in msg.topic:
         print("Downloading core data")
@@ -56,6 +63,7 @@ def on_message(client, userdata, msg):
         print("Downloading metadata")
     else:
         print(f"Not downloading data with topic {msg.topic}")
+        return
     # download and save to data dir
     canonical = None
     canonical_idx = None
@@ -81,36 +89,22 @@ def on_message(client, userdata, msg):
         response = http.request("GET", canonical)
         # save to tempory file
         temp = tempfile.NamedTemporaryFile(mode="w")
-        print(f"Saving to {temp.name}")
         with open(temp.name, "wb") as fh:
             fh.write(response.data)
-        print("Data written, now putting to minio")
         # connect to MinIO
         try:
             minio_client = Minio(MINIO_HOST, access_key=MINIO_KEY,
                            secret_key=MINIO_SECRET, secure=False)
         except Exception as e:
-            print("Error connecting to Minio")
-            print(e)
+            LOGGER.error("Error connecting to Minio")
+            raise e
 
-        print("Minio connected")
-
-        if minio_client.bucket_exists("cache"):
-            print("Bucket exists")
-        else:
-            try:
-                minio_client.make_bucket("cache")
-            except Exception as e:
-                print("Error creating bucket")
-
-        # now put object
-        print("Putting object")
         try:
             minio_client.fput_object("cache", f"{p}/{filename}", temp.name)
         except Exception as e:
-            print("Error putting object")
+            print(f"Error putting object in cache: {e}")
+            raise e
 
-        print("updating payload")
         # update data id and href
         try:
             payload["properties"]["data_id"] = f"cache/{p}/{filename}"
@@ -128,6 +122,7 @@ def on_message(client, userdata, msg):
             hostname = GB_HOST,
             auth={"username": GB_UID, "password": GB_PWD}
         )
+        print(f"Published to {topic}")
 
 
 def subscribe(**kwargs):
@@ -158,57 +153,82 @@ def subscribe(**kwargs):
             if os.path.exists(f"{host}.log"):
                 os.remove(f"{host}.log")
             time.sleep(5)  # Wait before retrying
-        
-# Load configurations
-idx = 0
-with open("/app/wis2nodes.json") as fh:
-    brokers = json.load(fh)
 
-    # set up clients
-    clients = []
+
+def main():
+    # connect to MinIO
+    try:
+        minio_client = Minio(MINIO_HOST, access_key=MINIO_KEY,
+                           secret_key=MINIO_SECRET, secure=False)
+    except Exception as e:
+        print("Error connecting to Minio")
+        raise e
+
+    print("Minio connected")
+
+    if minio_client.bucket_exists("cache"):
+        print("Bucket cache exists")
+    else:
+        print("Bucket cache does not exist, creating")
+        try:
+            minio_client.make_bucket("cache")
+        except Exception as e:
+            print("Error creating bucket")
+            raise e
+
+    # Load configurations
     idx = 0
-    for broker in brokers:
-        clients.append( mqtt.Client(transport=broker.get('protocol')))
-        idx += 1
-    conn_threads = []
-    idx = 0
-    for broker in brokers:
-        conn_threads.append(
-            threading.Thread(target=subscribe, kwargs={"client": clients[idx], "broker": broker}, daemon=True) # noqa
-        )
-        idx += 1
+    with open("/app/wis2nodes.json") as fh:
+        brokers = json.load(fh)
 
-    for t in conn_threads:
-        t.start()
-
-    with open("sub.lock", "w") as fh:
-        fh.write("Running")
-
-    running = True
-    while running:
-        # print the hosts connected by reading the log files
-        nconn = 0
+        # set up clients
+        clients = []
+        idx = 0
         for broker in brokers:
-            try:
-                with open(f"{broker.get('host')}.log", "r") as fh:
-                    print(f"Host {broker.get('host')} connected")
-                    nconn += 1
-            except Exception as e:
-                print(f"Host {broker.get('host')} not connected")
-        print("****")
-        print(f"**** {nconn} OUT OF {len(brokers)} WIS2 NODES CONNECTED")
-        print("****")
-        # sleep for 5 seconds
-        time.sleep(5)
-        if os.path.exists("sub.lock"):
-            continue
-        else:
-            running = False
+            clients.append( mqtt.Client(transport=broker.get('protocol')))
+            idx += 1
+        conn_threads = []
+        idx = 0
+        for broker in brokers:
+            conn_threads.append(
+                threading.Thread(target=subscribe, kwargs={"client": clients[idx], "broker": broker}, daemon=True) # noqa
+            )
+            idx += 1
 
-    for client in clients:
-        client.disconnect()
+        for t in conn_threads:
+            t.start()
+
+        with open("sub.lock", "w") as fh:
+            fh.write("Running")
+
+        running = True
+        while running:
+            # print the hosts connected by reading the log files
+            nconn = 0
+            for broker in brokers:
+                try:
+                    with open(f"{broker.get('host')}.log", "r") as fh:
+                        print(f"Host {broker.get('host')} connected")
+                        nconn += 1
+                except Exception as e:
+                    print(f"Host {broker.get('host')} not connected")
+            print("****")
+            print(f"**** {nconn} OUT OF {len(brokers)} WIS2 NODES CONNECTED")
+            print("****")
+            # sleep for 5 seconds
+            time.sleep(5)
+            if os.path.exists("sub.lock"):
+                continue
+            else:
+                running = False
+
+        for client in clients:
+            client.disconnect()
 
 
-    for t in conn_threads:
-        if t is not None:
-            t.join()
+        for t in conn_threads:
+            if t is not None:
+                t.join()
+
+if __name__ == '__main__':
+    main()
