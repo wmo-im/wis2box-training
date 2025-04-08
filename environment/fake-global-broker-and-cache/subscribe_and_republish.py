@@ -55,7 +55,7 @@ def on_message(client, userdata, msg):
             hostname = GB_HOST,
             auth={"username": GB_UID, "password": GB_PWD}
         )
-    print(f"Republished to {topic}")
+    print(f"Republished to {msg.topic}")
     # if topic contains data/core or metadata, download to cache
     if 'data/core' in msg.topic:
         print("Downloading core data")
@@ -146,9 +146,9 @@ def subscribe(**kwargs):
                 fh.write("connected")
             client.loop_forever()
         except Exception as e:
-            msg = f"Failed to connect to host={host}, retrying in 5 seconds..."
-            LOGGER.error(msg)
-            LOGGER.error(e)
+            # msg = f"Failed to connect to host={host}, retrying in 5 seconds..."
+            # LOGGER.error(msg)
+            # LOGGER.error(e)
             # remove the file if it exists
             if os.path.exists(f"{host}.log"):
                 os.remove(f"{host}.log")
@@ -215,8 +215,8 @@ def main():
             print("****")
             print(f"**** {nconn} OUT OF {len(brokers)} WIS2 NODES CONNECTED")
             print("****")
-            # sleep for 5 seconds
-            time.sleep(5)
+            # sleep for 15 seconds
+            time.sleep(15)
             if os.path.exists("sub.lock"):
                 continue
             else:
