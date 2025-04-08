@@ -25,7 +25,7 @@ services:
 
   mosquitto:
     container_name: mosquitto
-    image: ghcr.io/world-meteorological-organization/wis2box-broker:1.0.0
+    image: wmoim/wis2box-broker:1.0.0-acl-cache
     restart: always
     env_file:
       - wis2-gb-gc.env
@@ -34,6 +34,9 @@ services:
 
   republisher:
     container_name: republisher
+    restart: always
+    env_file:
+      - wis2-gb-gc.env
     build:
       context: .
     depends_on:

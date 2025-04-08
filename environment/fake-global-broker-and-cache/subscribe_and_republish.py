@@ -20,14 +20,14 @@ nworkers = 4
 
 # MinIO storage for saving data to
 MINIO_HOST = os.getenv("MINIO_HOST")
-MINIO_KEY = os.getenv('MINIO_KEY')
-MINIO_SECRET = os.getenv('MINIO_SECRET')
+MINIO_KEY = os.getenv('MINIO_ROOT_USER')
+MINIO_SECRET = os.getenv('MINIO_ROOT_PASSWORD')
 # Fake global cache url
 GC_URL = os.getenv('GC_URL')
 # Fake global broker
-GB_HOST = os.getenv('GB_HOST')
-GB_UID = os.getenv('GB_UID')
-GB_PWD = os.getenv('GB_PWD')
+GB_HOST = os.getenv('WIS2BOX_BROKER_HOST')
+GB_UID = os.getenv('WIS2BOX_BROKER_USER')
+GB_PWD = os.getenv('WIS2BOX_BROKER_PASSWORD')
 
 print(f"MINIO_HOST={MINIO_HOST}")
 print(f"MINIO_KEY={MINIO_KEY}")
