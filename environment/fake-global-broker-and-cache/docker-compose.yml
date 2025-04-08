@@ -32,6 +32,14 @@ services:
     volumes:
       - mosquitto-config:/mosquitto/config
 
+  republisher:
+    container_name: republisher
+    build:
+      context: .
+    depends_on:
+      minio:
+        condition: service_healthy
+
 volumes:
   mosquitto-config:
   minio-data:

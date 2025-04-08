@@ -10,10 +10,7 @@ import tempfile
 import threading
 import urllib3
 import uuid
-
-# use dotenv to load environment variables
-from dotenv import load_dotenv
-load_dotenv()
+import time
 
 logging.basicConfig(level=logging.DEBUG)
 LOGGER = logging.getLogger(__name__)
@@ -146,22 +143,22 @@ def subscribe(**kwargs):
     client.username_pw_set(uid, pwd)
     client.on_connect = on_connect
     client.on_message = on_message
-    try:
-        client.connect(host=host, port=port)
-    except Exception as e:
-        msg = f'failed to connect to host={host}'
-        LOGGER.error(msg)
-        return
-    print(f"Connected to host={host}")
-    with open(f"{host}.log", "w") as fh:
-        fh.write("connected")
-
-    try:
-        client.loop_forever()
-    except Exception as e:
-        msg = f'failed to run loop_forever on host={host}'
-        LOGGER.error(e)
-
+    while True:  # Retry loop
+        try:
+            client.connect(host=host, port=port)
+            print(f"Connected to host={host}")
+            with open(f"{host}.log", "w") as fh:
+                fh.write("connected")
+            client.loop_forever()
+        except Exception as e:
+            msg = f"Failed to connect to host={host}, retrying in 5 seconds..."
+            LOGGER.error(msg)
+            LOGGER.error(e)
+            # remove the file if it exists
+            if os.path.exists(f"{host}.log"):
+                os.remove(f"{host}.log")
+            time.sleep(5)  # Wait before retrying
+        
 # Load configurations
 idx = 0
 with open("wis2nodes.json") as fh:
@@ -189,6 +186,20 @@ with open("wis2nodes.json") as fh:
 
     running = True
     while running:
+        # print the hosts connected by reading the log files
+        nconn = 0
+        for broker in brokers:
+            try:
+                with open(f"{broker.get('host')}.log", "r") as fh:
+                    print(f"Host {broker.get('host')} connected")
+                    nconn += 1
+            except Exception as e:
+                print(f"Host {broker.get('host')} not connected")
+        print("****")
+        print(f"**** {nconn} OUT OF {len(brokers)} WIS2 NODES CONNECTED")
+        print("****")
+        # sleep for 5 seconds
+        time.sleep(5)
         if os.path.exists("sub.lock"):
             continue
         else:
