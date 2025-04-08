@@ -161,7 +161,7 @@ def subscribe(**kwargs):
         
 # Load configurations
 idx = 0
-with open("wis2nodes.json") as fh:
+with open("/app/wis2nodes.json") as fh:
     brokers = json.load(fh)
 
     # set up clients

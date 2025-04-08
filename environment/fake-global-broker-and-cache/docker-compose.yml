@@ -42,6 +42,8 @@ services:
     depends_on:
       minio:
         condition: service_healthy
+    volumes:
+      - ./wis2nodes.json:/app/wis2nodes.json
 
 volumes:
   mosquitto-config:
