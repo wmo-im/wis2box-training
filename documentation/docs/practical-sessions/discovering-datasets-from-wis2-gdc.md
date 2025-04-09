@@ -69,13 +69,13 @@ export PYWISCAT_GDC_URL=http://<local-gdc-host-or-ip>
 Let's use [pywiscat](https://github.com/wmo-im/pywiscat) to query the GDC setup as part of the training.
 
 ```bash
-pywiscat search --help
+pywiscat wis2 search --help
 ```
 
 Now search the GDC for all records:
 
 ```bash
-pywiscat search
+pywiscat wis2 search
 ```
 
 !!! question
@@ -88,7 +88,7 @@ pywiscat search
 Let's try querying the GDC with a keyword:
 
 ```bash
-pywiscat search -q observations
+pywiscat wis2 search -q observations
 ```
 
 !!! question

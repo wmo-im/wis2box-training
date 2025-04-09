@@ -66,15 +66,15 @@ exit
 
 ## Publish some data to the dataset
 
-Copy the file `exercise-materials/access-control-exercises/aws-example2.csv` to the directory defined by `WIS2BOX_HOST_DATADIR` in your `wis2box.env`:
+Copy the file `exercise-materials/access-control-exercises/aws-example.csv` to the directory defined by `WIS2BOX_HOST_DATADIR` in your `wis2box.env`:
 
 ```bash
-cp ~/exercise-materials/access-control-exercises/aws-example2.csv ~/wis2box-data
+cp ~/exercise-materials/access-control-exercises/aws-example.csv ~/wis2box-data
 ```
 
-Then use WinSCP or a command line editor to edit the file `aws-example2.csv` and update the WIGOS-station-identifiers in the input-data to match the stations you have in your wis2box instance. 
+Then use WinSCP or a command line editor to edit the file `aws-example.csv` and update the WIGOS-station-identifiers in the input-data to match the stations you have in your wis2box instance. 
 
-Next, go to the station-editor in the wis2box-webapp. For each station you used in `aws-example2.csv`, update the 'topic' field to match the 'topic' of the dataset you created in the previous exercise.
+Next, go to the station-editor in the wis2box-webapp. For each station you used in `aws-example.csv`, update the 'topic' field to match the 'topic' of the dataset you created in the previous exercise.
 
 This station will now be associated to 2 topics, one for the 'core' dataset and one for the 'recommended' dataset:
 
@@ -89,10 +89,10 @@ cd ~/wis2box
 python3 wis2box-ctl.py login
 ```
 
-From the wis2box command line we can ingest the sample data file `aws-example2.csv` into a specific dataset as follows:
+From the wis2box command line we can ingest the sample data file `aws-example.csv` into a specific dataset as follows:
 
 ```bash
-wis2box data ingest -p /data/wis2box/aws-example2.csv --metadata-id urn:wmo:md:not-my-centre:reco.surface-based-observations.synop
+wis2box data ingest -p /data/wis2box/aws-example.csv --metadata-id urn:wmo:md:not-my-centre:reco.surface-based-observations.synop
 ```
 
 Make sure to provide the correct metadata-identifier for your dataset and **check that you receive WIS2 data-notifications in MQTT Explorer**, on the topic `origin/a/wis2/<your-centre-id>/data/recommended/surface-based-observations/synop`.
