@@ -229,6 +229,7 @@ You should see the following volumes:
 - wis2box_project_minio-data
 - wis2box_project_prometheus-data
 - wis2box_project_loki-data
+- wis2box_project_mosquitto-config
 
 As well as some anonymous volumes used by the various containers.
 
