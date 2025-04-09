@@ -171,11 +171,31 @@ def main():
         print("Bucket cache exists")
     else:
         print("Bucket cache does not exist, creating")
+        
         try:
             minio_client.make_bucket("cache")
         except Exception as e:
             print("Error creating bucket")
             raise e
+
+    # Set bucket policy to allow public read access
+    policy_readonly = {
+        "Version": "2012-10-17",
+        "Statement": [
+            {
+                "Effect": "Allow",
+                "Principal": {"AWS": "*"},
+                "Action": ["s3:GetObject"],
+                "Resource": [f"arn:aws:s3:::cache/*"]
+            }
+        ]
+    }
+    try:
+        minio_client.set_bucket_policy("cache", json.dumps(policy_readonly))
+        print("Public read policy set for bucket 'cache'")
+    except Exception as e:
+        print("Error setting bucket policy")
+        raise e
 
     # Load configurations
     idx = 0
