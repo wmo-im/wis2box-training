@@ -17,7 +17,7 @@ In this session you will learn how to discover data from the WIS2 Global Discove
 At the moment, the following GDCs are available:
 
 - Environment and Climate Change Canada, Meteorological Service of Canada: <https://wis2-gdc.weather.gc.ca>
-- China Meteorological Administration: <https://gdc.wis.cma.cn/api>
+- China Meteorological Administration: <https://gdc.wis.cma.cn>
 - Deutscher Wetterdienst: <https://wis2.dwd.de/gdc>
 
 
