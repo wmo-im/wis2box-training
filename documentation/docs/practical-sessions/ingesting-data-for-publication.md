@@ -57,7 +57,7 @@ cp -r ~/exercise-materials/data-ingest-exercises ~/wis2box-data/
 
 ### Add the Test Station
 
-Add the station with WIGOS identifier `0-20000-0-60355` to your wis2box instance using the station editor in the wis2box-webapp.
+Add the station with WIGOS identifier `0-20000-0-64400` to your wis2box instance using the station editor in the wis2box-webapp.
 
 Retrieve the station from OSCAR:
 
