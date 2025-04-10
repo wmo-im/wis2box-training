@@ -536,7 +536,7 @@ This returns a large JSON file, providing the mapping for 43 CSV columns.
     {"eccodes_key": "internationalDataSubCategory", "value": "const:2"},
     ```
 
-    There is **no** CSV column mapped to the eccodes key `internationalDataSubCategory`, instead the value `const:2` is used and will be encoded in all BUFR files produced with this mapping template.
+    **There is no CSV column mapped to the eccodes key `internationalDataSubCategory`**, instead the constant value 2 is used and will be encoded in all BUFR files produced with this mapping template.
 
 ### convert CSV to BUFR
 

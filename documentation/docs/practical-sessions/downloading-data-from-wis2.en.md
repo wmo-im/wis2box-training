@@ -180,7 +180,7 @@ DOWNLOAD_BROKER_PASSWORD=everyone
 DOWNLOAD_BROKER_TRANSPORT=tcp
 ```
 
-Then restart the wis2box-stack to apply the changes:
+Then run the 'start'-command again to apply the changes:
 
 ```bash
 python3 wis2box-ctl.py start
