@@ -52,11 +52,12 @@ plugins:
     - search
     - table-reader
     - i18n:
-        default_language: en
+        docs_structure: suffix
         languages:
-            en:
-                name: English
-                build: true
+          - locale: en
+            default: true
+            name: English
+            build: true
     - print-site
 
 markdown_extensions:
