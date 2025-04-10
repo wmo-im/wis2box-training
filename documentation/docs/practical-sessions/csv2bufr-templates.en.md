@@ -222,11 +222,11 @@ Click on the dataset you created in the previous practical session and click on 
 
 You should see the new template you created in the list of available templates:
 
+<img alt="Image showing the csv2bufr-templates in the wis2box-webapp" src="../../assets/img/wis2box-webapp-csv2bufr-templates.png"/>
+
 !!! hint
 
-    Noted that if you don’t see the new template you created, try refreshing the page or opening it in a new incognito window.
-
-<img alt="Image showing the csv2bufr-templates in the wis2box-webapp" src="../../assets/img/wis2box-webapp-csv2bufr-templates.png"/>
+    Note that if you don’t see the new template you created, try refreshing the page or opening it in a new incognito window.
 
 For now keep the default selection of the AWS template (click on the top right to close the plugin configuration).
 

@@ -87,7 +87,7 @@ cat ~/wis2box/wis2box.env | grep DOWNLOAD
     To update the configuration of the wis2downloader, you can edit the wis2box.env file. To apply the changes you can re-run the start command for the wis2box-stack:
 
     ```bash
-    python3 wis2box-ctl.py restart
+    python3 wis2box-ctl.py start
     ```
 
     And you will see the wis2downloader service restart with the new configuration.
@@ -180,10 +180,10 @@ DOWNLOAD_BROKER_PASSWORD=everyone
 DOWNLOAD_BROKER_TRANSPORT=tcp
 ```
 
-Then restart the wis2box-stack to apply the changes:
+Then run the 'start'-command again to apply the changes:
 
 ```bash
-python3 wis2box-ctl.py restart
+python3 wis2box-ctl.py start
 ```
 
 Check the logs of the wis2downloader to see if the connection to the new broker was successful:

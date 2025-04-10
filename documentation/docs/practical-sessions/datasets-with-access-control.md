@@ -26,11 +26,13 @@ Ensure you have a web browser open with the wis2box-webapp for your instance by 
 
 ## Create a new dataset with data policy 'recommended'
 
-Go to the 'dataset editor' page in the wis2box-webapp and create a new dataset. Use the same centre-id as in the previous practical sessions and use the Data Type = 'weather/surface-weather-observations/synop'. 
+Go to the 'dataset editor' page in the wis2box-webapp and create a new dataset. Select the Data Type = 'weather/surface-weather-observations/synop'. 
 
 <img alt="create-dataset-recommended" src="../../assets/img/create-dataset-template.png" width="800">
 
-Click 'OK' to proceed.
+For "Centre ID", use the same as you used in the previous practical sessions.
+
+Click 'CONTINUE To FORM' to proceed.
 
 In the dataset editor, set the data policy to 'recommended' (note that changing the data-policy will update the 'Topic Hierarchy').
 Replace the auto-generated 'Local ID' with a descriptive name for the dataset, e.g. 'recommended-data-with-access-control':

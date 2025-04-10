@@ -189,13 +189,17 @@ Inspect the content of the WIS2 notification you published. You should see a JSO
 
 ??? success "Click to reveal answer"
 
-    Note that the title, description, and keywords you provided in the discovery metadata are **not** present in the WIS2 notification payload! 
+    **The title, description, and keywords you provided in the discovery metadata are not present in the WIS2 notification payload!** 
     
     Instead, try to look for the canonical link  in the "links"-section in the WIS2 notification:
 
     <img alt="WIS2 notification for metadata, links sections" src="../../assets/img/wis2-notification-metadata-links.png" width="800">
 
-    The WIS2 notification contains a canonical link to the WCMP2 record that was published. if you paste this link into a browser, the JSON metadata will usually be displayed directly in the browser. To download it, you may need to right-click and choose "Save As", or use a script to fetch the file programmatically.
+    **The WIS2 notification contains a canonical link to the WCMP2 record that was published.** 
+    
+    Copy-paste this canonical link into your browser to access the WCMP2 record, depending on your browser settings, you may be prompted to download the file or it may be displayed directly in your browser.
+
+    You will find the title, description, and keywords your provided inside the WCMP2 record.
 
 ## Conclusion
 
