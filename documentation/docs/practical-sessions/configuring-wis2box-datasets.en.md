@@ -195,7 +195,7 @@ Inspect the content of the WIS2 notification you published. You should see a JSO
 
     <img alt="WIS2 notification for metadata, links sections" src="../../assets/img/wis2-notification-metadata-links.png" width="800">
 
-    The WIS2 notification contains a canonical link to the WCMP2 record that was published. If you copy-paste this link into a browser, you will download the WCMP2 record and see the title, description, and keywords you provided.
+    The WIS2 notification contains a canonical link to the WCMP2 record that was published. if you paste this link into a browser, the JSON metadata will usually be displayed directly in the browser. To download it, you may need to right-click and choose "Save As", or use a script to fetch the file programmatically.
 
 ## Conclusion
 
