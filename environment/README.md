@@ -54,17 +54,25 @@ Student VMs:
 - on vm-host-2: 10.0.2.11, 10.0.2.12, 10.0.2.13 etc.
 - on vm-host-2: 10.0.3.11, 10.0.3.12, 10.0.3.13 etc.
 
+The WiFi router has pre-configured mac-to-IP settings. After cloning the base template set the MAC address to match the IP using the following logic:
+
+- `00:00:00:00:01:11` -> `10.0.1.11`
+- `00:00:00:00:02:12` -> `10.0.2.12`
+- etc.
+
 ### student VM setup
 
 Student VMs can be setup by cloning the a base template.
 
 The script `setup_student_vm.sh` can be used to by the `wmo_admin` account to create a new user account on the student VM and add the latest wis2box release to the home directory of the new user along with the exercise materials.
 
-The WiFi router has pre-configured mac-to-IP settings. After cloning the base template set the MAC address to match the IP using the following logic:
+The script requires a username and an host-ip as input:
 
-- `00:00:00:00:01:11` -> `10.0.1.11`
-- `00:00:00:00:02:12` -> `10.0.2.12`
-- etc.
+```bash
+source setup_student_vm.sh mlimper 10.0.1.11
+```
+
+The DNS server needs to be **manually** configured for each training to map host-IPs to hostnames, e.g.: 10.0.1.11 -> `mlimper.wis2.training`
 
 ### local DNS
 
@@ -75,6 +83,8 @@ http://dns-server.wis2.training:5380/
 or
 http://10.0.2.111:5380/
 
-The DNS server UI can be used to check the status of the DNS-server and/or to add additional A-records. The DNS server is preconfigured with A-records naming each host for each local training participants. 
+The DNS server UI can be used to check the status of the DNS-server and/or to add additional A-records. 
+
+**The DNS server needs to be manually pre-configured before each training with A-records naming each host for each local training participants.** 
 
 The DNS server is hosted on a VM on vm-host-2. If vm-host-2 is lost during transit or broken a backup is available on vm-host-1. If the DNS-server for some reason does not work at all, participants can just use the IP as hostname.

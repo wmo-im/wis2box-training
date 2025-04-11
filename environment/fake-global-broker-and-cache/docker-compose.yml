@@ -1,0 +1,55 @@
+services:
+  minio:
+    container_name: wis2box-minio
+    image: minio/minio:RELEASE.2024-08-03T04-33-23Z-cpuv1
+    mem_limit: 512m
+    memswap_limit: 512m
+    restart: always
+    env_file:
+      - wis2-gb-gc.env
+    environment:
+      - MINIO_BROWSER_LOGIN_ANIMATION=off
+      - MINIO_BROWSER_REDIRECT=false
+      - MINIO_UPDATE=off
+    command: server --quiet --console-address ":9001" /data
+    volumes:
+      - minio-data:/data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 5s
+      timeout: 1s
+      retries: 3
+    depends_on:
+      mosquitto:
+        condition: service_started
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+
+  mosquitto:
+    container_name: mosquitto
+    image: wmoim/wis2box-broker:1.0.0-acl-cache
+    restart: always
+    env_file:
+      - wis2-gb-gc.env
+    volumes:
+      - mosquitto-config:/mosquitto/config
+    ports:
+      - "1883:1883"
+
+  republisher:
+    container_name: republisher
+    restart: always
+    env_file:
+      - wis2-gb-gc.env
+    build:
+      context: .
+    depends_on:
+      minio:
+        condition: service_healthy
+    volumes:
+      - ./hostnames.txt:/app/hostnames.txt
+
+volumes:
+  mosquitto-config:
+  minio-data:

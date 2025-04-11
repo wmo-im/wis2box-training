@@ -68,11 +68,7 @@ Please create an authorization token for the `collections/stations` endpoint usi
 
 The **wis2box-webapp** provides a graphical user interface to edit station metadata.
 
-Open the **wis2box-webapp** in your browser by navigating to `http://YOUR-HOST/wis2box-webapp`:
-
-<img alt="wis2box-webapp" src="../../assets/img/wis2box-webapp.png" width="800">
-
-And select stations:
+Open the **wis2box-webapp** in your browser by navigating to `http://YOUR-HOST/wis2box-webapp`, and select stations:
 
 <img alt="wis2box-webapp-select-stations" src="../../assets/img/wis2box-webapp-select-stations.png" width="250">
 
