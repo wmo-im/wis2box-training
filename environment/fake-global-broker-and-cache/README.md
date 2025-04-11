@@ -4,7 +4,7 @@ To run a local MQTT broker and a local cache that can be used to simulate the gl
 
 # Usage
 
-Update the file ``wis2nodes.json`` with the hostnames or IPs of the student VMs.
+Update the file ``hostnames.txt`` with the hostnames or IPs of the student VMs.
 
 Start the containers with the following command:
 

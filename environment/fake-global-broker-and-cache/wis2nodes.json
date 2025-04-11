@@ -1,5 +1,0 @@
-[
-    {"host": "10.0.1.11", "port": 1883, "pwd": "everyone", "uid": "everyone", "protocol": "tcp"},
-    {"host": "10.0.1.12", "port": 1883, "pwd": "everyone", "uid": "everyone", "protocol": "tcp"},
-    {"host": "10.0.1.13", "port": 1883, "pwd": "everyone", "uid": "everyone", "protocol": "tcp"}
-]
