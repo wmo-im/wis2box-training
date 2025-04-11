@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+    <url>
+        <loc>https://training.wis2box.wis.wmo.int/</loc>
+        <lastmod>2025-04-11</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://training.wis2box.wis.wmo.int/"/>
+    </url>
+    <url>
+        <loc>https://training.wis2box.wis.wmo.int/cheatsheets/docker/</loc>
+        <lastmod>2025-04-11</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://training.wis2box.wis.wmo.int/cheatsheets/docker/"/>
+    </url>
+    <url>
+        <loc>https://training.wis2box.wis.wmo.int/cheatsheets/linux/</loc>
+        <lastmod>2025-04-11</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://training.wis2box.wis.wmo.int/cheatsheets/linux/"/>
+    </url>
+    <url>
+        <loc>https://training.wis2box.wis.wmo.int/cheatsheets/wis2box/</loc>
+        <lastmod>2025-04-11</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://training.wis2box.wis.wmo.int/cheatsheets/wis2box/"/>
+    </url>
+    <url>
+        <loc>https://training.wis2box.wis.wmo.int/csv2bufr-templates/aws-template/</loc>
+        <lastmod>2025-04-11</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://training.wis2box.wis.wmo.int/csv2bufr-templates/aws-template/"/>
+    </url>
+    <url>
+        <loc>https://training.wis2box.wis.wmo.int/csv2bufr-templates/daycli-template/</loc>
+        <lastmod>2025-04-11</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://training.wis2box.wis.wmo.int/csv2bufr-templates/daycli-template/"/>
+    </url>
+    <url>
+        <loc>https://training.wis2box.wis.wmo.int/practical-sessions/accessing-your-student-vm/</loc>
+        <lastmod>2025-04-11</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://training.wis2box.wis.wmo.int/practical-sessions/accessing-your-student-vm/"/>
+    </url>
+    <url>
+        <loc>https://training.wis2box.wis.wmo.int/practical-sessions/adding-gts-headers-to-wis2-notifications/</loc>
+        <lastmod>2025-04-11</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://training.wis2box.wis.wmo.int/practical-sessions/adding-gts-headers-to-wis2-notifications/"/>
+    </url>
+    <url>
+        <loc>https://training.wis2box.wis.wmo.int/practical-sessions/configuring-station-metadata/</loc>
+        <lastmod>2025-04-11</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://training.wis2box.wis.wmo.int/practical-sessions/configuring-station-metadata/"/>
+    </url>
+    <url>
+        <loc>https://training.wis2box.wis.wmo.int/practical-sessions/configuring-wis2box-datasets/</loc>
+        <lastmod>2025-04-11</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://training.wis2box.wis.wmo.int/practical-sessions/configuring-wis2box-datasets/"/>
+    </url>
+    <url>
+        <loc>https://training.wis2box.wis.wmo.int/practical-sessions/connecting-to-wis2-over-mqtt/</loc>
+        <lastmod>2025-04-11</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://training.wis2box.wis.wmo.int/practical-sessions/connecting-to-wis2-over-mqtt/"/>
+    </url>
+    <url>
+        <loc>https://training.wis2box.wis.wmo.int/practical-sessions/csv2bufr-templates/</loc>
+        <lastmod>2025-04-11</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://training.wis2box.wis.wmo.int/practical-sessions/csv2bufr-templates/"/>
+    </url>
+    <url>
+        <loc>https://training.wis2box.wis.wmo.int/practical-sessions/data-conversion-tools/</loc>
+        <lastmod>2025-04-11</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://training.wis2box.wis.wmo.int/practical-sessions/data-conversion-tools/"/>
+    </url>
+    <url>
+        <loc>https://training.wis2box.wis.wmo.int/practical-sessions/datasets-with-access-control/</loc>
+        <lastmod>2025-04-11</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://training.wis2box.wis.wmo.int/practical-sessions/datasets-with-access-control/"/>
+    </url>
+    <url>
+        <loc>https://training.wis2box.wis.wmo.int/practical-sessions/discovering-datasets-from-wis2-gdc/</loc>
+        <lastmod>2025-04-11</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://training.wis2box.wis.wmo.int/practical-sessions/discovering-datasets-from-wis2-gdc/"/>
+    </url>
+    <url>
+        <loc>https://training.wis2box.wis.wmo.int/practical-sessions/downloading-data-from-wis2/</loc>
+        <lastmod>2025-04-11</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://training.wis2box.wis.wmo.int/practical-sessions/downloading-data-from-wis2/"/>
+    </url>
+    <url>
+        <loc>https://training.wis2box.wis.wmo.int/practical-sessions/ingesting-data-for-publication/</loc>
+        <lastmod>2025-04-11</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://training.wis2box.wis.wmo.int/practical-sessions/ingesting-data-for-publication/"/>
+    </url>
+    <url>
+        <loc>https://training.wis2box.wis.wmo.int/practical-sessions/initializing-wis2box/</loc>
+        <lastmod>2025-04-11</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://training.wis2box.wis.wmo.int/practical-sessions/initializing-wis2box/"/>
+    </url>
+    <url>
+        <loc>https://training.wis2box.wis.wmo.int/practical-sessions/querying-data-using-the-wis2box-api/</loc>
+        <lastmod>2025-04-11</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://training.wis2box.wis.wmo.int/practical-sessions/querying-data-using-the-wis2box-api/"/>
+    </url>
+</urlset>
