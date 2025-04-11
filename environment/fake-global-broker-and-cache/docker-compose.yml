@@ -48,7 +48,7 @@ services:
       minio:
         condition: service_healthy
     volumes:
-      - ./wis2nodes.json:/app/wis2nodes.json
+      - ./hostnames.txt:/app/hostnames.txt
 
 volumes:
   mosquitto-config:

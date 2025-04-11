@@ -199,22 +199,20 @@ def main():
 
     # Load configurations
     idx = 0
-    with open("/app/wis2nodes.json") as fh:
-        #brokers = json.load(fh)
-        # create the brokers list from the hostnames.txt
-        brokers = []
-        with open("/app/hostnames.txt") as f:
-            for line in f:
-                # remove new line
-                line = line.strip()
-                if len(line) > 0:
-                    brokers.append({
-                        "host": line,
-                        "port": 1883,
-                        "uid": "everyone",
-                        "pwd": "everyone",
-                        "protocol": "tcp"
-                    })
+    # create the brokers list from the hostnames.txt
+    brokers = []
+    with open("/app/hostnames.txt") as f:
+        for line in f:
+            # remove new line
+            line = line.strip()
+            if len(line) > 0:
+                brokers.append({
+                    "host": line,
+                    "port": 1883,
+                    "uid": "everyone",
+                    "pwd": "everyone",
+                    "protocol": "tcp"
+                })
 
         # set up clients
         clients = []

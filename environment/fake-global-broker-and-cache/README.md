@@ -16,7 +16,7 @@ This will start the following containers:
 * `minio` - local cache
 * `republisher` - republisher that subscribes to the local MQTT broker and republishes messages to the global cache
 
-To check the status of the connections to the local MQTT brokers defined in ``wis2nodes.json``, run the following command:
+To check the status of the connections to the local MQTT brokers defined in ``hostnames.txt``, run the following command:
 
 ```bash
 docker logs -f republisher
