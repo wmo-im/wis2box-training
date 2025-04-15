@@ -33,7 +33,7 @@ In this session you will learn how to setup a subscription to a WIS2 Broker and 
 
 Before starting please login to your student VM and ensure your wis2box instance is up and running.
 
-## Viewing the wis2download dashboard in Grafana
+## Viewing the wis2downloader dashboard in Grafana
 
 Open a web browser and navigate to the Grafana dashboard for your wis2box instance by going to `http://YOUR-HOST:3000`.
 
