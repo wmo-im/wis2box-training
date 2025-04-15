@@ -35,7 +35,7 @@ Make sure that you have MQTT Explorer open and connected to your broker using th
 
 The csv2bufr module comes with a command line tool to create your own mapping template using a set of BUFR sequences and/or BUFR element as input.
 
-To find specific BUFR sequences and elements you can refer to the BUFR tables at [https://confluence.ecmwf.int/display/BUFR/BUFR+Tables](https://confluence.ecmwf.int/display/BUFR/BUFR+Tables).
+To find specific BUFR sequences and elements you can refer to the BUFR tables at [https://confluence.ecmwf.int/display/ECC/BUFR+tables](https://confluence.ecmwf.int/display/ECC/BUFR+tables).
 
 ### csv2bufr mappings command line tool
 
@@ -148,30 +148,10 @@ cat /data/wis2box/mappings/my_custom_template.json
     - **airTemperature** maps to `"eccodes_key": "#1#airTemperature"` (BUFR element 012101)
     - **nonCoordinatePressure** maps to `"eccodes_key": "#1#nonCoordinatePressure"` (BUFR element 010004)
 
-To test the new template, first exit the container:
+Check the content of the file `custom_template_data.csv` in the directory `/root/data-conversion-exercises`:
 
 ```bash
-exit
-```
-
-Then copy the example CSV file `aws-example.csv` to the directory `~/wis2box-data/mappings`:
-
-```bash
-cp ~/exercise-materials/data-conversion-exercises/custom_template_data.csv ~/wis2box-data/mappings
-```
-
-Login to the wis2box-api container:
-
-```bash
-cd ~/wis2box
-python3 wis2box-ctl.py login wis2box-api
-```
-
-Check that the file `custom_template_data.csv` is present in the directory `/data/wis2box/mappings` and view the content with the `cat` command:
-
-```bash
-ls /data/wis2box/mappings
-cat /data/wis2box/mappings/custom_template_data.csv
+cat /root/data-conversion-exercises/custom_template_data.csv
 ```
 
 Note that the headers of this CSV file are the same as the CSV headers in the mapping template you created.
@@ -179,13 +159,13 @@ Note that the headers of this CSV file are the same as the CSV headers in the ma
 To test the data conversion we can use the `csv2bufr` command line tool to convert the CSV file to BUFR using the mapping template we created:
 
 ```bash
-csv2bufr data transform --bufr-template /data/wis2box/mappings/my_custom_template.json /data/wis2box/mappings/custom_template_data.csv
+csv2bufr data transform --bufr-template my_custom_template /root/data-conversion-exercises/custom_template_data.csv
 ```
 
 You should see the following output:
 
 ```bash
-CLI:    ... Transforming /data/wis2box/mappings/custom_template_data.csv to BUFR ...
+CLI:    ... Transforming /root/data-conversion-exercises/custom_template_data.csv to BUFR ...
 CLI:    ... Processing subsets:
 CLI:    ..... 94 bytes written to ./WIGOS_0-20000-0-15015_20250412T210000.bufr4
 CLI:    End of processing, exiting.
