@@ -35,7 +35,7 @@ Make sure that you have MQTT Explorer open and connected to your broker using th
 
 The csv2bufr module comes with a command line tool to create your own mapping template using a set of BUFR sequences and/or BUFR element as input.
 
-To find specific BUFR sequences and elements you can refer to the BUFR tables at [https://confluence.ecmwf.int/display/BUFR/BUFR+Tables](https://confluence.ecmwf.int/display/BUFR/BUFR+Tables).
+To find specific BUFR sequences and elements you can refer to the BUFR tables at <https://confluence.ecmwf.int/display/ECC/BUFR+tables>.
 
 ### csv2bufr mappings command line tool
 
