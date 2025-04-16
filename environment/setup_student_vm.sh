@@ -44,3 +44,5 @@ ssh -o StrictHostKeyChecking=no wmo_admin@`echo $HOST_IP` "sudo unzip -o /tmp/ex
 ssh -o StrictHostKeyChecking=no wmo_admin@`echo $HOST_IP` "rm -rf /tmp/exercise-materials.zip"
 
 ssh -o StrictHostKeyChecking=no wmo_admin@`echo $HOST_IP` "sudo chown -R `echo $USERNAME`:`echo $USERNAME` /home/`echo $USERNAME`"
+
+ssh -o StrictHostKeyChecking=no wmo_admin@`echo $HOST_IP` "sudo pip3 install pywiscat==0.2.2"
