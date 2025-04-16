@@ -63,19 +63,19 @@ pywiscat --version
 By default, pywiscat connects to Canada's Global Discovery Catalogue.  Let's configure pywiscat to query the training GDC by setting the `PYWISCAT_GDC_URL` environment variable:
 
 ```bash
-export PYWISCAT_GDC_URL=http://<local-gdc-host-or-ip>
+export PYWISCAT_GDC_URL=http://gdc.wis2.training:5002
 ```
 
 Let's use [pywiscat](https://github.com/wmo-im/pywiscat) to query the GDC setup as part of the training.
 
 ```bash
-pywiscat wis2 search --help
+pywiscat search --help
 ```
 
 Now search the GDC for all records:
 
 ```bash
-pywiscat wis2 search
+pywiscat search
 ```
 
 !!! question
@@ -88,7 +88,7 @@ pywiscat wis2 search
 Let's try querying the GDC with a keyword:
 
 ```bash
-pywiscat wis2 search -q observations
+pywiscat search -q observations
 ```
 
 !!! question
