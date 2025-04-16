@@ -106,10 +106,10 @@ Try additional queries with `-q`
 
     - `-q synop`: find all records with the word "synop"
     - `-q temp`: find all records with the word "temp"
-    - `-q "observations AND fiji"`: find all records with the words "observations" and "fiji"
-    - `-q "observations NOT fiji"`: find all records that contain the word "observations" but not the word "fiji"
+    - `-q "observations AND oman"`: find all records with the words "observations" and "oman"
+    - `-q "observations NOT oman"`: find all records that contain the word "observations" but not the word "oman"
     - `-q "synop OR temp"`: find all records with both "synop" or "temp"
-    - `-q "obs~"`: fuzzy search
+    - `-q "obs*"`: fuzzy search
 
     When searching for terms with spaces, enclose in double quotes.
 
