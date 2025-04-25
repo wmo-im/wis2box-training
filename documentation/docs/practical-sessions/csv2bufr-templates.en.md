@@ -190,9 +190,21 @@ CLI:    End of processing, exiting.
     airTemperature=298.15
     ```
 
+You can now exit the container:
+
+```bash
+exit
+```
+
 ### Using the mapping template in the wis2box
 
-To use the mapping template you created in the wis2box, you need to configure your dataset in the wis2box-webapp to use the custom mapping template for the CSV to BUFR conversion plugin.
+To ensure the new mapping template is recognized by the wis2box-api container, you need to restart the container:
+
+```bash
+docker restart wis2box-api
+```
+
+You can now configure your dataset in the wis2box-webapp to use the custom mapping template for the CSV to BUFR conversion plugin.
 
 The wis2box-webapp will automatically detect the mapping template you created and make it available in the list of templates for the CSV to BUFR conversion plugin.
 
