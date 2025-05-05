@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-  const defaultLang = "en-test";
+  const defaultLang = "en";
   const currentLang = document.documentElement.lang || "en";
 
   const aiDisclaimersTtitle = {
@@ -41,7 +41,7 @@ document.addEventListener("DOMContentLoaded", function () {
       border: 1px solid #f0c36d;
       box-shadow : 0 2px 5px rgba(0,0,0,0.2)
       z-index: 1000;
-      font-size: 0.9em;
+      font-size: 1.4em;
       border-radius : 8px;
     `;
     banner.innerHTML = `<span style="color: black;font-weight: bold;">${
