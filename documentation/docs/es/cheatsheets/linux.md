@@ -1,10 +1,10 @@
 ---
-title: Hoja de trucos de Linux
+title: Linux cheatsheet
 ---
 
-# Hoja de trucos de Linux
+# Linux cheatsheet
 
-## Visión general
+## Resumen
 
 Los conceptos básicos para trabajar en un sistema operativo Linux son **archivos** y **directorios** (carpetas) organizados en
 una estructura de árbol dentro de un **entorno**.
@@ -29,13 +29,13 @@ cd /dir1/dir2
 cd ./somedir
 ```
 
-* Subir un directorio:
+* Moverse un directorio hacia arriba:
 
 ```bash
 cd ..
 ```
 
-* Subir dos directorios:
+* Moverse dos directorios hacia arriba:
 
 ```bash
 cd ../..
@@ -76,43 +76,43 @@ touch foo.txt
 * Crear un archivo desde un comando `echo`:
 
 ```bash
-echo "hola" > archivo-prueba.txt
+echo "hi there" > test-file.txt
 ```
 
 * Ver el contenido de un archivo:
 
 ```bash
-cat archivo-prueba.txt
+cat test-file.txt
 ```
 
 * Copiar un archivo:
 
 ```bash
-cp archivo1 archivo2
+cp file1 file2
 ```
 
-* Comodines: operar con patrones de archivos:
+* Comodines: operar sobre patrones de archivos:
 
 ```bash
-ls -l arch*  # coincide con archivo1 y archivo2
+ls -l fil*  # coincide con file1 y file2
 ```
 
-* Concatenar dos archivos en un nuevo archivo llamado `nuevoarchivo`:
+* Concatenar dos archivos en un nuevo archivo llamado `newfile`:
 
 ```bash
-cat archivo1 archivo2 > nuevoarchivo
+cat file1 file2 > newfile
 ```
 
-* Añadir otro archivo a `nuevoarchivo`
+* Añadir otro archivo a `newfile`
 
 ```bash
-cat archivo3 >> nuevoarchivo
+cat file3 >> newfile
 ```
 
 * Eliminar un archivo:
 
 ```bash
-rm nuevoarchivo
+rm newfile
 ```
 
 * Eliminar todos los archivos con la misma extensión de archivo:
@@ -132,64 +132,65 @@ mkdir dir1
 Las tuberías permiten a un usuario enviar la salida de un comando a otro usando el símbolo de tubería `|`:
 
 ```bash
-echo "hola" | sed 's/hola/adiós/'
+echo "hi" | sed 's/hi/bye/'
 ```
 
 * Filtrar salidas de comandos usando grep:
 
-```bash
-echo "id,título" > archivo-prueba.txt
-echo "1,pájaros" >> archivo-prueba.txt
-echo "2,peces" >> archivo-prueba.txt
-echo "3,gatos" >> archivo-prueba.txt
 
-cat archivo-prueba.txt | grep peces
+```bash
+echo "id,title" > test-file.txt
+echo "1,birds" >> test-file.txt
+echo "2,fish" >> test-file.txt
+echo "3,cats" >> test-file.txt
+
+cat test-file.txt | grep fish
 ```
 
 * Ignorar mayúsculas y minúsculas:
 
 ```bash
-grep -i PECES archivo-prueba.txt
+grep -i FISH test-file.txt
 ```
 
 * Contar líneas coincidentes:
 
 ```bash
-grep -c peces archivo-prueba.txt
+grep -c fish test-file.txt
 ```
 
 * Devolver salidas que no contienen la palabra clave:
 
 ```bash
-grep -v pájaros archivo-prueba.txt
+grep -v birds test-file.txt
 ```
 
-* Contar el número de líneas en `archivo-prueba.txt`:
+* Contar el número de líneas en `test-file.txt`:
 
 ```bash
-wc -l archivo-prueba.txt
+wc -l test-file.txt
 ```
 
-* Mostrar salida una pantalla a la vez:
+* Mostrar la salida una pantalla a la vez:
 
 ```bash
-more archivo-prueba.txt
+more test-file.txt
 ```
 
 ...con controles:
 
 - Desplazarse hacia abajo línea por línea: *enter*
 - Ir a la siguiente página: *barra espaciadora*
-- Regresar una página: *b*
+- Volver una página: *b*
 
 * Mostrar las primeras 3 líneas del archivo:
 
 ```bash
-head -3 archivo-prueba.txt
+head -3 test-file.txt
 ```
 
 * Mostrar las últimas 2 líneas del archivo:
 
 ```bash
-tail -2 archivo-prueba.txt
+tail -2 test-file.txt
 ```

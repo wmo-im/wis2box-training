@@ -1,35 +1,36 @@
 ---
-title: Descubriendo conjuntos de datos desde el WIS2 Global Discovery Catalogue
+title: Descubrimiento de conjuntos de datos desde el Catálogo Global de Descubrimiento WIS2
 ---
 
-# Descubriendo conjuntos de datos desde el WIS2 Global Discovery Catalogue
+# Descubrimiento de conjuntos de datos desde el Catálogo Global de Descubrimiento WIS2
 
-!!! abstract "¡Resultados del aprendizaje!"
+!!! abstract "Resultados de aprendizaje!"
 
     Al final de esta sesión práctica, podrás:
 
-    - usar pywiscat para descubrir conjuntos de datos desde el Global Discovery Catalogue (GDC)
+    - usar pywiscat para descubrir conjuntos de datos desde el Catálogo Global de Descubrimiento (GDC)
 
 ## Introducción
 
-En esta sesión aprenderás cómo descubrir datos desde el WIS2 Global Discovery Catalogue (GDC).
+En esta sesión aprenderás cómo descubrir datos desde el Catálogo Global de Descubrimiento WIS2 (GDC).
 
-Actualmente, los siguientes GDCs están disponibles:
+Actualmente, los siguientes GDC están disponibles:
 
 - Environment and Climate Change Canada, Meteorological Service of Canada: <https://wis2-gdc.weather.gc.ca>
-- China Meteorological Administration: <https://gdc.wis.cma.cn>
-- Deutscher Wetterdienst: <https://wis2.dwd.de/gdc>
+- Administración Meteorológica de China: <https://gdc.wis.cma.cn>
+- Servicio Meteorológico Alemán: <https://wis2.dwd.de/gdc>
 
-Durante las sesiones de capacitación local, se configura un GDC local para permitir que los participantes consulten el GDC para los metadatos que publicaron desde sus instancias de wis2box. En este caso, los instructores proporcionarán la URL al GDC local.
+
+Durante las sesiones de entrenamiento locales, se configura un GDC local para permitir a los participantes consultar el GDC por los metadatos que han publicado desde sus instancias de wis2box. En este caso, los entrenadores proporcionarán la URL al GDC local.
 
 ## Preparación
 
 !!! note
-    Antes de comenzar, por favor inicia sesión en tu máquina virtual de estudiante.
+    Antes de comenzar, por favor inicia sesión en tu VM de estudiante.
 
-## Instalando pywiscat
+## Instalación de pywiscat
 
-Usa el instalador de paquetes Python `pip3` para instalar pywiscat en tu máquina virtual:
+Usa el instalador de paquetes de Python `pip3` para instalar pywiscat en tu VM:
 ```bash
 pip3 install pywiscat
 ```
@@ -49,9 +50,9 @@ pip3 install pywiscat
     export PATH=$PATH:/home/$USER/.local/bin
     ```
 
-    ...donde `$USER` es tu nombre de usuario en tu máquina virtual.
+    ...donde `$USER` es tu nombre de usuario en tu VM.
 
-Verifica que la instalación fue exitosa:
+Verifica que la instalación haya sido exitosa:
 
 ```bash
 pywiscat --version
@@ -59,13 +60,13 @@ pywiscat --version
 
 ## Encontrando datos con pywiscat
 
-Por defecto, pywiscat se conecta al Global Discovery Catalogue de Canadá. Vamos a configurar pywiscat para consultar el GDC de entrenamiento estableciendo la variable de entorno `PYWISCAT_GDC_URL`:
+Por defecto, pywiscat se conecta al Catálogo Global de Descubrimiento de Canadá. Configuremos pywiscat para consultar el GDC de entrenamiento estableciendo la variable de entorno `PYWISCAT_GDC_URL`:
 
 ```bash
 export PYWISCAT_GDC_URL=http://gdc.wis2.training:5002
 ```
 
-Usemos [pywiscat](https://github.com/wmo-im/pywiscat) para consultar el GDC configurado como parte del entrenamiento.
+Usamos [pywiscat](https://github.com/wmo-im/pywiscat) para consultar el GDC configurado como parte del entrenamiento.
 
 ```bash
 pywiscat search --help
@@ -82,7 +83,7 @@ pywiscat search
     ¿Cuántos registros se devuelven de la búsqueda?
 
 ??? success "Haz clic para revelar la respuesta"
-    El número de registros depende del GDC que estés consultando. Cuando uses el GDC local de entrenamiento, deberías ver que el número de registros es igual al número de conjuntos de datos que se han ingresado en el GDC durante las otras sesiones prácticas.
+    El número de registros depende del GDC que estés consultando. Al usar el GDC de entrenamiento local, deberías ver que el número de registros es igual al número de conjuntos de datos que han sido ingestados en el GDC durante las otras sesiones prácticas.
 
 Intentemos consultar el GDC con una palabra clave:
 
@@ -95,7 +96,7 @@ pywiscat search -q observations
     ¿Cuál es la política de datos de los resultados?
 
 ??? success "Haz clic para revelar la respuesta"
-    Todos los datos devueltos deberían especificar datos "core"
+    Todos los datos devueltos deben especificar datos "core"
 
 Prueba consultas adicionales con `-q`
 
@@ -108,11 +109,11 @@ Prueba consultas adicionales con `-q`
     - `-q "observations AND oman"`: encuentra todos los registros con las palabras "observations" y "oman"
     - `-q "observations NOT oman"`: encuentra todos los registros que contienen la palabra "observations" pero no la palabra "oman"
     - `-q "synop OR temp"`: encuentra todos los registros con "synop" o "temp"
-    - `-q "obs*"`: búsqueda aproximada
+    - `-q "obs*"`: búsqueda difusa
 
-    Cuando busques términos con espacios, enciérralos entre comillas dobles.
+    Al buscar términos con espacios, enciérralos entre comillas dobles.
 
-Obtengamos más detalles sobre un resultado de búsqueda específico que nos interese:
+Obtengamos más detalles sobre un resultado de búsqueda específico que nos interesa:
 
 ```bash
 pywiscat get <id>
@@ -122,10 +123,11 @@ pywiscat get <id>
 
     Usa el valor `id` de la búsqueda anterior.
 
+
 ## Conclusión
 
-!!! success "¡Felicitaciones!"
+!!! success "¡Felicidades!"
 
-    En esta sesión práctica, aprendiste cómo:
+    En esta sesión práctica, aprendiste a:
 
-    - usar pywiscat para descubrir conjuntos de datos desde el WIS2 Global Discovery Catalogue
+    - usar pywiscat para descubrir conjuntos de datos desde el Catálogo Global de Descubrimiento WIS2

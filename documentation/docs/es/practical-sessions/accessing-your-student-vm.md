@@ -1,22 +1,22 @@
 ---
-title: Accediendo a su VM de estudiante
+title: Acceso a tu VM de estudiante
 ---
 
-# Accediendo a su VM de estudiante
+# Acceso a tu VM de estudiante
 
-!!! abstract "Objetivos de aprendizaje"
+!!! abstract "Resultados de aprendizaje"
 
-    Al final de esta sesión práctica, usted podrá:
+    Al final de esta sesión práctica, podrás:
 
-    - acceder a su VM de estudiante mediante SSH y WinSCP
-    - verificar que el software requerido para los ejercicios prácticos está instalado
-    - verificar que tiene acceso a los materiales de ejercicios para esta capacitación en su VM local de estudiante
+    - acceder a tu VM de estudiante mediante SSH y WinSCP
+    - verificar que el software necesario para los ejercicios prácticos esté instalado
+    - verificar que tienes acceso a los materiales de los ejercicios para este entrenamiento en tu VM de estudiante local
 
 ## Introducción
 
-Como parte de las sesiones de capacitación de wis2box ejecutadas localmente, puede acceder a su VM personal de estudiante en la red local de capacitación denominada "WIS2-training".
+Como parte de las sesiones de entrenamiento de wis2box realizadas localmente, puedes acceder a tu VM de estudiante personal en la red local de entrenamiento denominada "WIS2-training".
 
-Su VM de estudiante tiene el siguiente software preinstalado:
+Tu VM de estudiante tiene el siguiente software preinstalado:
 
 - Ubuntu 22.0.4.3 LTS [ubuntu-22.04.3-live-server-amd64.iso](https://releases.ubuntu.com/jammy/ubuntu-22.04.3-live-server-amd64.iso)
 - Python 3.10.12
@@ -26,71 +26,71 @@ Su VM de estudiante tiene el siguiente software preinstalado:
 
 !!! note
 
-    Si desea ejecutar esta capacitación fuera de una sesión local de entrenamiento, puede proporcionar su propia instancia utilizando cualquier proveedor de nube, por ejemplo:
+    Si deseas realizar este entrenamiento fuera de una sesión de entrenamiento local, puedes proporcionar tu propia instancia utilizando cualquier proveedor de nube, por ejemplo:
 
-    - GCP (Google Cloud Platform) VM instance `e2-medium`
-    - AWS (Amazon Web Services) ec2-instance `t3a.medium`
-    - Azure (Microsoft) Azure Virtual Machine `standard_b2s`
+    - Instancia VM de GCP (Google Cloud Platform) `e2-medium`
+    - Instancia ec2 de AWS (Amazon Web Services) `t3a.medium`
+    - Máquina Virtual de Azure (Microsoft) `standard_b2s`
 
-    Seleccione Ubuntu Server 22.0.4 LTS como sistema operativo.
+    Selecciona Ubuntu Server 22.0.4 LTS como sistema operativo.
     
-    Después de crear su VM, asegúrese de tener instalado python, docker y docker compose, como se describe en [wis2box-software-dependencies](https://docs.wis2box.wis.wmo.int/en/latest/user/getting-started.html#software-dependencies).
+    Después de crear tu VM asegúrate de haber instalado python, docker y docker compose, como se describe en [wis2box-software-dependencies](https://docs.wis2box.wis.wmo.int/en/latest/user/getting-started.html#software-dependencies).
     
-    El archivo de lanzamiento para wis2box utilizado en esta capacitación se puede descargar de la siguiente manera:
+    El archivo de lanzamiento para wis2box utilizado en este entrenamiento se puede descargar de la siguiente manera:
 
     ```bash
     wget https://github.com/World-Meteorological-Organization/wis2box-release/releases/download/1.0.0/wis2box-setup.zip
     unzip wis2box-setup.zip
     ```
     
-    Siempre puede encontrar el último archivo 'wis2box-setup' en [https://github.com/World-Meteorological-Organization/wis2box/releases](https://github.com/World-Meteorological-Organization/wis2box-release/releases).
+    Siempre puedes encontrar el último archivo 'wis2box-setup' en [https://github.com/World-Meteorological-Organization/wis2box/releases](https://github.com/World-Meteorological-Organization/wis2box-release/releases).
 
-    El material de ejercicios utilizado en esta capacitación se puede descargar de la siguiente manera:
+    Los materiales de ejercicio utilizados en este entrenamiento se pueden descargar de la siguiente manera:
 
     ```bash
     wget https://training.wis2box.wis.wmo.int/exercise-materials.zip
     unzip exercise-materials.zip
     ```
 
-    Los siguientes paquetes adicionales de Python son necesarios para ejecutar los materiales de ejercicios:
+    Los siguientes paquetes adicionales de Python son necesarios para ejecutar los materiales de ejercicio:
 
     ```bash
     pip3 install minio
     pip3 install pywiscat==0.2.2
     ```
 
-    Si está utilizando la VM de estudiante proporcionada durante las sesiones locales de capacitación WIS2, el software requerido ya estará instalado.
+    Si estás utilizando la VM de estudiante proporcionada durante las sesiones locales de entrenamiento WIS2, el software necesario ya estará instalado.
 
-## Conectarse a su VM de estudiante en la red local de capacitación
+## Conéctate a tu VM de estudiante en la red local de entrenamiento
 
-Conecte su PC a la red Wi-Fi local transmitida en la sala durante la capacitación WIS2 según las instrucciones proporcionadas por el instructor.
+Conecta tu PC a la red Wi-Fi local transmitida en la sala durante el entrenamiento WIS2 según las instrucciones proporcionadas por el entrenador.
 
-Use un cliente SSH para conectarse a su VM de estudiante utilizando lo siguiente:
+Usa un cliente SSH para conectarte a tu VM de estudiante utilizando lo siguiente:
 
-- **Host: (proporcionado durante la capacitación presencial)**
+- **Host: (proporcionado durante el entrenamiento presencial)**
 - **Puerto: 22**
-- **Nombre de usuario: (proporcionado durante la capacitación presencial)**
-- **Contraseña: (proporcionada durante la capacitación presencial)**
+- **Nombre de usuario: (proporcionado durante el entrenamiento presencial)**
+- **Contraseña: (proporcionado durante el entrenamiento presencial)**
 
 !!! tip
-    Contacte a un instructor si no está seguro sobre el nombre de host/usuario o tiene problemas para conectarse.
+    Contacta a un entrenador si tienes dudas sobre el nombre de host/usuario o si tienes problemas para conectarte.
 
-Una vez conectado, cambie su contraseña para asegurarse de que otros no puedan acceder a su VM:
+Una vez conectado, por favor cambia tu contraseña para asegurar que otros no puedan acceder a tu VM:
 
 ```bash
 limper@student-vm:~$ passwd
-Changing password for testuser.
-Current password:
-New password:
-Retype new password:
-passwd: password updated successfully
+Cambiando la contraseña para testuser.
+Contraseña actual:
+Nueva contraseña:
+Repite la nueva contraseña:
+passwd: contraseña actualizada correctamente
 ```
 
-## Verificar versiones de software
+## Verifica las versiones del software
 
-Para poder ejecutar wis2box, la VM del estudiante debe tener Python, Docker y Docker Compose preinstalados.
+Para poder ejecutar wis2box, la VM de estudiante debería tener Python, Docker y Docker Compose preinstalados. 
 
-Verificar versión de Python:
+Verifica la versión de Python:
 ```bash
 python3 --version
 ```
@@ -99,7 +99,7 @@ devuelve:
 Python 3.10.12
 ```
 
-Verificar versión de docker:
+Verifica la versión de docker:
 ```bash
 docker --version
 ```
@@ -108,7 +108,7 @@ devuelve:
 Docker version 24.0.6, build ed223bc
 ```
 
-Verificar versión de Docker Compose:
+Verifica la versión de Docker Compose:
 ```bash
 docker compose version
 ```
@@ -117,16 +117,16 @@ devuelve:
 Docker Compose version v2.21.0
 ```
 
-Para asegurar que su usuario pueda ejecutar comandos Docker, su usuario ha sido agregado al grupo `docker`.
+Para asegurar que tu usuario pueda ejecutar comandos de Docker, tu usuario ha sido añadido al grupo `docker`. 
 
-Para probar que su usuario puede ejecutar docker hello-world, ejecute el siguiente comando:
+Para probar que tu usuario puede ejecutar docker hello-world, ejecuta el siguiente comando:
 ```bash
 docker run hello-world
 ```
 
-Esto debería descargar la imagen hello-world y ejecutar un contenedor que imprime un mensaje.
+Esto debería descargar la imagen hello-world y ejecutar un contenedor que imprime un mensaje. 
 
-Verifique que ve lo siguiente en la salida:
+Verifica que veas lo siguiente en la salida:
 
 ```console
 ...
@@ -135,9 +135,9 @@ This message shows that your installation appears to be working correctly.
 ...
 ```
 
-## Inspeccionar los materiales de ejercicios
+## Inspecciona los materiales de ejercicio
 
-Inspeccione el contenido de su directorio personal; estos son los materiales utilizados como parte de la capacitación y sesiones prácticas.
+Inspecciona los contenidos de tu directorio home; estos son los materiales utilizados como parte del entrenamiento y las sesiones prácticas.
 
 ```bash
 ls ~/
@@ -147,27 +147,29 @@ devuelve:
 exercise-materials  wis2box
 ```
 
-Si tiene WinSCP instalado en su PC local, puede usarlo para conectarse a su VM de estudiante e inspeccionar el contenido de su directorio personal y descargar o subir archivos entre su VM y su PC local.
+Si tienes WinSCP instalado en tu PC local, puedes usarlo para conectarte a tu VM de estudiante e inspeccionar los contenidos de tu directorio home y descargar o subir archivos entre tu VM y tu PC local. 
 
-WinSCP no es necesario para la capacitación, pero puede ser útil si desea editar archivos en su VM usando un editor de texto en su PC local.
+WinSCP no es necesario para el entrenamiento, pero puede ser útil si deseas editar archivos en tu VM usando un editor de texto en tu PC local.
 
-Así es como puede conectarse a su VM de estudiante usando WinSCP:
+Aquí te mostramos cómo puedes conectarte a tu VM de estudiante usando WinSCP:
 
-Abra WinSCP y haga clic en "New Site". Puede crear una nueva conexión SCP a su VM de la siguiente manera:
+Abre WinSCP y haz clic en "Nuevo Sitio". Puedes crear una nueva conexión SCP a tu VM de la siguiente manera:
 
 <img alt="winscp-student-vm-scp.png" src="../../assets/img/winscp-student-vm-scp.png" width="400">
 
-Haga clic en 'Save' y luego en 'Login' para conectarse a su VM.
+Haz clic en 'Guardar' y luego en 'Conectar' para conectarte a tu VM.
 
-Y debería poder ver el siguiente contenido:
+Y deberías poder ver el siguiente contenido:
 
 <img alt="winscp-student-vm-exercise-materials.png" src="../../assets/img/winscp-student-vm-exercise-materials.png" width="600">
 
 ## Conclusión
 
-!!! success "¡Felicitaciones!"
-    En esta sesión práctica, aprendió a:
+!!! success "¡Felicidades!"
+    En esta sesión práctica, aprendiste cómo:
 
-    - acceder a su VM de estudiante mediante SSH y WinSCP
-    - verificar que el software requerido para los ejercicios prácticos está instalado
-    - verificar que tiene acceso a los materiales de ejercicios para esta capacitación en su VM local de estudiante
+    - acceder a tu VM de estudiante mediante SSH y WinSCP
+    - verificar que el software necesario para los ejercicios prácticos esté instalado
+    - verificar que tienes acceso a los materiales de los ejercicios para este entrenamiento en tu VM de estudiante local
+
+    

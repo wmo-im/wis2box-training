@@ -1,14 +1,14 @@
 ---
-title: Hoja de trucos de Docker
+title: Docker cheatsheet
 ---
 
-# Hoja de trucos de Docker
+# Docker cheatsheet
 
 ## Visión general
 
-Docker permite la creación de entornos virtuales de manera aislada en apoyo de la virtualización de recursos informáticos. El concepto básico detrás de Docker es la contenerización, donde el software puede funcionar como servicios, interactuando con otros contenedores de software, por ejemplo.
+Docker permite crear entornos virtuales de manera aislada en apoyo de la virtualización de recursos informáticos. El concepto básico detrás de Docker es la contenerización, donde el software puede funcionar como servicios, interactuando con otros contenedores de software, por ejemplo.
 
-El flujo de trabajo típico de Docker implica crear y construir **imágenes**, que luego se ejecutan como **contenedores** en vivo.
+El flujo de trabajo típico de Docker implica crear y construir **imágenes**, que luego se ejecutan como **contenedores** activos.
 
 Docker se utiliza para ejecutar el conjunto de servicios que componen wis2box utilizando imágenes preconstruidas.
 
@@ -40,7 +40,7 @@ docker rmi my-image:local
 docker volume ls
 ```
 
-* Mostrar información detallada de un volumen:
+* Mostrar información detallada sobre un volumen:
 
 ```bash
 docker volume inspect my-volume
@@ -74,9 +74,10 @@ docker ps -a
 
 * Entrar al terminal interactivo de un contenedor en ejecución:
 
+
 !!! tip
 
-    usa `docker ps` para usar el id del contenedor en el comando a continuación
+    use `docker ps` para usar el id del contenedor en el comando a continuación
 
 ```bash
 docker exec -it my-container /bin/bash
