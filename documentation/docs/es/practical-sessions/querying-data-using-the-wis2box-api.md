@@ -12,14 +12,14 @@ title: Consulta de datos utilizando la API de wis2box
 
 ## Introducción
 
-La API de wis2box proporciona acceso de descubrimiento y consulta de manera legible por máquina a los datos que han sido ingeridos en wis2box. La API se basa en el estándar OGC API - Features y está implementada usando [pygeoapi](https://pygeoapi.io).
+La API de wis2box proporciona acceso de descubrimiento y consulta de manera legible por máquina a los datos que han sido ingeridos en wis2box. La API se basa en el estándar OGC API - Features y se implementa utilizando [pygeoapi](https://pygeoapi.io).
 
 La API de wis2box proporciona acceso a las siguientes colecciones:
 
 - Estaciones
 - Metadatos de descubrimiento
 - Notificaciones de datos
-- más una colección por conjunto de datos configurado, que almacena la salida de bufr2geojson (el complemento `bufr2geojson` debe estar habilitado en la configuración de mapeo de datos para llenar los elementos en la colección de conjunto de datos).
+- más una colección por conjunto de datos configurado, que almacena la salida de bufr2geojson (el complemento `bufr2geojson` debe estar habilitado en la configuración de mapeo de datos para llenar los elementos en la colección de conjuntos de datos).
 
 En esta sesión práctica aprenderás a usar la API de datos para explorar y consultar datos que han sido ingeridos en wis2box.
 
@@ -54,7 +54,7 @@ Haz clic en el enlace 'Explorar', luego haz clic en el enlace 'json'.
     ¿Cuántas estaciones se devuelven? Compara este número con la lista de estaciones en `http://YOUR-HOST/wis2box-webapp/station`
 
 ??? success "Haz clic para revelar la respuesta"
-    El número de estaciones de la API debería ser igual al número de estaciones que ves en la aplicación web de wis2box.
+    El número de estaciones de la API debería ser igual al número de estaciones que ves en la wis2box-webapp.
 
 !!! question
     ¿Cómo podemos consultar por una sola estación (por ejemplo, `Balaka`)?
@@ -92,7 +92,7 @@ Haz clic en el enlace 'Explorar'.
     ¿Cómo podemos visualizar la respuesta JSON?
 
 ??? success "Haz clic para revelar la respuesta"
-    Haciendo clic en el enlace 'JSON' en la parte superior derecha de la página, o añadiendo `f=json` a la solicitud de API en el navegador web.
+    Haciendo clic en el enlace 'JSON' en la parte superior derecha de la página, o agregando `f=json` a la solicitud de API en el navegador web.
 
 Inspecciona la respuesta JSON de las observaciones.
 
@@ -103,36 +103,36 @@ Inspecciona la respuesta JSON de las observaciones.
     ¿Cómo podemos limitar la respuesta a 3 observaciones?
 
 ??? success "Haz clic para revelar la respuesta"
-    Añade `limit=3` a la solicitud de API.
+    Agrega `limit=3` a la solicitud de API.
 
 !!! question
     ¿Cómo podemos ordenar la respuesta por las observaciones más recientes?
 
 ??? success "Haz clic para revelar la respuesta"
-    Añade `sortby=-resultTime` a la solicitud de API (nota el signo `-` para denotar orden descendente). Para ordenar por las observaciones más antiguas, actualiza la solicitud para incluir `sortby=resultTime`.
+    Agrega `sortby=-resultTime` a la solicitud de API (nota el signo `-` para denotar orden descendente). Para ordenar por las observaciones más antiguas, actualiza la solicitud para incluir `sortby=resultTime`.
 
 !!! question
     ¿Cómo podemos filtrar las observaciones por una sola estación?
 
 ??? success "Haz clic para revelar la respuesta"
-    Añade `wigos_station_identifier=<WSI>` a la solicitud de API.
+    Agrega `wigos_station_identifier=<WSI>` a la solicitud de API.
 
 !!! question
     ¿Cómo podemos recibir las observaciones como un CSV?
 
 ??? success "Haz clic para revelar la respuesta"
-    Añade `f=csv` a la solicitud de API.
+    Agrega `f=csv` a la solicitud de API.
 
 !!! question
     ¿Cómo podemos mostrar una sola observación (id)?
 
 ??? success "Haz clic para revelar la respuesta"
-    Usando el identificador de característica de una solicitud de API contra las observaciones, consulta la API para `http://YOUR-HOST/oapi/collections/{collectionId}/items/{featureId}`, donde `{collectionId}` es el nombre de tu colección de observaciones y `{itemId}` es el identificador de la observación única de interés.
+    Usando el identificador de característica de una solicitud de API contra las observaciones, consulta la API para `http://YOUR-HOST/oapi/collections/{collectionId}/items/{featureId}`, donde `{collectionId}` es el nombre de tu colección de observaciones y `{itemId}` es el identificador de la única observación de interés.
 
 ## Conclusión
 
 !!! success "¡Felicidades!"
-    En esta sesión práctica, aprendiste a:
+    En esta sesión práctica, aprendiste cómo:
 
     - usar la API de wis2box para consultar y filtrar tus estaciones
     - usar la API de wis2box para consultar y filtrar tus datos

@@ -16,7 +16,7 @@ title: Inicializando wis2box
 
 !!! note
 
-    Los materiales de formación actuales se basan en wis2box-release 1.0.0.
+    Los materiales de formación actuales están basados en wis2box-release 1.0.0.
     
     Consulta [accessing-your-student-vm](accessing-your-student-vm.md) para obtener instrucciones sobre cómo descargar e instalar el stack de software de wis2box si estás realizando esta formación fuera de una sesión de entrenamiento local.
 
@@ -57,7 +57,7 @@ Por ejemplo, si tu nombre de usuario es `username`, la ruta completa al director
 
 ```{.copy}
 username@student-vm-username:~/wis2box$ python3 wis2box-create-config.py
-Por favor, introduce el directorio que se utilizará para WIS2BOX_HOST_DATADIR:
+Por favor, ingresa el directorio que se utilizará para WIS2BOX_HOST_DATADIR:
 /home/username/wis2box-data
 El directorio que se utilizará para WIS2BOX_HOST_DATADIR se establecerá en:
     /home/username/wis2box-data
@@ -68,12 +68,12 @@ El directorio /home/username/wis2box-data ha sido creado.
 
 ### URL de wis2box
 
-A continuación, se te pedirá que ingreses la URL de tu wis2box. Esta es la URL que se utilizará para acceder a la aplicación web, API y UI de wis2box.
+A continuación, se te pedirá que ingreses la URL de tu wis2box. Esta es la URL que se utilizará para acceder a la aplicación web de wis2box, API y UI.
 
 Por favor, utiliza `http://<tu-nombre-de-host-o-ip>` como URL.
 
 ```{.copy}
-Por favor, introduce la URL de wis2box:
+Por favor, ingresa la URL de wis2box:
  Para pruebas locales la URL es http://localhost
  Para habilitar el acceso remoto, la URL debe apuntar a la dirección IP pública o al nombre de dominio del servidor que aloja wis2box.
 http://username.wis2.training
@@ -84,7 +84,7 @@ La URL de wis2box se establecerá en:
 
 ### Contraseñas de WEBAPP, STORAGE y BROKER
 
-Puedes utilizar la opción de generación de contraseñas aleatorias cuando se te solicite `WIS2BOX_WEBAPP_PASSWORD`, `WIS2BOX_STORAGE_PASSWORD`, `WIS2BOX_BROKER_PASSWORD` y definir las tuyas propias.
+Puedes usar la opción de generación de contraseña aleatoria cuando se te solicite y `WIS2BOX_WEBAPP_PASSWORD`, `WIS2BOX_STORAGE_PASSWORD`, `WIS2BOX_BROKER_PASSWORD` y definir las tuyas.
 
 No te preocupes por recordar estas contraseñas, se almacenarán en el archivo `wis2box.env` en tu directorio de wis2box.
 
@@ -114,9 +114,9 @@ O verifica el contenido del archivo a través de WinSCP.
 
 ??? success "Haz clic para revelar la respuesta"
 
-    El valor predeterminado para WIS2BOX_STORAGE_DATA_RETENTION_DAYS es 30 días. Puedes cambiar este valor a un número diferente de días si lo deseas.
+    El valor predeterminado para WIS2BOX_STORAGE_DATA_RETENTION_DAYS es de 30 días. Puedes cambiar este valor a un número diferente de días si lo deseas.
     
-    El contenedor wis2box-management ejecuta un trabajo cron diariamente para eliminar datos más antiguos que el número de días definido por WIS2BOX_STORAGE_DATA_RETENTION_DAYS del bucket `wis2box-public` y del backend de la API:
+    El contenedor wis2box-management ejecuta un trabajo cron diariamente para eliminar datos anteriores al número de días definido por WIS2BOX_STORAGE_DATA_RETENTION_DAYS del bucket `wis2box-public` y del backend de la API:
     
     ```{.copy}
     0 0 * * * su wis2box -c "wis2box data clean --days=$WIS2BOX_STORAGE_DATA_RETENTION_DAYS"
@@ -124,9 +124,9 @@ O verifica el contenido del archivo a través de WinSCP.
 
 !!! note
 
-    El archivo `wis2box.env` contiene variables de entorno que definen la configuración de tu wis2box. Para más información consulta la [wis2box-documentation](https://docs.wis2box.wis.wmo.int/en/latest/reference/configuration.html).
+    El archivo `wis2box.env` contiene variables de entorno que definen la configuración de tu wis2box. Para obtener más información, consulta la [wis2box-documentation](https://docs.wis2box.wis.wmo.int/en/latest/reference/configuration.html).
 
-    No edites el archivo `wis2box.env` a menos que estés seguro de los cambios que estás haciendo. Cambios incorrectos pueden hacer que tu wis2box deje de funcionar.
+    No edites el archivo `wis2box.env` a menos que estés seguro de los cambios que estás haciendo. Los cambios incorrectos pueden hacer que tu wis2box deje de funcionar.
 
     No compartas el contenido de tu archivo `wis2box.env` con nadie, ya que contiene información sensible como contraseñas.
 
@@ -152,7 +152,7 @@ Versión actual=Indefinida, última versión=1.0.0
 ¿Te gustaría actualizar? (s/n/salir)
 ```
 
-Selecciona ``s`` y el script creará el archivo ``docker-compose.images-1.0.0.yml``, descargará las imágenes Docker necesarias e iniciará los servicios.
+Selecciona ``s`` y el script creará el archivo ``docker-compose.images-1.0.0.yml``, descargará las imágenes Docker requeridas e iniciará los servicios.
 
 La descarga de las imágenes puede llevar algún tiempo dependiendo de la velocidad de tu conexión a internet. Este paso solo es necesario la primera vez que inicies wis2box.
 
@@ -162,7 +162,7 @@ Inspecciona el estado con el siguiente comando:
 python3 wis2box-ctl.py status
 ```
 
-Repite este comando hasta que todos los servicios estén funcionando.
+Repite este comando hasta que todos los servicios estén en funcionamiento.
 
 !!! note "wis2box y Docker"
     wis2box funciona como un conjunto de contenedores Docker gestionados por docker-compose.
@@ -171,7 +171,7 @@ Repite este comando hasta que todos los servicios estén funcionando.
     
     El script de Python `wis2box-ctl.py` se utiliza para ejecutar los comandos subyacentes de Docker Compose que controlan los servicios de wis2box.
 
-    No necesitas conocer los detalles de los contenedores Docker para ejecutar el stack de software de wis2box, pero puedes inspeccionar los archivos `docker-compose*.yml` para ver cómo están definidos los servicios. Si estás interesado en aprender más sobre Docker, puedes encontrar más información en la [documentación de Docker](https://docs.docker.com/).
+    No necesitas conocer los detalles de los contenedores Docker para ejecutar el stack de software de wis2box, pero puedes inspeccionar los archivos `docker-compose*.yml` para ver cómo se definen los servicios. Si estás interesado en aprender más sobre Docker, puedes encontrar más información en la [documentación de Docker](https://docs.docker.com/).
 
 Para iniciar sesión en el contenedor de wis2box-management, utiliza el siguiente comando:
 
@@ -182,7 +182,7 @@ python3 wis2box-ctl.py login
 Dentro del contenedor de wis2box-management puedes ejecutar varios comandos para gestionar tu wis2box, como:
 
 - `wis2box auth add-token --path processes/wis2box` : para crear un token de autorización para el endpoint `processes/wis2box`
-- `wis2box data clean --days=<number-of-days>` : para limpiar datos más antiguos que un cierto número de días del bucket `wis2box-public`
+- `wis2box data clean --days=<número-de-días>` : para limpiar datos anteriores a cierto número de días del bucket `wis2box-public`
 
 Para salir del contenedor y volver a la máquina anfitriona, utiliza el siguiente comando:
 
@@ -225,7 +225,6 @@ Deberías ver los siguientes volúmenes:
 
 - wis2box_project_auth-data
 - wis2box_project_es-data
-
 - wis2box_project_htpasswd
 - wis2box_project_minio-data
 - wis2box_project_prometheus-data
@@ -234,11 +233,11 @@ Deberías ver los siguientes volúmenes:
 
 Así como algunos volúmenes anónimos utilizados por los diversos contenedores.
 
-Los volúmenes que comienzan con `wis2box_project_` se utilizan para almacenar datos persistentes para los diversos servicios en el conjunto de software de wis2box.
+Los volúmenes que comienzan con `wis2box_project_` se utilizan para almacenar datos persistentes para los diversos servicios en el stack de software de wis2box.
 
-## wis2box API
+## API de wis2box
 
-El wis2box contiene una API (Interfaz de Programación de Aplicaciones) que proporciona acceso a datos y procesos para visualización interactiva, transformación de datos y publicación.
+wis2box contiene una API (Interfaz de Programación de Aplicaciones) que proporciona acceso a datos y procesos para visualización interactiva, transformación de datos y publicación.
 
 Abre una nueva pestaña y navega a la página `http://YOUR-HOST/oapi`.
 
@@ -248,15 +247,15 @@ Esta es la página de inicio de la API de wis2box (ejecutándose a través del c
 
 !!! question
      
-     ¿Qué colecciones están disponibles actualmente?
+     ¿Qué colecciones están actualmente disponibles?
 
 ??? success "Haz clic para revelar la respuesta"
     
-    Para ver las colecciones disponibles actualmente a través de la API, haz clic en `Ver las colecciones en este servicio`:
+    Para ver las colecciones actualmente disponibles a través de la API, haz clic en `Ver las colecciones en este servicio`:
 
     <img alt="wis2box-api-collections.png" src="../../assets/img/wis2box-api-collections.png" width="600">
 
-    Las siguientes colecciones están disponibles actualmente:
+    Las siguientes colecciones están actualmente disponibles:
 
     - Estaciones
     - Notificaciones de datos
@@ -273,15 +272,15 @@ Esta es la página de inicio de la API de wis2box (ejecutándose a través del c
     
     Notarás que la página dice "No hay elementos" ya que aún no se han publicado notificaciones de datos.
 
-## wis2box webapp
+## Aplicación web de wis2box
 
 Abre un navegador web y visita la página `http://YOUR-HOST/wis2box-webapp`.
 
-Verás un pop-up solicitando tu nombre de usuario y contraseña. Usa el nombre de usuario predeterminado `wis2box-user` y la `WIS2BOX_WEBAPP_PASSWORD` definida en el archivo `wis2box.env` y haz clic en "Iniciar sesión":
+Verás un pop-up pidiendo tu nombre de usuario y contraseña. Usa el nombre de usuario predeterminado `wis2box-user` y el `WIS2BOX_WEBAPP_PASSWORD` definido en el archivo `wis2box.env` y haz clic en "Iniciar sesión":
 
 !!! note 
 
-    Revisa tu wis2box.env para el valor de tu WIS2BOX_WEBAPP_PASSWORD. Puedes usar el siguiente comando para verificar el valor de esta variable de entorno:
+    Consulta tu wis2box.env para conocer el valor de tu WIS2BOX_WEBAPP_PASSWORD. Puedes usar el siguiente comando para verificar el valor de esta variable de entorno:
 
     ```{.copy}
     cat ~/wis2box/wis2box.env | grep WIS2BOX_WEBAPP_PASSWORD
@@ -295,16 +294,16 @@ Esta es la aplicación web de wis2box que te permite interactuar con tu wis2box:
 
 - crear y gestionar conjuntos de datos
 - actualizar/revisar tus metadatos de estación
-- subir observaciones manuales usando el formulario FM-12 synop
+- subir observaciones manuales usando el formulario FM-12 synop 
 - monitorear notificaciones publicadas en tu wis2box-broker
 
-Utilizaremos esta aplicación web en una sesión posterior.
+Usaremos esta aplicación web en una sesión posterior.
 
 ## wis2box-broker
 
 Abre el MQTT Explorer en tu computadora y prepara una nueva conexión para conectarte a tu broker (ejecutándose a través del contenedor **wis2box-broker**).
 
-Haz clic en `+` para añadir una nueva conexión:
+Haz clic en `+` para agregar una nueva conexión:
 
 <img alt="mqtt-explorer-new-connection.png" src="../../assets/img/mqtt-explorer-new-connection.png" width="300">
 
@@ -321,17 +320,17 @@ Puedes hacer clic en el botón 'ADVANCED' y verificar que tienes suscripciones a
 
     Los mensajes publicados bajo el tema `$SYS` son mensajes del sistema publicados por el servicio mosquitto en sí.
 
-Usa los siguientes detalles de conexión, asegurándote de reemplazar el valor de `<your-host>` con tu nombre de host y `<WIS2BOX_BROKER_PASSWORD>` con el valor de tu archivo `wis2box.env`:
+Usa los siguientes detalles de conexión, asegurándote de reemplazar el valor de `<tu-host>` con tu nombre de host y `<WIS2BOX_BROKER_PASSWORD>` con el valor de tu archivo `wis2box.env`:
 
 - **Protocolo: mqtt://**
-- **Host: `<your-host>`**
+- **Host: `<tu-host>`**
 - **Puerto: 1883**
-- **Usuario: wis2box**
+- **Nombre de usuario: wis2box**
 - **Contraseña: `<WIS2BOX_BROKER_PASSWORD>`**
 
 !!! note 
 
-    Puedes verificar tu wis2box.env para el valor de tu WIS2BOX_BROKER_PASSWORD. Puedes usar el siguiente comando para verificar el valor de esta variable de entorno:
+    Puedes verificar tu wis2box.env para conocer el valor de tu WIS2BOX_BROKER_PASSWORD. Puedes usar el siguiente comando para verificar el valor de esta variable de entorno:
 
     ```{.copy}
     cat ~/wis2box/wis2box.env | grep WIS2BOX_BROKER_PASSWORD
@@ -358,5 +357,5 @@ Mantén el MQTT Explorer abierto, ya que lo utilizaremos para monitorear los men
 
     - ejecutar el script `wis2box-create-config.py` para crear la configuración inicial
     - iniciar wis2box y verificar el estado de sus componentes
-    - acceder a la wis2box-webapp y wis2box-API en un navegador
+    - acceder a wis2box-webapp y wis2box-API en un navegador
     - conectarte al broker MQTT en tu VM de estudiante usando MQTT Explorer

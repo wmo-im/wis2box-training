@@ -6,7 +6,9 @@ title: Docker cheatsheet
 
 ## Visión general
 
-Docker permite crear entornos virtuales de manera aislada en apoyo de la virtualización de recursos informáticos. El concepto básico detrás de Docker es la contenerización, donde el software puede funcionar como servicios, interactuando con otros contenedores de software, por ejemplo.
+Docker permite la creación de entornos virtuales de manera aislada en apoyo
+de la virtualización de recursos informáticos. El concepto básico detrás de Docker es la contenerización,
+donde el software puede funcionar como servicios, interactuando con otros contenedores de software, por ejemplo.
 
 El flujo de trabajo típico de Docker implica crear y construir **imágenes**, que luego se ejecutan como **contenedores** activos.
 
@@ -40,7 +42,7 @@ docker rmi my-image:local
 docker volume ls
 ```
 
-* Mostrar información detallada sobre un volumen:
+* Mostrar información detallada de un volumen:
 
 ```bash
 docker volume inspect my-volume

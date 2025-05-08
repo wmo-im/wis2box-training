@@ -12,13 +12,13 @@ Esta plantilla mapea observaciones diarias de:
 
  - Temperatura mínima, máxima y promedio durante un período de 24 horas
  - Precipitación total acumulada durante un período de 24 horas
- - Profundidad total de la nieve en el momento de la observación
+ - Profundidad total de nieve en el momento de la observación
  - Profundidad de nieve fresca durante un período de 24 horas
 
-Esta plantilla requiere metadatos adicionales con respecto a la plantilla simplificada de AWS: método de cálculo de la temperatura promedio; alturas de sensor y estación; clasificación de calidad de exposición y medición.
+Esta plantilla requiere metadatos adicionales con respecto a la plantilla simplificada AWS: método de cálculo de la temperatura promedio; alturas de sensor y estación; clasificación de exposición y calidad de medición.
 
 !!! Note "Acerca de la plantilla DAYCLI"
-    Tenga en cuenta que la secuencia BUFR DAYCLI se actualizará durante 2025 para incluir información adicional y banderas de QC revisadas. La plantilla DAYCLI incluida en wis2box se actualizará para reflejar estos cambios. La WMO comunicará cuando el software de wis2box se actualice para incluir la nueva plantilla DAYCLI, para permitir a los usuarios actualizar sus sistemas en consecuencia.
+    Tenga en cuenta que la secuencia BUFR DAYCLI se actualizará durante 2025 para incluir información adicional y banderas de QC revisadas. La plantilla DAYCLI incluida en wis2box se actualizará para reflejar estos cambios. La OMM comunicará cuando el software de wis2box se actualice para incluir la nueva plantilla DAYCLI, para permitir a los usuarios actualizar sus sistemas en consecuencia.
 
 ## Columnas CSV y descripción
 

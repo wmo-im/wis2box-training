@@ -9,14 +9,14 @@ title: Configuración de metadatos de estaciones
     Al final de esta sesión práctica, podrás:
 
     - crear un token de autorización para el endpoint `collections/stations`
-    - añadir metadatos de estación a wis2box
-    - actualizar/eliminar metadatos de estación usando el **wis2box-webapp**
+    - añadir metadatos de estaciones a wis2box
+    - actualizar/eliminar metadatos de estaciones usando el **wis2box-webapp**
 
 ## Introducción
 
-Para compartir datos internacionalmente entre los miembros de la OMM, es importante tener un entendimiento común de las estaciones que están produciendo los datos. El Sistema Global Integrado de Observación de la OMM (WIGOS) proporciona un marco para la integración de sistemas de observación y sistemas de gestión de datos. El **Identificador de Estación WIGOS (WSI)** se utiliza como la referencia única de la estación que produjo un conjunto específico de datos de observación.
+Para compartir datos internacionalmente entre los Miembros de la OMM, es importante tener un entendimiento común de las estaciones que están produciendo los datos. El Sistema Global Integrado de Observación de la OMM (WIGOS) proporciona un marco para la integración de sistemas de observación y sistemas de gestión de datos. El **Identificador de Estación WIGOS (WSI)** se utiliza como la referencia única de la estación que produjo un conjunto específico de datos de observación.
 
-wis2box tiene una colección de metadatos de estación que se utiliza para describir las estaciones que están produciendo los datos de observación y deben ser recuperados de **OSCAR/Surface**. Los metadatos de estación en wis2box son utilizados por las herramientas de transformación BUFR para verificar que los datos de entrada contengan un Identificador de Estación WIGOS (WSI) válido y para proporcionar un mapeo entre el WSI y los metadatos de la estación.
+wis2box tiene una colección de metadatos de estaciones que se utiliza para describir las estaciones que están produciendo los datos de observación y deben ser recuperados de **OSCAR/Surface**. Los metadatos de estaciones en wis2box son utilizados por las herramientas de transformación BUFR para verificar que los datos de entrada contengan un Identificador de Estación WIGOS (WSI) válido y para proporcionar un mapeo entre el WSI y los metadatos de la estación.
 
 ## Crear un token de autorización para collections/stations
 
@@ -40,7 +40,7 @@ Por ejemplo, para usar un token generado automáticamente al azar para el endpoi
 
 ```{.copy}
 wis2box auth add-token --path collections/stations
-```
+```	
 
 La salida se verá así:
 
@@ -49,7 +49,7 @@ Continue with token: 7ca20386a131f0de384e6ffa288eb1ae385364b3694e47e3b451598c82e
 Token successfully created
 ```
 
-O, si quieres definir tu propio token para el endpoint `collections/stations`, puedes usar el siguiente ejemplo:
+O, si deseas definir tu propio token para el endpoint `collections/stations`, puedes usar el siguiente ejemplo:
 
 ```{.copy}
 wis2box auth add-token --path collections/stations DataIsMagic
@@ -64,20 +64,20 @@ Token successfully created
 
 Por favor, crea un token de autorización para el endpoint `collections/stations` usando las instrucciones anteriores.
 
-## añadir metadatos de estación usando el **wis2box-webapp**
+## añadir metadatos de estaciones usando el **wis2box-webapp**
 
-El **wis2box-webapp** proporciona una interfaz gráfica para editar metadatos de estación.
+El **wis2box-webapp** proporciona una interfaz gráfica para editar metadatos de estaciones.
 
 Abre el **wis2box-webapp** en tu navegador navegando a `http://YOUR-HOST/wis2box-webapp`, y selecciona estaciones:
 
 <img alt="wis2box-webapp-select-stations" src="../../assets/img/wis2box-webapp-select-stations.png" width="250">
 
-Cuando hagas clic en 'añadir nueva estación' se te pedirá que proporciones el identificador de estación WIGOS para la estación que quieres añadir:
+Cuando hagas clic en 'añadir nueva estación' se te pedirá que proporciones el identificador de estación WIGOS para la estación que deseas añadir:
 
 <img alt="wis2box-webapp-import-station-from-oscar" src="../../assets/img/wis2box-webapp-import-station-from-oscar.png" width="800">
 
 !!! note "Añadir metadatos de estación para 3 o más estaciones"
-    Por favor, añade tres o más estaciones a la colección de metadatos de estación de tu wis2box. 
+    Por favor, añade tres o más estaciones a la colección de metadatos de estaciones de tu wis2box. 
       
     Si es posible, utiliza estaciones de tu país, especialmente si trajiste tus propios datos.
       
@@ -101,9 +101,9 @@ Regresa a la lista de estaciones y verás la estación que añadiste:
 
 Repite este proceso hasta que tengas al menos 3 estaciones configuradas.
 
-!!! tip "Derivar información de elevación faltante"
+!!! tip "Derivando información de elevación faltante"
 
-    Si falta la elevación de tu estación, hay servicios en línea que ayudan a buscar la elevación utilizando datos de elevación abiertos. Un ejemplo es la [API de Open Topo Data](https://www.opentopodata.org).
+    Si falta la elevación de tu estación, hay servicios en línea que ayudan a buscar la elevación usando datos de elevación abiertos. Un ejemplo es la [API de Datos Topográficos Abiertos](https://www.opentopodata.org).
 
     Por ejemplo, para obtener la elevación en la latitud -6.15558 y longitud 106.84204, puedes copiar y pegar la siguiente URL en una nueva pestaña del navegador:
 
@@ -131,9 +131,9 @@ Repite este proceso hasta que tengas al menos 3 estaciones configuradas.
 
 ## Revisar tus metadatos de estación
 
-Los metadatos de estación están almacenados en el backend de wis2box y están disponibles a través del **wis2box-api**.
+Los metadatos de la estación están almacenados en el backend de wis2box y están disponibles a través del **wis2box-api**. 
 
-Si abres un navegador y navegas a `http://YOUR-HOST/oapi/collections/stations/items` verás los metadatos de estación que añadiste:
+Si abres un navegador y navegas a `http://YOUR-HOST/oapi/collections/stations/items` verás los metadatos de la estación que añadiste:
 
 <img alt="wis2box-api-stations" src="../../assets/img/wis2box-api-stations.png" width="800">
 
@@ -145,7 +145,7 @@ También tienes la opción de ver/actualizar/eliminar la estación en el **wis2b
 
 !!! note "Actualizar/eliminar metadatos de estación"
 
-    Intenta ver si puedes actualizar/eliminar los metadatos de estación para una de las estaciones que añadiste usando el **wis2box-webapp**.
+    Intenta ver si puedes actualizar/eliminar los metadatos de la estación para una de las estaciones que añadiste usando el **wis2box-webapp**.
 
 ## Carga masiva de metadatos de estación
 
@@ -158,9 +158,9 @@ wis2box metadata station publish-collection -p /data/wis2box/metadata/station/st
 
 Esto te permite subir un gran número de estaciones a la vez y asociarlas con un tema específico.
 
-Puedes crear el archivo CSV usando Excel o un editor de texto y luego subirlo al wis2box-host-datadir para hacerlo disponible en el directorio `/data/wis2box/`.
+Puedes crear el archivo CSV usando Excel o un editor de texto y luego subirlo al wis2box-host-datadir para hacerlo disponible al contenedor **wis2box-management** en el directorio `/data/wis2box/`.
 
-Después de realizar una carga masiva de estaciones, se recomienda revisar las estaciones en el **wis2box-webapp** para asegurarse de que los datos se cargaron correctamente.
+Después de realizar una carga masiva de estaciones, se recomienda revisar las estaciones en el **wis2box-webapp** para asegurarse de que los datos se subieron correctamente.
 
 Consulta la [documentación oficial de wis2box](https://docs.wis2box.wis.wmo.int) para obtener más información sobre cómo usar esta característica.
 
@@ -170,7 +170,5 @@ Consulta la [documentación oficial de wis2box](https://docs.wis2box.wis.wmo.int
     En esta sesión práctica, aprendiste cómo:
 
     - crear un token de autorización para el endpoint `collections/stations` para usarlo con el **wis2box-webapp**
-    - añadir metadatos de estación a wis2box usando el **wis2box-webapp**
-    - ver/actualizar/eliminar metadatos de estación usando el **wis2box-webapp**
-
-    
+    - añadir metadatos de estaciones a wis2box usando el **wis2box-webapp**
+    - ver/actualizar/eliminar metadatos de estaciones usando el **wis2box-webapp**

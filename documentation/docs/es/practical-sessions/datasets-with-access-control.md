@@ -9,7 +9,7 @@ title: Configuración de un conjunto de datos recomendado con control de acceso
 
     - crear un nuevo conjunto de datos con política de datos 'recomendado'
     - añadir un token de acceso al conjunto de datos
-    - validar que el conjunto de datos no puede ser accedido sin el token de acceso
+    - validar que el conjunto de datos no se puede acceder sin el token de acceso
     - añadir el token de acceso a las cabeceras HTTP para acceder al conjunto de datos
 
 ## Introducción
@@ -18,7 +18,7 @@ Los conjuntos de datos que no se consideran 'núcleo' en la WMO pueden configura
 
 ## Preparación
 
-Asegúrate de tener acceso SSH a tu VM de estudiante y que tu instancia de wis2box esté en funcionamiento.
+Asegúrate de tener acceso SSH a tu VM de estudiante y que tu instancia de wis2box esté funcionando.
 
 Asegúrate de estar conectado al broker MQTT de tu instancia de wis2box usando MQTT Explorer. Puedes usar las credenciales públicas `everyone/everyone` para conectarte al broker.
 
@@ -34,20 +34,20 @@ Para "Centre ID", usa el mismo que usaste en las sesiones prácticas anteriores.
 
 Haz clic en 'CONTINUE To FORM' para continuar.
 
-En el editor de conjuntos de datos, establece la política de datos a 'recomendado' (nota que cambiar la política de datos actualizará la 'Jerarquía de Temas').
-Reemplaza el 'Local ID' generado automáticamente con un nombre descriptivo para el conjunto de datos, por ejemplo, 'datos-recomendados-con-control-de-acceso':
+En el editor de conjuntos de datos, establece la política de datos a 'recomendado' (ten en cuenta que cambiar la política de datos actualizará la 'Jerarquía de Temas').
+Reemplaza el 'Local ID' generado automáticamente con un nombre descriptivo para el conjunto de datos, por ejemplo, 'recommended-data-with-access-control':
 
 <img alt="create-dataset-recommended" src="../../assets/img/create-dataset-recommended.png" width="800">
 
-Continúa llenando los campos requeridos para Propiedades Espaciales e Información de Contacto, y 'Valida el formulario' para verificar si hay errores.
+Continúa llenando los campos requeridos para Propiedades Espaciales e Información de Contacto, y 'Valida el formulario' para buscar errores.
 
-Finalmente, envía el conjunto de datos, utilizando el token de autenticación creado previamente, y verifica que el nuevo conjunto de datos esté creado en el wis2box-webapp.
+Finalmente, envía el conjunto de datos, utilizando el token de autenticación creado previamente, y verifica que el nuevo conjunto de datos se haya creado en el wis2box-webapp.
 
 Revisa MQTT-explorer para ver que recibes el Mensaje de Notificación WIS2 anunciando el nuevo registro de Metadatos de Descubrimiento en el tema `origin/a/wis2/<your-centre-id>/metadata`.
 
 ## Añadir un token de acceso al conjunto de datos
 
-Inicia sesión en el contenedor wis2box-management,
+Inicia sesión en el contenedor de wis2box-management,
 
 ```bash
 cd ~/wis2box
@@ -62,7 +62,7 @@ Por ejemplo, para añadir el token de acceso `S3cr3tT0k3n` al conjunto de datos 
 wis2box auth add-token --metadata-id urn:wmo:md:not-my-centre:reco.surface-based-observations.synop S3cr3tT0k3n
 ```
 
-Sal del contenedor wis2box-management:
+Sal del contenedor de wis2box-management:
 
 ```bash
 exit
@@ -86,7 +86,7 @@ Esta estación ahora estará asociada a 2 temas, uno para el conjunto de datos '
 
 Necesitarás usar tu token para `collections/stations` para guardar los datos de la estación actualizada.
 
-A continuación, inicia sesión en el contenedor wis2box-management:
+A continuación, inicia sesión en el contenedor de wis2box-management:
 
 ```bash
 cd ~/wis2box
@@ -132,7 +132,5 @@ Ahora los datos deberían descargarse correctamente.
 
     - crear un nuevo conjunto de datos con política de datos 'recomendado'
     - añadir un token de acceso al conjunto de datos
-    - validar que el conjunto de datos no puede ser accedido sin el token de acceso
+    - validar que el conjunto de datos no se puede acceder sin el token de acceso
     - añadir el token de acceso a las cabeceras HTTP para acceder al conjunto de datos
-
-    

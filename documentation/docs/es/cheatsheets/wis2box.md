@@ -4,7 +4,7 @@ title: WIS2 in a box cheatsheet
 
 # WIS2 in a box cheatsheet
 
-## Descripción general
+## Visión general
 
 wis2box funciona como un conjunto de comandos de Docker Compose. El comando ``wis2box-ctl.py`` es una utilidad
 (escrita en Python) para ejecutar comandos de Docker Compose fácilmente.

@@ -14,11 +14,11 @@ title: Añadiendo encabezados GTS a las notificaciones WIS2
 
 ## Introducción
 
-Los miembros de la OMM que deseen detener su transmisión de datos en el GTS durante la fase de transición a WIS2 necesitarán añadir encabezados GTS a sus notificaciones WIS2. Estos encabezados permiten que la puerta de enlace de WIS2 a GTS reenvíe los datos a la red GTS.
+Los miembros de la OMM que deseen detener su transmisión de datos en GTS durante la fase de transición a WIS2 necesitarán añadir encabezados GTS a sus notificaciones WIS2. Estos encabezados permiten que la puerta de enlace de WIS2 a GTS reenvíe los datos a la red GTS.
 
 Esto permite a los miembros que han migrado a usar un nodo WIS2 para la publicación de datos desactivar su sistema MSS y asegurar que sus datos sigan estando disponibles para los miembros que aún no han migrado a WIS2.
 
-La propiedad GTS en el Mensaje de Notificación WIS2 necesita ser añadida como una propiedad adicional al Mensaje de Notificación WIS2. La propiedad GTS es un objeto JSON que contiene los encabezados GTS que se requieren para que los datos sean reenviados a la red GTS.
+La propiedad GTS en el Mensaje de Notificación WIS2 necesita ser añadida como una propiedad adicional al Mensaje de Notificación WIS2. La propiedad GTS es un objeto JSON que contiene los encabezados GTS que son necesarios para que los datos sean reenviados a la red GTS.
 
 ```json
 {
@@ -54,7 +54,6 @@ El archivo CSV debe ser nombrado (exactamente) `gts_headers_mapping.csv` y debe 
 ## Proporcionando un archivo `gts_headers_mapping.csv`
     
 Copia el archivo `exercise-materials/gts-headers-exercises/gts_headers_mapping.csv` a tu instancia de wis2box y colócalo en el directorio definido por `WIS2BOX_HOST_DATADIR` en tu `wis2box.env`.
-
 
 ```bash
 cp ~/exercise-materials/gts-headers-exercises/gts_headers_mapping.csv ~/wis2box-data
@@ -93,7 +92,7 @@ Revisa el tablero de Grafana para ver si los datos fueron ingeridos correctament
 
 ## Viendo los encabezados GTS en la Notificación WIS2
 
-Ve a MQTT Explorer y verifica el Mensaje de Notificación WIS2 para los datos que acabas de ingerir.
+Ve al MQTT Explorer y verifica el Mensaje de Notificación WIS2 para los datos que acabas de ingerir.
 
 El Mensaje de Notificación WIS2 debería contener los encabezados GTS que proporcionaste en el archivo `gts_headers_mapping.csv`.
 
@@ -103,5 +102,3 @@ El Mensaje de Notificación WIS2 debería contener los encabezados GTS que propo
     En esta sesión práctica, aprendiste cómo:
       - añadir encabezados GTS a tus notificaciones WIS2
       - verificar que los encabezados GTS estén disponibles a través de tu instalación de wis2box
-
-    

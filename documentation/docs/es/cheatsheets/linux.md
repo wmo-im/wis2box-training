@@ -41,7 +41,7 @@ cd ..
 cd ../..
 ```
 
-* Moverse al directorio "home":
+* Moverse a tu directorio "home":
 
 ```bash
 cd -
@@ -171,7 +171,7 @@ grep -v birds test-file.txt
 wc -l test-file.txt
 ```
 
-* Mostrar la salida una pantalla a la vez:
+* Mostrar salida una pantalla a la vez:
 
 ```bash
 more test-file.txt
