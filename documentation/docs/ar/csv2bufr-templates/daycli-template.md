@@ -40,4 +40,4 @@ title: قالب DAYCLI
 
 ## مثال
 
-ملف CSV مثالي يتوافق مع قالب DAYCLI: [daycli-example.csv](/sample-data/daycli-example.csv).
+ملف CSV مثالي يتوافق مع قالب DAYCLI: [daycli-example.csv](./../../sample-data/daycli-example.csv).

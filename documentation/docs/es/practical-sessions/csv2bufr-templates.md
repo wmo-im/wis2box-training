@@ -227,13 +227,13 @@ Por ahora, mantenga la selección predeterminada de la plantilla de AWS (haga cl
 
 La plantilla 'AWS' proporciona una plantilla de mapeo para convertir datos CSV a la secuencia BUFR 301150, 307096, en apoyo de los requisitos mínimos de GBON.
 
-La descripción de la plantilla AWS se puede encontrar aquí [aws-template](/csv2bufr-templates/aws-template).
+La descripción de la plantilla AWS se puede encontrar aquí [aws-template](./../csv2bufr-templates/aws-template.md).
 
 ### Revisar los datos de entrada de ejemplo de aws
 
 Descargue el ejemplo para este ejercicio desde el siguiente enlace:
 
-[aws-example.csv](/sample-data/aws-example.csv)
+[aws-example.csv](./../sample-data/aws-example.csv)
 
 Abra el archivo que descargó en un editor e inspeccione el contenido:
 
@@ -290,7 +290,7 @@ Si ingirió los datos con éxito, debería ver 3 notificaciones en MQTT explorer
 
 La plantilla **DayCLI** proporciona una plantilla de mapeo para convertir datos CSV de clima diario a la secuencia BUFR 307075, en apoyo de la presentación de datos climáticos diarios.
 
-La descripción de la plantilla DAYCLI se puede encontrar aquí [daycli-template](/csv2bufr-templates/daycli-template).
+La descripción de la plantilla DAYCLI se puede encontrar aquí [daycli-template](./../csv2bufr-templates/daycli-template.md).
 
 Para compartir estos datos en WIS2, necesitará crear un nuevo conjunto de datos en wis2box-webapp que tenga la Jerarquía de Temas WIS2 correcta y que use la plantilla DAYCLI para convertir datos CSV a BUFR.
 
@@ -314,7 +314,7 @@ Ahora debería tener un segundo conjunto de datos en wis2box-webapp que está co
 
 Descargue el ejemplo para este ejercicio desde el siguiente enlace:
 
-[daycli-example.csv](/sample-data/daycli-example.csv)
+[daycli-example.csv](./../../sample-data/daycli-example.csv)
 
 Abra el archivo que descargó en un editor e inspeccione el contenido:
 

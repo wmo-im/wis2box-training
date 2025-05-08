@@ -190,7 +190,7 @@ exit
     
 !!! question "使用 MinIO 网页界面上传新数据"
     
-    下载此示例文件 [synop_202502040900.txt](/sample-data/synop_202502040900.txt)（右键点击并选择“另存为”下载文件）。
+    下载此示例文件 [synop_202502040900.txt](../sample-data/synop_202502040900.txt)（右键点击并选择“另存为”下载文件）。
     
     使用网页界面上传您下载的文件到 MinIO 中与之前文件相同的路径。
 
@@ -230,7 +230,7 @@ SFTP 连接的凭据由 `WIS2BOX_STORAGE_USERNAME` 和 `WIS2BOX_STORAGE_PASSWORD
 
     将此示例文件下载到您的本地计算机：
 
-    [synop_202503030900.txt](/sample-data/synop_202503030900.txt)（右键点击并选择“另存为”下载文件）。
+    [synop_202503030900.txt](./../../sample-data/synop_202503030900.txt)（右键点击并选择“另存为”下载文件）。
 
     然后使用您在 WinSCP 中的 SFTP 会话将其上传到 MinIO 中的 incoming 数据集路径。
 

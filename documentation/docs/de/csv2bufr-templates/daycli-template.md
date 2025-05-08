@@ -40,4 +40,4 @@ Diese Vorlage erfordert zusätzliche Metadaten im Vergleich zur vereinfachten AW
 
 ## Beispiel
 
-Beispiel einer CSV-Datei, die der DAYCLI Vorlage entspricht: [daycli-example.csv](/sample-data/daycli-example.csv).
+Beispiel einer CSV-Datei, die der DAYCLI Vorlage entspricht: [daycli-example.csv](./../../sample-data/daycli-example.csv).

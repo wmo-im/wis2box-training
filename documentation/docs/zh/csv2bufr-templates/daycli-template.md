@@ -40,4 +40,4 @@ title: DAYCLI 模板
 
 ## 示例
 
-符合 DAYCLI 模板的示例 CSV 文件：[daycli-example.csv](/sample-data/daycli-example.csv)。
+符合 DAYCLI 模板的示例 CSV 文件：[daycli-example.csv](./../../sample-data/daycli-example.csv)。

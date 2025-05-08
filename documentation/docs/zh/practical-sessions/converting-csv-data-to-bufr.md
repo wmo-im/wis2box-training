@@ -40,13 +40,13 @@ title: 将 CSV 数据转换为 BUFR
 
 可以在此处找到 AWS 模板的描述：
 
-[aws-template](/csv2bufr-templates/aws-template)
+[aws-template](./../csv2bufr-templates/aws-template.md)
 
 ### 审查 aws-example 输入数据
 
 从下面的链接下载本练习的示例：
 
-[aws-example.csv](/sample-data/aws-example.csv)
+[aws-example.csv](./../sample-data/aws-example.csv)
 
 打开您下载的文件，并检查内容：
 
@@ -115,7 +115,7 @@ title: 将 CSV 数据转换为 BUFR
 
 可以在此处找到 DAYCLI 模板的描述：
 
-[daycli-template](/csv2bufr-templates/daycli-template)
+[daycli-template](./../csv2bufr-templates/daycli-template.md)
 
 !!! Note "关于 DAYCLI 模板"
     请注意，DAYCLI BUFR 序列将在 2025 年更新，以包括额外的信息和修订的 QC 标志。wis2box 将更新 DAYCLI 模板以反映这些变化。WMO 将通知何时更新 wis2box 软件以包括新的 DAYCLI 模板，以便用户相应更新其系统。
@@ -140,7 +140,7 @@ title: 将 CSV 数据转换为 BUFR
 
 从下面的链接下载本练习的示例：
 
-[daycli-example.csv](/sample-data/daycli-example.csv)
+[daycli-example.csv](./../../sample-data/daycli-example.csv)
 
 打开您下载的文件，并检查内容：
 
@@ -176,7 +176,7 @@ wis2box Web 应用程序提供了一个界面，用于上传 CSV 数据并在发
 
 导航到 wis2box web 应用程序上的 CSV 表单
 (``http://<your-host-name>/wis2box-webapp/csv2bufr_form``)。
-在本练习中使用文件 [aws-example.csv](/sample-data/aws-example.csv)。
+在本练习中使用文件 [aws-example.csv](../sample-data/aws-example.csv)。
 您现在应该能够点击下一步以预览并验证文件。
 
 <center><img alt="显示 CSV 到 BUFR 上传屏幕的图像" src="../../assets/img/csv2bufr-ex1.png"/></center>
@@ -206,7 +206,7 @@ wis2box Web 应用程序提供了一个界面，用于上传 CSV 数据并在发
 在这个练习中，我们将检查输入无效数据时会发生什么。通过点击下面的链接下载下一个示例文件。这包含与第一个文件相同的数据，但已删除空列。
 检查文件并确认已删除哪些列，然后按照相同的过程将数据转换为 BUFR。
 
-[csv2bufr-ex3a.csv](/sample-data/csv2bufr-ex3a.csv)
+[csv2bufr-ex3a.csv](./../../sample-data/csv2bufr-ex3a.csv)
 
 !!! question
     由于文件中缺少列，您是否能够将数据转换为 BUFR？
@@ -217,7 +217,7 @@ wis2box Web 应用程序提供了一个界面，用于上传 CSV 数据并在发
 
 在下一个示例中，CSV 文件中添加了一个额外的列。
 
-[csv2bufr-ex3b.csv](/sample-data/csv2bufr-ex3b.csv)
+[csv2bufr-ex3b.csv](./../../sample-data/csv2bufr-ex3b.csv)
 
 !!! question
     在上传或提交文件之前，您能预测会发生什么吗？
@@ -229,7 +229,7 @@ wis2box Web 应用程序提供了一个界面，用于上传 CSV 数据并在发
 
 在这个练习的最后一个示例中，数据已被修改。检查 CSV 文件的内容。
 
-[csv2bufr-ex3c.csv](/sample-data/csv2bufr-ex3c.csv)
+[csv2bufr-ex3c.csv](./../../sample-data/csv2bufr-ex3c.csv)
 
 !!! question
     文件中发生了什么变化，您认为会发生什么？

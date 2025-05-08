@@ -39,13 +39,13 @@ Asegúrate de que tienes MQTT Explorer abierto y conectado a tu broker usando la
 
 La plantilla 'AWS' proporciona una plantilla de mapeo predefinida para convertir datos CSV de estaciones AWS en apoyo a los requisitos de informes de GBON.
 
-La descripción de la plantilla AWS se puede encontrar [aquí](/csv2bufr-templates/aws-template).
+La descripción de la plantilla AWS se puede encontrar [aquí](./../csv2bufr-templates/aws-template.md).
 
 ### Revisar los datos de entrada de ejemplo aws
 
 Descarga el ejemplo para este ejercicio desde el enlace a continuación:
 
-[aws-example.csv](/sample-data/aws-example.csv)
+[aws-example.csv](./../../sample-data/aws-example.csv)
 
 Abre el archivo que descargaste en un editor e inspecciona el contenido:
 
@@ -120,7 +120,7 @@ En el ejercicio anterior usamos el conjunto de datos que creaste con el tipo de 
 
 En el próximo ejercicio usaremos la plantilla 'DayCLI' para convertir datos climáticos diarios a BUFR.
 
-La descripción de la plantilla DAYCLI se puede encontrar [aquí](/csv2bufr-templates/daycli-template).
+La descripción de la plantilla DAYCLI se puede encontrar [aquí](./../csv2bufr-templates/daycli-template.md).
 
 !!! Note "Acerca de la plantilla DAYCLI"
     Ten en cuenta que la secuencia BUFR DAYCLI se actualizará durante 2025 para incluir información adicional y banderas de control de calidad revisadas. La plantilla DAYCLI incluida en wis2box se actualizará para reflejar estos cambios. La OMM comunicará cuando el software de wis2box se actualice para incluir la nueva plantilla DAYCLI, para permitir a los usuarios actualizar sus sistemas en consecuencia.
@@ -145,7 +145,7 @@ Ahora deberías tener un segundo conjunto de datos en la aplicación web wis2box
 
 Descarga el ejemplo para este ejercicio desde el enlace a continuación:
 
-[daycli-example.csv](/sample-data/daycli-example.csv)
+[daycli-example.csv](./../../sample-data/daycli-example.csv)
 
 Abre el archivo que descargaste en un editor e inspecciona el contenido:
 
@@ -181,7 +181,7 @@ El uso de este formulario está destinado a propósitos de depuración y validac
 
 Navega al formulario CSV en la aplicación web wis2box
 (``http://<tu-nombre-de-host>/wis2box-webapp/csv2bufr_form``).
-Usa el archivo [aws-example.csv](/sample-data/aws-example.csv) para este ejercicio.
+Usa el archivo [aws-example.csv](../sample-data/aws-example.csv) para este ejercicio.
 Ahora deberías poder hacer clic en siguiente para previsualizar y validar el archivo.
 
 <center><img alt="Imagen mostrando la pantalla de carga de CSV a BUFR" src="../../assets/img/csv2bufr-ex1.png"/></center>
@@ -215,7 +215,7 @@ En este ejercicio examinaremos qué sucede con los datos de entrada inválidos. 
 enlace a continuación. Este contiene los mismos datos que el primer archivo pero con las columnas vacías eliminadas.
 Examina el archivo y confirma qué columnas han sido eliminadas y luego sigue el mismo proceso para convertir los datos a BUFR.
 
-[csv2bufr-ex3a.csv](/sample-data/csv2bufr-ex3a.csv)
+[csv2bufr-ex3a.csv](./../../sample-data/csv2bufr-ex3a.csv)
 
 !!! question
     Con las columnas faltantes en el archivo, ¿pudiste convertir los datos a BUFR?
@@ -227,7 +227,7 @@ Examina el archivo y confirma qué columnas han sido eliminadas y luego sigue el
 
 En este siguiente ejemplo se ha añadido una columna adicional al archivo CSV.
 
-[csv2bufr-ex3b.csv](/sample-data/csv2bufr-ex3b.csv)
+[csv2bufr-ex3b.csv](./../../sample-data/csv2bufr-ex3b.csv)
 
 !!! question
     Sin subir ni enviar el archivo, ¿puedes predecir qué sucederá cuando lo hagas?
@@ -241,7 +241,7 @@ Ahora sube y confirma si tu predicción fue correcta.
 
 En el último ejemplo de este ejercicio, los datos han sido modificados. Examina el contenido del archivo CSV.
 
-[csv2bufr-ex3c.csv](/sample-data/csv2bufr-ex3c.csv)
+[csv2bufr-ex3c.csv](./../../sample-data/csv2bufr-ex3c.csv)
 
 !!! question
     ¿Qué ha cambiado en el archivo y qué crees que sucederá?

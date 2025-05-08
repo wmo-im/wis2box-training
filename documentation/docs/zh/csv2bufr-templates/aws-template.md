@@ -14,4 +14,4 @@ title: AWS 模板
 
 ## 示例
 
-符合 AWS 模板的示例 CSV 文件：[aws-example.csv](/sample-data/aws-example.csv)。
+符合 AWS 模板的示例 CSV 文件：[aws-example.csv](../sample-data/aws-example.csv)。

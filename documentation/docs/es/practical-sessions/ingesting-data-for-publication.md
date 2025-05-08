@@ -190,7 +190,7 @@ A continuación, utilizaremos la interfaz web de MinIO, que permite descargar y 
     
 !!! question "Subir nuevos datos utilizando la interfaz web de MinIO"
     
-    Descarga este archivo de muestra [synop_202502040900.txt](/sample-data/synop_202502040900.txt) (haz clic derecho y selecciona "guardar como" para descargar el archivo).
+    Descarga este archivo de muestra [synop_202502040900.txt](../sample-data/synop_202502040900.txt) (haz clic derecho y selecciona "guardar como" para descargar el archivo).
     
     Sube el archivo que descargaste utilizando la interfaz web al mismo camino en MinIO que el archivo anterior.
 
@@ -230,7 +230,7 @@ Puedes navegar al bucket `wis2box-incoming` y luego a la carpeta de tu conjunto 
 
     Descarga este archivo de muestra a tu computadora local:
 
-    [synop_202503030900.txt](/sample-data/synop_202503030900.txt) (haz clic derecho y selecciona "guardar como" para descargar el archivo).
+    [synop_202503030900.txt](./../../sample-data/synop_202503030900.txt) (haz clic derecho y selecciona "guardar como" para descargar el archivo).
 
     Luego súbelo al camino del conjunto de datos entrante en MinIO utilizando tu sesión SFTP en WinSCP.
 

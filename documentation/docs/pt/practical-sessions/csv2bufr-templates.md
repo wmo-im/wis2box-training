@@ -226,13 +226,13 @@ Por enquanto, mantenha a seleção padrão do template AWS (clique no canto supe
 
 O template 'AWS' fornece um template de mapeamento para converter dados CSV para a sequência BUFR 301150, 307096, em suporte aos requisitos mínimos do GBON.
 
-A descrição do template AWS pode ser encontrada aqui [aws-template](/csv2bufr-templates/aws-template).
+A descrição do template AWS pode ser encontrada aqui [aws-template](./../csv2bufr-templates/aws-template.md).
 
 ### Revisar os dados de entrada do exemplo aws
 
 Baixe o exemplo para este exercício do link abaixo:
 
-[aws-example.csv](/sample-data/aws-example.csv)
+[aws-example.csv](./../sample-data/aws-example.csv)
 
 Abra o arquivo que você baixou em um editor e inspecione o conteúdo:
 

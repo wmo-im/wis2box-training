@@ -14,4 +14,4 @@ Das Format ist für die Verwendung mit automatischen Wetterstationen vorgesehen,
 
 ## Beispiel
 
-Beispiel-CSV-Datei, die der AWS-Vorlage entspricht: [aws-example.csv](/sample-data/aws-example.csv).
+Beispiel-CSV-Datei, die der AWS-Vorlage entspricht: [aws-example.csv](./../../sample-data/aws-example.csv).

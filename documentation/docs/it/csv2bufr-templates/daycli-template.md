@@ -40,4 +40,4 @@ Questo template richiede metadati aggiuntivi rispetto al template semplificato A
 
 ## Esempio
 
-File CSV di esempio che si conforma al template DAYCLI: [daycli-example.csv](/sample-data/daycli-example.csv).
+File CSV di esempio che si conforma al template DAYCLI: [daycli-example.csv](./../../sample-data/daycli-example.csv).

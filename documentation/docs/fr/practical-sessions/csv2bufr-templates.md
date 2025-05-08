@@ -227,13 +227,13 @@ Pour l'instant, gardez la sélection par défaut du modèle AWS (cliquez en haut
 
 Le modèle 'AWS' fournit un modèle de mappage pour convertir les données CSV en séquence BUFR 301150, 307096, en soutien aux exigences minimales du GBON.
 
-La description du modèle AWS peut être trouvée ici [aws-template](/csv2bufr-templates/aws-template).
+La description du modèle AWS peut être trouvée ici [aws-template](./../csv2bufr-templates/aws-template).
 
 ### Examiner les données d'entrée de l'exemple aws
 
 Téléchargez l'exemple pour cet exercice depuis le lien ci-dessous :
 
-[aws-example.csv](/sample-data/aws-example.csv)
+[aws-example.csv](../sample-data/aws-example.csv)
 
 Ouvrez le fichier que vous avez téléchargé dans un éditeur et inspectez le contenu :
 
@@ -284,7 +284,7 @@ Si vous avez réussi à ingérer les données, vous devriez voir 3 notifications
 
 Le modèle **DayCLI** fournit un modèle de mappage pour convertir les données CSV climatiques quotidiennes en séquence BUFR 307075, en soutien à la notification des données climatiques quotidiennes.
 
-La description du modèle DAYCLI peut être trouvée ici [daycli-template](/csv2bufr-templates/daycli-template).
+La description du modèle DAYCLI peut être trouvée ici [daycli-template](./../csv2bufr-templates/daycli-template.md).
 
 Pour partager ces données sur WIS2, vous devrez créer un nouveau jeu de données dans le wis2box-webapp qui a la bonne hiérarchie de sujets WIS2 et qui utilise le modèle DAYCLI pour convertir les données CSV en BUFR.
 
@@ -308,7 +308,7 @@ Vous devriez maintenant avoir un deuxième jeu de données dans le wis2box-webap
 
 Téléchargez l'exemple pour cet exercice depuis le lien ci-dessous :
 
-[daycli-example.csv](/sample-data/daycli-example.csv)
+[daycli-example.csv](./../../sample-data/daycli-example.csv)
 
 Ouvrez le fichier que vous avez téléchargé dans un éditeur et inspectez le contenu :
 

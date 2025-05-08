@@ -190,7 +190,7 @@ Ensuite, nous utiliserons l'interface web de MinIO, qui vous permet de télécha
     
 !!! question "Téléverser de nouvelles données en utilisant l'interface web de MinIO"
     
-    Téléchargez ce fichier exemple [synop_202502040900.txt](/sample-data/synop_202502040900.txt) (clic droit et sélectionnez "enregistrer sous" pour télécharger le fichier).
+    Téléchargez ce fichier exemple [synop_202502040900.txt](../sample-data/synop_202502040900.txt) (clic droit et sélectionnez "enregistrer sous" pour télécharger le fichier).
     
     Téléversez le fichier que vous avez téléchargé en utilisant l'interface web au même chemin dans MinIO que le fichier précédent.
 
@@ -230,7 +230,7 @@ Vous pouvez naviguer jusqu'au seau `wis2box-incoming` puis jusqu'au dossier de v
 
     Téléchargez ce fichier exemple sur votre ordinateur local :
 
-    [synop_202503030900.txt](/sample-data/synop_202503030900.txt) (clic droit et sélectionnez "enregistrer sous" pour télécharger le fichier).
+    [synop_202503030900.txt](./../../sample-data/synop_202503030900.txt) (clic droit et sélectionnez "enregistrer sous" pour télécharger le fichier).
 
     Ensuite, téléversez-le au chemin de l'ensemble de données entrant dans MinIO en utilisant votre session SFTP dans WinSCP.
 

@@ -40,4 +40,4 @@ Esta plantilla requiere metadatos adicionales con respecto a la plantilla simpli
 
 ## Ejemplo
 
-Archivo CSV de ejemplo que se ajusta a la plantilla DAYCLI: [daycli-example.csv](/sample-data/daycli-example.csv).
+Archivo CSV de ejemplo que se ajusta a la plantilla DAYCLI: [daycli-example.csv](./../../sample-data/daycli-example.csv).

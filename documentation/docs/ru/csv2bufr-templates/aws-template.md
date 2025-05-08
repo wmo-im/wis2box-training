@@ -14,4 +14,4 @@ title: Шаблон AWS
 
 ## Пример
 
-Пример CSV-файла, соответствующего шаблону AWS: [aws-example.csv](/sample-data/aws-example.csv).
+Пример CSV-файла, соответствующего шаблону AWS: [aws-example.csv](../sample-data/aws-example.csv).

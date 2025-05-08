@@ -40,4 +40,4 @@ title: Шаблон DAYCLI
 
 ## Пример
 
-Пример файла CSV, соответствующего шаблону DAYCLI: [daycli-example.csv](/sample-data/daycli-example.csv).
+Пример файла CSV, соответствующего шаблону DAYCLI: [daycli-example.csv](./../../sample-data/daycli-example.csv).

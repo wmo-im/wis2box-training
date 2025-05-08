@@ -39,13 +39,13 @@ Stellen Sie sicher, dass Sie MQTT Explorer geöffnet und mit Ihrem Broker verbun
 
 Die 'AWS'-Vorlage bietet eine vordefinierte Mapping-Vorlage zur Konvertierung von CSV-Daten von AWS-Stationen zur Unterstützung der GBON-Berichtsanforderungen.
 
-Die Beschreibung der AWS-Vorlage finden Sie [hier](/csv2bufr-templates/aws-template).
+Die Beschreibung der AWS-Vorlage finden Sie [hier](./../csv2bufr-templates/aws-template.md).
 
 ### Überprüfen der aws-example Eingabedaten
 
 Laden Sie das Beispiel für diese Übung von untenstehendem Link herunter:
 
-[aws-example.csv](/sample-data/aws-example.csv)
+[aws-example.csv](./../../sample-data/aws-example.csv)
 
 Öffnen Sie die heruntergeladene Datei in einem Editor und überprüfen Sie den Inhalt:
 
@@ -114,7 +114,7 @@ In der vorherigen Übung haben wir den Datensatz verwendet, den Sie mit Data-typ
 
 In der nächsten Übung werden wir die 'DayCLI'-Vorlage verwenden, um tägliche Klimadaten in BUFR zu konvertieren.
 
-Die Beschreibung der DAYCLI-Vorlage finden Sie [hier](/csv2bufr-templates/daycli-template).
+Die Beschreibung der DAYCLI-Vorlage finden Sie [hier](./../csv2bufr-templates/daycli-template.md).
 
 !!! Note "Über die DAYCLI-Vorlage"
     Bitte beachten Sie, dass die DAYCLI BUFR-Sequenz während 2025 aktualisiert wird, um zusätzliche Informationen und überarbeitete QC-Flags einzubeziehen. Die DAYCLI-Vorlage in der wis2box wird aktualisiert, um diese Änderungen widerzuspiegeln. Die WMO wird mitteilen, wann die wis2box-Software aktualisiert wird, um die neue DAYCLI-Vorlage einzubeziehen, damit die Benutzer ihre Systeme entsprechend aktualisieren können.
@@ -139,7 +139,7 @@ Sie sollten nun einen zweiten Datensatz in der wis2box-Webapp haben, der so konf
 
 Laden Sie das Beispiel für diese Übung von untenstehendem Link herunter:
 
-[daycli-example.csv](/sample-data/daycli-example.csv)
+[daycli-example.csv](./../../sample-data/daycli-example.csv)
 
 Öffnen Sie die heruntergeladene Datei in einem Editor und überprüfen Sie den Inhalt:
 
@@ -175,7 +175,7 @@ Die Verwendung dieses Formulars ist für Debugging- und Validierungszwecke vorge
 
 Navigieren Sie zum CSV-Formular in der wis2box-Webanwendung
 (``http://<Ihr-Hostname>/wis2box-webapp/csv2bufr_form``).
-Verwenden Sie die Datei [aws-example.csv](/sample-data/aws-example.csv) für diese Übung.
+Verwenden Sie die Datei [aws-example.csv](./../../sample-data/aws-example.csv) für diese Übung.
 Sie sollten jetzt in der Lage sein, neben der Datei auf Weiter zu klicken, um eine Vorschau zu sehen und die Datei zu validieren.
 
 <center><img alt="Bild zeigt CSV-zu-BUFR-Upload-Bildschirm" src="../../assets/img/csv2bufr-ex1.png"/></center>

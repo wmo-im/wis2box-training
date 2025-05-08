@@ -14,4 +14,4 @@ title: قالب محطات الطقس الآلية
 
 ## مثال
 
-ملف CSV نموذجي يتوافق مع قالب محطات الطقس الآلية: [aws-example.csv](/sample-data/aws-example.csv).
+ملف CSV نموذجي يتوافق مع قالب محطات الطقس الآلية: [aws-example.csv](./../../sample-data/aws-example.csv).

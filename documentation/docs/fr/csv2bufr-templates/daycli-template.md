@@ -40,4 +40,4 @@ Ce modèle nécessite des métadonnées supplémentaires par rapport au modèle 
 
 ## Exemple
 
-Fichier CSV exemple conforme au modèle DAYCLI : [daycli-example.csv](/sample-data/daycli-example.csv).
+Fichier CSV exemple conforme au modèle DAYCLI : [daycli-example.csv](./../../sample-data/daycli-example.csv).

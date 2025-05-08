@@ -40,4 +40,4 @@ Este modelo requer metadados adicionais em relação ao modelo simplificado AWS:
 
 ## Exemplo
 
-Arquivo CSV de exemplo que está em conformidade com o modelo DAYCLI: [daycli-example.csv](/sample-data/daycli-example.csv).
+Arquivo CSV de exemplo que está em conformidade com o modelo DAYCLI: [daycli-example.csv](./../../sample-data/daycli-example.csv).

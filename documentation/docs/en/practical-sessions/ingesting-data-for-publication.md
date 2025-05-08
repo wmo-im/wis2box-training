@@ -26,7 +26,7 @@ Note that wis2box will transform the example data into BUFR format before publis
 
 ## Preparation
 
-This section uses the dataset for "surface-based-observations/synop" previously created in the [Configuring Datasets in wis2box](/practical-sessions/configuring-wis2box-datasets) practical session. It also requires knowledge of configuring stations in the **wis2box-webapp**, as described in the [Configuring Station Metadata](/practical-sessions/configuring-station-metadata) practical session.
+This section uses the dataset for "surface-based-observations/synop" previously created in the [Configuring Datasets in wis2box](../configuring-wis2box-datasets) practical session. It also requires knowledge of configuring stations in the **wis2box-webapp**, as described in the [Configuring Station Metadata](../configuring-station-metadata) practical session.
 
 Ensure you can log in to your student VM using your SSH client (e.g., PuTTY).
 
@@ -190,7 +190,7 @@ Next, we will use the MinIO web interface, which allows you to download and uplo
     
 !!! question "Upload New Data Using the MinIO Web Interface"
     
-    Download this sample file [synop_202502040900.txt](/sample-data/synop_202502040900.txt) (right-click and select "save as" to download the file).
+    Download this sample file [synop_202502040900.txt](./../../sample-data/synop_202502040900.txt) (right-click and select "save as" to download the file).
     
     Upload the file you downloaded using the web interface to the same path in MinIO as the previous file.
 
@@ -230,7 +230,7 @@ You can navigate to the `wis2box-incoming` bucket and then to the folder for you
 
     Download this sample file to your local computer:
 
-    [synop_202503030900.txt](/sample-data/synop_202503030900.txt) (right-click and select "save as" to download the file).
+    [synop_202503030900.txt](./../../sample-data/synop_202503030900.txt) (right-click and select "save as" to download the file).
 
     Then upload it to the incoming dataset path in MinIO using your SFTP session in WinSCP.
 

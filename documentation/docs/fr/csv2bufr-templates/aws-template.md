@@ -14,4 +14,4 @@ Le format est destiné à être utilisé avec des stations météorologiques aut
 
 ## Exemple
 
-Fichier CSV exemple conforme au modèle AWS : [aws-example.csv](/sample-data/aws-example.csv).
+Fichier CSV exemple conforme au modèle AWS : [aws-example.csv](../sample-data/aws-example.csv).
