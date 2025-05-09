@@ -11,11 +11,13 @@ document.addEventListener("DOMContentLoaded", function () {
     it: "Avviso: ",
     de: "Haftungsausschluss: ",
     zh: "免责声明：",
+    pt: "Aviso: ",
   };
 
   const aiDisclaimers = {
     en: "This translation was generated using an AI model (OpenAI GPT-4). While we strive for accuracy, there may be errors or inconsistencies. For authoritative information, please refer to the original English version.",
     es: "Esta traducción fue generada utilizando un modelo de inteligencia artificial (OpenAI GPT-4). Aunque nos esforzamos por la precisión, pueden existir errores o inconsistencias. Para información oficial, consulte la versión original en inglés.",
+    pt: "Esta tradução foi gerada usando um modelo de IA (OpenAI GPT-4). Embora nos esforcemos para garantir a precisão, podem ocorrer erros ou inconsistências. Para informações oficiais, consulte a versão original em inglês.",
     ru: "Этот перевод был сгенерирован с помощью модели искусственного интеллекта (OpenAI GPT-4). Хотя мы стремимся к точности, возможны ошибки или несоответствия. Для получения достоверной информации обратитесь к оригинальной версии на английском языке.",
     ar: "تم إنشاء هذا الترجمة باستخدام نموذج ذكاء اصطناعي (OpenAI GPT-4). على الرغم من حرصنا على الدقة، قد توجد أخطاء أو تناقضات. للحصول على المعلومات الموثوقة، يُرجى الرجوع إلى النسخة الأصلية باللغة الإنجليزية.",
     fr: "Cette traduction a été générée à l'aide d'un modèle d'IA (OpenAI GPT-4). Bien que nous nous efforcions d'assurer l'exactitude, des erreurs ou des incohérences peuvent subsister. Pour des informations officielles, veuillez consulter la version originale en anglais.",
