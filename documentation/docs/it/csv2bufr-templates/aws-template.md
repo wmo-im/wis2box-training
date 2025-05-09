@@ -1,12 +1,12 @@
 ---
-title: Template AWS
+title: Modello AWS
 ---
 
-# Template csv2bufr per Stazioni Meteorologiche Automatiche che riportano dati GBON orari
+# Modello csv2bufr per Stazioni Meteorologiche Automatiche che riportano dati orari GBON
 
-Il **Template AWS** utilizza un formato CSV standardizzato per acquisire dati dalle Stazioni Meteorologiche Automatiche in supporto ai requisiti di reportistica GBON. Questo template di mappatura converte i dati CSV nella sequenza BUFR 301150, 307096.
+Il **Modello AWS** utilizza un formato CSV standardizzato per l'ingestione dei dati provenienti da Stazioni Meteorologiche Automatiche a supporto dei requisiti di segnalazione GBON. Questo modello di mappatura converte i dati CSV nelle sequenze BUFR 301150, 307096.
 
-Il formato è destinato all'uso con stazioni meteorologiche automatiche che riportano un numero minimo di parametri, tra cui pressione, temperatura dell'aria e umidità, velocità e direzione del vento e precipitazioni su base oraria.
+Il formato è destinato all'uso con stazioni meteorologiche automatiche che riportano un numero minimo di parametri, inclusi pressione, temperatura e umidità dell'aria, velocità e direzione del vento e precipitazioni su base oraria.
 
 ## Colonne CSV e descrizione
 
@@ -14,4 +14,4 @@ Il formato è destinato all'uso con stazioni meteorologiche automatiche che ripo
 
 ## Esempio
 
-File CSV di esempio conforme al template AWS: [aws-example.csv](../sample-data/aws-example.csv).
+File CSV di esempio che si conforma al modello AWS: [aws-example.csv](./../../sample-data/aws-example.csv).

@@ -1,12 +1,12 @@
 ---
-title: ورقة الغش لـ WIS2 في صندوق
+title: ورقة غش WIS2 في صندوق
 ---
 
-# ورقة الغش لـ WIS2 في صندوق
+# ورقة غش WIS2 في صندوق
 
 ## نظرة عامة
 
-يعمل wis2box كمجموعة من أوامر Docker Compose. أمر ``wis2box-ctl.py`` هو أداة
+يعمل wis2box كمجموعة من أوامر Docker Compose. الأمر ``wis2box-ctl.py`` هو أداة
 (مكتوبة بلغة Python) لتشغيل أوامر Docker Compose بسهولة.
 
 ## أساسيات أوامر wis2box
@@ -31,7 +31,7 @@ python3 wis2box-ctl.py stop
 python3 wis2box-ctl.py status
 ```
 
-* تسجيل الدخول إلى حاوية wis2box (الافتراضية هي *wis2box-management*):
+* تسجيل الدخول إلى حاوية wis2box (الافتراضي هو *wis2box-management*):
 
 ```bash
 python3 wis2box-ctl.py login

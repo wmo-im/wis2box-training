@@ -1,8 +1,8 @@
 ---
-title: WIS2 in einer Box Spickzettel
+title: WIS2 in a box Spickzettel
 ---
 
-# WIS2 in einer Box Spickzettel
+# WIS2 in a box Spickzettel
 
 ## Übersicht
 
@@ -31,13 +31,13 @@ python3 wis2box-ctl.py stop
 python3 wis2box-ctl.py status
 ```
 
-* In einen wis2box-Container einloggen (*standardmäßig wis2box-management*):
+* Anmeldung bei einem wis2box-Container (*wis2box-management* standardmäßig):
 
 ```bash
 python3 wis2box-ctl.py login
 ```
 
-* In einen bestimmten wis2box-Container einloggen:
+* Anmeldung bei einem spezifischen wis2box-Container:
 
 ```bash
 python3 wis2box-ctl.py login wis2box-api

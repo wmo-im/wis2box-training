@@ -1,12 +1,12 @@
 ---
-title: AWS-Vorlage
+title: AWS Vorlage
 ---
 
-# csv2bufr-Vorlage für automatische Wetterstationen mit stündlicher GBON-Datenübermittlung
+# csv2bufr Vorlage für automatische Wetterstationen, die stündlich GBON-Daten melden
 
-Die **AWS-Vorlage** verwendet ein standardisiertes CSV-Format zur Erfassung von Daten aus automatischen Wetterstationen zur Unterstützung der GBON-Berichterstattungsanforderungen. Diese Zuordnungsvorlage konvertiert CSV-Daten in die BUFR-Sequenz 301150, 307096.
+Die **AWS Vorlage** verwendet ein standardisiertes CSV-Format, um Daten von automatischen Wetterstationen im Rahmen der GBON-Berichtsanforderungen zu erfassen. Diese Zuordnungsvorlage konvertiert CSV-Daten in die BUFR-Sequenzen 301150, 307096.
 
-Das Format ist für die Verwendung mit automatischen Wetterstationen vorgesehen, die eine Mindestanzahl von Parametern melden, einschließlich Luftdruck, Lufttemperatur und Luftfeuchtigkeit, Windgeschwindigkeit und -richtung sowie Niederschlag auf stündlicher Basis.
+Das Format ist für den Einsatz mit automatischen Wetterstationen vorgesehen, die eine Mindestanzahl von Parametern melden, einschließlich Druck, Lufttemperatur und -feuchtigkeit, Windgeschwindigkeit und -richtung sowie Niederschlag auf stündlicher Basis.
 
 ## CSV-Spalten und Beschreibung
 
@@ -14,4 +14,4 @@ Das Format ist für die Verwendung mit automatischen Wetterstationen vorgesehen,
 
 ## Beispiel
 
-Beispiel-CSV-Datei, die der AWS-Vorlage entspricht: [aws-example.csv](./../../sample-data/aws-example.csv).
+Beispiel einer CSV-Datei, die der AWS-Vorlage entspricht: [aws-example.csv](./../../sample-data/aws-example.csv).

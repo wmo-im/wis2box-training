@@ -6,11 +6,11 @@ title: Docker Spickzettel
 
 ## Übersicht
 
-Docker ermöglicht das Erstellen von virtuellen Umgebungen auf isolierte Weise zur Unterstützung der Virtualisierung von Rechenressourcen. Das grundlegende Konzept hinter Docker ist die Containerisierung, bei der Software als Dienste ausgeführt werden kann, die mit anderen Softwarecontainern interagieren, zum Beispiel.
+Docker ermöglicht das Erstellen virtueller Umgebungen auf isolierte Weise zur Unterstützung der Virtualisierung von Rechenressourcen. Das grundlegende Konzept hinter Docker ist die Containerisierung, bei der Software als Dienste ausgeführt werden kann, die mit anderen Softwarecontainern interagieren, zum Beispiel.
 
-Der typische Docker-Arbeitsablauf umfasst das Erstellen und Bauen von **Images**, die dann als laufende **Container** ausgeführt werden.
+Der typische Docker-Workflow umfasst das Erstellen und Bauen von **Images**, die dann als laufende **Container** ausgeführt werden.
 
-Docker wird verwendet, um die Dienstesammlung, die wis2box bildet, mit vorab erstellten Images zu betreiben.
+Docker wird verwendet, um die Suite von Diensten auszuführen, die wis2box mit vorab erstellten Images bilden.
 
 ### Bildverwaltung
 
@@ -72,10 +72,10 @@ docker ps
 docker ps -a
 ```
 
-* In das interaktive Terminal eines laufenden Containers eintreten:
+* Das interaktive Terminal eines laufenden Containers betreten:
 
 
-!!! Tipp
+!!! tip
 
     Verwenden Sie `docker ps`, um die Container-ID im folgenden Befehl zu verwenden
 

@@ -1,22 +1,22 @@
 ---
-title: Conectando ao WIS2 por MQTT
+title: Conectando ao WIS2 via MQTT
 ---
 
-# Conectando ao WIS2 por MQTT
+# Conectando ao WIS2 via MQTT
 
-!!! abstract "Resultados de aprendizagem"
+!!! abstract "Resultados de aprendizado"
 
     Ao final desta sessão prática, você será capaz de:
 
-    - conectar ao Corretor Global WIS2 usando o MQTT Explorer
+    - conectar ao Global Broker do WIS2 usando MQTT Explorer
     - revisar a estrutura de tópicos do WIS2
     - revisar a estrutura de mensagens de notificação do WIS2
 
 ## Introdução
 
-O WIS2 usa o protocolo MQTT para anunciar a disponibilidade de dados de clima/temperatura/água. O Corretor Global WIS2 se inscreve em todos os Nós WIS2 na rede e republica as mensagens que recebe. O Cache Global se inscreve no Corretor Global, baixa os dados na mensagem e depois republica a mensagem no tópico `cache` com uma nova URL. O Catálogo de Descoberta Global publica metadados de descoberta do Corretor e fornece uma API de busca.
+O WIS2 utiliza o protocolo MQTT para anunciar a disponibilidade de dados de clima/meteorologia/água. O Global Broker do WIS2 se inscreve em todos os WIS2 Nodes na rede e republica as mensagens que recebe. O Global Cache se inscreve no Global Broker, baixa os dados na mensagem e então republica a mensagem no tópico `cache` com uma nova URL. O Global Discovery Catalogue publica metadados de descoberta do Broker e fornece uma API de busca.
 
-Este é um exemplo da estrutura de mensagem de notificação WIS2 para uma mensagem recebida no tópico `origin/a/wis2/br-inmet/data/core/weather/surface-based-observations/synop`:	
+Este é um exemplo da estrutura de mensagem de notificação do WIS2 para uma mensagem recebida no tópico `origin/a/wis2/br-inmet/data/core/weather/surface-based-observations/synop`:	
 
 ```json
 {
@@ -57,17 +57,17 @@ Este é um exemplo da estrutura de mensagem de notificação WIS2 para uma mensa
 }
 ``` 
 
-Nesta sessão prática, você aprenderá como usar a ferramenta MQTT Explorer para configurar uma conexão de cliente MQTT com um Corretor Global WIS2 e poderá visualizar mensagens de notificação do WIS2.
+Nesta sessão prática você aprenderá como usar a ferramenta MQTT Explorer para configurar uma conexão de cliente MQTT ao Global Broker do WIS2 e ser capaz de exibir mensagens de notificação do WIS2.
 
-O MQTT Explorer é uma ferramenta útil para navegar e revisar a estrutura de tópicos de um determinado corretor MQTT para revisar dados sendo publicados.
+MQTT Explorer é uma ferramenta útil para navegar e revisar a estrutura de tópicos para um dado broker MQTT para revisar dados sendo publicados.
 
-Observe que o MQTT é usado principalmente para comunicação "máquina a máquina"; isso significa que normalmente haveria um cliente analisando automaticamente as mensagens conforme são recebidas. Para trabalhar com MQTT programaticamente (por exemplo, em Python), você pode usar bibliotecas de cliente MQTT como [paho-mqtt](https://pypi.org/project/paho-mqtt) para se conectar a um corretor MQTT e processar mensagens recebidas. Existem inúmeros softwares de cliente e servidor MQTT, dependendo de suas necessidades e ambiente técnico.
+Observe que o MQTT é usado principalmente para comunicação "máquina-a-máquina"; o que significa que normalmente haveria um cliente automaticamente analisando as mensagens conforme são recebidas. Para trabalhar com MQTT programaticamente (por exemplo, em Python), você pode usar bibliotecas de cliente MQTT como [paho-mqtt](https://pypi.org/project/paho-mqtt) para conectar a um broker MQTT e processar mensagens recebidas. Existem inúmeros softwares de cliente e servidor MQTT, dependendo de suas necessidades e ambiente técnico.
 
-## Usando o MQTT Explorer para conectar ao Corretor Global
+## Usando MQTT Explorer para conectar ao Global Broker
 
-Para visualizar mensagens publicadas por um Corretor Global WIS2 você pode usar o "MQTT Explorer" que pode ser baixado do [site do MQTT Explorer](https://mqtt-explorer.com).
+Para visualizar mensagens publicadas por um Global Broker do WIS2 você pode usar "MQTT Explorer" que pode ser baixado do [site do MQTT Explorer](https://mqtt-explorer.com).
 
-Abra o MQTT Explorer e adicione uma nova conexão ao Corretor Global hospedado pela MeteoFrance usando os seguintes detalhes:
+Abra o MQTT Explorer e adicione uma nova conexão ao Global Broker hospedado pelo MeteoFrance usando os seguintes detalhes:
 
 - host: globalbroker.meteo.fr
 - port: 8883
@@ -76,31 +76,31 @@ Abra o MQTT Explorer e adicione uma nova conexão ao Corretor Global hospedado p
 
 <img alt="mqtt-explorer-global-broker-connection" src="../../assets/img/mqtt-explorer-global-broker-connection.png" width="800">
 
-Clique no botão 'AVANÇADO', remova os tópicos pré-configurados e adicione os seguintes tópicos para se inscrever:
+Clique no botão 'ADVANCED', remova os tópicos pré-configurados e adicione os seguintes tópicos para se inscrever:
 
 - `origin/a/wis2/#`
 
 <img alt="mqtt-explorer-global-broker-advanced" src="../../assets/img/mqtt-explorer-global-broker-sub-origin.png" width="800">
 
 !!! note
-    Ao configurar inscrições MQTT, você pode usar os seguintes curingas:
+    Ao configurar inscrições MQTT você pode usar os seguintes curingas:
 
-    - **Nível único (+)**: um curinga de nível único substitui um nível de tópico
-    - **Nível múltiplo (#)**: um curinga de nível múltiplo substitui vários níveis de tópicos
+    - **Curinga de um nível (+)**: um curinga de um nível substitui um nível de tópico
+    - **Curinga de múltiplos níveis (#)**: um curinga de múltiplos níveis substitui vários níveis de tópicos
 
-    Neste caso, `origin/a/wis2/#` inscreverá em todos os tópicos sob o tópico `origin/a/wis2`.
+    Neste caso `origin/a/wis2/#` inscreverá em todos os tópicos sob o tópico `origin/a/wis2`.
 
-Clique em 'VOLTAR', depois em 'SALVAR' para salvar seus detalhes de conexão e inscrição. Em seguida, clique em 'CONECTAR':
+Clique em 'BACK', depois em 'SAVE' para salvar seus detalhes de conexão e inscrição. Em seguida, clique em 'CONNECT':
 
 As mensagens devem começar a aparecer em sua sessão do MQTT Explorer como segue:
 
 <img alt="mqtt-explorer-global-broker-topics" src="../../assets/img/mqtt-explorer-global-broker-msg-origin.png" width="800">
 
-Você agora está pronto para começar a explorar os tópicos e a estrutura de mensagens do WIS2.
+Você está agora pronto para começar a explorar os tópicos e a estrutura de mensagens do WIS2.
 
 ## Exercício 1: Revisar a estrutura de tópicos do WIS2
 
-Use o MQTT para navegar pela estrutura de tópicos sob os tópicos `origin`.
+Use MQTT para navegar pela estrutura de tópicos sob os tópicos `origin`.
 
 !!! question
     
@@ -114,15 +114,15 @@ Use o MQTT para navegar pela estrutura de tópicos sob os tópicos `origin`.
 
     `origin/a/wis2/br-inmet/data/core/weather/surface-based-observations/synop`
 
-    nos diz que os dados foram publicados por um centro WIS com o id de centro `br-inmet`, que é o id do Instituto Nacional de Meteorologia - INMET, Brasil.
+    nos diz que os dados foram publicados por um centro WIS com o Centre ID `br-inmet`, que é o Centre ID para o Instituto Nacional de Meteorologia - INMET, Brasil.
 
 !!! question
 
-    Como podemos distinguir entre mensagens publicadas por centros WIS que hospedam um gateway GTS-to-WIS2 e mensagens publicadas por centros WIS que hospedam um nó WIS2?
+    Como podemos distinguir entre mensagens publicadas por centros WIS hospedando um gateway GTS-to-WIS2 e mensagens publicadas por centros WIS hospedando um WIS2 Node?
 
 ??? success "Clique para revelar a resposta"
 
-    Podemos distinguir mensagens vindas de um gateway GTS-to-WIS2 olhando para o id de centro na estrutura de tópicos. Por exemplo, o seguinte tópico:
+    Podemos distinguir mensagens vindas de um gateway GTS-to-WIS2 olhando para o Centre ID na estrutura de tópicos. Por exemplo, o seguinte tópico:
 
     `origin/a/wis2/de-dwd-gts-to-wis2/data/core/I/S/A/I/01/sbbr`
 
@@ -130,7 +130,7 @@ Use o MQTT para navegar pela estrutura de tópicos sob os tópicos `origin`.
 
 ## Exercício 2: Revisar a estrutura de mensagens do WIS2
 
-Desconecte do MQTT Explorer e atualize as seções 'Avançadas' para mudar a inscrição para os seguintes tópicos:
+Desconecte do MQTT Explorer e atualize as seções 'Advanced' para mudar a inscrição para os seguintes tópicos:
 
 * `origin/a/wis2/+/data/core/weather/surface-based-observations/synop`
 * `cache/a/wis2/+/data/core/weather/surface-based-observations/synop`
@@ -140,9 +140,9 @@ Desconecte do MQTT Explorer e atualize as seções 'Avançadas' para mudar a ins
 !!! note
     O curinga `+` é usado para se inscrever em todos os centros WIS.
 
-Reconecte ao Corretor Global e aguarde as mensagens aparecerem.
+Reconecte ao Global Broker e aguarde as mensagens aparecerem.
 
-Você pode visualizar o conteúdo da mensagem WIS2 na seção "Valor" no lado direito. Tente expandir a estrutura de tópicos para ver os diferentes níveis da mensagem até alcançar o último nível e revisar o conteúdo da mensagem de uma das mensagens.
+Você pode visualizar o conteúdo da mensagem WIS2 na seção "Value" no lado direito. Tente expandir a estrutura de tópicos para ver os diferentes níveis da mensagem até alcançar o último nível e revisar o conteúdo da mensagem de uma das mensagens.
 
 !!! question
 
@@ -158,19 +158,19 @@ Você pode visualizar o conteúdo da mensagem WIS2 na seção "Valor" no lado di
 
 !!! question
 
-    Como podemos baixar os dados do URL fornecido na mensagem?
+    Como podemos baixar os dados a partir da URL fornecida na mensagem?
 
 ??? success "Clique para revelar a resposta"
 
-    O URL está contido na seção `links` com `rel="canonical"` e definido pela chave `href`.
+    A URL está contida na seção `links` com `rel="canonical"` e definida pela chave `href`.
 
-    Você pode copiar o URL e colá-lo em um navegador web para baixar os dados.
+    Você pode copiar a URL e colar em um navegador web para baixar os dados.
 
 ## Exercício 3: Revisar a diferença entre os tópicos 'origin' e 'cache'
 
-Certifique-se de que ainda está conectado ao Corretor Global usando as inscrições de tópicos `origin/a/wis2/+/data/core/weather/surface-based-observations/synop` e `cache/a/wis2/+/data/core/weather/surface-based-observations/synop` conforme descrito no Exercício 2.
+Certifique-se de que ainda está conectado ao Global Broker usando as inscrições de tópicos `origin/a/wis2/+/data/core/weather/surface-based-observations/synop` e `cache/a/wis2/+/data/core/weather/surface-based-observations/synop` conforme descrito no Exercício 2.
 
-Tente identificar uma mensagem para o mesmo id de centro publicada em ambos os tópicos `origin` e `cache`.
+Tente identificar uma mensagem para o mesmo Centre ID publicada tanto nos tópicos `origin` quanto `cache`.
 
 
 !!! question
@@ -179,22 +179,22 @@ Tente identificar uma mensagem para o mesmo id de centro publicada em ambos os t
 
 ??? success "Clique para revelar a resposta"
 
-    As mensagens publicadas nos tópicos `origin` são as mensagens originais que o Corretor Global republica dos Nós WIS2 na rede.
+    As mensagens publicadas nos tópicos `origin` são as mensagens originais que o Global Broker republica dos WIS2 Nodes na rede. 
 
-    As mensagens publicadas nos tópicos `cache` são as mensagens cujos dados foram baixados pelo Cache Global. Se você verificar o conteúdo da mensagem do tópico que começa com `cache`, verá que o link 'canonical' foi atualizado para um novo URL.
+    As mensagens publicadas nos tópicos `cache` são as mensagens para dados que foram baixados pelo Global Cache. Se você verificar o conteúdo da mensagem do tópico que começa com `cache`, você verá que o link 'canonical' foi atualizado para uma nova URL.
     
-    Existem vários Caches Globais na rede WIS2, então você receberá uma mensagem de cada Cache Global que baixou a mensagem.
+    Existem múltiplos Global Caches na rede WIS2, então você receberá uma mensagem de cada Global Cache que baixou a mensagem.
 
-    O Cache Global só baixará e republicará mensagens que foram publicadas na hierarquia de tópicos `../data/core/...`.
+    O Global Cache só baixará e republicará mensagens que foram publicadas na hierarquia de tópicos `../data/core/...`.
 
 ## Conclusão
 
 !!! success "Parabéns!"
     Nesta sessão prática, você aprendeu:
 
-    - como se inscrever nos serviços do Corretor Global WIS2 usando o MQTT Explorer
+    - como se inscrever nos serviços do Global Broker do WIS2 usando MQTT Explorer
     - a estrutura de tópicos do WIS2
     - a estrutura de mensagens de notificação do WIS2
     - a diferença entre dados essenciais e recomendados
     - a estrutura de tópicos usada pelo gateway GTS-to-WIS2
-    - a diferença entre as mensagens do Corretor Global publicadas nos tópicos `origin` e `cache`
+    - a diferença entre mensagens do Global Broker publicadas nos tópicos `origin` e `cache`

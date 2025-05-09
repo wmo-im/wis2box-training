@@ -1,24 +1,24 @@
 ---
-title: Modelo DAYCLI
+title: Template DAYCLI
 ---
 
-# Modelo csv2bufr para dados climáticos diários (DAYCLI)
+# Template csv2bufr para dados climáticos diários (DAYCLI)
 
-O modelo **DAYCLI** fornece um formato CSV padronizado para converter dados climáticos diários para a sequência BUFR 307075.
+O template **DAYCLI** fornece um formato CSV padronizado para converter dados climáticos diários para a sequência BUFR 307075.
 
 O formato é destinado ao uso com Sistemas de Gestão de Dados Climáticos para publicar dados no WIS2, em apoio aos requisitos de relatórios para observações climáticas diárias.
 
-Este modelo mapeia observações diárias de:
+Este template mapeia observações diárias de:
 
  - Temperatura mínima, máxima e média durante o período de 24 horas
  - Precipitação total acumulada durante o período de 24 horas
  - Profundidade total da neve no momento da observação
  - Profundidade de neve fresca durante o período de 24 horas
 
-Este modelo requer metadados adicionais em relação ao modelo simplificado AWS: método de cálculo da temperatura média; alturas do sensor e da estação; classificação de exposição e qualidade da medição.
+Este template requer metadados adicionais em relação ao template simplificado AWS: método de cálculo da temperatura média; alturas do sensor e da estação; classificação de exposição e qualidade da medição.
 
-!!! Nota "Sobre o modelo DAYCLI"
-    Por favor, note que a sequência BUFR DAYCLI será atualizada durante 2025 para incluir informações adicionais e bandeiras de QC revisadas. O modelo DAYCLI incluído no wis2box será atualizado para refletir essas mudanças. A OMM comunicará quando o software wis2box for atualizado para incluir o novo modelo DAYCLI, permitindo que os usuários atualizem seus sistemas de acordo.
+!!! Note "Sobre o template DAYCLI"
+    Por favor, note que a sequência BUFR DAYCLI será atualizada durante 2025 para incluir informações adicionais e bandeiras de QC revisadas. O template DAYCLI incluído no wis2box será atualizado para refletir essas mudanças. A WMO comunicará quando o software wis2box for atualizado para incluir o novo template DAYCLI, permitindo que os usuários atualizem seus sistemas de acordo.
 
 ## Colunas CSV e descrição
 
@@ -40,4 +40,4 @@ Este modelo requer metadados adicionais em relação ao modelo simplificado AWS:
 
 ## Exemplo
 
-Arquivo CSV de exemplo que está em conformidade com o modelo DAYCLI: [daycli-example.csv](./../../sample-data/daycli-example.csv).
+Arquivo CSV de exemplo que está de acordo com o template DAYCLI: [daycli-example.csv](./../../sample-data/daycli-example.csv).

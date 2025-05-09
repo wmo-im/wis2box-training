@@ -1,17 +1,16 @@
 ---
-title: Guia de Consulta Rápida do Docker
+title: Docker cheatsheet
 ---
 
-# Guia de Consulta Rápida do Docker
+# Docker cheatsheet
 
 ## Visão Geral
 
-O Docker permite a criação de ambientes virtuais de maneira isolada, apoiando a virtualização de recursos computacionais. O conceito básico por trás do Docker é a contêinerização,
-onde softwares podem ser executados como serviços, interagindo com outros contêineres de software, por exemplo.
+Docker permite a criação de ambientes virtuais de maneira isolada, apoiando a virtualização de recursos computacionais. O conceito básico por trás do Docker é a contêinerização, onde softwares podem rodar como serviços, interagindo com outros contêineres de software, por exemplo.
 
-O fluxo de trabalho típico do Docker envolve a criação e construção de **imagens**, que são então executadas como **contêineres** ativos.
+O fluxo de trabalho típico do Docker envolve criar e construir **imagens**, que são então executadas como **contêineres** ativos.
 
-O Docker é usado para executar o conjunto de serviços que compõem o wis2box usando imagens pré-construídas.
+Docker é usado para executar o conjunto de serviços que compõem o wis2box usando imagens pré-construídas.
 
 ### Gerenciamento de Imagens
 
@@ -27,7 +26,7 @@ docker image ls
 docker pull my-image:latest
 ```
 
-* Remover uma imagem:
+* Removendo uma imagem:
 
 ```bash
 docker rmi my-image:local
@@ -76,9 +75,9 @@ docker ps -a
 * Entrar no terminal interativo de um contêiner em execução:
 
 
-!!! dica
+!!! tip
 
-    use `docker ps` para usar o ID do contêiner no comando abaixo
+    use `docker ps` para usar o id do contêiner no comando abaixo
 
 ```bash
 docker exec -it my-container /bin/bash

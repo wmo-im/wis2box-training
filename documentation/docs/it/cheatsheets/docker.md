@@ -6,7 +6,7 @@ title: Docker cheatsheet
 
 ## Panoramica
 
-Docker permette la creazione di ambienti virtuali in modo isolato a supporto della virtualizzazione delle risorse di calcolo. Il concetto di base dietro Docker è la containerizzazione, dove il software può essere eseguito come servizi, interagendo con altri container di software, ad esempio.
+Docker permette la creazione di ambienti virtuali in modo isolato a supporto della virtualizzazione delle risorse di calcolo. Il concetto di base dietro Docker è la containerizzazione, dove il software può funzionare come servizi, interagendo con altri container di software, ad esempio.
 
 Il flusso di lavoro tipico di Docker coinvolge la creazione e la costruzione di **immagini**, che vengono poi eseguite come **container** attivi.
 

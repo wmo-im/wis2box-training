@@ -4,9 +4,9 @@ title: DAYCLI Vorlage
 
 # csv2bufr Vorlage für tägliche Klimadaten (DAYCLI)
 
-Die **DAYCLI** Vorlage bietet ein standardisiertes CSV-Format für die Umwandlung von täglichen Klimadaten in die BUFR-Sequenz 307075.
+Die **DAYCLI** Vorlage bietet ein standardisiertes CSV-Format zur Umwandlung von täglichen Klimadaten in die BUFR-Sequenz 307075.
 
-Das Format ist für die Verwendung mit Klimadaten-Management-Systemen gedacht, um Daten auf WIS2 zu veröffentlichen, zur Unterstützung der Berichtsanforderungen für tägliche Klimabeobachtungen.
+Das Format ist für den Einsatz in Klimadaten-Management-Systemen gedacht, um Daten auf WIS2 zu veröffentlichen, zur Unterstützung der Berichtsanforderungen für tägliche Klimabeobachtungen.
 
 Diese Vorlage bildet tägliche Beobachtungen ab von:
 
@@ -17,8 +17,8 @@ Diese Vorlage bildet tägliche Beobachtungen ab von:
 
 Diese Vorlage erfordert zusätzliche Metadaten im Vergleich zur vereinfachten AWS-Vorlage: Methode zur Berechnung der Durchschnittstemperatur; Sensor- und Stationshöhen; Exposition und Klassifikation der Messqualität.
 
-!!! Hinweis "Über die DAYCLI Vorlage"
-    Bitte beachten Sie, dass die DAYCLI BUFR-Sequenz während des Jahres 2025 aktualisiert wird, um zusätzliche Informationen und überarbeitete QC-Flags einzuschließen. Die DAYCLI Vorlage im wis2box wird aktualisiert, um diese Änderungen widerzuspiegeln. Die WMO wird kommunizieren, wenn die wis2box-Software aktualisiert wird, um die neue DAYCLI Vorlage einzuschließen, damit die Benutzer ihre Systeme entsprechend aktualisieren können.
+!!! Note "Über die DAYCLI Vorlage"
+    Bitte beachten Sie, dass die DAYCLI BUFR-Sequenz während 2025 aktualisiert wird, um zusätzliche Informationen und überarbeitete QC-Flags einzuschließen. Die DAYCLI Vorlage in der wis2box wird aktualisiert, um diese Änderungen widerzuspiegeln. Die WMO wird kommunizieren, wenn die wis2box-Software aktualisiert wird, um die neue DAYCLI Vorlage einzuschließen, damit Benutzer ihre Systeme entsprechend aktualisieren können.
 
 ## CSV-Spalten und Beschreibung
 

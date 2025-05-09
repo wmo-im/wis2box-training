@@ -10,7 +10,7 @@ I concetti di base del lavoro in un sistema operativo Linux sono **file** e **di
 una struttura ad albero all'interno di un **ambiente**.
 
 Una volta effettuato l'accesso a un sistema Linux, si lavora in una **shell** in cui è possibile gestire file e directory,
-eseguendo comandi installati sul sistema. La shell Bash è una shell comune e popolare che
+eseguendo comandi che sono installati sul sistema. La shell Bash è una shell comune e popolare che
 si trova tipicamente sui sistemi Linux.
 
 ## Bash
@@ -55,7 +55,7 @@ cd -
 ls
 ```
 
-* Elenca i file nella directory corrente con maggiori dettagli:
+* Elenca i file nella directory corrente con più dettagli:
 
 ```bash
 ls -l
@@ -76,7 +76,7 @@ touch foo.txt
 * Crea un file dal comando `echo`:
 
 ```bash
-echo "ciao" > test-file.txt
+echo "hi there" > test-file.txt
 ```
 
 * Visualizza il contenuto di un file:
@@ -103,7 +103,7 @@ ls -l fil*  # corrisponde a file1 e file2
 cat file1 file2 > newfile
 ```
 
-* Aggiungi un altro file a `newfile`:
+* Aggiungi un altro file a `newfile`
 
 ```bash
 cat file3 >> newfile
@@ -121,47 +121,47 @@ rm newfile
 rm *.dat
 ```
 
-* Crea una directory:
+* Crea una directory
 
 ```bash
 mkdir dir1
 ```
 
-### Concatenazione di comandi con le pipe
+### Concatenare comandi insieme con i pipe
 
-Le pipe permettono di inviare l'output di un comando a un altro utilizzando il simbolo della pipe `|`:
+I pipe permettono a un utente di inviare l'output di un comando a un altro utilizzando il simbolo del pipe `|`:
 
 ```bash
-echo "ciao" | sed 's/ciao/addio/'
+echo "hi" | sed 's/hi/bye/'
 ```
 
 * Filtrare gli output dei comandi usando grep:
 
 ```bash
-echo "id,titolo" > test-file.txt
-echo "1,uccelli" >> test-file.txt
-echo "2,pesci" >> test-file.txt
-echo "3,gatti" >> test-file.txt
+echo "id,title" > test-file.txt
+echo "1,birds" >> test-file.txt
+echo "2,fish" >> test-file.txt
+echo "3,cats" >> test-file.txt
 
-cat test-file.txt | grep pesci
+cat test-file.txt | grep fish
 ```
 
 * Ignorare il maiuscolo/minuscolo:
 
 ```bash
-grep -i PESCI test-file.txt
+grep -i FISH test-file.txt
 ```
 
 * Contare le righe corrispondenti:
 
 ```bash
-grep -c pesci test-file.txt
+grep -c fish test-file.txt
 ```
 
 * Restituire output che non contengono la parola chiave:
 
 ```bash
-grep -v uccelli test-file.txt
+grep -v birds test-file.txt
 ```
 
 * Contare il numero di righe in `test-file.txt`:
@@ -178,17 +178,17 @@ more test-file.txt
 
 ...con controlli:
 
-- Scorri verso il basso riga per riga: *invio*
-- Vai alla pagina successiva: *barra spaziatrice*
-- Torna indietro di una pagina: *b*
+- Scorrere verso il basso riga per riga: *enter*
+- Passare alla pagina successiva: *barra spaziatrice*
+- Tornare indietro di una pagina: *b*
 
-* Visualizza le prime 3 righe del file:
+* Visualizzare le prime 3 righe del file:
 
 ```bash
 head -3 test-file.txt
 ```
 
-* Visualizza le ultime 2 righe del file:
+* Visualizzare le ultime 2 righe del file:
 
 ```bash
 tail -2 test-file.txt

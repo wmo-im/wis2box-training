@@ -1,15 +1,15 @@
 ---
-title: Guia de comandos Linux
+title: Linux cheatsheet
 ---
 
-# Guia de comandos Linux
+# Linux cheatsheet
 
 ## Visão Geral
 
-Os conceitos básicos para trabalhar em um sistema operacional Linux são **arquivos** e **diretórios** (pastas) organizados em
+Os conceitos básicos de trabalho em um sistema operacional Linux são **arquivos** e **diretórios** (pastas) organizados em
 uma estrutura de árvore dentro de um **ambiente**.
 
-Uma vez que você faz login em um sistema Linux, você está trabalhando em um **shell**, no qual pode manipular arquivos e diretórios,
+Uma vez que você faz login em um sistema Linux, você está trabalhando em um **shell** no qual pode trabalhar com arquivos e diretórios,
 executando comandos que estão instalados no sistema. O shell Bash é um shell comum e popular que
 é tipicamente encontrado em sistemas Linux.
 
@@ -29,13 +29,13 @@ cd /dir1/dir2
 cd ./somedir
 ```
 
-* Subir um diretório:
+* Mover um diretório para cima:
 
 ```bash
 cd ..
 ```
 
-* Subir dois diretórios:
+* Mover dois diretórios para cima:
 
 ```bash
 cd ../..
@@ -49,13 +49,13 @@ cd -
 
 ### Gerenciamento de Arquivos
 
-* Listar arquivos no diretório atual:
+* Listando arquivos no diretório atual:
 
 ```bash
 ls
 ```
 
-* Listar arquivos no diretório atual com mais detalhes:
+* Listando arquivos no diretório atual com mais detalhes:
 
 ```bash
 ls -l
@@ -76,7 +76,7 @@ touch foo.txt
 * Criar um arquivo a partir de um comando `echo`:
 
 ```bash
-echo "oi lá" > test-file.txt
+echo "hi there" > test-file.txt
 ```
 
 * Visualizar o conteúdo de um arquivo:
@@ -103,65 +103,66 @@ ls -l fil*  # corresponde a file1 e file2
 cat file1 file2 > newfile
 ```
 
-* Acrescentar outro arquivo em `newfile`:
+* Anexar outro arquivo em `newfile`
 
 ```bash
 cat file3 >> newfile
 ```
 
-* Deletar um arquivo:
+* Excluir um arquivo:
 
 ```bash
 rm newfile
 ```
 
-* Deletar todos os arquivos com a mesma extensão de arquivo:
+* Excluir todos os arquivos com a mesma extensão de arquivo:
 
 ```bash
 rm *.dat
 ```
 
-* Criar um diretório:
+* Criar um diretório
 
 ```bash
 mkdir dir1
 ```
 
-### Encadeando comandos com pipes
+### Encadeando comandos juntos com pipes
 
-Pipes permitem ao usuário enviar a saída de um comando para outro usando o símbolo de pipe `|`:
+Pipes permitem que um usuário envie a saída de um comando para outro usando o símbolo de pipe `|`:
 
 ```bash
-echo "oi" | sed 's/oi/tchau/'
+echo "hi" | sed 's/hi/bye/'
 ```
 
-* Filtrar saídas de comandos usando grep:
+* Filtrando saídas de comandos usando grep:
+
 
 ```bash
-echo "id,título" > test-file.txt
-echo "1,pássaros" >> test-file.txt
-echo "2,peixes" >> test-file.txt
-echo "3,gatos" >> test-file.txt
+echo "id,title" > test-file.txt
+echo "1,birds" >> test-file.txt
+echo "2,fish" >> test-file.txt
+echo "3,cats" >> test-file.txt
 
-cat test-file.txt | grep peixes
+cat test-file.txt | grep fish
 ```
 
-* Ignorar maiúsculas e minúsculas:
+* Ignorando maiúsculas e minúsculas:
 
 ```bash
-grep -i PEIXES test-file.txt
+grep -i FISH test-file.txt
 ```
 
 * Contar linhas correspondentes:
 
 ```bash
-grep -c peixes test-file.txt
+grep -c fish test-file.txt
 ```
 
 * Retornar saídas que não contêm a palavra-chave:
 
 ```bash
-grep -v pássaros test-file.txt
+grep -v birds test-file.txt
 ```
 
 * Contar o número de linhas em `test-file.txt`:

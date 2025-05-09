@@ -1,22 +1,22 @@
 ---
-title: Zugriff auf Ihre Student-VM
+title: Zugriff auf Ihre Studenten-VM
 ---
 
-# Zugriff auf Ihre Student-VM
+# Zugriff auf Ihre Studenten-VM
 
-!!! abstract "Lernziele"
+!!! abstract "Lernergebnisse"
 
-    Nach Abschluss dieser praktischen Einheit werden Sie in der Lage sein:
+    Am Ende dieser praktischen Sitzung werden Sie in der Lage sein:
 
-    - auf Ihre Student-VM über SSH und WinSCP zuzugreifen
-    - zu überprüfen, ob die erforderliche Software für die praktischen Übungen installiert ist
-    - zu überprüfen, ob Sie Zugriff auf die Übungsmaterialien für diese Schulung auf Ihrer lokalen Student-VM haben
+    - Zugriff auf Ihre Studenten-VM über SSH und WinSCP
+    - Überprüfung der erforderlichen Software für die praktischen Übungen
+    - Überprüfung des Zugriffs auf Übungsmaterialien für dieses Training auf Ihrer lokalen Studenten-VM
 
 ## Einführung
 
-Im Rahmen lokaler wis2box-Schulungen haben Sie Zugriff auf Ihre persönliche Student-VM im lokalen Schulungsnetzwerk "WIS2-training".
+Im Rahmen von lokal durchgeführten wis2box-Schulungen können Sie auf Ihre persönliche Studenten-VM im lokalen Schulungsnetzwerk namens "WIS2-training" zugreifen.
 
-Auf Ihrer Student-VM ist folgende Software vorinstalliert:
+Ihre Studenten-VM hat die folgende Software vorinstalliert:
 
 - Ubuntu 22.0.4.3 LTS [ubuntu-22.04.3-live-server-amd64.iso](https://releases.ubuntu.com/jammy/ubuntu-22.04.3-live-server-amd64.iso)
 - Python 3.10.12
@@ -26,7 +26,7 @@ Auf Ihrer Student-VM ist folgende Software vorinstalliert:
 
 !!! note
 
-    Wenn Sie diese Schulung außerhalb einer lokalen Schulungseinheit durchführen möchten, können Sie Ihre eigene Instanz bei einem beliebigen Cloud-Anbieter bereitstellen, zum Beispiel:
+    Wenn Sie dieses Training außerhalb einer lokalen Schulungssitzung durchführen möchten, können Sie Ihre eigene Instanz über einen beliebigen Cloud-Anbieter bereitstellen, zum Beispiel:
 
     - GCP (Google Cloud Platform) VM-Instanz `e2-medium`
     - AWS (Amazon Web Services) ec2-Instanz `t3a.medium`
@@ -34,18 +34,18 @@ Auf Ihrer Student-VM ist folgende Software vorinstalliert:
 
     Wählen Sie Ubuntu Server 22.0.4 LTS als Betriebssystem.
     
-    Stellen Sie nach der Erstellung Ihrer VM sicher, dass Sie Python, Docker und Docker Compose installiert haben, wie unter [wis2box-software-dependencies](https://docs.wis2box.wis.wmo.int/en/latest/user/getting-started.html#software-dependencies) beschrieben.
+    Nachdem Sie Ihre VM erstellt haben, stellen Sie sicher, dass Python, Docker und Docker Compose installiert sind, wie unter [wis2box-software-dependencies](https://docs.wis2box.wis.wmo.int/en/latest/user/getting-started.html#software-dependencies) beschrieben.
     
-    Das in dieser Schulung verwendete Release-Archiv für wis2box kann wie folgt heruntergeladen werden:
+    Das Release-Archiv für wis2box, das in diesem Training verwendet wird, kann wie folgt heruntergeladen werden:
 
     ```bash
     wget https://github.com/World-Meteorological-Organization/wis2box-release/releases/download/1.0.0/wis2box-setup.zip
     unzip wis2box-setup.zip
     ```
     
-    Das aktuelle 'wis2box-setup'-Archiv finden Sie immer unter [https://github.com/World-Meteorological-Organization/wis2box/releases](https://github.com/World-Meteorological-Organization/wis2box-release/releases).
+    Das neueste 'wis2box-setup'-Archiv finden Sie immer unter [https://github.com/World-Meteorological-Organization/wis2box/releases](https://github.com/World-Meteorological-Organization/wis2box-release/releases).
 
-    Das in dieser Schulung verwendete Übungsmaterial kann wie folgt heruntergeladen werden:
+    Das Übungsmaterial, das in diesem Training verwendet wird, kann wie folgt heruntergeladen werden:
 
     ```bash
     wget https://training.wis2box.wis.wmo.int/exercise-materials.zip
@@ -59,38 +59,38 @@ Auf Ihrer Student-VM ist folgende Software vorinstalliert:
     pip3 install pywiscat==0.2.2
     ```
 
-    Wenn Sie die während der lokalen WIS2-Schulungen bereitgestellte Student-VM verwenden, ist die erforderliche Software bereits installiert.
+    Wenn Sie die Studenten-VM verwenden, die während der lokalen WIS2-Schulungen bereitgestellt wird, ist die erforderliche Software bereits installiert.
 
-## Verbindung zu Ihrer Student-VM im lokalen Schulungsnetzwerk
+## Verbinden Sie sich mit Ihrer Studenten-VM im lokalen Schulungsnetzwerk
 
 Verbinden Sie Ihren PC mit dem lokalen WLAN, das während der WIS2-Schulung im Raum ausgestrahlt wird, gemäß den Anweisungen des Trainers.
 
-Verwenden Sie einen SSH-Client, um sich mit folgenden Daten mit Ihrer Student-VM zu verbinden:
+Verwenden Sie einen SSH-Client, um sich mit Ihrer Studenten-VM zu verbinden, indem Sie folgende Daten verwenden:
 
-- **Host: (wird während der Präsenzschulung bereitgestellt)**
+- **Host: (während der Präsenzschulung bereitgestellt)**
 - **Port: 22**
-- **Benutzername: (wird während der Präsenzschulung bereitgestellt)**
-- **Passwort: (wird während der Präsenzschulung bereitgestellt)**
+- **Benutzername: (während der Präsenzschulung bereitgestellt)**
+- **Passwort: (während der Präsenzschulung bereitgestellt)**
 
 !!! tip
-    Wenden Sie sich an einen Trainer, wenn Sie sich beim Hostnamen/Benutzernamen nicht sicher sind oder Probleme bei der Verbindung haben.
+    Kontaktieren Sie einen Trainer, wenn Sie sich bezüglich des Hostnamens/Benutzernamens unsicher sind oder Probleme beim Verbinden haben.
 
-Ändern Sie nach der Verbindung Ihr Passwort, damit andere nicht auf Ihre VM zugreifen können:
+Sobald Sie verbunden sind, ändern Sie bitte Ihr Passwort, um sicherzustellen, dass andere keinen Zugriff auf Ihre VM haben:
 
 ```bash
 limper@student-vm:~$ passwd
-Changing password for testuser.
-Current password:
-New password:
-Retype new password:
-passwd: password updated successfully
+Passwort ändern für testuser.
+Aktuelles Passwort:
+Neues Passwort:
+Neues Passwort wiederholen:
+passwd: Passwort erfolgreich aktualisiert
 ```
 
-## Überprüfen der Softwareversionen
+## Überprüfen Sie die Softwareversionen
 
-Um wis2box ausführen zu können, sollten Python, Docker und Docker Compose auf der Student-VM vorinstalliert sein.
+Um wis2box ausführen zu können, sollten Python, Docker und Docker Compose auf der Studenten-VM vorinstalliert sein.
 
-Python-Version überprüfen:
+Überprüfen Sie die Python-Version:
 ```bash
 python3 --version
 ```
@@ -99,7 +99,7 @@ gibt zurück:
 Python 3.10.12
 ```
 
-Docker-Version überprüfen:
+Überprüfen Sie die Docker-Version:
 ```bash
 docker --version
 ```
@@ -108,7 +108,7 @@ gibt zurück:
 Docker version 24.0.6, build ed223bc
 ```
 
-Docker Compose-Version überprüfen:
+Überprüfen Sie die Docker Compose-Version:
 ```bash
 docker compose version
 ```
@@ -117,9 +117,9 @@ gibt zurück:
 Docker Compose version v2.21.0
 ```
 
-Damit Sie Docker-Befehle ausführen können, wurde Ihr Benutzer zur Gruppe `docker` hinzugefügt.
+Um sicherzustellen, dass Ihr Benutzer Docker-Befehle ausführen kann, wurde Ihr Benutzer zur `docker`-Gruppe hinzugefügt.
 
-Um zu testen, ob Ihr Benutzer docker hello-world ausführen kann, führen Sie folgenden Befehl aus:
+Um zu testen, dass Ihr Benutzer docker hello-world ausführen kann, führen Sie den folgenden Befehl aus:
 ```bash
 docker run hello-world
 ```
@@ -135,9 +135,9 @@ This message shows that your installation appears to be working correctly.
 ...
 ```
 
-## Überprüfen der Übungsmaterialien
+## Überprüfen Sie die Übungsmaterialien
 
-Überprüfen Sie den Inhalt Ihres Home-Verzeichnisses; dies sind die Materialien, die im Rahmen der Schulung und der praktischen Einheiten verwendet werden.
+Überprüfen Sie den Inhalt Ihres Home-Verzeichnisses; dies sind die Materialien, die als Teil des Trainings und der praktischen Sitzungen verwendet werden.
 
 ```bash
 ls ~/
@@ -147,27 +147,27 @@ gibt zurück:
 exercise-materials  wis2box
 ```
 
-Wenn Sie WinSCP auf Ihrem lokalen PC installiert haben, können Sie es verwenden, um sich mit Ihrer Student-VM zu verbinden und den Inhalt Ihres Home-Verzeichnisses zu überprüfen sowie Dateien zwischen Ihrer VM und Ihrem lokalen PC hoch- und herunterzuladen.
+Wenn Sie WinSCP auf Ihrem lokalen PC installiert haben, können Sie es verwenden, um sich mit Ihrer Studenten-VM zu verbinden und den Inhalt Ihres Home-Verzeichnisses zu inspizieren sowie Dateien zwischen Ihrer VM und Ihrem lokalen PC herunterzuladen oder hochzuladen.
 
-WinSCP ist für die Schulung nicht erforderlich, kann aber nützlich sein, wenn Sie Dateien auf Ihrer VM mit einem Texteditor auf Ihrem lokalen PC bearbeiten möchten.
+WinSCP ist nicht erforderlich für das Training, kann jedoch nützlich sein, wenn Sie Dateien auf Ihrer VM mit einem Texteditor auf Ihrem lokalen PC bearbeiten möchten.
 
-So können Sie sich mit WinSCP mit Ihrer Student-VM verbinden:
+So können Sie sich mit WinSCP mit Ihrer Studenten-VM verbinden:
 
-Öffnen Sie WinSCP und klicken Sie auf "Neue Site". Sie können wie folgt eine neue SCP-Verbindung zu Ihrer VM erstellen:
+Öffnen Sie WinSCP und klicken Sie auf "Neue Seite". Sie können eine neue SCP-Verbindung zu Ihrer VM wie folgt erstellen:
 
 <img alt="winscp-student-vm-scp.png" src="../../assets/img/winscp-student-vm-scp.png" width="400">
 
 Klicken Sie auf 'Speichern' und dann auf 'Anmelden', um sich mit Ihrer VM zu verbinden.
 
-Sie sollten dann den folgenden Inhalt sehen können:
+Und Sie sollten in der Lage sein, den folgenden Inhalt zu sehen:
 
 <img alt="winscp-student-vm-exercise-materials.png" src="../../assets/img/winscp-student-vm-exercise-materials.png" width="600">
 
-## Abschluss
+## Schlussfolgerung
 
 !!! success "Herzlichen Glückwunsch!"
-    In dieser praktischen Einheit haben Sie gelernt:
+    In dieser praktischen Sitzung haben Sie gelernt, wie Sie:
 
-    - wie Sie auf Ihre Student-VM über SSH und WinSCP zugreifen
-    - wie Sie überprüfen, ob die erforderliche Software für die praktischen Übungen installiert ist
-    - wie Sie überprüfen, ob Sie Zugriff auf die Übungsmaterialien für diese Schulung auf Ihrer lokalen Student-VM haben
+    - Zugriff auf Ihre Studenten-VM über SSH und WinSCP
+    - Überprüfung der erforderlichen Software für die praktischen Übungen
+    - Überprüfung des Zugriffs auf Übungsmaterialien für dieses Training auf Ihrer lokalen Studenten-VM

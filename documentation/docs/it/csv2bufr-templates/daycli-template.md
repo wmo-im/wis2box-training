@@ -4,9 +4,9 @@ title: Template DAYCLI
 
 # Template csv2bufr per dati climatici giornalieri (DAYCLI)
 
-Il template **DAYCLI** fornisce un formato CSV standardizzato per convertire i dati climatici giornalieri nella sequenza BUFR 307075.
+Il template **DAYCLI** fornisce un formato CSV standardizzato per convertire i dati climatici giornalieri in sequenza BUFR 307075.
 
-Il formato è destinato all'uso con i Sistemi di Gestione dei Dati Climatici per pubblicare dati su WIS2, a supporto degli obblighi di segnalazione delle osservazioni climatiche giornaliere.
+Il formato è destinato all'uso con i Sistemi di Gestione dei Dati Climatici per pubblicare dati su WIS2, a supporto dei requisiti di segnalazione per le osservazioni climatiche giornaliere.
 
 Questo template mappa le osservazioni giornaliere di:
 
@@ -15,10 +15,10 @@ Questo template mappa le osservazioni giornaliere di:
  - Profondità totale della neve al momento dell'osservazione
  - Profondità della neve fresca su un periodo di 24 ore
 
-Questo template richiede metadati aggiuntivi rispetto al template semplificato AWS: metodo di calcolo della temperatura media; altezze del sensore e della stazione; classificazione di esposizione e qualità della misurazione.
+Questo template richiede metadati aggiuntivi rispetto al template AWS semplificato: metodo di calcolo della temperatura media; altezze del sensore e della stazione; esposizione e classificazione della qualità delle misurazioni.
 
-!!! Nota "Riguardo al template DAYCLI"
-    Si prega di notare che la sequenza BUFR DAYCLI sarà aggiornata nel 2025 per includere informazioni aggiuntive e bandiere di controllo di qualità (QC) riviste. Il template DAYCLI incluso nel wis2box sarà aggiornato per riflettere questi cambiamenti. L'OMM comunicherà quando il software wis2box sarà aggiornato per includere il nuovo template DAYCLI, permettendo agli utenti di aggiornare i loro sistemi di conseguenza.
+!!! Note "Informazioni sul template DAYCLI"
+    Si prega di notare che la sequenza BUFR DAYCLI sarà aggiornata nel 2025 per includere informazioni aggiuntive e bandiere di QC riviste. Il template DAYCLI incluso nel wis2box sarà aggiornato per riflettere questi cambiamenti. La WMO comunicherà quando il software wis2box sarà aggiornato per includere il nuovo template DAYCLI, per permettere agli utenti di aggiornare i loro sistemi di conseguenza.
 
 ## Colonne CSV e descrizione
 
@@ -34,10 +34,10 @@ Questo template richiede metadati aggiuntivi rispetto al template semplificato A
 
 ## Riferimenti per la classificazione del sito
 
-[Riferimento per "classificazione del sito per la temperatura"](https://library.wmo.int/idviewer/35625/839).
+[Referenza per "temperature_siting_classification"](https://library.wmo.int/idviewer/35625/839).
 
-[Riferimento per "classificazione del sito per le precipitazioni"](https://library.wmo.int/idviewer/35625/840).
+[Referenza per "precipitation_siting_classification"](https://library.wmo.int/idviewer/35625/840).
 
 ## Esempio
 
-File CSV di esempio che si conforma al template DAYCLI: [daycli-example.csv](./../../sample-data/daycli-example.csv).
+File CSV di esempio conforme al template DAYCLI: [daycli-example.csv](./../../sample-data/daycli-example.csv).

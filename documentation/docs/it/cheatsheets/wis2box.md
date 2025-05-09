@@ -1,13 +1,13 @@
 ---
-title: Guida rapida WIS2 in a box
+title: WIS2 in a box cheatsheet
 ---
 
-# Guida rapida WIS2 in a box
+# WIS2 in a box cheatsheet
 
 ## Panoramica
 
 wis2box funziona come una suite di comandi Docker Compose. Il comando ``wis2box-ctl.py`` è uno strumento
-(scritto in Python) per eseguire comandi Docker Compose in modo semplice.
+(scritto in Python) per eseguire comandi Docker Compose facilmente.
 
 ## Comandi essenziali di wis2box
 
@@ -25,19 +25,19 @@ python3 wis2box-ctl.py start
 python3 wis2box-ctl.py stop
 ```
 
-* Verifica che tutti i container di wis2box siano in esecuzione:
+* Verifica che tutti i container wis2box siano in esecuzione:
 
 ```bash
 python3 wis2box-ctl.py status
 ```
 
-* Accedi a un container di wis2box (*wis2box-management* di default):
+* Accedi a un container wis2box (*wis2box-management* di default):
 
 ```bash
 python3 wis2box-ctl.py login
 ```
 
-* Accedi a un container specifico di wis2box:
+* Accedi a un container wis2box specifico:
 
 ```bash
 python3 wis2box-ctl.py login wis2box-api

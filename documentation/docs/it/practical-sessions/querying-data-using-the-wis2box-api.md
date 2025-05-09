@@ -1,10 +1,10 @@
 ---
-title: Interrogazione dei dati utilizzando l'API wis2box
+title: Interrogazione dei dati tramite l'API wis2box
 ---
 
-# Interrogazione dei dati utilizzando l'API wis2box
+# Interrogazione dei dati tramite l'API wis2box
 
-!!! abstract "Obiettivi di apprendimento"
+!!! abstract "Risultati dell'apprendimento"
     Al termine di questa sessione pratica, sarai in grado di:
 
     - utilizzare l'API wis2box per interrogare e filtrare le tue stazioni
@@ -12,21 +12,21 @@ title: Interrogazione dei dati utilizzando l'API wis2box
 
 ## Introduzione
 
-L'API wis2box fornisce accesso alla scoperta e all'interrogazione in formato leggibile dalle macchine ai dati che sono stati inseriti in wis2box. L'API è basata sullo standard OGC API - Features ed è implementata utilizzando [pygeoapi](https://pygeoapi.io).
+L'API wis2box fornisce accesso alla scoperta e all'interrogazione in modo leggibile da macchina ai dati che sono stati ingeriti in wis2box. L'API si basa sullo standard OGC API - Features ed è implementata utilizzando [pygeoapi](https://pygeoapi.io).
 
-L'API wis2box fornisce accesso alle seguenti collezioni:
+L'API wis2box offre accesso alle seguenti collezioni:
 
 - Stazioni
 - Metadati di scoperta
-- Notifiche dei dati
-- più una collezione per ogni dataset configurato, che memorizza l'output da bufr2geojson (il plugin `bufr2geojson` deve essere abilitato nella configurazione dei mapping dei dati per popolare gli elementi nella collezione del dataset).
+- Notifiche di dati
+- più una collezione per dataset configurato, che memorizza l'output da bufr2geojson (il plugin `bufr2geojson` deve essere abilitato nella configurazione delle mappature dei dati per riempire gli elementi nella collezione del dataset).
 
-In questa sessione pratica imparerai come utilizzare l'API dei dati per esplorare e interrogare i dati che sono stati inseriti in wis2box.
+In questa sessione pratica imparerai a utilizzare l'API dei dati per sfogliare e interrogare i dati che sono stati ingeriti in wis2box.
 
 ## Preparazione
 
 !!! note
-    Naviga alla pagina iniziale dell'API wis2box nel tuo browser web:
+    Naviga alla pagina di atterraggio dell'API wis2box nel tuo browser web:
 
     `http://YOUR-HOST/oapi`
 
@@ -34,43 +34,43 @@ In questa sessione pratica imparerai come utilizzare l'API dei dati per esplorar
 
 ## Ispezione delle collezioni
 
-Dalla pagina iniziale, clicca sul link 'Collections'.
+Dalla pagina di atterraggio, clicca sul link 'Collections'.
 
 !!! question
-    Quante collezioni di dataset vedi nella pagina risultante? Cosa pensi rappresenti ciascuna collezione?
+    Quante collezioni di dataset vedi nella pagina risultante? Cosa pensi che rappresenti ogni collezione?
 
 ??? success "Clicca per rivelare la risposta"
-    Dovrebbero essere visualizzate 4 collezioni, incluse "Stations", "Discovery metadata" e "Data notifications"
+    Dovrebbero essere visualizzate 4 collezioni, incluse "Stazioni", "Metadati di scoperta" e "Notifiche di dati"
 
 ## Ispezione delle stazioni
 
-Dalla pagina iniziale, clicca sul link 'Collections', poi clicca sul link 'Stations'.
+Dalla pagina di atterraggio, clicca sul link 'Collections', poi clicca sul link 'Stazioni'.
 
 <img alt="wis2box-api-collections-stations" src="../../assets/img/wis2box-api-collections-stations.png" width="600">
 
 Clicca sul link 'Browse', poi clicca sul link 'json'.
 
 !!! question
-    Quante stazioni vengono restituite? Confronta questo numero con la lista delle stazioni in `http://YOUR-HOST/wis2box-webapp/station`
+    Quante stazioni vengono restituite? Confronta questo numero con l'elenco delle stazioni in `http://YOUR-HOST/wis2box-webapp/station`
 
 ??? success "Clicca per rivelare la risposta"
-    Il numero di stazioni dall'API dovrebbe essere uguale al numero di stazioni che vedi nella webapp wis2box.
+    Il numero di stazioni dall'API dovrebbe essere uguale al numero di stazioni che vedi nella wis2box webapp.
 
 !!! question
-    Come possiamo interrogare una singola stazione (es. `Balaka`)?
+    Come possiamo interrogare per una singola stazione (es. `Balaka`)?
 
 ??? success "Clicca per rivelare la risposta"
     Interroga l'API con `http://YOUR-HOST/oapi/collections/stations/items?q=Balaka`.
 
 !!! note
-    L'esempio sopra è basato sui dati di test del Malawi. Prova a testare con le stazioni che hai inserito come parte degli esercizi precedenti.
+    L'esempio sopra è basato sui dati di test del Malawi. Prova a testare contro le stazioni che hai ingerito come parte degli esercizi precedenti.
 
 ## Ispezione delle osservazioni
 
 !!! note
-    L'esempio sopra è basato sui dati di test del Malawi. Prova a testare con le osservazioni che hai inserito come parte degli esercizi.
+    L'esempio sopra è basato sui dati di test del Malawi. Prova a testare contro le osservazioni che hai ingerito come parte degli esercizi.
 
-Dalla pagina iniziale, clicca sul link 'Collections', poi clicca sul link 'Surface weather observations from Malawi'.
+Dalla pagina di atterraggio, clicca sul link 'Collections', poi clicca sul link 'Osservazioni meteorologiche di superficie dal Malawi'.
 
 <img alt="wis2box-api-collections-malawi-obs" src="../../assets/img/wis2box-api-collections-malawi-obs.png" width="600">
 
@@ -79,12 +79,12 @@ Clicca sul link 'Queryables'.
 <img alt="wis2box-api-collections-malawi-obs-queryables" src="../../assets/img/wis2box-api-collections-malawi-obs-queryables.png" width="600">
 
 !!! question
-    Quale queryable dovrebbe essere usato per filtrare per identificativo della stazione?
+    Quale queryable sarebbe utilizzato per filtrare per identificatore di stazione?
 
 ??? success "Clicca per rivelare la risposta"
     Il `wigos_station_identifer` è il queryable corretto.
 
-Naviga alla pagina precedente (cioè `http://YOUR-HOST/oapi/collections/urn:wmo:md:mwi:mwi_met_centre:surface-weather-observations`)
+Naviga alla pagina precedente (i.e. `http://YOUR-HOST/oapi/collections/urn:wmo:md:mwi:mwi_met_centre:surface-weather-observations`)
 
 Clicca sul link 'Browse'.
 
@@ -92,7 +92,7 @@ Clicca sul link 'Browse'.
     Come possiamo visualizzare la risposta JSON?
 
 ??? success "Clicca per rivelare la risposta"
-    Cliccando sul link 'JSON' in alto a destra della pagina, o aggiungendo `f=json` alla richiesta API nel browser web.
+    Cliccando sul link 'JSON' in alto a destra della pagina, o aggiungendo `f=json` alla richiesta API sul browser web.
 
 Ispeziona la risposta JSON delle osservazioni.
 
@@ -109,7 +109,7 @@ Ispeziona la risposta JSON delle osservazioni.
     Come possiamo ordinare la risposta per le osservazioni più recenti?
 
 ??? success "Clicca per rivelare la risposta"
-    Aggiungi `sortby=-resultTime` alla richiesta API (nota il segno `-` per indicare l'ordine decrescente). Per ordinare per le osservazioni più vecchie, aggiorna la richiesta includendo `sortby=resultTime`.
+    Aggiungi `sortby=-resultTime` alla richiesta API (nota il segno `-` per denotare l'ordine decrescente). Per ordinare per le osservazioni più vecchie, aggiorna la richiesta includendo `sortby=resultTime`.
 
 !!! question
     Come possiamo filtrare le osservazioni per una singola stazione?
@@ -118,7 +118,7 @@ Ispeziona la risposta JSON delle osservazioni.
     Aggiungi `wigos_station_identifier=<WSI>` alla richiesta API.
 
 !!! question
-    Come possiamo ricevere le osservazioni come CSV?
+    Come possiamo ricevere le osservazioni come un CSV?
 
 ??? success "Clicca per rivelare la risposta"
     Aggiungi `f=csv` alla richiesta API.
@@ -127,12 +127,12 @@ Ispeziona la risposta JSON delle osservazioni.
     Come possiamo mostrare una singola osservazione (id)?
 
 ??? success "Clicca per rivelare la risposta"
-    Utilizzando l'identificativo della feature da una richiesta API sulle osservazioni, interroga l'API con `http://YOUR-HOST/oapi/collections/{collectionId}/items/{featureId}`, dove `{collectionId}` è il nome della tua collezione di osservazioni e `{itemId}` è l'identificativo della singola osservazione di interesse.
+    Utilizzando l'identificatore della caratteristica da una richiesta API contro le osservazioni, interroga l'API per `http://YOUR-HOST/oapi/collections/{collectionId}/items/{featureId}`, dove `{collectionId}` è il nome della tua collezione di osservazioni e `{itemId}` è l'identificatore della singola osservazione di interesse.
 
 ## Conclusione
 
 !!! success "Congratulazioni!"
-    In questa sessione pratica, hai imparato come:
+    In questa sessione pratica, hai imparato a:
 
     - utilizzare l'API wis2box per interrogare e filtrare le tue stazioni
     - utilizzare l'API wis2box per interrogare e filtrare i tuoi dati

@@ -1,14 +1,14 @@
 ---
-title: Linux Spickzettel
+title: Linux cheatsheet
 ---
 
-# Linux Spickzettel
+# Linux cheatsheet
 
 ## Übersicht
 
 Die grundlegenden Konzepte der Arbeit in einem Linux-Betriebssystem sind **Dateien** und **Verzeichnisse** (Ordner), die in einer Baumstruktur innerhalb einer **Umgebung** organisiert sind.
 
-Sobald Sie sich in ein Linux-System einloggen, arbeiten Sie in einer **Shell**, in der Sie Dateien und Verzeichnisse bearbeiten können, indem Sie Befehle ausführen, die auf dem System installiert sind. Die Bash-Shell ist eine häufige und beliebte Shell, die typischerweise auf Linux-Systemen zu finden ist.
+Sobald Sie sich in einem Linux-System anmelden, arbeiten Sie in einer **Shell**, in der Sie Dateien und Verzeichnisse bearbeiten können, indem Sie Befehle ausführen, die auf dem System installiert sind. Die Bash-Shell ist eine häufige und beliebte Shell, die typischerweise auf Linux-Systemen zu finden ist.
 
 ## Bash
 
@@ -46,19 +46,19 @@ cd -
 
 ### Dateiverwaltung
 
-* Auflisten der Dateien im aktuellen Verzeichnis:
+* Auflisten von Dateien im aktuellen Verzeichnis:
 
 ```bash
 ls
 ```
 
-* Detailliertes Auflisten der Dateien im aktuellen Verzeichnis:
+* Detailliertes Auflisten von Dateien im aktuellen Verzeichnis:
 
 ```bash
 ls -l
 ```
 
-* Auflisten der Wurzel des Dateisystems:
+* Auflisten des Wurzelverzeichnisses des Dateisystems:
 
 ```bash
 ls -l /
@@ -126,13 +126,14 @@ mkdir dir1
 
 ### Befehle mit Pipes verketten
 
-Pipes erlauben es einem Benutzer, die Ausgabe eines Befehls an einen anderen zu senden, indem das Pipe-Symbol `|` verwendet wird:
+Pipes ermöglichen es einem Benutzer, die Ausgabe eines Befehls an einen anderen zu senden, indem das Pipe-Symbol `|` verwendet wird:
 
 ```bash
 echo "hi" | sed 's/hi/bye/'
 ```
 
 * Filtern von Befehlsausgaben mit grep:
+
 
 ```bash
 echo "id,title" > test-file.txt
@@ -149,7 +150,7 @@ cat test-file.txt | grep fish
 grep -i FISH test-file.txt
 ```
 
-* Zählen von passenden Zeilen:
+* Zählen von übereinstimmenden Zeilen:
 
 ```bash
 grep -c fish test-file.txt
@@ -175,7 +176,7 @@ more test-file.txt
 
 ...mit Steuerungen:
 
-- Zeile für Zeile nach unten scrollen: *Enter*
+- Zeile für Zeile nach unten scrollen: *enter*
 - Zur nächsten Seite gehen: *Leertaste*
 - Eine Seite zurückgehen: *b*
 
