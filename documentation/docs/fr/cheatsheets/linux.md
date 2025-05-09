@@ -1,17 +1,14 @@
 ---
-title: Feuille de triche Linux
+title: Linux cheatsheet
 ---
 
-# Feuille de triche Linux
+# Linux cheatsheet
 
 ## Vue d'ensemble
 
-Les concepts de base pour travailler dans un système d'exploitation Linux sont les **fichiers** et les **répertoires** (dossiers) organisés en
-une structure arborescente au sein d'un **environnement**.
+Les concepts de base pour travailler dans un système d'exploitation Linux sont les **fichiers** et les **répertoires** (dossiers) organisés dans une structure arborescente au sein d'un **environnement**.
 
-Une fois connecté à un système Linux, vous travaillez dans un **shell** où vous pouvez manipuler des fichiers et des répertoires,
-en exécutant des commandes qui sont installées sur le système. Le shell Bash est un shell courant et populaire qui
-se trouve typiquement sur les systèmes Linux.
+Une fois connecté à un système Linux, vous travaillez dans un **shell** où vous pouvez manipuler des fichiers et des répertoires en exécutant des commandes installées sur le système. Le shell Bash est un shell courant et populaire qui se trouve généralement sur les systèmes Linux.
 
 ## Bash
 
@@ -29,19 +26,19 @@ cd /dir1/dir2
 cd ./somedir
 ```
 
-* Remonter d'un répertoire :
+* Monter d'un répertoire :
 
 ```bash
 cd ..
 ```
 
-* Remonter de deux répertoires :
+* Monter de deux répertoires :
 
 ```bash
 cd ../..
 ```
 
-* Retourner dans votre répertoire "home" :
+* Aller à votre répertoire "home" :
 
 ```bash
 cd -
@@ -76,7 +73,7 @@ touch foo.txt
 * Créer un fichier à partir d'une commande `echo` :
 
 ```bash
-echo "salut" > test-file.txt
+echo "hi there" > test-file.txt
 ```
 
 * Voir le contenu d'un fichier :
@@ -115,53 +112,53 @@ cat file3 >> newfile
 rm newfile
 ```
 
-* Supprimer tous les fichiers avec la même extension de fichier :
+* Supprimer tous les fichiers ayant la même extension de fichier :
 
 ```bash
 rm *.dat
 ```
 
-* Créer un répertoire
+* Créer un répertoire :
 
 ```bash
 mkdir dir1
 ```
 
-### Enchaînement de commandes avec des pipes
+### Chaînage de commandes avec des tubes
 
-Les pipes permettent à un utilisateur d'envoyer la sortie d'une commande à une autre en utilisant le symbole de pipe `|` :
+Les tubes permettent à un utilisateur d'envoyer la sortie d'une commande à une autre en utilisant le symbole de tube `|` :
 
 ```bash
-echo "salut" | sed 's/salut/au revoir/'
+echo "hi" | sed 's/hi/bye/'
 ```
 
 * Filtrer les sorties de commandes en utilisant grep :
 
 ```bash
-echo "id,titre" > test-file.txt
-echo "1,oiseaux" >> test-file.txt
-echo "2,poissons" >> test-file.txt
-echo "3,chats" >> test-file.txt
+echo "id,title" > test-file.txt
+echo "1,birds" >> test-file.txt
+echo "2,fish" >> test-file.txt
+echo "3,cats" >> test-file.txt
 
-cat test-file.txt | grep poissons
+cat test-file.txt | grep fish
 ```
 
 * Ignorer la casse :
 
 ```bash
-grep -i POISSONS test-file.txt
+grep -i FISH test-file.txt
 ```
 
 * Compter les lignes correspondantes :
 
 ```bash
-grep -c poissons test-file.txt
+grep -c fish test-file.txt
 ```
 
 * Retourner les sorties ne contenant pas le mot-clé :
 
 ```bash
-grep -v oiseaux test-file.txt
+grep -v birds test-file.txt
 ```
 
 * Compter le nombre de lignes dans `test-file.txt` :
@@ -170,7 +167,7 @@ grep -v oiseaux test-file.txt
 wc -l test-file.txt
 ```
 
-* Afficher la sortie une page à la fois :
+* Afficher la sortie écran par écran :
 
 ```bash
 more test-file.txt

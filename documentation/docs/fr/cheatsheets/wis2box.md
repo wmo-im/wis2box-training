@@ -1,15 +1,15 @@
 ---
-title: Feuille de triche WIS2 en boîte
+title: WIS2 in a box cheatsheet
 ---
 
-# Feuille de triche WIS2 en boîte
+# WIS2 in a box cheatsheet
 
 ## Vue d'ensemble
 
 wis2box fonctionne comme une suite de commandes Docker Compose. La commande ``wis2box-ctl.py`` est un utilitaire
-(écrit en Python) pour exécuter facilement des commandes Docker Compose.
+(écrit en Python) pour exécuter facilement les commandes Docker Compose.
 
-## Essentiels des commandes wis2box
+## Commandes essentielles de wis2box
 
 ### Démarrage et arrêt
 

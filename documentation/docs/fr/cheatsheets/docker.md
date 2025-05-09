@@ -1,8 +1,8 @@
 ---
-title: Feuille de triche Docker
+title: Docker cheatsheet
 ---
 
-# Feuille de triche Docker
+# Docker cheatsheet
 
 ## Vue d'ensemble
 
@@ -75,7 +75,7 @@ docker ps -a
 
 * Entrer dans le terminal interactif d'un conteneur en cours d'exécution :
 
-!!! astuce
+!!! tip
 
     utilisez `docker ps` pour utiliser l'identifiant du conteneur dans la commande ci-dessous
 

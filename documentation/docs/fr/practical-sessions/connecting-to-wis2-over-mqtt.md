@@ -8,15 +8,15 @@ title: Connexion à WIS2 via MQTT
 
     À la fin de cette session pratique, vous serez capable de :
 
-    - vous connecter au Courtier Global WIS2 en utilisant MQTT Explorer
+    - vous connecter au Global Broker de WIS2 en utilisant MQTT Explorer
     - examiner la structure des sujets WIS2
     - examiner la structure des messages de notification WIS2
 
 ## Introduction
 
-WIS2 utilise le protocole MQTT pour annoncer la disponibilité des données météorologiques/climatiques/hydrologiques. Le Courtier Global WIS2 s'abonne à tous les Nœuds WIS2 du réseau et republie les messages qu'il reçoit. Le Cache Global s'abonne au Courtier Global, télécharge les données dans le message puis republie le message sur le sujet `cache` avec une nouvelle URL. Le Catalogue de Découverte Global publie les métadonnées de découverte du Courtier et fournit une API de recherche.
+WIS2 utilise le protocole MQTT pour annoncer la disponibilité des données météorologiques/climatiques/hydrologiques. Le Global Broker de WIS2 s'abonne à tous les WIS2 Nodes du réseau et republie les messages qu'il reçoit. Le Global Cache s'abonne au Global Broker, télécharge les données dans le message puis republie le message sur le sujet `cache` avec une nouvelle URL. Le Global Discovery Catalogue publie les métadonnées de découverte du Broker et fournit une API de recherche.
 
-Voici un exemple de la structure de message de notification WIS2 pour un message reçu sur le sujet `origin/a/wis2/br-inmet/data/core/weather/surface-based-observations/synop` :
+Voici un exemple de la structure de message de notification WIS2 pour un message reçu sur le sujet `origin/a/wis2/br-inmet/data/core/weather/surface-based-observations/synop`:	
 
 ```json
 {
@@ -55,32 +55,32 @@ Voici un exemple de la structure de message de notification WIS2 pour un message
     }
   ]
 }
-```
+``` 
 
-Dans cette session pratique, vous apprendrez à utiliser l'outil MQTT Explorer pour configurer une connexion client MQTT au Courtier Global WIS2 et à afficher les messages de notification WIS2.
+Dans cette session pratique, vous apprendrez à utiliser l'outil MQTT Explorer pour configurer une connexion client MQTT à un Global Broker de WIS2 et à afficher les messages de notification WIS2.
 
-MQTT Explorer est un outil utile pour parcourir et examiner la structure des sujets pour un courtier MQTT donné afin de réviser les données publiées.
+MQTT Explorer est un outil utile pour parcourir et examiner la structure des sujets pour un broker MQTT donné afin de réviser les données publiées.
 
-Notez que MQTT est principalement utilisé pour la communication "machine à machine"; cela signifie qu'en général, un client analyserait automatiquement les messages à mesure qu'ils sont reçus. Pour travailler avec MQTT de manière programmatique (par exemple, en Python), vous pouvez utiliser des bibliothèques clientes MQTT telles que [paho-mqtt](https://pypi.org/project/paho-mqtt) pour vous connecter à un courtier MQTT et traiter les messages entrants. Il existe de nombreux logiciels clients et serveurs MQTT, en fonction de vos besoins et de votre environnement technique.
+Notez que MQTT est principalement utilisé pour la communication "machine à machine" ; cela signifie qu'il y aurait normalement un client qui analyse automatiquement les messages au fur et à mesure de leur réception. Pour travailler avec MQTT de manière programmatique (par exemple, en Python), vous pouvez utiliser des bibliothèques clientes MQTT telles que [paho-mqtt](https://pypi.org/project/paho-mqtt) pour vous connecter à un broker MQTT et traiter les messages entrants. Il existe de nombreux logiciels clients et serveurs MQTT, en fonction de vos besoins et de votre environnement technique.
 
-## Utilisation de MQTT Explorer pour se connecter au Courtier Global
+## Utilisation de MQTT Explorer pour se connecter au Global Broker
 
-Pour voir les messages publiés par un Courtier Global WIS2, vous pouvez utiliser "MQTT Explorer" qui peut être téléchargé depuis le [site web de MQTT Explorer](https://mqtt-explorer.com).
+Pour visualiser les messages publiés par un Global Broker de WIS2, vous pouvez utiliser "MQTT Explorer" qui peut être téléchargé depuis le [site web de MQTT Explorer](https://mqtt-explorer.com).
 
-Ouvrez MQTT Explorer et ajoutez une nouvelle connexion au Courtier Global hébergé par MeteoFrance en utilisant les détails suivants :
+Ouvrez MQTT Explorer et ajoutez une nouvelle connexion au Global Broker hébergé par MeteoFrance en utilisant les détails suivants :
 
 - hôte : globalbroker.meteo.fr
 - port : 8883
 - nom d'utilisateur : everyone
 - mot de passe : everyone
 
-<img alt="connexion-courtier-global-mqtt-explorer" src="../../assets/img/mqtt-explorer-global-broker-connection.png" width="800">
+<img alt="mqtt-explorer-global-broker-connection" src="../../assets/img/mqtt-explorer-global-broker-connection.png" width="800">
 
-Cliquez sur le bouton 'AVANCÉ', retirez les sujets pré-configurés et ajoutez les sujets suivants auxquels vous abonner :
+Cliquez sur le bouton 'ADVANCED', retirez les sujets préconfigurés et ajoutez les sujets suivants à souscrire :
 
 - `origin/a/wis2/#`
 
-<img alt="mqtt-explorer-courtier-global-avancé" src="../../assets/img/mqtt-explorer-global-broker-sub-origin.png" width="800">
+<img alt="mqtt-explorer-global-broker-advanced" src="../../assets/img/mqtt-explorer-global-broker-sub-origin.png" width="800">
 
 !!! note
     Lors de la configuration des abonnements MQTT, vous pouvez utiliser les jokers suivants :
@@ -90,13 +90,13 @@ Cliquez sur le bouton 'AVANCÉ', retirez les sujets pré-configurés et ajoutez 
 
     Dans ce cas, `origin/a/wis2/#` vous abonnera à tous les sujets sous le sujet `origin/a/wis2`.
 
-Cliquez sur 'RETOUR', puis 'ENREGISTRER' pour sauvegarder vos détails de connexion et d'abonnement. Ensuite, cliquez sur 'CONNECTER' :
+Cliquez sur 'BACK', puis sur 'SAVE' pour enregistrer vos détails de connexion et d'abonnement. Ensuite, cliquez sur 'CONNECT' :
 
 Les messages devraient commencer à apparaître dans votre session MQTT Explorer comme suit :
 
-<img alt="sujets-courtier-global-mqtt-explorer" src="../../assets/img/mqtt-explorer-global-broker-msg-origin.png" width="800">
+<img alt="mqtt-explorer-global-broker-topics" src="../../assets/img/mqtt-explorer-global-broker-msg-origin.png" width="800">
 
-Vous êtes maintenant prêt à commencer à explorer les sujets et la structure des messages WIS2.
+Vous êtes maintenant prêt à explorer la structure des sujets et des messages WIS2.
 
 ## Exercice 1 : Examiner la structure des sujets WIS2
 
@@ -118,7 +118,7 @@ Utilisez MQTT pour parcourir la structure des sujets sous les sujets `origin`.
 
 !!! question
 
-    Comment pouvons-nous distinguer entre les messages publiés par les centres WIS hébergeant une passerelle GTS-to-WIS2 et les messages publiés par les centres WIS hébergeant un nœud WIS2 ?
+    Comment pouvons-nous distinguer entre les messages publiés par les centres WIS hébergeant un passerelle GTS-to-WIS2 et les messages publiés par les centres WIS hébergeant un WIS2 Node ?
 
 ??? success "Cliquez pour révéler la réponse"
 
@@ -126,35 +126,35 @@ Utilisez MQTT pour parcourir la structure des sujets sous les sujets `origin`.
 
     `origin/a/wis2/de-dwd-gts-to-wis2/data/core/I/S/A/I/01/sbbr`
 
-    nous indique que les données ont été publiées par la passerelle GTS-to-WIS2 hébergée par Deutscher Wetterdienst (DWD), Allemagne. La passerelle GTS-to-WIS2 est un type spécial de publieur de données qui publie des données du Système Mondial de Télécommunication (GTS) à WIS2. La structure des sujets est composée par les en-têtes TTAAii CCCC pour les messages GTS.
+    nous indique que les données ont été publiées par la passerelle GTS-to-WIS2 hébergée par Deutscher Wetterdienst (DWD), Allemagne. La passerelle GTS-to-WIS2 est un type spécial de diffuseur de données qui publie des données du Système mondial de télécommunication (GTS) vers WIS2. La structure des sujets est composée par les en-têtes TTAAii CCCC pour les messages GTS.
 
 ## Exercice 2 : Examiner la structure des messages WIS2
 
-Déconnectez-vous de MQTT Explorer et mettez à jour les sections 'Avancé' pour changer l'abonnement aux sujets suivants :
+Déconnectez-vous de MQTT Explorer et mettez à jour les sections 'Advanced' pour changer l'abonnement aux sujets suivants :
 
 * `origin/a/wis2/+/data/core/weather/surface-based-observations/synop`
 * `cache/a/wis2/+/data/core/weather/surface-based-observations/synop`
 
-<img alt="sujets-courtier-global-mqtt-explorer-exercice2" src="../../assets/img/mqtt-explorer-global-broker-sub-origin-cache-synop.png" width="800">
+<img alt="mqtt-explorer-global-broker-topics-exercise2" src="../../assets/img/mqtt-explorer-global-broker-sub-origin-cache-synop.png" width="800">
 
 !!! note
     Le joker `+` est utilisé pour s'abonner à tous les centres WIS.
 
-Reconnectez-vous au Courtier Global et attendez que les messages apparaissent.
+Reconnectez-vous au Global Broker et attendez que les messages apparaissent.
 
-Vous pouvez voir le contenu du message WIS2 dans la section "Valeur" sur le côté droit. Essayez de développer la structure des sujets pour voir les différents niveaux du message jusqu'à atteindre le dernier niveau et examinez le contenu du message d'un des messages.
+Vous pouvez visualiser le contenu du message WIS2 dans la section "Value" sur le côté droit. Essayez d'élargir la structure des sujets pour voir les différents niveaux du message jusqu'à atteindre le dernier niveau et examinez le contenu du message de l'un des messages.
 
 !!! question
 
-    Comment pouvons-nous identifier l'horodatage de la publication des données ? Et comment pouvons-nous identifier l'horodatage de la collecte des données ?
+    Comment pouvons-nous identifier le moment où les données ont été publiées ? Et comment pouvons-nous identifier le moment où les données ont été collectées ?
 
 ??? success "Cliquez pour révéler la réponse"
 
-    L'horodatage de la publication des données est contenu dans la section `properties` du message avec une clé de `pubtime`.
+    Le moment où les données ont été publiées est contenu dans la section `properties` du message avec une clé de `pubtime`.
 
-    L'horodatage de la collecte des données est contenu dans la section `properties` du message avec une clé de `datetime`.
+    Le moment où les données ont été collectées est contenu dans la section `properties` du message avec une clé de `datetime`.
 
-    <img alt="propriétés-message-courtier-global-mqtt-explorer" src="../../assets/img/mqtt-explorer-global-broker-msg-properties.png" width="800">
+    <img alt="mqtt-explorer-global-broker-msg-properties" src="../../assets/img/mqtt-explorer-global-broker-msg-properties.png" width="800">
 
 !!! question
 
@@ -168,7 +168,7 @@ Vous pouvez voir le contenu du message WIS2 dans la section "Valeur" sur le côt
 
 ## Exercice 3 : Examiner la différence entre les sujets 'origin' et 'cache'
 
-Assurez-vous que vous êtes toujours connecté au Courtier Global en utilisant les abonnements aux sujets `origin/a/wis2/+/data/core/weather/surface-based-observations/synop` et `cache/a/wis2/+/data/core/weather/surface-based-observations/synop` comme décrit dans l'Exercice 2.
+Assurez-vous que vous êtes toujours connecté au Global Broker en utilisant les abonnements aux sujets `origin/a/wis2/+/data/core/weather/surface-based-observations/synop` et `cache/a/wis2/+/data/core/weather/surface-based-observations/synop` comme décrit dans l'Exercice 2.
 
 Essayez d'identifier un message pour le même identifiant de centre publié à la fois sur les sujets `origin` et `cache`.
 
@@ -179,22 +179,22 @@ Essayez d'identifier un message pour le même identifiant de centre publié à l
 
 ??? success "Cliquez pour révéler la réponse"
 
-    Les messages publiés sur les sujets `origin` sont les messages originaux que le Courtier Global republie à partir des Nœuds WIS2 du réseau.
+    Les messages publiés sur les sujets `origin` sont les messages originaux que le Global Broker republie des WIS2 Nodes du réseau. 
 
-    Les messages publiés sur les sujets `cache` sont les messages pour lesquels les données ont été téléchargées par le Cache Global. Si vous vérifiez le contenu du message du sujet commençant par `cache`, vous verrez que le lien 'canonical' a été mis à jour avec une nouvelle URL.
+    Les messages publiés sur les sujets `cache` sont les messages pour lesquels les données ont été téléchargées par le Global Cache. Si vous vérifiez le contenu du message du sujet commençant par `cache`, vous verrez que le lien 'canonical' a été mis à jour vers une nouvelle URL.
     
-    Il existe plusieurs Caches Globaux dans le réseau WIS2, donc vous recevrez un message de chaque Cache Global qui a téléchargé le message.
+    Il existe plusieurs Global Caches dans le réseau WIS2, donc vous recevrez un message de chaque Global Cache qui a téléchargé le message.
 
-    Le Cache Global ne télécharge et ne republie que les messages qui ont été publiés sur la hiérarchie des sujets `../data/core/...`.
+    Le Global Cache ne téléchargera et ne republiera que les messages qui ont été publiés sur la hiérarchie des sujets `../data/core/...`.
 
 ## Conclusion
 
 !!! success "Félicitations !"
     Dans cette session pratique, vous avez appris :
 
-    - comment vous abonner aux services du Courtier Global WIS2 en utilisant MQTT Explorer
+    - comment vous abonner aux services du Global Broker de WIS2 en utilisant MQTT Explorer
     - la structure des sujets WIS2
     - la structure des messages de notification WIS2
     - la différence entre les données de base et les données recommandées
     - la structure des sujets utilisée par la passerelle GTS-to-WIS2
-    - la différence entre les messages du Courtier Global publiés sur les sujets `origin` et `cache`
+    - la différence entre les messages du Global Broker publiés sur les sujets `origin` et `cache`

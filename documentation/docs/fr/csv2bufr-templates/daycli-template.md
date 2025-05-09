@@ -6,7 +6,7 @@ title: Modèle DAYCLI
 
 Le modèle **DAYCLI** fournit un format CSV standardisé pour convertir les données climatiques quotidiennes en séquence BUFR 307075.
 
-Ce format est destiné à être utilisé avec les Systèmes de Gestion des Données Climatiques pour publier des données sur WIS2, en soutien aux exigences de rapport pour les observations climatiques quotidiennes.
+Ce format est destiné à être utilisé avec les systèmes de gestion des données climatiques pour publier des données sur WIS2, en soutien aux exigences de rapport pour les observations climatiques quotidiennes.
 
 Ce modèle mappe les observations quotidiennes de :
 
@@ -15,10 +15,10 @@ Ce modèle mappe les observations quotidiennes de :
  - Profondeur totale de la neige au moment de l'observation
  - Profondeur de la neige fraîche sur une période de 24 heures
 
-Ce modèle nécessite des métadonnées supplémentaires par rapport au modèle AWS simplifié : méthode de calcul de la température moyenne ; hauteurs des capteurs et de la station ; exposition et classification de la qualité des mesures.
+Ce modèle nécessite des métadonnées supplémentaires par rapport au modèle AWS simplifié : méthode de calcul de la température moyenne ; hauteur des capteurs et des stations ; classification de l'exposition et de la qualité des mesures.
 
 !!! Note "À propos du modèle DAYCLI"
-    Veuillez noter que la séquence BUFR DAYCLI sera mise à jour en 2025 pour inclure des informations supplémentaires et des drapeaux QC révisés. Le modèle DAYCLI inclus dans wis2box sera mis à jour pour refléter ces changements. L'OMM communiquera lorsque le logiciel wis2box sera mis à jour pour inclure le nouveau modèle DAYCLI, afin de permettre aux utilisateurs de mettre à jour leurs systèmes en conséquence.
+    Veuillez noter que la séquence BUFR DAYCLI sera mise à jour en 2025 pour inclure des informations supplémentaires et des drapeaux QC révisés. Le modèle DAYCLI inclus dans le wis2box sera mis à jour pour refléter ces changements. L'OMM communiquera lorsque le logiciel wis2box sera mis à jour pour inclure le nouveau modèle DAYCLI, afin de permettre aux utilisateurs de mettre à jour leurs systèmes en conséquence.
 
 ## Colonnes CSV et description
 

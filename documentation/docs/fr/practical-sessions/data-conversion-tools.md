@@ -1,38 +1,38 @@
 ---
-title: Outils de Conversion de Données
+title: Outils de conversion de données
 ---
 
-# Outils de Conversion de Données
+# Outils de conversion de données
 
 !!! abstract "Résultats d'apprentissage"
     À la fin de cette session pratique, vous serez capable de :
 
     - Accéder aux outils en ligne de commande ecCodes dans le conteneur wis2box-api
     - Utiliser l'outil synop2bufr pour convertir des rapports SYNOP FM-12 en BUFR depuis la ligne de commande
-    - Déclencher la conversion synop2bufr via wis2box-webapp
+    - Déclencher la conversion synop2bufr via le wis2box-webapp
     - Utiliser l'outil csv2bufr pour convertir des données CSV en BUFR depuis la ligne de commande
 
 ## Introduction
 
-Les données publiées sur WIS2 doivent répondre aux exigences et normes définies par les différentes communautés d'experts en disciplines / domaines du système terrestre. Pour abaisser la barrière à la publication de données pour les observations de surface terrestre, wis2box fournit des outils pour convertir les données au format BUFR. Ces outils sont disponibles via le conteneur wis2box-api et peuvent être utilisés depuis la ligne de commande pour tester le processus de conversion des données.
+Les données publiées sur WIS2 doivent répondre aux exigences et normes définies par les différentes communautés d'experts en disciplines / domaines du système terrestre. Pour abaisser la barrière à la publication de données pour les observations de surface terrestres, wis2box fournit des outils pour convertir les données au format BUFR. Ces outils sont disponibles via le conteneur wis2box-api et peuvent être utilisés depuis la ligne de commande pour tester le processus de conversion des données.
 
 Les principales conversions actuellement prises en charge par wis2box sont les rapports SYNOP FM-12 en BUFR et les données CSV en BUFR. Les données FM-12 sont prises en charge car elles sont encore largement utilisées et échangées dans la communauté de l'OMM, tandis que les données CSV sont prises en charge pour permettre la cartographie des données produites par les stations météorologiques automatiques au format BUFR.
 
 ### À propos de FM-12 SYNOP
 
-Les rapports météorologiques de surface des stations terrestres ont historiquement été rapportés chaque heure ou aux heures synoptiques principales (00, 06, 12 et 18 UTC) et intermédiaires (03, 09, 15, 21 UTC). Avant la migration vers BUFR, ces rapports étaient codés dans le format de code SYNOP FM-12 en texte brut. Bien que la migration vers BUFR devait être complète d'ici 2012, un grand nombre de rapports sont encore échangés dans le format SYNOP FM-12 hérité. Des informations supplémentaires sur le format FM-12 SYNOP peuvent être trouvées dans le Manuel des Codes de l'OMM, Volume I.1 (OMM-No. 306, Volume I.1).
+Les rapports météorologiques de surface des stations de surface terrestre ont historiquement été rapportés chaque heure ou aux heures synoptiques principales (00, 06, 12 et 18 UTC) et intermédiaires (03, 09, 15, 21 UTC). Avant la migration vers BUFR, ces rapports étaient codés dans le format de code SYNOP FM-12 en texte brut. Bien que la migration vers BUFR devait être complète d'ici 2012, un grand nombre de rapports sont encore échangés dans le format SYNOP FM-12 hérité. Des informations supplémentaires sur le format FM-12 SYNOP peuvent être trouvées dans le Manuel des Codes de l'OMM, Volume I.1 (WMO-No. 306, Volume I.1).
 
 ### À propos de ecCodes
 
-La bibliothèque ecCodes est un ensemble de bibliothèques logicielles et d'utilitaires conçus pour décoder et encoder des données météorologiques dans les formats GRIB et BUFR. Elle est développée par le Centre Européen pour les Prévisions Météorologiques à Moyen Terme (ECMWF), consultez la [documentation ecCodes](https://confluence.ecmwf.int/display/ECC/ecCodes+documentation) pour plus d'informations.
+La bibliothèque ecCodes est un ensemble de bibliothèques logicielles et d'utilitaires conçus pour décoder et encoder des données météorologiques dans les formats GRIB et BUFR. Elle est développée par le Centre européen pour les prévisions météorologiques à moyen terme (ECMWF), consultez la [documentation ecCodes](https://confluence.ecmwf.int/display/ECC/ecCodes+documentation) pour plus d'informations.
 
 Le logiciel wis2box inclut la bibliothèque ecCodes dans l'image de base du conteneur wis2box-api. Cela permet aux utilisateurs d'accéder aux outils et bibliothèques en ligne de commande depuis le conteneur. La bibliothèque ecCodes est utilisée au sein de la pile wis2box pour décoder et encoder les messages BUFR.
 
 ### À propos de csv2bufr et synop2bufr
 
-En plus de ecCodes, wis2box utilise les modules Python suivants qui fonctionnent avec ecCodes pour convertir les données au format BUFR :
+En plus de ecCodes, le wis2box utilise les modules Python suivants qui travaillent avec ecCodes pour convertir les données au format BUFR :
 
-- **synop2bufr** : pour prendre en charge le format SYNOP FM-12 hérité traditionnellement utilisé par les observateurs manuels. Le module synop2bufr s'appuie sur des métadonnées de station supplémentaires pour encoder des paramètres supplémentaires dans le fichier BUFR. Voir le [répertoire synop2bufr sur GitHub](https://github.com/World-Meteorological-Organization/synop2bufr)
+- **synop2bufr** : pour prendre en charge le format SYNOP FM-12 hérité traditionnellement utilisé par les observateurs manuels. Le module synop2bufr repose sur des métadonnées de station supplémentaires pour encoder des paramètres supplémentaires dans le fichier BUFR. Voir le [répertoire synop2bufr sur GitHub](https://github.com/World-Meteorological-Organization/synop2bufr)
 - **csv2bufr** : pour permettre la conversion des données CSV produites par des stations météorologiques automatiques en format BUFR. Le module csv2bufr est utilisé pour convertir les données CSV en format BUFR en utilisant un modèle de mappage qui définit comment les données CSV doivent être mappées au format BUFR. Voir le [répertoire csv2bufr sur GitHub](https://github.com/World-Meteorological-Organization/csv2bufr)
 
 Ces modules peuvent être utilisés seuls ou dans le cadre de la pile wis2box.
@@ -47,7 +47,7 @@ Ces modules peuvent être utilisés seuls ou dans le cadre de la pile wis2box.
     - Ouvrez l'application web wis2box (`http://YOUR-HOST/wis2box-webapp`) et assurez-vous que vous êtes connecté
     - Ouvrez le tableau de bord Grafana pour votre instance en allant à `http://YOUR-HOST:3000`
 
-Pour utiliser les outils en ligne de commande BUFR, vous devez être connecté au conteneur wis2box-api. Sauf indication contraire, toutes les commandes doivent être exécutées sur ce conteneur. Vous devrez également avoir MQTT Explorer ouvert et connecté à votre courtier.
+Pour utiliser les outils en ligne de commande BUFR, vous devrez être connecté au conteneur wis2box-api. Sauf indication contraire, toutes les commandes doivent être exécutées sur ce conteneur. Vous aurez également besoin d'avoir MQTT Explorer ouvert et connecté à votre courtier.
 
 Tout d'abord, connectez-vous à votre VM étudiante via votre client SSH et copiez les matériaux d'exercice dans le conteneur wis2box-api :
 
@@ -102,11 +102,11 @@ csv2bufr, version 0.8.5
 ## Outils en ligne de commande ecCodes
 
 La bibliothèque ecCodes incluse dans le conteneur wis2box-api fournit un certain nombre d'outils en ligne de commande pour travailler avec les fichiers BUFR.
-Les exercices suivants démontrent comment utiliser `bufr_ls` et `bufr_dump` pour vérifier le contenu d'un fichier BUFR.
+Les prochains exercices démontrent comment utiliser `bufr_ls` et `bufr_dump` pour vérifier le contenu d'un fichier BUFR.
 
 ### bufr_ls
 
-Dans ce premier exercice, vous utiliserez la commande `bufr_ls` pour inspecter les en-têtes d'un fichier BUFR et déterminer le type de contenu du fichier.
+Dans ce premier exercice, vous utiliserez la commande `bufr_ls` pour inspecter les en-têtes d'un fichier BUFR et déterminer le type du contenu du fichier.
 
 Utilisez la commande suivante pour exécuter `bufr_ls` sur le fichier `bufr-cli-ex1.bufr4` :
 
@@ -159,7 +159,7 @@ Seule, cette information n'est pas très informative, avec seulement des informa
 
 Lors de l'examen d'un fichier BUFR, nous voulons souvent déterminer le type de données contenues dans le fichier et la date/heure typique des données dans le fichier. Cette information peut être listée en utilisant l'option `-p` pour sélectionner les en-têtes à afficher. Plusieurs en-têtes peuvent être inclus en utilisant une liste séparée par des virgules.
 
-Vous pouvez utiliser la commande suivante pour lister la catégorie de données, la sous-catégorie internationale, la date typique et l'heure :
+Vous pouvez utiliser la commande suivante pour lister la catégorie de données, la sous-catégorie, la date typique et l'heure :
     
 ```bash
 bufr_ls -p dataCategory,internationalDataSubCategory,typicalDate,typicalTime -j bufr-cli-ex1.bufr4
@@ -184,11 +184,11 @@ bufr_ls -p dataCategory,internationalDataSubCategory,typicalDate,typicalTime -j 
     ]}
     ```
 
-    D'après cela, nous voyons que :
+    De cela, nous voyons que :
 
-- La catégorie de données est 2, indiquant des données de **"Sondages verticaux (autres que satellite)"**.
-- La sous-catégorie internationale est 4, indiquant des données de **"Rapports de température/humidité/vent de niveau supérieur provenant de stations terrestres fixes (TEMP)"**.
-- La date et l'heure typiques sont respectivement 2023-10-02 et 00:00:00z.
+    - La catégorie de données est 2, indiquant des données de **"Sondages verticaux (autres que satellite)"**.
+    - La sous-catégorie internationale est 4, indiquant des données de **"Rapports de température/humidité/vent en altitude provenant de stations terrestres fixes (TEMP)"**.
+    - La date et l'heure typiques sont respectivement 2023-10-02 et 00:00:00z.
 
 ### bufr_dump
 
@@ -200,15 +200,15 @@ Essayez d'exécuter la commande `bufr_dump` sur le deuxième fichier exemple `bu
 bufr_dump bufr-cli-ex2.bufr4
 ```
 
-Cela produit un JSON qui peut être difficile à analyser, essayez d'utiliser le drapeau `-p` pour afficher les données en texte brut (format clé=valeur) :
+Cela donne un JSON qui peut être difficile à analyser, essayez d'utiliser l'option `-p` pour afficher les données au format texte brut (format clé=valeur) :
 
 ```{.copy}
 bufr_dump -p bufr-cli-ex2.bufr4
 ```
 
-Vous devriez voir un grand nombre de clés en sortie, dont beaucoup sont manquantes. Cela est typique avec les données réelles car toutes les clés eccodes ne sont pas peuplées avec des données rapportées.
+Vous devriez voir un grand nombre de clés en sortie, dont beaucoup sont manquantes. Cela est typique avec les données réelles car toutes les clés eccodes ne sont pas peuplées avec des données signalées.
 
-Vous pouvez utiliser la commande `grep` pour filtrer la sortie et afficher uniquement les clés qui ne sont pas manquantes. Par exemple, pour montrer toutes les clés qui ne sont pas manquantes, vous pouvez utiliser la commande suivante :
+Vous pouvez utiliser la commande `grep` pour filtrer la sortie et afficher uniquement les clés qui ne sont pas manquantes. Par exemple, pour afficher toutes les clés qui ne sont pas manquantes, vous pouvez utiliser la commande suivante :
 
 ```{.copy}
 bufr_dump -p bufr-cli-ex2.bufr4 | grep -v MISSING
@@ -235,7 +235,7 @@ bufr_dump -p bufr-cli-ex2.bufr4 | grep -v MISSING
 
 !!! question
 
-    Quel est l'identifiant de station WIGOS de la station qui a rapporté les données dans le fichier BUFR `bufr-cli-ex2.bufr4` ?
+    Quel est l'identifiant de la station WIGOS de la station qui a rapporté les données dans le fichier BUFR `bufr-cli-ex2.bufr4` ?
 
 ??? success "Cliquez pour révéler la réponse"
 
@@ -254,11 +254,11 @@ bufr_dump -p bufr-cli-ex2.bufr4 | grep -v MISSING
     wigosLocalIdentifierCharacter="99100"
     ```
 
-    Cela indique que l'identifiant de station WIGOS est `0-20000-0-99100`.
+    Cela indique que l'identifiant de la station WIGOS est `0-20000-0-99100`.
 
-## conversion synop2bufr
+## Conversion synop2bufr
 
-Ensuite, examinons comment convertir les données FM-12 SYNOP en format BUFR en utilisant le module `synop2bufr`. Le module `synop2bufr` est utilisé pour convertir les données FM-12 SYNOP en format BUFR. Le module est installé dans le conteneur wis2box-api et peut être utilisé depuis la ligne de commande comme suit :
+Ensuite, examinons comment convertir les données SYNOP FM-12 en format BUFR en utilisant le module `synop2bufr`. Le module `synop2bufr` est utilisé pour convertir les données SYNOP FM-12 en format BUFR. Le module est installé dans le conteneur wis2box-api et peut être utilisé depuis la ligne de commande comme suit :
 
 ```{.copy}
 synop2bufr data transform \
@@ -272,7 +272,9 @@ synop2bufr data transform \
 L'argument `--metadata` est utilisé pour spécifier le fichier de métadonnées de la station, qui fournit des informations supplémentaires à encoder dans le fichier BUFR.
 L'argument `--output-dir` est utilisé pour spécifier le répertoire où les fichiers BUFR convertis seront écrits. Les arguments `--year` et `--month` sont utilisés pour spécifier l'année et le mois de l'observation.
 
-Le module `synop2bufr` est également utilisé dans l'application web wis2box-webapp pour convertir les données FM-12 SYNOP en format BUFR à l'aide d'un formulaire d'entrée basé sur le web.
+Le module `synop2bufr` est également utilisé dans le wis2box-webapp pour convertir les données SYNOP FM-12 en format BUFR en utilisant un formulaire d'entrée basé sur le web.
+
+Les prochains exercices démontreront comment fonctionne le module `synop2bufr` et comment l'utiliser pour convertir des données SYNOP FM-12 en format BUFR.
 
 ### examiner le message SYNOP exemple
 
@@ -325,7 +327,7 @@ more station_list.csv
     BOTOSANI,0-20000-0-15020,15020,landFixed,47.7356532437,26.6455501701,161.0,162.1,ROU,europe
     ```
 
-    Cela correspond aux métadonnées des stations pour 2 stations : pour les identifiants de station WIGOS `0-20000-0-15015` et `0-20000-0-15020`.
+    Cela correspond aux métadonnées de station pour 2 stations : pour les identifiants de station WIGOS `0-20000-0-15015` et `0-20000-0-15020`.
 
 ### convertir SYNOP en BUFR
 
@@ -345,9 +347,9 @@ synop2bufr data transform --metadata station_list.csv --output-dir ./ --year 202
     [WARNING] Station 15090 not found in station file
     ```
 
-    Si vous vérifiez le contenu de votre répertoire avec la commande `ls -lh`, vous devriez voir 2 nouveaux fichiers BUFR créés : `WIGOS_0-20000-0-15015_20240921T120000.bufr4` et `WIGOS_0-20000-0-15020_20240921T120000.bufr4`.
+    Si vous vérifiez le contenu de votre répertoire avec la commande `ls -lh`, vous devriez voir que 2 nouveaux fichiers BUFR ont été créés : `WIGOS_0-20000-0-15015_20240921T120000.bufr4` et `WIGOS_0-20000-0-15020_20240921T120000.bufr4`.
 
-    Le message d'avertissement indique que la station avec l'identifiant de station traditionnel `15090` n'a pas été trouvée dans le fichier de liste des stations `station_list.csv`. Cela signifie que le rapport SYNOP pour cette station n'a pas été converti en format BUFR.
+    Le message d'avertissement indique que la station avec l'identifiant de station traditionnel `15090` n'a pas été trouvée dans le fichier de liste des stations `station_list.csv`. Cela signifie que le rapport SYNOP pour cette station n'a pas été converti au format BUFR.
 
 !!! question
     Vérifiez le contenu du fichier BUFR `WIGOS_0-20000-0-15015_20240921T120000.bufr4` en utilisant la commande `bufr_dump`. 
@@ -379,18 +381,15 @@ synop2bufr data transform --metadata station_list.csv --output-dir ./ --year 202
     minute=0
     latitude=47.7771
     longitude=23.9405
+    heightOfStationGroundAboveMeanSeaLevel=503
+    heightOfBarometerAboveMeanSeaLevel=504
     ```
 
-```markdown
-heightOfStationGroundAboveMeanSeaLevel=503
-heightOfBarometerAboveMeanSeaLevel=504
-```
-
-Notez que cela inclut les données fournies par le fichier `station_list.csv`.
+    Notez que cela inclut les données fournies par le fichier `station_list.csv`.
 
 ### Formulaire SYNOP dans wis2box-webapp
 
-Le module `synop2bufr` est également utilisé dans le wis2box-webapp pour convertir les données SYNOP FM-12 en format BUFR à l'aide d'un formulaire basé sur le web.
+Le module `synop2bufr` est également utilisé dans le wis2box-webapp pour convertir les données SYNOP FM-12 en format BUFR à l'aide d'un formulaire d'entrée basé sur le web.
 Pour tester cela, rendez-vous sur `http://YOUR-HOST/wis2box-webapp` et connectez-vous.
 
 Sélectionnez le `Formulaire SYNOP` dans le menu à gauche et copiez-collez le contenu du fichier `synop_message.txt` :
@@ -419,9 +418,9 @@ Dans la zone de texte `Message SYNOP` :
 
     Si vous fournissez un jeton valide, vous verrez "AVERTISSEMENTS : 3". Cliquez sur "AVERTISSEMENTS" pour ouvrir le menu déroulant qui montrera :
 
-    - Station 15015 non trouvée dans le fichier des stations
-    - Station 15020 non trouvée dans le fichier des stations
-    - Station 15090 non trouvée dans le fichier des stations
+    - Station 15015 non trouvée dans le fichier de station
+    - Station 15020 non trouvée dans le fichier de station
+    - Station 15090 non trouvée dans le fichier de station
 
     Pour convertir ces données au format BUFR, vous devrez configurer les stations correspondantes dans votre wis2box et vous assurer que les stations sont associées au sujet de votre ensemble de données.
 
@@ -431,10 +430,10 @@ Dans la zone de texte `Message SYNOP` :
 
     Dans le flux de travail automatisé dans le wis2box, l'année et le mois sont automatiquement extraits du nom de fichier et utilisés pour remplir les arguments `--year` et `--month` requis par synop2bufr, tandis que les métadonnées de la station sont automatiquement extraites de la configuration de la station dans le wis2box.
 
-## Conversion csv2bufr
+## conversion csv2bufr
 
 !!! note
-    Assurez-vous que vous êtes toujours connecté au conteneur wis2box-api et dans le répertoire `/root/data-conversion-exercises`, si vous avez quitté le conteneur dans l'exercice précédent, vous pouvez vous reconnecter comme suit :
+    Assurez-vous que vous êtes toujours connecté au conteneur wis2box-api et dans le répertoire `/root/data-conversion-exercises`, si vous avez quitté le conteneur lors de l'exercice précédent, vous pouvez vous connecter à nouveau comme suit :
 
     ```bash
     cd ~/wis2box
@@ -442,7 +441,7 @@ Dans la zone de texte `Message SYNOP` :
     cd /root/data-conversion-exercises
     ```
 
-Examinons maintenant comment convertir des données CSV en format BUFR en utilisant le module `csv2bufr`. Le module est installé dans le conteneur wis2box-api et peut être utilisé depuis la ligne de commande comme suit :
+Examinons maintenant comment convertir les données CSV en format BUFR en utilisant le module `csv2bufr`. Le module est installé dans le conteneur wis2box-api et peut être utilisé depuis la ligne de commande comme suit :
 
 ```{.copy}
 csv2bufr data transform \
@@ -450,9 +449,9 @@ csv2bufr data transform \
     <input-csv-file>
 ```
 
-L'argument `--bufr-template` est utilisé pour spécifier le fichier de modèle de mappage BUFR, qui fournit le mappage entre les données CSV d'entrée et les données BUFR de sortie spécifiées dans un fichier JSON. Les modèles de mappage par défaut sont installés dans le répertoire `/opt/csv2bufr/templates` dans le conteneur wis2box-api.
+L'argument `--bufr-template` est utilisé pour spécifier le fichier de modèle de mappage BUFR, qui fournit le mappage entre les données d'entrée CSV et les données de sortie BUFR spécifiées dans un fichier JSON. Les modèles de mappage par défaut sont installés dans le répertoire `/opt/csv2bufr/templates` dans le conteneur wis2box-api.
 
-### Examinez le fichier CSV exemple
+### examiner le fichier CSV exemple
 
 Examinez le contenu du fichier CSV exemple `aws-example.csv` :
 
@@ -461,7 +460,7 @@ more aws-example.csv
 ```
 
 !!! question
-    Combien de lignes de données y a-t-il dans le fichier CSV ? Quel est l'identifiant de la station WIGOS des stations qui rapportent dans le fichier CSV ?
+    Combien de lignes de données y a-t-il dans le fichier CSV ? Quel est l'identifiant de station WIGOS des stations qui rapportent dans le fichier CSV ?
 
 ??? question "Cliquez pour révéler la réponse"
 
@@ -478,7 +477,7 @@ more aws-example.csv
 
     Après la ligne d'en-tête, il y a 3 lignes de données, représentant 3 observations météorologiques de la même station avec l'identifiant de station WIGOS `0-20000-0-60355` à trois horodatages différents `2024-03-31 01:00:00`, `2024-03-31 02:00:00`, et `2024-03-31 03:00:00`.
 
-### Examinez le modèle aws
+### examiner le modèle aws
 
 Le wis2box-api comprend un ensemble de modèles de mappage BUFR prédéfinis qui sont installés dans le répertoire `/opt/csv2bufr/templates`.
 
@@ -493,7 +492,7 @@ Vous devriez voir la sortie suivante :
 CampbellAfrica-v1-template.json  aws-template.json  daycli-template.json
 ```
 
-Examinons le contenu du fichier `aws-template.json` :
+Vérifions le contenu du fichier `aws-template.json` :
 
 ```bash
 cat /opt/csv2bufr/templates/aws-template.json
@@ -506,7 +505,7 @@ Cela retourne un grand fichier JSON, fournissant le mappage pour 43 colonnes CSV
 
 ??? success "Cliquez pour révéler la réponse"
 
-    Utilisez la commande suivante pour filtrer la sortie :
+    En utilisant la commande suivante pour filtrer la sortie :
 
     ```bash
     cat /opt/csv2bufr/templates/aws-template.json | grep -i airTemperature
@@ -523,10 +522,10 @@ Cela retourne un grand fichier JSON, fournissant le mappage pour 43 colonnes CSV
 
 !!! question
 
-Quelle colonne CSV est mappée à la clé eccodes `internationalDataSubCategory` ? Quelle est la valeur de cette clé ?
+    Quelle colonne CSV est mappée à la clé eccodes `internationalDataSubCategory` ? Quelle est la valeur de cette clé ?
 
 ??? success "Cliquez pour révéler la réponse"
-    Utilisez la commande suivante pour filtrer la sortie :
+    En utilisant la commande suivante pour filtrer la sortie :
 
     ```bash
     cat /opt/csv2bufr/templates/aws-template.json | grep -i internationalDataSubCategory
@@ -537,11 +536,11 @@ Quelle colonne CSV est mappée à la clé eccodes `internationalDataSubCategory`
     {"eccodes_key": "internationalDataSubCategory", "value": "const:2"},
     ```
 
-    **Il n'y a pas de colonne CSV mappée à la clé eccodes `internationalDataSubCategory`**, à la place la valeur constante 2 est utilisée et sera encodée dans tous les fichiers BUFR produits avec ce modèle de mappage.
+    **Il n'y a pas de colonne CSV mappée à la clé eccodes `internationalDataSubCategory`**, à la place, la valeur constante 2 est utilisée et sera encodée dans tous les fichiers BUFR produits avec ce modèle de mappage.
 
 ### convertir CSV en BUFR
 
-Essayons de convertir le fichier au format BUFR en utilisant la commande `csv2bufr` :
+Tentons de convertir le fichier au format BUFR en utilisant la commande `csv2bufr` :
 
 ```{.copy}
 csv2bufr data transform --bufr-template aws-template ./aws-example.csv
@@ -558,10 +557,10 @@ csv2bufr data transform --bufr-template aws-template ./aws-example.csv
     CLI:    ... Transforming ./aws-example.csv to BUFR ...
     CLI:    ... Processing subsets:
     CLI:    ..... 384 bytes written to ./WIGOS_0-20000-0-60355_20240331T010000.bufr4
-    #1#airTemperature: Valeur (25.0) hors de la plage valide (193.15 - 333.15).; Élément défini comme manquant
+    #1#airTemperature: Value (25.0) out of valid range (193.15 - 333.15).; Element set to missing
     CLI:    ..... 384 bytes written to ./WIGOS_0-20000-0-60355_20240331T020000.bufr4
     CLI:    ..... 384 bytes written to ./WIGOS_0-20000-0-60355_20240331T030000.bufr4
-    CLI:    Fin du traitement, sortie.
+    CLI:    End of processing, exiting.
     ```
 
     La sortie indique que 3 fichiers BUFR ont été créés : `WIGOS_0-20000-0-60355_20240331T010000.bufr4`, `WIGOS_0-20000-0-60355_20240331T020000.bufr4`, et `WIGOS_0-20000-0-60355_20240331T030000.bufr4`.
@@ -587,21 +586,21 @@ bufr_dump -p WIGOS_0-20000-0-60355_20240331T010000.bufr4 | grep -v MISSING
     #1#airTemperature=298.15
     ```
 
-    Tandis que pour le second fichier :
+    Tandis que pour le deuxième fichier :
 
     ```bash
     bufr_dump -p WIGOS_0-20000-0-60355_20240331T020000.bufr4 | grep -v MISSING | grep airTemperature
     ```
 
-    Vous n'obtenez aucun résultat, indiquant que la valeur pour la clé `airTemperature` est manquante dans le fichier BUFR `WIGOS_0-20000-0-60355_20240331T020000.bufr4`. Le csv2bufr a refusé d'encoder la valeur `25.0` des données CSV car elle est en dehors de la plage valide de `193.15` à `333.15` comme défini dans le modèle de mappage.
+Vous n'obtenez aucun résultat, indiquant que la valeur pour la clé `airTemperature` est manquante dans le fichier BUFR `WIGOS_0-20000-0-60355_20240331T020000.bufr4`. Le csv2bufr a refusé de coder la valeur `25.0` provenant des données CSV car elle est hors de la plage valide de `193.15` à `333.15` comme défini dans le modèle de mappage.
 
-Notez que la conversion de CSV en BUFR à l'aide d'un des modèles de mappage BUFR prédéfinis présente des limitations :
+Notez que la conversion de CSV en BUFR en utilisant l'un des modèles de mappage BUFR prédéfinis présente des limitations :
 
 - le fichier CSV doit être dans le format défini dans le modèle de mappage, c'est-à-dire que les noms des colonnes CSV doivent correspondre aux noms définis dans le modèle de mappage
-- vous ne pouvez encoder que les clés définies dans le modèle de mappage
-- les contrôles de qualité sont limités aux contrôles définis dans le modèle de mappage
+- vous ne pouvez coder que les clés définies dans le modèle de mappage
+- les contrôles de qualité sont limités aux vérifications définies dans le modèle de mappage
 
-Pour des informations sur comment créer et utiliser des modèles de mappage BUFR personnalisés, voir l'exercice pratique suivant [csv2bufr-templates](./csv2bufr-templates.md).
+Pour des informations sur comment créer et utiliser des modèles de mappage BUFR personnalisés, consultez l'exercice pratique suivant [csv2bufr-templates](./csv2bufr-templates.md).
 
 ## Conclusion
 

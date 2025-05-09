@@ -9,7 +9,7 @@ title: Téléchargement et décodage des données depuis WIS2
     À la fin de cette session pratique, vous serez capable de :
 
     - utiliser le "wis2downloader" pour vous abonner aux notifications de données WIS2 et télécharger des données sur votre système local
-    - visualiser le statut des téléchargements sur le tableau de bord Grafana
+    - visualiser l'état des téléchargements dans le tableau de bord Grafana
     - décoder certaines données téléchargées en utilisant le conteneur "decode-bufr-jupyter"
 
 ## Introduction
@@ -31,11 +31,11 @@ Dans cette session, vous apprendrez à configurer un abonnement à un Broker WIS
 
 ## Préparation
 
-Avant de commencer, veuillez vous connecter à votre VM étudiante et assurez-vous que votre instance wis2box est opérationnelle.
+Avant de commencer, veuillez vous connecter à votre VM étudiant et assurez-vous que votre instance wis2box est opérationnelle.
 
 ## Visualisation du tableau de bord wis2downloader dans Grafana
 
-Ouvrez un navigateur web et naviguez vers le tableau de bord Grafana pour votre instance wis2box en allant à `http://YOUR-HOST:3000`.
+Ouvrez un navigateur web et naviguez vers le tableau de bord Grafana pour votre instance wis2box en allant sur `http://YOUR-HOST:3000`.
 
 Cliquez sur tableaux de bord dans le menu de gauche, puis sélectionnez le **tableau de bord wis2downloader**.
 
@@ -43,15 +43,15 @@ Vous devriez voir le tableau de bord suivant :
 
 ![Tableau de bord wis2downloader](../assets/img/wis2downloader-dashboard.png)
 
-Ce tableau de bord est basé sur les métriques publiées par le service wis2downloader et vous montrera le statut des téléchargements en cours.
+Ce tableau de bord est basé sur les métriques publiées par le service wis2downloader et vous montrera l'état des téléchargements en cours.
 
 Dans le coin supérieur gauche, vous pouvez voir les abonnements qui sont actuellement actifs.
 
-Gardez ce tableau de bord ouvert car vous l'utiliserez pour surveiller la progression des téléchargements dans le prochain exercice.
+Gardez ce tableau de bord ouvert car vous l'utiliserez pour surveiller la progression du téléchargement dans le prochain exercice.
 
 ## Révision de la configuration de wis2downloader
 
-Le service wis2downloader démarré par la pile wis2box peut être configuré en utilisant les variables d'environnement définies dans votre fichier wis2box.env.
+Le service wis2downloader démarré par la pile wis2box peut être configuré à l'aide des variables d'environnement définies dans votre fichier wis2box.env.
 
 Les variables d'environnement suivantes sont utilisées par le wis2downloader :
 
@@ -84,7 +84,7 @@ cat ~/wis2box/wis2box.env | grep DOWNLOAD
 
 !!! note "Mise à jour de la configuration du wis2downloader"
 
-    Pour mettre à jour la configuration du wis2downloader, vous pouvez éditer le fichier wis2box.env. Pour appliquer les changements, vous pouvez relancer la commande de démarrage pour la pile wis2box :
+    Pour mettre à jour la configuration du wis2downloader, vous pouvez éditer le fichier wis2box.env. Pour appliquer les modifications, vous pouvez relancer la commande de démarrage pour la pile wis2box :
 
     ```bash
     python3 wis2box-ctl.py start
@@ -104,7 +104,7 @@ Pour vous connecter au conteneur **wis2downloader**, utilisez la commande suivan
 python3 wis2box-ctl.py login wis2downloader
 ```
 
-Ensuite, utilisez la commande suivante pour lister les abonnements qui sont actuellement actifs :
+Ensuite, utilisez la commande suivante pour lister les abonnements actuellement actifs :
 
 ```bash
 wis2downloader list-subscriptions
@@ -112,7 +112,7 @@ wis2downloader list-subscriptions
 
 Cette commande retourne une liste vide puisqu'aucun abonnement n'est actuellement actif.
 
-Pour cet exercice, nous nous abonnerons au sujet suivant `cache/a/wis2/de-dwd-gts-to-wis2/#`, pour s'abonner aux données publiées par le passerelle GTS-to-WIS2 hébergée par DWD et télécharger les notifications depuis le Global Cache.
+Pour cet exercice, nous nous abonnerons au sujet suivant `cache/a/wis2/de-dwd-gts-to-wis2/#`, pour s'abonner aux données publiées par la passerelle GTS-to-WIS2 hébergée par DWD et télécharger les notifications depuis le Global Cache.
 
 Pour ajouter cet abonnement, utilisez la commande suivante :
 
@@ -160,15 +160,15 @@ exit
 
 Vérifiez le tableau de bord wis2downloader dans Grafana pour voir l'abonnement supprimé. Vous devriez voir les téléchargements s'arrêter.
 
-## Télécharger et décoder les données pour une trajectoire de cyclone tropical
+## Télécharger et décoder des données pour une trajectoire de cyclone tropical
 
-Dans cet exercice, vous vous abonnerez au Broker de formation WIS2 qui publie des données d'exemple à des fins de formation. Vous configurerez un abonnement pour télécharger des données pour une trajectoire de cyclone tropical. Vous décoderez ensuite les données téléchargées en utilisant le conteneur "decode-bufr-jupyter".
+Dans cet exercice, vous vous abonnerez au Broker de Formation WIS2 qui publie des données d'exemple à des fins de formation. Vous configurerez un abonnement pour télécharger des données pour une trajectoire de cyclone tropical. Vous décoderez ensuite les données téléchargées en utilisant le conteneur "decode-bufr-jupyter".
 
 ### Abonnez-vous au wis2training-broker et configurez un nouvel abonnement
 
-Cela montre comment s'abonner à un broker qui n'est pas le broker par défaut et vous permettra de télécharger certaines données publiées depuis le Broker de formation WIS2.
+Cela montre comment s'abonner à un broker qui n'est pas le broker par défaut et vous permettra de télécharger certaines données publiées depuis le Broker de Formation WIS2.
 
-Éditez le fichier wis2box.env et changez DOWNLOAD_BROKER_HOST en `wis2training-broker.wis2dev.io`, changez DOWNLOAD_BROKER_PORT en `1883` et changez DOWNLOAD_BROKER_TRANSPORT en `tcp` :
+Éditez le fichier wis2box.env et changez le DOWNLOAD_BROKER_HOST en `wis2training-broker.wis2dev.io`, changez DOWNLOAD_BROKER_PORT en `1883` et changez DOWNLOAD_BROKER_TRANSPORT en `tcp` :
 
 ```copy
 # paramètres du téléchargeur
@@ -180,7 +180,7 @@ DOWNLOAD_BROKER_PASSWORD=everyone
 DOWNLOAD_BROKER_TRANSPORT=tcp
 ```
 
-Ensuite, exécutez à nouveau la commande 'start' pour appliquer les changements :
+Ensuite, exécutez à nouveau la commande 'start' pour appliquer les modifications :
 
 ```bash
 python3 wis2box-ctl.py start
@@ -192,7 +192,7 @@ Vérifiez les journaux du wis2downloader pour voir si la connexion au nouveau br
 docker logs wis2downloader
 ```
 
-Vous devriez voir le message de journalisation suivant :
+Vous devriez voir le message de journal suivant :
 
 ```copy
 ...
@@ -201,7 +201,7 @@ INFO - Hôte : wis2training-broker.wis2dev.io, port : 1883
 INFO - Connecté avec succès
 ```
 
-Nous allons maintenant configurer un nouvel abonnement au sujet pour télécharger les données de trajectoire de cyclone depuis le WIS2 Training Broker.
+Maintenant, nous allons configurer un nouvel abonnement au sujet pour télécharger les données de trajectoire de cyclone depuis le Broker de Formation WIS2.
 
 Connectez-vous au conteneur **wis2downloader** :
 
@@ -217,17 +217,17 @@ wis2downloader add-subscription --topic origin/a/wis2/int-wis2-training/data/cor
 
 Quittez le conteneur **wis2downloader** en tapant `exit`.
 
-Attendez de voir les téléchargements commencer sur le tableau de bord wis2downloader dans Grafana.
+Attendez jusqu'à ce que vous voyiez les téléchargements commencer dans le tableau de bord wis2downloader dans Grafana.
 
-!!! note "Téléchargement de données depuis le WIS2 Training Broker"
+!!! note "Téléchargement de données depuis le Broker de Formation WIS2"
 
-    Le WIS2 Training Broker est un courtier de test qui est utilisé à des fins de formation et peut ne pas publier de données tout le temps.
+    Le Broker de Formation WIS2 est un broker de test qui est utilisé à des fins de formation et peut ne pas publier de données tout le temps.
 
-    Lors des sessions de formation en personne, le formateur local veillera à ce que le WIS2 Training Broker publie des données pour que vous puissiez les télécharger.
+    Pendant les sessions de formation en personne, le formateur local s'assurera que le Broker de Formation WIS2 publiera des données pour que vous puissiez les télécharger.
 
-    Si vous effectuez cet exercice en dehors d'une session de formation, il se peut que vous ne voyiez aucune donnée téléchargée.
+    Si vous faites cet exercice en dehors d'une session de formation, vous ne verrez peut-être aucune donnée téléchargée.
 
-Vérifiez que les données ont été téléchargées en consultant à nouveau les journaux de wis2downloader avec :
+Vérifiez que les données ont été téléchargées en vérifiant à nouveau les journaux du wis2downloader avec :
 
 ```bash
 docker logs wis2downloader
@@ -244,9 +244,9 @@ Vous devriez voir un message de journal similaire au suivant :
 
 Afin de démontrer comment vous pouvez décoder les données téléchargées, nous allons démarrer un nouveau conteneur en utilisant l'image 'decode-bufr-jupyter'.
 
-Ce conteneur démarrera un serveur de notebooks Jupyter sur votre instance qui inclut la bibliothèque "ecCodes" que vous pouvez utiliser pour décoder les données BUFR.
+Ce conteneur démarrera un serveur de cahiers Jupyter sur votre instance qui inclut la bibliothèque "ecCodes" que vous pouvez utiliser pour décoder les données BUFR.
 
-Nous utiliserons les notebooks d'exemple inclus dans `~/exercise-materials/notebook-examples` pour décoder les données téléchargées pour les trajectoires de cyclones.
+Nous utiliserons les cahiers d'exemples inclus dans `~/exercise-materials/notebook-examples` pour décoder les données téléchargées pour les trajectoires de cyclones.
 
 Pour démarrer le conteneur, utilisez la commande suivante :
 
@@ -260,54 +260,54 @@ docker run -d --name decode-bufr-jupyter \
 
 !!! note "À propos du conteneur decode-bufr-jupyter"
 
-    Le conteneur `decode-bufr-jupyter` est un conteneur personnalisé qui inclut la bibliothèque ecCodes et exécute un serveur de notebooks Jupyter. Le conteneur est basé sur une image qui inclut la bibliothèque `ecCodes` pour décoder les données BUFR, ainsi que des bibliothèques pour le traçage et l'analyse de données.
+    Le conteneur `decode-bufr-jupyter` est un conteneur personnalisé qui inclut la bibliothèque ecCodes et exécute un serveur de cahiers Jupyter. Le conteneur est basé sur une image qui inclut la bibliothèque `ecCodes` pour décoder les données BUFR, ainsi que des bibliothèques pour le traçage et l'analyse de données.
 
     La commande ci-dessus démarre le conteneur en mode détaché, avec le nom `decode-bufr-jupyter`, le port 8888 est mappé au système hôte et la variable d'environnement `JUPYTER_TOKEN` est définie sur `dataismagic!`.
     
-    La commande ci-dessus monte également le répertoire `~/wis2box-data/downloads` à `/root/downloads` dans le conteneur. Cela garantit que les données téléchargées sont disponibles pour le serveur de notebooks Jupyter.
+    La commande ci-dessus monte également le répertoire `~/wis2box-data/downloads` sur `/root/downloads` dans le conteneur. Cela garantit que les données téléchargées sont disponibles pour le serveur de cahiers Jupyter.
     
-Une fois le conteneur démarré, vous pouvez accéder au serveur de notebooks Jupyter en naviguant vers `http://YOUR-HOST:8888` dans votre navigateur web.
+Une fois le conteneur démarré, vous pouvez accéder au serveur de cahiers Jupyter en naviguant sur `http://YOUR-HOST:8888` dans votre navigateur web.
 
 Vous verrez un écran vous demandant d'entrer un "Mot de passe ou jeton".
 
-Fournissez le jeton `dataismagic!` pour vous connecter au serveur de notebooks Jupyter.
+Fournissez le jeton `dataismagic!` pour vous connecter au serveur de cahiers Jupyter.
 
 Après vous être connecté, vous devriez voir l'écran suivant listant les répertoires dans le conteneur :
 
-![Écran d'accueil du notebook Jupyter](../assets/img/jupyter-files-screen1.png)
+![Écran d'accueil du cahier Jupyter](../assets/img/jupyter-files-screen1.png)
 
 Double-cliquez sur le répertoire `example-notebooks` pour l'ouvrir.
 
-Vous devriez voir l'écran suivant listant les notebooks d'exemple, double-cliquez sur le notebook `tropical_cyclone_track.ipynb` pour l'ouvrir :
+Vous devriez voir l'écran suivant listant les cahiers d'exemples, double-cliquez sur le cahier `tropical_cyclone_track.ipynb` pour l'ouvrir :
 
-![Notebooks d'exemple Jupyter](../assets/img/jupyter-files-screen2.png)
+![Cahiers d'exemples du cahier Jupyter](../assets/img/jupyter-files-screen2.png)
 
-Vous devriez maintenant être dans le notebook Jupyter pour décoder les données de trajectoire de cyclone tropical :
+Vous devriez maintenant être dans le cahier Jupyter pour décoder les données de la trajectoire du cyclone tropical :
 
-![Notebook Jupyter trajectoire de cyclone tropical](../assets/img/jupyter-tropical-cyclone-track.png)
+![Cahier Jupyter trajectoire du cyclone tropical](../assets/img/jupyter-tropical-cyclone-track.png)
 
-Lisez les instructions dans le notebook et exécutez les cellules pour décoder les données téléchargées pour les trajectoires de cyclones tropicaux. Exécutez chaque cellule en cliquant sur la cellule puis sur le bouton d'exécution dans la barre d'outils ou en appuyant sur `Shift+Enter`.
+Lisez les instructions dans le carnet et exécutez les cellules pour décoder les données téléchargées concernant les trajectoires des cyclones tropicaux. Exécutez chaque cellule en cliquant dessus puis sur le bouton d'exécution dans la barre d'outils ou en appuyant sur `Shift+Enter`.
 
-À la fin, vous devriez voir un graphique de la probabilité de frappe pour les trajectoires de cyclones tropicaux :
+À la fin, vous devriez voir un graphique de la probabilité d'impact pour les trajectoires des cyclones tropicaux :
 
-![Trajectoires de cyclones tropicaux](../assets/img/tropical-cyclone-track-map.png)
+![Tropical cyclone tracks](../assets/img/tropical-cyclone-track-map.png)
 
-!!! question
+!!! question 
 
-    Le résultat affiche la probabilité prévue de trajectoire de tempête tropicale dans un rayon de 200 km. Comment mettriez-vous à jour le notebook pour afficher la probabilité prévue de trajectoire de tempête tropicale dans un rayon de 300 km ?
+    Le résultat affiche la probabilité prédite de trajectoire de tempête tropicale à moins de 200 km. Comment mettriez-vous à jour le carnet pour afficher la probabilité prédite de trajectoire de tempête tropicale à moins de 300 km ?
 
 ??? success "Cliquez pour révéler la réponse"
 
-    Pour mettre à jour le notebook afin d'afficher la probabilité prévue de trajectoire de tempête tropicale à une distance différente, vous pouvez mettre à jour la variable `distance_threshold` dans le bloc de code qui calcule la probabilité de frappe.
+    Pour mettre à jour le carnet afin d'afficher la probabilité prédite de trajectoire de tempête tropicale à une distance différente, vous pouvez mettre à jour la variable `distance_threshold` dans le bloc de code qui calcule la probabilité d'impact.
 
-    Pour afficher la probabilité prévue de trajectoire de tempête tropicale dans un rayon de 300 km,
+    Pour afficher la probabilité prédite de trajectoire de tempête tropicale à moins de 300 km, 
 
     ```python
-    # définir le seuil de distance (mètres)
+    # set distance threshold (meters)
     distance_threshold = 300000  # 300 km en mètres
     ```
 
-    Ensuite, réexécutez les cellules dans le notebook pour voir le graphique mis à jour.
+    Ensuite, réexécutez les cellules dans le carnet pour voir le graphique mis à jour.
 
 !!! note "Décodage des données BUFR"
 
@@ -315,12 +315,14 @@ Lisez les instructions dans le notebook et exécutez les cellules pour décoder 
     
     Pour plus d'informations, veuillez consulter la [documentation ecCodes](https://confluence.ecmwf.int/display/ECC).
 
+
+
 ## Conclusion
 
 !!! success "Félicitations !"
 
     Dans cette session pratique, vous avez appris à :
 
-    - utiliser le 'wis2downloader' pour vous abonner à un WIS2 Broker et télécharger des données sur votre système local
-    - visualiser l'état des téléchargements dans le tableau de bord Grafana
+    - utiliser 'wis2downloader' pour vous abonner à un WIS2 Broker et télécharger des données sur votre système local
+    - visualiser le statut des téléchargements dans le tableau de bord Grafana
     - décoder certaines données téléchargées en utilisant le conteneur 'decode-bufr-jupyter'
