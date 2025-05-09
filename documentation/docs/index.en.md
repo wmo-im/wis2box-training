@@ -87,7 +87,7 @@ Container names (running images) are denoted in **bold**.
 
 ## Training location and materials
 
-The training contents, wiki and issue tracker are managed on GitHub at [https://github.com/World-Meteorological-Organization/wis2box-training](https://github.com/World-Meteorological-Organization/wis2box-training).
+The training contents, wiki and issue tracker are managed on GitHub at [https://github.com/wmo-im/wis2box-training](https://github.com/wmo-im/wis2box-training).
 
 ## Printing the material
 

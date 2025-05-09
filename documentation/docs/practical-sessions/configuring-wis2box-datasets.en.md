@@ -97,7 +97,7 @@ A pop-up window will appear, asking you to provide:
 
     For the purpose of the training we will use the *weather/surface-based-observations/synop* data type which includes data plugins that ensure the data is transformed into BUFR format before being published.
 
-    If you want to publish CAP alerts using wis2box, use the template *weather/advisories-warnings*. This template includes a data plugin that verifies the input data is a valid CAP alert before publishing. To create CAP alerts and publish them via wis2box you can use [CAP Composer](https://github.com/wmo-raf/cap-composer).
+    If you want to publish CAP alerts using wis2box, use the template *weather/advisories-warnings*. This template includes a data plugin that verifies the input data is a valid CAP alert before publishing. To create CAP alerts and publish them via wis2box you can use the [WMO CAP Composer](https://github.com/World-Meteorological-Organization/cap-composer) or forward the CAP XML from your own system into the wis2box-incoming bucket.
 
 Please choose a centre-id appropriate for your organization.
 
