@@ -39,14 +39,14 @@ The right hand navigation provides a table of contents for a specific page.
 
 ### Knowledge
 
-- Basic Linux commands (see the [cheatsheet](cheatsheets/linux.md))
+- Basic Linux commands (see the [cheatsheet](./cheatsheets/linux.md))
 - Basic knowledge of networking and Internet protocols
 
 ### Software
 
 This training requires the following tools:
 
-- An instance running Ubuntu OS (provided by WMO trainers during local training sessions) see [Accessing your student VM](practical-sessions/accessing-your-student-vm.md#introduction)
+- An instance running Ubuntu OS (provided by WMO trainers during local training sessions) see [Accessing your student VM](./practical-sessions/accessing-your-student-vm.md#introduction)
 - SSH client to access your instance
 - MQTT Explorer on your local machine
 - SCP and SFTP client to copy files from your local machine

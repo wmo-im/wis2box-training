@@ -394,7 +394,7 @@ AAXX 21121
 
 !!! note
 
-    В упражнении [ingesting-data-for-publication](ingesting-data-for-publication.md) вы загрузили файл "synop_202412030900.txt", и он был конвертирован в формат BUFR модулем synop2bufr.
+    В упражнении [ingesting-data-for-publication](./ingesting-data-for-publication.md) вы загрузили файл "synop_202412030900.txt", и он был конвертирован в формат BUFR модулем synop2bufr.
 
     В автоматизированном рабочем процессе в wis2box год и месяц автоматически извлекаются из имени файла и используются для заполнения аргументов `--year` и `--month`, требуемых synop2bufr, в то время как метаданные станции автоматически извлекаются из конфигурации станции в wis2box.
 

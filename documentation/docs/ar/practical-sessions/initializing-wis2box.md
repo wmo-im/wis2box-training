@@ -18,7 +18,7 @@ title: تهيئة wis2box
 
     المواد التدريبية الحالية مبنية على إصدار wis2box-release 1.0.0.
     
-    انظر [accessing-your-student-vm](accessing-your-student-vm.md) للحصول على تعليمات حول كيفية تنزيل وتثبيت حزمة برامج wis2box إذا كنت تقوم بتشغيل هذا التدريب خارج جلسة تدريب محلية.
+    انظر [accessing-your-student-vm](./accessing-your-student-vm.md) للحصول على تعليمات حول كيفية تنزيل وتثبيت حزمة برامج wis2box إذا كنت تقوم بتشغيل هذا التدريب خارج جلسة تدريب محلية.
 
 ## التحضير
 

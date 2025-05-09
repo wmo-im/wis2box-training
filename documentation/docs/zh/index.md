@@ -37,14 +37,14 @@ WIS2 in a box ([wis2box](https://docs.wis2box.wis.wmo.int)) 是一个免费开�
 
 ### 知识要求
 
-- 基本的 Linux 命令（参见[速查表](cheatsheets/linux.md)）
+- 基本的 Linux 命令（参见[速查表](./cheatsheets/linux.md)）
 - 网络和互联网协议的基础知识
 
 ### 软件要求
 
 本培训需要以下工具：
 
-- 运行 Ubuntu 操作系统的实例（在本地培训课程中由 WMO 培训师提供）参见[访问您的学员虚拟机](practical-sessions/accessing-your-student-vm.md#introduction)
+- 运行 Ubuntu 操作系统的实例（在本地培训课程中由 WMO 培训师提供）参见[访问您的学员虚拟机](./practical-sessions/accessing-your-student-vm.md#introduction)
 - SSH 客户端以访问您的实例
 - 本地机器上的 MQTT Explorer
 - SCP 和 SFTP 客户端用于从本地机器复制文件

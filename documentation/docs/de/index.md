@@ -37,14 +37,14 @@ Die Navigation auf der rechten Seite bietet ein Inhaltsverzeichnis für eine spe
 
 ### Wissen
 
-- Grundlegende Linux-Befehle (siehe das [cheatsheet](cheatsheets/linux.md))
+- Grundlegende Linux-Befehle (siehe das [cheatsheet](./cheatsheets/linux.md))
 - Grundkenntnisse über Netzwerk- und Internetprotokolle
 
 ### Software
 
 Diese Schulung erfordert die folgenden Werkzeuge:
 
-- Eine Instanz mit Ubuntu OS (wird von WMO-Trainern während lokaler Schulungssitzungen bereitgestellt) siehe [Zugriff auf Ihre Studenten-VM](practical-sessions/accessing-your-student-vm.md#introduction)
+- Eine Instanz mit Ubuntu OS (wird von WMO-Trainern während lokaler Schulungssitzungen bereitgestellt) siehe [Zugriff auf Ihre Studenten-VM](./practical-sessions/accessing-your-student-vm.md#introduction)
 - SSH-Client für den Zugriff auf Ihre Instanz
 - MQTT Explorer auf Ihrem lokalen Rechner
 - SCP- und SFTP-Client zum Kopieren von Dateien von Ihrem lokalen Rechner

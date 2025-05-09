@@ -41,7 +41,7 @@ Invece di utilizzare le credenziali interne del tuo broker, usa le credenziali p
     
 Apri un browser e apri una pagina a `http://YOUR-HOST/wis2box-webapp`. Assicurati di essere loggato e di poter accedere alla pagina 'editor dei dataset'.
 
-Consulta la sezione su [Inizializzazione di wis2box](/practical-sessions/initializing-wis2box) se hai bisogno di ricordare come connetterti al broker o accedere a wis2box-webapp.
+Consulta la sezione su [Inizializzazione di wis2box](./initializing-wis2box.md) se hai bisogno di ricordare come connetterti al broker o accedere a wis2box-webapp.
 
 ## Crea un token di autorizzazione per processes/wis2box
 

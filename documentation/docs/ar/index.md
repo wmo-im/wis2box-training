@@ -39,14 +39,14 @@ WIS2 في صندوق ([wis2box](https://docs.wis2box.wis.wmo.int)) هو تطبي
 
 ### المعرفة
 
-- أوامر Linux الأساسية (انظر [cheatsheet](cheatsheets/linux.md))
+- أوامر Linux الأساسية (انظر [cheatsheet](./cheatsheets/linux.md))
 - معرفة أساسية بالشبكات وبروتوكولات الإنترنت
 
 ### البرمجيات
 
 يتطلب هذا التدريب الأدوات التالية:
 
-- نسخة تعمل بنظام التشغيل Ubuntu (مقدمة من مدربي WMO خلال جلسات التدريب المحلية) انظر [Accessing your student VM](practical-sessions/accessing-your-student-vm.md#introduction)
+- نسخة تعمل بنظام التشغيل Ubuntu (مقدمة من مدربي WMO خلال جلسات التدريب المحلية) انظر [Accessing your student VM](./practical-sessions/accessing-your-student-vm.md#introduction)
 - عميل SSH للوصول إلى نسختك
 - MQTT Explorer على جهازك المحلي
 - عميل SCP و SFTP لنسخ الملفات من جهازك المحلي

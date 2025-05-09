@@ -18,7 +18,7 @@ title: Inizializzazione di wis2box
 
     I materiali di formazione attuali si basano su wis2box-release 1.0.0.
     
-    Consulta [accessing-your-student-vm](accessing-your-student-vm.md) per istruzioni su come scaricare e installare il software stack di wis2box se stai eseguendo questa formazione al di fuori di una sessione di formazione locale.
+    Consulta [accessing-your-student-vm](./accessing-your-student-vm.md) per istruzioni su come scaricare e installare il software stack di wis2box se stai eseguendo questa formazione al di fuori di una sessione di formazione locale.
 
 ## Preparazione
 

@@ -41,7 +41,7 @@ Au lieu d'utiliser vos identifiants de broker internes, utilisez les identifiant
     
 Ouvrez un navigateur et ouvrez une page à `http://YOUR-HOST/wis2box-webapp`. Assurez-vous que vous êtes connecté et que vous pouvez accéder à la page 'éditeur de jeu de données'.
 
-Consultez la section sur [Initialisation de wis2box](/practical-sessions/initializing-wis2box) si vous avez besoin de vous rappeler comment vous connecter au broker ou accéder au wis2box-webapp.
+Consultez la section sur [Initialisation de wis2box](./initializing-wis2box.md) si vous avez besoin de vous rappeler comment vous connecter au broker ou accéder au wis2box-webapp.
 
 ## Créer un jeton d'autorisation pour processes/wis2box
 

@@ -37,14 +37,14 @@ La navegación de la mano derecha proporciona una tabla de contenidos para una p
 
 ### Conocimientos
 
-- Comandos básicos de Linux (ver la [cheatsheet](cheatsheets/linux.md))
+- Comandos básicos de Linux (ver la [cheatsheet](./cheatsheets/linux.md))
 - Conocimientos básicos de redes y protocolos de Internet
 
 ### Software
 
 Esta capacitación requiere las siguientes herramientas:
 
-- Una instancia ejecutando el sistema operativo Ubuntu (proporcionada por los entrenadores de la OMM durante las sesiones de capacitación locales) ver [Accediendo a tu VM de estudiante](practical-sessions/accessing-your-student-vm.md#introduction)
+- Una instancia ejecutando el sistema operativo Ubuntu (proporcionada por los entrenadores de la OMM durante las sesiones de capacitación locales) ver [Accediendo a tu VM de estudiante](./practical-sessions/accessing-your-student-vm.md#introduction)
 - Cliente SSH para acceder a tu instancia
 - MQTT Explorer en tu máquina local
 - Cliente SCP y SFTP para copiar archivos desde tu máquina local

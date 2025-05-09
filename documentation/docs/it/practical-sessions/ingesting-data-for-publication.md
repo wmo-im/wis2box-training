@@ -22,11 +22,11 @@ In questo esercizio, utilizzeremo file di dati di esempio per attivare il flusso
 
 Durante l'esercizio, monitoreremo lo stato dell'ingestione dei dati utilizzando il **dashboard di Grafana** e **MQTT Explorer**. Il dashboard di Grafana utilizza dati da Prometheus e Loki per visualizzare lo stato del tuo wis2box, mentre MQTT Explorer ti permette di vedere le notifiche di dati WIS2 pubblicate dalla tua istanza wis2box.
 
-Nota che wis2box trasformerà i dati di esempio in formato BUFR prima di pubblicarli sul broker MQTT, come preconfigurato nelle mappature dei dati del tuo dataset. Per questo esercizio, ci concentreremo sui diversi metodi per caricare dati sulla tua istanza wis2box e verificare l'ingestione e la pubblicazione con successo. La trasformazione dei dati sarà trattata più avanti nella sessione pratica [Strumenti di Conversione dei Dati](../data-conversion-tools).
+Nota che wis2box trasformerà i dati di esempio in formato BUFR prima di pubblicarli sul broker MQTT, come preconfigurato nelle mappature dei dati del tuo dataset. Per questo esercizio, ci concentreremo sui diversi metodi per caricare dati sulla tua istanza wis2box e verificare l'ingestione e la pubblicazione con successo. La trasformazione dei dati sarà trattata più avanti nella sessione pratica [Strumenti di Conversione dei Dati](./data-conversion-tools).
 
 ## Preparazione
 
-Questa sezione utilizza il dataset per "surface-based-observations/synop" precedentemente creato nella sessione pratica [Configurazione dei Dataset in wis2box](../configuring-wis2box-datasets). È inoltre necessaria la conoscenza della configurazione delle stazioni in **wis2box-webapp**, come descritto nella sessione pratica [Configurazione dei Metadati delle Stazioni](../configuring-station-metadata).
+Questa sezione utilizza il dataset per "surface-based-observations/synop" precedentemente creato nella sessione pratica [Configurazione dei Dataset in wis2box](./configuring-wis2box-datasets). È inoltre necessaria la conoscenza della configurazione delle stazioni in **wis2box-webapp**, come descritto nella sessione pratica [Configurazione dei Metadati delle Stazioni](./configuring-station-metadata).
 
 Assicurati di poter accedere alla tua VM studente utilizzando il tuo client SSH (ad es., PuTTY).
 

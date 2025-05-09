@@ -41,7 +41,7 @@ Instead of using your internal broker credentials, use the public credentials `e
     
 Open a browser and open a page to `http://YOUR-HOST/wis2box-webapp`. Make sure you are logged in and can access the 'dataset editor' page.
 
-See the section on [Initializing wis2box](/practical-sessions/initializing-wis2box) if you need to remember how to connect to the broker or access the wis2box-webapp.
+See the section on [Initializing wis2box](./initializing-wis2box.md) if you need to remember how to connect to the broker or access the wis2box-webapp.
 
 ## Create an authorization token for processes/wis2box
 

@@ -37,14 +37,14 @@ La navigazione a destra fornisce un indice per una pagina specifica.
 
 ### Conoscenze
 
-- Comandi Linux di base (vedi il [cheatsheet](cheatsheets/linux.md))
+- Comandi Linux di base (vedi il [cheatsheet](./cheatsheets/linux.md))
 - Conoscenze di base di networking e protocolli Internet
 
 ### Software
 
 Questa formazione richiede i seguenti strumenti:
 
-- Un'istanza in esecuzione su Ubuntu OS (fornita dai formatori WMO durante le sessioni di formazione locali) vedi [Accesso alla tua VM studente](practical-sessions/accessing-your-student-vm.md#introduction)
+- Un'istanza in esecuzione su Ubuntu OS (fornita dai formatori WMO durante le sessioni di formazione locali) vedi [Accesso alla tua VM studente](./practical-sessions/accessing-your-student-vm.md#introduction)
 - Client SSH per accedere alla tua istanza
 - MQTT Explorer sul tuo computer locale
 - Client SCP e SFTP per copiare file dal tuo computer locale

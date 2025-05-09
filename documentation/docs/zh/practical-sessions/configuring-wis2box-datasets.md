@@ -41,7 +41,7 @@ wis2box使用与发现元数据和数据映射相关联的数据集。
     
 打开浏览器并打开页面`http://YOUR-HOST/wis2box-webapp`。确保您已登录并可以访问"数据集编辑器"页面。
 
-如果您需要回顾如何连接到代理或访问wis2box-webapp，请参阅[初始化wis2box](/practical-sessions/initializing-wis2box)部分。
+如果您需要回顾如何连接到代理或访问wis2box-webapp，请参阅[初始化wis2box](./initializing-wis2box.md)部分。
 
 ## 为processes/wis2box创建授权令牌
 

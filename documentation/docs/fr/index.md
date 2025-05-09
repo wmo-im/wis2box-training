@@ -37,14 +37,14 @@ La navigation à droite fournit une table des matières pour une page spécifiqu
 
 ### Connaissances
 
-- Commandes Linux de base (voir la [cheatsheet](cheatsheets/linux.md))
+- Commandes Linux de base (voir la [cheatsheet](./cheatsheets/linux.md))
 - Connaissances de base en réseautage et protocoles Internet
 
 ### Logiciel
 
 Cette formation nécessite les outils suivants :
 
-- Une instance fonctionnant sous Ubuntu OS (fournie par les formateurs de l'OMM lors des sessions de formation locales) voir [Accéder à votre VM étudiante](practical-sessions/accessing-your-student-vm.md#introduction)
+- Une instance fonctionnant sous Ubuntu OS (fournie par les formateurs de l'OMM lors des sessions de formation locales) voir [Accéder à votre VM étudiante](./practical-sessions/accessing-your-student-vm.md#introduction)
 - Client SSH pour accéder à votre instance
 - MQTT Explorer sur votre machine locale
 - Client SCP et SFTP pour copier des fichiers depuis votre machine locale

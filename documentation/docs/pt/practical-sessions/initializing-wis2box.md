@@ -18,7 +18,7 @@ title: Inicializando o wis2box
 
     Os materiais de treinamento atuais são baseados no wis2box-release 1.0.0.
     
-    Veja [accessing-your-student-vm](accessing-your-student-vm.md) para instruções sobre como baixar e instalar o pacote de software do wis2box se você estiver realizando este treinamento fora de uma sessão de treinamento local.
+    Veja [accessing-your-student-vm](./accessing-your-student-vm.md) para instruções sobre como baixar e instalar o pacote de software do wis2box se você estiver realizando este treinamento fora de uma sessão de treinamento local.
 
 ## Preparação
 

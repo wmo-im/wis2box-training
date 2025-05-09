@@ -22,11 +22,11 @@ In this exercise, we will use sample data files to trigger the wis2box workflow 
 
 During the exercise, we will monitor the status of the data ingestion using the **Grafana dashboard** and **MQTT Explorer**. The Grafana dashboard uses data from Prometheus and Loki to display the status of your wis2box, while MQTT Explorer allows you to see the WIS2 data notifications published by your wis2box instance.
 
-Note that wis2box will transform the example data into BUFR format before publishing it to the MQTT broker, as per the data mappings pre-configured in your dataset. For this exercise, we will focus on the different methods to upload data to your wis2box instance and verify successful ingestion and publication. Data transformation will be covered later in the [Data Conversion Tools](../data-conversion-tools) practical session.
+Note that wis2box will transform the example data into BUFR format before publishing it to the MQTT broker, as per the data mappings pre-configured in your dataset. For this exercise, we will focus on the different methods to upload data to your wis2box instance and verify successful ingestion and publication. Data transformation will be covered later in the [Data Conversion Tools](./data-conversion-tools.md) practical session.
 
 ## Preparation
 
-This section uses the dataset for "surface-based-observations/synop" previously created in the [Configuring Datasets in wis2box](../configuring-wis2box-datasets) practical session. It also requires knowledge of configuring stations in the **wis2box-webapp**, as described in the [Configuring Station Metadata](../configuring-station-metadata) practical session.
+This section uses the dataset for "surface-based-observations/synop" previously created in the [Configuring Datasets in wis2box](./configuring-wis2box-datasets.md) practical session. It also requires knowledge of configuring stations in the **wis2box-webapp**, as described in the [Configuring Station Metadata](./configuring-station-metadata.md) practical session.
 
 Ensure you can log in to your student VM using your SSH client (e.g., PuTTY).
 

@@ -426,7 +426,7 @@ AAXX 21121
 
 !!! note
 
-    في التمرين لـ [ingesting-data-for-publication](ingesting-data-for-publication.md) قمت بإدخال الملف "synop_202412030900.txt" وتم تحويله إلى تنسيق BUFR بواسطة وحدة synop2bufr.
+    في التمرين لـ [ingesting-data-for-publication](./ingesting-data-for-publication.md) قمت بإدخال الملف "synop_202412030900.txt" وتم تحويله إلى تنسيق BUFR بواسطة وحدة synop2bufr.
 
     في سير العمل الآلي في wis2box، يتم استخراج السنة والشهر تلقائيًا من اسم الملف واستخدامها لملء الوسيطتين `--year` و `--month` المطلوبتين بواسطة synop2bufr، بينما يتم استخراج بيانات المحطة تلقائيًا من تكوين المحطة في wis2box.
 

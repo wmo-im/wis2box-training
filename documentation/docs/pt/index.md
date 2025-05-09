@@ -39,14 +39,14 @@ A navegação à direita fornece um índice para uma página específica.
 
 ### Conhecimento
 
-- Comandos básicos de Linux (veja o [cheatsheet](cheatsheets/linux.md))
+- Comandos básicos de Linux (veja o [cheatsheet](./cheatsheets/linux.md))
 - Conhecimento básico de redes e protocolos da Internet
 
 ### Software
 
 Este treinamento requer as seguintes ferramentas:
 
-- Uma instância rodando o sistema operacional Ubuntu (fornecida pelos instrutores da WMO durante sessões de treinamento locais) veja [Acessando sua VM de estudante](practical-sessions/accessing-your-student-vm.md#introduction)
+- Uma instância rodando o sistema operacional Ubuntu (fornecida pelos instrutores da WMO durante sessões de treinamento locais) veja [Acessando sua VM de estudante](./practical-sessions/accessing-your-student-vm.md#introduction)
 - Cliente SSH para acessar sua instância
 - MQTT Explorer em sua máquina local
 - Cliente SCP e SFTP para copiar arquivos de sua máquina local

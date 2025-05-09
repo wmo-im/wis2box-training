@@ -18,7 +18,7 @@ title: Initialisierung von wis2box
 
     Die aktuellen Schulungsmaterialien basieren auf wis2box-release 1.0.0.
     
-    Siehe [accessing-your-student-vm](accessing-your-student-vm.md) für Anweisungen zum Herunterladen und Installieren des wis2box-Software-Stacks, wenn Sie diese Schulung außerhalb einer lokalen Schulungssitzung durchführen.
+    Siehe [accessing-your-student-vm](./accessing-your-student-vm.md) für Anweisungen zum Herunterladen und Installieren des wis2box-Software-Stacks, wenn Sie diese Schulung außerhalb einer lokalen Schulungssitzung durchführen.
 
 ## Vorbereitung
 

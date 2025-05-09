@@ -18,7 +18,7 @@ title: 初始化 wis2box
 
     当前的培训材料基于 wis2box-release 1.0.0。
     
-    如果您在本地培训会议之外运行此培训，请参阅 [accessing-your-student-vm](accessing-your-student-vm.md) 了解如何下载和安装 wis2box 软件栈的指南。
+    如果您在本地培训会议之外运行此培训，请参阅 [accessing-your-student-vm](./accessing-your-student-vm.md) 了解如何下载和安装 wis2box 软件栈的指南。
 
 ## 准备工作
 

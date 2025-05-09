@@ -426,7 +426,7 @@ AAXX 21121
 
 !!! note
 
-    在 [ingesting-data-for-publication](ingesting-data-for-publication.md) 练习中，你摄取了文件 "synop_202412030900.txt"，并由 synop2bufr 模块转换为 BUFR 格式。
+    在 [ingesting-data-for-publication](./ingesting-data-for-publication.md) 练习中，你摄取了文件 "synop_202412030900.txt"，并由 synop2bufr 模块转换为 BUFR 格式。
 
     在 wis2box 的自动化工作流中，年份和月份会自动从文件名中提取，并用来填充 synop2bufr 所需的 `--year` 和 `--month` 参数，而站点元数据则会自动从 wis2box 中的站点配置中提取。
 

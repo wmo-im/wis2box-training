@@ -41,7 +41,7 @@ Verwenden Sie anstelle Ihrer internen Broker-Anmeldeinformationen die öffentlic
     
 Öffnen Sie einen Browser und gehen Sie zu `http://YOUR-HOST/wis2box-webapp`. Stellen Sie sicher, dass Sie angemeldet sind und auf die Seite 'dataset editor' zugreifen können.
 
-Sehen Sie sich den Abschnitt über [Initializing wis2box](/practical-sessions/initializing-wis2box) an, wenn Sie sich daran erinnern müssen, wie Sie sich mit dem Broker verbinden oder auf die wis2box-webapp zugreifen können.
+Sehen Sie sich den Abschnitt über [Initializing wis2box](./initializing-wis2box.md) an, wenn Sie sich daran erinnern müssen, wie Sie sich mit dem Broker verbinden oder auf die wis2box-webapp zugreifen können.
 
 ## Erstellen eines Autorisierungstokens für processes/wis2box
 

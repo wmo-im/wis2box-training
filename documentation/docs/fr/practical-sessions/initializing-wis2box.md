@@ -18,7 +18,7 @@ title: Initialisation de wis2box
 
     Les supports de formation actuels sont basés sur wis2box-release 1.0.0.
     
-    Consultez [accessing-your-student-vm](accessing-your-student-vm.md) pour des instructions sur comment télécharger et installer la pile logicielle wis2box si vous suivez cette formation en dehors d'une session locale.
+    Consultez [accessing-your-student-vm](./accessing-your-student-vm.md) pour des instructions sur comment télécharger et installer la pile logicielle wis2box si vous suivez cette formation en dehors d'une session locale.
 
 ## Préparation
 

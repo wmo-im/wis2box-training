@@ -426,7 +426,7 @@ Nell'area di testo `SYNOP message`:
 
 !!! note
 
-    Nell'esercizio per [ingesting-data-for-publication](ingesting-data-for-publication.md) hai inserito il file "synop_202412030900.txt" ed è stato convertito in formato BUFR dal modulo synop2bufr.
+    Nell'esercizio per [ingesting-data-for-publication](./ingesting-data-for-publication.md) hai inserito il file "synop_202412030900.txt" ed è stato convertito in formato BUFR dal modulo synop2bufr.
 
     Nel flusso di lavoro automatizzato nel wis2box, l'anno e il mese sono estratti automaticamente dal nome del file e utilizzati per popolare gli argomenti `--year` e `--month` richiesti da synop2bufr, mentre i metadati della stazione sono estratti automaticamente dalla configurazione della stazione nel wis2box.
 

@@ -22,7 +22,7 @@ title: 发布数据的摄入
 
 在练习过程中，我们将使用**Grafana仪表板**和**MQTT Explorer**监控数据摄入的状态。Grafana仪表板使用来自Prometheus和Loki的数据显示您的wis2box的状态，而MQTT Explorer允许您查看您的wis2box实例发布的WIS2数据通知。
 
-请注意，wis2box将在发布到MQTT代理之前将示例数据转换为BUFR格式，这是根据您的数据集中预配置的数据映射进行的。对于本练习，我们将重点关注上传数据到您的wis2box实例的不同方法，并验证成功的摄入和发布。数据转换将在[数据转换工具](../data-conversion-tools)实践课程中后续讨论。
+请注意，wis2box将在发布到MQTT代理之前将示例数据转换为BUFR格式，这是根据您的数据集中预配置的数据映射进行的。对于本练习，我们将重点关注上传数据到您的wis2box实例的不同方法，并验证成功的摄入和发布。数据转换将在[数据转换工具](./data-conversion-tools)实践课程中后续讨论。
 
 ## 准备
 
