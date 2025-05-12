@@ -47,17 +47,260 @@ theme:
         - content.code.copy
     favicon: https://public.wmo.int/sites/all/themes/wmo/favicon.ico
     logo: assets/img/wmo-logo.png
+    # custom_dir: overrides  # adjust to your layout
 
 plugins:
     - search
     - table-reader
     - i18n:
-        docs_structure: suffix
+        docs_structure: folder
         languages:
           - locale: en
             default: true
             name: English
             build: true
+        #   - locale: ru
+        #     name: Русский
+        #     build: true
+        #     nav_translations:
+        #         Home: "Главная"
+        #         Practical sessions: "Практические занятия"
+        #         Connecting to WIS2 over MQTT: "Подключение к WIS2 через MQTT"
+        #         Accessing your student VM: "Доступ к вашей виртуальной машине студента"
+        #         Initializing wis2box: "Инициализация wis2box"
+        #         Configuring datasets in wis2box: "Настройка наборов данных в wis2box"
+        #         Configuring station metadata: "Настройка метаданных станции"
+        #         Monitoring WIS2 notifications: "Мониторинг уведомлений WIS2"
+        #         Converting SYNOP data to BUFR from the command line: "Конвертация данных SYNOP в BUFR через командную строку"
+        #         Converting SYNOP data to BUFR using the wis2box-webapp: "Конвертация данных SYNOP в BUFR с помощью веб-приложения wis2box"
+        #         Converting CSV data to BUFR: "Конвертация CSV в BUFR"
+        #         Automating data ingestion: "Автоматизация загрузки данных"
+        #         Adding GTS-headers to WIS2 notifications: "Добавление заголовков GTS в уведомления WIS2"
+        #         Setting up a recommended dataset with access control: "Настройка рекомендуемого набора данных с контролем доступа"
+        #         Downloading data from WIS2: "Загрузка данных из WIS2"
+        #         Discovering datasets from the WIS2 Global Discovery Catalogue: "Поиск наборов данных в Глобальном каталоге WIS2"
+        #         Querying data using the wis2box API: "Запрос данных с использованием API wis2box"
+        #         Ingesting data for publication: "Загрузка данных для публикации"
+        #         Data conversion tools: "Инструменты преобразования данных"
+        #         CSV-to-BUFR mapping templates: "Шаблоны сопоставления CSV с BUFR"
+        #         Cheatsheets: "Шпаргалки"
+        #         Linux: "Linux"
+        #         Docker: "Docker"
+        #         # WIS2 in a box: "WIS2 в коробке"
+        #         csv2bufr templates: "Шаблоны csv2bufr"
+        #         AWS hourly: "AWS почасовой"
+        #         DAYCLI: "DAYCLI"
+        #   - locale: es
+        #     name: Español
+        #     build: true
+        #     nav_translations:
+        #         Home: "Inicio"
+        #         Practical sessions: "Sesiones prácticas"
+        #         Connecting to WIS2 over MQTT: "Conectarse a WIS2 a través de MQTT"
+        #         Accessing your student VM: "Acceder a tu máquina virtual de estudiante"
+        #         Initializing wis2box: "Inicializando wis2box"
+        #         Configuring datasets in wis2box: "Configurando conjuntos de datos en wis2box"
+        #         Configuring station metadata: "Configurando metadatos de estación"
+        #         Monitoring WIS2 notifications: "Monitoreo de notificaciones de WIS2"
+        #         Converting SYNOP data to BUFR from the command line: "Convertir datos SYNOP a BUFR desde la línea de comandos"
+        #         Converting SYNOP data to BUFR using the wis2box-webapp: "Convertir datos SYNOP a BUFR usando la aplicación web wis2box"
+        #         Converting CSV data to BUFR: "Convertir datos CSV a BUFR"
+        #         Automating data ingestion: "Automatizar la ingesta de datos"
+        #         Adding GTS-headers to WIS2 notifications: "Añadir encabezados GTS a notificaciones de WIS2"
+        #         Setting up a recommended dataset with access control: "Configurar un conjunto de datos recomendado con control de acceso"
+        #         Downloading data from WIS2: "Descargar datos de WIS2"
+        #         Discovering datasets from the WIS2 Global Discovery Catalogue: "Descubrir conjuntos de datos en el Catálogo Global de Descubrimiento de WIS2"
+        #         Querying data using the wis2box API: "Consultar datos usando la API de wis2box"
+        #         Ingesting data for publication: "Ingesta de datos para publicación"
+        #         Data conversion tools: "Herramientas de conversión de datos"
+        #         CSV-to-BUFR mapping templates: "Plantillas de mapeo de CSV a BUFR"
+        #         Cheatsheets: "Hojas de referencia"
+        #         Linux: "Linux"
+        #         Docker: "Docker"
+        #         # WIS2 in a box: "WIS2 en una caja"
+        #         csv2bufr templates: "Plantillas csv2bufr"
+        #         AWS hourly: "AWS por hora"
+        #         DAYCLI: "DAYCLI"
+        #   - locale: pt
+        #     name: Português
+        #     build: true
+        #     nav_translations:
+        #         Home: "Início"
+        #         Practical sessions: "Sessões práticas"
+        #         Connecting to WIS2 over MQTT: "Conectando ao WIS2 via MQTT"
+        #         Accessing your student VM: "Acessando sua VM de estudante"
+        #         Initializing wis2box: "Inicializando o wis2box"
+        #         Configuring datasets in wis2box: "Configurando conjuntos de dados no wis2box"
+        #         Configuring station metadata: "Configurando metadados da estação"
+        #         Monitoring WIS2 notifications: "Monitorando notificações do WIS2"
+        #         Converting SYNOP data to BUFR from the command line: "Convertendo dados SYNOP para BUFR via linha de comando"
+        #         Converting SYNOP data to BUFR using the wis2box-webapp: "Convertendo dados SYNOP para BUFR usando o aplicativo web wis2box"
+        #         Converting CSV data to BUFR: "Convertendo dados CSV para BUFR"
+        #         Automating data ingestion: "Automatizando a ingestão de dados"
+        #         Adding GTS-headers to WIS2 notifications: "Adicionando cabeçalhos GTS às notificações do WIS2"
+        #         Setting up a recommended dataset with access control: "Configurando um conjunto de dados recomendado com controle de acesso"
+        #         Downloading data from WIS2: "Baixando dados do WIS2"
+        #         Discovering datasets from the WIS2 Global Discovery Catalogue: "Descobrindo conjuntos de dados no Catálogo Global de Descoberta do WIS2"
+        #         Querying data using the wis2box API: "Consultando dados usando a API do wis2box"
+        #         Ingesting data for publication: "Ingestão de dados para publicação"
+        #         Data conversion tools: "Ferramentas de conversão de dados"
+        #         CSV-to-BUFR mapping templates: "Modelos de mapeamento de CSV para BUFR"
+        #         Cheatsheets: "Guias rápidos"
+        #         Linux: "Linux"
+        #         Docker: "Docker"
+        #         csv2bufr templates: "Modelos csv2bufr"
+        #         AWS hourly: "AWS por hora"
+        #         DAYCLI: "DAYCLI"        
+        #   - locale: fr
+        #     name: Français
+        #     build: true
+        #     nav_translations:
+        #         Home: "Accueil"
+        #         Practical sessions: "Sessions pratiques"
+        #         Connecting to WIS2 over MQTT: "Connexion à WIS2 via MQTT"
+        #         Accessing your student VM: "Accéder à votre VM étudiante"
+        #         Initializing wis2box: "Initialisation de wis2box"
+        #         Configuring datasets in wis2box: "Configuration des ensembles de données dans wis2box"
+        #         Configuring station metadata: "Configuration des métadonnées de la station"
+        #         Monitoring WIS2 notifications: "Surveillance des notifications WIS2"
+        #         Converting SYNOP data to BUFR from the command line: "Conversion des données SYNOP en BUFR depuis la ligne de commande"
+        #         Converting SYNOP data to BUFR using the wis2box-webapp: "Conversion des données SYNOP en BUFR via l'application web wis2box"
+        #         Converting CSV data to BUFR: "Conversion des données CSV en BUFR"
+        #         Automating data ingestion: "Automatisation de l'ingestion de données"
+        #         Adding GTS-headers to WIS2 notifications: "Ajout des en-têtes GTS aux notifications WIS2"
+        #         Setting up a recommended dataset with access control: "Configuration d'un ensemble de données recommandé avec contrôle d'accès"
+        #         Downloading data from WIS2: "Téléchargement des données de WIS2"
+        #         Discovering datasets from the WIS2 Global Discovery Catalogue: "Découverte des ensembles de données du Catalogue Global de Découverte WIS2"
+        #         Querying data using the wis2box API: "Interrogation des données via l'API wis2box"
+        #         Ingesting data for publication: "Ingestion de données pour publication"
+        #         Data conversion tools: "Outils de conversion de données"
+        #         CSV-to-BUFR mapping templates: "Modèles de correspondance CSV vers BUFR"
+        #         Cheatsheets: "Aide-mémoire"
+        #         Linux: "Linux"
+        #         Docker: "Docker"
+        #         csv2bufr templates: "Modèles csv2bufr"
+        #         AWS hourly: "AWS horaire"
+        #         DAYCLI: "DAYCLI"
+        #   - locale: ar
+        #     name: العربية
+        #     build: true
+        #     nav_translations:
+        #         Home: "الرئيسية"
+        #         Practical sessions: "جلسات عملية"
+        #         Connecting to WIS2 over MQTT: "الاتصال بـ WIS2 عبر MQTT"
+        #         Accessing your student VM: "الوصول إلى جهاز الطالب الافتراضي"
+        #         Initializing wis2box: "تهيئة wis2box"
+        #         Configuring datasets in wis2box: "تهيئة مجموعات البيانات في wis2box"
+        #         Configuring station metadata: "تهيئة بيانات المحطة الوصفية"
+        #         Monitoring WIS2 notifications: "مراقبة إشعارات WIS2"
+        #         Converting SYNOP data to BUFR from the command line: "تحويل بيانات SYNOP إلى BUFR عبر سطر الأوامر"
+        #         Converting SYNOP data to BUFR using the wis2box-webapp: "تحويل بيانات SYNOP إلى BUFR باستخدام تطبيق wis2box-webapp"
+        #         Converting CSV data to BUFR: "تحويل بيانات CSV إلى BUFR"
+        #         Automating data ingestion: "أتمتة إدخال البيانات"
+        #         Adding GTS-headers to WIS2 notifications: "إضافة رؤوس GTS إلى إشعارات WIS2"
+        #         Setting up a recommended dataset with access control: "إعداد مجموعة بيانات موصى بها مع التحكم في الوصول"
+        #         Downloading data from WIS2: "تنزيل البيانات من WIS2"
+        #         Discovering datasets from the WIS2 Global Discovery Catalogue: "اكتشاف مجموعات البيانات من كتالوج الاكتشاف العالمي لـ WIS2"
+        #         Querying data using the wis2box API: "استعلام البيانات باستخدام واجهة برمجة تطبيقات wis2box"
+        #         Ingesting data for publication: "استيعاب البيانات للنشر"
+        #         Data conversion tools: "أدوات تحويل البيانات"
+        #         CSV-to-BUFR mapping templates: "قوالب تحويل CSV إلى BUFR"
+        #         Cheatsheets: "أوراق المساعدة"
+        #         Linux: "لينكس"
+        #         Docker: "دوكر"
+        #         csv2bufr templates: "قوالب csv2bufr"
+        #         AWS hourly: "AWS بالساعة"
+        #         DAYCLI: "DAYCLI"
+        #   - locale: zh
+        #     name: 中文
+        #     build: true
+        #     nav_translations:
+        #         Home: "主页"
+        #         Practical sessions: "实践课程"
+        #         Connecting to WIS2 over MQTT: "通过 MQTT 连接到 WIS2"
+        #         Accessing your student VM: "访问您的学生虚拟机"
+        #         Initializing wis2box: "初始化 wis2box"
+        #         Configuring datasets in wis2box: "在 wis2box 中配置数据集"
+        #         Configuring station metadata: "配置站点元数据"
+        #         Monitoring WIS2 notifications: "监控 WIS2 通知"
+        #         Converting SYNOP data to BUFR from the command line: "通过命令行将 SYNOP 数据转换为 BUFR"
+        #         Converting SYNOP data to BUFR using the wis2box-webapp: "使用 wis2box-webapp 将 SYNOP 数据转换为 BUFR"
+        #         Converting CSV data to BUFR: "将 CSV 数据转换为 BUFR"
+        #         Automating data ingestion: "自动化数据摄取"
+        #         Adding GTS-headers to WIS2 notifications: "向 WIS2 通知添加 GTS 头信息"
+        #         Setting up a recommended dataset with access control: "设置带访问控制的推荐数据集"
+        #         Downloading data from WIS2: "从 WIS2 下载数据"
+        #         Discovering datasets from the WIS2 Global Discovery Catalogue: "在 WIS2 全球发现目录中发现数据集"
+        #         Querying data using the wis2box API: "使用 wis2box API 查询数据"
+        #         Ingesting data for publication: "用于发布的数据摄取"
+        #         Data conversion tools: "数据转换工具"
+        #         CSV-to-BUFR mapping templates: "CSV 到 BUFR 映射模板"
+        #         Cheatsheets: "备忘单"
+        #         Linux: "Linux"
+        #         Docker: "Docker"
+        #         csv2bufr templates: "csv2bufr 模板"
+        #         AWS hourly: "AWS 每小时"
+        #         DAYCLI: "DAYCLI"           
+        #   - locale: it
+        #     name: Italiano
+        #     build: true
+        #     nav_translations:
+        #         Home: "Home"
+        #         Practical sessions: "Sessioni pratiche"
+        #         Connecting to WIS2 over MQTT: "Connessione a WIS2 tramite MQTT"
+        #         Accessing your student VM: "Accesso alla tua VM studente"
+        #         Initializing wis2box: "Inizializzazione di wis2box"
+        #         Configuring datasets in wis2box: "Configurazione dei dataset in wis2box"
+        #         Configuring station metadata: "Configurazione dei metadati della stazione"
+        #         Monitoring WIS2 notifications: "Monitoraggio delle notifiche WIS2"
+        #         Converting SYNOP data to BUFR from the command line: "Conversione dei dati SYNOP in BUFR da riga di comando"
+        #         Converting SYNOP data to BUFR using the wis2box-webapp: "Conversione dei dati SYNOP in BUFR utilizzando l'applicazione web wis2box"
+        #         Converting CSV data to BUFR: "Conversione dei dati CSV in BUFR"
+        #         Automating data ingestion: "Automazione dell'ingestione dei dati"
+        #         Adding GTS-headers to WIS2 notifications: "Aggiunta di intestazioni GTS alle notifiche WIS2"
+        #         Setting up a recommended dataset with access control: "Configurazione di un dataset consigliato con controllo dell'accesso"
+        #         Downloading data from WIS2: "Scaricamento dei dati da WIS2"
+        #         Discovering datasets from the WIS2 Global Discovery Catalogue: "Scoperta dei dataset dal Catalogo globale di scoperta di WIS2"
+        #         Querying data using the wis2box API: "Interrogazione dei dati utilizzando l'API di wis2box"
+        #         Ingesting data for publication: "Acquisizione dei dati per la pubblicazione"
+        #         Data conversion tools: "Strumenti di conversione dei dati"
+        #         CSV-to-BUFR mapping templates: "Modelli di mappatura da CSV a BUFR"
+        #         Cheatsheets: "Fogli di riferimento"
+        #         Linux: "Linux"
+        #         Docker: "Docker"
+        #         csv2bufr templates: "Modelli csv2bufr"
+        #         AWS hourly: "AWS orario"
+        #         DAYCLI: "DAYCLI"
+        #   - locale: de
+        #     name: Deutsch
+        #     build: true
+        #     nav_translations:
+        #         Home: "Startseite"
+        #         Practical sessions: "Praktische Sitzungen"
+        #         Connecting to WIS2 over MQTT: "Verbindung zu WIS2 über MQTT"
+        #         Accessing your student VM: "Zugriff auf Ihre Studenten-VM"
+        #         Initializing wis2box: "Initialisierung von wis2box"
+        #         Configuring datasets in wis2box: "Konfigurieren von Datensätzen in wis2box"
+        #         Configuring station metadata: "Konfigurieren von Stationsmetadaten"
+        #         Monitoring WIS2 notifications: "Überwachung von WIS2-Benachrichtigungen"
+        #         Converting SYNOP data to BUFR from the command line: "Konvertieren von SYNOP-Daten in BUFR von der Befehlszeile aus"
+        #         Converting SYNOP data to BUFR using the wis2box-webapp: "Konvertieren von SYNOP-Daten in BUFR mit der wis2box-Webanwendung"
+        #         Converting CSV data to BUFR: "Konvertieren von CSV-Daten in BUFR"
+        #         Automating data ingestion: "Automatisieren der Datenaufnahme"
+        #         Adding GTS-headers to WIS2 notifications: "Hinzufügen von GTS-Headern zu WIS2-Benachrichtigungen"
+        #         Setting up a recommended dataset with access control: "Einrichten eines empfohlenen Datensatzes mit Zugriffskontrolle"
+        #         Downloading data from WIS2: "Daten von WIS2 herunterladen"
+        #         Discovering datasets from the WIS2 Global Discovery Catalogue: "Auffinden von Datensätzen im globalen Entdeckungskatalog von WIS2"
+        #         Querying data using the wis2box API: "Abfragen von Daten mit der wis2box-API"
+        #         Ingesting data for publication: "Daten für die Veröffentlichung erfassen"
+        #         Data conversion tools: "Datenkonvertierungstools"
+        #         CSV-to-BUFR mapping templates: "CSV-zu-BUFR Mapping-Vorlagen"
+        #         Cheatsheets: "Spickzettel"
+        #         Linux: "Linux"
+        #         Docker: "Docker"
+        #         csv2bufr templates: "CSV2BUFR-Vorlagen"
+        #         AWS hourly: "AWS stündlich"
+        #         DAYCLI: "DAYCLI"
     - print-site
 
 markdown_extensions:
@@ -72,3 +315,6 @@ markdown_extensions:
 
 extra_css:
     - assets/css/custom.css
+
+extra_javascript:
+    - assets/js/disclaimer.js
