@@ -75,5 +75,5 @@ markdown_extensions:
 extra_css:
     - assets/css/custom.css
 
-extra_javascript:
-    - assets/js/disclaimer.js
+# extra_javascript:
+#     - assets/js/disclaimer.js
