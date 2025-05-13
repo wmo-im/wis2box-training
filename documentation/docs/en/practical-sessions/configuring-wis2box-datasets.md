@@ -41,7 +41,7 @@ Instead of using your internal broker credentials, use the public credentials `e
     
 Open a browser and open a page to `http://YOUR-HOST/wis2box-webapp`. Make sure you are logged in and can access the 'dataset editor' page.
 
-See the section on [Initializing wis2box](/practical-sessions/initializing-wis2box) if you need to remember how to connect to the broker or access the wis2box-webapp.
+See the section on [Initializing wis2box](./initializing-wis2box.md) if you need to remember how to connect to the broker or access the wis2box-webapp.
 
 ## Create an authorization token for processes/wis2box
 
@@ -97,7 +97,7 @@ A pop-up window will appear, asking you to provide:
 
     For the purpose of the training we will use the *weather/surface-based-observations/synop* data type which includes data plugins that ensure the data is transformed into BUFR format before being published.
 
-    If you want to publish CAP alerts using wis2box, use the template *weather/advisories-warnings*. This template includes a data plugin that verifies the input data is a valid CAP alert before publishing. To create CAP alerts and publish them via wis2box you can use the [WMO CAP Composer](https://github.com/World-Meteorological-Organization/cap-composer) or forward the CAP XML from your own system into the wis2box-incoming bucket.
+    If you want to publish CAP alerts using wis2box, use the template *weather/advisories-warnings*. This template includes a data plugin that verifies the input data is a valid CAP alert before publishing. To create CAP alerts and publish them via wis2box you can use [CAP Composer](https://github.com/wmo-raf/cap-composer).
 
 Please choose a centre-id appropriate for your organization.
 

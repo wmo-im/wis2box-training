@@ -14,4 +14,4 @@ The format is intended for use with automatic weather stations reporting a minim
 
 ## Example
 
-Example CSV file that conforms to the AWS template: [aws-example.csv](/sample-data/aws-example.csv).
+Example CSV file that conforms to the AWS template: [aws-example.csv](./../../sample-data/aws-example.csv).

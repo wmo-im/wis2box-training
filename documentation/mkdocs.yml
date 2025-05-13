@@ -47,17 +47,19 @@ theme:
         - content.code.copy
     favicon: https://public.wmo.int/sites/all/themes/wmo/favicon.ico
     logo: assets/img/wmo-logo.png
+    # custom_dir: overrides  # adjust to your layout
 
 plugins:
     - search
     - table-reader
     - i18n:
-        docs_structure: suffix
+        docs_structure: folder
         languages:
           - locale: en
             default: true
             name: English
             build: true
+
     - print-site
 
 markdown_extensions:
@@ -72,3 +74,6 @@ markdown_extensions:
 
 extra_css:
     - assets/css/custom.css
+
+# extra_javascript:
+#     - assets/js/disclaimer.js
