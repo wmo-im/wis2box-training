@@ -18,7 +18,7 @@ As part of locally run wis2box training sessions, you can access your personal s
 
 Your student VM has the following software pre-installed:
 
-- Ubuntu 22.0.4.3 LTS [ubuntu-22.04.3-live-server-amd64.iso](https://releases.ubuntu.com/jammy/ubuntu-22.04.3-live-server-amd64.iso)
+- Ubuntu 22.04 LTS [ubuntu-22.04.5-live-server-amd64.iso](https://releases.ubuntu.com/jammy/ubuntu-22.04.5-live-server-amd64.iso)
 - Python 3.10.12
 - Docker 24.0.6
 - Docker Compose 2.21.0
