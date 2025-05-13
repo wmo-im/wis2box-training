@@ -1,9 +1,0 @@
-Integer,Description
-0,Data checked and declared good 
-1,Data checked and declared suspect 
-2,Data checked and declared aggregated
-3,Data checked and declared out of instrument range
-4,Data checked and declared aggregated and out of instrument range
-5,Parameter is not measured at the station
-6,Daily value not provided
-7,Data unchecked

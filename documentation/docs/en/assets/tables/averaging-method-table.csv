@@ -1,8 +1,0 @@
-Integer,Description
-0,Average of minimum and maximum temperatures
-1,Average of 8 tri-hourly observations
-2,Average of 24 hourly observations
-3,Weighted average of three observations
-4,"Weighted average of three observations, as well as the minimum and maximum values"
-5,AWS complete integration from minute data
-6,Average of 4 six-hourly observations
