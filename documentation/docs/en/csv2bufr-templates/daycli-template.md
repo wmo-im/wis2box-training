@@ -40,4 +40,4 @@ This template requires additional metadata with respect to the simplified AWS-te
 
 ## Example
 
-Example CSV file that conforms to the DAYCLI template: [daycli-example.csv](/sample-data/daycli-example.csv).
+Example CSV file that conforms to the DAYCLI template: [daycli-example.csv](../../sample-data/daycli-example.csv).

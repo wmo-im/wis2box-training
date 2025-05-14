@@ -226,13 +226,13 @@ For now keep the default selection of the AWS template (click on the top right t
 
 The 'AWS' template provides mapping template for converting CSV data to BUFR sequence 301150, 307096, in support of minimum GBON requirements.
 
-The description of the AWS template can be found here [aws-template](/csv2bufr-templates/aws-template).
+The description of the AWS template can be found here [aws-template](./../csv2bufr-templates/aws-template.md).
 
 ### Review the aws-example input data
 
 Download the example for this exercise from the link below:
 
-[aws-example.csv](/sample-data/aws-example.csv)
+[aws-example.csv](./../sample-data/aws-example.csv)
 
 Open the file you downloaded in an editor and inspect the content:
 
@@ -291,7 +291,7 @@ If you successfully ingested the data you should see 3 notifications in MQTT exp
 
 The **DayCLI** template provides a mapping template for converting daily climate CSV data to BUFR sequence 307075, in support of reporting daily climate data.
 
-The description of the DAYCLI template can be found here [daycli-template](/csv2bufr-templates/daycli-template).
+The description of the DAYCLI template can be found here [daycli-template](./../csv2bufr-templates/daycli-template.md).
 
 To share this data on WIS2 you will need to create a new dataset in the wis2box-webapp that has the correct WIS2 Topic Hierarchy and that uses the DAYCLI template for converting CSV data to BUFR.
 
@@ -315,7 +315,7 @@ You should know have a second dataset in the wis2box-webapp that is configured t
 
 Download the example for this exercise from the link below:
 
-[daycli-example.csv](/sample-data/daycli-example.csv)
+[daycli-example.csv](./../sample-data/daycli-example.csv)
 
 Open the file you downloaded in an editor and inspect the content:
 

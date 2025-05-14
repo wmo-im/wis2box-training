@@ -2,7 +2,7 @@
 title: Home
 ---
 
-<img alt="WMO logo" src="../assets/img/wmo-logo.png" width="200">
+<img alt="WMO logo" src="assets/img/wmo-logo.png" width="200">
 # WIS2 in a box training
 
 WIS2 in a box ([wis2box](https://docs.wis2box.wis.wmo.int)) is a Free and Open Source (FOSS) Reference Implementation of a WMO WIS2 Node. The project provides a plug and play toolset to ingest, process, and publish weather/climate/water data using standards-based approaches in alignment with the WIS2 principles. wis2box also provides access to all data in the WIS2 network. wis2box is designed to have a low barrier to entry for data providers, providing enabling infrastructure and services for data discovery, access, and visualization.
@@ -39,14 +39,14 @@ The right hand navigation provides a table of contents for a specific page.
 
 ### Knowledge
 
-- Basic Linux commands (see the [cheatsheet](cheatsheets/linux.md))
+- Basic Linux commands (see the [cheatsheet](./cheatsheets/linux.md))
 - Basic knowledge of networking and Internet protocols
 
 ### Software
 
 This training requires the following tools:
 
-- An instance running Ubuntu OS (provided by WMO trainers during local training sessions) see [Accessing your student VM](practical-sessions/accessing-your-student-vm.md#introduction)
+- An instance running Ubuntu OS (provided by WMO trainers during local training sessions) see [Accessing your student VM](./practical-sessions/accessing-your-student-vm.md#introduction)
 - SSH client to access your instance
 - MQTT Explorer on your local machine
 - SCP and SFTP client to copy files from your local machine
@@ -88,11 +88,6 @@ Container names (running images) are denoted in **bold**.
 ## Training location and materials
 
 The training contents, wiki and issue tracker are managed on GitHub at [https://github.com/wmo-im/wis2box-training](https://github.com/wmo-im/wis2box-training).
-
-## Printing the material
-
-This training can be exported to PDF.  To save or print this training material, go to the [print page](print_page), and select
-File > Print > Save as PDF.
 
 ## Exercise materials
 
