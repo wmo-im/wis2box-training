@@ -22,11 +22,11 @@ In this exercise, we will use sample data files to trigger the wis2box workflow 
 
 During the exercise, we will monitor the status of the data ingestion using the **Grafana dashboard** and **MQTT Explorer**. The Grafana dashboard uses data from Prometheus and Loki to display the status of your wis2box, while MQTT Explorer allows you to see the WIS2 data notifications published by your wis2box instance.
 
-Note that wis2box will transform the example data into BUFR format before publishing it to the MQTT broker, as per the data mappings pre-configured in your dataset. For this exercise, we will focus on the different methods to upload data to your wis2box instance and verify successful ingestion and publication. Data transformation will be covered later in the [Data Conversion Tools](../data-conversion-tools) practical session.
+Note that wis2box will transform the example data into BUFR format before publishing it to the MQTT broker, as per the data mappings pre-configured in your dataset. For this exercise, we will focus on the different methods to upload data to your wis2box instance and verify successful ingestion and publication. Data transformation will be covered later in the [Data Conversion Tools](./data-conversion-tools.md) practical session.
 
 ## Preparation
 
-This section uses the dataset for "surface-based-observations/synop" previously created in the [Configuring Datasets in wis2box](/practical-sessions/configuring-wis2box-datasets) practical session. It also requires knowledge of configuring stations in the **wis2box-webapp**, as described in the [Configuring Station Metadata](/practical-sessions/configuring-station-metadata) practical session.
+This section uses the dataset for "surface-based-observations/synop" previously created in the [Configuring Datasets in wis2box](./configuring-wis2box-datasets.md) practical session. It also requires knowledge of configuring stations in the **wis2box-webapp**, as described in the [Configuring Station Metadata](./configuring-station-metadata.md) practical session.
 
 Ensure you can log in to your student VM using your SSH client (e.g., PuTTY).
 
@@ -61,11 +61,11 @@ Add the station with WIGOS identifier `0-20000-0-64400` to your wis2box instance
 
 Retrieve the station from OSCAR:
 
-<img alt="oscar-station" src="../../assets/img/webapp-test-station-oscar-search.png" width="600">
+<img alt="oscar-station" src="/../assets/img/webapp-test-station-oscar-search.png" width="600">
 
 Add the station to the datasets you created for publishing on "../surface-based-observations/synop" and save the changes using your authentication token:
 
-<img alt="webapp-test-station" src="../../assets/img/webapp-test-station-save.png" width="800">
+<img alt="webapp-test-station" src="/../assets/img/webapp-test-station-save.png" width="800">
 
 Note that you can remove this station from your dataset after the practical session.
 
@@ -115,7 +115,7 @@ ls -lh /data/wis2box/data-ingest-exercises/synop_202412030900.txt
 
 Go to the MinIO console in your browser and check if the file `synop_202412030900.txt` was uploaded to the `wis2box-incoming` bucket. You should see a new directory with the name of the dataset you provided in the `--metadata-id` option, and inside this directory, you will find the file `synop_202412030900.txt`:
 
-<img alt="minio-wis2box-incoming-dataset-folder" src="../../assets/img/minio-data-ingest-test-data.png" width="800">
+<img alt="minio-wis2box-incoming-dataset-folder" src="/../assets/img/minio-data-ingest-test-data.png" width="800">
 
 !!! note
     The `wis2box data ingest` command uploaded the file to the `wis2box-incoming` bucket in MinIO in a directory named after the metadata identifier you provided.
@@ -132,7 +132,7 @@ Go to the Grafana dashboard in your browser and check the status of the data ing
     
     If you successfully ingested the data, you should see the following:
     
-    <img alt="grafana_data_ingest" src="../../assets/img/grafana_data-ingest-test.png" width="400">  
+    <img alt="grafana_data_ingest" src="/../assets/img/grafana_data-ingest-test.png" width="400">  
     
     If you do not see this, please check for WARNING or ERROR messages displayed at the bottom of the dashboard and attempt to resolve them.
 
@@ -172,7 +172,7 @@ Next, we will use the MinIO web interface, which allows you to download and uplo
 
     Click on the file, and you will have the option to download it:
 
-    <img alt="minio-wis2box-incoming-dataset-folder" src="../../assets/img/minio-download.png" width="800">
+    <img alt="minio-wis2box-incoming-dataset-folder" src="/../assets/img/minio-download.png" width="800">
 
     You can download this file and re-upload it to the same path in MinIO to re-trigger the wis2box workflow.
 
@@ -190,7 +190,7 @@ Next, we will use the MinIO web interface, which allows you to download and uplo
     
 !!! question "Upload New Data Using the MinIO Web Interface"
     
-    Download this sample file [synop_202502040900.txt](/sample-data/synop_202502040900.txt) (right-click and select "save as" to download the file).
+    Download this sample file [synop_202502040900.txt](./../sample-data/synop_202502040900.txt) (right-click and select "save as" to download the file).
     
     Upload the file you downloaded using the web interface to the same path in MinIO as the previous file.
 
@@ -204,7 +204,7 @@ Next, we will use the MinIO web interface, which allows you to download and uplo
 
     If you use the correct path, you will see one more WIS2 data notification published for test station `0-20000-0-64400`, indicating that the data was successfully ingested and published.
 
-    <img alt="grafana_data_ingest" src="../../assets/img/grafana_data-ingest-test2.png" width="400"> 
+    <img alt="grafana_data_ingest" src="/../assets/img/grafana_data-ingest-test2.png" width="400"> 
 
 ## Uploading Data Using SFTP
 
@@ -214,23 +214,23 @@ In this exercise, we will demonstrate how to use WinSCP to upload data to MinIO 
 
 You can set up a new WinSCP connection as shown in this screenshot:
 
-<img alt="winscp-sftp-connection" src="../../assets/img/winscp-sftp-login.png" width="400">
+<img alt="winscp-sftp-connection" src="/../assets/img/winscp-sftp-login.png" width="400">
 
 The credentials for the SFTP connection are defined by `WIS2BOX_STORAGE_USERNAME` and `WIS2BOX_STORAGE_PASSWORD` in your `wis2box.env` file and are the same as the credentials you used to connect to the MinIO UI.
 
 When you log in, you will see the buckets used by wis2box in MinIO:
 
-<img alt="winscp-sftp-bucket" src="../../assets/img/winscp-buckets.png" width="600">
+<img alt="winscp-sftp-bucket" src="/../assets/img/winscp-buckets.png" width="600">
 
 You can navigate to the `wis2box-incoming` bucket and then to the folder for your dataset. You will see the files you uploaded in the previous exercises:
 
-<img alt="winscp-sftp-incoming-path" src="../../assets/img/winscp-incoming-data-path.png" width="600">
+<img alt="winscp-sftp-incoming-path" src="/../assets/img/winscp-incoming-data-path.png" width="600">
 
 !!! question "Upload Data Using SFTP"
 
     Download this sample file to your local computer:
 
-    [synop_202503030900.txt](/sample-data/synop_202503030900.txt) (right-click and select "save as" to download the file).
+    [synop_202503030900.txt](./../sample-data/synop_202503030900.txt) (right-click and select "save as" to download the file).
 
     Then upload it to the incoming dataset path in MinIO using your SFTP session in WinSCP.
 
@@ -240,7 +240,7 @@ You can navigate to the `wis2box-incoming` bucket and then to the folder for you
 
     You should see a new WIS2 data notification published for the test station `0-20000-0-64400`, indicating that the data was successfully ingested and published.
 
-    <img alt="grafana_data_ingest" src="../../assets/img/grafana_data-ingest-test3.png" width="400"> 
+    <img alt="grafana_data_ingest" src="/../assets/img/grafana_data-ingest-test3.png" width="400"> 
 
     If you use the wrong path, you will see an error message in the logs.
 

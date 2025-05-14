@@ -210,11 +210,11 @@ The wis2box-webapp will automatically detect the mapping template you created an
 
 Click on the dataset you created in the previous practical session and click on "UPDATE" next to the plugin with name "CSV data converted to BUFR":
 
-<img alt="Image showing the dataset editor in the wis2box-webapp" src="../../assets/img/wis2box-webapp-data-mapping-update-csv2bufr.png"/>
+<img alt="Image showing the dataset editor in the wis2box-webapp" src="/../assets/img/wis2box-webapp-data-mapping-update-csv2bufr.png"/>
 
 You should see the new template you created in the list of available templates:
 
-<img alt="Image showing the csv2bufr-templates in the wis2box-webapp" src="../../assets/img/wis2box-webapp-csv2bufr-templates.png"/>
+<img alt="Image showing the csv2bufr-templates in the wis2box-webapp" src="/../assets/img/wis2box-webapp-csv2bufr-templates.png"/>
 
 !!! hint
 
@@ -226,13 +226,13 @@ For now keep the default selection of the AWS template (click on the top right t
 
 The 'AWS' template provides mapping template for converting CSV data to BUFR sequence 301150, 307096, in support of minimum GBON requirements.
 
-The description of the AWS template can be found here [aws-template](/csv2bufr-templates/aws-template).
+The description of the AWS template can be found here [aws-template](./../csv2bufr-templates/aws-template.md).
 
 ### Review the aws-example input data
 
 Download the example for this exercise from the link below:
 
-[aws-example.csv](/sample-data/aws-example.csv)
+[aws-example.csv](./../sample-data/aws-example.csv)
 
 Open the file you downloaded in an editor and inspect the content:
 
@@ -269,15 +269,15 @@ Navigate to the MinIO UI and log in using the credentials from the `wis2box.env`
 
 Navigate to the **wis2box-incoming** and click the button "Create new path":
 
-<img alt="Image showing MinIO UI with the create folder button highlighted" src="../../assets/img/minio-create-new-path.png"/>
+<img alt="Image showing MinIO UI with the create folder button highlighted" src="/../assets/img/minio-create-new-path.png"/>
 
 Create a new folder in the MinIO bucket that matches the dataset-id for the dataset you created with the template='weather/surface-weather-observations/synop':
 
-<img alt="Image showing MinIO UI with the create folder button highlighted" src="../../assets/img/minio-create-new-path-metadata_id.png"/>
+<img alt="Image showing MinIO UI with the create folder button highlighted" src="/../assets/img/minio-create-new-path-metadata_id.png"/>
 
 Upload the example file you downloaded to the folder you created in the MinIO bucket:
 
-<img alt="Image showing MinIO UI with aws-example uploaded" src="../../assets/img/minio-upload-aws-example.png"/></center>
+<img alt="Image showing MinIO UI with aws-example uploaded" src="/../assets/img/minio-upload-aws-example.png"/></center>
 
 Check the Grafana dashboard at `http://YOUR-HOST:3000` to see if there are any WARNINGS or ERRORS. If you see any, try to fix them and repeat the exercise.
 
@@ -285,13 +285,13 @@ Check the MQTT Explorer to see if you receive WIS2 data-notifications.
 
 If you successfully ingested the data you should see 3 notifications in MQTT explorer on the topic `origin/a/wis2/<centre-id>/data/weather/surface-weather-observations/synop` for the 3 stations you reported data for:
 
-<img width="450" alt="Image showing MQTT explorer after uploading AWS" src="../../assets/img/mqtt-explorer-aws-upload.png"/>
+<img width="450" alt="Image showing MQTT explorer after uploading AWS" src="/../assets/img/mqtt-explorer-aws-upload.png"/>
 
 ## Using the 'DayCLI' template
 
 The **DayCLI** template provides a mapping template for converting daily climate CSV data to BUFR sequence 307075, in support of reporting daily climate data.
 
-The description of the DAYCLI template can be found here [daycli-template](/csv2bufr-templates/daycli-template).
+The description of the DAYCLI template can be found here [daycli-template](./../csv2bufr-templates/daycli-template.md).
 
 To share this data on WIS2 you will need to create a new dataset in the wis2box-webapp that has the correct WIS2 Topic Hierarchy and that uses the DAYCLI template for converting CSV data to BUFR.
 
@@ -299,13 +299,13 @@ To share this data on WIS2 you will need to create a new dataset in the wis2box-
 
 Go to the dataset editor in the wis2box-webapp and create a new dataset. Use the same centre-id as in the previous practical sessions and select **Data Type='climate/surface-based-observations/daily'**:
 
-<img alt="Create a new dataset in the wis2box-webapp for DAYCLI" src="../../assets/img/wis2box-webapp-create-dataset-daycli.png"/>
+<img alt="Create a new dataset in the wis2box-webapp for DAYCLI" src="/../assets/img/wis2box-webapp-create-dataset-daycli.png"/>
 
 Click "CONTINUE TO FORM" and add a description for your dataset, set the bounding box and provide the contact information for the dataset. Once you are done filling out all the sections, click 'VALIDATE FORM' and check the form.
 
 Review the data-plugins for the datasets. Click on "UPDATE" next to the plugin with name "CSV data converted to BUFR" and you will see the template is set to **DayCLI**:
 
-<img alt="Update the data plugin for the dataset to use the DAYCLI template" src="../../assets/img/wis2box-webapp-update-data-plugin-daycli.png"/>
+<img alt="Update the data plugin for the dataset to use the DAYCLI template" src="/../assets/img/wis2box-webapp-update-data-plugin-daycli.png"/>
 
 Close the plugin configuration and submit the form using the authentication token you created in the previous practical session.
 
@@ -315,7 +315,7 @@ You should know have a second dataset in the wis2box-webapp that is configured t
 
 Download the example for this exercise from the link below:
 
-[daycli-example.csv](/sample-data/daycli-example.csv)
+[daycli-example.csv](./../sample-data/daycli-example.csv)
 
 Open the file you downloaded in an editor and inspect the content:
 
@@ -333,13 +333,13 @@ The example file contains one row of data for each day in a month, and reports d
 
 As before, you will need to upload the data to the 'wis2box-incoming' bucket in MinIO to be processed by the csv2bufr converter. This time you will need to create a new folder in the MinIO bucket that matches the dataset-id for the dataset you created with the template='climate/surface-based-observations/daily' which will be different from the dataset-id you used in the previous exercise:
 
-<img alt="Image showing MinIO UI with DAYCLI-example uploaded" src="../../assets/img/minio-upload-daycli-example.png"/></center>
+<img alt="Image showing MinIO UI with DAYCLI-example uploaded" src="/../assets/img/minio-upload-daycli-example.png"/></center>
 
 After uploading the data check there are no WARNINGS or ERRORS in the Grafana dashboard and check the MQTT Explorer to see if you receive WIS2 data-notifications.
 
 If you successfully ingested the data you should see 30 notifications in MQTT explorer on the topic `origin/a/wis2/<centre-id>/data/climate/surface-based-observations/daily` for the 30 days in the month you reported data for:
 
-<img width="450" alt="Image showing MQTT explorer after uploading DAYCLI" src="../../assets/img/mqtt-daycli-template-success.png"/>
+<img width="450" alt="Image showing MQTT explorer after uploading DAYCLI" src="/../assets/img/mqtt-daycli-template-success.png"/>
 
 ## Conclusion
 

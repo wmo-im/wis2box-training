@@ -70,11 +70,11 @@ The **wis2box-webapp** provides a graphical user interface to edit station metad
 
 Open the **wis2box-webapp** in your browser by navigating to `http://YOUR-HOST/wis2box-webapp`, and select stations:
 
-<img alt="wis2box-webapp-select-stations" src="../../assets/img/wis2box-webapp-select-stations.png" width="250">
+<img alt="wis2box-webapp-select-stations" src="/../assets/img/wis2box-webapp-select-stations.png" width="250">
 
 When you click add 'add new station' you are asked to provide the WIGOS station identifier for the station you want to add:
 
-<img alt="wis2box-webapp-import-station-from-oscar" src="../../assets/img/wis2box-webapp-import-station-from-oscar.png" width="800">
+<img alt="wis2box-webapp-import-station-from-oscar" src="/../assets/img/wis2box-webapp-import-station-from-oscar.png" width="800">
 
 !!! note "Add station metadata for 3 or more stations"
     Please add three or more stations to the wis2box station metadata collection of your wis2box. 
@@ -91,13 +91,13 @@ When you click search the station data is retrieved from OSCAR/Surface, please n
 
 Review the data returned by OSCAR/Surface and add missing data where required. Select a topic for the station and provide your authorization token for the `collections/stations` endpoint and click 'save':
 
-<img alt="wis2box-webapp-create-station-save" src="../../assets/img/wis2box-webapp-create-station-save.png" width="800">
+<img alt="wis2box-webapp-create-station-save" src="/../assets/img/wis2box-webapp-create-station-save.png" width="800">
 
-<img alt="wis2box-webapp-create-station-success" src="../../assets/img/wis2box-webapp-create-station-success.png" width="500">
+<img alt="wis2box-webapp-create-station-success" src="/../assets/img/wis2box-webapp-create-station-success.png" width="500">
 
 Go back to the station list and you will see the station you added:
 
-<img alt="wis2box-webapp-stations-with-one-station" src="../../assets/img/wis2box-webapp-stations-with-one-station.png" width="800">
+<img alt="wis2box-webapp-stations-with-one-station" src="/../assets/img/wis2box-webapp-stations-with-one-station.png" width="800">
 
 Repeat this process until you have at least 3 stations configured.
 
@@ -135,7 +135,7 @@ The station metadata is stored in the backend of wis2box and made available via 
 
 If you open a browser and navigate to `http://YOUR-HOST/oapi/collections/stations/items` you will see the station metadata you added:
 
-<img alt="wis2box-api-stations" src="../../assets/img/wis2box-api-stations.png" width="800">
+<img alt="wis2box-api-stations" src="/../assets/img/wis2box-api-stations.png" width="800">
 
 !!! note "Review your station metadata"
 

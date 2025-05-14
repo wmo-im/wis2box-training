@@ -403,7 +403,7 @@ AAXX 21121
 
 Into the `SYNOP message` text area:
 
-<img alt="synop-form" src="../../assets/img/wis2box-webapp-synop-form.png" width="800">
+<img alt="synop-form" src="/../assets/img/wis2box-webapp-synop-form.png" width="800">
 
 !!! question
     Are you able to submit the form? What is the result?
@@ -426,7 +426,7 @@ Into the `SYNOP message` text area:
 
 !!! note
 
-    In the exercise for [ingesting-data-for-publication](ingesting-data-for-publication.md) you ingested the file "synop_202412030900.txt" and it was converted to BUFR format by the synop2bufr module.
+    In the exercise for [ingesting-data-for-publication](./ingesting-data-for-publication.md) you ingested the file "synop_202412030900.txt" and it was converted to BUFR format by the synop2bufr module.
 
     In the automated workflow in the wis2box, the year and month are automatically extracted from the filename and used to populate the `--year` and `--month` arguments required by synop2bufr, while the station metadata is automatically extracted from the station configuration in the wis2box.
 

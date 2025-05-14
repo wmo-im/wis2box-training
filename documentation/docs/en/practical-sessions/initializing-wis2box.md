@@ -18,7 +18,7 @@ title: Initializing wis2box
 
     The current training materials are based on wis2box-release 1.0.0. 
     
-    See [accessing-your-student-vm](accessing-your-student-vm.md) for instructions on how to download and install the wis2box software stack if you are running this training outside of a local training session.
+    See [accessing-your-student-vm](./accessing-your-student-vm.md) for instructions on how to download and install the wis2box software stack if you are running this training outside of a local training session.
 
 ## Preparation
 
@@ -241,7 +241,7 @@ The wis2box contains an API (Application Programming Interface) that provide dat
 
 Open a new tab and navigate to the page `http://YOUR-HOST/oapi`.
 
-<img alt="wis2box-api.png" src="../../assets/img/wis2box-api.png" width="800">
+<img alt="wis2box-api.png" src="/../assets/img/wis2box-api.png" width="800">
 
 This is the landing page of the wis2box API (running via the **wis2box-api** container).
 
@@ -253,7 +253,7 @@ This is the landing page of the wis2box API (running via the **wis2box-api** con
     
     To view collections currently available through the API, click `View the collections in this service`:
 
-    <img alt="wis2box-api-collections.png" src="../../assets/img/wis2box-api-collections.png" width="600">
+    <img alt="wis2box-api-collections.png" src="/../assets/img/wis2box-api-collections.png" width="600">
 
     The following collections are currently available:
 
@@ -288,7 +288,7 @@ You will see a pop-up asking for your username and password. Use the default use
 
 Once logged in, you move your mouse to the menu on the left to see the options available in the wis2box web application:
 
-<img alt="wis2box-webapp-menu.png" src="../../assets/img/wis2box-webapp-menu.png" width="400">
+<img alt="wis2box-webapp-menu.png" src="/../assets/img/wis2box-webapp-menu.png" width="400">
 
 This is the wis2box web application to enable you to interact with your wis2box:
 
@@ -305,14 +305,14 @@ Open the MQTT Explorer on your computer and prepare a new connection to connect 
 
 Click `+` to add a new connection:
 
-<img alt="mqtt-explorer-new-connection.png" src="../../assets/img/mqtt-explorer-new-connection.png" width="300">
+<img alt="mqtt-explorer-new-connection.png" src="/../assets/img/mqtt-explorer-new-connection.png" width="300">
 
 You can click on the 'ADVANCED' button and verify you have subscriptions to the the following topics:
 
 - `#`
 - `$SYS/#`
 
-<img alt="mqtt-explorer-topics.png" src="../../assets/img/mqtt-explorer-topics.png" width="550">
+<img alt="mqtt-explorer-topics.png" src="/../assets/img/mqtt-explorer-topics.png" width="550">
 
 !!! note
 
@@ -342,11 +342,11 @@ Make sure to click "SAVE" to store your connection details.
 
 Then click "CONNECT" to connect to your **wis2box-broker**.
 
-<img alt="mqtt-explorer-wis2box-broker.png" src="../../assets/img/mqtt-explorer-wis2box-broker.png" width="600">
+<img alt="mqtt-explorer-wis2box-broker.png" src="/../assets/img/mqtt-explorer-wis2box-broker.png" width="600">
 
 Once you are connected, verify that your the internal mosquitto statistics being published by your broker under the `$SYS` topic:
 
-<img alt="mqtt-explorer-sys-topic.png" src="../../assets/img/mqtt-explorer-sys-topic.png" width="400">
+<img alt="mqtt-explorer-sys-topic.png" src="/../assets/img/mqtt-explorer-sys-topic.png" width="400">
 
 Keep the MQTT Explorer open, as we will use it to monitor the messages published on the broker.
 

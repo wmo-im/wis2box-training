@@ -1,5 +1,5 @@
 mkdocs
 mkdocs-material
-mkdocs-print-site-plugin
 mkdocs-table-reader-plugin
 mkdocs-static-i18n
+mkdocs-awesome-pages-plugin

@@ -28,7 +28,7 @@ Ensure you have a web browser open with the wis2box-webapp for your instance by 
 
 Go to the 'dataset editor' page in the wis2box-webapp and create a new dataset. Select the Data Type = 'weather/surface-weather-observations/synop'. 
 
-<img alt="create-dataset-recommended" src="../../assets/img/create-dataset-template.png" width="800">
+<img alt="create-dataset-recommended" src="/../assets/img/create-dataset-template.png" width="800">
 
 For "Centre ID", use the same as you used in the previous practical sessions.
 
@@ -37,7 +37,7 @@ Click 'CONTINUE To FORM' to proceed.
 In the dataset editor, set the data policy to 'recommended' (note that changing the data-policy will update the 'Topic Hierarchy').
 Replace the auto-generated 'Local ID' with a descriptive name for the dataset, e.g. 'recommended-data-with-access-control':
 
-<img alt="create-dataset-recommended" src="../../assets/img/create-dataset-recommended.png" width="800">
+<img alt="create-dataset-recommended" src="/../assets/img/create-dataset-recommended.png" width="800">
 
 Continue to fill the required fields for Spatial Properties and Contact Information, and 'Validate form' to check for any errors.
 
@@ -82,7 +82,7 @@ Next, go to the station-editor in the wis2box-webapp. For each station you used 
 
 This station will now be associated to 2 topics, one for the 'core' dataset and one for the 'recommended' dataset:
 
-<img alt="edit-stations-add-topics" src="../../assets/img/edit-stations-add-topics.png" width="600">
+<img alt="edit-stations-add-topics" src="/../assets/img/edit-stations-add-topics.png" width="600">
 
 You will need to use your token for `collections/stations` to save the updated station data.
 

@@ -29,7 +29,7 @@ Connect to your broker using MQTT Explorer.
 
 Instead of using your internal broker credentials, use the public credentials `everyone/everyone`:
 
-<img alt="MQTT Explorer: Connect to broker" src="../../assets/img/mqtt-explorer-wis2box-broker-everyone-everyone.png" width="800">
+<img alt="MQTT Explorer: Connect to broker" src="/../assets/img/mqtt-explorer-wis2box-broker-everyone-everyone.png" width="800">
 
 !!! Note
 
@@ -41,7 +41,7 @@ Instead of using your internal broker credentials, use the public credentials `e
     
 Open a browser and open a page to `http://YOUR-HOST/wis2box-webapp`. Make sure you are logged in and can access the 'dataset editor' page.
 
-See the section on [Initializing wis2box](/practical-sessions/initializing-wis2box) if you need to remember how to connect to the broker or access the wis2box-webapp.
+See the section on [Initializing wis2box](./initializing-wis2box.md) if you need to remember how to connect to the broker or access the wis2box-webapp.
 
 ## Create an authorization token for processes/wis2box
 
@@ -80,7 +80,7 @@ Navigate to the 'dataset editor' page in the wis2box-webapp of your wis2box inst
 
 On the 'dataset editor' page, under the 'Datasets' tab, click on "Create New ...":
 
-<img alt="Create New Dataset" src="../../assets/img/wis2box-create-new-dataset.png" width="800">
+<img alt="Create New Dataset" src="/../assets/img/wis2box-create-new-dataset.png" width="800">
 
 A pop-up window will appear, asking you to provide:
 
@@ -103,7 +103,7 @@ Please choose a centre-id appropriate for your organization.
 
 For **Data Type**, select **weather/surface-based-observations/synop**:
 
-<img alt="Create New Dataset Form: Initial information" src="../../assets/img/wis2box-create-new-dataset-form-initial.png" width="450">
+<img alt="Create New Dataset Form: Initial information" src="/../assets/img/wis2box-create-new-dataset-form-initial.png" width="450">
 
 Click *continue to form* to proceed, you will now be presented with the **Dataset Editor Form**.
 
@@ -117,7 +117,7 @@ Since you have selected the 'weather/surface-based-observations/synop' data type
 
 Please make sure to replace the auto-generated 'Local ID' with a descriptive name for your dataset, e.g. 'synop-dataset-wis2training':
 
-<img alt="Metadata Editor: title, description, keywords" src="../../assets/img/wis2box-metadata-editor-part1.png" width="800">
+<img alt="Metadata Editor: title, description, keywords" src="/../assets/img/wis2box-metadata-editor-part1.png" width="800">
 
 Review the title and keywords, and update them as necessary, and provide a description for your dataset.
 
@@ -125,23 +125,23 @@ Note there are options to change the 'WMO Data Policy' from 'core' to 'recommend
 
 Next, review the section defining your 'Temporal Properties' and 'Spatial Properties'. You can adjust the bounding box by updating the 'North Latitude', 'South Latitude', 'East Longitude', and 'West Longitude' fields:
 
-<img alt="Metadata Editor: temporal properties, spatial properties" src="../../assets/img/wis2box-metadata-editor-part2.png" width="800">
+<img alt="Metadata Editor: temporal properties, spatial properties" src="/../assets/img/wis2box-metadata-editor-part2.png" width="800">
 
 Next, fill out the section defining the 'Contact Information of the Data Provider':
 
-<img alt="Metadata Editor: contact information" src="../../assets/img/wis2box-metadata-editor-part3.png" width="800">
+<img alt="Metadata Editor: contact information" src="/../assets/img/wis2box-metadata-editor-part3.png" width="800">
 
 Finally, fill out the section defining the 'Data Quality Information':
 
 Once you are done filling out all the sections, click 'VALIDATE FORM' and check the form for any errors:
 
-<img alt="Metadata Editor: validation" src="../../assets/img/wis2box-metadata-validation-error.png" width="800">
+<img alt="Metadata Editor: validation" src="/../assets/img/wis2box-metadata-validation-error.png" width="800">
 
 If there are any errors, correct them and click 'VALIDATE FORM' again.
 
 Making sure you have no errors and that you get a pop-up indication your form has been validated:
 
-<img alt="Metadata Editor: validation success" src="../../assets/img/wis2box-metadata-validation-success.png" width="800">
+<img alt="Metadata Editor: validation success" src="/../assets/img/wis2box-metadata-validation-success.png" width="800">
 
 Next, before submitting your dataset, review the data mappings for your dataset.
 
@@ -149,7 +149,7 @@ Next, before submitting your dataset, review the data mappings for your dataset.
 
 Since you used a template to create your dataset, the dataset mappings have been pre-populated with the defaults plugins for the 'weather/surface-based-observations/synop' data type. Data plugins are used in the wis2box to transform data before it is published using the WIS2 notification.
 
-<img alt="Data Mappings: update plugin" src="../../assets/img/wis2box-data-mappings.png" width="800">
+<img alt="Data Mappings: update plugin" src="/../assets/img/wis2box-data-mappings.png" width="800">
 
 Note that you can click on the "update"-button to change settings for the plugin such as file-extension and the file-pattern, you can leave the default settings for now. In a later session, you will learn more about BUFR and the transformation of data into BUFR format.
 
@@ -161,17 +161,17 @@ You will need to provide the authorization token for 'processes/wis2box' that yo
 
 Check that you get the following message after submitting your dataset, indicating that the dataset was successfully submitted:
 
-<img alt="Submit Dataset Success" src="../../assets/img/wis2box-submit-dataset-success.png" width="400">
+<img alt="Submit Dataset Success" src="/../assets/img/wis2box-submit-dataset-success.png" width="400">
 
 After you click 'OK', you are redirected to the Dataset Editor home page. Now if you click on the 'Dataset' tab, you should see your new dataset listed:
 
-<img alt="Dataset Editor: new dataset" src="../../assets/img/wis2box-dataset-editor-new-dataset.png" width="800">
+<img alt="Dataset Editor: new dataset" src="/../assets/img/wis2box-dataset-editor-new-dataset.png" width="800">
 
 ## Reviewing the WIS2-notification for your discovery metadata
 
 Go to MQTT Explorer, if you were connected to the broker, you should see a new WIS2 notification published on the topic `origin/a/wis2/<your-centre-id>/metadata`:
 
-<img alt="MQTT Explorer: WIS2 notification" src="../../assets/img/mqtt-explorer-wis2-notification-metadata.png" width="800">
+<img alt="MQTT Explorer: WIS2 notification" src="/../assets/img/mqtt-explorer-wis2-notification-metadata.png" width="800">
 
 Inspect the content of the WIS2 notification you published. You should see a JSON with a structure corresponding to the WIS Notification Message (WNM) format.
 
@@ -193,7 +193,7 @@ Inspect the content of the WIS2 notification you published. You should see a JSO
     
     Instead, try to look for the canonical link  in the "links"-section in the WIS2 notification:
 
-    <img alt="WIS2 notification for metadata, links sections" src="../../assets/img/wis2-notification-metadata-links.png" width="800">
+    <img alt="WIS2 notification for metadata, links sections" src="/../assets/img/wis2-notification-metadata-links.png" width="800">
 
     **The WIS2 notification contains a canonical link to the WCMP2 record that was published.** 
     

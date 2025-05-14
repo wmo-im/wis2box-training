@@ -155,13 +155,13 @@ Here is how you can connect to your student VM using WinSCP:
 
 Open WinSCP and click on the "New Site". You can create a new SCP connection to your VM as follows:
 
-<img alt="winscp-student-vm-scp.png" src="../../assets/img/winscp-student-vm-scp.png" width="400">
+<img alt="winscp-student-vm-scp.png" src="/../assets/img/winscp-student-vm-scp.png" width="400">
 
 Click 'Save' and then 'Login' to connect to your VM.
 
 And you should be able to see the following content:
 
-<img alt="winscp-student-vm-exercise-materials.png" src="../../assets/img/winscp-student-vm-exercise-materials.png" width="600">
+<img alt="winscp-student-vm-exercise-materials.png" src="/../assets/img/winscp-student-vm-exercise-materials.png" width="600">
 
 ## Conclusion
 

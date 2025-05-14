@@ -9,31 +9,6 @@ site_url: https://training.wis2box.wis.wmo.int
 docs_dir: docs
 site_dir: /tmp/html
 
-nav:
-    - Home: index.md
-    - Practical sessions:
-        - Connecting to WIS2 over MQTT: practical-sessions/connecting-to-wis2-over-mqtt.md
-        - Accessing your student VM: practical-sessions/accessing-your-student-vm.md
-        - Initializing wis2box: practical-sessions/initializing-wis2box.md
-        - Configuring datasets in wis2box: practical-sessions/configuring-wis2box-datasets.md
-        - Configuring station metadata: practical-sessions/configuring-station-metadata.md
-        - Ingesting data for publication: practical-sessions/ingesting-data-for-publication.md
-        - Data conversion tools: practical-sessions/data-conversion-tools.md
-        - CSV-to-BUFR mapping templates: practical-sessions/csv2bufr-templates.md
-        - Adding GTS-headers to WIS2 notifications: practical-sessions/adding-gts-headers-to-wis2-notifications.md
-        - Setting up a recommended dataset with access control: practical-sessions/datasets-with-access-control.md
-        - Downloading data from WIS2: practical-sessions/downloading-data-from-wis2.md
-        - Discovering datasets from the WIS2 Global Discovery Catalogue: practical-sessions/discovering-datasets-from-wis2-gdc.md
-        #- Querying data using the wis2box API: practical-sessions/querying-data-using-the-wis2box-api.md
-        #- Working with BUFR data: practical-sessions/bufr-command-line-tools.md
-    - Cheatsheets:
-        - Linux: cheatsheets/linux.md
-        - Docker: cheatsheets/docker.md
-        - WIS2 in a box: cheatsheets/wis2box.md
-    - csv2bufr templates:
-        - AWS hourly: csv2bufr-templates/aws-template.md
-        - DAYCLI: csv2bufr-templates/daycli-template.md
-
 strict: true
 
 use_directory_urls: true
@@ -47,18 +22,19 @@ theme:
         - content.code.copy
     favicon: https://public.wmo.int/sites/all/themes/wmo/favicon.ico
     logo: assets/img/wmo-logo.png
+    # custom_dir: overrides  # adjust to your layout
 
 plugins:
     - search
+    - awesome-pages
     - table-reader
     - i18n:
-        docs_structure: suffix
+        docs_structure: folder
         languages:
           - locale: en
             default: true
             name: English
             build: true
-    - print-site
 
 markdown_extensions:
     - admonition
