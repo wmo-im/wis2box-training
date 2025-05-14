@@ -403,7 +403,7 @@ AAXX 21121
 
 Into the `SYNOP message` text area:
 
-<img alt="synop-form" src="../../assets/img/wis2box-webapp-synop-form.png" width="800">
+<img alt="synop-form" src="/../assets/img/wis2box-webapp-synop-form.png" width="800">
 
 !!! question
     Are you able to submit the form? What is the result?

@@ -74,13 +74,13 @@ Open MQTT Explorer and add a new connection to the Global Broker hosted by Meteo
 - username: everyone
 - password: everyone
 
-<img alt="mqtt-explorer-global-broker-connection" src="../../assets/img/mqtt-explorer-global-broker-connection.png" width="800">
+<img alt="mqtt-explorer-global-broker-connection" src="/../assets/img/mqtt-explorer-global-broker-connection.png" width="800">
 
 Click on the 'ADVANCED' button, remove the pre-configured topics and add the following topics to subscribe to:
 
 - `origin/a/wis2/#`
 
-<img alt="mqtt-explorer-global-broker-advanced" src="../../assets/img/mqtt-explorer-global-broker-sub-origin.png" width="800">
+<img alt="mqtt-explorer-global-broker-advanced" src="/../assets/img/mqtt-explorer-global-broker-sub-origin.png" width="800">
 
 !!! note
     When setting up MQTT subscriptions you can use the following wildcards:
@@ -94,7 +94,7 @@ Click 'BACK', then 'SAVE' to save your connection and subscription details.  The
 
 Messages should start appearing in your MQTT Explorer session as follows:
 
-<img alt="mqtt-explorer-global-broker-topics" src="../../assets/img/mqtt-explorer-global-broker-msg-origin.png" width="800">
+<img alt="mqtt-explorer-global-broker-topics" src="/../assets/img/mqtt-explorer-global-broker-msg-origin.png" width="800">
 
 You are now ready to start exploring the WIS2 topics and message structure.
 
@@ -135,7 +135,7 @@ Disconnect from MQTT Explorer and update the 'Advanced' sections to change the s
 * `origin/a/wis2/+/data/core/weather/surface-based-observations/synop`
 * `cache/a/wis2/+/data/core/weather/surface-based-observations/synop`
 
-<img alt="mqtt-explorer-global-broker-topics-exercise2" src="../../assets/img/mqtt-explorer-global-broker-sub-origin-cache-synop.png" width="800">
+<img alt="mqtt-explorer-global-broker-topics-exercise2" src="/../assets/img/mqtt-explorer-global-broker-sub-origin-cache-synop.png" width="800">
 
 !!! note
     The `+` wildcard is used to subscribe to all WIS-centres.
@@ -154,7 +154,7 @@ You can view the content of the WIS2 message in the "Value" section on the right
 
     The timestamp that the data was collected is contained in the `properties` section of the message with a key of `datetime`.
 
-    <img alt="mqtt-explorer-global-broker-msg-properties" src="../../assets/img/mqtt-explorer-global-broker-msg-properties.png" width="800">
+    <img alt="mqtt-explorer-global-broker-msg-properties" src="/../assets/img/mqtt-explorer-global-broker-msg-properties.png" width="800">
 
 !!! question
 
