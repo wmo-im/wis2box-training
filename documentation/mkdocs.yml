@@ -35,6 +35,31 @@ plugins:
             default: true
             name: English
             build: true
+          - locale: fr
+            name: Français
+            build: true
+          - locale: es
+            name: Español
+            build: true
+          - locale: pt
+            name: Português
+            build: true
+          - locale: zh
+            name: 中文
+            build: true
+          - locale: ru
+            name: Русский
+            build: true
+          - locale: ar
+            name: العربية
+            build: true
+          - locale: de
+            name: Deutsch
+            build: true
+          - locale: it
+            name: Italiano
+            build: true
+
 
 markdown_extensions:
     - admonition
@@ -48,3 +73,6 @@ markdown_extensions:
 
 extra_css:
     - assets/css/custom.css
+
+extra_javascript:
+    - assets/js/disclaimer.js
