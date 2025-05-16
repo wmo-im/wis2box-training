@@ -1,0 +1,16 @@
+title: Sesiones prácticas
+nav:
+  - connecting-to-wis2-over-mqtt.md
+  - accessing-your-student-vm.md
+  - initializing-wis2box.md
+  - configuring-wis2box-datasets.md
+  - configuring-station-metadata.md
+  - ingesting-data-for-publication.md
+  - data-conversion-tools.md
+  - csv2bufr-templates.md
+  - adding-gts-headers-to-wis2-notifications.md
+  - datasets-with-access-control.md
+  - downloading-data-from-wis2.md
+  - discovering-datasets-from-wis2-gdc.md
+
+collapse: false
