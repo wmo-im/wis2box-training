@@ -2,7 +2,7 @@
 title: 首页
 ---
 
-<img alt="WMO logo" src="../assets/img/wmo-logo.png" width="200">
+<img alt="WMO logo" src="/assets/img/wmo-logo.png" width="200">
 # WIS2 in a box 培训
 
 WIS2 in a box ([wis2box](https://docs.wis2box.wis.wmo.int)) 是一个免费开源的 WMO WIS2 Node 参考实现。该项目提供了一套即插即用的工具集，用于按照 WIS2 原则，采用基于标准的方法来摄取、处理和发布天气/气候/水文数据。wis2box 还提供对 WIS2 网络中所有数据的访问。wis2box 的设计目标是降低数据提供者的使用门槛，为数据发现、访问和可视化提供基础设施和服务。

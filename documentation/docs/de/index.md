@@ -2,7 +2,7 @@
 title: Startseite
 ---
 
-<img alt="WMO logo" src="assets/img/wmo-logo.png" width="200">
+<img alt="WMO logo" src="/assets/img/wmo-logo.png" width="200">
 # WIS2 in a box Schulung
 
 WIS2 in a box ([wis2box](https://docs.wis2box.wis.wmo.int)) ist eine freie und Open-Source (FOSS) Referenzimplementierung eines WMO WIS2-Knotens. Das Projekt bietet ein Plug-and-Play-Toolset zum Erfassen, Verarbeiten und Veröffentlichen von Wetter-/Klima-/Wasserdaten unter Verwendung von standardbasierten Ansätzen in Übereinstimmung mit den WIS2-Prinzipien. wis2box bietet auch Zugang zu allen Daten im WIS2-Netzwerk. wis2box ist so konzipiert, dass es für Datenanbieter eine niedrige Einstiegshürde bietet und Infrastruktur und Dienste zur Datenentdeckung, -zugriff und -visualisierung ermöglicht.

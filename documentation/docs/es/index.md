@@ -2,7 +2,7 @@
 title: Inicio
 ---
 
-<img alt="Logo de la OMM" src="assets/img/wmo-logo.png" width="200">
+<img alt="Logo de la OMM" src="/assets/img/wmo-logo.png" width="200">
 # Capacitación de WIS2 in a box
 
 WIS2 in a box ([wis2box](https://docs.wis2box.wis.wmo.int)) es una Implementación de Referencia de Código Abierto y Gratuita de un Nodo WIS2 de la OMM. El proyecto proporciona un conjunto de herramientas plug and play para ingerir, procesar y publicar datos de clima, agua y meteorología utilizando enfoques basados en estándares alineados con los principios de WIS2. wis2box también proporciona acceso a todos los datos en la red WIS2. wis2box está diseñado para tener una baja barrera de entrada para los proveedores de datos, proporcionando infraestructura y servicios habilitantes para el descubrimiento, acceso y visualización de datos.

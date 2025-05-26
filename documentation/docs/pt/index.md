@@ -2,7 +2,7 @@
 title: Início
 ---
 
-<img alt="Logotipo da WMO" src="assets/img/wmo-logo.png" width="200">
+<img alt="Logotipo da WMO" src="/assets/img/wmo-logo.png" width="200">
 # Treinamento WIS2 in a box
 
 WIS2 in a box ([wis2box](https://docs.wis2box.wis.wmo.int)) é uma Implementação de Referência Livre e de Código Aberto (FOSS) de um WIS2 Node da WMO. O projeto fornece um conjunto de ferramentas plug and play para ingestão, processamento e publicação de dados meteorológicos/climáticos/hídricos usando abordagens baseadas em padrões alinhadas aos princípios do WIS2. wis2box também oferece acesso a todos os dados na rede WIS2. wis2box é projetado para ter uma barreira baixa de entrada para provedores de dados, fornecendo infraestrutura e serviços habilitadores para descoberta, acesso e visualização de dados.

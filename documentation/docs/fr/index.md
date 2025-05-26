@@ -2,7 +2,7 @@
 title: Accueil
 ---
 
-<img alt="Logo OMM" src="assets/img/wmo-logo.png" width="200">
+<img alt="Logo OMM" src="/assets/img/wmo-logo.png" width="200">
 # Formation WIS2 in a box
 
 WIS2 in a box ([wis2box](https://docs.wis2box.wis.wmo.int)) est une mise en œuvre de référence libre et open source (FOSS) d'un nœud WIS2 de l'OMM. Le projet fournit un ensemble d'outils prêts à l'emploi pour ingérer, traiter et publier des données météorologiques/climatiques/hydrologiques en utilisant des approches basées sur des normes, conformément aux principes de WIS2. wis2box offre également un accès à toutes les données du réseau WIS2. wis2box est conçu pour avoir un faible seuil d'entrée pour les fournisseurs de données, fournissant une infrastructure et des services facilitant la découverte, l'accès et la visualisation des données.
