@@ -42,9 +42,6 @@ plugins:
           - locale: es
             name: Español
             build: true
-          - locale: pt
-            name: Português
-            build: true
           - locale: zh
             name: 中文
             build: true
@@ -53,12 +50,6 @@ plugins:
             build: true
           - locale: ar
             name: العربية
-            build: true
-          - locale: de
-            name: Deutsch
-            build: true
-          - locale: it
-            name: Italiano
             build: true
 
 
