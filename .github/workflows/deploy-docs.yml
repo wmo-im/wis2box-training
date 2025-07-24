@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - wis2box-training
 jobs:
 
   setup:
