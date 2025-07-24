@@ -1,12 +1,43 @@
-topics/*.html
-documentation/*.html
-documentation/*/*.html
-topics/*/*.html
+# Environment variables
 .env
-update_topics_bucket_old.py
+.env.*
 
-site
-upload_training_materials.py
-.vscode/settings.json
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib
+lib64/
+parts/
+sdist/
+var/
+bin/
+*.egg-info/
+.installed.cfg
+*.egg
+pyvenv.cfg
+lib64
+# Virtual environments
+venv/
+ENV/
+env/
 
+# Editor settings
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS specific files
 .DS_Store
+Thumbs.db

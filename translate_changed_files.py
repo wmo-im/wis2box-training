@@ -67,12 +67,13 @@ def estimate_token_count(text, model="gpt-4-turbo"):
 
 def get_changed_files():
     result = subprocess.run(
-        ['git', 'diff', '--name-only', 'HEAD'],
+        ['git', 'diff', '--name-only', 'HEAD^..HEAD'],
         stdout=subprocess.PIPE,
         text=True,
         check=True
     )
-    return [line.strip() for line in result.stdout.splitlines() if line.strip().endswith('.md')]
+    valid_exts = ('.md', '.pages')
+    return [line.strip() for line in result.stdout.splitlines() if line.strip().endswith(valid_exts)]
 
 def estimate_token_count(text):
     # Simple approximation: 1 token ≈ 4 characters (adjust as needed)
@@ -231,10 +232,11 @@ def translate_file(source_path: Path, lang: str):
 def main():
     if '--changed-only' in sys.argv:
         changed = get_changed_files()
+        print(f"Changed files: {changed}")
         md_files = [Path(f) for f in changed if f.startswith(str(EN_DIR))]
     else:
         # translate all files in the EN_DIR
-        md_files = list(EN_DIR.rglob('csv2bufr-templates.md'))
+        md_files = list(EN_DIR.rglob('*.md'))
     
     print(f"target languages: {TARGET_LANGS}")
     print(f"Found {len(md_files)} Markdown files to translate.")
