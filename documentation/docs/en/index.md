@@ -27,7 +27,7 @@ The goals of this training are to become familiar with the following:
     - data ingest and transformation to BUFR format
     - MQTT broker for WIS2 message publishing
     - HTTP endpoint for data download
-    - API endpoint for programmatic access to data
+    - API endpoint for programmatic access to data.
 
 ## Navigation
 
