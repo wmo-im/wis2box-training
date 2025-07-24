@@ -68,4 +68,5 @@ jobs:
         env:
           CI: true
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: mkdocs gh-deploy --config-file documentation/mkdocs.yml --force
+        run: |
+          mkdocs gh-deploy --config-file documentation/mkdocs.yml --force
