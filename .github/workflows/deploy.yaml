@@ -8,6 +8,10 @@ jobs:
 
   setup:
     runs-on: ubuntu-latest
+    env:
+      GITHUB_EVENT_BEFORE: ${{ github.event.before }}
+      GITHUB_SHA: ${{ github.sha }}
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
     permissions:
       contents: write  # Add this line to grant write access
     outputs:
