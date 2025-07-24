@@ -66,26 +66,12 @@ def estimate_token_count(text, model="gpt-4-turbo"):
     return len(enc.encode(text))
 
 def get_changed_files():
-    # Get commit range
-    before = os.environ.get("GITHUB_EVENT_BEFORE")
-    after = os.environ.get("GITHUB_SHA")
-
-    # If not in GitHub Actions, compute range locally
-    if not before or not after:
-        # Ensure origin/main is available
-        subprocess.run(['git', 'fetch', 'origin', 'main'], check=True)
-        # Find base commit of current branch with main
-        before = subprocess.check_output(['git', 'merge-base', 'origin/main', 'HEAD'], text=True).strip()
-        after = 'HEAD'
-
-    # Run diff
     result = subprocess.run(
-        ['git', 'diff', '--name-only', before, after],
+        ['git', 'diff', '--name-only', 'HEAD^..HEAD'],
         stdout=subprocess.PIPE,
         text=True,
         check=True
     )
-
     valid_exts = ('.md', '.pages')
     return [line.strip() for line in result.stdout.splitlines() if line.strip().endswith(valid_exts)]
 
