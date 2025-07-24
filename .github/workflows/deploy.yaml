@@ -66,7 +66,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install mkdocs mkdocs-material mkdocs-static-i18n mkdocs-table-reader-plugin mkdocs-print-site-plugin
+          pip install mkdocs mkdocs-material mkdocs-static-i18n mkdocs-table-reader-plugin mkdocs-print-site-plugin mkdocs-awesome-pages-plugin
 
       - name: Deploy with MkDocs
         env:
