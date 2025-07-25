@@ -1,4 +1,4 @@
-name: Test documentation
+name: Test documentation ⚙️
 
 on:
   pull_request:
