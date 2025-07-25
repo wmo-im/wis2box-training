@@ -40,6 +40,9 @@ The 'vm-clone-base' template consists of:
       - minio
       - pywiscat
 
+Each vm-clone-base should have been prepared with the wis2box-images for the wis2box-release to be used during the training.
+See https://github.com/World-Meteorological-Organization/wis2box-release/blob/1.0.0/docker-compose.images.yml
+
 ### VM naming convention
 
 ProxMox hosts running on mini PCs:
