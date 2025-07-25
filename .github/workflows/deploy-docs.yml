@@ -43,6 +43,7 @@ jobs:
         id: check
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          ADMIN_PAT: ${{ secrets.ADMIN_PAT }}
         run: |
           echo "Running translation script..."
           python translate_changed_files.py --changed-only
@@ -53,7 +54,7 @@ jobs:
           git add .
           git diff --cached --quiet && echo "translated=false" >> $GITHUB_OUTPUT || (
             git commit -m "Auto-translated docs"
-            git push
+            git push https://x-access-token:${ADMIN_PAT}@github.com/${{ github.repository }} HEAD:main
             echo "translated=true" >> $GITHUB_OUTPUT
           )
 
