@@ -1,15 +1,15 @@
 ---
-title: WIS2 in a box cheatsheet
+title: دليل مختصر لـ WIS2 in a box
 ---
 
-# WIS2 in a box cheatsheet
+# دليل مختصر لـ WIS2 in a box
 
 ## نظرة عامة
 
-يعمل `wis2box` كمجموعة من أوامر Docker Compose. الأمر ``wis2box-ctl.py`` هو أداة 
+يعمل `wis2box` كمجموعة من أوامر Docker Compose. يُعتبر الأمر ``wis2box-ctl.py`` أداة 
 (مكتوبة بلغة Python) لتسهيل تشغيل أوامر Docker Compose.
 
-## أساسيات أوامر wis2box
+## الأساسيات لأوامر wis2box
 
 ### بدء التشغيل والإيقاف
 
@@ -25,13 +25,13 @@ python3 wis2box-ctl.py start
 python3 wis2box-ctl.py stop
 ```
 
-* التحقق من تشغيل جميع حاويات wis2box:
+* التحقق من أن جميع حاويات wis2box تعمل:
 
 ```bash
 python3 wis2box-ctl.py status
 ```
 
-* تسجيل الدخول إلى حاوية wis2box (*wis2box-management* افتراضيًا):
+* تسجيل الدخول إلى حاوية wis2box (*wis2box-management* بشكل افتراضي):
 
 ```bash
 python3 wis2box-ctl.py login
