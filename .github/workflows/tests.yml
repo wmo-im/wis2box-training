@@ -24,4 +24,3 @@ jobs:
           pip install -r requirements.txt
       - name: Deploy 📦
         run: mkdocs build --strict
-

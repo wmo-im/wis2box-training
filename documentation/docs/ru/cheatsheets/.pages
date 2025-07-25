@@ -1,0 +1,5 @@
+title: Шпаргалки
+nav:
+  - linux.md
+  - docker.md
+  - wis2box.md

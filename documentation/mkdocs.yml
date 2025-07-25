@@ -3,7 +3,7 @@ site_description: "WIS2 in a box (wis2box) is a Free and Open Source (FOSS) Refe
 site_author: World Meteorological Organization
 copyright: "&copy; 2023 World Meteorological Organization"
 site_url: https://training.wis2box.wis.wmo.int
-#repo_url: https://github.com/World-Meteorological-Organization/wis2box-training
+#repo_url: httphs://github.com/World-Meteorological-Organization/wis2box-training
 #edit_uri: tree/main/documentation/docs
 
 docs_dir: docs
@@ -35,6 +35,22 @@ plugins:
             default: true
             name: English
             build: true
+          - locale: fr
+            name: Français
+            build: true
+          - locale: es
+            name: Español
+            build: true
+          - locale: zh
+            name: 中文
+            build: true
+          - locale: ru
+            name: Русский
+            build: true
+          - locale: ar
+            name: العربية
+            build: true
+
 
 markdown_extensions:
     - admonition
@@ -48,3 +64,6 @@ markdown_extensions:
 
 extra_css:
     - assets/css/custom.css
+
+extra_javascript:
+    - assets/js/disclaimer.js
