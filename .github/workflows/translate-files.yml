@@ -1,0 +1,55 @@
+name: Translate files ⚙️
+
+on:
+  pull_request:
+    paths:
+      - 'documentation/docs/en/**'
+
+defaults:
+  run:
+    working-directory: documentation
+
+jobs:
+
+  setup-translate:
+    runs-on: ubuntu-latest
+    env:
+      GITHUB_EVENT_BEFORE: ${{ github.event.before }}
+      GITHUB_SHA: ${{ github.sha }}
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+    permissions:
+      contents: write  # Add this line to grant write access
+    outputs:
+      translated: ${{ steps.check.outputs.translated }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # Fetch the entire commit history to get all changes
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.x
+
+      - name: Install dependencies
+        run: |
+          pip install openai==1.65.3 anthropic tiktoken python-dotenv
+
+      - name: Run translation script
+        id: check
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          echo "Running translation script..."
+          python translate_changed_files.py --changed-only
+          
+          # Check if there are new changes to commit
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add .
+          git diff --cached --quiet && echo "translated=false" >> $GITHUB_OUTPUT || (
+            git commit -m "Auto-translated docs"
+            git push origin HEAD:${{ github.head_ref }}
+            echo "translated=true" >> $GITHUB_OUTPUT
+          )

@@ -1,7 +1,7 @@
 name: Test documentation ⚙️
 
 on:
-  pull_request:
+  push:
     paths:
       - 'documentation/**'
 
