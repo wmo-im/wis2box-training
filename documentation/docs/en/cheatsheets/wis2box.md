@@ -6,7 +6,7 @@ title: WIS2 in a box cheatsheet
 
 ## Overview
 
-wis2box runs as a suite of Docker Compose commands.  The ``wis2box-ctl.py`` command is a utility
+wis2box runs as a suite of Docker Compose commands. The ``wis2box-ctl.py`` command is a utility
 (written in Python) to run Docker Compose commands easily.
 
 ## wis2box command essentials
