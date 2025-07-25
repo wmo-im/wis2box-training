@@ -1,0 +1,1108 @@
+
+<!doctype html>
+<html lang="ar" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="WIS2 in a box (wis2box) is a Free and Open Source (FOSS) Reference Implementation of a WMO WIS2 Node. The project provides a plug and play toolset to ingest, process, and publish weather/climate/water data using standards-based approaches in alignment with the WIS2 principles. wis2box also provides access to all data in the WIS2 network. wis2box is designed to have a low barrier to entry for data providers, providing enabling infrastructure and services for data discovery, access, and visualization.">
+      
+      
+        <meta name="author" content="World Meteorological Organization">
+      
+      
+        <link rel="canonical" href="https://training.wis2box.wis.wmo.int/ar/practical-sessions/monitoring-wis2-notifications/">
+      
+      
+        <link rel="prev" href="../initializing-wis2box/">
+      
+      
+        <link rel="next" href="../querying-data-using-the-wis2box-api/">
+      
+      
+      <link rel="icon" href="https://public.wmo.int/sites/all/themes/wmo/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.15">
+    
+    
+      
+        <title>مراقبة إشعارات WIS2 - WIS2 in a box training</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.342714a4.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/css/custom.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="rtl" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#wis2" class="md-skip">
+          انتقل إلى المحتوى
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="عنوان العارضة">
+    <a href="../../" title="WIS2 in a box training" class="md-header__button md-logo" aria-label="WIS2 in a box training" data-md-component="logo">
+      
+  <img src="../../../assets/img/wmo-logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            WIS2 in a box training
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              مراقبة إشعارات WIS2
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+      <div class="md-header__option">
+  <div class="md-select">
+    
+    <button class="md-header__button md-icon" aria-label="إختر اللغة">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12.87 15.07-2.54-2.51.03-.03A17.5 17.5 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2zm-2.62 7 1.62-4.33L19.12 17z"/></svg>
+    </button>
+    <div class="md-select__inner">
+      <ul class="md-select__list">
+        
+          <li class="md-select__item">
+            <a href="/" hreflang="en" class="md-select__link">
+              English
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="../../../fr/practical-sessions/monitoring-wis2-notifications/" hreflang="fr" class="md-select__link">
+              Français
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="../../../es/practical-sessions/monitoring-wis2-notifications/" hreflang="es" class="md-select__link">
+              Español
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="../../../zh/practical-sessions/monitoring-wis2-notifications/" hreflang="zh" class="md-select__link">
+              中文
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="../../../ru/practical-sessions/monitoring-wis2-notifications/" hreflang="ru" class="md-select__link">
+              Русский
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="./" hreflang="ar" class="md-select__link">
+              العربية
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</div>
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="بحث" placeholder="بحث" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="إبحث">
+        
+        <button type="reset" class="md-search__icon md-icon" title="مسح كلي" aria-label="مسح كلي" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            بدء البحث
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="تصفح" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../" title="WIS2 in a box training" class="md-nav__button md-logo" aria-label="WIS2 in a box training" data-md-component="logo">
+      
+  <img src="../../../assets/img/wmo-logo.png" alt="logo">
+
+    </a>
+    WIS2 in a box training
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    الصفحة الرئيسية
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    أوراق المساعدة
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            أوراق المساعدة
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cheatsheets/linux/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    دليل Linux المختصر
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cheatsheets/docker/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Docker cheatsheet
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cheatsheets/wis2box/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    دليل مختصر لـ WIS2 in a box
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    جلسات عملية
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            جلسات عملية
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../connecting-to-wis2-over-mqtt/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    الاتصال بـ WIS2 عبر MQTT
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../accessing-your-student-vm/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    الوصول إلى جهاز الطالب الافتراضي (VM)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../initializing-wis2box/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    تهيئة wis2box
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../configuring-wis2box-datasets/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    تكوين مجموعات البيانات في wis2box
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../configuring-station-metadata/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    تكوين بيانات المحطة الوصفية
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ingesting-data-for-publication/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    إدخال البيانات للنشر
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../data-conversion-tools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    أدوات تحويل البيانات
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../csv2bufr-templates/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    قوالب تحويل CSV إلى BUFR
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../adding-gts-headers-to-wis2-notifications/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    إضافة رؤوس GTS إلى إشعارات WIS2
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../datasets-with-access-control/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    إعداد مجموعة بيانات موصى بها مع التحكم في الوصول
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../downloading-data-from-wis2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    تنزيل وفك تشفير البيانات من WIS2
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../discovering-datasets-from-wis2-gdc/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    اكتشاف مجموعات البيانات من فهرس الاكتشاف العالمي WIS2
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    قوالب csv2bufr
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            قوالب csv2bufr
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../csv2bufr-templates/aws-template/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    قالب AWS
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../csv2bufr-templates/daycli-template/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    قالب DAYCLI
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="جدول المحتويات">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      جدول المحتويات
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      المقدمة
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      التحضير
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      إدخال بعض البيانات
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      عرض محتوى البيانات التي نشرتها
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="wis2">مراقبة إشعارات WIS2</h1>
+<div class="admonition abstract">
+<p class="admonition-title">نتائج التعلم</p>
+<p>بنهاية هذه الجلسة العملية، ستكون قادرًا على:</p>
+<ul>
+<li>تشغيل سير عمل wis2box عن طريق تحميل البيانات في MinIO باستخدام الأمر <code>wis2box data ingest</code></li>
+<li>مشاهدة التحذيرات والأخطاء المعروضة في لوحة تحكم Grafana</li>
+<li>التحقق من محتوى البيانات المنشورة</li>
+</ul>
+</div>
+<h2 id="_1">المقدمة</h2>
+<p>تستخدم لوحة تحكم <strong>Grafana</strong> بيانات من Prometheus و Loki لعرض حالة wis2box الخاص بك. يخزن Prometheus البيانات الزمنية من المقاييس المجمعة، بينما يخزن Loki السجلات من الحاويات التي تعمل على نسخة wis2box الخاصة بك. تسمح لك هذه البيانات بالتحقق من كمية البيانات المستلمة على MinIO وعدد إشعارات WIS2 المنشورة، وما إذا كانت هناك أية أخطاء مكتشفة في السجلات.</p>
+<p>لرؤية محتوى إشعارات WIS2 التي يتم نشرها على مواضيع مختلفة من wis2box الخاص بك، يمكنك استخدام علامة التبويب 'Monitor' في <strong>wis2box-webapp</strong>.</p>
+<h2 id="_2">التحضير</h2>
+<p>سيستخدم هذا القسم مجموعة البيانات "surface-based-observations/synop" التي تم إنشاؤها مسبقًا في جلسة <a href="/practical-sessions/configuring-wis2box-datasets">تكوين مجموعات البيانات في wis2box</a>.</p>
+<p>قم بتسجيل الدخول إلى جهاز الطالب الافتراضي الخاص بك باستخدام عميل SSH (PuTTY أو غيره).</p>
+<p>تأكد من أن wis2box يعمل:</p>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>~/wis2box-1.0.0rc1/
+python3<span class="w"> </span>wis2box-ctl.py<span class="w"> </span>start
+python3<span class="w"> </span>wis2box-ctl.py<span class="w"> </span>status
+</code></pre></div>
+<p>تأكد من أن لديك MQTT Explorer قيد التشغيل ومتصل بنسختك باستخدام بيانات الاعتماد العامة <code>everyone/everyone</code> مع اشتراك في الموضوع <code>origin/a/wis2/#</code>.</p>
+<p>تأكد من أن لديك وصولاً إلى واجهة الويب MinIO بالانتقال إلى <code>http://&lt;your-host&gt;:9000</code> وأنك قد سجلت الدخول (باستخدام <code>WIS2BOX_STORAGE_USERNAME</code> و <code>WIS2BOX_STORAGE_PASSWORD</code> من ملف <code>wis2box.env</code> الخاص بك).</p>
+<p>تأكد من أن لديك متصفح ويب مفتوح مع لوحة تحكم Grafana لنسختك بالانتقال إلى <code>http://&lt;your-host&gt;:3000</code>.</p>
+<h2 id="_3">إدخال بعض البيانات</h2>
+<p>يرجى تنفيذ الأوامر التالية من جلسة عميل SSH الخاصة بك:</p>
+<p>انسخ ملف البيانات النموذجي <code>aws-example.csv</code> إلى الدليل الذي حددته كـ <code>WI2BOX_HOST_DATADIR</code> في ملف <code>wis2box.env</code> الخاص بك.</p>
+<div class="highlight"><pre><span></span><code>cp<span class="w"> </span>~/exercise-materials/monitoring-exercises/aws-example.csv<span class="w"> </span>~/wis2box-data/
+</code></pre></div>
+<p>تأكد من أنك في دليل <code>wis2box-1.0.0rc1</code> وقم بتسجيل الدخول إلى حاوية <strong>wis2box-management</strong>:</p>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>~/wis2box-1.0.0rc1
+python3<span class="w"> </span>wis2box-ctl.py<span class="w"> </span>login
+</code></pre></div>
+<p>تحقق من توفر البيانات النموذجية في الدليل <code>/data/wis2box/</code> داخل حاوية <strong>wis2box-management</strong>:</p>
+<div class="highlight"><pre><span></span><code>ls<span class="w"> </span>-lh<span class="w"> </span>/data/wis2box/aws-example.csv
+</code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>يتم تركيب <code>WIS2BOX_HOST_DATADIR</code> كـ <code>/data/wis2box/</code> داخل حاوية إدارة wis2box بواسطة ملف <code>docker-compose.yml</code> المضمن في دليل <code>wis2box-1.0.0rc1</code>.</p>
+<p>هذا يسمح لك بمشاركة البيانات بين الخادم والحاوية.</p>
+</div>
+<div class="admonition question">
+<p class="admonition-title">تمرين 1: إدخال البيانات باستخدام <code>wis2box data ingest</code></p>
+<p>نفذ الأمر التالي لإدخال ملف البيانات النموذجي <code>aws-example.csv</code> إلى نسخة wis2box الخاصة بك:</p>
+<div class="highlight"><pre><span></span><code>wis2box<span class="w"> </span>data<span class="w"> </span>ingest<span class="w"> </span>-p<span class="w"> </span>/data/wis2box/aws-example.csv<span class="w"> </span>--metadata-id<span class="w"> </span>urn:wmo:md:not-my-centre:core.surface-based-observations.synop
+</code></pre></div>
+<p>هل تم إدخال البيانات بنجاح؟ إذا لم يكن كذلك، ما هي رسالة الخطأ وكيف يمكنك إصلاحها؟</p>
+</div>
+<details class="success">
+<summary>انقر لكشف الإجابة</summary>
+<p>سترى الإخراج التالي:</p>
+<div class="highlight"><pre><span></span><code>Error:<span class="w"> </span><span class="nv">metadata_id</span><span class="o">=</span>urn:wmo:md:not-my-centre:core.surface-based-observations.synop<span class="w"> </span>not<span class="w"> </span>found<span class="w"> </span><span class="k">in</span><span class="w"> </span>data<span class="w"> </span>mappings
+</code></pre></div>
+<p>تشير رسالة الخطأ إلى أن المعرف الوصفي الذي قدمته لا يتطابق مع أي من مجموعات البيانات التي قمت بتكوينها في نسخة wis2box الخاصة بك.</p>
+<p>قدم المعرف الوصفي الصحيح الذي يتطابق مع مجموعة البيانات التي أنشأتها في الجلسة العملية السابقة وكرر أمر إدخال البيانات حتى يجب أن ترى الإخراج التالي:</p>
+<div class="highlight"><pre><span></span><code>Processing<span class="w"> </span>/data/wis2box/aws-example.csv
+Done
+</code></pre></div>
+</details>
+<p>انتقل إلى وحدة تحكم MinIO في متصفحك وتحقق مما إذا تم تحميل ملف <code>aws-example.csv</code> في دلو <code>wis2box-incoming</code>. يجب أن ترى دليلًا جديدًا باسم مجموعة البيانات التي قدمتها في خيار <code>--metadata-id</code>:</p>
+<p><img alt="minio-wis2box-incoming-dataset-folder" src="/../assets/img/minio-wis2box-incoming-dataset-folder.png" width="800"></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>قام الأمر <code>wis2box data ingest</code> بتحميل الملف إلى دلو <code>wis2box-incoming</code> في MinIO في دليل يحمل اسم المعرف الوصفي الذي قدمته.</p>
+</div>
+<p>انتقل إلى لوحة تحكم Grafana في متصفحك وتحقق من حالة إدخال البيانات.</p>
+<div class="admonition question">
+<p class="admonition-title">تمرين 2: التحقق من حالة إدخال البيانات</p>
+<p>انتقل إلى لوحة تحكم Grafana في متصفحك وتحقق من حالة إدخال البيانات.</p>
+<p>هل تم إدخال البيانات بنجاح؟</p>
+</div>
+<details class="success">
+<summary>انقر لكشف الإجابة</summary>
+<p>تقارير اللوحة في أسفل لوحة تحكم Grafana الرئيسية التحذيرات التالية:    </p>
+<p><code>WARNING - input=aws-example.csv warning=Station 0-20000-0-60355 not in station list; skipping</code>
+<code>WARNING - input=aws-example.csv warning=Station 0-20000-0-60360 not in station list; skipping</code></p>
+<p>تشير هذه التحذيرات إلى أن المحطات ليست معرفة في قائمة المحطات الخاصة بـ wis2box. لن يتم نشر أية إشعارات WIS2 لهذه المحطة حتى تقوم بإضافتها إلى قائمة المحطات وربطها بموضوع مجموعة البيانات الخاصة بك.</p>
+</details>
+<div class="admonition question">
+<p class="admonition-title">تمرين 3: إضافة المحطات التجريبية وتكرار إدخال البيانات</p>
+<p>أضف المحطات إلى wis2box الخاص بك باستخدام محرر المحطات في <strong>wis2box-webapp</strong>، واربط المحطات بموضوع مجموعة البيانات الخاصة بك.</p>
+<p>الآن أعد تحميل ملف البيانات النموذجي <code>aws-example.csv</code> إلى نفس المسار في MinIO الذي استخدمته في التمرين السابق.</p>
+<p>تحقق من لوحة تحكم Grafana، هل هناك أية أخطاء أو تحذيرات جديدة؟ كيف يمكنك معرفة أن البيانات التجريبية تم إدخالها ونشرها بنجاح؟</p>
+</div>
+<details class="success">
+<summary>انقر لكشف الإجابة</summary>
+<p>يمكنك التحقق من الرسوم البيانية على لوحة تحكم Grafana الرئيسية لمعرفة ما إذا تم إدخال البيانات التجريبية ونشرها بنجاح.</p>
+<p>إذا نجحت، يجب أن ترى ما يلي:</p>
+<p><img alt="grafana_success" src="/../assets/img/grafana_success.png" width="800"></p>
+</details>
+<div class="admonition question">
+<p class="admonition-title">تمرين 4: التحقق من وسيط MQTT لإشعارات WIS2</p>
+<p>انتقل إلى MQTT Explorer وتحقق مما إذا كان بإمكانك رؤية رسالة إشعار WIS2 للبيانات التي قمت بإدخالها للتو.</p>
+<p>كم عدد إشعارات البيانات WIS2 التي نشرها wis2box الخاص بك؟</p>
+<p>كيف يمكنك الوصول إلى محتوى البيانات المنشورة؟</p>
+</div>
+<details class="success">
+<summary>انقر لكشف الإجابة</summary>
+<p>يجب أن ترى 6 إشعارات بيانات WIS2 نشرها wis2box الخاص بك.</p>
+<p>للوصول إلى محتوى البيانات المنشورة، يمكنك توسيع هيكل الموضوع لرؤية المستويات المختلفة للرسالة حتى تصل إلى المستوى الأخير ومراجعة محتوى رسالة واحدة.</p>
+<p>يحتوي محتوى الرسالة على قسم "links" مع مفتاح "rel" بقيمة "canonical" ومفتاح "href" بعنوان URL لتنزيل البيانات. سيكون تنسيق URL على النحو التالي <code>http://&lt;your-host&gt;/data/...</code>. </p>
+<p>لاحظ أن تنسيق البيانات هو BUFR وستحتاج إلى محلل BUFR لعرض محتوى البيانات. تنسيق BUFR هو تنسيق ثنائي يستخدمه الخدمات الجوية لتبادل البيانات. قامت الإضافات البيانية داخل wis2box بتحويل البيانات من CSV إلى BUFR قبل نشرها.</p>
+</details>
+<h2 id="_4">عرض محتوى البيانات التي نشرتها</h2>
+<p>يمكنك استخدام <strong>wis2box-webapp</strong> لعرض محتوى إشعارات البيانات WIS2 التي تم نشرها بواسطة wis2box الخاص بك.</p>
+<p>افتح <strong>wis2box-webapp</strong> في متصفحك بالانتقال إلى <code>http://&lt;your-host&gt;/wis2box-webapp</code> واختر علامة التبويب <strong>Monitoring</strong>:</p>
+<p><img alt="wis2box-webapp-monitor" src="/../assets/img/wis2box-webapp-monitor.png" width="220"></p>
+<p>في علامة التبويب monitoring، حدد معرف مجموعة البيانات الخاصة بك وانقر على "UPDATE"</p>
+<details class="question">
+<summary>تمرين 5: عرض إشعارات WIS2 في wis2box-webapp</summary>
+<p>كم عدد إشعارات البيانات WIS2 التي نشرها wis2box الخاص بك؟ </p>
+<p>ما هي درجة الحرارة الجوية المبلغ عنها في الإشعار الأخير في المحطة بمعرف WIGOS=0-20000-0-60355؟</p>
+</details>
+<details class="success">
+<summary>انقر لكشف الإجابة</summary>
+<p>إذا قمت بإدخال البيانات التجريبية بنجاح، يجب أن ترى 6 إشعارات بيانات WIS2 نشرها wis2box الخاص بك.</p>
+<p>لرؤية درجة الحرارة الجوية المقاسة للمحطة بمعرف WIGOS=0-20000-0-60355، انقر على زر "INSPECT" بجانب الملف لتلك المحطة لفتح نافذة منبثقة تعرض محتوى الملف البياني المحلل. كانت درجة الحرارة الجوية المقاسة في هذه المحطة 25.0 درجة مئوية.</p>
+</details>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>يتضمن حاوية wis2box-api أدوات لتحليل ملفات BUFR وعرض المحتوى بتنسيق يمكن قراءته بواسطة الإنسان. هذا ليس متطلبًا أساسيًا لتنفيذ WIS2.0، ولكن تم تضمينه في wis2box لمساعدة الناشرين على التحقق من م</p>
+</div>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      &copy; 2023 World Meteorological Organization
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.indexes", "content.code.copy"], "search": "../../../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "\u062a\u0645 \u0627\u0644\u0646\u0633\u062e \u0627\u0644\u0649 \u0627\u0644\u062d\u0627\u0641\u0638\u0629", "clipboard.copy": "\u0646\u0633\u062e \u0625\u0644\u0649 \u0627\u0644\u062d\u0627\u0641\u0638\u0629", "search.result.more.one": "\u0623\u0643\u062b\u0631 \u0645\u0646 1 \u0641\u064a \u0647\u0630\u0647 \u0627\u0644\u0635\u0641\u062d\u0629", "search.result.more.other": "\u0623\u0643\u062b\u0631 \u0645\u0646 # \u0641\u064a \u0647\u0630\u0647 \u0627\u0644\u0635\u0641\u062d\u0629", "search.result.none": "\u0644\u0627 \u062a\u0648\u062c\u062f \u0646\u062a\u0627\u0626\u062c", "search.result.one": "\u0646\u062a\u0627\u0626\u062c \u0627\u0644\u0628\u062d\u062b \u0645\u0633\u062a\u0646\u062f \u0648\u0627\u062d\u062f", "search.result.other": "\u0646\u062a\u0627\u0626\u062c \u0627\u0644\u0628\u062d\u062b # \u0645\u0633\u062a\u0646\u062f\u0627\u062a", "search.result.placeholder": "\u0627\u0643\u062a\u0628 \u0644\u0628\u062f\u0621 \u0627\u0644\u0628\u062d\u062b", "search.result.term.missing": "\u0645\u0641\u0642\u0648\u062f", "select.version": "\u0625\u062e\u062a\u0631 \u0627\u0644\u0625\u0635\u062f\u0627\u0631"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.56ea9cef.min.js"></script>
+      
+        <script src="../../../assets/js/disclaimer.js"></script>
+      
+    
+  </body>
+</html>

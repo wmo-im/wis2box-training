@@ -1,0 +1,1183 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="WIS2 in a box (wis2box) is a Free and Open Source (FOSS) Reference Implementation of a WMO WIS2 Node. The project provides a plug and play toolset to ingest, process, and publish weather/climate/water data using standards-based approaches in alignment with the WIS2 principles. wis2box also provides access to all data in the WIS2 network. wis2box is designed to have a low barrier to entry for data providers, providing enabling infrastructure and services for data discovery, access, and visualization.">
+      
+      
+        <meta name="author" content="World Meteorological Organization">
+      
+      
+        <link rel="canonical" href="https://training.wis2box.wis.wmo.int/zh/practical-sessions/converting-synop-data-to-bufr-form/">
+      
+      
+        <link rel="prev" href="../converting-csv-data-to-bufr/">
+      
+      
+        <link rel="next" href="../converting-synop-data-to-bufr/">
+      
+      
+      <link rel="icon" href="https://public.wmo.int/sites/all/themes/wmo/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.15">
+    
+    
+      
+        <title>将SYNOP数据转换为BUFR - WIS2 in a box training</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.342714a4.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/css/custom.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#wis2box-webappsynopbufr" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../../" title="WIS2 in a box training" class="md-header__button md-logo" aria-label="WIS2 in a box training" data-md-component="logo">
+      
+  <img src="../../../assets/img/wmo-logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            WIS2 in a box training
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              将SYNOP数据转换为BUFR
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+      <div class="md-header__option">
+  <div class="md-select">
+    
+    <button class="md-header__button md-icon" aria-label="选择当前语言">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12.87 15.07-2.54-2.51.03-.03A17.5 17.5 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2zm-2.62 7 1.62-4.33L19.12 17z"/></svg>
+    </button>
+    <div class="md-select__inner">
+      <ul class="md-select__list">
+        
+          <li class="md-select__item">
+            <a href="/" hreflang="en" class="md-select__link">
+              English
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="../../../fr/practical-sessions/converting-synop-data-to-bufr-form/" hreflang="fr" class="md-select__link">
+              Français
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="../../../es/practical-sessions/converting-synop-data-to-bufr-form/" hreflang="es" class="md-select__link">
+              Español
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="./" hreflang="zh" class="md-select__link">
+              中文
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="../../../ru/practical-sessions/converting-synop-data-to-bufr-form/" hreflang="ru" class="md-select__link">
+              Русский
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="../../../ar/practical-sessions/converting-synop-data-to-bufr-form/" hreflang="ar" class="md-select__link">
+              العربية
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</div>
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../" title="WIS2 in a box training" class="md-nav__button md-logo" aria-label="WIS2 in a box training" data-md-component="logo">
+      
+  <img src="../../../assets/img/wmo-logo.png" alt="logo">
+
+    </a>
+    WIS2 in a box training
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    首页
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    csv2bufr 模板
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            csv2bufr 模板
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../csv2bufr-templates/aws-template/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    AWS 模板
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../csv2bufr-templates/daycli-template/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    DAYCLI 模板
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    备忘单
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            备忘单
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cheatsheets/linux/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Linux 速查表
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cheatsheets/docker/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Docker 速查表
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cheatsheets/wis2box/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    WIS2 盒装版速查表
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    实践课程
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            实践课程
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../connecting-to-wis2-over-mqtt/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    通过 MQTT 连接到 WIS2
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../accessing-your-student-vm/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    访问你的学生虚拟机
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../initializing-wis2box/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    初始化 wis2box
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../configuring-wis2box-datasets/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    在wis2box中配置数据集
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../configuring-station-metadata/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    配置站点元数据
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ingesting-data-for-publication/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    发布数据的摄入
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../data-conversion-tools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    数据转换工具
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../csv2bufr-templates/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    CSV至BUFR映射模板
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../adding-gts-headers-to-wis2-notifications/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    为 WIS2 通知添加 GTS 头信息
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../datasets-with-access-control/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    设置带访问控制的推荐数据集
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../downloading-data-from-wis2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    从 WIS2 下载和解码数据
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../discovering-datasets-from-wis2-gdc/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    从WIS2全球发现目录中发现数据集
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      引言
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      准备工作
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#wis2box-webappfm-12-synopbufr" class="md-nav__link">
+    <span class="md-ellipsis">
+      使用wis2box-webapp将FM-12 SYNOP转换为BUFR
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="使用wis2box-webapp将FM-12 SYNOP转换为BUFR">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-wis2box-webappfm-12-synopbufr" class="md-nav__link">
+    <span class="md-ellipsis">
+      练习1 - 使用wis2box-webapp将FM-12 SYNOP转换为BUFR
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-" class="md-nav__link">
+    <span class="md-ellipsis">
+      练习2 - 理解站点列表
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-" class="md-nav__link">
+    <span class="md-ellipsis">
+      练习3 - 调试
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      清理
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      结论
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="wis2box-webappsynopbufr">使用wis2box-webapp将SYNOP数据转换为BUFR</h1>
+<div class="admonition abstract">
+<p class="admonition-title">学习成果</p>
+<p>在本实践课程结束时，您将能够：</p>
+<ul>
+<li>通过wis2box网络应用程序提交有效的FM-12 SYNOP公告，以转换为BUFR并通过WIS2.0交换</li>
+<li>在格式转换和交换之前，验证、诊断并修复FM-12 SYNOP公告中的简单编码错误</li>
+<li>确保所需的站点元数据在wis2box中可用</li>
+<li>确认并检查成功转换的公告</li>
+</ul>
+</div>
+<h2 id="_1">引言</h2>
+<p>为了允许手动观察者直接向WIS2.0提交数据，wis2box-webapp有一个表单用于将FM-12 SYNOP公告转换为BUFR。该表单还允许用户在格式转换和交换之前诊断并修复FM-12 SYNOP公告中的简单编码错误，并检查生成的BUFR数据。</p>
+<h2 id="_2">准备工作</h2>
+<div class="admonition warning">
+<p class="admonition-title">先决条件</p>
+<ul>
+<li>确保您的wis2box已配置并启动。</li>
+<li>打开终端并使用SSH连接到您的学生VM。</li>
+<li>使用MQTT Explorer连接到您的wis2box实例的MQTT代理。</li>
+<li>打开wis2box网络应用程序（<code>http://&lt;your-host-name&gt;/wis2box-webapp</code>）并确保您已登录。</li>
+</ul>
+</div>
+<h2 id="wis2box-webappfm-12-synopbufr">使用wis2box-webapp将FM-12 SYNOP转换为BUFR</h2>
+<h3 id="1-wis2box-webappfm-12-synopbufr">练习1 - 使用wis2box-webapp将FM-12 SYNOP转换为BUFR</h3>
+<p>确保您拥有在上一个练习中生成的“processes/wis2box”的授权令牌，并且您已连接到MQTT Explorer中的wis2box代理。</p>
+<p>复制以下消息：</p>
+<div class="highlight"><pre><span></span><code>AAXX 27031
+15015 02999 02501 10103 21090 39765 42952 57020 60001=
+</code></pre></div>
+<p>打开wis2box网络应用程序，使用左侧导航抽屉导航到synop2bufr页面，然后按照以下步骤操作：</p>
+<ul>
+<li>将您复制的内容粘贴到文本输入框中。</li>
+<li>使用日期选择器选择月份和年份，假设本练习为当前月份。</li>
+<li>从下拉菜单中选择一个主题（选项基于wis2box中配置的数据集）。</li>
+<li>输入您之前生成的“processes/wis2box”授权令牌</li>
+<li>确保“在WIS2上发布”已开启</li>
+<li>点击“提交”</li>
+</ul>
+<center><img alt="显示synop2bufr页面的对话框，包括切换按钮" src="/../assets/img/synop2bufr-toggle.png"></center>
+
+<p>点击提交。您将收到一个警告消息，因为站点未在wis2box中注册。转到station-editor并导入以下站点：</p>
+<div class="highlight"><pre><span></span><code>0-20000-0-15015
+</code></pre></div>
+<p>确保站点与您在上一步中选择的主题相关联，然后返回到synop2bufr页面并重复之前的过程。</p>
+<div class="admonition question">
+<p class="admonition-title">Question</p>
+<p>您如何查看从FM-12 SYNOP到BUFR的转换结果？</p>
+</div>
+<details class="success">
+<summary>点击以显示答案</summary>
+<p>页面的结果部分显示警告、错误和输出BUFR文件。</p>
+<p>点击“输出BUFR文件”以查看已生成的文件列表。您应该看到一个文件列表。</p>
+<p>下载按钮允许将BUFR数据直接下载到您的计算机。</p>
+<p>检查按钮运行一个过程来转换和提取BUFR中的数据。</p>
+<p><center><img alt="显示成功提交消息的对话框"
+     src="/../assets/img/synop2bufr-ex2-success.png"></center></p>
+</details>
+<div class="admonition question">
+<p class="admonition-title">Question</p>
+<p>FM-12 SYNOP输入数据未包括站点位置、海拔或气压计高度。
+确认这些是否在输出BUFR数据中，这些数据从何而来？</p>
+</div>
+<details class="success">
+<summary>点击以显示答案</summary>
+<p>点击检查按钮应显示如下所示的对话框。</p>
+<p><center><img alt="检查按钮结果显示基本站点元数据、站点位置和观测属性"
+     src="/../assets/img/synop2bufr-ex2.png"></center></p>
+<p>这包括在地图上显示的站点位置和基本元数据，以及消息中的观测结果。</p>
+<p>作为从FM-12 SYNOP到BUFR的转换的一部分，额外的元数据被添加到BUFR文件中。</p>
+<p>BUFR文件也可以通过下载文件并使用如ECMWF ecCodes BUFR验证器等工具进行验证。</p>
+</details>
+<p>转到MQTT Explorer并检查已发布的WIS2通知主题，以查看已发布的WIS2通知。</p>
+<h3 id="2-">练习2 - 理解站点列表</h3>
+<p>在下一个练习中，您将转换包含多个报告的文件，见下面的数据：</p>
+<div class="highlight"><pre><span></span><code>AAXX 27031
+15015 02999 02501 10103 21090 39765 42952 57020 60001=
+15020 02997 23104 10130 21075 30177 40377 58020 60001 81041=
+15090 02997 53102 10139 21075 30271 40364 58031 60001 82046=
+</code></pre></div>
+<div class="admonition question">
+<p class="admonition-title">Question</p>
+<p>根据之前的练习，查看FM-12 SYNOP消息并预测将生成多少个输出BUFR消息。</p>
+<p>现在将此消息复制粘贴到SYNOP表单并提交数据。</p>
+<p>生成的消息数量是否符合您的预期，如果不符合，为什么？</p>
+</div>
+<details class="warning">
+<summary>点击以显示答案</summary>
+<p>您可能预期会生成三个BUFR消息，每个天气报告一个。然而，您实际上得到了2个警告和只有一个BUFR文件。</p>
+<p>为了将天气报告转换为BUFR，需要站点列表中包含的基本元数据。尽管上述示例包括三个天气报告，但其中三个站点中的两个未在您的wis2box中注册。</p>
+<p>因此，三个天气报告中只有一个结果生成了BUFR文件并发布了WIS2通知。其他两个天气报告被忽略并生成了警告。</p>
+</details>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>注意WIGOS标识符与BUFR输出中包含的传统站点标识符之间的关系。在许多情况下，对于在迁移到WIGOS站点标识符时已列在WMO-No. 9第A卷的站点，WIGOS站点标识符由传统站点标识符前加上<code>0-20000-0</code>给出，
+例如<code>15015</code>已变为<code>0-20000-0-15015</code>。</p>
+</div>
+<p>使用站点列表页面，导入以下站点：</p>
+<div class="highlight"><pre><span></span><code>0-20000-0-15020
+0-20000-0-15090
+</code></pre></div>
+<p>确保站点与您在上一个练习中选择的主题相关联，然后返回到synop2bufr页面并重复过程。</p>
+<p>现在应该生成三个BUFR文件，并且网页应用程序中不应列出任何警告或错误。</p>
+<p>除了基本站点信息外，还需要额外的元数据，如站点海拔高度和海平面上的气压计高度，这些字段包含在站点列表和站点编辑器页面中。</p>
+<h3 id="3-">练习3 - 调试</h3>
+<p>在这最后一个练习中，您将识别并纠正在使用此工具将FM-12 SYNOP转换为BUFR时遇到的两个最常见的问题。</p>
+<p>下面的框中显示了示例数据，检查数据并尝试在通过网络应用程序提交数据之前解决任何问题。</p>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>您可以在网页应用程序页面的输入框中编辑数据。如果您遗漏了任何问题，这些应该在点击提交按钮后被检测到并突出显示为警告或错误。</p>
+</div>
+<div class="highlight"><pre><span></span><code>AAXX 27031
+15015 02999 02501 10103 21090 39765 42952 57020 60001
+15020 02997 23104 10130 21075 30177 40377 58020 60001 81041=
+15090 02997 53102 10139 21075 30271 40364 58031 60001 82046=
+</code></pre></div>
+<div class="admonition question">
+<p class="admonition-title">Question</p>
+<p>在将数据转换为BUFR时，您预期会遇到哪些问题，您是如何克服它们的？有没有您没有预料到的问题？</p>
+</div>
+<details class="success">
+<summary>点击以显示答案</summary>
+<p>在第一个示例中，“文本结束”符号（=），或记录分隔符，在第一和第二个天气报告之间缺失。因此，第2行和第3行被视为单个报告，导致消息解析出错。</p>
+</details>
+<p>下面的第二个示例包含FM-12 SYNOP报告中发现的几个常见问题。检查数据并尝试识别问题，然后通过网络应用程序提交更正后的数据。</p>
+<div class="highlight"><pre><span></span><code>AAXX 27031
+15020 02997 23104 10/30 21075 30177 40377 580200 60001 81041=
+</code></pre></div>
+<div class="admonition question">
+<p class="admonition-title">Question</p>
+<p>您发现了哪些问题，您是如何解决这些问题的？</p>
+</div>
+<details class="success">
+<summary>点击以显示答案</summary>
+<p>天气报告中有两个问题。</p>
+<p>第一个问题出现在带符号的气温组中，十位字符设置为缺失（/），导致组无效。在这个示例中，我们知道温度是13.0摄氏度（从上面的示例中得知），因此可以纠正这个问题。在操作中，正确的值需要与观察者确认。</p>
+<p>第二个问题出现在第5组中，有一个额外的字符，最后一个字符重复了。这个问题可以通过移除额外的字符来解决。</p>
+</details>
+<h2 id="_3">清理</h2>
+<p>在本次会议的练习中，您将导入几个文件到您的站点列表中。导航到站点列表页面并点击垃圾桶图标删除站点。您可能需要刷新页面才能在删除后从列表中移除站点。</p>
+<center><img alt="站点元数据查看器"
+         src="/../assets/img/synop2bufr-trash.png" width="600"></center>
+
+<h2 id="_4">结论</h2>
+<div class="admonition success">
+<p class="admonition-title">恭喜！</p>
+<p>在这个实践课程中，您学到了：</p>
+<ul>
+<li>如何使用synop2bufr工具将FM-12 SYNOP报告转换为BUFR；</li>
+<li>如何通过网络应用提交FM-12 SYNOP报告；</li>
+<li>如何诊断并纠正FM-12 SYNOP报告中的简单错误；</li>
+<li>在wis2box（和OSCAR/Surface）中注册站点的重要性；</li>
+<li>如何使用检查按钮查看BUFR数据的内容。</li>
+</ul>
+</div>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      &copy; 2023 World Meteorological Organization
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.indexes", "content.code.copy"], "search": "../../../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.56ea9cef.min.js"></script>
+      
+        <script src="../../../assets/js/disclaimer.js"></script>
+      
+    
+  </body>
+</html>

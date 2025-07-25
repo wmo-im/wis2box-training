@@ -1,0 +1,1408 @@
+
+<!doctype html>
+<html lang="es" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="WIS2 in a box (wis2box) is a Free and Open Source (FOSS) Reference Implementation of a WMO WIS2 Node. The project provides a plug and play toolset to ingest, process, and publish weather/climate/water data using standards-based approaches in alignment with the WIS2 principles. wis2box also provides access to all data in the WIS2 network. wis2box is designed to have a low barrier to entry for data providers, providing enabling infrastructure and services for data discovery, access, and visualization.">
+      
+      
+        <meta name="author" content="World Meteorological Organization">
+      
+      
+        <link rel="canonical" href="https://training.wis2box.wis.wmo.int/es/practical-sessions/converting-synop-data-to-bufr/">
+      
+      
+        <link rel="prev" href="../converting-synop-data-to-bufr-form/">
+      
+      
+        <link rel="next" href="../csv2bufr-templates/">
+      
+      
+      <link rel="icon" href="https://public.wmo.int/sites/all/themes/wmo/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.15">
+    
+    
+      
+        <title>Conversión de datos SYNOP a BUFR - WIS2 in a box training</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.342714a4.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/css/custom.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#conversion-de-datos-synop-a-bufr-desde-la-linea-de-comandos" class="md-skip">
+          Saltar a contenido
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Cabecera">
+    <a href="../../" title="WIS2 in a box training" class="md-header__button md-logo" aria-label="WIS2 in a box training" data-md-component="logo">
+      
+  <img src="../../../assets/img/wmo-logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            WIS2 in a box training
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Conversión de datos SYNOP a BUFR
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+      <div class="md-header__option">
+  <div class="md-select">
+    
+    <button class="md-header__button md-icon" aria-label="Seleccionar idioma">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12.87 15.07-2.54-2.51.03-.03A17.5 17.5 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2zm-2.62 7 1.62-4.33L19.12 17z"/></svg>
+    </button>
+    <div class="md-select__inner">
+      <ul class="md-select__list">
+        
+          <li class="md-select__item">
+            <a href="/" hreflang="en" class="md-select__link">
+              English
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="../../../fr/practical-sessions/converting-synop-data-to-bufr/" hreflang="fr" class="md-select__link">
+              Français
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="./" hreflang="es" class="md-select__link">
+              Español
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="../../../zh/practical-sessions/converting-synop-data-to-bufr/" hreflang="zh" class="md-select__link">
+              中文
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="../../../ru/practical-sessions/converting-synop-data-to-bufr/" hreflang="ru" class="md-select__link">
+              Русский
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="../../../ar/practical-sessions/converting-synop-data-to-bufr/" hreflang="ar" class="md-select__link">
+              العربية
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</div>
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Búsqueda" placeholder="Búsqueda" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Buscar">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Limpiar" aria-label="Limpiar" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Inicializando búsqueda
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navegación" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../" title="WIS2 in a box training" class="md-nav__button md-logo" aria-label="WIS2 in a box training" data-md-component="logo">
+      
+  <img src="../../../assets/img/wmo-logo.png" alt="logo">
+
+    </a>
+    WIS2 in a box training
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Inicio
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Hojas de referencia
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Hojas de referencia
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cheatsheets/linux/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Linux cheatsheet
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cheatsheets/docker/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Docker cheatsheet
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cheatsheets/wis2box/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    WIS2 in a box cheatsheet
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Plantillas csv2bufr
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Plantillas csv2bufr
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../csv2bufr-templates/aws-template/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Plantilla AWS
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../csv2bufr-templates/daycli-template/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Plantilla DAYCLI
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Sesiones prácticas
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Sesiones prácticas
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../connecting-to-wis2-over-mqtt/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Conectándose a WIS2 a través de MQTT
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../accessing-your-student-vm/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Accediendo a tu VM de estudiante
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../initializing-wis2box/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Inicializando wis2box
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../configuring-wis2box-datasets/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Configuración de conjuntos de datos en wis2box
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../configuring-station-metadata/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Configuración de metadatos de estaciones
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ingesting-data-for-publication/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Ingesta de Datos para Publicación
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../data-conversion-tools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Herramientas de Conversión de Datos
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../csv2bufr-templates/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Plantillas de mapeo de CSV a BUFR
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../adding-gts-headers-to-wis2-notifications/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Añadiendo encabezados GTS a las notificaciones WIS2
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../datasets-with-access-control/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Configuración de un conjunto de datos recomendado con control de acceso
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../downloading-data-from-wis2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Descarga y decodificación de datos desde WIS2
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../discovering-datasets-from-wis2-gdc/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Descubriendo conjuntos de datos desde el Catálogo Global de Descubrimiento WIS2
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduccion" class="md-nav__link">
+    <span class="md-ellipsis">
+      Introducción
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#preparacion" class="md-nav__link">
+    <span class="md-ellipsis">
+      Preparación
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#synop2bufr-primer" class="md-nav__link">
+    <span class="md-ellipsis">
+      synop2bufr primer
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="synop2bufr primer">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#transform" class="md-nav__link">
+    <span class="md-ellipsis">
+      transform
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eccodes-primer" class="md-nav__link">
+    <span class="md-ellipsis">
+      ecCodes primer
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="ecCodes primer">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bufr_dump" class="md-nav__link">
+    <span class="md-ellipsis">
+      bufr_dump
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conversion-de-synop-fm-12-a-bufr-usando-synop2bufr-desde-la-linea-de-comandos" class="md-nav__link">
+    <span class="md-ellipsis">
+      Conversión de SYNOP FM-12 a BUFR usando synop2bufr desde la línea de comandos
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Conversión de SYNOP FM-12 a BUFR usando synop2bufr desde la línea de comandos">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ejercicio-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Ejercicio 1
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ejercicio-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Ejercicio 2
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ejercicio-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Ejercicio 3
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ejercicio-4" class="md-nav__link">
+    <span class="md-ellipsis">
+      Ejercicio 4
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ejercicio-5" class="md-nav__link">
+    <span class="md-ellipsis">
+      Ejercicio 5
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusion" class="md-nav__link">
+    <span class="md-ellipsis">
+      Conclusión
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="conversion-de-datos-synop-a-bufr-desde-la-linea-de-comandos">Conversión de datos SYNOP a BUFR desde la línea de comandos</h1>
+<div class="admonition abstract">
+<p class="admonition-title">Resultados de aprendizaje</p>
+<p>Al final de esta sesión práctica, podrás:</p>
+<ul>
+<li>usar la herramienta synop2bufr para convertir informes SYNOP FM-12 a BUFR;</li>
+<li>diagnosticar y corregir errores de codificación simples en informes SYNOP FM-12 antes de la conversión de formato;</li>
+</ul>
+</div>
+<h2 id="introduccion">Introducción</h2>
+<p>Los informes meteorológicos de superficie de las estaciones terrestres se han informado históricamente cada hora o en las horas sinópticas principales
+(00, 06, 12 y 18 UTC) e intermedias (03, 09, 15, 21 UTC). Antes de la migración
+a BUFR, estos informes se codificaban en el formato de texto plano SYNOP FM-12. Aunque la migración a BUFR
+estaba programada para completarse en 2012, todavía se intercambian un gran número de informes en el formato legado
+FM-12 SYNOP. Puedes encontrar más información sobre el formato FM-12 SYNOP en el Manual de Códigos de la OMM, 
+Volumen I.1 (OMM-No. 306, Volumen I.1).</p>
+<p><a href="https://library.wmo.int/records/item/35713-manual-on-codes-international-codes-volume-i-1">Manual de Códigos de la OMM, Volumen I.1</a></p>
+<p>Para ayudar a completar la migración a BUFR, se han desarrollado algunas herramientas para
+codificar informes SYNOP FM-12 a BUFR, en esta sesión aprenderás a usar estas herramientas así
+como la relación entre la información contenida en los informes SYNOP FM-12 y los mensajes BUFR.</p>
+<h2 id="preparacion">Preparación</h2>
+<div class="admonition warning">
+<p class="admonition-title">Prerrequisitos</p>
+<ul>
+<li>Asegúrate de que tu wis2box ha sido configurado y iniciado.</li>
+<li>Confirma el estado visitando la API de wis2box (<code>http://&lt;tu-nombre-de-host&gt;/oapi</code>) y verificando que la API está funcionando.</li>
+<li>Asegúrate de leer las secciones <strong>synop2bufr primer</strong> y <strong>ecCodes primer</strong> antes de comenzar los ejercicios.</li>
+</ul>
+</div>
+<h2 id="synop2bufr-primer">synop2bufr primer</h2>
+<p>A continuación, se presentan los comandos y configuraciones esenciales de <code>synop2bufr</code>:</p>
+<h3 id="transform">transform</h3>
+<p>La función <code>transform</code> convierte un mensaje SYNOP a BUFR:</p>
+<div class="highlight"><pre><span></span><code>synop2bufr<span class="w"> </span>data<span class="w"> </span>transform<span class="w"> </span>--metadata<span class="w"> </span>my_file.csv<span class="w"> </span>--output-dir<span class="w"> </span>./my_directory<span class="w"> </span>--year<span class="w"> </span>message_year<span class="w"> </span>--month<span class="w"> </span>message_month<span class="w"> </span>my_SYNOP.txt
+</code></pre></div>
+<p>Nota que si no se especifican las opciones de metadatos, directorio de salida, año y mes, asumirán sus valores predeterminados:</p>
+<table>
+<thead>
+<tr>
+<th>Opción</th>
+<th>Predeterminado</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>--metadata</td>
+<td>station_list.csv</td>
+</tr>
+<tr>
+<td>--output-dir</td>
+<td>El directorio de trabajo actual.</td>
+</tr>
+<tr>
+<td>--year</td>
+<td>El año actual.</td>
+</tr>
+<tr>
+<td>--month</td>
+<td>El mes actual.</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Debe tenerse cuidado al usar el año y mes predeterminados, ya que el día del mes especificado en el informe puede no corresponder (por ejemplo, junio no tiene 31 días).</p>
+</div>
+<p>En los ejemplos, no se dan el año y el mes, así que siéntete libre de especificar una fecha tú mismo o usar los valores predeterminados.</p>
+<h2 id="eccodes-primer">ecCodes primer</h2>
+<p>ecCodes proporciona tanto herramientas de línea de comandos como puede ser integrado en tus propias aplicaciones. A continuación, se presentan algunas utilidades de línea de comandos útiles para trabajar con datos BUFR.</p>
+<h3 id="bufr_dump">bufr_dump</h3>
+<p>El comando <code>bufr_dump</code> es una herramienta genérica de información BUFR. Tiene muchas opciones, pero las siguientes serán las más aplicables a los ejercicios:</p>
+<div class="highlight"><pre><span></span><code>bufr_dump<span class="w"> </span>-p<span class="w"> </span>my_bufr.bufr4
+</code></pre></div>
+<p>Esto mostrará el contenido BUFR en tu pantalla. Si estás interesado en los valores que toma una variable en particular, usa el comando <code>egrep</code>:</p>
+<div class="highlight"><pre><span></span><code>bufr_dump<span class="w"> </span>-p<span class="w"> </span>my_bufr.bufr4<span class="w"> </span><span class="p">|</span><span class="w"> </span>egrep<span class="w"> </span>-i<span class="w"> </span>temperature
+</code></pre></div>
+<p>Esto mostrará variables relacionadas con la temperatura en tus datos BUFR. Si quieres hacer esto para múltiples tipos de variables, filtra la salida usando un pipe (<code>|</code>):</p>
+<div class="highlight"><pre><span></span><code>bufr_dump<span class="w"> </span>-p<span class="w"> </span>my_bufr.bufr4<span class="w"> </span><span class="p">|</span><span class="w"> </span>egrep<span class="w"> </span>-i<span class="w"> </span><span class="s1">&#39;temperature|wind&#39;</span>
+</code></pre></div>
+<h2 id="conversion-de-synop-fm-12-a-bufr-usando-synop2bufr-desde-la-linea-de-comandos">Conversión de SYNOP FM-12 a BUFR usando synop2bufr desde la línea de comandos</h2>
+<p>La biblioteca eccodes y el módulo synop2bufr están instalados en el contenedor wis2box-api. Para realizar los próximos ejercicios, copiaremos el directorio synop2bufr-exercises al contenedor wis2box-api y ejecutaremos los ejercicios desde allí.</p>
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>cp<span class="w"> </span>~/exercise-materials/synop2bufr-exercises<span class="w"> </span>wis2box-api:/root
+</code></pre></div>
+<p>Ahora podemos entrar al contenedor y ejecutar los ejercicios:</p>
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>wis2box-api<span class="w"> </span>/bin/bash
+</code></pre></div>
+<h3 id="ejercicio-1">Ejercicio 1</h3>
+<p>Navega al directorio <code>/root/synop2bufr-exercises/ex_1</code> e inspecciona el archivo de mensaje SYNOP message.txt:</p>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>/root/synop2bufr-exercises/ex_1
+more<span class="w"> </span>message.txt
+</code></pre></div>
+<div class="admonition question">
+<p class="admonition-title">Question</p>
+<p>¿Cuántos informes SYNOP hay en este archivo?</p>
+</div>
+<details class="success">
+<summary>Haz clic para revelar la respuesta</summary>
+<p>Hay 1 informe SYNOP, ya que solo hay 1 delimitador (=) al final del mensaje.</p>
+</details>
+<p>Inspecciona la lista de estaciones:</p>
+<div class="highlight"><pre><span></span><code>more<span class="w"> </span>station_list.csv
+</code></pre></div>
+<div class="admonition question">
+<p class="admonition-title">Question</p>
+<p>¿Cuántas estaciones están listadas en la lista de estaciones?</p>
+</div>
+<details class="success">
+<summary>Haz clic para revelar la respuesta</summary>
+<p>Hay 1 estación, el archivo station_list.csv contiene una fila de metadatos de estación.</p>
+</details>
+<div class="admonition question">
+<p class="admonition-title">Question</p>
+<p>Intenta convertir <code>message.txt</code> a formato BUFR.</p>
+</div>
+<details class="success">
+<summary>Haz clic para revelar la respuesta</summary>
+<p>Para convertir el mensaje SYNOP a formato BUFR, usa el siguiente comando:</p>
+<div class="highlight"><pre><span></span><code>synop2bufr<span class="w"> </span>data<span class="w"> </span>transform<span class="w"> </span>--metadata<span class="w"> </span>station_list.csv<span class="w"> </span>--output-dir<span class="w"> </span>./<span class="w"> </span>--year<span class="w"> </span><span class="m">2024</span><span class="w"> </span>--month<span class="w"> </span><span class="m">09</span><span class="w"> </span>message.txt
+</code></pre></div>
+</details>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Consulta la sección <a href="#synop2bufr-primer">synop2bufr primer</a>.</p>
+</div>
+<p>Inspecciona los datos BUFR resultantes usando <code>bufr_dump</code>.</p>
+<div class="admonition question">
+<p class="admonition-title">Question</p>
+<p>Averigua cómo comparar los valores de latitud y longitud con los de la lista de estaciones.</p>
+</div>
+<details class="success">
+<summary>Haz clic para revelar la respuesta</summary>
+<p>Para comparar los valores de latitud y longitud en los datos BUFR con los de la lista de estaciones, usa el siguiente comando:</p>
+<div class="highlight"><pre><span></span><code>bufr_dump<span class="w"> </span>-p<span class="w"> </span>WIGOS_0-20000-0-15015_20240921T120000.bufr4<span class="w"> </span><span class="p">|</span><span class="w"> </span>egrep<span class="w"> </span>-i<span class="w"> </span><span class="s1">&#39;latitude|longitude&#39;</span>
+</code></pre></div>
+<p>Esto mostrará los valores de latitud y longitud en los datos BUFR.</p>
+</details>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Consulta la sección <a href="#eccodes-primer">ecCodes primer</a>.</p>
+</div>
+<h3 id="ejercicio-2">Ejercicio 2</h3>
+<p>Navega al directorio <code>exercise-materials/synop2bufr-exercises/ex_2</code> e inspecciona el archivo de mensaje SYNOP message.txt:</p>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>/root/synop2bufr-exercises/ex_2
+more<span class="w"> </span>message.txt
+</code></pre></div>
+<div class="admonition question">
+<p class="admonition-title">Question</p>
+<p>¿Cuántos informes SYNOP hay en este archivo?</p>
+</div>
+<details class="success">
+<summary>Haz clic para revelar la respuesta</summary>
+<p>Hay 3 informes SYNOP, ya que hay 3 delimitadores (=) al final del mensaje.</p>
+</details>
+<p>Inspecciona la lista de estaciones:</p>
+<div class="highlight"><pre><span></span><code>more<span class="w"> </span>station_list.csv
+</code></pre></div>
+<div class="admonition question">
+<p class="admonition-title">Question</p>
+<p>¿Cuántas estaciones están listadas en la lista de estaciones?</p>
+</div>
+<details class="success">
+<summary>Haz clic para revelar la respuesta</summary>
+<p>Hay 3 estaciones, el archivo station_list.csv contiene tres filas de metadatos de estación.</p>
+</details>
+<div class="admonition question">
+<p class="admonition-title">Question</p>
+<p>Convierte <code>message.txt</code> a formato BUFR.</p>
+</div>
+<details class="success">
+<summary>Haz clic para revelar la respuesta</summary>
+<p>Para convertir el mensaje SYNOP a formato BUFR, usa el siguiente comando:</p>
+<div class="highlight"><pre><span></span><code>synop2bufr<span class="w"> </span>data<span class="w"> </span>transform<span class="w"> </span>--metadata<span class="w"> </span>station_list.csv<span class="w"> </span>--output-dir<span class="w"> </span>./<span class="w"> </span>--year<span class="w"> </span><span class="m">2024</span><span class="w"> </span>--month<span class="w"> </span><span class="m">09</span><span class="w"> </span>message.txt
+</code></pre></div>
+</details>
+<div class="admonition question">
+<p class="admonition-title">Question</p>
+<p>Basado en los resultados de los ejercicios en esta y la sesión anterior, ¿cómo predecirías el número de
+archivos BUFR resultantes basado en el número de informes SYNOP y estaciones listadas en el archivo de metadatos de la estación?</p>
+</div>
+<details class="success">
+<summary>Haz clic para revelar la respuesta</summary>
+<p>Para ver los archivos BUFR producidos ejecuta el siguiente comando:</p>
+<div class="highlight"><pre><span></span><code>ls<span class="w"> </span>-l<span class="w"> </span>*.bufr4
+</code></pre></div>
+<p>El número de archivos BUFR producidos será igual al número de informes SYNOP en el archivo de mensaje.</p>
+</details>
+<p>Inspecciona los datos BUFR resultantes usando <code>bufr_dump</code>.</p>
+<div class="admonition question">
+<p class="admonition-title">Question</p>
+<p>¿Cómo puedes verificar el ID de Estación WIGOS codificado dentro de los datos BUFR de cada archivo producido?</p>
+</div>
+<details class="success">
+<summary>Haz clic para revelar la respuesta</summary>
+<p>Esto se puede hacer usando los siguientes comandos:</p>
+<div class="highlight"><pre><span></span><code>bufr_dump<span class="w"> </span>-p<span class="w"> </span>WIGOS_0-20000-0-15015_20240921T120000.bufr4<span class="w"> </span><span class="p">|</span><span class="w"> </span>egrep<span class="w"> </span>-i<span class="w"> </span><span class="s1">&#39;wigos&#39;</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>bufr_dump<span class="w"> </span>-p<span class="w"> </span>WIGOS_0-20000-0-15020_20240921T120000.bufr4<span class="w"> </span><span class="p">|</span><span class="w"> </span>egrep<span class="w"> </span>-i<span class="w"> </span><span class="s1">&#39;wigos&#39;</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>bufr_dump<span class="w"> </span>-p<span class="w"> </span>WIGOS_0-20000-0-15090_20240921T120000.bufr4<span class="w"> </span><span class="p">|</span><span class="w"> </span>egrep<span class="w"> </span>-i<span class="w"> </span><span class="s1">&#39;wigos&#39;</span>
+</code></pre></div>
+<p>Ten en cuenta que si tienes un directorio con solo estos 3 archivos BUFR, puedes usar comodines de Linux de la siguiente manera:</p>
+<div class="highlight"><pre><span></span><code>bufr_dump<span class="w"> </span>-p<span class="w"> </span>*.bufr4<span class="w"> </span><span class="p">|</span><span class="w"> </span>egrep<span class="w"> </span>-i<span class="w"> </span><span class="s1">&#39;wigos&#39;</span>
+</code></pre></div>
+</details>
+<h3 id="ejercicio-3">Ejercicio 3</h3>
+<p>Navega al directorio <code>exercise-materials/synop2bufr-exercises/ex_3</code> e inspecciona el archivo de mensaje SYNOP message.txt:</p>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>/root/synop2bufr-exercises/ex_3
+more<span class="w"> </span>message.txt
+</code></pre></div>
+<p>Este mensaje SYNOP solo contiene un informe más largo con más secciones.</p>
+<p>Inspecciona la lista de estaciones:</p>
+<div class="highlight"><pre><span></span><code>more<span class="w"> </span>station_list.csv
+</code></pre></div>
+<div class="admonition question">
+<p class="admonition-title">Question</p>
+<p>¿Es problemático que este archivo contenga más estaciones de las que hay informes en el mensaje SYNOP?</p>
+</div>
+<details class="success">
+<summary>Haz clic para revelar la respuesta</summary>
+<p>No, esto no es un problema siempre y cuando exista una fila en el archivo de la lista de estaciones con un TSI de estación que coincida con el del informe SYNOP que estamos tratando de convertir.</p>
+</details>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>El archivo de la lista de estaciones es una fuente de metadatos para <code>synop2bufr</code> para proporcionar la información que falta en el informe SYNOP alfanumérico y que se requiere en el SYNOP BUFR.</p>
+</div>
+<div class="admonition question">
+<p class="admonition-title">Question</p>
+<p>Convierte <code>message.txt</code> a formato BUFR.</p>
+</div>
+<details class="success">
+<summary>Haz clic para revelar la respuesta</summary>
+<p>Esto se hace usando el comando <code>transform</code>, por ejemplo:</p>
+<div class="highlight"><pre><span></span><code>synop2bufr<span class="w"> </span>data<span class="w"> </span>transform<span class="w"> </span>--metadata<span class="w"> </span>station_list.csv<span class="w"> </span>--output-dir<span class="w"> </span>./<span class="w"> </span>--year<span class="w"> </span><span class="m">2024</span><span class="w"> </span>--month<span class="w"> </span><span class="m">09</span><span class="w"> </span>message.txt
+</code></pre></div>
+</details>
+<p>Inspecciona los datos BUFR resultantes usando <code>bufr_dump</code>.</p>
+<div class="admonition question">
+<p class="admonition-title">Question</p>
+<p>Encuentra las siguientes variables:</p>
+<ul>
+<li>Temperatura del aire (K) del informe</li>
+<li>Cobertura total de nubes (%) del informe</li>
+<li>Periodo total de sol (minutos) del informe</li>
+<li>Velocidad del viento (m/s) del informe</li>
+</ul>
+</div>
+<details class="success">
+<summary>Haz clic para revelar la respuesta</summary>
+<p>Para encontrar las variables por palabra clave en los datos BUFR, puedes usar los siguientes comandos:</p>
+<div class="highlight"><pre><span></span><code>bufr_dump<span class="w"> </span>-p<span class="w"> </span>WIGOS_0-20000-0-15260_20240921T115500.bufr4<span class="w"> </span><span class="p">|</span><span class="w"> </span>egrep<span class="w"> </span>-i<span class="w"> </span><span class="s1">&#39;temperature&#39;</span>
+</code></pre></div>
+<p>Puedes usar el siguiente comando para buscar múltiples palabras clave:</p>
+<div class="highlight"><pre><span></span><code>bufr_dump<span class="w"> </span>-p<span class="w"> </span>WIGOS_0-20000-0-15260_20240921T115500.bufr4<span class="w"> </span><span class="p">|</span><span class="w"> </span>egrep<span class="w"> </span>-i<span class="w"> </span><span class="s1">&#39;temperature|cover|sunshine|wind&#39;</span>
+</code></pre></div>
+</details>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Puedes encontrar útil el último comando de la sección <a href="#eccodes-primer">ecCodes primer</a>.</p>
+</div>
+<h3 id="ejercicio-4">Ejercicio 4</h3>
+<p>Navega al directorio <code>exercise-materials/synop2bufr-exercises/ex_4</code> e inspecciona el archivo de mensaje SYNOP message.txt:</p>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>/root/synop2bufr-exercises/ex_4
+more<span class="w"> </span>message_incorrect.txt
+</code></pre></div>
+<div class="admonition question">
+<p class="admonition-title">Question</p>
+<p>¿Qué es incorrecto sobre este archivo SYNOP?</p>
+</div>
+<details class="success">
+<summary>Haz clic para revelar la respuesta</summary>
+<p>El informe SYNOP para 15015 está faltando el delimitador (<code>=</code>) que permite a <code>synop2bufr</code> distinguir este informe del siguiente.</p>
+</details>
+<p>Intenta convertir <code>message_incorrect.txt</code> usando <code>station_list.csv</code></p>
+<div class="admonition question">
+<p class="admonition-title">Question</p>
+<p>¿Qué problema(s) encontraste con esta conversión?</p>
+</div>
+<details class="success">
+<summary>Haz clic para revelar la respuesta</summary>
+<p>Para convertir el mensaje SYNOP a formato BUFR, usa el siguiente comando:</p>
+<div class="highlight"><pre><span></span><code>synop2bufr<span class="w"> </span>data<span class="w"> </span>transform<span class="w"> </span>--metadata<span class="w"> </span>station_list.csv<span class="w"> </span>--output-dir<span class="w"> </span>./<span class="w"> </span>--year<span class="w"> </span><span class="m">2024</span><span class="w"> </span>--month<span class="w"> </span><span class="m">09</span><span class="w"> </span>message_incorrect.txt
+</code></pre></div>
+<p>Intentar convertir debería generar los siguientes errores:</p>
+<ul>
+<li><code>[ERROR] No se pudo decodificar el mensaje SYNOP</code></li>
+<li><code>[ERROR] Error al analizar el informe SYNOP: AAXX 21121 15015 02999 02501 10103 21090 39765 42952 57020 60001 15020 02997 23104 10130 21075 30177 40377 58020 60001 81041. ¡10130 no es un grupo válido!</code></li>
+</ul>
+</details>
+<h3 id="ejercicio-5">Ejercicio 5</h3>
+<p>Navega al directorio <code>exercise-materials/synop2bufr-exercises/ex_5</code> e inspecciona el archivo de mensaje SYNOP message.txt:</p>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>/root/synop2bufr-exercises/ex_5
+more<span class="w"> </span>message.txt
+</code></pre></div>
+<p>Intenta convertir <code>message.txt</code> a formato BUFR usando <code>station_list_incorrect.csv</code> </p>
+<div class="admonition question">
+<p class="admonition-title">Question</p>
+<p>¿Qué problema(s) encontraste con esta conversión?<br />
+Considerando el error presentado, justifica el número de archivos BUFR producidos.</p>
+</div>
+<details class="success">
+<summary>Haz clic para revelar la respuesta</summary>
+<p>Para convertir el mensaje SYNOP a formato BUFR, usa el siguiente comando:</p>
+<div class="highlight"><pre><span></span><code>synop2bufr<span class="w"> </span>data<span class="w"> </span>transform<span class="w"> </span>--metadata<span class="w"> </span>station_list_incorrect.csv<span class="w"> </span>--output-dir<span class="w"> </span>./<span class="w"> </span>--year<span class="w"> </span><span class="m">2024</span><span class="w"> </span>--month<span class="w"> </span><span class="m">09</span><span class="w"> </span>message.txt
+</code></pre></div>
+<p>Uno de los TSIs de la estación (<code>15015</code>) no tiene metadatos correspondientes en la lista de estaciones, lo que impedirá que synop2bufr acceda a metadatos adicionales necesarios para convertir el primer informe SYNOP a BUFR.</p>
+<p>Verás la siguiente advertencia:</p>
+<ul>
+<li><code>[ADVERTENCIA] Estación 15015 no encontrada en el archivo de estaciones</code></li>
+</ul>
+<p>Puedes ver el número de archivos BUFR producidos ejecutando el siguiente comando:</p>
+<div class="highlight"><pre><span></span><code>ls<span class="w"> </span>-l<span class="w"> </span>*.bufr4
+</code></pre></div>
+<p>Hay 3 informes SYNOP en message.txt pero solo se han producido 2 archivos BUFR. Esto es porque a uno de los informes SYNOP le faltaban los metadatos necesarios como se mencionó anteriormente.</p>
+</details>
+<h2 id="conclusion">Conclusión</h2>
+<div class="admonition success">
+<p class="admonition-title">¡Felicidades!</p>
+<p>En esta sesión práctica, aprendiste:</p>
+<ul>
+<li>cómo la herramienta synop2bufr puede ser usada para convertir informes SYNOP FM-12 a BUFR;</li>
+<li>cómo diagnosticar y corregir errores de codificación simples en informes SYNOP FM-12 antes de la conversión de formato;</li>
+</ul>
+</div>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      &copy; 2023 World Meteorological Organization
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.indexes", "content.code.copy"], "search": "../../../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copiado al portapapeles", "clipboard.copy": "Copiar al portapapeles", "search.result.more.one": "1 m\u00e1s en esta p\u00e1gina", "search.result.more.other": "# m\u00e1s en esta p\u00e1gina", "search.result.none": "No se encontraron documentos", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.placeholder": "Teclee para comenzar b\u00fasqueda", "search.result.term.missing": "Falta", "select.version": "Seleccionar versi\u00f3n"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.56ea9cef.min.js"></script>
+      
+        <script src="../../../assets/js/disclaimer.js"></script>
+      
+    
+  </body>
+</html>

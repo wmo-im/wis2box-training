@@ -1,0 +1,1408 @@
+
+<!doctype html>
+<html lang="fr" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="WIS2 in a box (wis2box) is a Free and Open Source (FOSS) Reference Implementation of a WMO WIS2 Node. The project provides a plug and play toolset to ingest, process, and publish weather/climate/water data using standards-based approaches in alignment with the WIS2 principles. wis2box also provides access to all data in the WIS2 network. wis2box is designed to have a low barrier to entry for data providers, providing enabling infrastructure and services for data discovery, access, and visualization.">
+      
+      
+        <meta name="author" content="World Meteorological Organization">
+      
+      
+        <link rel="canonical" href="https://training.wis2box.wis.wmo.int/fr/practical-sessions/downloading-data-from-wis2/">
+      
+      
+        <link rel="prev" href="../datasets-with-access-control/">
+      
+      
+        <link rel="next" href="../discovering-datasets-from-wis2-gdc/">
+      
+      
+      <link rel="icon" href="https://public.wmo.int/sites/all/themes/wmo/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.15">
+    
+    
+      
+        <title>Téléchargement et décodage des données depuis WIS2 - WIS2 in a box training</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.342714a4.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/css/custom.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#telechargement-et-decodage-des-donnees-depuis-wis2" class="md-skip">
+          Aller au contenu
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="En-tête">
+    <a href="../../" title="WIS2 in a box training" class="md-header__button md-logo" aria-label="WIS2 in a box training" data-md-component="logo">
+      
+  <img src="../../../assets/img/wmo-logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            WIS2 in a box training
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Téléchargement et décodage des données depuis WIS2
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+      <div class="md-header__option">
+  <div class="md-select">
+    
+    <button class="md-header__button md-icon" aria-label="Sélectionner la langue">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12.87 15.07-2.54-2.51.03-.03A17.5 17.5 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2zm-2.62 7 1.62-4.33L19.12 17z"/></svg>
+    </button>
+    <div class="md-select__inner">
+      <ul class="md-select__list">
+        
+          <li class="md-select__item">
+            <a href="../../../practical-sessions/downloading-data-from-wis2/" hreflang="en" class="md-select__link">
+              English
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="./" hreflang="fr" class="md-select__link">
+              Français
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="../../../es/practical-sessions/downloading-data-from-wis2/" hreflang="es" class="md-select__link">
+              Español
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="../../../zh/practical-sessions/downloading-data-from-wis2/" hreflang="zh" class="md-select__link">
+              中文
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="../../../ru/practical-sessions/downloading-data-from-wis2/" hreflang="ru" class="md-select__link">
+              Русский
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="../../../ar/practical-sessions/downloading-data-from-wis2/" hreflang="ar" class="md-select__link">
+              العربية
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</div>
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Rechercher" placeholder="Rechercher" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Recherche">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Effacer" aria-label="Effacer" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initialisation de la recherche
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../" title="WIS2 in a box training" class="md-nav__button md-logo" aria-label="WIS2 in a box training" data-md-component="logo">
+      
+  <img src="../../../assets/img/wmo-logo.png" alt="logo">
+
+    </a>
+    WIS2 in a box training
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Accueil
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Aide-mémoire
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Aide-mémoire
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cheatsheets/linux/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Linux cheatsheet
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cheatsheets/docker/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Docker cheatsheet
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cheatsheets/wis2box/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    WIS2 in a box cheatsheet
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Modèles csv2bufr
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Modèles csv2bufr
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../csv2bufr-templates/aws-template/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Modèle AWS
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../csv2bufr-templates/daycli-template/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Modèle DAYCLI
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Sessions pratiques
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Sessions pratiques
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../connecting-to-wis2-over-mqtt/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Connexion à WIS2 via MQTT
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../accessing-your-student-vm/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Accéder à votre VM étudiante
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../initializing-wis2box/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Initialisation de wis2box
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../configuring-wis2box-datasets/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Configuration des jeux de données dans wis2box
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../configuring-station-metadata/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Configuration des métadonnées des stations
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ingesting-data-for-publication/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Ingestion de données pour publication
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../data-conversion-tools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Outils de conversion de données
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../csv2bufr-templates/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Modèles de mappage de CSV à BUFR
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../adding-gts-headers-to-wis2-notifications/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Ajout d'en-têtes GTS aux notifications WIS2
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../datasets-with-access-control/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Configuration d'un ensemble de données recommandé avec contrôle d'accès
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Téléchargement et décodage des données depuis WIS2
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    Téléchargement et décodage des données depuis WIS2
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table des matières">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table des matières
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      Introduction
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#preparation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Préparation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#visualisation-du-tableau-de-bord-wis2downloader-dans-grafana" class="md-nav__link">
+    <span class="md-ellipsis">
+      Visualisation du tableau de bord wis2downloader dans Grafana
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#revision-de-la-configuration-de-wis2downloader" class="md-nav__link">
+    <span class="md-ellipsis">
+      Révision de la configuration de wis2downloader
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ajout-dabonnements-au-wis2downloader" class="md-nav__link">
+    <span class="md-ellipsis">
+      Ajout d'abonnements au wis2downloader
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#visualisation-des-donnees-telechargees" class="md-nav__link">
+    <span class="md-ellipsis">
+      Visualisation des données téléchargées
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#suppression-des-abonnements-du-wis2downloader" class="md-nav__link">
+    <span class="md-ellipsis">
+      Suppression des abonnements du wis2downloader
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#telecharger-et-decoder-des-donnees-pour-une-trajectoire-de-cyclone-tropical" class="md-nav__link">
+    <span class="md-ellipsis">
+      Télécharger et décoder des données pour une trajectoire de cyclone tropical
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Télécharger et décoder des données pour une trajectoire de cyclone tropical">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#abonnez-vous-au-wis2training-broker-et-configurez-un-nouvel-abonnement" class="md-nav__link">
+    <span class="md-ellipsis">
+      Abonnez-vous au wis2training-broker et configurez un nouvel abonnement
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#decodage-des-donnees-telechargees" class="md-nav__link">
+    <span class="md-ellipsis">
+      Décodage des données téléchargées
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusion" class="md-nav__link">
+    <span class="md-ellipsis">
+      Conclusion
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../discovering-datasets-from-wis2-gdc/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Découverte de jeux de données depuis le Catalogue de Découverte Global WIS2
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table des matières">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table des matières
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      Introduction
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#preparation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Préparation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#visualisation-du-tableau-de-bord-wis2downloader-dans-grafana" class="md-nav__link">
+    <span class="md-ellipsis">
+      Visualisation du tableau de bord wis2downloader dans Grafana
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#revision-de-la-configuration-de-wis2downloader" class="md-nav__link">
+    <span class="md-ellipsis">
+      Révision de la configuration de wis2downloader
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ajout-dabonnements-au-wis2downloader" class="md-nav__link">
+    <span class="md-ellipsis">
+      Ajout d'abonnements au wis2downloader
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#visualisation-des-donnees-telechargees" class="md-nav__link">
+    <span class="md-ellipsis">
+      Visualisation des données téléchargées
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#suppression-des-abonnements-du-wis2downloader" class="md-nav__link">
+    <span class="md-ellipsis">
+      Suppression des abonnements du wis2downloader
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#telecharger-et-decoder-des-donnees-pour-une-trajectoire-de-cyclone-tropical" class="md-nav__link">
+    <span class="md-ellipsis">
+      Télécharger et décoder des données pour une trajectoire de cyclone tropical
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Télécharger et décoder des données pour une trajectoire de cyclone tropical">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#abonnez-vous-au-wis2training-broker-et-configurez-un-nouvel-abonnement" class="md-nav__link">
+    <span class="md-ellipsis">
+      Abonnez-vous au wis2training-broker et configurez un nouvel abonnement
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#decodage-des-donnees-telechargees" class="md-nav__link">
+    <span class="md-ellipsis">
+      Décodage des données téléchargées
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusion" class="md-nav__link">
+    <span class="md-ellipsis">
+      Conclusion
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="telechargement-et-decodage-des-donnees-depuis-wis2">Téléchargement et décodage des données depuis WIS2</h1>
+<div class="admonition abstract">
+<p class="admonition-title">Résultats d'apprentissage !</p>
+<p>À la fin de cette session pratique, vous serez capable de :</p>
+<ul>
+<li>utiliser le "wis2downloader" pour vous abonner aux notifications de données WIS2 et télécharger des données sur votre système local</li>
+<li>visualiser l'état des téléchargements dans le tableau de bord Grafana</li>
+<li>décoder certaines données téléchargées en utilisant le conteneur "decode-bufr-jupyter"</li>
+</ul>
+</div>
+<h2 id="introduction">Introduction</h2>
+<p>Dans cette session, vous apprendrez à configurer un abonnement à un Broker WIS2 et à télécharger automatiquement des données sur votre système local en utilisant le service "wis2downloader" inclus dans wis2box.</p>
+<div class="admonition note">
+<p class="admonition-title">À propos de wis2downloader</p>
+<p>Le wis2downloader est également disponible en tant que service autonome qui peut être exécuté sur un système différent de celui qui publie les notifications WIS2. Voir <a href="https://pypi.org/project/wis2downloader/">wis2downloader</a> pour plus d'informations sur l'utilisation du wis2downloader en tant que service autonome.</p>
+<p>Si vous souhaitez développer votre propre service pour vous abonner aux notifications WIS2 et télécharger des données, vous pouvez utiliser le <a href="https://github.com/World-Meteorological-Organization/wis2downloader">code source de wis2downloader</a> comme référence.</p>
+</div>
+<div class="admonition autres outils pour accéder aux données wis2">
+<p class="admonition-title">Autres</p>
+<p>Les outils suivants peuvent également être utilisés pour découvrir et accéder aux données de WIS2 :</p>
+<ul>
+<li><a href="https://github.com/wmo-im/pywiscat">pywiscat</a> offre des capacités de recherche au-dessus du Catalogue Global de Découverte WIS2 pour soutenir le reporting et l'analyse du Catalogue WIS2 et de ses métadonnées de découverte associées</li>
+<li><a href="https://github.com/World-Meteorological-Organization/pywis-pubsub">pywis-pubsub</a> offre des capacités d'abonnement et de téléchargement des données de l'OMM depuis les services d'infrastructure WIS2</li>
+</ul>
+</div>
+<h2 id="preparation">Préparation</h2>
+<p>Avant de commencer, veuillez vous connecter à votre VM étudiant et assurez-vous que votre instance wis2box est opérationnelle.</p>
+<h2 id="visualisation-du-tableau-de-bord-wis2downloader-dans-grafana">Visualisation du tableau de bord wis2downloader dans Grafana</h2>
+<p>Ouvrez un navigateur web et naviguez vers le tableau de bord Grafana pour votre instance wis2box en allant sur <code>http://YOUR-HOST:3000</code>.</p>
+<p>Cliquez sur tableaux de bord dans le menu de gauche, puis sélectionnez le <strong>tableau de bord wis2downloader</strong>.</p>
+<p>Vous devriez voir le tableau de bord suivant :</p>
+<p><img alt="Tableau de bord wis2downloader" src="../../../assets/img/wis2downloader-dashboard.png" /></p>
+<p>Ce tableau de bord est basé sur les métriques publiées par le service wis2downloader et vous montrera l'état des téléchargements en cours.</p>
+<p>Dans le coin supérieur gauche, vous pouvez voir les abonnements qui sont actuellement actifs.</p>
+<p>Gardez ce tableau de bord ouvert car vous l'utiliserez pour surveiller la progression du téléchargement dans le prochain exercice.</p>
+<h2 id="revision-de-la-configuration-de-wis2downloader">Révision de la configuration de wis2downloader</h2>
+<p>Le service wis2downloader démarré par la pile wis2box peut être configuré à l'aide des variables d'environnement définies dans votre fichier wis2box.env.</p>
+<p>Les variables d'environnement suivantes sont utilisées par le wis2downloader :</p>
+<pre><code>- DOWNLOAD_BROKER_HOST : Le nom d'hôte du broker MQTT auquel se connecter. Par défaut à globalbroker.meteo.fr
+- DOWNLOAD_BROKER_PORT : Le port du broker MQTT auquel se connecter. Par défaut à 443 (HTTPS pour les websockets)
+- DOWNLOAD_BROKER_USERNAME : Le nom d'utilisateur à utiliser pour se connecter au broker MQTT. Par défaut à everyone
+- DOWNLOAD_BROKER_PASSWORD : Le mot de passe à utiliser pour se connecter au broker MQTT. Par défaut à everyone
+- DOWNLOAD_BROKER_TRANSPORT : websockets ou tcp, le mécanisme de transport à utiliser pour se connecter au broker MQTT. Par défaut à websockets,
+- DOWNLOAD_RETENTION_PERIOD_HOURS : La période de rétention en heures pour les données téléchargées. Par défaut à 24
+- DOWNLOAD_WORKERS : Le nombre de travailleurs de téléchargement à utiliser. Par défaut à 8. Détermine le nombre de téléchargements parallèles.
+- DOWNLOAD_MIN_FREE_SPACE_GB : L'espace libre minimum en GB à conserver sur le volume hébergeant les téléchargements. Par défaut à 1.
+</code></pre>
+<p>Pour réviser la configuration actuelle du wis2downloader, vous pouvez utiliser la commande suivante :</p>
+<div class="highlight"><pre><span></span><code>cat<span class="w"> </span>~/wis2box/wis2box.env<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>DOWNLOAD
+</code></pre></div>
+<div class="admonition question">
+<p class="admonition-title">Révisez la configuration du wis2downloader</p>
+<p>Quel est le broker MQTT par défaut auquel le wis2downloader se connecte ?</p>
+<p>Quelle est la période de rétention par défaut pour les données téléchargées ?</p>
+</div>
+<details class="success">
+<summary>Cliquez pour révéler la réponse</summary>
+<p>Le broker MQTT par défaut auquel le wis2downloader se connecte est <code>globalbroker.meteo.fr</code>.</p>
+<p>La période de rétention par défaut pour les données téléchargées est de 24 heures.</p>
+</details>
+<div class="admonition note">
+<p class="admonition-title">Mise à jour de la configuration du wis2downloader</p>
+<p>Pour mettre à jour la configuration du wis2downloader, vous pouvez éditer le fichier wis2box.env. Pour appliquer les modifications, vous pouvez relancer la commande de démarrage pour la pile wis2box :</p>
+<div class="highlight"><pre><span></span><code>python3<span class="w"> </span>wis2box-ctl.py<span class="w"> </span>start
+</code></pre></div>
+<p>Et vous verrez le service wis2downloader redémarrer avec la nouvelle configuration.</p>
+</div>
+<p>Vous pouvez conserver la configuration par défaut pour cet exercice.</p>
+<h2 id="ajout-dabonnements-au-wis2downloader">Ajout d'abonnements au wis2downloader</h2>
+<p>À l'intérieur du conteneur <strong>wis2downloader</strong>, vous pouvez utiliser la ligne de commande pour lister, ajouter et supprimer des abonnements.</p>
+<p>Pour vous connecter au conteneur <strong>wis2downloader</strong>, utilisez la commande suivante :</p>
+<div class="highlight"><pre><span></span><code>python3<span class="w"> </span>wis2box-ctl.py<span class="w"> </span>login<span class="w"> </span>wis2downloader
+</code></pre></div>
+<p>Ensuite, utilisez la commande suivante pour lister les abonnements actuellement actifs :</p>
+<div class="highlight"><pre><span></span><code>wis2downloader<span class="w"> </span>list-subscriptions
+</code></pre></div>
+<p>Cette commande retourne une liste vide puisqu'aucun abonnement n'est actuellement actif.</p>
+<p>Pour cet exercice, nous nous abonnerons au sujet suivant <code>cache/a/wis2/de-dwd-gts-to-wis2/#</code>, pour s'abonner aux données publiées par la passerelle GTS-to-WIS2 hébergée par DWD et télécharger les notifications depuis le Global Cache.</p>
+<p>Pour ajouter cet abonnement, utilisez la commande suivante :</p>
+<div class="highlight"><pre><span></span><code>wis2downloader<span class="w"> </span>add-subscription<span class="w"> </span>--topic<span class="w"> </span>cache/a/wis2/de-dwd-gts-to-wis2/#
+</code></pre></div>
+<p>Ensuite, quittez le conteneur <strong>wis2downloader</strong> en tapant <code>exit</code> :</p>
+<div class="highlight"><pre><span></span><code><span class="nb">exit</span>
+</code></pre></div>
+<p>Vérifiez le tableau de bord wis2downloader dans Grafana pour voir le nouvel abonnement ajouté. Attendez quelques minutes et vous devriez voir les premiers téléchargements commencer. Passez à l'exercice suivant une fois que vous avez confirmé que les téléchargements ont commencé.</p>
+<h2 id="visualisation-des-donnees-telechargees">Visualisation des données téléchargées</h2>
+<p>Le service wis2downloader dans la pile wis2box télécharge les données dans le répertoire 'downloads' dans le répertoire que vous avez défini comme WIS2BOX_HOST_DATADIR dans votre fichier wis2box.env. Pour visualiser le contenu du répertoire des téléchargements, vous pouvez utiliser la commande suivante :</p>
+<div class="highlight"><pre><span></span><code>ls<span class="w"> </span>-R<span class="w"> </span>~/wis2box-data/downloads
+</code></pre></div>
+<p>Notez que les données téléchargées sont stockées dans des répertoires nommés d'après le sujet sur lequel la notification WIS2 a été publiée.</p>
+<h2 id="suppression-des-abonnements-du-wis2downloader">Suppression des abonnements du wis2downloader</h2>
+<p>Ensuite, reconnectez-vous au conteneur wis2downloader :</p>
+<div class="highlight"><pre><span></span><code>python3<span class="w"> </span>wis2box-ctl.py<span class="w"> </span>login<span class="w"> </span>wis2downloader
+</code></pre></div>
+<p>et supprimez l'abonnement que vous avez fait du wis2downloader, en utilisant la commande suivante :</p>
+<div class="highlight"><pre><span></span><code>wis2downloader<span class="w"> </span>remove-subscription<span class="w"> </span>--topic<span class="w"> </span>cache/a/wis2/de-dwd-gts-to-wis2/#
+</code></pre></div>
+<p>Et quittez le conteneur wis2downloader en tapant <code>exit</code> :</p>
+<div class="highlight"><pre><span></span><code><span class="nb">exit</span>
+</code></pre></div>
+<p>Vérifiez le tableau de bord wis2downloader dans Grafana pour voir l'abonnement supprimé. Vous devriez voir les téléchargements s'arrêter.</p>
+<h2 id="telecharger-et-decoder-des-donnees-pour-une-trajectoire-de-cyclone-tropical">Télécharger et décoder des données pour une trajectoire de cyclone tropical</h2>
+<p>Dans cet exercice, vous vous abonnerez au Broker de Formation WIS2 qui publie des données d'exemple à des fins de formation. Vous configurerez un abonnement pour télécharger des données pour une trajectoire de cyclone tropical. Vous décoderez ensuite les données téléchargées en utilisant le conteneur "decode-bufr-jupyter".</p>
+<h3 id="abonnez-vous-au-wis2training-broker-et-configurez-un-nouvel-abonnement">Abonnez-vous au wis2training-broker et configurez un nouvel abonnement</h3>
+<p>Cela montre comment s'abonner à un broker qui n'est pas le broker par défaut et vous permettra de télécharger certaines données publiées depuis le Broker de Formation WIS2.</p>
+<p>Éditez le fichier wis2box.env et changez le DOWNLOAD_BROKER_HOST en <code>wis2training-broker.wis2dev.io</code>, changez DOWNLOAD_BROKER_PORT en <code>1883</code> et changez DOWNLOAD_BROKER_TRANSPORT en <code>tcp</code> :</p>
+<div class="highlight"><pre><span></span><code># paramètres du téléchargeur
+DOWNLOAD_BROKER_HOST=wis2training-broker.wis2dev.io
+DOWNLOAD_BROKER_PORT=1883
+DOWNLOAD_BROKER_USERNAME=everyone
+DOWNLOAD_BROKER_PASSWORD=everyone
+# mécanisme de transport de téléchargement (tcp ou websockets)
+DOWNLOAD_BROKER_TRANSPORT=tcp
+</code></pre></div>
+<p>Ensuite, exécutez à nouveau la commande 'start' pour appliquer les modifications :</p>
+<div class="highlight"><pre><span></span><code>python3<span class="w"> </span>wis2box-ctl.py<span class="w"> </span>start
+</code></pre></div>
+<p>Vérifiez les journaux du wis2downloader pour voir si la connexion au nouveau broker a été réussie :</p>
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>logs<span class="w"> </span>wis2downloader
+</code></pre></div>
+<p>Vous devriez voir le message de journal suivant :</p>
+<div class="highlight"><pre><span></span><code>...
+INFO - Connexion...
+INFO - Hôte : wis2training-broker.wis2dev.io, port : 1883
+INFO - Connecté avec succès
+</code></pre></div>
+<p>Maintenant, nous allons configurer un nouvel abonnement au sujet pour télécharger les données de trajectoire de cyclone depuis le Broker de Formation WIS2.</p>
+<p>Connectez-vous au conteneur <strong>wis2downloader</strong> :</p>
+<div class="highlight"><pre><span></span><code>python3<span class="w"> </span>wis2box-ctl.py<span class="w"> </span>login<span class="w"> </span>wis2downloader
+</code></pre></div>
+<p>Et exécutez la commande suivante (copiez-collez ceci pour éviter les fautes de frappe) :</p>
+<div class="highlight"><pre><span></span><code>wis2downloader<span class="w"> </span>add-subscription<span class="w"> </span>--topic<span class="w"> </span>origin/a/wis2/int-wis2-training/data/core/weather/prediction/forecast/medium-range/probabilistic/trajectory
+</code></pre></div>
+<p>Quittez le conteneur <strong>wis2downloader</strong> en tapant <code>exit</code>.</p>
+<p>Attendez jusqu'à ce que vous voyiez les téléchargements commencer dans le tableau de bord wis2downloader dans Grafana.</p>
+<div class="admonition note">
+<p class="admonition-title">Téléchargement de données depuis le Broker de Formation WIS2</p>
+<p>Le Broker de Formation WIS2 est un broker de test qui est utilisé à des fins de formation et peut ne pas publier de données tout le temps.</p>
+<p>Pendant les sessions de formation en personne, le formateur local s'assurera que le Broker de Formation WIS2 publiera des données pour que vous puissiez les télécharger.</p>
+<p>Si vous faites cet exercice en dehors d'une session de formation, vous ne verrez peut-être aucune donnée téléchargée.</p>
+</div>
+<p>Vérifiez que les données ont été téléchargées en vérifiant à nouveau les journaux du wis2downloader avec :</p>
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>logs<span class="w"> </span>wis2downloader
+</code></pre></div>
+<p>Vous devriez voir un message de journal similaire au suivant :</p>
+<div class="highlight"><pre><span></span><code>[...] INFO - Message reçu sous le sujet origin/a/wis2/int-wis2-training/data/core/weather/prediction/forecast/medium-range/probabilistic/trajectory
+[...] INFO - Téléchargé A_JSXX05ECEP020000_C_ECMP_...
+</code></pre></div>
+<h3 id="decodage-des-donnees-telechargees">Décodage des données téléchargées</h3>
+<p>Afin de démontrer comment vous pouvez décoder les données téléchargées, nous allons démarrer un nouveau conteneur en utilisant l'image 'decode-bufr-jupyter'.</p>
+<p>Ce conteneur démarrera un serveur de cahiers Jupyter sur votre instance qui inclut la bibliothèque "ecCodes" que vous pouvez utiliser pour décoder les données BUFR.</p>
+<p>Nous utiliserons les cahiers d'exemples inclus dans <code>~/exercise-materials/notebook-examples</code> pour décoder les données téléchargées pour les trajectoires de cyclones.</p>
+<p>Pour démarrer le conteneur, utilisez la commande suivante :</p>
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>--name<span class="w"> </span>decode-bufr-jupyter<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-v<span class="w"> </span>~/wis2box-data/downloads:/root/downloads<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-p<span class="w"> </span><span class="m">8888</span>:8888<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-e<span class="w"> </span><span class="nv">JUPYTER_TOKEN</span><span class="o">=</span>dataismagic!<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>mlimper/decode-bufr-jupyter
+</code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">À propos du conteneur decode-bufr-jupyter</p>
+<p>Le conteneur <code>decode-bufr-jupyter</code> est un conteneur personnalisé qui inclut la bibliothèque ecCodes et exécute un serveur de cahiers Jupyter. Le conteneur est basé sur une image qui inclut la bibliothèque <code>ecCodes</code> pour décoder les données BUFR, ainsi que des bibliothèques pour le traçage et l'analyse de données.</p>
+<p>La commande ci-dessus démarre le conteneur en mode détaché, avec le nom <code>decode-bufr-jupyter</code>, le port 8888 est mappé au système hôte et la variable d'environnement <code>JUPYTER_TOKEN</code> est définie sur <code>dataismagic!</code>.</p>
+<p>La commande ci-dessus monte également le répertoire <code>~/wis2box-data/downloads</code> sur <code>/root/downloads</code> dans le conteneur. Cela garantit que les données téléchargées sont disponibles pour le serveur de cahiers Jupyter.</p>
+</div>
+<p>Une fois le conteneur démarré, vous pouvez accéder au serveur de cahiers Jupyter en naviguant sur <code>http://YOUR-HOST:8888</code> dans votre navigateur web.</p>
+<p>Vous verrez un écran vous demandant d'entrer un "Mot de passe ou jeton".</p>
+<p>Fournissez le jeton <code>dataismagic!</code> pour vous connecter au serveur de cahiers Jupyter.</p>
+<p>Après vous être connecté, vous devriez voir l'écran suivant listant les répertoires dans le conteneur :</p>
+<p><img alt="Écran d'accueil du cahier Jupyter" src="../../../assets/img/jupyter-files-screen1.png" /></p>
+<p>Double-cliquez sur le répertoire <code>example-notebooks</code> pour l'ouvrir.</p>
+<p>Vous devriez voir l'écran suivant listant les cahiers d'exemples, double-cliquez sur le cahier <code>tropical_cyclone_track.ipynb</code> pour l'ouvrir :</p>
+<p><img alt="Cahiers d'exemples du cahier Jupyter" src="../../../assets/img/jupyter-files-screen2.png" /></p>
+<p>Vous devriez maintenant être dans le cahier Jupyter pour décoder les données de la trajectoire du cyclone tropical :</p>
+<p><img alt="Cahier Jupyter trajectoire du cyclone tropical" src="../../../assets/img/jupyter-tropical-cyclone-track.png" /></p>
+<p>Lisez les instructions dans le carnet et exécutez les cellules pour décoder les données téléchargées concernant les trajectoires des cyclones tropicaux. Exécutez chaque cellule en cliquant dessus puis sur le bouton d'exécution dans la barre d'outils ou en appuyant sur <code>Shift+Enter</code>.</p>
+<p>À la fin, vous devriez voir un graphique de la probabilité d'impact pour les trajectoires des cyclones tropicaux :</p>
+<p><img alt="Tropical cyclone tracks" src="../../../assets/img/tropical-cyclone-track-map.png" /></p>
+<div class="admonition question">
+<p class="admonition-title">Question</p>
+<p>Le résultat affiche la probabilité prédite de trajectoire de tempête tropicale à moins de 200 km. Comment mettriez-vous à jour le carnet pour afficher la probabilité prédite de trajectoire de tempête tropicale à moins de 300 km ?</p>
+</div>
+<details class="success">
+<summary>Cliquez pour révéler la réponse</summary>
+<p>Pour mettre à jour le carnet afin d'afficher la probabilité prédite de trajectoire de tempête tropicale à une distance différente, vous pouvez mettre à jour la variable <code>distance_threshold</code> dans le bloc de code qui calcule la probabilité d'impact.</p>
+<p>Pour afficher la probabilité prédite de trajectoire de tempête tropicale à moins de 300 km, </p>
+<div class="highlight"><pre><span></span><code><span class="c1"># set distance threshold (meters)</span>
+<span class="n">distance_threshold</span> <span class="o">=</span> <span class="mi">300000</span>  <span class="c1"># 300 km en mètres</span>
+</code></pre></div>
+<p>Ensuite, réexécutez les cellules dans le carnet pour voir le graphique mis à jour.</p>
+</details>
+<div class="admonition note">
+<p class="admonition-title">Décodage des données BUFR</p>
+<p>L'exercice que vous venez de réaliser a fourni un exemple spécifique de la manière dont vous pouvez décoder les données BUFR en utilisant la bibliothèque ecCodes. Différents types de données peuvent nécessiter différentes étapes de décodage et vous devrez peut-être consulter la documentation pour le type de données avec lequel vous travaillez.</p>
+<p>Pour plus d'informations, veuillez consulter la <a href="https://confluence.ecmwf.int/display/ECC">documentation ecCodes</a>.</p>
+</div>
+<h2 id="conclusion">Conclusion</h2>
+<div class="admonition success">
+<p class="admonition-title">Félicitations !</p>
+<p>Dans cette session pratique, vous avez appris à :</p>
+<ul>
+<li>utiliser 'wis2downloader' pour vous abonner à un WIS2 Broker et télécharger des données sur votre système local</li>
+<li>visualiser le statut des téléchargements dans le tableau de bord Grafana</li>
+<li>décoder certaines données téléchargées en utilisant le conteneur 'decode-bufr-jupyter'</li>
+</ul>
+</div>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      &copy; 2023 World Meteorological Organization
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.indexes", "content.code.copy"], "search": "../../../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copi\u00e9 dans le presse-papier", "clipboard.copy": "Copier dans le presse-papier", "search.result.more.one": "1 de plus sur cette page", "search.result.more.other": "# de plus sur cette page", "search.result.none": "Aucun document trouv\u00e9", "search.result.one": "1 document trouv\u00e9", "search.result.other": "# documents trouv\u00e9s", "search.result.placeholder": "Taper pour d\u00e9marrer la recherche", "search.result.term.missing": "Non trouv\u00e9", "select.version": "S\u00e9lectionner la version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.56ea9cef.min.js"></script>
+      
+        <script src="../../../assets/js/disclaimer.js"></script>
+      
+    
+  </body>
+</html>

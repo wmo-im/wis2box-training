@@ -1,0 +1,1228 @@
+
+<!doctype html>
+<html lang="ar" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="WIS2 in a box (wis2box) is a Free and Open Source (FOSS) Reference Implementation of a WMO WIS2 Node. The project provides a plug and play toolset to ingest, process, and publish weather/climate/water data using standards-based approaches in alignment with the WIS2 principles. wis2box also provides access to all data in the WIS2 network. wis2box is designed to have a low barrier to entry for data providers, providing enabling infrastructure and services for data discovery, access, and visualization.">
+      
+      
+        <meta name="author" content="World Meteorological Organization">
+      
+      
+        <link rel="canonical" href="https://training.wis2box.wis.wmo.int/ar/practical-sessions/bufr-command-line-tools/">
+      
+      
+        <link rel="prev" href="../automating-data-ingestion/">
+      
+      
+        <link rel="next" href="../configuring-station-metadata/">
+      
+      
+      <link rel="icon" href="https://public.wmo.int/sites/all/themes/wmo/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.15">
+    
+    
+      
+        <title>العمل مع بيانات BUFR - WIS2 in a box training</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.342714a4.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/css/custom.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="rtl" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#bufr" class="md-skip">
+          انتقل إلى المحتوى
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="عنوان العارضة">
+    <a href="../../" title="WIS2 in a box training" class="md-header__button md-logo" aria-label="WIS2 in a box training" data-md-component="logo">
+      
+  <img src="../../../assets/img/wmo-logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            WIS2 in a box training
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              العمل مع بيانات BUFR
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+      <div class="md-header__option">
+  <div class="md-select">
+    
+    <button class="md-header__button md-icon" aria-label="إختر اللغة">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12.87 15.07-2.54-2.51.03-.03A17.5 17.5 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2zm-2.62 7 1.62-4.33L19.12 17z"/></svg>
+    </button>
+    <div class="md-select__inner">
+      <ul class="md-select__list">
+        
+          <li class="md-select__item">
+            <a href="/" hreflang="en" class="md-select__link">
+              English
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="../../../fr/practical-sessions/bufr-command-line-tools/" hreflang="fr" class="md-select__link">
+              Français
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="../../../es/practical-sessions/bufr-command-line-tools/" hreflang="es" class="md-select__link">
+              Español
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="../../../zh/practical-sessions/bufr-command-line-tools/" hreflang="zh" class="md-select__link">
+              中文
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="../../../ru/practical-sessions/bufr-command-line-tools/" hreflang="ru" class="md-select__link">
+              Русский
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="./" hreflang="ar" class="md-select__link">
+              العربية
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</div>
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="بحث" placeholder="بحث" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="إبحث">
+        
+        <button type="reset" class="md-search__icon md-icon" title="مسح كلي" aria-label="مسح كلي" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            بدء البحث
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="تصفح" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../" title="WIS2 in a box training" class="md-nav__button md-logo" aria-label="WIS2 in a box training" data-md-component="logo">
+      
+  <img src="../../../assets/img/wmo-logo.png" alt="logo">
+
+    </a>
+    WIS2 in a box training
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    الصفحة الرئيسية
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    أوراق المساعدة
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            أوراق المساعدة
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cheatsheets/linux/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    دليل Linux المختصر
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cheatsheets/docker/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Docker cheatsheet
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cheatsheets/wis2box/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    دليل مختصر لـ WIS2 in a box
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    جلسات عملية
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            جلسات عملية
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../connecting-to-wis2-over-mqtt/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    الاتصال بـ WIS2 عبر MQTT
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../accessing-your-student-vm/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    الوصول إلى جهاز الطالب الافتراضي (VM)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../initializing-wis2box/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    تهيئة wis2box
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../configuring-wis2box-datasets/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    تكوين مجموعات البيانات في wis2box
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../configuring-station-metadata/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    تكوين بيانات المحطة الوصفية
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ingesting-data-for-publication/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    إدخال البيانات للنشر
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../data-conversion-tools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    أدوات تحويل البيانات
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../csv2bufr-templates/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    قوالب تحويل CSV إلى BUFR
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../adding-gts-headers-to-wis2-notifications/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    إضافة رؤوس GTS إلى إشعارات WIS2
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../datasets-with-access-control/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    إعداد مجموعة بيانات موصى بها مع التحكم في الوصول
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../downloading-data-from-wis2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    تنزيل وفك تشفير البيانات من WIS2
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../discovering-datasets-from-wis2-gdc/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    اكتشاف مجموعات البيانات من فهرس الاكتشاف العالمي WIS2
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    قوالب csv2bufr
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            قوالب csv2bufr
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../csv2bufr-templates/aws-template/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    قالب AWS
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../csv2bufr-templates/daycli-template/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    قالب DAYCLI
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="جدول المحتويات">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      جدول المحتويات
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      مقدمة
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      التحضير
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bufr_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      استخدام أدوات سطر الأوامر BUFR
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="استخدام أدوات سطر الأوامر BUFR">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-bufr_ls" class="md-nav__link">
+    <span class="md-ellipsis">
+      التمرين 1 - bufr_ls
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="bufr">العمل مع بيانات BUFR</h1>
+<div class="admonition abstract">
+<p class="admonition-title">نتائج التعلم</p>
+<p>في هذه الجلسة العملية، سيتم تعريفك على بعض أدوات BUFR المتضمنة في حاوية <strong>wis2box-api</strong> والتي تُستخدم لتحويل البيانات إلى تنسيق BUFR وقراءة المحتوى المُشفر في BUFR.</p>
+<p>ستتعلم:</p>
+<ul>
+<li>كيفية فحص الرؤوس في ملف BUFR باستخدام الأمر <code>bufr_ls</code></li>
+<li>كيفية استخراج وفحص البيانات داخل ملف bufr باستخدام <code>bufr_dump</code></li>
+<li>الهيكل الأساسي لقوالب bufr المستخدمة في csv2bufr وكيفية استخدام أداة سطر الأوامر</li>
+<li>وكيفية إجراء تغييرات أساسية على قوالب bufr وكيفية تحديث wis2box لاستخدام النسخة المعدلة</li>
+</ul>
+</div>
+<h2 id="_1">مقدمة</h2>
+<p>الإضافات التي تنتج إشعارات ببيانات BUFR تستخدم عمليات في wis2box-api للعمل مع بيانات BUFR، على سبيل المثال لتحويل البيانات من CSV إلى BUFR أو من BUFR إلى geojson.</p>
+<p>تشتمل حاوية wis2box-api على عدد من الأدوات للعمل مع بيانات BUFR.</p>
+<p>تشمل هذه الأدوات المطورة من قبل ECMWF والمتضمنة في برنامج ecCodes، يمكن العثور على مزيد من المعلومات حول هذه على <a href="https://confluence.ecmwf.int/display/ECC/BUFR+tools">موقع ecCodes</a>.</p>
+<p>في هذه الجلسة، سيتم تعريفك على الأوامر <code>bufr_ls</code> و <code>bufr_dump</code> من حزمة برامج ecCodes وتكوين متقدم لأداة csv2bufr.</p>
+<h2 id="_2">التحضير</h2>
+<p>لكي تستخدم أدوات سطر الأوامر BUFR، ستحتاج إلى تسجيل الدخول إلى حاوية wis2box-api
+وما لم يُذكر خلاف ذلك، يجب تشغيل جميع الأوامر على هذه الحاوية. ستحتاج أيضًا إلى فتح MQTT Explorer والاتصال بوسيطك.</p>
+<p>أولاً، قم بالاتصال بجهاز الطالب الافتراضي الخاص بك عبر عميل ssh الخاص بك ثم سجل الدخول إلى حاوية wis2box-api:</p>
+<div class="highlight"><pre><span></span><code>cd ~/wis2box-1.0.0rc1
+python3 wis2box-ctl.py login wis2box-api
+</code></pre></div>
+<p>تأكد من توفر الأدوات، بدءًا من ecCodes:</p>
+<p><div class="highlight"><pre><span></span><code>bufr_dump -V
+</code></pre></div>
+يجب أن تحصل على الاستجابة التالية:</p>
+<div class="highlight"><pre><span></span><code>ecCodes Version 2.28.0
+</code></pre></div>
+<p>ثم تحقق من csv2bufr:</p>
+<div class="highlight"><pre><span></span><code>csv2bufr --version
+</code></pre></div>
+<p>يجب أن تحصل على الاستجابة التالية:</p>
+<div class="highlight"><pre><span></span><code>csv2bufr, version 0.7.4
+</code></pre></div>
+<p>أخيرًا، قم بإنشاء دليل عمل للعمل فيه:</p>
+<div class="highlight"><pre><span></span><code>cd /data/wis2box
+mkdir -p working/bufr-cli
+cd working/bufr-cli
+</code></pre></div>
+<p>أنت الآن جاهز لبدء استخدام أدوات BUFR.</p>
+<h2 id="bufr_1">استخدام أدوات سطر الأوامر BUFR</h2>
+<h3 id="1-bufr_ls">التمرين 1 - bufr_ls</h3>
+<p>في هذا التمرين الأول، ستستخدم الأمر <code>bufr_ls</code> لفحص رؤوس ملف BUFR وتحديد محتويات الملف. تتضمن الرؤوس التالية في ملف BUFR:</p>
+<table>
+<thead>
+<tr>
+<th>الرأس</th>
+<th>مفتاح ecCodes</th>
+<th>الوصف</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>المركز الأصلي/المولد</td>
+<td>centre</td>
+<td>المركز الأصلي / المولد للبيانات</td>
+</tr>
+<tr>
+<td>المركز الفرعي الأصلي/المولد</td>
+<td>bufrHeaderSubCentre</td>
+<td>المركز الفرعي الأصلي / المولد للبيانات</td>
+</tr>
+<tr>
+<td>رقم تسلسل التحديث</td>
+<td>updateSequenceNumber</td>
+<td>هل هذه هي النسخة الأولى من البيانات (0) أو تحديث (&gt;0)</td>
+</tr>
+<tr>
+<td>فئة البيانات</td>
+<td>dataCategory</td>
+<td>نوع البيانات الموجودة في رسالة BUFR، على سبيل المثال، بيانات السطح. انظر <a href="https://github.com/wmo-im/BUFR4/blob/master/BUFR_TableA_en.csv">جدول BUFR A</a></td>
+</tr>
+<tr>
+<td>الفئة الفرعية الدولية للبيانات</td>
+<td>internationalDataSubCategory</td>
+<td>النوع الفرعي للبيانات الموجودة في رسالة BUFR، على سبيل المثال، بيانات السطح. انظر <a href="https://github.com/wmo-im/CCT/blob/master/C13.csv">جدول الرموز المشترك C-13</a></td>
+</tr>
+<tr>
+<td>السنة</td>
+<td>typicalYear (typicalDate)</td>
+<td>الوقت الأكثر نموذجية لمحتويات رسالة BUFR</td>
+</tr>
+<tr>
+<td>الشهر</td>
+<td>typicalMonth (typicalDate)</td>
+<td>الوقت الأكثر نموذجية لمحتويات رسالة BUFR</td>
+</tr>
+<tr>
+<td>اليوم</td>
+<td>typicalDay (typicalDate)</td>
+<td>الوقت الأكثر نموذجية لمحتويات رسالة BUFR</td>
+</tr>
+<tr>
+<td>الساعة</td>
+<td>typicalHour (typicalTime)</td>
+<td>الوقت الأكثر نموذجية لمحتويات رسالة BUFR</td>
+</tr>
+<tr>
+<td>الدقيقة</td>
+<td>typicalMinute (typicalTime)</td>
+<td>الوقت الأكثر نموذجية لمحتويات رسالة BUFR</td>
+</tr>
+<tr>
+<td>وصفات BUFR</td>
+<td>unexpandedDescriptors</td>
+<td>قائمة بواحد أو أكثر من وصفات BUFR التي تحدد البيانات الموجودة في الملف</td>
+</tr>
+</tbody>
+</table>
+<p>قم بتنزيل الملف المثالي مباشرة إلى حاوية إدارة wis2box باستخدام الأمر التالي:</p>
+<div class="highlight"><pre><span></span><code>curl https://training.wis2box.wis.wmo.int/sample-data/bufr-cli-ex1.bufr4 --output bufr-cli-ex1.bufr4
+</code></pre></div>
+<p>الآن استخدم الأمر التالي لتشغيل <code>bufr_ls</code> على هذا الملف:</p>
+<div class="highlight"><pre><span></span><code>bufr_ls<span class="w"> </span>bufr-cli-ex1.bufr4
+</code></pre></div>
+<p>يجب أن ترى الإخراج التالي:</p>
+<div class="highlight"><pre><span></span><code>bufr-cli-ex1.bufr4
+centre<span class="w">                     </span>masterTablesVersionNumber<span class="w">  </span>localTablesVersionNumber<span class="w">   </span>typicalDate<span class="w">                </span>typicalTime<span class="w">                </span>numberOfSubsets
+cnmc<span class="w">                       </span><span class="m">29</span><span class="w">                         </span><span class="m">0</span><span class="w">                          </span><span class="m">20231002</span><span class="w">                   </span><span class="m">000000</span><span class="w">                     </span><span class="m">1</span>
+<span class="m">1</span><span class="w"> </span>of<span class="w"> </span><span class="m">1</span><span class="w"> </span>messages<span class="w"> </span><span class="k">in</span><span class="w"> </span>bufr-cli-ex1.bufr4
+
+<span class="m">1</span><span class="w"> </span>of<span class="w"> </span><span class="m">1</span><span class="w"> </span>total<span class="w"> </span>messages<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="m">1</span><span class="w"> </span>files
+</code></pre></div>
+<p>بمفردها، هذه المعلومات ليست مفيدة جدًا، حيث تقدم معلومات محدودة فقط عن محتويات الملف.</p>
+<p>الإخراج الافتراضي لا يقدم معلومات حول نوع الرصد أو البيانات، وهو بتنسيق ليس سهل القراءة. ومع ذلك، يمكن تمرير خيارات مختلفة إلى <code>bufr_ls</code> لتغيير كل من التنسيق وحقول الرأس المطبوعة.</p>
+<p>استخدم <code>bufr_ls</code> بدون أي حجج لعرض الخيارات:</p>
+<div class="highlight"><pre><span></span><code>bufr_ls
+</code></pre></div>
+<p>يجب أن ترى الإخراج التالي:</p>
+<div class="highlight"><pre><span></span><code>NAME    bufr_ls
+
+DESCRIPTION
+        List content of BUFR files printing values of some header keys.
+        Only scalar keys can be printed.
+        It does not fail when a key is not found.
+
+USAGE
+        bufr_ls [options] bufr_file bufr_file ...
+
+OPTIONS
+        -p key[:{s|d|i}],key[:{s|d|i}],...
+                Declaration of keys to print.
+                For each key a string (key:s), a double (key:d) or an integer (key:i)
+                type can be requested. Default type is string.
+        -F format
+                C style format for floating-point values.
+        -P key[:{s|d|i}],key[:{s|d|i}],...
+                As -p adding the declared keys to the default list.
+        -w key[:{s|d|i}]{=|!=}value,key[:{s|d|i}]{=|!=}value,...
+                Where clause.
+                Messages are processed only if they match all the key/value constraints.
+                A valid constraint is of type key=value or key!=value.
+                For each key a string (key:s), a double (key:d) or an integer (key:i)
+                type can be specified. Default type is string.
+                In the value you can also use the forward-slash character &#39;/&#39; to specify an OR condition (i.e. a logical disjunction)
+                Note: only one -w clause is allowed.
+        -j      JSON output
+        -s key[:{s|d|i}]=value,key[:{s|d|i}]=value,...
+                Key/values to set.
+                For each key a string (key:s), a double (key:d) or an integer (key:i)
+                type can be defined. By default the native type is set.
+        -n namespace
+                All the keys belonging to the given namespace are printed.
+        -m      Mars keys are printed.
+        -V      Version.
+        -W width
+                Minimum width of each column in output. Default is 10.
+        -g      Copy GTS header.
+        -7      Does not fail when the message has wrong length
+
+SEE ALSO
+        Full documentation and examples at:
+        &lt;https://confluence.ecmwf.int/display/ECC/bufr_ls&gt;
+</code></pre></div>
+<p>الآن قم بتشغيل نفس الأمر على الملف المثالي ولكن قم بإخراج المعلومات بتنسيق JSON.</p>
+<div class="admonition question">
+<p class="admonition-title">Question</p>
+<p>أي علم تمرره إلى الأمر <code>bufr_ls</code> لعرض الإخراج بتنسيق JSON؟</p>
+</div>
+<details class="success">
+<summary>انقر لكشف الإجابة</summary>
+<p>يمكنك تغيير تنسيق الإخراج إلى json باستخدام العلم <code>-j</code>، أي
+<code>bufr_ls -j &lt;input-file&gt;</code>. قد يكون هذا أكثر قابلية للقراءة من تنسيق الإخراج الافتراضي. انظر الإخراج المثالي أدناه:</p>
+<div class="highlight"><pre><span></span><code>{ &quot;messages&quot; : [
+  {
+    &quot;centre&quot;: &quot;cnmc&quot;,
+    &quot;masterTablesVersionNumber&quot;: 29,
+    &quot;localTablesVersionNumber&quot;: 0,
+    &quot;typicalDate&quot;: 20231002,
+    &quot;typicalTime&quot;: &quot;000000&quot;,
+    &quot;numberOfSubsets&quot;: 1
+  }
+]}
+</code></pre></div>
+</details>
+<p>عند فحص ملف BUFR، غالبًا ما نرغب في تحديد نوع البيانات الموجودة في الملف والتاريخ / الوقت النموذجي
+للبيانات في الملف. يمكن سرد هذه المعلومات باستخدام العلم <code>-p</code> لتحديد الرؤوس للإخراج. يمكن تضمين رؤوس متعددة باستخدام قائمة مفصولة بفواصل.</p>
+<p>باستخدام الأمر <code>bufr_ls</code>، فحص ملف الاختبار وتحديد نوع البيانات الموجودة في الملف والتاريخ والوقت النموذجي لتلك البيانات.</p>
+<details class="hint">
+<summary>Hint</summary>
+<p>تُعطى مفاتيح ecCodes في الجدول أعلاه. يمكننا استخدام ما يلي لسرد فئة البيانات و
+الفئة الفرعية الدولية لبيانات BUFR:</p>
+<div class="highlight"><pre><span></span><code>bufr_ls -p dataCategory,internationalDataSubCategory bufr-cli-ex1.bufr4
+</code></pre></div>
+<p>يمكن إضافة مفاتيح إضافية حسب الحاجة.</p>
+</details>
+<div class="admonition question">
+<p class="admonition-title">Question</p>
+<p>ما نوع البيانات (فئة البيانات والفئة الفرعية) الموجودة في الملف؟ ما هو التاريخ والوقت النموذجي
+للبيانات؟</p>
+</div>
+<details class="success">
+<summary>انقر لكشف الإجابة</summary>
+<p>يجب أن يكون الأمر الذي تحتاج إلى تشغيله مشابهًا لما يلي:</p>
+<div class="highlight"><pre><span></span><code>bufr_ls -p dataCategory,internationalDataSubCategory,typicalDate,typicalTime -j bufr-cli-ex1.bufr4
+</code></pre></div>
+<p>قد تكون لديك مفاتيح إضافية، أو قمت بسرد السنة والشهر واليوم وما إلى ذلك بشكل فردي. يجب أن يكون الإخراج مشابهًا لما يلي، اعتمادًا على ما إذا كنت قد اخترت تنسيق JSON أو الإخراج الافتراضي.</p>
+<div class="highlight"><pre><span></span><code>{ &quot;messages&quot; : [
+  {
+    &quot;dataCategory&quot;: 2,
+    &quot;internationalDataSubCategory&quot;: 4,
+    &quot;typicalDate&quot;: 20231002,
+    &quot;typicalTime&quot;: &quot;000000&quot;
+  }
+]}
+</code></pre></div>
+<p>من هذا نرى أن:</p>
+<ul>
+<li>فئة البيانات هي 2، من <a href="https://github.com/wmo-im/BUFR4/blob/master/BUFR_TableA_en.csv">جدول BUFR A</a>
+  يمكننا أن نرى أن هذا الملف يحتوي على بيانات "الرصد العمودي (بخلاف الأقمار الصناعية)".</li>
+<li>الفئة الفرعية الدولية هي 4، مما يشير
+  إلى "تقارير درجة الحرارة/الرطوبة/الرياح على مستوى ع</li>
+</ul>
+</details>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      &copy; 2023 World Meteorological Organization
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.indexes", "content.code.copy"], "search": "../../../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "\u062a\u0645 \u0627\u0644\u0646\u0633\u062e \u0627\u0644\u0649 \u0627\u0644\u062d\u0627\u0641\u0638\u0629", "clipboard.copy": "\u0646\u0633\u062e \u0625\u0644\u0649 \u0627\u0644\u062d\u0627\u0641\u0638\u0629", "search.result.more.one": "\u0623\u0643\u062b\u0631 \u0645\u0646 1 \u0641\u064a \u0647\u0630\u0647 \u0627\u0644\u0635\u0641\u062d\u0629", "search.result.more.other": "\u0623\u0643\u062b\u0631 \u0645\u0646 # \u0641\u064a \u0647\u0630\u0647 \u0627\u0644\u0635\u0641\u062d\u0629", "search.result.none": "\u0644\u0627 \u062a\u0648\u062c\u062f \u0646\u062a\u0627\u0626\u062c", "search.result.one": "\u0646\u062a\u0627\u0626\u062c \u0627\u0644\u0628\u062d\u062b \u0645\u0633\u062a\u0646\u062f \u0648\u0627\u062d\u062f", "search.result.other": "\u0646\u062a\u0627\u0626\u062c \u0627\u0644\u0628\u062d\u062b # \u0645\u0633\u062a\u0646\u062f\u0627\u062a", "search.result.placeholder": "\u0627\u0643\u062a\u0628 \u0644\u0628\u062f\u0621 \u0627\u0644\u0628\u062d\u062b", "search.result.term.missing": "\u0645\u0641\u0642\u0648\u062f", "select.version": "\u0625\u062e\u062a\u0631 \u0627\u0644\u0625\u0635\u062f\u0627\u0631"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.56ea9cef.min.js"></script>
+      
+        <script src="../../../assets/js/disclaimer.js"></script>
+      
+    
+  </body>
+</html>

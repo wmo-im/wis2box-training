@@ -1,0 +1,1211 @@
+
+<!doctype html>
+<html lang="ru" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="WIS2 in a box (wis2box) is a Free and Open Source (FOSS) Reference Implementation of a WMO WIS2 Node. The project provides a plug and play toolset to ingest, process, and publish weather/climate/water data using standards-based approaches in alignment with the WIS2 principles. wis2box also provides access to all data in the WIS2 network. wis2box is designed to have a low barrier to entry for data providers, providing enabling infrastructure and services for data discovery, access, and visualization.">
+      
+      
+        <meta name="author" content="World Meteorological Organization">
+      
+      
+        <link rel="canonical" href="https://training.wis2box.wis.wmo.int/ru/practical-sessions/converting-csv-data-to-bufr/">
+      
+      
+        <link rel="prev" href="../connecting-to-wis2-over-mqtt/">
+      
+      
+        <link rel="next" href="../converting-synop-data-to-bufr-form/">
+      
+      
+      <link rel="icon" href="https://public.wmo.int/sites/all/themes/wmo/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.15">
+    
+    
+      
+        <title>Преобразование данных CSV в BUFR - WIS2 in a box training</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.342714a4.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/css/custom.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#csv-bufr" class="md-skip">
+          Перейти к содержанию
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Верхний колонтитул">
+    <a href="../../" title="WIS2 in a box training" class="md-header__button md-logo" aria-label="WIS2 in a box training" data-md-component="logo">
+      
+  <img src="../../../assets/img/wmo-logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            WIS2 in a box training
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Преобразование данных CSV в BUFR
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+      <div class="md-header__option">
+  <div class="md-select">
+    
+    <button class="md-header__button md-icon" aria-label="Выберите язык">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12.87 15.07-2.54-2.51.03-.03A17.5 17.5 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2zm-2.62 7 1.62-4.33L19.12 17z"/></svg>
+    </button>
+    <div class="md-select__inner">
+      <ul class="md-select__list">
+        
+          <li class="md-select__item">
+            <a href="/" hreflang="en" class="md-select__link">
+              English
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="../../../fr/practical-sessions/converting-csv-data-to-bufr/" hreflang="fr" class="md-select__link">
+              Français
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="../../../es/practical-sessions/converting-csv-data-to-bufr/" hreflang="es" class="md-select__link">
+              Español
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="../../../zh/practical-sessions/converting-csv-data-to-bufr/" hreflang="zh" class="md-select__link">
+              中文
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="./" hreflang="ru" class="md-select__link">
+              Русский
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="../../../ar/practical-sessions/converting-csv-data-to-bufr/" hreflang="ar" class="md-select__link">
+              العربية
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</div>
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Поиск" placeholder="Поиск" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Поиск">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Очистить" aria-label="Очистить" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Инициализация поиска
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Навигация" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../" title="WIS2 in a box training" class="md-nav__button md-logo" aria-label="WIS2 in a box training" data-md-component="logo">
+      
+  <img src="../../../assets/img/wmo-logo.png" alt="logo">
+
+    </a>
+    WIS2 in a box training
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Главная
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Практические занятия
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Практические занятия
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../connecting-to-wis2-over-mqtt/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Подключение к WIS2 через MQTT
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../accessing-your-student-vm/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Доступ к вашей учебной виртуальной машине
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../initializing-wis2box/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Инициализация wis2box
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../configuring-wis2box-datasets/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Настройка наборов данных в wis2box
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../configuring-station-metadata/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Настройка метаданных станции
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ingesting-data-for-publication/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Ввод данных для публикации
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../data-conversion-tools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Инструменты конвертации данных
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../csv2bufr-templates/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Шаблоны преобразования CSV в BUFR
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../adding-gts-headers-to-wis2-notifications/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Добавление заголовков GTS в уведомления WIS2
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../datasets-with-access-control/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Настройка рекомендуемого набора данных с контролем доступа
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../downloading-data-from-wis2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Загрузка и декодирование данных из WIS2
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../discovering-datasets-from-wis2-gdc/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Обнаружение наборов данных из Глобального каталога открытия WIS2
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Шаблоны csv2bufr
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Шаблоны csv2bufr
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../csv2bufr-templates/aws-template/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Шаблон AWS
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../csv2bufr-templates/daycli-template/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Шаблон DAYCLI
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Шпаргалки
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Шпаргалки
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cheatsheets/linux/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Шпаргалка по Linux
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cheatsheets/docker/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Шпаргалка по Docker
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cheatsheets/wis2box/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Шпаргалка WIS2 in a box
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Содержание">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Содержание
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Введение
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Подготовка
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-csv2bufr-aws" class="md-nav__link">
+    <span class="md-ellipsis">
+      Упражнение 1: Использование csv2bufr с шаблоном 'AWS'
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Упражнение 1: Использование csv2bufr с шаблоном &#39;AWS&#39;">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#aws" class="md-nav__link">
+    <span class="md-ellipsis">
+      Просмотрите пример входных данных aws
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Обновите пример файла
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#minio" class="md-nav__link">
+    <span class="md-ellipsis">
+      Загрузите данные в MinIO и проверьте результат
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-daycli" class="md-nav__link">
+    <span class="md-ellipsis">
+      Упражнение 2 - Использование шаблона 'DayCLI'
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Упражнение 2 - Использование шаблона &#39;DayCLI&#39;">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#wis2box-daycli" class="md-nav__link">
+    <span class="md-ellipsis">
+      Создание набора данных wis2box для публикации сообщений DAYCLI
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#daycli" class="md-nav__link">
+    <span class="md-ellipsis">
+      Просмотрите пример входных данных daycli
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      Обновите пример файла
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#minio_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Загрузите данные в MinIO и проверьте результат
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-csv-wis2box-webapp" class="md-nav__link">
+    <span class="md-ellipsis">
+      Упражнение 3 - использование формы CSV в wis2box-webapp (необязательно)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Упражнение 3 - использование формы CSV в wis2box-webapp (необязательно)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#csv-wis2box" class="md-nav__link">
+    <span class="md-ellipsis">
+      Использование формы CSV в веб-приложении wis2box
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="csv-bufr">Преобразование данных CSV в BUFR</h1>
+<div class="admonition abstract">
+<p class="admonition-title">Учебные результаты</p>
+<p>К концу этого практического занятия вы сможете:</p>
+<ul>
+<li>использовать <strong>MinIO UI</strong> для загрузки входных файлов данных CSV и мониторинга результатов</li>
+<li>знать формат данных CSV для использования с шаблоном BUFR стандартной автоматической метеостанции</li>
+<li>использовать редактор наборов данных в <strong>wis2box webapp</strong> для создания набора данных для публикации сообщений DAYCLI</li>
+<li>знать формат данных CSV для использования с шаблоном DAYCLI BUFR</li>
+<li>использовать <strong>wis2box webapp</strong> для проверки и преобразования образцов данных для станций AWS в BUFR (необязательно)</li>
+</ul>
+</div>
+<h2 id="_1">Введение</h2>
+<p>Файлы данных с разделителями-запятыми (CSV) часто используются для записи наблюдений и других данных в табличном формате.
+Большинство регистраторов данных, используемых для записи выходных данных датчиков, могут экспортировать наблюдения в файлах с разделителями, включая CSV.
+Аналогично, когда данные загружаются в базу данных, легко экспортировать необходимые данные в файлах с форматированием CSV.
+Для облегчения обмена данными, первоначально хранящимися в табличных форматах данных, в wis2box был реализован конвертер CSV в BUFR,
+использующий тот же программный продукт, что и для преобразования SYNOP в BUFR.</p>
+<p>На этом занятии вы узнаете о использовании конвертера csv2bufr в wis2box для следующих встроенных шаблонов:</p>
+<ul>
+<li><strong>AWS</strong> (aws-template.json) : Шаблон сопоставления для преобразования данных CSV из упрощенного файла автоматической метеостанции в последовательность BUFR 301150, 307096"</li>
+<li><strong>DayCLI</strong> (daycli-template.json) : Шаблон сопоставления для преобразования ежедневных климатических данных CSV в последовательность BUFR 307075</li>
+</ul>
+<h2 id="_2">Подготовка</h2>
+<p>Убедитесь, что wis2box-stack был запущен с помощью <code>python3 wis2box.py start</code></p>
+<p>Убедитесь, что у вас открыт веб-браузер с MinIO UI для вашего экземпляра, перейдя по адресу <code>http://&lt;your-host&gt;:9000</code>
+Если вы не помните свои учетные данные MinIO, вы можете найти их в файле <code>wis2box.env</code> в каталоге <code>wis2box-1.0.0rc1</code> на вашей студенческой виртуальной машине.</p>
+<p>Убедитесь, что у вас открыт и подключен MQTT Explorer к вашему брокеру с использованием учетных данных <code>everyone/everyone</code>.</p>
+<h2 id="1-csv2bufr-aws">Упражнение 1: Использование csv2bufr с шаблоном 'AWS'</h2>
+<p>Шаблон 'AWS' предоставляет предопределенный шаблон сопоставления для преобразования данных CSV с метеостанций AWS в поддержку требований отчетности GBON.</p>
+<p>Описание шаблона AWS можно найти <a href="../../csv2bufr-templates/aws-template/">здесь</a>.</p>
+<h3 id="aws">Просмотрите пример входных данных aws</h3>
+<p>Загрузите пример для этого упражнения по ссылке ниже:</p>
+<p><a href="../../../sample-data/aws-example.csv">aws-example.csv</a></p>
+<p>Откройте загруженный файл в редакторе и изучите содержимое:</p>
+<div class="admonition question">
+<p class="admonition-title">Question</p>
+<p>Изучая поля даты, времени и идентификации (идентификаторы WIGOS и традиционные идентификаторы), что вы заметили? Как будет представлена сегодняшняя дата?</p>
+</div>
+<details class="success">
+<summary>Нажмите, чтобы увидеть ответ</summary>
+<p>Каждый столбец содержит отдельную информацию. Например, дата разделена на год, месяц и день, отражая то, как данные хранятся в BUFR. Сегодняшняя дата будет разделена на столбцы "год", "месяц" и "день". Аналогично, время должно быть разделено на "час" и "минуту", а идентификатор станции WIGOS на его соответствующие компоненты.</p>
+</details>
+<div class="admonition question">
+<p class="admonition-title">Question</p>
+<p>Глядя на файл данных, как кодируются отсутствующие данные?</p>
+</div>
+<details class="success">
+<summary>Нажмите, чтобы увидеть ответ</summary>
+<p>Отсутствующие данные в файле представлены пустыми ячейками. В файле CSV это будет закодировано как <code>,,</code>. Обратите внимание, что это пустая ячейка, а не закодированная как строка нулевой длины, например, <code>,"",</code>.</p>
+</details>
+<div class="admonition hint">
+<p class="admonition-title">Отсутствующие данные</p>
+<p>Признается, что данные могут отсутствовать по разным причинам, будь то из-за сбоя датчика или ненаблюдения параметра. В этих случаях отсутствующие данные могут быть закодированы, как указано выше, другие данные в отчете остаются действительными.</p>
+</div>
+<div class="admonition question">
+<p class="admonition-title">Question</p>
+<p>Какие идентификаторы станций WIGOS для станций, сообщающих данные в примере файла? Как они определены во входном файле?</p>
+</div>
+<details class="success">
+<summary>Нажмите, чтобы увидеть ответ</summary>
+<p>Идентификатор станции WIGOS определяется четырьмя отдельными столбцами в файле:</p>
+<ul>
+<li><strong>wsi_series</strong>: серия идентификаторов WIGOS</li>
+<li><strong>wsi_issuer</strong>: издатель идентификатора WIGOS</li>
+<li><strong>wsi_issue_number</strong>: номер выпуска WIGOS</li>
+<li><strong>wsi_local</strong>: локальный идентификатор WIGOS</li>
+</ul>
+<p>Идентификаторы станций WIGOS, используемые в примере файла, это <code>0-20000-0-60351</code>, <code>0-20000-0-60355</code> и <code>0-20000-0-60360</code>. </p>
+</details>
+<h3 id="_3">Обновите пример файла</h3>
+<p>Обновите пример файла, который вы загрузили, используя сегодняшнюю дату и время, и измените идентификаторы станций WIGOS на станции, которые вы зарегистрировали в wis2box-webapp.</p>
+<h3 id="minio">Загрузите данные в MinIO и проверьте результат</h3>
+<p>Перейдите в MinIO UI и войдите, используя учетные данные из файла <code>wis2box.env</code>.</p>
+<p>Перейдите в <strong>wis2box-incoming</strong> и нажмите кнопку "Создать новый путь":</p>
+<p><img alt="Изображение, показывающее интерфейс MinIO с выделенной кнопкой создания папки" src="/../assets/img/minio-create-new-path.png"/></p>
+<p>Создайте новую папку в корзине MinIO, которая соответствует идентификатору набора данных для набора данных, который вы создали с template='weather/surface-weather-observations/synop':</p>
+<p><img alt="Изображение, показывающее интерфейс MinIO с выделенной кнопкой создания папки" src="/../assets/img/minio-create-new-path-metadata_id.png"/></p>
+<p>Загрузите пример файла, который вы загрузили, в папку, которую вы создали в корзине MinIO:</p>
+<p><img alt="Изображение, показывающее интерфейс MinIO с загруженным aws-example" src="/../assets/img/minio-upload-aws-example.png"/></center></p>
+<p>Проверьте панель управления Grafana по адресу <code>http://&lt;your-host&gt;:3000</code>, чтобы увидеть, есть ли какие-либо ПРЕДУПРЕЖДЕНИЯ или ОШИБКИ. Если вы видите какие-либо, попробуйте их исправить и повторите упражнение.</p>
+<p>Проверьте MQTT Explorer, чтобы увидеть, получаете ли вы уведомления о данных WIS2.</p>
+<p>Если вы успешно загрузили данные, вы должны увидеть 3 уведомления в MQTT Explorer на тему <code>origin/a/wis2/&lt;centre-id&gt;/data/weather/surface-weather-observations/synop</code> для 3 станций, о которых вы сообщили данные:</p>
+<p><img width="450" alt="Изображение, показывающее MQTT explorer после загрузки AWS" src="/../assets/img/mqtt-explorer-aws-upload.png"/></p>
+<h2 id="2-daycli">Упражнение 2 - Использование шаблона 'DayCLI'</h2>
+<p>В предыдущем упражнении мы использовали набор данных, который вы создали с Data-type='weather/surface-weather-observations/synop', который предварительно настроен на шаблон преобразования CSV в BUFR для шаблона AWS.</p>
+<p>В следующем упражнении мы будем использовать шаблон 'DayCLI' для преобразования ежедневных климатических данных в BUFR.</p>
+<p>Описание шаблона DAYCLI можно найти <a href="../../csv2bufr-templates/daycli-template/">здесь</a>.</p>
+<div class="admonition note">
+<p class="admonition-title">О шаблоне DAYCLI</p>
+<p>Обратите внимание, что последовательность DAYCLI BUFR будет обновлена в 2025 году для включения дополнительной информации и пересмотренных флагов КК. Шаблон DAYCLI, включенный в wis2box, будет обновлен, чтобы отразить эти изменения. ВМО сообщит, когда программное обеспечение wis2box будет обновлено для включения нового шаблона DAYCLI, чтобы пользователи могли обновить свои системы соответственно.</p>
+</div>
+<h3 id="wis2box-daycli">Создание набора данных wis2box для публикации сообщений DAYCLI</h3>
+<p>Перейдите в редактор наборов данных в wis2box-webapp и создайте новый набор данных. Используйте тот же centre-id, что и в предыдущих практических занятиях, и выберите <strong>Data Type='climate/surface-based-observations/daily'</strong>:</p>
+<p><img alt="Создайте новый набор данных в wis2box-webapp для DAYCLI" src="/../assets/img/wis2box-webapp-create-dataset-daycli.png"/></p>
+<p>Нажмите "CONTINUE TO FORM" и добавьте описание для вашего набора данных, установите ограничивающий прямоугольник и предоставьте контактную информацию для набора данных. Как только вы закончите заполнять все разделы, нажмите 'VALIDATE FORM' и проверьте форму.</p>
+<p>Просмотрите плагины данных для наборов данных. Нажмите "UPDATE" рядом с плагином с именем "CSV data converted to BUFR", и вы увидите, что шаблон установлен на <strong>DayCLI</strong>:</p>
+<p><img alt="Обновите плагин данных для набора данных, чтобы использовать шаблон DAYCLI" src="/../assets/img/wis2box-webapp-update-data-plugin-daycli.png"/></p>
+<p>Закройте конфигурацию плагина и отправьте форму, используя токен аутентификации, который вы создали на предыдущем практическом занятии.</p>
+<p>Теперь у вас должен быть второй набор данных в wis2box-webapp, настроенный на использование шаблона DAYCLI для преобразования данных CSV в BUFR.</p>
+<h3 id="daycli">Просмотрите пример входных данных daycli</h3>
+<p>Загрузите пример для этого упражнения по ссылке ниже:</p>
+<p><a href="../../../sample-data/daycli-example.csv">daycli-example.csv</a></p>
+<p>Откройте загруженный файл в редакторе и изучите содержимое:</p>
+<div class="admonition question">
+<p class="admonition-title">Question</p>
+<p>Какие дополнительные переменные включены в шаблон daycli?</p>
+</div>
+<details class="success">
+<summary>Нажмите, чтобы увидеть ответ</summary>
+<p>Шаблон daycli включает важные метаданные о расположении приборов и классификациях качества измерений температуры и влажности, флаги контроля качества и информацию о том, как была рассчитана среднесуточная температура.</p>
+</details>
+<h3 id="_4">Обновите пример файла</h3>
+<p>Пример файла содержит одну строку данных за каждый день в месяце и сообщает данные для одной станции. Обновите пример файла, который вы загрузили, используя сегодняшнюю дату и время, и измените идентификаторы станций WIGOS на станцию, которую вы зарегистрировали в wis2box-webapp.</p>
+<h3 id="minio_1">Загрузите данные в MinIO и проверьте результат</h3>
+<p>Как и раньше, вам нужно будет загрузить данные в корзину 'wis2box-incoming' в MinIO для обработки конвертером csv2bufr. На этот раз вам нужно будет создать новую папку в корзине MinIO, которая соответствует идентификатору набора данных для набора данных, который вы создали с template='climate/surface-based-observations/daily', который будет отличаться от идентификатора набора данных, который вы использовали в предыдущем упражнении:</p>
+<p><img alt="Изображение, показывающее интерфейс MinIO с загруженным DAYCLI-example" src="/../assets/img/minio-upload-daycli-example.png"/></center></p>
+<p>После загрузки данных проверьте, нет ли ПРЕДУПРЕЖДЕНИЙ или ОШИБОК на панели управления Grafana, и проверьте MQTT Explorer, чтобы увидеть, получаете ли вы уведомления о данных WIS2.</p>
+<p>Если вы успешно загрузили данные, вы должны увидеть 30 уведомлений в MQTT Explorer на тему <code>origin/a/wis2/&lt;centre-id&gt;/data/climate/surface-based-observations/daily</code> за 30 дней в месяце, о которых вы сообщили данные:</p>
+<p><img width="450" alt="Изображение, показывающее MQTT explorer после загрузки DAYCLI" src="/../assets/img/mqtt-daycli-template-success.png"/></p>
+<h2 id="3-csv-wis2box-webapp">Упражнение 3 - использование формы CSV в wis2box-webapp (необязательно)</h2>
+<p>Веб-приложение wis2box предоставляет интерфейс для загрузки данных CSV и их преобразования в BUFR перед публикацией в WIS2, используя шаблон AWS.</p>
+<p>Использование этой формы предназначено для отладки и проверки, рекомендуемый метод отправки для публикации данных с автоматизированных метеостанций - настроить процесс, который автоматически загружает данные в корзину MinIO.</p>
+<h3 id="csv-wis2box">Использование формы CSV в веб-приложении wis2box</h3>
+<p>Перейдите к форме CSV на веб-приложении wis2box
+(``http://<your-host-name>/</p>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      &copy; 2023 World Meteorological Organization
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.indexes", "content.code.copy"], "search": "../../../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "\u0421\u043a\u043e\u043f\u0438\u0440\u043e\u0432\u0430\u043d\u043e \u0432 \u0431\u0443\u0444\u0435\u0440", "clipboard.copy": "\u041a\u043e\u043f\u0438\u0440\u043e\u0432\u0430\u0442\u044c \u0432 \u0431\u0443\u0444\u0435\u0440", "search.result.more.one": "\u0415\u0449\u0451 1 \u043d\u0430 \u044d\u0442\u043e\u0439 \u0441\u0442\u0440\u0430\u043d\u0438\u0446\u0435", "search.result.more.other": "\u0415\u0449\u0451 # \u043d\u0430 \u044d\u0442\u043e\u0439 \u0441\u0442\u0440\u0430\u043d\u0438\u0446\u0435", "search.result.none": "\u0421\u043e\u0432\u043f\u0430\u0434\u0435\u043d\u0438\u0439 \u043d\u0435 \u043d\u0430\u0439\u0434\u0435\u043d\u043e", "search.result.one": "\u041d\u0430\u0439\u0434\u0435\u043d\u043e 1 \u0441\u043e\u0432\u043f\u0430\u0434\u0435\u043d\u0438\u0435", "search.result.other": "\u041d\u0430\u0439\u0434\u0435\u043d\u043e \u0441\u043e\u0432\u043f\u0430\u0434\u0435\u043d\u0438\u0439: #", "search.result.placeholder": "\u041d\u0430\u0447\u043d\u0438\u0442\u0435 \u043f\u0435\u0447\u0430\u0442\u0430\u0442\u044c \u0434\u043b\u044f \u043f\u043e\u0438\u0441\u043a\u0430", "search.result.term.missing": "\u041e\u0442\u0441\u0443\u0442\u0441\u0442\u0432\u0443\u0435\u0442", "select.version": "\u0412\u044b\u0431\u0435\u0440\u0438\u0442\u0435 \u0432\u0435\u0440\u0441\u0438\u044e"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.56ea9cef.min.js"></script>
+      
+        <script src="../../../assets/js/disclaimer.js"></script>
+      
+    
+  </body>
+</html>
