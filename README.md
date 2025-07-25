@@ -46,6 +46,14 @@ To make contributions back to the workshop, fork the repository from GitHub.  Co
 
 Changes to the GitHub repository result in an automated build and deploy of the content to [training.wis2box.wis.wmo.int](https://training.wis2box.wis.wmo.int).
 
+## Automatic Translations
+ 
+The English documentation, located under `documentation/docs/en`, serves as the single source of truth. Content updates can only be made in this folder.
+ 
+The documentation is automatically translated into multiple languages using a script that leverages **Azure OpenAI's GPT-4o model**, which provides high-quality translations.  
+This ensures that the content is accessible to a wider audience. Please note that as the translations are machine-generated, there may be occasional inaccuracies.
+If you find any issues, please feel free to open an issue or submit a pull request.
+
 ## Deploying to live site
 
 Website updates are automatically published via GitHub Actions. To publish manually:
