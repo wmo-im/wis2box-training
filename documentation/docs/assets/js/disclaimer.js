@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", function () {
   };
 
   const aiDisclaimers = {
-    en: "This translation was generated using an AI model (OpenAI GPT-4). While we strive for accuracy, there may be errors or inconsistencies. For authoritative information, please refer to the original English version.",
+    en: "Training material provided by WMO's WIS division, contact wis2-support@wmo to report any issues. Use top-right menu to access AI-based translation of the original English version.",
     es: "Esta traducción fue generada utilizando un modelo de inteligencia artificial (OpenAI GPT-4). Aunque nos esforzamos por la precisión, pueden existir errores o inconsistencias. Para información oficial, consulte la versión original en inglés.",
     pt: "Esta tradução foi gerada usando um modelo de IA (OpenAI GPT-4). Embora nos esforcemos para garantir a precisão, podem ocorrer erros ou inconsistências. Para informações oficiais, consulte a versão original em inglês.",
     ru: "Этот перевод был сгенерирован с помощью модели искусственного интеллекта (OpenAI GPT-4). Хотя мы стремимся к точности, возможны ошибки или несоответствия. Для получения достоверной информации обратитесь к оригинальной версии на английском языке.",
