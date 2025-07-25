@@ -85,8 +85,8 @@ jobs:
           git push
 
   deploy:
-    needs: setup
-    if: needs.setup.outputs.translated == 'true'
+    needs: setup-translate
+    if: needs.setup-translate.outputs.translated == 'true'
     runs-on: ubuntu-latest
     permissions:
       contents: write
