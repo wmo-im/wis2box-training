@@ -3,7 +3,7 @@ name: Translate files ⚙️
 on:
   pull_request:
     paths:
-      - 'documentation/en/**'
+      - 'documentation/docs/en/**'
 
 defaults:
   run:

@@ -14,7 +14,7 @@ title: Accessing your student VM
 
 ## Introduction
 
-As part of locally hosted WIS2 Training workshop, you can access your personal student VM on the local training network named "WIS2-training".
+As part of local WIS2 Training workshop, you can access your personal student VM on the local training network named "WIS2-training".
 
 Your student VM has the following software pre-installed:
 
