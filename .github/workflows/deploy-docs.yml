@@ -85,27 +85,27 @@ jobs:
           git commit -m "add exercise-materials zipfile" -a
           git push
 
-  deploy:
-    needs: setup-translate
-    if: needs.setup-translate.outputs.translated == 'true'
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+  # deploy: # Not used for now
+  #   needs: setup-translate
+  #   if: needs.setup-translate.outputs.translated == 'true'
+  #   runs-on: ubuntu-latest
+  #   permissions:
+  #     contents: write
+  #   steps:
+  #     - name: Checkout repository
+  #       uses: actions/checkout@v3
 
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: 3.x
+  #     - name: Set up Python
+  #       uses: actions/setup-python@v4
+  #       with:
+  #         python-version: 3.x
 
-      - name: Install dependencies
-        run: |
-          pip install mkdocs mkdocs-material mkdocs-static-i18n mkdocs-table-reader-plugin mkdocs-print-site-plugin mkdocs-awesome-pages-plugin
+  #     - name: Install dependencies
+  #       run: |
+  #         pip install mkdocs mkdocs-material mkdocs-static-i18n mkdocs-table-reader-plugin mkdocs-print-site-plugin mkdocs-awesome-pages-plugin
 
-      - name: Deploy with MkDocs
-        env:
-          CI: true
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: mkdocs gh-deploy --config-file documentation/mkdocs.yml --force
+  #     - name: Deploy with MkDocs
+  #       env:
+  #         CI: true
+  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  #       run: mkdocs gh-deploy --config-file mkdocs.yml --force
