@@ -1,4 +1,4 @@
-name: Translate files ⚙️
+name: Translate files and Test Build Documentation ⚙️
 
 on:
   pull_request:
