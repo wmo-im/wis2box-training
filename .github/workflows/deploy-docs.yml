@@ -58,6 +58,7 @@ jobs:
           )
 
   build-create-exercises-zip:
+    needs: setup-translate
     name: Build and Deploy Documentation
     runs-on: ubuntu-latest
     steps:

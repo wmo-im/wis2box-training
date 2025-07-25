@@ -14,14 +14,14 @@ load_dotenv()
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 EN_DIR = Path('docs/en')
 BASE_DIR = Path('docs')
-TARGET_LANGS = ['ar']
+TARGET_LANGS = ['ar', 'fr', 'es', 'zh', 'ru']
 
 LANG_DICT = {
     "ar": "Arabic",
-    # "fr": "French",
-    # "es": "Spanish",
-    # "zh": "Chinese",
-    # "ru": "Russian",
+    "fr": "French",
+    "es": "Spanish",
+    "zh": "Chinese",
+    "ru": "Russian",
 }
 
 EXCLUDED_TERMS = [
@@ -179,7 +179,7 @@ def main():
     if not md_files:
         print("No files to translate.")
         return
-
+    print(f"We will be translating languages: {LANG_DICT}")
     for md_file in md_files:
         for lang in TARGET_LANGS:
             translate_file(md_file, lang)
