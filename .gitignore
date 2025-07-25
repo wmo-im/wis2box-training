@@ -1,3 +1,11 @@
+topics/*.html
+documentation/*.html
+documentation/*/*.html
+topics/*/*.html
+update_topics_bucket_old.py
+site
+upload_training_materials.py
+.vscode/settings.json
 # Environment variables
 .env
 .env.*
