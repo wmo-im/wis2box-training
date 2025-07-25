@@ -258,7 +258,7 @@ bufr_dump -p bufr-cli-ex2.bufr4 | grep -v MISSING
 
 ## synop2bufr conversion
 
-Next, let's look at how to convert FM-12 SYNOP data to BUFR format using the `synop2bufr` module. The `synop2bufr` module is used to convert FM-12 SYNOP data to BUFR format. The module is installed in the wis2box-api container and can be used from the command line as follows:
+Next, let's look at how to convert FM-12 SYNOP data to BUFR format using the `synop2bufr` module. The `synop2bufr` module is used to convert FM-12 SYNOP data to BUFR format.  The module is installed in the wis2box-api container and can be used from the command line as follows:
 
 ```{.copy}
 synop2bufr data transform \
