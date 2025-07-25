@@ -179,7 +179,7 @@ def main():
     if not md_files:
         print("No files to translate.")
         return
-
+    print(f"We will be translating languages: {LANG_DICT}")
     for md_file in md_files:
         for lang in TARGET_LANGS:
             translate_file(md_file, lang)
