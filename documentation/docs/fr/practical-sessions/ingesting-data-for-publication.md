@@ -22,11 +22,11 @@ Dans cet exercice, nous utiliserons des fichiers de données exemples pour décl
 
 Pendant l'exercice, nous surveillerons le statut de l'ingestion des données en utilisant le **tableau de bord Grafana** et **MQTT Explorer**. Le tableau de bord Grafana utilise des données de Prometheus et Loki pour afficher le statut de votre wis2box, tandis que MQTT Explorer vous permet de voir les notifications de données WIS2 publiées par votre instance wis2box.
 
-Notez que wis2box transformera les données d'exemple en format BUFR avant de les publier sur le courtier MQTT, conformément aux mappages de données préconfigurés dans votre ensemble de données. Pour cet exercice, nous nous concentrerons sur les différentes méthodes pour télécharger des données sur votre instance wis2box et vérifier l'ingestion et la publication réussies. La transformation des données sera abordée plus tard dans la session pratique [Outils de conversion de données](./data-conversion-tools).
+Notez que wis2box transformera les données d'exemple en format BUFR avant de les publier sur le courtier MQTT, conformément aux mappages de données préconfigurés dans votre ensemble de données. Pour cet exercice, nous nous concentrerons sur les différentes méthodes pour télécharger des données sur votre instance wis2box et vérifier l'ingestion et la publication réussies. La transformation des données sera abordée plus tard dans la session pratique [Outils de conversion de données](./data-conversion-tools.md).
 
 ## Préparation
 
-Cette section utilise l'ensemble de données pour "surface-based-observations/synop" précédemment créé dans la session pratique [Configuration des ensembles de données dans wis2box](./configuring-wis2box-datasets). Elle nécessite également une connaissance de la configuration des stations dans le **wis2box-webapp**, comme décrit dans la session pratique [Configuration des métadonnées des stations](./configuring-station-metadata).
+Cette section utilise l'ensemble de données pour "surface-based-observations/synop" précédemment créé dans la session pratique [Configuration des ensembles de données dans wis2box](./configuring-wis2box-datasets.md). Elle nécessite également une connaissance de la configuration des stations dans le **wis2box-webapp**, comme décrit dans la session pratique [Configuration des métadonnées des stations](./configuring-station-metadata.md).
 
 Assurez-vous de pouvoir vous connecter à votre VM étudiante en utilisant votre client SSH (par exemple, PuTTY).
 
