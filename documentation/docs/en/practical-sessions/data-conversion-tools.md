@@ -96,7 +96,7 @@ csv2bufr --version
 You should get the following response:
 
 ```
-csv2bufr, version 0.8.5
+csv2bufr, version 0.8.6
 ```
 
 ## ecCodes command-line tools
