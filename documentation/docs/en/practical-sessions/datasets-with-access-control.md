@@ -128,7 +128,7 @@ Make sure to provide the correct metadata-identifier for your dataset and **chec
 
 Check the canonical link in the WIS2 Notification Message and copy/paste the link to the browser to try and download the data.
 
-You should see a *401 Unauthorized*.
+You should see a *401 Authorization Required*.
 
 ## Add the access token to HTTP headers to access the dataset
 
