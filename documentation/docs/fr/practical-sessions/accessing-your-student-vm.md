@@ -28,9 +28,9 @@ Votre VM étudiant dispose des logiciels suivants préinstallés :
 
     Si vous souhaitez suivre cette formation en dehors d'une session de formation locale, vous pouvez fournir votre propre instance en utilisant n'importe quel fournisseur de cloud, par exemple :
 
-    - Instance VM GCP (Google Cloud Platform) `e2-medium`
-    - Instance ec2 AWS (Amazon Web Services) `t3a.medium`
-    - Machine virtuelle Azure (Microsoft) `standard_b2s`
+    - GCP (Google Cloud Platform) instance VM `e2-medium`
+    - AWS (Amazon Web Services) instance ec2 `t3a.medium`
+    - Azure (Microsoft) machine virtuelle Azure `standard_b2s`
 
     Sélectionnez Ubuntu Server 22.0.4 LTS comme système d'exploitation.
     
@@ -73,7 +73,7 @@ Utilisez un client SSH pour vous connecter à votre VM étudiant en utilisant le
 - **Mot de passe : (fourni pendant la formation en présentiel)**
 
 !!! tip
-    Contactez un formateur si vous n'êtes pas sûr du nom d'hôte/nom d'utilisateur ou si vous rencontrez des problèmes de connexion.
+    Contactez un formateur si vous ne connaissez pas le nom d'hôte/nom d'utilisateur ou si vous rencontrez des problèmes de connexion.
 
 Une fois connecté, veuillez changer votre mot de passe pour garantir que personne d'autre ne puisse accéder à votre VM :
 
@@ -94,7 +94,7 @@ Vérifiez la version de Python :
 ```bash
 python3 --version
 ```
-retourne :
+résultat :
 ```console
 Python 3.10.12
 ```
@@ -103,7 +103,7 @@ Vérifiez la version de Docker :
 ```bash
 docker --version
 ```
-retourne :
+résultat :
 ```console
 Docker version 24.0.6, build ed223bc
 ```
@@ -112,12 +112,12 @@ Vérifiez la version de Docker Compose :
 ```bash
 docker compose version
 ```
-retourne :
+résultat :
 ```console
 Docker Compose version v2.21.0
 ```
 
-Pour vous assurer que votre utilisateur peut exécuter des commandes Docker, votre utilisateur a été ajouté au groupe `docker`. 
+Pour garantir que votre utilisateur peut exécuter des commandes Docker, il a été ajouté au groupe `docker`. 
 
 Pour tester que votre utilisateur peut exécuter `docker hello-world`, exécutez la commande suivante :
 ```bash
@@ -142,16 +142,16 @@ Inspectez le contenu de votre répertoire personnel ; ce sont les supports utili
 ```bash
 ls ~/
 ```
-retourne :
+résultat :
 ```console
 exercise-materials  wis2box
 ```
 
 Si vous avez installé WinSCP sur votre PC local, vous pouvez l'utiliser pour vous connecter à votre VM étudiant et inspecter le contenu de votre répertoire personnel, ainsi que pour télécharger ou téléverser des fichiers entre votre VM et votre PC local. 
 
-WinSCP n'est pas requis pour la formation, mais il peut être utile si vous souhaitez modifier des fichiers sur votre VM en utilisant un éditeur de texte sur votre PC local.
+WinSCP n'est pas requis pour la formation, mais il peut être utile si vous souhaitez modifier des fichiers sur votre VM à l'aide d'un éditeur de texte sur votre PC local.
 
-Voici comment vous connecter à votre VM étudiant en utilisant WinSCP :
+Voici comment vous connecter à votre VM étudiant avec WinSCP :
 
 Ouvrez WinSCP et cliquez sur "New Site". Vous pouvez créer une nouvelle connexion SCP à votre VM comme suit :
 
