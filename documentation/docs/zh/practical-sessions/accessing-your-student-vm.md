@@ -12,7 +12,7 @@ title: 访问你的学生虚拟机
     - 验证实践练习所需的软件是否已安装
     - 验证你是否能够在本地学生虚拟机上访问本次培训的练习材料
 
-## 简介
+## 介绍
 
 作为本地运行的 WIS2 培训工作坊的一部分，你可以通过名为 "WIS2-training" 的本地培训网络访问你的个人学生虚拟机。
 
@@ -32,17 +32,17 @@ title: 访问你的学生虚拟机
     - AWS (Amazon Web Services) ec2 实例 `t3a.medium`
     - Azure (Microsoft) Azure 虚拟机 `standard_b2s`
 
-    选择 Ubuntu Server 22.0.4 LTS 作为操作系统。
-    
-    创建虚拟机后，请确保已安装 python、docker 和 docker compose，具体说明请参阅 [wis2box-software-dependencies](https://docs.wis2box.wis.wmo.int/en/latest/user/getting-started.html#software-dependencies)。
-    
-    本次培训使用的 wis2box 发布归档文件可以通过以下方式下载：
+    请选择 Ubuntu Server 22.0.4 LTS 作为操作系统。
+
+    创建虚拟机后，请确保已安装 python、docker 和 docker compose，具体说明见 [wis2box-software-dependencies](https://docs.wis2box.wis.wmo.int/en/latest/user/getting-started.html#software-dependencies)。
+
+    本次培训使用的 wis2box 发行版可以通过以下方式下载：
 
     ```bash
     wget https://github.com/World-Meteorological-Organization/wis2box-release/releases/download/1.1.0/wis2box-setup-1.1.0.zip
     unzip wis2box-setup-1.1.0.zip
     ```
-    
+
     你可以随时在 [https://github.com/World-Meteorological-Organization/wis2box/releases](https://github.com/World-Meteorological-Organization/wis2box-release/releases) 找到最新的 'wis2box-setup' 归档文件。
 
     本次培训使用的练习材料可以通过以下方式下载：
@@ -52,28 +52,28 @@ title: 访问你的学生虚拟机
     unzip exercise-materials.zip
     ```
 
-    运行练习材料所需的额外 Python 包如下：
+    运行练习材料需要以下额外的 Python 包：
 
     ```bash
     pip3 install minio
     pip3 install pywiscat==0.2.2
     ```
 
-    如果你使用的是本地 WIS2 培训课程中提供的学生虚拟机，所需的软件将已预装。
+    如果你使用的是本地 WIS2 培训课程中提供的学生虚拟机，则所需软件已预先安装。
 
 ## 连接到本地培训网络上的学生虚拟机
 
 将你的电脑连接到 WIS2 培训期间房间内广播的本地 Wi-Fi，具体说明请参考培训师提供的指导。
 
-使用 SSH 客户端连接到你的学生虚拟机，具体信息如下：
+使用 SSH 客户端连接到你的学生虚拟机，连接信息如下：
 
-- **主机名: (培训期间提供)**
-- **端口: 22**
-- **用户名: (培训期间提供)**
-- **密码: (培训期间提供)**
+- **主机名：（现场培训期间提供）**
+- **端口：22**
+- **用户名：（现场培训期间提供）**
+- **密码：（现场培训期间提供）**
 
 !!! tip
-    如果你不确定主机名/用户名，或者在连接时遇到问题，请联系培训师。
+    如果你不确定主机名/用户名或连接时遇到问题，请联系培训师。
 
 连接后，请更改你的密码以确保其他人无法访问你的虚拟机：
 
@@ -117,9 +117,9 @@ docker compose version
 Docker Compose version v2.21.0
 ```
 
-为了确保你的用户能够运行 Docker 命令，你的用户已被添加到 `docker` 组中。
+为了确保你的用户能够运行 Docker 命令，你的用户已被添加到 `docker` 组。
 
-测试你的用户是否能够运行 Docker hello-world，运行以下命令：
+测试你的用户是否能够运行 Docker hello-world，请执行以下命令：
 ```bash
 docker run hello-world
 ```
@@ -147,13 +147,13 @@ ls ~/
 exercise-materials  wis2box
 ```
 
-如果你的本地电脑安装了 WinSCP，你可以使用它连接到学生虚拟机，检查主目录内容，并在虚拟机和本地电脑之间上传或下载文件。
+如果你的本地电脑安装了 WinSCP，你可以使用它连接到学生虚拟机，检查主目录内容，并在虚拟机与本地电脑之间上传或下载文件。
 
 WinSCP 不是培训的必需工具，但如果你希望使用本地电脑上的文本编辑器编辑虚拟机上的文件，它会很有用。
 
 以下是使用 WinSCP 连接到学生虚拟机的方法：
 
-打开 WinSCP 并点击 "New Site"。你可以创建一个新的 SCP 连接到你的虚拟机，具体如下：
+打开 WinSCP 并点击 "New Site"。你可以创建一个新的 SCP 连接，具体如下：
 
 <img alt="winscp-student-vm-scp.png" src="/../assets/img/winscp-student-vm-scp.png" width="400">
 

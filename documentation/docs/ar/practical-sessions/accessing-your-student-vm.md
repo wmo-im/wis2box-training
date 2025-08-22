@@ -10,7 +10,7 @@ title: الوصول إلى جهاز الطالب الافتراضي (VM)
 
     - الوصول إلى جهاز الطالب الافتراضي الخاص بك باستخدام SSH وWinSCP
     - التحقق من تثبيت البرامج المطلوبة للتمارين العملية
-    - التحقق من توفر مواد التمرين لهذا التدريب على جهاز الطالب الافتراضي الخاص بك
+    - التحقق من توفر مواد التمارين لهذا التدريب على جهاز الطالب الافتراضي المحلي الخاص بك
 
 ## المقدمة
 
@@ -29,30 +29,30 @@ title: الوصول إلى جهاز الطالب الافتراضي (VM)
     إذا كنت ترغب في إجراء هذا التدريب خارج جلسة تدريب محلية، يمكنك توفير جهاز افتراضي خاص بك باستخدام أي مزود خدمة سحابية، على سبيل المثال:
 
     - GCP (Google Cloud Platform) VM instance `e2-medium`
-    - AWS (Amazon Web Services)  ec2-instance `t3a.medium` 
+    - AWS (Amazon Web Services) ec2-instance `t3a.medium`
     - Azure (Microsoft) Azure Virtual Machine `standard_b2s`
 
     اختر Ubuntu Server 22.0.4 LTS كنظام تشغيل.
 
     بعد إنشاء الجهاز الافتراضي، تأكد من تثبيت python وdocker وdocker compose، كما هو موضح في [wis2box-software-dependencies](https://docs.wis2box.wis.wmo.int/en/latest/user/getting-started.html#software-dependencies).
 
-    يمكن تنزيل أرشيف الإصدار الخاص بـ 'wis2box' المستخدم في هذا التدريب كما يلي:
+    يمكن تنزيل أرشيف الإصدار الخاص بـ wis2box المستخدم في هذا التدريب كما يلي:
 
     ```bash
     wget https://github.com/World-Meteorological-Organization/wis2box-release/releases/download/1.1.0/wis2box-setup-1.1.0.zip
     unzip wis2box-setup-1.1.0.zip
     ```
 
-    يمكنك دائمًا العثور على أحدث أرشيف 'wis2box-setup' على [https://github.com/World-Meteorological-Organization/wis2box/releases](https://github.com/World-Meteorological-Organization/wis2box-release/releases).
+    يمكنك دائمًا العثور على أحدث أرشيف 'wis2box-setup' على الرابط التالي: [https://github.com/World-Meteorological-Organization/wis2box/releases](https://github.com/World-Meteorological-Organization/wis2box-release/releases).
 
-    يمكن تنزيل مواد التمرين المستخدمة في هذا التدريب كما يلي:
+    يمكن تنزيل مواد التمارين المستخدمة في هذا التدريب كما يلي:
 
     ```bash
     wget https://training.wis2box.wis.wmo.int/exercise-materials.zip
     unzip exercise-materials.zip
     ```
 
-    تتطلب مواد التمرين الحزم الإضافية التالية من Python لتشغيلها:
+    الحزم الإضافية التالية لـ Python مطلوبة لتشغيل مواد التمارين:
 
     ```bash
     pip3 install minio
@@ -73,7 +73,7 @@ title: الوصول إلى جهاز الطالب الافتراضي (VM)
 - **Password: (يتم توفيره أثناء التدريب الشخصي)**
 
 !!! tip
-    تواصل مع المدرب إذا لم تكن متأكدًا من اسم المضيف/اسم المستخدم أو واجهت مشاكل في الاتصال.
+    تواصل مع المدرب إذا كنت غير متأكد من اسم المضيف/اسم المستخدم أو واجهت مشاكل في الاتصال.
 
 بمجرد الاتصال، يرجى تغيير كلمة المرور الخاصة بك لضمان عدم تمكن الآخرين من الوصول إلى جهازك الافتراضي:
 
@@ -117,16 +117,16 @@ docker compose version
 Docker Compose version v2.21.0
 ```
 
-لضمان أن المستخدم الخاص بك يمكنه تشغيل أوامر Docker، تم إضافة المستخدم إلى مجموعة `docker`.
+لضمان أن المستخدم الخاص بك يمكنه تشغيل أوامر Docker، تمت إضافته إلى مجموعة `docker`.
 
 لاختبار أن المستخدم الخاص بك يمكنه تشغيل docker hello-world، قم بتشغيل الأمر التالي:
 ```bash
 docker run hello-world
 ```
 
-يجب أن يقوم هذا الأمر بتنزيل صورة hello-world وتشغيل حاوية تطبع رسالة.
+يجب أن يقوم هذا بتنزيل صورة hello-world وتشغيل حاوية تطبع رسالة.
 
-تحقق من أنك ترى ما يلي في الإخراج:
+تحقق من أنك ترى ما يلي في المخرجات:
 
 ```console
 ...
@@ -135,9 +135,9 @@ This message shows that your installation appears to be working correctly.
 ...
 ```
 
-## فحص مواد التمرين
+## فحص مواد التمارين
 
-قم بفحص محتويات دليل المنزل الخاص بك؛ هذه هي المواد المستخدمة كجزء من التدريب والجلسات العملية.
+افحص محتويات دليل المنزل الخاص بك؛ هذه هي المواد المستخدمة كجزء من التدريب والجلسات العملية.
 
 ```bash
 ls ~/
@@ -170,4 +170,4 @@ WinSCP ليس مطلوبًا للتدريب، ولكنه يمكن أن يكون 
 
     - الوصول إلى جهاز الطالب الافتراضي الخاص بك باستخدام SSH وWinSCP
     - التحقق من تثبيت البرامج المطلوبة للتمارين العملية
-    - التحقق من توفر مواد التمرين لهذا التدريب على جهاز الطالب الافتراضي الخاص بك
+    - التحقق من توفر مواد التمارين لهذا التدريب على جهاز الطالب الافتراضي المحلي الخاص بك
