@@ -14,7 +14,7 @@ title: Setting up a recommended dataset with access control
 
 ## Introduction
 
-Datasets that are not considered 'core' datasetd in WMO can optionally be configured with an access control policy. wis2box provides a mechanism to add an access token to a dataset which will prevent users from downloading data unless they supply the access token in the HTTP headers.
+Datasets that are not considered 'core' in WMO can optionally be configured with an access control policy. wis2box provides a mechanism to add an access token to a dataset which will prevent users from downloading data unless they supply the access token in the HTTP headers.
 
 ## Preparation
 
