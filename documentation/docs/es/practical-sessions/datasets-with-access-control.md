@@ -14,19 +14,19 @@ title: Configuración de un conjunto de datos recomendado con control de acceso
 
 ## Introducción
 
-Los conjuntos de datos que no se consideran 'core' en WMO pueden configurarse opcionalmente con una política de control de acceso. wis2box proporciona un mecanismo para agregar un token de acceso a un conjunto de datos que evitará que los usuarios descarguen datos a menos que incluyan el token de acceso en los encabezados HTTP.
+Los conjuntos de datos que no se consideran 'core' en WMO pueden configurarse opcionalmente con una política de control de acceso. wis2box proporciona un mecanismo para agregar un token de acceso a un conjunto de datos, lo que impedirá que los usuarios descarguen datos a menos que incluyan el token de acceso en los encabezados HTTP.
 
 ## Preparación
 
-Asegúrate de tener acceso SSH a tu máquina virtual de estudiante y que tu instancia de wis2box esté en funcionamiento.
+Asegúrate de tener acceso SSH a tu máquina virtual de estudiante y de que tu instancia de wis2box esté en funcionamiento.
 
-Conéctate al broker MQTT de tu instancia de wis2box utilizando MQTT Explorer. Puedes usar las credenciales públicas `everyone/everyone` para conectarte al broker.
+Asegúrate de estar conectado al broker MQTT de tu instancia de wis2box utilizando MQTT Explorer. Puedes usar las credenciales públicas `everyone/everyone` para conectarte al broker.
 
-Asegúrate de tener un navegador web abierto con la wis2box-webapp de tu instancia accediendo a `http://YOUR-HOST/wis2box-webapp`.
+Asegúrate de tener un navegador web abierto con la aplicación wis2box-webapp para tu instancia accediendo a `http://YOUR-HOST/wis2box-webapp`.
 
 ## Crear un nuevo conjunto de datos con la política de datos 'recommended'
 
-Ve a la página 'dataset editor' en la wis2box-webapp y crea un nuevo conjunto de datos. Selecciona el Data Type = 'weather/surface-weather-observations/synop'. 
+Ve a la página 'dataset editor' en la wis2box-webapp y crea un nuevo conjunto de datos. Selecciona el Data Type = 'weather/surface-weather-observations/synop'.
 
 <img alt="create-dataset-recommended" src="/../assets/img/create-dataset-template.png" width="800">
 
@@ -38,7 +38,7 @@ Reemplaza el 'Local ID' generado automáticamente con un nombre descriptivo para
 
 <img alt="create-dataset-recommended" src="/../assets/img/create-dataset-recommended.png" width="800">
 
-Cambia la política de datos de WMO a 'recommended' y verás que el formulario agregó un nuevo campo de entrada para una URL que proporciona la información de la licencia del conjunto de datos:
+Cambia la política de datos de WMO a 'recommended' y verás que el formulario añadió un nuevo campo de entrada para una URL que proporciona la información de la licencia del conjunto de datos:
 
 <img alt="create-dataset-license" src="/../assets/img/create-dataset-license.png" width="800">
 
@@ -64,7 +64,7 @@ Abre el enlace del conjunto de datos que acabas de crear y desplázate hacia aba
 
 <img alt="wis2box-api-recommended-dataset-links" src="/../assets/img/wis2box-api-recommended-dataset-links.png" width="600">
 
-Deberías ver un enlace para "License for this dataset" apuntando a la URL que proporcionaste en el editor de conjuntos de datos.
+Deberías ver un enlace para "License for this dataset" que apunta a la URL que proporcionaste en el editor de conjuntos de datos.
 
 Si usaste `http://YOUR-HOST/data/license.txt` como la URL de la licencia, el enlace actualmente no funcionará porque aún no hemos agregado un archivo de licencia a la instancia de wis2box.
 
@@ -79,9 +79,9 @@ cd ~/wis2box
 python3 wis2box-ctl.py login
 ```
 
-Desde la línea de comandos dentro del contenedor, puedes proteger un conjunto de datos utilizando el comando `wis2box auth add-token`, usando la bandera `--metadata-id` para especificar el identificador de metadatos del conjunto de datos y el token de acceso como argumento.
+Desde la línea de comandos dentro del contenedor, puedes proteger un conjunto de datos utilizando el comando `wis2box auth add-token`, con la bandera `--metadata-id` para especificar el identificador de metadatos del conjunto de datos y el token de acceso como argumento.
 
-Por ejemplo, para agregar el token de acceso `S3cr3tT0k3n` al conjunto de datos con identificador de metadatos `urn:wmo:md:not-my-centre:core.surface-based-observations.synop`:	
+Por ejemplo, para agregar el token de acceso `S3cr3tT0k3n` al conjunto de datos con el identificador de metadatos `urn:wmo:md:not-my-centre:core.surface-based-observations.synop`:
 
 ```bash
 wis2box auth add-token --metadata-id urn:wmo:md:not-my-centre:reco.surface-based-observations.synop S3cr3tT0k3n
@@ -101,7 +101,7 @@ Copia el archivo `exercise-materials/access-control-exercises/aws-example.csv` a
 cp ~/exercise-materials/access-control-exercises/aws-example.csv ~/wis2box-data
 ```
 
-Luego utiliza WinSCP o un editor de línea de comandos para editar el archivo `aws-example.csv` y actualiza los identificadores de estaciones WIGOS en los datos de entrada para que coincidan con las estaciones que tienes en tu instancia de wis2box.
+Luego, utiliza WinSCP o un editor de línea de comandos para editar el archivo `aws-example.csv` y actualiza los identificadores de estaciones WIGOS en los datos de entrada para que coincidan con las estaciones que tienes en tu instancia de wis2box.
 
 A continuación, ve al editor de estaciones en la wis2box-webapp. Para cada estación que usaste en `aws-example.csv`, actualiza el campo 'topic' para que coincida con el 'topic' del conjunto de datos que creaste en el ejercicio anterior.
 
@@ -128,7 +128,7 @@ Asegúrate de proporcionar el identificador de metadatos correcto para tu conjun
 
 Revisa el enlace canónico en el Mensaje de Notificación WIS2 y copia/pega el enlace en el navegador para intentar descargar los datos.
 
-Deberías ver un *401 Unauthorized*.
+Deberías ver un *401 Authorization Required*.
 
 ## Agregar el token de acceso a los encabezados HTTP para acceder al conjunto de datos
 
@@ -140,7 +140,7 @@ Desde la línea de comandos en tu máquina virtual de estudiante, utiliza el com
 wget <canonical-link>
 ```
 
-Deberías ver que la solicitud HTTP regresa con *401 Unauthorized* y los datos no se descargan.
+Deberías ver que la solicitud HTTP devuelve un *401 Unauthorized* y los datos no se descargan.
 
 Ahora agrega el token de acceso a los encabezados HTTP para acceder al conjunto de datos.
 
@@ -154,13 +154,12 @@ Ahora los datos deberían descargarse correctamente.
 
 Crea un archivo de texto en tu máquina local utilizando tu editor de texto favorito y agrega información de licencia al archivo, como:
 
-*Este es un archivo de licencia personalizado para el conjunto de datos recomendado con control de acceso.  
+*Este es un archivo de licencia personalizado para el conjunto de datos recomendado con control de acceso. 
 Eres libre de usar estos datos, pero por favor reconoce al proveedor de los datos.*
 
 Para subir un archivo localmente creado llamado license.txt, utiliza la Consola MinIO disponible en el puerto 9001 de la instancia de wis2box, accediendo a un navegador web y visitando `http://YOUR-HOST:9001`.
 
-Las credenciales para acceder a la Consola MinIO en el archivo wis2box.env están definidas por las variables de entorno `WIS2BOX_STORAGE_USERNAME` y `WIS2BOX_STORAGE_PASSWORD`.  
-Puedes encontrarlas en el archivo wis2box.env de la siguiente manera:
+Las credenciales para acceder a la Consola MinIO en el archivo wis2box.env están definidas por las variables de entorno `WIS2BOX_STORAGE_USERNAME` y `WIS2BOX_STORAGE_PASSWORD`. Puedes encontrarlas en el archivo wis2box.env de la siguiente manera:
 
 ```bash
 cat wis2box.env | grep WIS2BOX_STORAGE_USERNAME

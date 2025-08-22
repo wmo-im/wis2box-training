@@ -16,7 +16,7 @@ title: Accéder à votre VM étudiant
 
 Dans le cadre des ateliers de formation WIS2 organisés localement, vous pouvez accéder à votre VM étudiant personnelle sur le réseau de formation local nommé "WIS2-training".
 
-Votre VM étudiant dispose des logiciels suivants préinstallés :
+Votre VM étudiant dispose des logiciels préinstallés suivants :
 
 - Ubuntu 22.04 LTS [ubuntu-22.04.5-live-server-amd64.iso](https://releases.ubuntu.com/jammy/ubuntu-22.04.5-live-server-amd64.iso)
 - Python 3.10.12
@@ -43,7 +43,7 @@ Votre VM étudiant dispose des logiciels suivants préinstallés :
     unzip wis2box-setup-1.1.0.zip
     ```
     
-    Vous pouvez toujours trouver la dernière archive 'wis2box-setup' à [https://github.com/World-Meteorological-Organization/wis2box/releases](https://github.com/World-Meteorological-Organization/wis2box-release/releases).
+    Vous pouvez toujours trouver la dernière archive 'wis2box-setup' à l'adresse [https://github.com/World-Meteorological-Organization/wis2box/releases](https://github.com/World-Meteorological-Organization/wis2box-release/releases).
 
     Les supports d'exercice utilisés dans cette formation peuvent être téléchargés comme suit :
 
@@ -63,7 +63,7 @@ Votre VM étudiant dispose des logiciels suivants préinstallés :
 
 ## Se connecter à votre VM étudiant sur le réseau de formation local
 
-Connectez votre PC au réseau Wi-Fi local diffusé dans la salle pendant la formation WIS2, conformément aux instructions fournies par le formateur.
+Connectez votre PC au Wi-Fi local diffusé dans la salle pendant la formation WIS2, conformément aux instructions fournies par le formateur.
 
 Utilisez un client SSH pour vous connecter à votre VM étudiant en utilisant les informations suivantes :
 
@@ -73,9 +73,9 @@ Utilisez un client SSH pour vous connecter à votre VM étudiant en utilisant le
 - **Mot de passe : (fourni pendant la formation en présentiel)**
 
 !!! tip
-    Contactez un formateur si vous ne connaissez pas le nom d'hôte/nom d'utilisateur ou si vous rencontrez des problèmes de connexion.
+    Contactez un formateur si vous n'êtes pas sûr du nom d'hôte/nom d'utilisateur ou si vous rencontrez des problèmes de connexion.
 
-Une fois connecté, veuillez changer votre mot de passe pour garantir que personne d'autre ne puisse accéder à votre VM :
+Une fois connecté, veuillez changer votre mot de passe pour vous assurer que personne d'autre ne peut accéder à votre VM :
 
 ```bash
 limper@student-vm:~$ passwd
@@ -88,7 +88,7 @@ passwd: password updated successfully
 
 ## Vérifier les versions des logiciels
 
-Pour pouvoir exécuter wis2box, la VM étudiant doit avoir Python, Docker et Docker Compose préinstallés. 
+Pour pouvoir exécuter wis2box, la VM étudiant doit avoir Python, Docker et Docker Compose préinstallés.
 
 Vérifiez la version de Python :
 ```bash
@@ -117,14 +117,14 @@ résultat :
 Docker Compose version v2.21.0
 ```
 
-Pour garantir que votre utilisateur peut exécuter des commandes Docker, il a été ajouté au groupe `docker`. 
+Pour vous assurer que votre utilisateur peut exécuter des commandes Docker, il a été ajouté au groupe `docker`.
 
 Pour tester que votre utilisateur peut exécuter `docker hello-world`, exécutez la commande suivante :
 ```bash
 docker run hello-world
 ```
 
-Cela devrait télécharger l'image hello-world et exécuter un conteneur qui affiche un message. 
+Cela devrait télécharger l'image hello-world et exécuter un conteneur qui affiche un message.
 
 Vérifiez que vous voyez le message suivant dans la sortie :
 
@@ -147,11 +147,11 @@ résultat :
 exercise-materials  wis2box
 ```
 
-Si vous avez installé WinSCP sur votre PC local, vous pouvez l'utiliser pour vous connecter à votre VM étudiant et inspecter le contenu de votre répertoire personnel, ainsi que pour télécharger ou téléverser des fichiers entre votre VM et votre PC local. 
+Si vous avez installé WinSCP sur votre PC local, vous pouvez l'utiliser pour vous connecter à votre VM étudiant, inspecter le contenu de votre répertoire personnel et télécharger ou téléverser des fichiers entre votre VM et votre PC local.
 
 WinSCP n'est pas requis pour la formation, mais il peut être utile si vous souhaitez modifier des fichiers sur votre VM à l'aide d'un éditeur de texte sur votre PC local.
 
-Voici comment vous connecter à votre VM étudiant avec WinSCP :
+Voici comment vous connecter à votre VM étudiant en utilisant WinSCP :
 
 Ouvrez WinSCP et cliquez sur "New Site". Vous pouvez créer une nouvelle connexion SCP à votre VM comme suit :
 
