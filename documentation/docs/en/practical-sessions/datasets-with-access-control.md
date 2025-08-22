@@ -166,7 +166,9 @@ wget --header="Authorization: Bearer S3cr3tT0k3n" <canonical-link>
 
 Now the data should be downloaded successfully.
 
-## Add a custom license file to your wis2box instance (optional)
+## Add a custom license file to your wis2box instance
+
+This step is only required if you want to provide a custom license hosted by your wis2box instance, rather than using an external license URL.
 
 Create a text file on your local machine using your favorite text editor and add some license information to the file, such as:
 
