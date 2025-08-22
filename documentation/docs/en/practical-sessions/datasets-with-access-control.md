@@ -11,10 +11,26 @@ title: Setting up a recommended dataset with access control
     - add an access token to the dataset
     - validate the dataset can not be accessed without the access token
     - add the access token to HTTP headers to access the dataset
+    - add a custom license file hosted on your wis2box instance
 
 ## Introduction
 
-Datasets that are not considered 'core' in WMO can optionally be configured with an access control policy. wis2box provides a mechanism to add an access token to a dataset which will prevent users from downloading data unless they supply the access token in the HTTP headers.
+Data are shared on WIS2 in accordance with the WMO Unified Data Policy which describes two categories of data:
+
+- **core** : data that is provided on a free and unrestricted basis, without charge and with no conditions on use.
+- **recommended** : data that may be provided with conditions on use and/or subject to a license.
+
+Data that are shared as recommended:
+
+- May be subject to conditions on use and reuse;
+- May have access controls applied to the data;
+- Are not cached within WIS2 by the Global Caches;
+- Must have a link to a license specifying the conditions of use of the data included in the discovery metadata.
+
+The dataset-editor in the wis2box-webapp will require you to provide a license URL when you select the data policy 'recommended'. Optionally, you can add an access token to such a dataset to restrict access to the data. 
+
+In this practical session, you will create a new dataset with data policy 'recommended' and learn how to add access control.
+It will also guide you through the steps to add a custom license file to your wis2box instance.
 
 ## Preparation
 
