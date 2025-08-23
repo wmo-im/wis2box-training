@@ -15,22 +15,23 @@ title: Setting up a recommended dataset with access control
 
 ## Introduction
 
-Data are shared on WIS2 in accordance with the WMO Unified Data Policy which describes two categories of data:
+Data are shared on WIS2 according to WMO Unified Data Policy which describes two categories of data:
 
-- **core** : data that is provided on a free and unrestricted basis, without charge and with no conditions on use.
-- **recommended** : data that may be provided with conditions on use and/or subject to a license.
+- **core** : data that is provided on a free and unrestricted basis, without charge and with no conditions on use
+- **recommended** : data that may be provided with conditions on use and/or subject to a license
 
 Data that are shared as recommended:
 
-- May be subject to conditions on use and reuse;
-- May have access controls applied to the data;
-- Are not cached within WIS2 by the Global Caches;
-- Must have a link to a license specifying the conditions of use of the data included in the discovery metadata.
+- may be subject to conditions on use and reuse
+- may have access controls applied to the data
+- are not cached by WIS2 Global Cache Services
+- must have a link to a license specifying the conditions of use of the data included in the discovery metadata
 
-The dataset-editor in the wis2box-webapp will require you to provide a license URL when you select the data policy 'recommended'. Optionally, you can add an access token to such a dataset to restrict access to the data. 
+The dataset editor in the wis2box-webapp will require you to provide a license URL when you select the data policy 'recommended'. Optionally, you can add an access token to the dataset, restrict to the data. 
 
 In this practical session, you will create a new dataset with data policy 'recommended' and learn how to add access control.
-It will also guide you through the steps to add a custom license file to your wis2box instance.
+
+This session will also guide you through the steps to add a custom license file to your wis2box instance.
 
 ## Preparation
 
@@ -58,29 +59,28 @@ Change the WMO data policy to 'recommended' and you will see that the form added
 
 <img alt="create-dataset-license" src="/../assets/img/create-dataset-license.png" width="800">
 
-You have the option to provide a URL to a license that describes the terms of use for the dataset. For example you could use
-`https://creativecommons.org/licenses/by/4.0/`
-to point to the Creative Commons Attribution 4.0 International (CC BY 4.0) license.
+You have the option to provide a URL to a license that describes the terms of use for the dataset. For example, use
+`https://creativecommons.org/licenses/by/4.0/` to point to the Creative Commons Attribution 4.0 International (CC BY 4.0) license.
 
-Or you can use `WIS2BOX_URL/data/license.txt` to point to a custom license file you hosted on your own webserver, where `WIS2BOX_URL` is the URL your defined in the wis2box.env file:
+Or `WIS2BOX_URL/data/license.txt` to point to a custom license file you hosted on your own web server, where `WIS2BOX_URL` is the URL your defined in the `wis2box.env` file:
 
 <img alt="create-dataset-license-url" src="/../assets/img/create-dataset-license-custom.png" width="800">
 
-Continue to fill the required fields for Spatial Properties and Contact Information, and 'Validate form' to check for any errors.
+Continue to fill the required fields for Spatial Properties and Contact Information.  Click 'Validate form' to check for any errors.
 
 Finally submit the dataset, using the previously created authentication token, and check that the new dataset is created in the wis2box-webapp.
 
-Check MQTT Explorer to see that you receive the WIS2 Notification Message announcing the new Discovery Metadata record on the topic `origin/a/wis2/<your-centre-id>/metadata`.	
+Check MQTT Explorer to verify that you receive the WIS2 Notification Message announcing the new Discovery Metadata record on the topic `origin/a/wis2/<your-centre-id>/metadata`.	
 
 ## Review your new dataset in the wis2box-api
 
 View the list of datasets in the wis2box-api by opening the URL `WIS2BOX_URL/oapi/collections/discovery-metadata/items` in your web browser, replacing `WIS2BOX_URL` with the URL of your wis2box instance.
 
-Open the link of the dataset you just created and scroll down to the 'links' section of the JSON response:
+Open the link of the dataset just created and scroll down to the 'links' section of the JSON response:
 
 <img alt="wis2box-api-recommended-dataset-links" src="/../assets/img/wis2box-api-recommended-dataset-links.png" width="600">
 
-You should see a link for "License for this dataset" pointing to the URL you provided in the dataset editor.
+You should see a link for "License for this dataset" pointing to the URL provided in the dataset editor.
 
 If you used `http://YOUR-HOST/data/license.txt` as the license URL, the link will currently not work, because we have not yet added a license file to the wis2box instance.
 
@@ -175,17 +175,18 @@ Create a text file on your local machine using your favorite text editor and add
 *This is a custom license file for the recommended dataset with access control.
 You are free to use this data, but please acknowledge the data provider.*
 
-To upload a locally created file license.txt, use the MinIO Console available at port 9001 of the wis2box instance, by going to a web browser and visiting `http://YOUR-HOST:9001`
+To upload a locally created file called `license.txt`, use the MinIO Console available at port 9001 of the wis2box instance, by going to a web browser and visiting `http://YOUR-HOST:9001`
 
 The credentials to access the MinIO Console in the wis2box.env file are defined by `WIS2BOX_STORAGE_USERNAME` and `WIS2BOX_STORAGE_PASSWORD` environment variables.
-You can find these in the wis2box.env file as follows:
+
+You can find these in `wis2box.env` file as follows:
 
 ```bash
 cat wis2box.env | grep WIS2BOX_STORAGE_USERNAME
 cat wis2box.env | grep WIS2BOX_STORAGE_PASSWORD
 ```
 
-Once you have logged in to the MinIO Console, you can upload the license file into base path of the **wis2box-public** bucket using the “Upload” button:
+Once you have logged in to the MinIO Console, upload the license file into base path of the **wis2box-public** bucket using the “Upload” button:
 
 <img alt="minio-upload-license" src="/../assets/img/minio-upload-license.png" width="800">
 
@@ -195,7 +196,7 @@ After uploading the license file, check if the file is accessible by visiting `W
 
     The web-proxy in wis2box proxies all files stored in the "wis2box-public" bucket under the path `WIS2BOX_URL/data/`
 
-The link for "License for this dataset" included in the metadata of your recommended dataset should now work.
+The link for "License for this dataset" included in the metadata of your recommended dataset should now work as expected.
 
 ## Conclusion
 
