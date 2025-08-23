@@ -9,14 +9,14 @@ title: Accéder à votre VM étudiant
     À la fin de cette session pratique, vous serez capable de :
 
     - accéder à votre VM étudiant via SSH et WinSCP
-    - vérifier que les logiciels nécessaires aux exercices pratiques sont installés
+    - vérifier que les logiciels requis pour les exercices pratiques sont installés
     - vérifier que vous avez accès aux supports d'exercice pour cette formation sur votre VM étudiant locale
 
 ## Introduction
 
 Dans le cadre des ateliers de formation WIS2 organisés localement, vous pouvez accéder à votre VM étudiant personnelle sur le réseau de formation local nommé "WIS2-training".
 
-Votre VM étudiant dispose des logiciels préinstallés suivants :
+Votre VM étudiant dispose des logiciels suivants préinstallés :
 
 - Ubuntu 22.04 LTS [ubuntu-22.04.5-live-server-amd64.iso](https://releases.ubuntu.com/jammy/ubuntu-22.04.5-live-server-amd64.iso)
 - Python 3.10.12
@@ -29,12 +29,12 @@ Votre VM étudiant dispose des logiciels préinstallés suivants :
     Si vous souhaitez suivre cette formation en dehors d'une session de formation locale, vous pouvez fournir votre propre instance en utilisant n'importe quel fournisseur de cloud, par exemple :
 
     - GCP (Google Cloud Platform) instance VM `e2-medium`
-    - AWS (Amazon Web Services) instance ec2 `t3a.medium`
-    - Azure (Microsoft) machine virtuelle Azure `standard_b2s`
+    - AWS (Amazon Web Services) instance ec2 `t3a.medium` 
+    - Azure (Microsoft) Azure Virtual Machine `standard_b2s`
 
     Sélectionnez Ubuntu Server 22.0.4 LTS comme système d'exploitation.
     
-    Après avoir créé votre VM, assurez-vous d'avoir installé Python, Docker et Docker Compose, comme décrit dans [wis2box-software-dependencies](https://docs.wis2box.wis.wmo.int/en/latest/user/getting-started.html#software-dependencies).
+    Après avoir créé votre VM, assurez-vous d'avoir installé python, docker et docker compose, comme décrit dans [wis2box-software-dependencies](https://docs.wis2box.wis.wmo.int/en/latest/user/getting-started.html#software-dependencies).
     
     L'archive de la version de wis2box utilisée dans cette formation peut être téléchargée comme suit :
 
@@ -63,7 +63,7 @@ Votre VM étudiant dispose des logiciels préinstallés suivants :
 
 ## Se connecter à votre VM étudiant sur le réseau de formation local
 
-Connectez votre PC au réseau Wi-Fi local diffusé dans la salle pendant la formation WIS2, conformément aux instructions fournies par le formateur.
+Connectez votre PC au Wi-Fi local diffusé dans la salle pendant la formation WIS2, conformément aux instructions fournies par le formateur.
 
 Utilisez un client SSH pour vous connecter à votre VM étudiant en utilisant les informations suivantes :
 
@@ -75,7 +75,7 @@ Utilisez un client SSH pour vous connecter à votre VM étudiant en utilisant le
 !!! tip
     Contactez un formateur si vous n'êtes pas sûr du nom d'hôte/nom d'utilisateur ou si vous rencontrez des problèmes de connexion.
 
-Une fois connecté, veuillez changer votre mot de passe pour garantir que personne d'autre ne puisse accéder à votre VM :
+Une fois connecté, veuillez changer votre mot de passe pour empêcher d'autres personnes d'accéder à votre VM :
 
 ```bash
 limper@student-vm:~$ passwd
@@ -94,7 +94,7 @@ Vérifiez la version de Python :
 ```bash
 python3 --version
 ```
-retourne :
+renvoie :
 ```console
 Python 3.10.12
 ```
@@ -103,7 +103,7 @@ Vérifiez la version de Docker :
 ```bash
 docker --version
 ```
-retourne :
+renvoie :
 ```console
 Docker version 24.0.6, build ed223bc
 ```
@@ -112,19 +112,19 @@ Vérifiez la version de Docker Compose :
 ```bash
 docker compose version
 ```
-retourne :
+renvoie :
 ```console
 Docker Compose version v2.21.0
 ```
 
-Pour vous assurer que votre utilisateur peut exécuter des commandes Docker, votre utilisateur a été ajouté au groupe `docker`.
+Pour vous assurer que votre utilisateur peut exécuter des commandes Docker, votre utilisateur a été ajouté au groupe `docker`. 
 
-Pour tester que votre utilisateur peut exécuter `docker hello-world`, exécutez la commande suivante :
+Pour tester que votre utilisateur peut exécuter docker hello-world, exécutez la commande suivante :
 ```bash
 docker run hello-world
 ```
 
-Cela devrait télécharger l'image hello-world et exécuter un conteneur qui affiche un message.
+Cela devrait télécharger l'image hello-world et exécuter un conteneur qui imprime un message. 
 
 Vérifiez que vous voyez le message suivant dans la sortie :
 
@@ -142,12 +142,12 @@ Inspectez le contenu de votre répertoire personnel ; ce sont les supports utili
 ```bash
 ls ~/
 ```
-retourne :
+renvoie :
 ```console
 exercise-materials  wis2box
 ```
 
-Si vous avez installé WinSCP sur votre PC local, vous pouvez l'utiliser pour vous connecter à votre VM étudiant, inspecter le contenu de votre répertoire personnel et télécharger ou téléverser des fichiers entre votre VM et votre PC local.
+Si vous avez installé WinSCP sur votre PC local, vous pouvez l'utiliser pour vous connecter à votre VM étudiant et inspecter le contenu de votre répertoire personnel, ainsi que pour télécharger ou téléverser des fichiers entre votre VM et votre PC local. 
 
 WinSCP n'est pas requis pour la formation, mais il peut être utile si vous souhaitez modifier des fichiers sur votre VM à l'aide d'un éditeur de texte sur votre PC local.
 
@@ -166,8 +166,8 @@ Vous devriez alors voir le contenu suivant :
 ## Conclusion
 
 !!! success "Félicitations !"
-    Au cours de cette session pratique, vous avez appris à :
+    Lors de cette session pratique, vous avez appris à :
 
     - accéder à votre VM étudiant via SSH et WinSCP
-    - vérifier que les logiciels nécessaires aux exercices pratiques sont installés
+    - vérifier que les logiciels requis pour les exercices pratiques sont installés
     - vérifier que vous avez accès aux supports d'exercice pour cette formation sur votre VM étudiant locale

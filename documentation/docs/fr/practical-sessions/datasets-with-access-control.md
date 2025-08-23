@@ -9,44 +9,45 @@ title: Configuration d'un jeu de données recommandé avec contrôle d'accès
 
     - créer un nouveau jeu de données avec une politique de données 'recommended'
     - ajouter un jeton d'accès au jeu de données
-    - vérifier que le jeu de données ne peut pas être consulté sans le jeton d'accès
+    - vérifier que le jeu de données ne peut pas être accessible sans le jeton d'accès
     - ajouter le jeton d'accès aux en-têtes HTTP pour accéder au jeu de données
     - ajouter un fichier de licence personnalisé hébergé sur votre instance wis2box
 
 ## Introduction
 
-Les données sont partagées sur WIS2 conformément à la Politique Unifiée des Données de l'OMM, qui décrit deux catégories de données :
+Les données sont partagées sur WIS2 conformément à la Politique de Données Unifiée de l'OMM, qui décrit deux catégories de données :
 
-- **core** : données fournies gratuitement et sans restriction, sans frais et sans conditions d'utilisation.
-- **recommended** : données pouvant être soumises à des conditions d'utilisation et/ou à une licence.
+- **core** : données fournies gratuitement et sans restriction, sans frais ni conditions d'utilisation
+- **recommended** : données pouvant être soumises à des conditions d'utilisation et/ou à une licence
 
 Les données partagées en tant que 'recommended' :
 
-- Peuvent être soumises à des conditions d'utilisation et de réutilisation ;
-- Peuvent avoir des contrôles d'accès appliqués ;
-- Ne sont pas mises en cache dans WIS2 par les Global Caches ;
-- Doivent inclure un lien vers une licence spécifiant les conditions d'utilisation des données dans les métadonnées de découverte.
+- peuvent être soumises à des conditions d'utilisation et de réutilisation
+- peuvent être soumises à des contrôles d'accès
+- ne sont pas mises en cache par les services de cache global de WIS2
+- doivent inclure un lien vers une licence spécifiant les conditions d'utilisation des données dans les métadonnées de découverte
 
-L'éditeur de jeux de données dans le wis2box-webapp vous demandera de fournir une URL de licence lorsque vous sélectionnez la politique de données 'recommended'. Facultativement, vous pouvez ajouter un jeton d'accès à un tel jeu de données pour en restreindre l'accès.
+L'éditeur de jeu de données dans le wis2box-webapp vous demandera de fournir une URL de licence lorsque vous sélectionnez la politique de données 'recommended'. Vous pouvez également ajouter un jeton d'accès au jeu de données pour en restreindre l'accès.
 
-Dans cette session pratique, vous allez créer un nouveau jeu de données avec une politique de données 'recommended' et apprendre à ajouter un contrôle d'accès. 
-Vous serez également guidé à travers les étapes pour ajouter un fichier de licence personnalisé à votre instance wis2box.
+Dans cette session pratique, vous allez créer un nouveau jeu de données avec une politique de données 'recommended' et apprendre à ajouter un contrôle d'accès.
+
+Cette session vous guidera également à travers les étapes pour ajouter un fichier de licence personnalisé à votre instance wis2box.
 
 ## Préparation
 
 Assurez-vous d'avoir un accès SSH à votre machine virtuelle étudiante et que votre instance wis2box est opérationnelle.
 
-Vérifiez que vous êtes connecté au broker MQTT de votre instance wis2box en utilisant MQTT Explorer. Vous pouvez utiliser les identifiants publics `everyone/everyone` pour vous connecter au broker.
+Assurez-vous d'être connecté au broker MQTT de votre instance wis2box en utilisant MQTT Explorer. Vous pouvez utiliser les identifiants publics `everyone/everyone` pour vous connecter au broker.
 
-Assurez-vous d'avoir un navigateur web ouvert avec le wis2box-webapp de votre instance en accédant à `http://YOUR-HOST/wis2box-webapp`.
+Assurez-vous d'avoir un navigateur web ouvert avec le wis2box-webapp pour votre instance en accédant à `http://YOUR-HOST/wis2box-webapp`.
 
 ## Créer un nouveau jeu de données avec une politique de données 'recommended'
 
-Accédez à la page 'dataset editor' dans le wis2box-webapp et créez un nouveau jeu de données. Sélectionnez le type de données = 'weather/surface-weather-observations/synop'.
+Accédez à la page 'dataset editor' dans le wis2box-webapp et créez un nouveau jeu de données. Sélectionnez le Data Type = 'weather/surface-weather-observations/synop'. 
 
 <img alt="create-dataset-recommended" src="/../assets/img/create-dataset-template.png" width="800">
 
-Pour "Centre ID", utilisez le même que celui utilisé dans les sessions pratiques précédentes.
+Pour "Centre ID", utilisez le même identifiant que celui utilisé dans les sessions pratiques précédentes.
 
 Cliquez sur 'CONTINUE TO FORM' pour continuer.
 
@@ -58,17 +59,16 @@ Changez la politique de données de l'OMM en 'recommended' et vous verrez qu'un 
 
 <img alt="create-dataset-license" src="/../assets/img/create-dataset-license.png" width="800">
 
-Vous avez la possibilité de fournir une URL pointant vers une licence décrivant les conditions d'utilisation du jeu de données. Par exemple, vous pourriez utiliser 
-`https://creativecommons.org/licenses/by/4.0/` 
-pour pointer vers la licence Creative Commons Attribution 4.0 International (CC BY 4.0).
+Vous avez la possibilité de fournir une URL vers une licence décrivant les conditions d'utilisation du jeu de données. Par exemple, utilisez 
+`https://creativecommons.org/licenses/by/4.0/` pour pointer vers la licence Creative Commons Attribution 4.0 International (CC BY 4.0).
 
-Ou vous pouvez utiliser `WIS2BOX_URL/data/license.txt` pour pointer vers un fichier de licence personnalisé hébergé sur votre propre serveur web, où `WIS2BOX_URL` est l'URL définie dans le fichier wis2box.env :
+Ou `WIS2BOX_URL/data/license.txt` pour pointer vers un fichier de licence personnalisé que vous avez hébergé sur votre propre serveur web, où `WIS2BOX_URL` est l'URL définie dans le fichier `wis2box.env` :
 
 <img alt="create-dataset-license-url" src="/../assets/img/create-dataset-license-custom.png" width="800">
 
-Continuez à remplir les champs requis pour les Propriétés Spatiales et les Informations de Contact, puis 'Validate form' pour vérifier les éventuelles erreurs.
+Continuez à remplir les champs requis pour les Propriétés Spatiales et les Informations de Contact. Cliquez sur 'Validate form' pour vérifier s'il y a des erreurs.
 
-Enfin, soumettez le jeu de données en utilisant le jeton d'authentification créé précédemment et vérifiez que le nouveau jeu de données est créé dans le wis2box-webapp.
+Enfin, soumettez le jeu de données en utilisant le jeton d'authentification précédemment créé, et vérifiez que le nouveau jeu de données est créé dans le wis2box-webapp.
 
 Vérifiez dans MQTT Explorer que vous recevez le message de notification WIS2 annonçant le nouvel enregistrement de métadonnées de découverte sur le sujet `origin/a/wis2/<your-centre-id>/metadata`.
 
@@ -80,7 +80,7 @@ Ouvrez le lien du jeu de données que vous venez de créer et faites défiler ju
 
 <img alt="wis2box-api-recommended-dataset-links" src="/../assets/img/wis2box-api-recommended-dataset-links.png" width="600">
 
-Vous devriez voir un lien pour "License for this dataset" pointant vers l'URL que vous avez fournie dans l'éditeur de jeux de données.
+Vous devriez voir un lien pour "License for this dataset" pointant vers l'URL fournie dans l'éditeur de jeu de données.
 
 Si vous avez utilisé `http://YOUR-HOST/data/license.txt` comme URL de licence, le lien ne fonctionnera pas pour le moment, car nous n'avons pas encore ajouté de fichier de licence à l'instance wis2box.
 
@@ -117,15 +117,15 @@ Copiez le fichier `exercise-materials/access-control-exercises/aws-example.csv` 
 cp ~/exercise-materials/access-control-exercises/aws-example.csv ~/wis2box-data
 ```
 
-Ensuite, utilisez WinSCP ou un éditeur de ligne de commande pour modifier le fichier `aws-example.csv` et mettez à jour les identifiants des stations WIGOS dans les données d'entrée pour correspondre aux stations de votre instance wis2box.
+Utilisez ensuite WinSCP ou un éditeur de ligne de commande pour modifier le fichier `aws-example.csv` et mettre à jour les identifiants des stations WIGOS dans les données d'entrée pour qu'ils correspondent aux stations de votre instance wis2box.
 
-Ensuite, accédez à l'éditeur de stations dans le wis2box-webapp. Pour chaque station utilisée dans `aws-example.csv`, mettez à jour le champ 'topic' pour correspondre au 'topic' du jeu de données que vous avez créé dans l'exercice précédent.
+Ensuite, accédez à l'éditeur de stations dans le wis2box-webapp. Pour chaque station utilisée dans `aws-example.csv`, mettez à jour le champ 'topic' pour qu'il corresponde au 'topic' du jeu de données que vous avez créé dans l'exercice précédent.
 
-Cette station sera maintenant associée à 2 topics, un pour le jeu de données 'core' et un pour le jeu de données 'recommended' :
+Cette station sera désormais associée à 2 topics, un pour le jeu de données 'core' et un pour le jeu de données 'recommended' :
 
 <img alt="edit-stations-add-topics" src="/../assets/img/edit-stations-add-topics.png" width="600">
 
-Vous devrez utiliser votre jeton pour `collections/stations` pour enregistrer les données de station mises à jour.
+Vous devrez utiliser votre jeton pour `collections/stations` pour enregistrer les données mises à jour de la station.
 
 Ensuite, connectez-vous au conteneur wis2box-management :
 
@@ -140,7 +140,7 @@ Depuis la ligne de commande wis2box, nous pouvons ingérer le fichier de donnée
 wis2box data ingest -p /data/wis2box/aws-example.csv --metadata-id urn:wmo:md:not-my-centre:reco.surface-based-observations.synop
 ```
 
-Assurez-vous de fournir le bon identifiant de métadonnées pour votre jeu de données et **vérifiez que vous recevez des notifications de données WIS2 dans MQTT Explorer**, sur le sujet `origin/a/wis2/<your-centre-id>/data/recommended/surface-based-observations/synop`.
+Assurez-vous de fournir l'identifiant de métadonnées correct pour votre jeu de données et **vérifiez que vous recevez des notifications de données WIS2 dans MQTT Explorer**, sur le sujet `origin/a/wis2/<your-centre-id>/data/recommended/surface-based-observations/synop`.
 
 Vérifiez le lien canonique dans le message de notification WIS2 et copiez/collez le lien dans le navigateur pour essayer de télécharger les données.
 
@@ -148,9 +148,9 @@ Vous devriez voir une erreur *401 Authorization Required*.
 
 ## Ajouter le jeton d'accès aux en-têtes HTTP pour accéder au jeu de données
 
-Pour démontrer que le jeton d'accès est nécessaire pour accéder au jeu de données, nous allons reproduire l'erreur que vous avez vue dans le navigateur en utilisant la fonction de ligne de commande `wget`.
+Pour démontrer que le jeton d'accès est requis pour accéder au jeu de données, nous allons reproduire l'erreur que vous avez vue dans le navigateur en utilisant la fonction de ligne de commande `wget`.
 
-Depuis la ligne de commande de votre machine virtuelle étudiante, utilisez la commande `wget` avec le lien canonique que vous avez copié à partir du message de notification WIS2.
+Depuis la ligne de commande dans votre machine virtuelle étudiante, utilisez la commande `wget` avec le lien canonique que vous avez copié du message de notification WIS2.
 
 ```bash
 wget <canonical-link>
@@ -172,18 +172,21 @@ Cette étape est uniquement nécessaire si vous souhaitez fournir une licence pe
 
 Créez un fichier texte sur votre machine locale en utilisant votre éditeur de texte préféré et ajoutez des informations de licence au fichier, telles que :
 
-*Ce fichier de licence personnalisé est destiné au jeu de données recommandé avec contrôle d'accès. Vous êtes libre d'utiliser ces données, mais veuillez reconnaître le fournisseur des données.*
+*Ce fichier de licence personnalisé est destiné au jeu de données recommandé avec contrôle d'accès.  
+Vous êtes libre d'utiliser ces données, mais veuillez reconnaître le fournisseur des données.*
 
-Pour télécharger un fichier localement créé `license.txt`, utilisez la console MinIO disponible sur le port 9001 de l'instance wis2box, en accédant à un navigateur web et en visitant `http://YOUR-HOST:9001`.
+Pour télécharger un fichier localement créé appelé `license.txt`, utilisez la console MinIO disponible sur le port 9001 de l'instance wis2box, en accédant à un navigateur web et en visitant `http://YOUR-HOST:9001`.
 
-Les identifiants pour accéder à la console MinIO dans le fichier wis2box.env sont définis par les variables d'environnement `WIS2BOX_STORAGE_USERNAME` et `WIS2BOX_STORAGE_PASSWORD`. Vous pouvez les trouver dans le fichier wis2box.env comme suit :
+Les identifiants pour accéder à la console MinIO dans le fichier wis2box.env sont définis par les variables d'environnement `WIS2BOX_STORAGE_USERNAME` et `WIS2BOX_STORAGE_PASSWORD`.
+
+Vous pouvez les trouver dans le fichier `wis2box.env` comme suit :
 
 ```bash
 cat wis2box.env | grep WIS2BOX_STORAGE_USERNAME
 cat wis2box.env | grep WIS2BOX_STORAGE_PASSWORD
 ```
 
-Une fois connecté à la console MinIO, vous pouvez télécharger le fichier de licence dans le chemin de base du bucket **wis2box-public** en utilisant le bouton “Upload” :
+Une fois connecté à la console MinIO, téléchargez le fichier de licence dans le chemin de base du bucket **wis2box-public** en utilisant le bouton “Upload” :
 
 <img alt="minio-upload-license" src="/../assets/img/minio-upload-license.png" width="800">
 
@@ -193,15 +196,15 @@ Après avoir téléchargé le fichier de licence, vérifiez si le fichier est ac
 
     Le proxy web dans wis2box redirige tous les fichiers stockés dans le bucket "wis2box-public" sous le chemin `WIS2BOX_URL/data/`
 
-Le lien pour "License for this dataset" inclus dans les métadonnées de votre jeu de données recommandé devrait maintenant fonctionner.
+Le lien pour "License for this dataset" inclus dans les métadonnées de votre jeu de données recommandé devrait maintenant fonctionner comme prévu.
 
 ## Conclusion
 
 !!! success "Félicitations !"
-    Au cours de cette session pratique, vous avez appris à :
+    Dans cette session pratique, vous avez appris à :
 
     - créer un nouveau jeu de données avec une politique de données 'recommended'
     - ajouter un jeton d'accès au jeu de données
-    - vérifier que le jeu de données ne peut pas être consulté sans le jeton d'accès
+    - vérifier que le jeu de données ne peut pas être accessible sans le jeton d'accès
     - ajouter le jeton d'accès aux en-têtes HTTP pour accéder au jeu de données
     - ajouter un fichier de licence personnalisé à votre instance wis2box

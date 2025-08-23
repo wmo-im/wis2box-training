@@ -9,12 +9,12 @@ title: Accediendo a tu VM de estudiante
     Al final de esta sesión práctica, serás capaz de:
 
     - acceder a tu VM de estudiante mediante SSH y WinSCP
-    - verificar que el software requerido para los ejercicios prácticos está instalado
+    - verificar que el software necesario para los ejercicios prácticos está instalado
     - verificar que tienes acceso a los materiales de los ejercicios para este entrenamiento en tu VM de estudiante local
 
 ## Introducción
 
-Como parte de los talleres de entrenamiento de WIS2 realizados localmente, puedes acceder a tu VM de estudiante personal en la red de entrenamiento local llamada "WIS2-training".
+Como parte de los talleres de capacitación de WIS2 realizados localmente, puedes acceder a tu VM de estudiante personal en la red de entrenamiento local llamada "WIS2-training".
 
 Tu VM de estudiante tiene el siguiente software preinstalado:
 
@@ -26,11 +26,11 @@ Tu VM de estudiante tiene el siguiente software preinstalado:
 
 !!! note
 
-    Si deseas realizar este entrenamiento fuera de una sesión de entrenamiento local, puedes proporcionar tu propia instancia utilizando cualquier proveedor de nube, por ejemplo:
+    Si deseas realizar este entrenamiento fuera de una sesión de capacitación local, puedes proporcionar tu propia instancia utilizando cualquier proveedor de nube, por ejemplo:
 
-    - GCP (Google Cloud Platform) instancia VM `e2-medium`
-    - AWS (Amazon Web Services) instancia ec2 `t3a.medium` 
-    - Azure (Microsoft) Máquina Virtual de Azure `standard_b2s`
+    - GCP (Google Cloud Platform) VM instance `e2-medium`
+    - AWS (Amazon Web Services) ec2-instance `t3a.medium`
+    - Azure (Microsoft) Azure Virtual Machine `standard_b2s`
 
     Selecciona Ubuntu Server 22.0.4 LTS como sistema operativo.
     
@@ -59,13 +59,13 @@ Tu VM de estudiante tiene el siguiente software preinstalado:
     pip3 install pywiscat==0.2.2
     ```
 
-    Si estás utilizando la VM de estudiante proporcionada durante las sesiones locales de entrenamiento de WIS2, el software requerido ya estará instalado.
+    Si estás utilizando la VM de estudiante proporcionada durante las sesiones locales de capacitación de WIS2, el software necesario ya estará instalado.
 
 ## Conéctate a tu VM de estudiante en la red de entrenamiento local
 
-Conecta tu PC a la red Wi-Fi local transmitida en la sala durante el entrenamiento de WIS2 según las instrucciones proporcionadas por el instructor.
+Conecta tu PC a la red Wi-Fi local transmitida en el salón durante el entrenamiento de WIS2, según las instrucciones proporcionadas por el instructor.
 
-Usa un cliente SSH para conectarte a tu VM de estudiante utilizando lo siguiente:
+Utiliza un cliente SSH para conectarte a tu VM de estudiante utilizando lo siguiente:
 
 - **Host: (proporcionado durante el entrenamiento presencial)**
 - **Port: 22**
@@ -75,7 +75,7 @@ Usa un cliente SSH para conectarte a tu VM de estudiante utilizando lo siguiente
 !!! tip
     Contacta a un instructor si no estás seguro del nombre del host/usuario o si tienes problemas para conectarte.
 
-Una vez conectado, cambia tu contraseña para asegurarte de que otros no puedan acceder a tu VM:
+Una vez conectado, por favor cambia tu contraseña para asegurarte de que otros no puedan acceder a tu VM:
 
 ```bash
 limper@student-vm:~$ passwd
@@ -126,7 +126,7 @@ docker run hello-world
 
 Esto debería descargar la imagen hello-world y ejecutar un contenedor que imprime un mensaje. 
 
-Verifica que ves lo siguiente en la salida:
+Verifica que veas lo siguiente en la salida:
 
 ```console
 ...
@@ -147,11 +147,11 @@ devuelve:
 exercise-materials  wis2box
 ```
 
-Si tienes WinSCP instalado en tu PC local, puedes usarlo para conectarte a tu VM de estudiante e inspeccionar el contenido de tu directorio home y descargar o subir archivos entre tu VM y tu PC local. 
+Si tienes WinSCP instalado en tu PC local, puedes usarlo para conectarte a tu VM de estudiante e inspeccionar el contenido de tu directorio home, así como descargar o subir archivos entre tu VM y tu PC local. 
 
 WinSCP no es necesario para el entrenamiento, pero puede ser útil si deseas editar archivos en tu VM utilizando un editor de texto en tu PC local.
 
-Aquí está cómo puedes conectarte a tu VM de estudiante usando WinSCP:
+Aquí tienes cómo conectarte a tu VM de estudiante utilizando WinSCP:
 
 Abre WinSCP y haz clic en "New Site". Puedes crear una nueva conexión SCP a tu VM de la siguiente manera:
 
@@ -165,9 +165,9 @@ Y deberías poder ver el siguiente contenido:
 
 ## Conclusión
 
-!!! success "¡Felicidades!"
+!!! success "¡Felicitaciones!"
     En esta sesión práctica, aprendiste a:
 
     - acceder a tu VM de estudiante mediante SSH y WinSCP
-    - verificar que el software requerido para los ejercicios prácticos está instalado
+    - verificar que el software necesario para los ejercicios prácticos está instalado
     - verificar que tienes acceso a los materiales de los ejercicios para este entrenamiento en tu VM de estudiante local
