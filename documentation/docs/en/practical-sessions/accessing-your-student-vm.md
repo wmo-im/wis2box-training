@@ -39,8 +39,8 @@ Your student VM has the following software pre-installed:
     The release archive for wis2box used in this training can be downloaded as follows:
 
     ```bash
-    wget https://github.com/World-Meteorological-Organization/wis2box-release/releases/download/1.0.0/wis2box-setup.zip
-    unzip wis2box-setup.zip
+    wget https://github.com/World-Meteorological-Organization/wis2box-release/releases/download/1.1.0/wis2box-setup-1.1.0.zip
+    unzip wis2box-setup-1.1.0.zip
     ```
     
     You can always find the latest 'wis2box-setup' archive at [https://github.com/World-Meteorological-Organization/wis2box/releases](https://github.com/World-Meteorological-Organization/wis2box-release/releases).

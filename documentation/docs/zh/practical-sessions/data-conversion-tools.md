@@ -4,58 +4,58 @@ title: 数据转换工具
 
 # 数据转换工具
 
-!!! abstract "学习成果"
-    通过本实践课程，您将能够：
+!!! abstract "学习目标"
+    在本次实践课程结束时，您将能够：
 
-    - 在 wis2box-api 容器中访问 ecCodes 命令行工具
-    - 使用命令行中的 synop2bufr 工具将 FM-12 SYNOP 报告转换为 BUFR
-    - 通过 wis2box-webapp 触发 synop2bufr 转换
-    - 使用命令行中的 csv2bufr 工具将 CSV 数据转换为 BUFR
+    - 在 `wis2box-api` 容器中访问 ecCodes 命令行工具
+    - 使用 `synop2bufr` 工具从命令行将 FM-12 SYNOP 报告转换为 BUFR
+    - 通过 `wis2box-webapp` 触发 `synop2bufr` 转换
+    - 使用 `csv2bufr` 工具从命令行将 CSV 数据转换为 BUFR
 
-## 引言
+## 介绍
 
-在 WIS2 上发布的数据应满足各个地球系统学科/领域专家社区定义的要求和标准。为了降低陆基地面观测数据发布的门槛，wis2box 提供了将数据转换为 BUFR 格式的工具。这些工具可通过 wis2box-api 容器使用，并可从命令行测试数据转换过程。
+在 WIS2 上发布的数据应符合由各地球系统学科/领域专家社区定义的要求和标准。为了降低发布陆地表面观测数据的门槛，`wis2box` 提供了将数据转换为 BUFR 格式的工具。这些工具可通过 `wis2box-api` 容器使用，并可从命令行测试数据转换过程。
 
-wis2box 当前主要支持的转换是将 FM-12 SYNOP 报告转换为 BUFR 和将 CSV 数据转换为 BUFR。支持 FM-12 数据是因为它仍然在 WMO 社区中广泛使用和交换，而支持 CSV 数据是为了允许将自动气象站产生的数据映射到 BUFR 格式。
+`wis2box` 当前支持的主要转换包括将 FM-12 SYNOP 报告转换为 BUFR，以及将 CSV 数据转换为 BUFR。支持 FM-12 数据是因为它在 WMO 社区中仍被广泛使用和交换，而支持 CSV 数据是为了允许将自动气象站生成的数据映射到 BUFR 格式。
 
 ### 关于 FM-12 SYNOP
 
-陆地地面站的地面天气报告历史上每小时或在主要（00、06、12 和 18 UTC）和中间（03、09、15、21 UTC）天气时报告。在迁移到 BUFR 之前，这些报告是以纯文本 FM-12 SYNOP 代码形式编码的。尽管计划在 2012 年之前完成迁移到 BUFR，但仍有大量报告在传统的 FM-12 SYNOP 格式中交换。有关 FM-12 SYNOP 格式的更多信息，请参阅 WMO 代码手册，第 I.1 卷（WMO-No. 306, Volume I.1）。
+陆地表面站的地面天气报告历史上通常每小时或在主要（00、06、12 和 18 UTC）和中间（03、09、15 和 21 UTC）天气时段报告。在迁移到 BUFR 之前，这些报告以纯文本的 FM-12 SYNOP 编码形式进行编码。尽管迁移到 BUFR 的计划应在 2012 年完成，但仍有大量报告以传统的 FM-12 SYNOP 格式交换。有关 FM-12 SYNOP 格式的更多信息，请参阅《WMO 编码手册》，第一卷（WMO-No. 306, Volume I.1）。
 
 ### 关于 ecCodes
 
-ecCodes 库是一套用于解码和编码气象数据的软件库和实用程序，支持 GRIB 和 BUFR 格式。它由欧洲中期天气预报中心（ECMWF）开发，有关更多信息，请参阅 [ecCodes 文档](https://confluence.ecmwf.int/display/ECC/ecCodes+documentation)。
+`ecCodes` 是一组软件库和工具，用于解码和编码 GRIB 和 BUFR 格式的气象数据。它由欧洲中期天气预报中心（ECMWF）开发，更多信息请参阅 [ecCodes 文档](https://confluence.ecmwf.int/display/ECC/ecCodes+documentation)。
 
-wis2box 软件在 wis2box-api 容器的基础镜像中包含 ecCodes 库。这允许用户从容器内部访问命令行工具和库。ecCodes 库在 wis2box 堆栈中用于解码和编码 BUFR 消息。
+`wis2box` 软件在 `wis2box-api` 容器的基础镜像中包含了 `ecCodes` 库。这使用户能够从容器内部访问命令行工具和库。`ecCodes` 库在 `wis2box-stack` 中用于解码和编码 BUFR 消息。
 
 ### 关于 csv2bufr 和 synop2bufr
 
-除了 ecCodes，wis2box 还使用以下与 ecCodes 一起工作的 Python 模块将数据转换为 BUFR 格式：
+除了 `ecCodes`，`wis2box` 还使用以下与 `ecCodes` 一起工作的 Python 模块将数据转换为 BUFR 格式：
 
-- **synop2bufr**：支持传统的 FM-12 SYNOP 格式，该格式传统上由手动观测者使用。synop2bufr 模块依赖额外的站点元数据来在 BUFR 文件中编码额外的参数。请参阅 [GitHub 上的 synop2bufr 仓库](https://github.com/World-Meteorological-Organization/synop2bufr)
-- **csv2bufr**：使自动气象站产生的 CSV 提取转换为 BUFR 格式成为可能。csv2bufr 模块用于使用映射模板将 CSV 数据转换为 BUFR 格式，该模板定义了如何将 CSV 数据映射到 BUFR 格式。请参阅 [GitHub 上的 csv2bufr 仓库](https://github.com/World-Meteorological-Organization/csv2bufr)
+- **synop2bufr**：支持传统上由人工观测员使用的 FM-12 SYNOP 格式。`synop2bufr` 模块依赖额外的站点元数据来在 BUFR 文件中编码额外的参数。请参阅 [synop2bufr GitHub 仓库](https://github.com/World-Meteorological-Organization/synop2bufr)。
+- **csv2bufr**：支持将自动气象站生成的 CSV 数据提取转换为 BUFR 格式。`csv2bufr` 模块使用映射模板将 CSV 数据映射到 BUFR 格式。请参阅 [csv2bufr GitHub 仓库](https://github.com/World-Meteorological-Organization/csv2bufr)。
 
-这些模块可以独立使用或作为 wis2box 堆栈的一部分。
+这些模块既可以独立使用，也可以作为 `wis2box` 堆栈的一部分使用。
 
 ## 准备工作
 
 !!! warning "先决条件"
 
-    - 确保您的 wis2box 已配置并启动
-    - 确保您已设置数据集并在您的 wis2box 中配置了至少一个站点
-    - 使用 MQTT Explorer 连接到您的 wis2box 实例的 MQTT 代理
-    - 打开 wis2box 网络应用程序 (`http://YOUR-HOST/wis2box-webapp`) 并确保您已登录
-    - 通过访问 `http://YOUR-HOST:3000` 打开您实例的 Grafana 仪表板
+    - 确保您的 `wis2box` 已配置并启动
+    - 确保您已设置数据集并在 `wis2box` 中配置了至少一个站点
+    - 使用 `MQTT Explorer` 连接到您的 `wis2box` 实例的 MQTT broker
+    - 打开 `wis2box` Web 应用程序 (`http://YOUR-HOST/wis2box-webapp`) 并确保已登录
+    - 通过访问 `http://YOUR-HOST:3000` 打开实例的 Grafana 仪表板
 
-要使用 BUFR 命令行工具，您需要登录到 wis2box-api 容器。除非另有说明，否则所有命令都应在此容器上运行。您还需要打开 MQTT Explorer 并连接到您的代理。
+要使用 BUFR 命令行工具，您需要登录到 `wis2box-api` 容器。除非另有说明，否则所有命令应在此容器中运行。您还需要打开 `MQTT Explorer` 并连接到您的 broker。
 
-首先，通过您的 SSH 客户端连接到您的学生 VM，并将练习材料复制到 wis2box-api 容器：
+首先，通过 SSH 客户端连接到您的学生虚拟机，并将练习材料复制到 `wis2box-api` 容器：
 
 ```bash
 docker cp ~/exercise-materials/data-conversion-exercises wis2box-api:/root
 ```
 
-然后登录到 wis2box-api 容器并更改到练习材料所在的目录：
+然后登录到 `wis2box-api` 容器并切换到练习材料所在的目录：
 
 ```bash
 cd ~/wis2box
@@ -69,46 +69,46 @@ cd /root/data-conversion-exercises
 bufr_dump -V
 ```
 
-您应该得到以下响应：
+您应该看到以下响应：
 
 ```
 ecCodes Version 2.36.0
 ```
 
-接下来，检查 synop2bufr 版本：
+接下来，检查 `synop2bufr` 版本：
 
 ```bash
 synop2bufr --version
 ```
 
-您应该得到以下响应：
+您应该看到以下响应：
 
 ```
 synop2bufr, version 0.7.0
 ```
 
-接下来，检查 csv2bufr：
+接下来，检查 `csv2bufr`：
 
 ```bash
 csv2bufr --version
 ```
 
-您应该得到以下响应：
+您应该看到以下响应：
 
 ```
-csv2bufr, version 0.8.5
+csv2bufr, version 0.8.6
 ```
 
 ## ecCodes 命令行工具
 
-wis2box-api 容器中包含的 ecCodes 库提供了许多用于处理 BUFR 文件的命令行工具。
-接下来的练习将演示如何使用 `bufr_ls` 和 `bufr_dump` 检查 BUFR 文件的内容。
+`wis2box-api` 容器中包含的 `ecCodes` 库提供了许多用于处理 BUFR 文件的命令行工具。
+接下来的练习演示如何使用 `bufr_ls` 和 `bufr_dump` 检查 BUFR 文件的内容。
 
 ### bufr_ls
 
-在这个第一个练习中，您将使用 `bufr_ls` 命令检查 BUFR 文件的头部，并确定文件内容的类型。
+在第一个练习中，您将使用 `bufr_ls` 命令检查 BUFR 文件的头信息，并确定文件内容的类型。
 
-使用以下命令在文件 `bufr-cli-ex1.bufr4` 上运行 `bufr_ls`：
+使用以下命令运行 `bufr_ls`，检查文件 `bufr-cli-ex1.bufr4`：
 
 ```bash
 bufr_ls bufr-cli-ex1.bufr4
@@ -125,21 +125,21 @@ cnmc                       29                         0                         
 1 of 1 total messages in 1 file
 ```
 
-可以传递各种选项给 `bufr_ls`，以更改打印的格式和头字段。
+可以通过向 `bufr_ls` 传递各种选项来更改打印的格式和头字段。
 
 !!! question
+     
+    如何使用 JSON 格式列出上述输出？
 
-    要以 JSON 格式列出上述输出的命令是什么？
+    您可以运行命令 `bufr_ls` 并使用 `-h` 标志查看可用选项。
 
-    您可以运行带有 `-h` 标志的 `bufr_ls` 命令以查看可用选项。
-
-??? success "点击以显示答案"
-    您可以使用 `-j` 标志将输出格式更改为 JSON，即
+??? success "点击查看答案"
+    您可以使用 `-j` 标志将输出格式更改为 JSON，例如：
     ```bash
     bufr_ls -j bufr-cli-ex1.bufr4
     ```
 
-    运行后，您应该得到以下输出：
+    运行后，您应该看到以下输出：
     ```
     { "messages" : [
       {
@@ -153,26 +153,26 @@ cnmc                       29                         0                         
     ]}
     ```
 
-输出打印代表 BUFR 文件中一些头键的值。
+打印的输出表示 BUFR 文件中某些头键的值。
 
-单独来看，这些信息不是很有信息量，只提供了有限的文件内容信息。
+单独来看，这些信息并不十分有用，仅提供了文件内容的有限信息。
 
-当检查 BUFR 文件时，我们通常希望确定文件中包含的数据类型以及数据的典型日期/时间。可以使用 `-p` 标志选择要输出的头部。可以使用逗号分隔列表包括多个头部。
+在检查 BUFR 文件时，我们通常希望确定文件中包含的数据类型以及数据的典型日期/时间。可以使用 `-p` 标志选择要输出的头字段。多个头字段可以使用逗号分隔的列表包含。
 
 您可以使用以下命令列出数据类别、子类别、典型日期和时间：
-
+    
 ```bash
 bufr_ls -p dataCategory,internationalDataSubCategory,typicalDate,typicalTime -j bufr-cli-ex1.bufr4
 ```
 
 !!! question
 
-    执行上一个命令并使用 [公共代码表 C-13](https://github.com/wmo-im/CCT/blob/master/C13.csv) 解释输出，以确定数据类别和子类别。
+    执行上述命令，并使用 [公共代码表 C-13](https://github.com/wmo-im/CCT/blob/master/C13.csv) 解释输出，以确定数据类别和子类别。
 
-    文件中包含哪种类型的数据（数据类别和子类别）？数据的典型日期和时间是什么？
+    文件中包含的数据类型（数据类别和子类别）是什么？数据的典型日期和时间是什么？
 
-??? success "点击以显示答案"
-
+??? success "点击查看答案"
+    
     ```
     { "messages" : [
       {
@@ -184,31 +184,31 @@ bufr_ls -p dataCategory,internationalDataSubCategory,typicalDate,typicalTime -j 
     ]}
     ```
 
-    从这里我们可以看到：
+    从中我们可以看到：
 
-    - 数据类别为 2，表示 **"垂直探测（卫星以外）"** 数据。
-    - 国际子类别为 4，表示 **"固定陆地站的高层温度/湿度/风报告（TEMP）"** 数据。
-    - 典型日期和时间分别为 2023-10-02 和 00:00:00z。
+- 数据类别为2，表示**“垂直探空（非卫星）”**数据。
+- 国际子类别为4，表示**“来自固定陆地站的高空温度/湿度/风报告（TEMP）”**数据。
+- 典型日期和时间分别为2023-10-02和00:00:00z。
 
 ### bufr_dump
 
-`bufr_dump` 命令可用于列出和检查 BUFR 文件的内容，包括数据本身。
+`bufr_dump`命令可用于列出并检查BUFR文件的内容，包括数据本身。
 
-尝试在第二个示例文件 `bufr-cli-ex2.bufr4` 上运行 `bufr_dump` 命令：
+尝试对第二个示例文件`bufr-cli-ex2.bufr4`运行`bufr_dump`命令：
 
 ```{.copy}
 bufr_dump bufr-cli-ex2.bufr4
 ```
 
-这会生成一个难以解析的 JSON，尝试使用 `-p` 标志以纯文本（key=value 格式）输出数据：
+这将生成一个难以解析的JSON，尝试使用`-p`标志以纯文本（key=value格式）输出数据：
 
 ```{.copy}
 bufr_dump -p bufr-cli-ex2.bufr4
 ```
 
-您应该会看到大量的键作为输出，其中许多是缺失的。这在真实世界数据中是典型的，因为并非所有的 eccodes 键都填充了报告数据。
+你会看到大量的键作为输出，其中许多是缺失的。这在实际数据中是典型的，因为并非所有的eccodes键都填充了报告数据。
 
-您可以使用 `grep` 命令过滤输出，只显示未缺失的键。例如，要显示所有未缺失的键，您可以使用以下命令：
+你可以使用`grep`命令过滤输出，仅显示未缺失的键。例如，要显示所有未缺失的键，可以使用以下命令：
 
 ```{.copy}
 bufr_dump -p bufr-cli-ex2.bufr4 | grep -v MISSING
@@ -216,9 +216,9 @@ bufr_dump -p bufr-cli-ex2.bufr4 | grep -v MISSING
 
 !!! question
 
-    BUFR 文件 `bufr-cli-ex2.bufr4` 中报告的海平面上的气压是多少？
+    BUFR文件`bufr-cli-ex2.bufr4`中报告的海平面气压是多少？
 
-??? success "点击以显示答案"
+??? success "点击查看答案"
 
     使用以下命令：
 
@@ -226,18 +226,18 @@ bufr_dump -p bufr-cli-ex2.bufr4 | grep -v MISSING
     bufr_dump -p bufr-cli-ex2.bufr4 | grep -i 'pressureReducedToMeanSeaLevel'
     ```
 
-    您应该看到以下输出：
+    你应该会看到以下输出：
 
     ```
     pressureReducedToMeanSeaLevel=105590
     ```
-    这表明海平面上的气压为 105590 帕（1055.90 百帕）。
+    这表明海平面气压为105590 Pa（1055.90 hPa）。
 
 !!! question
 
-    报告 BUFR 文件 `bufr-cli-ex2.bufr4` 数据的站点的 WIGOS 站点标识符是什么？
+    BUFR文件`bufr-cli-ex2.bufr4`中报告数据的站点的WIGOS站点标识符是什么？
 
-??? success "点击以显示答案"
+??? success "点击查看答案"
 
     使用以下命令：
 
@@ -245,7 +245,7 @@ bufr_dump -p bufr-cli-ex2.bufr4 | grep -v MISSING
     bufr_dump -p bufr-cli-ex2.bufr4 | grep -i 'wigos'
     ```
 
-    您应该看到以下输出：
+    你应该会看到以下输出：
 
     ```
     wigosIdentifierSeries=0
@@ -254,11 +254,11 @@ bufr_dump -p bufr-cli-ex2.bufr4 | grep -v MISSING
     wigosLocalIdentifierCharacter="99100"
     ```
 
-    这表明 WIGOS 站点标识符为 `0-20000-0-99100`。
+    这表明WIGOS站点标识符为`0-20000-0-99100`。
 
 ## synop2bufr 转换
 
-接下来，让我们看看如何使用 `synop2bufr` 模块将 FM-12 SYNOP 数据转换为 BUFR 格式。`synop2bufr` 模块用于将 FM-12 SYNOP 数据转换为 BUFR 格式。该模块已安装在 wis2box-api 容器中，可以从命令行使用，如下所示：
+接下来，我们来看如何使用`synop2bufr`模块将FM-12 SYNOP数据转换为BUFR格式。`synop2bufr`模块用于将FM-12 SYNOP数据转换为BUFR格式。该模块安装在wis2box-api容器中，可以通过以下命令行使用：
 
 ```{.copy}
 synop2bufr data transform \
@@ -269,16 +269,16 @@ synop2bufr data transform \
     <input-fm12.txt>
 ```
 
-`--metadata` 参数用于指定站点元数据文件，该文件提供要在 BUFR 文件中编码的附加信息。
-`--output-dir` 参数用于指定将写入转换后的 BUFR 文件的目录。`--year` 和 `--month` 参数用于指定观测的年份和月份。
+`--metadata`参数用于指定站点元数据文件，该文件提供要编码到BUFR文件中的附加信息。
+`--output-dir`参数用于指定转换后的BUFR文件将写入的目录。`--year`和`--month`参数用于指定观测的年份和月份。
 
-`synop2bufr` 模块还在 wis2box-webapp 中使用，通过基于网络的输入表单将 FM-12 SYNOP 数据转换为 BUFR 格式。
+`synop2bufr`模块还可在wis2box-webapp中使用基于Web的输入表单将FM-12 SYNOP数据转换为BUFR格式。
 
-接下来的几个练习将演示 `synop2bufr` 模块的工作原理以及如何使用它将 FM-12 SYNOP 数据转换为 BUFR 格式。
+接下来的几个练习将演示如何使用`synop2bufr`模块工作以及如何将FM-12 SYNOP数据转换为BUFR格式。
 
-### 审查示例 SYNOP 消息
+### 查看示例SYNOP消息
 
-检查此练习的示例 SYNOP 消息文件 `synop_message.txt`：
+检查本练习的示例SYNOP消息文件`synop_message.txt`：
 
 ```bash
 cd /root/data-conversion-exercises
@@ -287,10 +287,10 @@ more synop_message.txt
 
 !!! question
 
-    这个文件中有多少个 SYNOP 报告？
+    此文件中有多少个SYNOP报告？
 
-??? success "点击以显示答案"
-
+??? success "点击查看答案"
+    
     输出显示以下内容：
 
     ```{.copy}
@@ -300,14 +300,14 @@ more synop_message.txt
     15090 02997 53102 10139 21075 30271 40364 58031 60001 82046=
     ```
 
-    文件中有 3 个 SYNOP 报告，对应于 3 个不同的站点（由 5 位传统站点标识符标识：15015, 15020, 和 15090）。
-    注意，每个报告的结尾都由 `=` 字符标记。
+    文件中有3个SYNOP报告，分别对应3个不同的站点（由5位传统站点标识符标识：15015、15020和15090）。
+    注意，每个报告的结束由`=`字符标记。
 
-### 审查站点列表
+### 查看站点列表
 
-`--metadata` 参数需要一个使用预定义格式的 CSV 文件，一个工作示例在文件 `station_list.csv` 中提供：
+`--metadata`参数需要一个使用预定义格式的CSV文件，工作示例提供在文件`station_list.csv`中：
 
-使用以下命令查看 `station_list.csv` 文件的内容：
+使用以下命令检查`station_list.csv`文件的内容：
 
 ```bash
 more station_list.csv
@@ -315,11 +315,11 @@ more station_list.csv
 
 !!! question
 
-    清单中列出了多少个站点？这些站点的 WIGOS 站点标识符是什么？
+    站点列表中列出了多少个站点？这些站点的WIGOS站点标识符是什么？
 
 ??? success "点击查看答案"
 
-    输出显示如下：
+    输出显示以下内容：
 
     ```{.copy}
     station_name,wigos_station_identifier,traditional_station_identifier,facility_type,latitude,longitude,elevation,barometer_height,territory_name,wmo_region
@@ -327,37 +327,37 @@ more station_list.csv
     BOTOSANI,0-20000-0-15020,15020,landFixed,47.7356532437,26.6455501701,161.0,162.1,ROU,europe
     ```
 
-    这对应于 2 个站点的站点元数据：WIGOS 站点标识符为 `0-20000-0-15015` 和 `0-20000-0-15020`。
+    这对应于2个站点的站点元数据：WIGOS站点标识符分别为`0-20000-0-15015`和`0-20000-0-15020`。
 
-### 将 SYNOP 转换为 BUFR
+### 将SYNOP转换为BUFR
 
-接下来，使用以下命令将 FM-12 SYNOP 消息转换为 BUFR 格式：
+接下来，使用以下命令将FM-12 SYNOP消息转换为BUFR格式：
 
 ```bash
 synop2bufr data transform --metadata station_list.csv --output-dir ./ --year 2024 --month 09 synop_message.txt
 ```
 
 !!! question
-    创建了多少个 BUFR 文件？输出中的 WARNING 消息是什么意思？
+    创建了多少个BUFR文件？输出中的WARNING消息是什么意思？
 
 ??? success "点击查看答案"
-    输出显示如下：
+    输出显示以下内容：
 
     ```{.copy}
     [WARNING] Station 15090 not found in station file
     ```
 
-    如果你检查你的目录内容 `ls -lh`，你应该看到创建了 2 个新的 BUFR 文件：`WIGOS_0-20000-0-15015_20240921T120000.bufr4` 和 `WIGOS_0-20000-0-15020_20240921T120000.bufr4`。
+    如果使用`ls -lh`检查目录内容，你应该会看到创建了2个新的BUFR文件：`WIGOS_0-20000-0-15015_20240921T120000.bufr4`和`WIGOS_0-20000-0-15020_20240921T120000.bufr4`。
 
-    警告消息表明传统站点标识符 `15090` 的站点在站点列表文件 `station_list.csv` 中未找到。这意味着该站点的 SYNOP 报告未转换为 BUFR 格式。
+    警告消息表明，传统站点标识符为`15090`的站点未在站点列表文件`station_list.csv`中找到。这意味着该站点的SYNOP报告未转换为BUFR格式。
 
 !!! question
-    使用 `bufr_dump` 命令检查 BUFR 文件 `WIGOS_0-20000-0-15015_20240921T120000.bufr4` 的内容。
+    使用`bufr_dump`命令检查BUFR文件`WIGOS_0-20000-0-15015_20240921T120000.bufr4`的内容。
 
-    你能验证 `station_list.csv` 文件中提供的信息是否存在于 BUFR 文件中吗？
+    你能验证`station_list.csv`文件中提供的信息是否存在于BUFR文件中吗？
 
 ??? success "点击查看答案"
-    你可以使用以下命令检查 BUFR 文件的内容：
+    你可以使用以下命令检查BUFR文件的内容：
 
     ```bash
     bufr_dump -p WIGOS_0-20000-0-15015_20240921T120000.bufr4 | grep -v MISSING
@@ -385,14 +385,14 @@ synop2bufr data transform --metadata station_list.csv --output-dir ./ --year 202
     heightOfBarometerAboveMeanSeaLevel=504
     ```
 
-    注意这包括了 `station_list.csv` 文件提供的数据。
+    注意，这包括了`station_list.csv`文件中提供的数据。
 
-### wis2box-webapp 中的 SYNOP 表单
+### wis2box-webapp中的SYNOP表单
 
-`synop2bufr` 模块也用于 wis2box-webapp 中，通过基于网页的输入表单将 FM-12 SYNOP 数据转换为 BUFR 格式。
-要测试这一点，请转到 `http://YOUR-HOST/wis2box-webapp` 并登录。
+`synop2bufr` 模块也被用于 `wis2box-webapp`，通过基于网页的输入表单将 FM-12 SYNOP 数据转换为 BUFR 格式。  
+要测试此功能，请访问 `http://YOUR-HOST/wis2box-webapp` 并登录。
 
-从左侧菜单中选择 `SYNOP Form` 并将 `synop_message.txt` 文件的内容复制粘贴：
+从左侧菜单中选择 `SYNOP Form`，然后复制并粘贴 `synop_message.txt` 文件的内容：
 
 ```{.copy}
 AAXX 21121
@@ -401,39 +401,39 @@ AAXX 21121
 15090 02997 53102 10139 21075 30271 40364 58031 60001 82046=
 ```
 
-到 `SYNOP message` 文本区域：
+到 `SYNOP message` 文本区域中：
 
 <img alt="synop-form" src="/../assets/img/wis2box-webapp-synop-form.png" width="800">
 
 !!! question
-    你能提交表单吗？结果如何？
+    您是否能够提交表单？结果是什么？
 
 ??? success "点击查看答案"
 
-    你需要选择一个数据集并提供你在上一个练习中创建的 "processes/wis2box" 的令牌来提交表单。
+    您需要选择一个数据集并提供在前一个练习中创建的 "processes/wis2box" 的令牌才能提交表单。
 
-    如果你提供了无效的令牌，你将看到：
+    如果提供了无效的令牌，您会看到以下结果：
     
     - 结果：未授权，请提供有效的 'processes/wis2box' 令牌
 
-    如果你提供了有效的令牌，你将看到 "WARNINGS: 3"。点击 "WARNINGS" 打开下拉菜单将显示：
+    如果提供了有效的令牌，您会看到 "WARNINGS: 3"。点击 "WARNINGS" 打开下拉菜单，显示以下内容：
 
-    - 站点 15015 在站点文件中未找到
-    - 站点 15020 在站点文件中未找到
-    - 站点 15090 在站点文件中未找到
+    - Station 15015 not found in station file
+    - Station 15020 not found in station file
+    - Station 15090 not found in station file
 
-    要将这些数据转换为 BUFR 格式，你需要在你的 wis2box 中配置相应的站点，并确保这些站点与你的数据集的主题相关联。
+    要将这些数据转换为 BUFR 格式，您需要在您的 wis2box 中配置相应的站点，并确保这些站点与您的数据集主题相关联。
 
 !!! note
 
-    在 [ingesting-data-for-publication](./ingesting-data-for-publication.md) 练习中，你摄取了文件 "synop_202412030900.txt"，并由 synop2bufr 模块转换为 BUFR 格式。
+    在 [ingesting-data-for-publication](./ingesting-data-for-publication.md) 的练习中，您导入了文件 "synop_202412030900.txt"，并通过 `synop2bufr` 模块将其转换为 BUFR 格式。
 
-    在 wis2box 的自动化工作流中，年份和月份会自动从文件名中提取，并用来填充 synop2bufr 所需的 `--year` 和 `--month` 参数，而站点元数据则会自动从 wis2box 中的站点配置中提取。
+    在 wis2box 的自动化工作流程中，年份和月份会从文件名中自动提取，并用于填充 `--year` 和 `--month` 参数，而站点元数据会从 wis2box 的站点配置中自动提取。
 
 ## csv2bufr 转换
 
 !!! note
-    确保你仍然登录在 wis2box-api 容器中，并位于目录 `/root/data-conversion-exercises` 中，如果你在上一个练习中退出了容器，你可以按如下方式重新登录：
+    确保您仍然登录到 `wis2box-api` 容器，并位于目录 `/root/data-conversion-exercises` 中。如果您在前一个练习中退出了容器，可以通过以下方式重新登录：
 
     ```bash
     cd ~/wis2box
@@ -441,7 +441,7 @@ AAXX 21121
     cd /root/data-conversion-exercises
     ```
 
-现在让我们看看如何使用 `csv2bufr` 模块将 CSV 数据转换为 BUFR 格式。该模块安装在 wis2box-api 容器中，可以从命令行使用，如下所示：
+现在我们来看如何使用 `csv2bufr` 模块将 CSV 数据转换为 BUFR 格式。该模块已安装在 `wis2box-api` 容器中，可以通过以下命令行使用：
 
 ```{.copy}
 csv2bufr data transform \
@@ -449,7 +449,7 @@ csv2bufr data transform \
     <input-csv-file>
 ```
 
-`--bufr-template` 参数用于指定 BUFR 映射模板文件，该文件提供输入 CSV 数据与输出 BUFR 数据之间的映射，指定在 JSON 文件中。默认的映射模板安装在 wis2box-api 容器中的目录 `/opt/csv2bufr/templates` 中。
+`--bufr-template` 参数用于指定 BUFR 映射模板文件，该文件以 JSON 格式提供输入 CSV 数据与输出 BUFR 数据之间的映射关系。默认的映射模板安装在 `wis2box-api` 容器的目录 `/opt/csv2bufr/templates` 中。
 
 ### 查看示例 CSV 文件
 
@@ -460,11 +460,11 @@ more aws-example.csv
 ```
 
 !!! question
-    CSV 文件中有多少行数据？报告 CSV 文件中的站点的 WIGOS 站点标识符是什么？
+    CSV 文件中有多少行数据？CSV 文件中报告的站点的 WIGOS 站标识符是什么？
 
 ??? question "点击查看答案"
 
-    输出显示如下：
+    输出显示如下内容：
 
     ```{.copy}
     wsi_series,wsi_issuer,wsi_issue_number,wsi_local,wmo_block_number,wmo_station_number,station_type,year,month,day,hour,minute,latitude,longitude,station_height_above_msl,barometer_height_above_msl,station_pressure,msl_pressure,geopotential_height,thermometer_height,air_temperature,dewpoint_temperature,relative_humidity,method_of_ground_state_measurement,ground_state,method_of_snow_depth_measurement,snow_depth,precipitation_intensity,anemometer_height,time_period_of_wind,wind_direction,wind_speed,maximum_wind_gust_direction_10_minutes,maximum_wind_gust_speed_10_minutes,maximum_wind_gust_direction_1_hour,maximum_wind_gust_speed_1_hour,maximum_wind_gust_direction_3_hours,maximum_wind_gust_speed_3_hours,rain_sensor_height,total_precipitation_1_hour,total_precipitation_3_hours,total_precipitation_6_hours,total_precipitation_12_hours,total_precipitation_24_hours
@@ -473,35 +473,36 @@ more aws-example.csv
     0,20000,0,60355,60,355,1,2024,3,31,3,0,47.77706163,23.94046026,503,504.43,100940,101040,1448,5,298.15,294.55,80,3,1,1,0,0.004,10,-10,30,3,30,5,40,9,20,11,2,4.7,5.3,7.9,9.5,11.4
     ```
 
-    CSV 文件的第一行包含列标题，用于标识每列中的数据。
+    CSV 文件的第一行是列标题，用于标识每列中的数据。
 
-    标题行之后，有 3 行数据，代表同一站点在三个不同时间戳 `2024-03-31 01:00:00`、`2024-03-31 02:00:00` 和 `2024-03-31 03:00:00` 的 3 次天气观测。
+    在标题行之后，有 3 行数据，表示来自同一站点的 3 次气象观测，WIGOS 站点标识符为 `0-20000-0-60355`，时间戳分别为 `2024-03-31 01:00:00`、`2024-03-31 02:00:00` 和 `2024-03-31 03:00:00`。
 
 ### 查看 aws-template
 
-wis2box-api 包含一组预定义的 BUFR 映射模板，安装在目录 `/opt/csv2bufr/templates` 中。
+`wis2box-api` 包含一组预定义的 BUFR 映射模板，这些模板安装在目录 `/opt/csv2bufr/templates` 中。
 
 检查目录 `/opt/csv2bufr/templates` 的内容：
 
 ```bash
 ls /opt/csv2bufr/templates
 ```
-你应该看到以下输出：
+
+您应该看到以下输出：
 
 ```{.copy}
 CampbellAfrica-v1-template.json  aws-template.json  daycli-template.json
 ```
 
-让我们检查 `aws-template.json` 文件的内容：
+查看 `aws-template.json` 文件的内容：
 
 ```bash
 cat /opt/csv2bufr/templates/aws-template.json
 ```
 
-这将返回一个大型 JSON 文件，提供 43 个 CSV 列的映射。
+这将返回一个较大的 JSON 文件，提供了 43 个 CSV 列的映射关系。
 
 !!! question
-    哪个 CSV 列映射到 eccodes 键 `airTemperature`？这个键的有效最小值和最大值是多少？
+    哪个 CSV 列映射到 eccodes 键 `airTemperature`？该键的有效最小值和最大值是多少？
 
 ??? success "点击查看答案"
 
@@ -510,19 +511,19 @@ cat /opt/csv2bufr/templates/aws-template.json
     ```bash
     cat /opt/csv2bufr/templates/aws-template.json | grep -i airTemperature
     ```
-    你应该看到以下输出：
+    您应该看到以下输出：
 
     ```{.copy}
     {"eccodes_key": "#1#airTemperature", "value": "data:air_temperature", "valid_min": "const:193.15", "valid_max": "const:333.15"},
     ```
 
-    将为 eccodes 键 `airTemperature` 编码的值将从 CSV 列：**air_temperature** 中获取。
+    对于 eccodes 键 `airTemperature`，其值将从 CSV 列 **air_temperature** 中提取。
 
-    这个键的最小值和最大值分别是 `193.15` 和 `333.15`。
+    该键的最小值和最大值分别为 `193.15` 和 `333.15`。
 
 !!! question
 
-    哪个 CSV 列映射到 eccodes 键 `internationalDataSubCategory`？这个键的值是什么？
+    哪个 CSV 列映射到 eccodes 键 `internationalDataSubCategory`？该键的值是多少？
 
 ??? success "点击查看答案"
     使用以下命令过滤输出：
@@ -530,13 +531,13 @@ cat /opt/csv2bufr/templates/aws-template.json
     ```bash
     cat /opt/csv2bufr/templates/aws-template.json | grep -i internationalDataSubCategory
     ```
-    你应该看到以下输出：
+    您应该看到以下输出：
 
     ```{.copy}
     {"eccodes_key": "internationalDataSubCategory", "value": "const:2"},
     ```
 
-    **没有 CSV 列映射到 eccodes 键 `internationalDataSubCategory`**，而是使用常数值 2，并将在使用此映射模板生成的所有 BUFR 文件中编码。
+**没有 CSV 列映射到 eccodes 键 `internationalDataSubCategory`**，而是使用了常量值 2，并将在使用此映射模板生成的所有 BUFR 文件中进行编码。
 
 ### 将 CSV 转换为 BUFR
 
@@ -551,7 +552,7 @@ csv2bufr data transform --bufr-template aws-template ./aws-example.csv
 
 ??? success "点击查看答案"
 
-    输出显示如下：
+    输出显示如下内容：
 
     ```{.copy}
     CLI:    ... Transforming ./aws-example.csv to BUFR ...
@@ -563,24 +564,24 @@ csv2bufr data transform --bufr-template aws-template ./aws-example.csv
     CLI:    End of processing, exiting.
     ```
 
-    输出表明创建了 3 个 BUFR 文件：`WIGOS_0-20000-0-60355_20240331T010000.bufr4`, `WIGOS_0-20000-0-60355_20240331T020000.bufr4`, 和 `WIGOS_0-20000-0-60355_20240331T030000.bufr4`。
+    输出表明创建了 3 个 BUFR 文件：`WIGOS_0-20000-0-60355_20240331T010000.bufr4`、`WIGOS_0-20000-0-60355_20240331T020000.bufr4` 和 `WIGOS_0-20000-0-60355_20240331T030000.bufr4`。
 
-要检查 BUFR 文件的内容，同时忽略缺失值，可以使用以下命令：
+要检查 BUFR 文件的内容并忽略缺失值，可以使用以下命令：
 
 ```bash
 bufr_dump -p WIGOS_0-20000-0-60355_20240331T010000.bufr4 | grep -v MISSING
 ```
 
 !!! question
-    BUFR 文件 `WIGOS_0-20000-0-60355_20240331T010000.bufr4` 中 eccodes 键 `airTemperature` 的值是多少？BUFR 文件 `WIGOS_0-20000-0-60355_20240331T020000.bufr4` 中的值又是多少？
+    在 BUFR 文件 `WIGOS_0-20000-0-60355_20240331T010000.bufr4` 中，eccodes 键 `airTemperature` 的值是多少？在 BUFR 文件 `WIGOS_0-20000-0-60355_20240331T020000.bufr4` 中又是多少？
 
 ??? success "点击查看答案"
-    若要过滤输出，可以使用以下命令：
+    要过滤输出，可以使用以下命令：
 
     ```bash
     bufr_dump -p WIGOS_0-20000-0-60355_20240331T010000.bufr4 | grep -v MISSING | grep airTemperature
     ```
-    你应该看到以下输出：
+    你应该会看到以下输出：
 
     ```{.copy}
     #1#airTemperature=298.15
@@ -592,22 +593,22 @@ bufr_dump -p WIGOS_0-20000-0-60355_20240331T010000.bufr4 | grep -v MISSING
     bufr_dump -p WIGOS_0-20000-0-60355_20240331T020000.bufr4 | grep -v MISSING | grep airTemperature
     ```
 
-您没有得到结果，这表明BUFR文件`WIGOS_0-20000-0-60355_20240331T020000.bufr4`中缺少键`airTemperature`的值。csv2bufr拒绝编码CSV数据中的值`25.0`，因为它超出了映射模板中定义的有效范围`193.15`和`333.15`。
+    你不会得到任何结果，这表明 BUFR 文件 `WIGOS_0-20000-0-60355_20240331T020000.bufr4` 中键 `airTemperature` 的值缺失。`csv2bufr` 拒绝对 CSV 数据中的值 `25.0` 进行编码，因为它超出了映射模板中定义的有效范围 `193.15` 和 `333.15`。
 
-注意，使用预定义的BUFR映射模板将CSV转换为BUFR有限制：
+请注意，使用预定义的 BUFR 映射模板将 CSV 转换为 BUFR 存在以下限制：
 
-- CSV文件必须符合映射模板中定义的格式，即CSV列名必须与映射模板中定义的名称匹配
-- 您只能编码映射模板中定义的键
+- CSV 文件必须符合映射模板中定义的格式，即 CSV 列名必须与映射模板中定义的名称匹配
+- 只能编码映射模板中定义的键
 - 质量控制检查仅限于映射模板中定义的检查
 
-有关如何创建和使用自定义BUFR映射模板的信息，请参见下一个实践练习[csv2bufr-templates](./csv2bufr-templates.md)。
+有关如何创建和使用自定义 BUFR 映射模板的信息，请参阅下一节实践练习 [csv2bufr-templates](./csv2bufr-templates.md)。
 
 ## 结论
 
 !!! success "恭喜！"
-    在这个实践环节中，您已经学到：
+    在本次实践课程中，你学会了：
 
-    - 如何在wis2box-api容器内访问ecCodes命令行工具
-    - 如何使用`synop2bufr`从命令行将FM-12 SYNOP报告转换为BUFR
-    - 如何在wis2box-webapp中使用SYNOP表单将FM-12 SYNOP报告转换为BUFR
-    - 如何使用`csv2bufr`从命令行将CSV数据转换为BUFR
+    - 如何在 wis2box-api 容器中访问 ecCodes 命令行工具
+    - 如何使用 `synop2bufr` 从命令行将 FM-12 SYNOP 报告转换为 BUFR
+    - 如何使用 wis2box-webapp 中的 SYNOP 表单将 FM-12 SYNOP 报告转换为 BUFR
+    - 如何使用 `csv2bufr` 从命令行将 CSV 数据转换为 BUFR
