@@ -7,7 +7,10 @@ title: Decoding data from WMO binary formats
 !!! abstract "Learning outcomes!"
 
     By the end of this practical session, you will be able to:
+
+    - run a docker container for the "demo-decode-eccodes-jupyter" image
     - run the example Jupyter notebooks to decode data in GRIB2, NetCDF and BUFR formats
+    - know about other tools to decode and visualize WMO binary formats
 
 ## Introduction
 
@@ -161,4 +164,5 @@ You can also use other tools to decode and visualize WMO binary formats without 
 
     In this practical session, you learned how to:
 
-    - run the example Jupyter notebooks to decode data in GRIB2, BUFR and NetCDF4 formats
+    - run a docker container for the "demo-decode-eccodes-jupyter" image
+    - run the example Jupyter notebooks to decode data in GRIB2, NetCDF and BUFR formats

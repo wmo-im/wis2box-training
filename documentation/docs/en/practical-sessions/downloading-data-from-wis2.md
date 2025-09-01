@@ -26,7 +26,12 @@ In this session you will learn how to setup a subscription to a WIS2 Broker and 
 
 Before starting please login to your student VM and ensure your wis2box instance is up and running.
 
-## Viewing the wis2downloader dashboard in Grafana
+
+## wis2downloader basics
+
+The wis2downloader is included as a separate container in the wis2box-stack as defined in the docker compose files. The prometheus container in the wis2box-stack is configured to scrape metrics from the wis2downloader container and these metrics can be visualized by a dashboard in Grafana.
+
+### Viewing the wis2downloader dashboard in Grafana
 
 Open a web browser and navigate to the Grafana dashboard for your wis2box instance by going to `http://YOUR-HOST:3000`.
 
@@ -42,9 +47,9 @@ On the top left corner you can see the subscriptions that are currently active.
 
 Keep this dashboard open as you will use it to monitor the download progress in the next exercise.
 
-## Reviewing the wis2downloader configuration
+### Reviewing the wis2downloader configuration
 
-The wis2downloader-service started by the wis2box-stack can be configured using the environment variables defined in your wis2box.env file.
+The wis2downloader-service in the wis2box-stack can be configured using the environment variables defined in your wis2box.env file.
 
 The following environment variables are used by the wis2downloader:
 
@@ -87,7 +92,7 @@ cat ~/wis2box/wis2box.env | grep DOWNLOAD
 
 You can keep the default configuration for the next exercise.
 
-## wis2downloader command line interface
+### wis2downloader command line interface
 
 To access the command line interface of the wis2downloader within the wis2box-stack, you can login to the **wis2downloader** container using the following command:
 
@@ -103,21 +108,13 @@ wis2downloader list-subscriptions
 
 This command returns an empty list, as there are no subscriptions setup yet.
 
-## Subscribe to GTS-to-WIS2 gateway through the WIS2 Global Broker
+## Download GTS-data using a WIS2 Global Broker
 
-In the next exercise, you will subscribe to the DWD-hosted GTS-to-WIS2 gateway which is publishing data from the Global Telecommunication System (GTS) to WIS2.
+If you kept the default configuration of the wis2downloader, it is currently connected to the WIS2 Global Broker hosted by Météo-France.
 
-There are multiple centers around the world that are publishing data from the GTS to WIS2. If you like to use a different GTS-to-WIS2 gateway you can replace `de-dwd-gts-to-wis2` in the topic used in the exercise below with a different center, such as `cn-cma-gts-to-wis2` for the CMA-hosted GTS-to-WIS2 gateway.
+### Setup the subscription
 
-### Adding subscription
-
-Inside the **wis2downloader** container, you can use the command line to list, add and delete subscriptions.
-
-
-
-For the purpose of this exercise, we will subscribe to the following topic `cache/a/wis2/de-dwd-gts-to-wis2/#`, to subscribe to data published by the DWD-hosted GTS-to-WIS2 gateway and downloading notifications from the Global Cache.
-
-To add this subscription, use the following command:
+Use the following command `cache/a/wis2/de-dwd-gts-to-wis2/#`, to subscribe to data published by the DWD-hosted GTS-to-WIS2 gateway made available through the Global Caches :
 
 ```bash
 wis2downloader add-subscription --topic cache/a/wis2/de-dwd-gts-to-wis2/#
@@ -129,9 +126,9 @@ Then exit the **wis2downloader** container by typing `exit`:
 exit
 ```
 
-Check the wis2downloader dashboard in Grafana to see the new subscription added. Wait a few minutes and you should see the first downloads starting. Go to he next exercise once you have confirmed that the downloads are starting.
+### Check the downloaded data
 
-### Viewing the downloaded data
+Check the wis2downloader dashboard in Grafana to see the new subscription added. Wait a few minutes and you should see the first downloads starting. Go to he next exercise once you have confirmed that the downloads are starting.
 
 The wis2downloader-service in the wis2box-stack downloads the data in the 'downloads' directory in the directory you defined as the WIS2BOX_HOST_DATADIR in your wis2box.env file. To view the contents of the downloads directory, you can use the following command:
 
@@ -148,13 +145,13 @@ Note that the downloaded data is stored in directories named after the topic the
     Can you see any downloaded files in these directories?
 
 ??? success "Click to reveal answer"
-    You should see a directory named `cache/a/wis2/de-dwd-gts-to-wis2/#` in the downloads directory.
+    You should see a directory structure starting with `cache/a/wis2/de-dwd-gts-to-wis2/` underneath which you will see more directories named after the GTS-bulletin headers of the downloaded data.
 
     Depending on when you started the subscription, you may or may not see any downloaded files in this directory yet. If you do not see any files yet, wait a few more minutes and check again.
 
-### Removing subscriptions from the wis2downloader
+Let's cleanup the subscription and the downloaded data before moving to the next exercise.
 
-Next, log back in to the wis2downloader container:
+Log back in to the wis2downloader container:
 
 ```bash
 python3 wis2box-ctl.py login wis2downloader
@@ -166,7 +163,7 @@ and remove the subscription you made from the wis2downloader, using the followin
 wis2downloader remove-subscription --topic cache/a/wis2/de-dwd-gts-to-wis2/#
 ```
 
-remove the downloaded data using the following command:
+Remove the downloaded data using the following command:
 
 ```bash
 rm -rf /wis2box-data/downloads/cache/*
@@ -180,11 +177,25 @@ exit
 
 Check the wis2downloader dashboard in Grafana to see the subscription removed. You should see the downloads stopping.
 
+!!! note "About GTS-to-WIS2 gateways"
+    There are two GTS-to-WIS2 gateways currently publishing data through the WIS2 Global Broker and the Global Caches:
+
+    - DWD (Germany): centre-id=*de-dwd-gts-to-wis2*
+    - JMA (Japan): centre-id=*jp-jma-gts-to-wis2*
+    
+    If in the previous exercise you replace `de-dwd-gts-to-wis2` with `jp-jma-gts-to-wis2` you would receive the notifications and data published by the JMA GTS-to-WIS2 gateway.
+
+!!! note "Origin vs cache topics"
+
+    When you subscribe to a topic starting with `origin/`, you will receive notifications with a canonical URL that points to a data-server provided by the WIS Centre publishing the data.
+
+    When you subscribe to a topic starting with `cache/` you will receive multiple notifications for the same data, one for each Global Cache. Each notification will contain a canonical URL that points to the data-server of the respective Global Cache. The wis2downloader will download the data from the first canonical URL it can reach.
+
 ## Download example data from the WIS2 Training Broker
 
 In this exercise, you will subscribe to the WIS2 Training Broker which is publishing example data for training purposes. 
 
-### Subscribe to the wis2training-broker and setup a new subscription
+### Change the wis2downloader configuration
 
 This demonstrates how to subscribe to a broker that is not the default broker and will allow you to download some data published from the WIS2 Training Broker.
 
@@ -221,6 +232,8 @@ INFO - Host: wis2training-broker.wis2dev.io, port: 1883
 INFO - Connected successfully
 ```
 
+### Setup new subscriptions
+
 Now we will setup a new subscription to the topic to downloaded cyclone-track data from the WIS2 Training Broker.
 
 Login to the **wis2downloader** container:
@@ -236,6 +249,8 @@ wis2downloader add-subscription --topic origin/a/wis2/int-wis2-training/data/cor
 ```
 
 Exit the **wis2downloader** container by typing `exit`.
+
+### Check the downloaded data
 
 Wait until you see the downloads starting in the wis2downloader dashboard in Grafana.
 
