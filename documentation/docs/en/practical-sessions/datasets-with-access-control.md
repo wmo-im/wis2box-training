@@ -32,16 +32,16 @@ Data that are shared as recommended:
     
     Since the WIS Global Caches do not cache recommended data, you will **not** see notifications on the topic `cache/a/wis2/<centre-id>/data/recommended/..` 
 
-    The data-consumer must download data from the data-server hosted by the data-provider, using the canonical URL provided in the notifications on the topic `origin/a/wis2/<centre-id>/data/recommended/..`
+    The data consumer must download data from the data server hosted by the data provider, using the canonical URL provided in the notifications on the topic `origin/a/wis2/<centre-id>/data/recommended/...`
 
-In this practical session, you will create a new dataset with data policy 'recommended' using the dataset editor in the wis2box-webapp.
+In this practical session, you will create a new dataset with data policy 'recommended' using the dataset editor in wis2box-webapp.
 You will also learn how provide a self-hosted license and how to optionally add access control.
 
 !!! note "Aviation data in WIS2"
     
-    For this exercise you are asked to create a dataset to share METAR, a standard format for reporting aviation weather observations.
+    For this exercise you are asked to create a dataset to share METAR data, a standard format for reporting aviation weather observations.
     
-    Aviation data on WIS2 should always be shared as 'recommended' to align with the regulations for sharing aviation data as specified by the International Civil Aviation Organization (ICAO).
+    Aviation data on WIS2 should always be shared as 'recommended' in order to align with the regulations for sharing aviation data as specified by the International Civil Aviation Organization (ICAO).
 
 ## Preparation
 
@@ -65,7 +65,7 @@ Click 'CONTINUE TO FORM' to proceed.
 
 For this exercise, please create a dataset for aviation METAR data;
 
-- choose an appropriate 'Local ID' for the dataset, for example "aviation-metar".
+- choose an appropriate 'Local ID' for the dataset, for example 'aviation-metar'
 - provide a title and description for the dataset
 - choose WMO Data Policy = 'recommended'
 
@@ -88,7 +88,7 @@ Next:
 
     For this exercise, we will use a self-hosted license file. You will add the file 'aviation-license.html' to your wis2box instance later in this practical session to ensure the license URL is valid.
 
-Since you selected Template = 'other' no keywords are pre-filled for the dataset. Add at last 3 keywords relevant for the dataset:
+Since you selected Template = 'other' no keywords are pre-filled for the dataset. Add a minimum of 3 keywords relevant for the dataset:
 
 ![create-dataset-metar-keywords](../assets/img/create-dataset-metar-keywords.png)
 
@@ -100,7 +100,7 @@ Please add the plugin for 'Universal data without conversion' and make sure to s
 
 ![create-dataset-plugin-universal-txt](../assets/img/create-dataset-plugin-universal-txt.png)
 
-Finally submit the dataset, using the previously created authentication token, and check that the new dataset is created in the wis2box-webapp.
+Submit the dataset, using the previously created authentication token, and check that the new dataset is created in the wis2box-webapp.
 
 Check MQTT Explorer to verify that you receive the WIS2 Notification Message announcing the new Discovery Metadata record on the topic `origin/a/wis2/<your-centre-id>/metadata`.	
 
@@ -118,7 +118,7 @@ If you click on the link, you will get an error since the license file is not ye
 
 ## Add the license file to your wis2box instance
 
-Let's ensure the link for "License for this dataset" in the metadata of your recommended dataset works as expected.
+Ensure the link for "License for this dataset" in the metadata of your recommended dataset works as expected.
 
 Download this example aviation license file: [aviation-license.html](./../../sample-data/aviation-license.html)
 
@@ -241,7 +241,7 @@ wis2box auth remove-token --metadata-id urn:wmo:md:my-centre-id:aviation-metar S
 
 Make sure to replace `urn:wmo:md:my-centre-id:aviation-metar` with the metadata-identifier of your dataset.
 
-Logout the wis2box-management container:
+Logout of the wis2box-management container:
 
 ```bash
 exit
@@ -253,7 +253,7 @@ And verify that the access token has been removed by trying to download the data
 
     WIS2 specifies that recommended datasets *may* have access controls applied to the data. It is not mandatory to add access control to a recommended dataset and you may rely on the license URL only to inform data consumers about the conditions of use of the data. If do you apply access control you are responsible to share the access token to any data consumers that need to access this data.
 
-    If you apply `wis2box auth add-token` to a dataset with WMO Data Policy 'core', the Global Caches will report an error to the Global Monitoring as they can not download the data and your dataset will be considered to be *non-compliant* with the WIS2 specification.
+    If you apply `wis2box auth add-token` to a dataset with WMO Data Policy 'core', the Global Caches will report an error to the Global Monitoring as they can not download the data and your dataset will be considered to be *non-compliant* with the WIS2 Technical Regulations.
 
 ## Conclusion
 
@@ -265,4 +265,3 @@ And verify that the access token has been removed by trying to download the data
     - add an access token to the dataset
     - validate the dataset can not be accessed without the access token
     - add the access token to HTTP headers to access the dataset
-
