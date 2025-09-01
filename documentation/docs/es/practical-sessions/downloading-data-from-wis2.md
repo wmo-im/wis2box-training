@@ -1,68 +1,65 @@
 ---
-title: Descarga y decodificación de datos desde WIS2
+title: Descargando datos de WIS2 usando wis2downloader
 ---
 
-# Descarga y decodificación de datos desde WIS2
+# Descargando datos de WIS2 usando wis2downloader
 
-!!! abstract "Resultados de aprendizaje!"
+!!! abstract "¡Resultados de aprendizaje!"
 
-    Al final de esta sesión práctica, podrás:
+    Al final de esta sesión práctica, serás capaz de:
 
-    - usar "wis2downloader" para suscribirte a notificaciones de datos de WIS2 y descargar datos a tu sistema local
-    - ver el estado de las descargas en el tablero de Grafana
-    - decodificar algunos datos descargados usando el contenedor "decode-bufr-jupyter"
+    - usar el "wis2downloader" para suscribirte a notificaciones de datos de WIS2 y descargar datos en tu sistema local
+    - ver el estado de las descargas en el panel de Grafana
+    - aprender a configurar el wis2downloader para suscribirte a un broker no predeterminado
 
 ## Introducción
 
-En esta sesión aprenderás cómo configurar una suscripción a un Broker de WIS2 y descargar automáticamente datos a tu sistema local usando el servicio "wis2downloader" incluido en wis2box.
+En esta sesión aprenderás a configurar una suscripción a un WIS2 Broker y a descargar automáticamente datos en tu sistema local utilizando el servicio "wis2downloader" incluido en el wis2box.
 
 !!! note "Acerca de wis2downloader"
      
-     El wis2downloader también está disponible como un servicio independiente que puede ejecutarse en un sistema diferente al que está publicando las notificaciones de WIS2. Consulta [wis2downloader](https://pypi.org/project/wis2downloader/) para más información sobre cómo usar el wis2downloader como un servicio independiente.
+     El wis2downloader también está disponible como un servicio independiente que puede ejecutarse en un sistema diferente al que publica las notificaciones de WIS2. Consulta [wis2downloader](https://pypi.org/project/wis2downloader/) para obtener más información sobre cómo usar el wis2downloader como un servicio independiente.
 
      Si deseas desarrollar tu propio servicio para suscribirte a notificaciones de WIS2 y descargar datos, puedes usar el [código fuente de wis2downloader](https://github.com/World-Meteorological-Organization/wis2downloader) como referencia.
 
-!!! Other tools for accessing WIS2 data
-
-    Las siguientes herramientas también pueden usarse para descubrir y acceder a datos de WIS2:
-
-    - [pywiscat](https://github.com/wmo-im/pywiscat) proporciona capacidad de búsqueda sobre el Catálogo Global de Descubrimiento de WIS2 en apoyo del reporte y análisis del Catálogo de WIS2 y sus metadatos de descubrimiento asociados
-    - [pywis-pubsub](https://github.com/World-Meteorological-Organization/pywis-pubsub) proporciona capacidad de suscripción y descarga de datos de la OMM desde servicios de infraestructura de WIS2
-
 ## Preparación
 
-Antes de comenzar, por favor inicia sesión en tu VM de estudiante y asegúrate de que tu instancia de wis2box esté funcionando.
+Antes de comenzar, inicia sesión en tu máquina virtual de estudiante y asegúrate de que tu instancia de wis2box esté en funcionamiento.
 
-## Visualizando el tablero de wis2downloader en Grafana
+## Conceptos básicos de wis2downloader
 
-Abre un navegador web y navega al tablero de Grafana para tu instancia de wis2box yendo a `http://YOUR-HOST:3000`.
+El wis2downloader está incluido como un contenedor separado en el wis2box-stack, tal como se define en los archivos de docker compose. El contenedor de prometheus en el wis2box-stack está configurado para recopilar métricas del contenedor de wis2downloader, y estas métricas pueden visualizarse en un panel de Grafana.
 
-Haz clic en tableros en el menú de la izquierda, y luego selecciona el **tablero de wis2downloader**.
+### Visualización del panel de wis2downloader en Grafana
 
-Deberías ver el siguiente tablero:
+Abre un navegador web y navega al panel de Grafana de tu instancia de wis2box accediendo a `http://YOUR-HOST:3000`.
+
+Haz clic en "dashboards" en el menú de la izquierda y luego selecciona el **wis2downloader dashboard**.
+
+Deberías ver el siguiente panel:
 
 ![wis2downloader dashboard](../assets/img/wis2downloader-dashboard.png)
 
-Este tablero se basa en métricas publicadas por el servicio de wis2downloader y te mostrará el estado de las descargas que están en curso.
+Este panel se basa en métricas publicadas por el servicio wis2downloader y te mostrará el estado de las descargas que están en progreso.
 
-En la esquina superior izquierda puedes ver las suscripciones que están actualmente activas.
+En la esquina superior izquierda, puedes ver las suscripciones que están activas actualmente.
 
-Mantén este tablero abierto ya que lo usarás para monitorear el progreso de la descarga en el próximo ejercicio.
+Mantén este panel abierto, ya que lo usarás para monitorear el progreso de las descargas en el próximo ejercicio.
 
-## Revisando la configuración de wis2downloader
+### Revisión de la configuración de wis2downloader
 
-El servicio de wis2downloader iniciado por el stack de wis2box puede configurarse usando las variables de entorno definidas en tu archivo wis2box.env.
+El servicio wis2downloader en el wis2box-stack puede configurarse utilizando las variables de entorno definidas en tu archivo wis2box.env.
 
-Las siguientes variables de entorno son utilizadas por wis2downloader:
+Las siguientes variables de entorno son utilizadas por el wis2downloader:
 
-    - DOWNLOAD_BROKER_HOST: El nombre de host del broker MQTT al que conectarse. Por defecto es globalbroker.meteo.fr
+    - DOWNLOAD_BROKER_HOST: El nombre del host del broker MQTT al que conectarse. Por defecto es globalbroker.meteo.fr
     - DOWNLOAD_BROKER_PORT: El puerto del broker MQTT al que conectarse. Por defecto es 443 (HTTPS para websockets)
     - DOWNLOAD_BROKER_USERNAME: El nombre de usuario para conectarse al broker MQTT. Por defecto es everyone
     - DOWNLOAD_BROKER_PASSWORD: La contraseña para conectarse al broker MQTT. Por defecto es everyone
-    - DOWNLOAD_BROKER_TRANSPORT: websockets o tcp, el mecanismo de transporte para conectarse al broker MQTT. Por defecto es websockets,
+    - DOWNLOAD_BROKER_TRANSPORT: websockets o tcp, el mecanismo de transporte para conectarse al broker MQTT. Por defecto es websockets
     - DOWNLOAD_RETENTION_PERIOD_HOURS: El período de retención en horas para los datos descargados. Por defecto es 24
-    - DOWNLOAD_WORKERS: El número de trabajadores de descarga para usar. Por defecto es 8. Determina el número de descargas paralelas.
-    - DOWNLOAD_MIN_FREE_SPACE_GB: El espacio libre mínimo en GB para mantener en el volumen que aloja las descargas. Por defecto es 1.
+    - DOWNLOAD_WORKERS: El número de trabajadores de descarga a utilizar. Por defecto es 8. Determina el número de descargas paralelas.
+    - DOWNLOAD_MIN_FREE_SPACE_GB: El espacio libre mínimo en GB que se debe mantener en el volumen que aloja las descargas. Por defecto es 1.
 
 Para revisar la configuración actual de wis2downloader, puedes usar el siguiente comando:
 
@@ -70,259 +67,254 @@ Para revisar la configuración actual de wis2downloader, puedes usar el siguient
 cat ~/wis2box/wis2box.env | grep DOWNLOAD
 ```
 
-!!! question "Revisa la configuración de wis2downloader"
+!!! question "Revisar la configuración de wis2downloader"
     
-    ¿Cuál es el broker MQTT predeterminado al que se conecta wis2downloader?
+    ¿Cuál es el broker MQTT predeterminado al que se conecta el wis2downloader?
 
     ¿Cuál es el período de retención predeterminado para los datos descargados?
 
 ??? success "Haz clic para revelar la respuesta"
 
-    El broker MQTT predeterminado al que se conecta wis2downloader es `globalbroker.meteo.fr`.
+    El broker MQTT predeterminado al que se conecta el wis2downloader es `globalbroker.meteo.fr`.
 
     El período de retención predeterminado para los datos descargados es de 24 horas.
 
-!!! note "Actualizando la configuración de wis2downloader"
+!!! note "Actualizar la configuración de wis2downloader"
 
-    Para actualizar la configuración de wis2downloader, puedes editar el archivo wis2box.env. Para aplicar los cambios puedes volver a ejecutar el comando de inicio para el stack de wis2box:
+    Para actualizar la configuración de wis2downloader, puedes editar el archivo wis2box.env. Para aplicar los cambios, puedes volver a ejecutar el comando de inicio para el wis2box-stack:
 
     ```bash
     python3 wis2box-ctl.py start
     ```
 
-    Y verás que el servicio de wis2downloader se reinicia con la nueva configuración.
+    Y verás que el servicio wis2downloader se reinicia con la nueva configuración.
 
-Puedes mantener la configuración predeterminada para el propósito de este ejercicio.
+Puedes mantener la configuración predeterminada para el próximo ejercicio.
 
-## Agregando suscripciones al wis2downloader
+### Interfaz de línea de comandos de wis2downloader
 
-Dentro del contenedor **wis2downloader**, puedes usar la línea de comandos para listar, agregar y eliminar suscripciones.
-
-Para iniciar sesión en el contenedor **wis2downloader**, usa el siguiente comando:
+Para acceder a la interfaz de línea de comandos de wis2downloader dentro del wis2box-stack, puedes iniciar sesión en el contenedor **wis2downloader** utilizando el siguiente comando:
 
 ```bash
 python3 wis2box-ctl.py login wis2downloader
 ```
 
-Luego usa el siguiente comando para listar las suscripciones que están actualmente activas:
+Usa el siguiente comando para listar las suscripciones que están activas actualmente:
 
 ```bash
 wis2downloader list-subscriptions
 ```
 
-Este comando devuelve una lista vacía ya que no hay suscripciones actualmente activas.
+Este comando devuelve una lista vacía, ya que aún no hay suscripciones configuradas.
 
-Para el propósito de este ejercicio, nos suscribiremos al siguiente tema `cache/a/wis2/de-dwd-gts-to-wis2/#`, para suscribirnos a datos publicados por la puerta de enlace GTS-to-WIS2 alojada por DWD y descargar notificaciones desde el Global Cache.
+## Descargar datos GTS usando un WIS2 Global Broker
 
-Para agregar esta suscripción, usa el siguiente comando:
+Si mantuviste la configuración predeterminada de wis2downloader, actualmente está conectado al WIS2 Global Broker alojado por Météo-France.
+
+### Configurar la suscripción
+
+Usa el siguiente comando `cache/a/wis2/de-dwd-gts-to-wis2/#` para suscribirte a los datos publicados por el gateway GTS-to-WIS2 alojado por DWD y disponible a través de los Global Caches:
 
 ```bash
 wis2downloader add-subscription --topic cache/a/wis2/de-dwd-gts-to-wis2/#
 ```
 
-Luego sal del contenedor **wis2downloader** escribiendo `exit`:
+Luego, sal del contenedor **wis2downloader** escribiendo `exit`:
 
 ```bash
 exit
 ```
 
-Revisa el tablero de wis2downloader en Grafana para ver la nueva suscripción agregada. Espera unos minutos y deberías ver que las primeras descargas comienzan. Ve al siguiente ejercicio una vez que hayas confirmado que las descargas están comenzando.
+### Verificar los datos descargados
 
-## Visualizando los datos descargados
+Revisa el panel de wis2downloader en Grafana para ver la nueva suscripción añadida. Espera unos minutos y deberías ver que comienzan las primeras descargas. Pasa al siguiente ejercicio una vez que hayas confirmado que las descargas están comenzando.
 
-El servicio de wis2downloader en el stack de wis2box descarga los datos en el directorio 'downloads' en el directorio que definiste como WIS2BOX_HOST_DATADIR en tu archivo wis2box.env. Para ver el contenido del directorio de descargas, puedes usar el siguiente comando:
+El servicio wis2downloader en el wis2box-stack descarga los datos en el directorio 'downloads' dentro del directorio que definiste como WIS2BOX_HOST_DATADIR en tu archivo wis2box.env. Para ver el contenido del directorio de descargas, puedes usar el siguiente comando:
 
 ```bash
 ls -R ~/wis2box-data/downloads
 ```
 
-Nota que los datos descargados están almacenados en directorios nombrados después del tema en el que se publicó la Notificación de WIS2.
+Ten en cuenta que los datos descargados se almacenan en directorios nombrados según el tema en el que se publicó la notificación de WIS2.
 
-## Eliminando suscripciones del wis2downloader
+!!! question "Visualización de los datos descargados"
 
-A continuación, inicia sesión de nuevo en el contenedor de wis2downloader:
+    ¿Qué directorios ves en el directorio de descargas?
+
+    ¿Puedes ver algún archivo descargado en estos directorios?
+
+??? success "Haz clic para revelar la respuesta"
+    Deberías ver una estructura de directorios que comienza con `cache/a/wis2/de-dwd-gts-to-wis2/`, debajo de la cual verás más directorios nombrados según los encabezados de boletines GTS de los datos descargados.
+
+    Dependiendo de cuándo comenzaste la suscripción, es posible que veas o no archivos descargados en este directorio. Si aún no ves archivos, espera unos minutos más y verifica nuevamente.
+
+Vamos a limpiar la suscripción y los datos descargados antes de pasar al siguiente ejercicio.
+
+Vuelve a iniciar sesión en el contenedor wis2downloader:
 
 ```bash
 python3 wis2box-ctl.py login wis2downloader
 ```
 
-y elimina la suscripción que hiciste del wis2downloader, usando el siguiente comando:
+y elimina la suscripción que configuraste en wis2downloader usando el siguiente comando:
 
 ```bash
 wis2downloader remove-subscription --topic cache/a/wis2/de-dwd-gts-to-wis2/#
 ```
 
-Y sal del contenedor de wis2downloader escribiendo `exit`:
+Elimina los datos descargados utilizando el siguiente comando:
+
+```bash
+rm -rf /wis2box-data/downloads/cache/*
+```
+
+Y sal del contenedor wis2downloader escribiendo `exit`:
     
 ```bash
 exit
 ```
 
-Revisa el tablero de wis2downloader en Grafana para ver la suscripción eliminada. Deberías ver que las descargas se detienen.
+Revisa el panel de wis2downloader en Grafana para ver que la suscripción ha sido eliminada. Deberías ver que las descargas se detienen.
 
-## Descarga y decodificación de datos para una trayectoria de ciclón tropical
+!!! note "Acerca de los gateways GTS-to-WIS2"
+    Actualmente hay dos gateways GTS-to-WIS2 que publican datos a través del WIS2 Global Broker y los Global Caches:
 
-En este ejercicio, te suscribirás al Broker de Entrenamiento de WIS2 que está publicando datos de ejemplo para fines de entrenamiento. Configurarás una suscripción para descargar datos de una trayectoria de ciclón tropical. Luego decodificarás los datos descargados usando el contenedor "decode-bufr-jupyter".
+    - DWD (Alemania): centre-id=*de-dwd-gts-to-wis2*
+    - JMA (Japón): centre-id=*jp-jma-gts-to-wis2*
+    
+    Si en el ejercicio anterior reemplazas `de-dwd-gts-to-wis2` con `jp-jma-gts-to-wis2`, recibirías las notificaciones y datos publicados por el gateway GTS-to-WIS2 de JMA.
 
-### Suscríbete al wis2training-broker y configura una nueva suscripción
+!!! note "Temas de origen vs temas de caché"
 
-Esto demuestra cómo suscribirse a un broker que no es el broker predeterminado y te permitirá descargar algunos datos publicados desde el Broker de Entrenamiento de WIS2.
+    Cuando te suscribes a un tema que comienza con `origin/`, recibirás notificaciones con una URL canónica que apunta a un servidor de datos proporcionado por el Centro WIS que publica los datos.
 
-Edita el archivo wis2box.env y cambia DOWNLOAD_BROKER_HOST a `wis2training-broker.wis2dev.io`, cambia DOWNLOAD_BROKER_PORT a `1883` y cambia DOWNLOAD_BROKER_TRANSPORT a `tcp`:
+    Cuando te suscribes a un tema que comienza con `cache/`, recibirás múltiples notificaciones para los mismos datos, una por cada Global Cache. Cada notificación contendrá una URL canónica que apunta al servidor de datos de la respectiva Global Cache. El wis2downloader descargará los datos desde la primera URL canónica que pueda alcanzar.
+
+## Descargar datos de ejemplo del WIS2 Training Broker
+
+En este ejercicio, te suscribirás al WIS2 Training Broker, que publica datos de ejemplo con fines de capacitación.
+
+### Cambiar la configuración de wis2downloader
+
+Esto demuestra cómo suscribirse a un broker que no es el broker predeterminado y le permitirá descargar algunos datos publicados desde el WIS2 Training Broker.
+
+Edite el archivo `wis2box.env` y cambie `DOWNLOAD_BROKER_HOST` a `wis2training-broker.wis2dev.io`, cambie `DOWNLOAD_BROKER_PORT` a `1883` y cambie `DOWNLOAD_BROKER_TRANSPORT` a `tcp`:
 
 ```copy
-# configuración del descargador
+# downloader settings
 DOWNLOAD_BROKER_HOST=wis2training-broker.wis2dev.io
 DOWNLOAD_BROKER_PORT=1883
 DOWNLOAD_BROKER_USERNAME=everyone
 DOWNLOAD_BROKER_PASSWORD=everyone
-# mecanismo de transporte de descarga (tcp o websockets)
+# download transport mechanism (tcp or websockets)
 DOWNLOAD_BROKER_TRANSPORT=tcp
 ```
 
-Luego ejecuta el comando 'start' nuevamente para aplicar los cambios:
+Luego, ejecute nuevamente el comando 'start' para aplicar los cambios:
 
 ```bash
 python3 wis2box-ctl.py start
 ```
 
-Revisa los registros de wis2downloader para ver si la conexión con el nuevo broker fue exitosa:
+Revise los registros del **wis2downloader** para verificar si la conexión con el nuevo broker fue exitosa:
 
 ```bash
 docker logs wis2downloader
 ```
 
-Deberías ver el siguiente mensaje de registro:
+Debería ver el siguiente mensaje en los registros:
 
 ```copy
 ...
-INFO - Conectando...
-INFO - Host: wis2training-broker.wis2dev.io, puerto: 1883
-INFO - Conectado exitosamente
+INFO - Connecting...
+INFO - Host: wis2training-broker.wis2dev.io, port: 1883
+INFO - Connected successfully
 ```
 
-Ahora configuraremos una nueva suscripción al tema para descargar datos de trayectoria de ciclones desde el Broker de Entrenamiento de WIS2.
+### Configurar nuevas suscripciones
 
-Inicia sesión en el contenedor **wis2downloader**:
+Ahora configuraremos una nueva suscripción al tema para descargar datos de trayectoria de ciclones desde el WIS2 Training Broker.
+
+Inicie sesión en el contenedor **wis2downloader**:
 
 ```bash
 python3 wis2box-ctl.py login wis2downloader
 ```
 
-Y ejecuta el siguiente comando (copia y pega esto para evitar errores tipográficos):
+Y ejecute el siguiente comando (cópielo y péguelo para evitar errores tipográficos):
 
 ```bash
 wis2downloader add-subscription --topic origin/a/wis2/int-wis2-training/data/core/weather/prediction/forecast/medium-range/probabilistic/trajectory
 ```
 
-Sal del contenedor **wis2downloader** escribiendo `exit`.
+Salga del contenedor **wis2downloader** escribiendo `exit`.
 
-Espera hasta que veas que las descargas comienzan en el tablero de wis2downloader en Grafana.
+### Verificar los datos descargados
 
-!!! note "Descargando datos del Broker de Entrenamiento de WIS2"
+Espere hasta que vea que las descargas comienzan en el panel de control de **wis2downloader** en Grafana.
 
-    El Broker de Entrenamiento de WIS2 es un broker de prueba que se usa para fines de entrenamiento y puede no publicar datos todo el tiempo.
-
-    Durante las sesiones de entrenamiento presenciales, el instructor local asegurará que el Broker de Entrenamiento de WIS2 publique datos para que los descargues.
-
-    Si estás haciendo este ejercicio fuera de una sesión de entrenamiento, es posible que no veas ningún dato siendo descargado.
-
-Verifica que los datos fueron descargados revisando los registros de wis2downloader nuevamente con:
+Verifique que los datos se hayan descargado revisando nuevamente los registros de **wis2downloader** con:
 
 ```bash
 docker logs wis2downloader
 ```
 
-Deberías ver un mensaje de registro similar al siguiente:
+Debería ver un mensaje en los registros similar al siguiente:
 
 ```copy
-[...] INFO - Mensaje recibido bajo el tema origin/a/wis2/int-wis2-training/data/core/weather/prediction/forecast/medium-range/probabilistic/trajectory
-[...] INFO - Descargado A_JSXX05ECEP020000_C_ECMP_...
+[...] INFO - Message received under topic origin/a/wis2/int-wis2-training/data/core/weather/prediction/forecast/medium-range/probabilistic/trajectory
+[...] INFO - Downloaded A_JSXX05ECEP020000_C_ECMP_...
 ```
 
-### Decodificando los datos descargados
-
-Para demostrar cómo puedes decodificar los datos descargados, iniciaremos un nuevo contenedor usando la imagen 'decode-bufr-jupyter'.
-
-Este contenedor iniciará un servidor de cuadernos Jupyter en tu instancia que incluye la biblioteca "ecCodes" que puedes usar para decodificar datos BUFR.
-
-Usaremos los cuadernos de ejemplo incluidos en `~/exercise-materials/notebook-examples` para decodificar los datos descargados de las trayectorias de ciclones.
-
-Para iniciar el contenedor, usa el siguiente comando:
+Revise el contenido del directorio de descargas nuevamente:
 
 ```bash
-docker run -d --name decode-bufr-jupyter \
-    -v ~/wis2box-data/downloads:/root/downloads \
-    -p 8888:8888 \
-    -e JUPYTER_TOKEN=dataismagic! \
-    mlimper/decode-bufr-jupyter
+ls -R ~/wis2box-data/downloads
 ```
 
-!!! note "Acerca del contenedor decode-bufr-jupyter"
+Debería ver un nuevo directorio llamado `origin/a/wis2/int-wis2-training/data/core/weather/prediction/forecast/medium-range/probabilistic/trajectory` que contiene los datos descargados.
 
-    El contenedor `decode-bufr-jupyter` es un contenedor personalizado que incluye la biblioteca ecCodes y ejecuta un servidor de cuadernos Jupyter. El contenedor se basa en una imagen que incluye la biblioteca `ecCodes` para decodificar datos BUFR, junto con bibliotecas para trazado y análisis de datos.
-
-    El comando anterior inicia el contenedor en modo separado, con el nombre `decode-bufr-jupyter`, el puerto 8888 está mapeado al sistema host y la variable de entorno `JUPYTER_TOKEN` está configurada como `dataismagic!`.
+!!! question "Revisar los datos descargados"
     
-    El comando anterior también monta el directorio `~/wis2box-data/downloads` a `/root/downloads` en el contenedor. Esto asegura que los datos descargados estén disponibles para el servidor de cuadernos Jupyter.
+    ¿Cuál es el formato de archivo de los datos descargados?
+
+??? success "Haga clic para revelar la respuesta"
+
+    Los datos descargados están en formato BUFR, como lo indica la extensión de archivo `.bufr`.
+
+A continuación, intente agregar otras dos suscripciones para descargar anomalías mensuales de temperatura superficial y datos de pronóstico global del conjunto desde los siguientes temas:
+- `origin/a/wis2/int-wis2-training/data/core/weather/prediction/forecast/medium-range/probabilistic/global`
+- `origin/a/wis2/int-wis2-training/data/core/climate/experimental/anomalies/monthly/surface-temperature`
+
+Espere hasta que vea que las descargas comienzan en el panel de control de **wis2downloader** en Grafana.
+
+Revise el contenido del directorio de descargas nuevamente:
+
+```bash
+ls -R ~/wis2box-data/downloads
+```
+
+Debería ver dos nuevos directorios llamados `origin/a/wis2/int-wis2-training/data/core/weather/prediction/forecast/medium-range/probabilistic/global` y `origin/a/wis2/int-wis2-training/data/core/climate/experimental/anomalies/monthly/surface-temperature` que contienen los datos descargados.
+
+!!! question "Revisar los datos descargados para los dos nuevos temas"
     
-Una vez que el contenedor esté iniciado, puedes acceder al servidor de cuadernos Jupyter navegando a `http://YOUR-HOST:8888` en tu navegador web.
+    ¿Cuál es el formato de archivo de los datos descargados para el tema `../prediction/forecast/medium-range/probabilistic/global`?
 
-Verás una pantalla solicitándote que ingreses una "Contraseña o token".
+    ¿Cuál es el formato de archivo de los datos descargados para el tema `../climate/experimental/anomalies/monthly/surface-temperature`?
 
-Proporciona el token `dataismagic!` para iniciar sesión en el servidor de cuadernos Jupyter.
+??? success "Haga clic para revelar la respuesta"
 
-Después de iniciar sesión, deberías ver la siguiente pantalla que lista los directorios en el contenedor:
+    Los datos descargados para el tema `../prediction/forecast/medium-range/probabilistic/global` están en formato GRIB2, como lo indica la extensión de archivo `.grib2`.
 
-![Jupyter notebook home](../assets/img/jupyter-files-screen1.png)
-
-Haz doble clic en el directorio `example-notebooks` para abrirlo.
-
-Deberías ver la siguiente pantalla que lista los cuadernos de ejemplo, haz doble clic en el cuaderno `tropical_cyclone_track.ipynb` para abrirlo:
-
-![Jupyter notebook example notebooks](../assets/img/jupyter-files-screen2.png)
-
-Ahora deberías estar en el cuaderno Jupyter para decodificar los datos de la trayectoria del ciclón tropical:
-
-![Jupyter notebook tropical cyclone track](../assets/img/jupyter-tropical-cyclone-track.png)
-
-Lee las instrucciones en el cuaderno y ejecuta las celdas para decodificar los datos descargados de las trayectorias de los ciclones tropicales. Ejecuta cada celda haciendo clic en la celda y luego en el botón de ejecución en la barra de herramientas o presionando `Shift+Enter`.
-
-Al final deberías ver un gráfico de la probabilidad de impacto para las trayectorias de los ciclones tropicales:
-
-![Tropical cyclone tracks](../assets/img/tropical-cyclone-track-map.png)
-
-!!! question 
-
-    El resultado muestra la probabilidad predicha de la trayectoria de la tormenta tropical dentro de 200 km. ¿Cómo actualizarías el cuaderno para mostrar la probabilidad predicha de la trayectoria de la tormenta tropical dentro de 300 km?
-
-??? success "Haz clic para revelar la respuesta"
-
-    Para actualizar el cuaderno y mostrar la probabilidad predicha de la trayectoria de la tormenta tropical a una distancia diferente, puedes actualizar la variable `distance_threshold` en el bloque de código que calcula la probabilidad de impacto.
-
-    Para mostrar la probabilidad predicha de la trayectoria de la tormenta tropical dentro de 300 km,
-
-    ```python
-    # establecer umbral de distancia (metros)
-    distance_threshold = 300000  # 300 km en metros
-    ```
-
-    Luego, vuelve a ejecutar las celdas en el cuaderno para ver el gráfico actualizado.
-
-!!! note "Decodificación de datos BUFR"
-
-    El ejercicio que acabas de realizar proporcionó un ejemplo específico de cómo puedes decodificar datos BUFR utilizando la biblioteca ecCodes. Diferentes tipos de datos pueden requerir diferentes pasos de decodificación y es posible que necesites consultar la documentación para el tipo de datos con el que estás trabajando.
-    
-    Para más información, consulta la [documentación de ecCodes](https://confluence.ecmwf.int/display/ECC).
-
-
+    Los datos descargados para el tema `../climate/experimental/anomalies/monthly/surface-temperature` están en formato NetCDF, como lo indica la extensión de archivo `.nc`.
 
 ## Conclusión
 
 !!! success "¡Felicidades!"
 
-    En esta sesión práctica, aprendiste cómo:
+    En esta sesión práctica, aprendió a:
 
-    - usar 'wis2downloader' para suscribirte a un WIS2 Broker y descargar datos a tu sistema local
-    - ver el estado de las descargas en el tablero de Grafana
-    - decodificar algunos datos descargados usando el contenedor 'decode-bufr-jupyter'
+    - usar el **wis2downloader** para suscribirse a un WIS2 Broker y descargar datos a su sistema local
+    - ver el estado de las descargas en el panel de control de Grafana
+    - cambiar la configuración predeterminada del **wis2downloader** para suscribirse a un broker diferente
+    - ver los datos descargados en su sistema local
