@@ -9,7 +9,7 @@ title: Configuration d'un jeu de données recommandé
 
     - créer un nouveau jeu de données avec une politique de données 'recommended'
     - ajouter un jeton d'accès au jeu de données
-    - vérifier que le jeu de données ne peut pas être accessible sans le jeton d'accès
+    - vérifier que le jeu de données ne peut pas être consulté sans le jeton d'accès
     - ajouter le jeton d'accès aux en-têtes HTTP pour accéder au jeu de données
     - ajouter un fichier de licence personnalisé hébergé sur votre instance wis2box
 
@@ -17,24 +17,24 @@ title: Configuration d'un jeu de données recommandé
 
 Les données sont partagées sur WIS2 conformément à la Politique Unifiée des Données de l'OMM, qui définit deux catégories de données.
 
-**core** : données fournies gratuitement et sans restriction, sans frais et sans conditions d'utilisation
+**core** : données fournies de manière gratuite et sans restriction, sans frais et sans conditions d'utilisation.
 
-**recommended** : données pouvant être soumises à des conditions d'utilisation et/ou à une licence
+**recommended** : données pouvant être soumises à des conditions d'utilisation et/ou à une licence.
 
-Les données partagées en tant que données 'recommended' :
+Les données partagées en tant que 'recommended' :
 
-- peuvent être soumises à des conditions d'utilisation et de réutilisation
-- peuvent être soumises à des contrôles d'accès
-- ne sont pas mises en cache par les Global Caches de WIS2
-- doivent avoir un enregistrement de métadonnées incluant une URL de licence
+- peuvent être soumises à des conditions d'utilisation et de réutilisation,
+- peuvent être soumises à des contrôles d'accès,
+- ne sont pas mises en cache par les WIS2 Global Caches,
+- doivent avoir un enregistrement de métadonnées incluant une URL de licence.
 
 !!! note "Téléchargement des données recommandées"
     
-    Étant donné que les Global Caches de WIS2 ne mettent pas en cache les données recommandées, vous ne verrez **pas** de notifications sur le sujet `cache/a/wis2/<centre-id>/data/recommended/..`.
+    Étant donné que les WIS Global Caches ne mettent pas en cache les données recommandées, vous ne verrez **pas** de notifications sur le sujet `cache/a/wis2/<centre-id>/data/recommended/..`
 
-    Le consommateur de données doit télécharger les données depuis le serveur de données hébergé par le fournisseur de données, en utilisant l'URL canonique fournie dans les notifications sur le sujet `origin/a/wis2/<centre-id>/data/recommended/...`.
+    Le consommateur de données doit télécharger les données depuis le serveur de données hébergé par le fournisseur de données, en utilisant l'URL canonique fournie dans les notifications sur le sujet `origin/a/wis2/<centre-id>/data/recommended/...`
 
-Dans cette session pratique, vous allez créer un nouveau jeu de données avec une politique de données 'recommended' en utilisant l'éditeur de jeux de données dans wis2box-webapp. Vous apprendrez également à fournir une licence auto-hébergée et, éventuellement, à ajouter un contrôle d'accès.
+Dans cette session pratique, vous allez créer un nouveau jeu de données avec une politique de données 'recommended' en utilisant l'éditeur de jeux de données dans wis2box-webapp. Vous apprendrez également à fournir une licence auto-hébergée et à ajouter éventuellement un contrôle d'accès.
 
 !!! note "Données aéronautiques dans WIS2"
     
@@ -48,11 +48,11 @@ Assurez-vous d'avoir un accès SSH à votre machine virtuelle étudiante et que 
 
 Vérifiez que vous êtes connecté au broker MQTT de votre instance wis2box en utilisant MQTT Explorer. Vous pouvez utiliser les identifiants publics `everyone/everyone` pour vous connecter au broker.
 
-Assurez-vous d'avoir un navigateur web ouvert avec l'application wis2box-webapp pour votre instance en accédant à `http://YOUR-HOST/wis2box-webapp`.
+Assurez-vous d'avoir un navigateur web ouvert avec le wis2box-webapp de votre instance en accédant à `http://YOUR-HOST/wis2box-webapp`.
 
 ## Créer un nouveau jeu de données avec une politique de données 'recommended'
 
-Accédez à la page 'dataset editor' dans wis2box-webapp et créez un nouveau jeu de données.
+Accédez à la page 'dataset editor' dans le wis2box-webapp et créez un nouveau jeu de données.
 
 Pour "Centre ID", utilisez le même que celui utilisé dans les sessions pratiques précédentes.
 
@@ -64,9 +64,9 @@ Cliquez sur 'CONTINUE TO FORM' pour continuer.
 
 Pour cet exercice, veuillez créer un jeu de données pour les données METAR aéronautiques :
 
-- choisissez un 'Local ID' approprié pour le jeu de données, par exemple 'aviation-metar'
-- fournissez un titre et une description pour le jeu de données
-- choisissez WMO Data Policy = 'recommended'
+- choisissez un 'Local ID' approprié pour le jeu de données, par exemple 'aviation-metar',
+- fournissez un titre et une description pour le jeu de données,
+- choisissez WMO Data Policy = 'recommended'.
 
 <img alt="create-dataset-recommended" src="/../assets/img/create-dataset-aviation-metar-example.png" width="800">
 
@@ -81,9 +81,9 @@ Ensuite :
 
 !!! note "À propos de l'URL de licence"
     
-    L'URL de licence associée à un jeu de données recommandé informe les consommateurs de données sur les conditions d'utilisation des données.
+    L'URL de licence associée à un jeu de données recommandé informe les consommateurs de données des conditions d'utilisation des données.
 
-    Vous pouvez utiliser une URL pointant vers un fichier de licence hébergé sur votre instance wis2box, ou une URL pointant vers un fichier de licence hébergé sur un site web externe.
+    Vous pouvez utiliser une URL pointant vers un fichier de licence hébergé sur votre instance wis2box ou une URL pointant vers un fichier de licence hébergé sur un site externe.
 
     Pour cet exercice, nous utiliserons un fichier de licence auto-hébergé. Vous ajouterez le fichier 'aviation-license.html' à votre instance wis2box plus tard dans cette session pratique pour garantir que l'URL de licence est valide.
 
@@ -99,13 +99,13 @@ Ajoutez le plugin pour 'Universal data without conversion' et assurez-vous de d�
 
 ![create-dataset-plugin-universal-txt](../assets/img/create-dataset-plugin-universal-txt.png)
 
-Soumettez le jeu de données, en utilisant le jeton d'authentification précédemment créé, et vérifiez que le nouveau jeu de données est créé dans wis2box-webapp.
+Soumettez le jeu de données en utilisant le jeton d'authentification précédemment créé et vérifiez que le nouveau jeu de données est créé dans le wis2box-webapp.
 
 Vérifiez dans MQTT Explorer que vous recevez le message de notification WIS2 annonçant le nouvel enregistrement de métadonnées de découverte sur le sujet `origin/a/wis2/<your-centre-id>/metadata`.
 
-## Examiner votre nouveau jeu de données dans wis2box-api
+## Examiner votre nouveau jeu de données dans le wis2box-api
 
-Affichez la liste des jeux de données dans wis2box-api en ouvrant l'URL `WIS2BOX_URL/oapi/collections/discovery-metadata/items` dans votre navigateur web, en remplaçant `WIS2BOX_URL` par l'URL de votre instance wis2box.
+Affichez la liste des jeux de données dans le wis2box-api en ouvrant l'URL `WIS2BOX_URL/oapi/collections/discovery-metadata/items` dans votre navigateur web, en remplaçant `WIS2BOX_URL` par l'URL de votre instance wis2box.
 
 Ouvrez le lien du jeu de données que vous venez de créer et faites défiler jusqu'à la section 'links' de la réponse JSON :
 
@@ -113,7 +113,7 @@ Ouvrez le lien du jeu de données que vous venez de créer et faites défiler ju
 
 Vous devriez voir un lien pour "License for this dataset" pointant vers l'URL fournie dans l'éditeur de jeux de données.
 
-Si vous cliquez sur le lien, vous obtiendrez une erreur puisque le fichier de licence n'a pas encore été ajouté à votre instance wis2box.
+Si vous cliquez sur le lien, vous obtiendrez une erreur car le fichier de licence n'a pas encore été ajouté à votre instance wis2box.
 
 ## Ajouter le fichier de licence à votre instance wis2box
 
@@ -157,7 +157,7 @@ cd ~/wis2box
 python3 wis2box-ctl.py login
 ```
 
-Depuis la ligne de commande à l'intérieur du conteneur, vous pouvez sécuriser un jeu de données en utilisant la commande `wis2box auth add-token`, en utilisant l'option `--metadata-id` pour spécifier l'identifiant des métadonnées du jeu de données et le jeton d'accès comme argument.
+Depuis la ligne de commande à l'intérieur du conteneur, vous pouvez sécuriser un jeu de données en utilisant la commande `wis2box auth add-token`, avec l'option `--metadata-id` pour spécifier l'identifiant des métadonnées du jeu de données et le jeton d'accès comme argument.
 
 Par exemple, pour ajouter le jeton d'accès `S3cr3tT0k3n` au jeu de données avec l'identifiant de métadonnées `urn:wmo:md:my-centre-id:core.surface-based-observations.synop` :
 
@@ -177,37 +177,37 @@ Téléchargez le fichier de données METAR suivant sur votre machine locale :
 
 [A_SAKO31RKSL290000_C_RKSL_20250729000055.txt](../../sample-data/A_SAKO31RKSL290000_C_RKSL_20250729000055.txt)
 
-Ensuite, ingérez ce fichier dans votre jeu de données en utilisant la console MinIO. Pour accéder à la console MinIO, ouvrez un navigateur web et visitez `http://YOUR-HOST:9001`, puis connectez-vous en utilisant les identifiants définis dans le fichier `wis2box.env` par les variables d'environnement `WIS2BOX_STORAGE_USERNAME` et `WIS2BOX_STORAGE_PASSWORD`.
+Ensuite, ingérez ce fichier dans votre ensemble de données en utilisant la console MinIO. Pour accéder à la console MinIO, ouvrez un navigateur web et visitez `http://YOUR-HOST:9001`, puis connectez-vous en utilisant les identifiants définis dans le fichier `wis2box.env` par les variables d'environnement `WIS2BOX_STORAGE_USERNAME` et `WIS2BOX_STORAGE_PASSWORD`.
 
-Pour ingérer le fichier dans votre jeu de données, accédez au bucket **wis2box-incoming** et créez un nouveau dossier portant le nom de l'identifiant des métadonnées de votre jeu de données. Téléversez ensuite le fichier de données METAR d'exemple dans ce dossier en utilisant le bouton « Upload » :
+Pour ingérer le fichier dans votre ensemble de données, accédez au bucket **wis2box-incoming** et créez un nouveau dossier portant le nom de l'identifiant des métadonnées de votre ensemble de données. Téléversez ensuite le fichier de données METAR d'exemple dans ce dossier en utilisant le bouton « Upload » :
 
 ![minio-wis2box-incoming-metar-data-uploaded](../assets/img/minio-wis2box-incoming-metar-data-uploaded.png)
 
-Assurez-vous que le nom du dossier correspond à l'identifiant des métadonnées de votre jeu de données et vérifiez que vous recevez des notifications de données WIS2 dans MQTT Explorer, sur le sujet `origin/a/wis2/<your-centre-id>/data/recommended/aviation/metar` :
+Assurez-vous que le nom du dossier correspond à l'identifiant des métadonnées de votre ensemble de données et vérifiez que vous recevez des notifications de données WIS2 dans MQTT Explorer, sur le sujet `origin/a/wis2/<your-centre-id>/data/recommended/aviation/metar` :
 
 ![mqtt-explorer-data-aviation-metar](../assets/img/mqtt-explorer-data-aviation-metar.png)
 
 !!! note "Dépannage"
 
-    Si vous ne recevez pas de notification après avoir téléversé vos données, vous pouvez consulter les journaux récents du conteneur `wis2box-management` pour identifier le problème :
+    Si vous ne recevez pas de notification après avoir téléversé vos données, vous pouvez consulter les journaux récents du conteneur `wis2box-management` pour résoudre le problème :
 
     ```bash
     docker logs -n100 wis2box-management
     ```
 
-Copiez-collez l'URL du lien canonique à partir du message de notification WIS2 dans votre navigateur web. L'URL devrait ressembler à ceci :
+Copiez-collez l'URL du lien canonique depuis le message de notification WIS2 dans votre navigateur web. L'URL devrait ressembler à ceci :
 
 ```
 http://example.wis2.training/data/2025-07-29/wis/urn:wmo:md:int-wmo-example:aviation-metar/A_SAKO31RKSL290000_C_RKSL_20250729000055.txt
 ```
 
-Si vous avez correctement ajouté le jeton d'accès au jeu de données, vous ne devriez **pas** pouvoir accéder aux données dans votre navigateur web. À la place, vous verrez une erreur *401 Authorization Required*.
+Si vous avez correctement ajouté le jeton d'accès à l'ensemble de données, vous ne devriez **pas** pouvoir accéder aux données dans votre navigateur web. À la place, vous verrez une erreur *401 Authorization Required*.
 
-## Ajouter le jeton d'accès aux en-têtes HTTP pour accéder au jeu de données
+## Ajouter le jeton d'accès aux en-têtes HTTP pour accéder à l'ensemble de données
 
-Pour démontrer que le jeton d'accès est nécessaire pour accéder au jeu de données, nous allons reproduire l'erreur que vous avez vue dans le navigateur en utilisant la commande `wget` en ligne de commande.
+Pour démontrer que le jeton d'accès est nécessaire pour accéder à l'ensemble de données, nous allons reproduire l'erreur que vous avez vue dans le navigateur en utilisant la commande `wget` en ligne de commande.
 
-Depuis la ligne de commande dans votre machine virtuelle étudiante, utilisez la commande `wget` avec le lien canonique que vous avez copié à partir du message de notification WIS2.
+Depuis la ligne de commande dans votre machine virtuelle étudiante, utilisez la commande `wget` avec le lien canonique que vous avez copié depuis le message de notification WIS2.
 
 ```bash
 wget http://example.wis2.training/data/2025-07-29/wis/urn:wmo:md:int-wmo-example:aviation-metar/A_SAKO31RKSL290000_C_RKSL_20250729000055.txt
@@ -215,7 +215,7 @@ wget http://example.wis2.training/data/2025-07-29/wis/urn:wmo:md:int-wmo-example
 
 Vous devriez voir que la requête HTTP retourne une erreur *401 Unauthorized* et que les données ne sont pas téléchargées.
 
-Ajoutez maintenant le jeton d'accès aux en-têtes HTTP pour accéder au jeu de données.
+Ajoutez maintenant le jeton d'accès aux en-têtes HTTP pour accéder à l'ensemble de données.
 
 ```bash
 wget --header="Authorization: Bearer S3cr3tT0k3n" <canonical-link>
@@ -223,22 +223,22 @@ wget --header="Authorization: Bearer S3cr3tT0k3n" <canonical-link>
 
 Les données devraient maintenant être téléchargées avec succès.
 
-## Supprimer le jeton d'accès du jeu de données
+## Supprimer le jeton d'accès de l'ensemble de données
 
-Pour supprimer le jeton d'accès du jeu de données, connectez-vous au conteneur wis2box-management :
+Pour supprimer le jeton d'accès de l'ensemble de données, connectez-vous au conteneur wis2box-management :
 
 ```bash
 cd ~/wis2box
 python3 wis2box-ctl.py login
 ```
 
-Utilisez ensuite la commande `wis2box auth remove-token` pour supprimer le jeton d'accès du jeu de données, en utilisant l'option `--metadata-id` pour spécifier l'identifiant des métadonnées du jeu de données et le jeton d'accès comme argument :
+Et utilisez la commande `wis2box auth remove-token` pour supprimer le jeton d'accès de l'ensemble de données, en utilisant l'option `--metadata-id` pour spécifier l'identifiant des métadonnées de l'ensemble de données et le jeton d'accès comme argument :
 
 ```bash
 wis2box auth remove-token --metadata-id urn:wmo:md:my-centre-id:aviation-metar S3cr3tT0k3n
 ```
 
-Assurez-vous de remplacer `urn:wmo:md:my-centre-id:aviation-metar` par l'identifiant des métadonnées de votre jeu de données.
+Assurez-vous de remplacer `urn:wmo:md:my-centre-id:aviation-metar` par l'identifiant des métadonnées de votre ensemble de données.
 
 Déconnectez-vous du conteneur wis2box-management :
 
@@ -246,21 +246,21 @@ Déconnectez-vous du conteneur wis2box-management :
 exit
 ```
 
-Et vérifiez que le jeton d'accès a été supprimé en essayant de télécharger à nouveau les données avec `wget` et le jeton d'accès dans les en-têtes HTTP, ou en essayant d'accéder aux données dans votre navigateur web.
+Et vérifiez que le jeton d'accès a été supprimé en essayant de télécharger les données à nouveau avec `wget` en ajoutant le jeton d'accès dans les en-têtes HTTP, ou en essayant d'accéder aux données dans votre navigateur web.
 
-!!! note "Le contrôle d'accès est optionnel, uniquement pour les jeux de données recommandés"
+!!! note "Le contrôle d'accès est optionnel, uniquement pour les ensembles de données recommandés"
 
-    WIS2 spécifie que les jeux de données recommandés *peuvent* avoir des contrôles d'accès appliqués aux données. Il n'est pas obligatoire d'ajouter un contrôle d'accès à un jeu de données recommandé, et vous pouvez vous contenter d'utiliser l'URL de la licence pour informer les consommateurs de données des conditions d'utilisation des données. Si vous appliquez un contrôle d'accès, vous êtes responsable de partager le jeton d'accès avec les consommateurs de données qui en ont besoin.
+    WIS2 spécifie que les ensembles de données recommandés *peuvent* avoir des contrôles d'accès appliqués aux données. Il n'est pas obligatoire d'ajouter un contrôle d'accès à un ensemble de données recommandé, et vous pouvez vous contenter de fournir l'URL de la licence pour informer les consommateurs de données des conditions d'utilisation des données. Si vous appliquez un contrôle d'accès, vous êtes responsable de partager le jeton d'accès avec tout consommateur de données nécessitant l'accès à ces données.
 
-    Si vous appliquez `wis2box auth add-token` à un jeu de données avec une politique de données WMO 'core', les Global Caches signaleront une erreur au Global Monitoring car ils ne pourront pas télécharger les données, et votre jeu de données sera considéré comme *non conforme* aux règlements techniques de WIS2.
+    Si vous appliquez `wis2box auth add-token` à un ensemble de données avec une politique de données WMO 'core', les Global Caches signaleront une erreur au Global Monitoring car ils ne pourront pas télécharger les données, et votre ensemble de données sera considéré comme *non conforme* aux règlements techniques de WIS2.
 
 ## Conclusion
 
 !!! success "Félicitations !"
     Lors de cette session pratique, vous avez appris à :
 
-    - créer un nouveau jeu de données avec une politique de données 'recommended'
+    - créer un nouvel ensemble de données avec une politique de données 'recommended'
     - ajouter un fichier de licence personnalisé à votre instance wis2box
-    - ajouter un jeton d'accès au jeu de données
-    - valider que le jeu de données ne peut pas être accessible sans le jeton d'accès
-    - ajouter le jeton d'accès aux en-têtes HTTP pour accéder au jeu de données
+    - ajouter un jeton d'accès à l'ensemble de données
+    - valider que l'ensemble de données ne peut pas être accessible sans le jeton d'accès
+    - ajouter le jeton d'accès aux en-têtes HTTP pour accéder à l'ensemble de données
