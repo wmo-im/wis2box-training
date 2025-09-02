@@ -17,7 +17,7 @@ title: Configuring datasets in wis2box
 
 wis2box uses **datasets** that are associated with **discovery metadata** and **data mappings**.
 
-**Discovery metadata** is used to create a WCMP2 (WMO Core Metadata Profile 2) record that is shared using a WIS2 notification published on your wis2box-broker.
+**Discovery metadata** is used to create a WMO Core Metadata Profile (WCMP2) record that is shared using a WIS2 notification published on your wis2box broker.
 
 **Data mappings** are used to associate data plugins to your input data, allowing your data to be transformed prior to being published on WIS2.
 
@@ -25,11 +25,11 @@ In this practical session, you will learn how to create and configure datasets u
  
 !!! note "Configuring datasets without using the wis2box-webapp"
 
-    wis2box also supports configuring datasets using the [metadata control file (MCF)](https://geopython.github.io/pygeometa/reference/mcf) format.
+    wis2box also supports configuring datasets using the [metadata control file (MCF)](https://geopython.github.io/pygeometa/reference/mcf) format defined by the [pygeometa](ttps://geopython.github.io/pygeometa) tool.
     
-    Using MCF allows you more flexibility and control but can be more error-prone as you need to ensure that the MCF is correctly formatted and adheres to the required schema.
+    Using MCF allows more flexibility and control but needs to be written precisely as you need to ensure that the MCF is correctly formatted and indented, adhering to the required schema.
     
-    MCF-files can be published from the command line in the wis2box-management container. See the [wis2box documentation](https://docs.wis2box.wis.wmo.int/en/latest/reference/running/discovery-metadata.html) for more information.
+    MCF files can be published from the command line in the wis2box-management container. See the [wis2box documentation](https://docs.wis2box.wis.wmo.int/en/latest/reference/running/discovery-metadata.html) for more information.
 
 ## Preparation
 
