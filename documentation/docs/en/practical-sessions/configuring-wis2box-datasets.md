@@ -15,13 +15,21 @@ title: Configuring datasets in wis2box
 
 ## Introduction
 
-wis2box uses datasets that are associated with discovery metadata and data mappings.
+wis2box uses **datasets** that are associated with **discovery metadata** and **data mappings**.
 
-Discovery metadata is used to create a WCMP2 (WMO Core Metadata Profile 2) record that is shared using a WIS2 notification published on your wis2box-broker.
+**Discovery metadata** is used to create a WCMP2 (WMO Core Metadata Profile 2) record that is shared using a WIS2 notification published on your wis2box-broker.
 
-The data mappings are used to associate a data plugin to your input data, allowing your data to be transformed prior to being published using the WIS2 notification.
+**Data mappings** are used to associate data plugins to your input data, allowing your data to be transformed prior to being published on WIS2.
 
-This session will walk you through creating new datasets using the default template and your customized template, creating discovery metadata, and configuring data mappings. You will inspect your datasets in the wis2box-api and review the WIS2 notification for your discovery metadata.
+In this practical session, you will learn how to create and configure datasets using the **wis2box-webapp dataset editor**.
+ 
+!!! note "Configuring datasets without using the wis2box-webapp"
+
+    wis2box also supports configuring datasets using the [metadata control file (MCF)](https://geopython.github.io/pygeometa/reference/mcf) format.
+    
+    Using MCF allows you more flexibility and control but can be more error-prone as you need to ensure that the MCF is correctly formatted and adheres to the required schema.
+    
+    MCF-files can be published from the command line in the wis2box-management container. See the [wis2box documentation](https://docs.wis2box.wis.wmo.int/en/latest/reference/running/discovery-metadata.html) for more information.
 
 ## Preparation
 
@@ -238,7 +246,7 @@ After filling out the required fields, fill out the remaining sections of the fo
 
 ### Configuring data mappings
 
-When a custom template is used, no default data mappings are provided. As a result, the Dataset Mappings Editor will be empty and users must configure the mappings according to their specific requirements.
+When Template=other is used, no default data mappings are provided. As a result, the Dataset Mappings Editor will be empty and users must configure the mappings according to their specific requirements.
 
 <img alt="Data Mappings: update plugin" src="/../assets/img/wis2box-data-mappings-other1.png" width="800">
 
