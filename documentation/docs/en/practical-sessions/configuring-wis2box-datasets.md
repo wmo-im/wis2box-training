@@ -7,12 +7,11 @@ title: Configuring datasets in wis2box
 !!! abstract "Learning outcomes"
     By the end of this practical session, you will be able to:
 
-    - how to use the wis2box-webapp dataset editor
+    - use the wis2box-webapp dataset editor
     - create new datasets using Template=*weather/surface-based-observations/synop* and Template=*other*
     - define your discovery metadata
     - review your data mappings
     - publish a WIS2 notification for your discovery metadata
-    - review the WIS2 notification for your discovery metadata
 
 ## Introduction
 
@@ -22,7 +21,7 @@ Discovery metadata is used to create a WCMP2 (WMO Core Metadata Profile 2) recor
 
 The data mappings are used to associate a data plugin to your input data, allowing your data to be transformed prior to being published using the WIS2 notification.
 
-This session will walk you through create new datasets using the default template and your customized template, creating discovery metadata, and configuring data mappings. You will inspect your datasets in the wis2box-api and review the WIS2 notification for your discovery metadata.
+This session will walk you through creating new datasets using the default template and your customized template, creating discovery metadata, and configuring data mappings. You will inspect your datasets in the wis2box-api and review the WIS2 notification for your discovery metadata.
 
 ## Preparation
 
@@ -36,11 +35,11 @@ Instead of using your internal broker credentials, use the public credentials `e
 
     You never need to share the credentials of your internal broker with external users. The 'everyone' user is a public user to enable sharing of WIS2 notifications.
 
-    The `everyone/everyone` credentials has read-only access on the topic 'origin/a/wis2/#'. This is the topic where the WIS2 notifications are published. The Global Broker can subscribe with these public credentials to receive the notifications.
+    The `everyone/everyone` credentials have read-only access on the topic 'origin/a/wis2/#'. This is the topic where the WIS2 notifications are published. The Global Broker can subscribe with these public credentials to receive the notifications.
     
     The 'everyone' user will not see internal topics or be able to publish messages.
     
-Open a browser and open a page to `http://YOUR-HOST/wis2box-webapp`. Make sure you are logged in and can access the 'dataset editor' page.
+Open a browser and go to `http://YOUR-HOST/wis2box-webapp`. Make sure you are logged in and can access the 'dataset editor' page.
 
 See the section on [Initializing wis2box](./initializing-wis2box.md) if you need to remember how to connect to the broker or access the wis2box-webapp.
 
@@ -48,7 +47,7 @@ See the section on [Initializing wis2box](./initializing-wis2box.md) if you need
 
 You will need an authorization token for the 'processes/wis2box' endpoint to publish your dataset. 
 
-To create an authorization token, access your training VM over SSH and use the following commands to login to the wis2box-management container:
+To create an authorization token, access your training VM over SSH and use the following commands:
 
 ```bash
 cd ~/wis2box
@@ -75,9 +74,9 @@ Once you have your token, you can exit the wis2box-management container:
 exit
 ```
 
-## Using the dataset editor
+## The wis2box-webapp dataset editor
 
-Navigate to the 'dataset editor' page in the wis2box-webapp of your wis2box instance by going to `http://YOUR-HOST/wis2box-webapp` and selecting 'dataset editor' from the menu on the left hand side.
+Navigate to the 'dataset editor' page in the wis2box-webapp of your wis2box instance by going to `http://YOUR-HOST/wis2box-webapp` and selecting 'dataset editor' from the menu on the left-hand side.
 
 On the 'dataset editor' page, under the 'Datasets' tab, click on "Create New ...":
 
@@ -85,25 +84,25 @@ On the 'dataset editor' page, under the 'Datasets' tab, click on "Create New ...
 
 A pop-up window will appear, asking you to provide:
 
-- **Centre ID** : this is the agency acronym (in lower case and no spaces), as specified by the WMO Member, that identifies the data centre responsible for publishing the data.
+- **Centre ID**: this is the agency acronym (in lower case and no spaces), as specified by the WMO Member, that identifies the data centre responsible for publishing the data.
 - **Template**: The type of data you are creating metadata for. You can choose between using a predefined template or selecting *other*.
 
 <img alt="Create New Dataset pop up" src="/../assets/img/wis2box-create-new-dataset-pop-up.png" width="600">
 
 !!! Note "Centre ID"
 
-    Your centre-id should start with the TLD of your country, followed by a dash (`-`) and an abbreviated name of your organization (for example `fr-meteofrance`). The centre-id must be lowercase and use alphanumeric characters only. The dropdown list shows all currently registered centre-ids on WIS2 as well as any centre-id you have already created in wis2box. Please choose a centre-id appropriate for your organization.
+    Your Centre ID should start with the TLD of your country, followed by a dash (`-`) and an abbreviated name of your organization (for example `fr-meteofrance`). The Centre ID must be lowercase and use alphanumeric characters only. The dropdown list shows all currently registered Centre IDs on WIS2 as well as any Centre ID you have already created in wis2box. Please choose a Centre ID appropriate for your organization.
 
 !!! Note "Template"
 
     The *Template* field allows you to select from a list of templates available in the wis2box-webapp dataset editor. A template will pre-populate the form with suggested default values appropriate for the data type. This includes suggested title and keywords for the metadata and pre-configured data plugins. 
     
-    The topic is automatically set to the default topic linked to the selected template unless you select *other*. If you select *other* the topic can be defined from a dropdown list based on the [WIS2 Topic Hierarchy](https://codes.wmo.int/wis/topic-hierarchy/_earth-system-discipline).
+    The topic is automatically set to the default topic linked to the selected template unless you select *other*. If you select *other*, the topic can be defined from a dropdown list based on the [WIS2 Topic Hierarchy](https://codes.wmo.int/wis/topic-hierarchy/_earth-system-discipline).
 
-For the purpose of the training，you will create two datasets:
+For the purpose of the training, you will create two datasets:
     
-- A dataset using Template=*weather/surface-based-observations/synop*, which includes data plugins that transform the data into BUFR format before publication;
-- A dataset using Template=*Other*, where you are responsible for defining the WIS2 Topic and where you will use the "Universal"-plugin to publish the data without transformation.
+- A dataset using Template=*weather/surface-based-observations/synop*, which includes data plugins that transform the data into BUFR format before publication.
+- A dataset using Template=*other*, where you are responsible for defining the WIS2 Topic and where you will use the "Universal" plugin to publish the data without transformation.
 
 ## Template=weather/surface-based-observations/synop
 
@@ -111,7 +110,7 @@ For **Template**, select **weather/surface-based-observations/synop**:
 
 <img alt="Create New Dataset Form: Initial information" src="/../assets/img/wis2box-create-new-dataset-form-initial.png" width="450">
 
-Click *continue to form* to proceed, you will now be presented with the **Dataset Editor Form**.
+Click *continue to form* to proceed. You will now be presented with the **Dataset Editor Form**.
 
 Since you selected the **weather/surface-based-observations/synop** template, the form will be pre-populated with some initial values related to this data type.
 
@@ -121,13 +120,13 @@ The Dataset Editor Form allows you to provide the Discovery Metadata for your da
 
 Since you have selected the 'weather/surface-based-observations/synop' template, the form will be pre-populated with some default values.
 
-Please make sure to replace the auto-generated 'Local ID' with a descriptive name for your dataset, e.g. 'synop-dataset-wis2training':
+Please make sure to replace the auto-generated 'Local ID' with a descriptive name for your dataset, e.g., 'synop-dataset-wis2training':
 
 <img alt="Metadata Editor: title, description, keywords" src="/../assets/img/wis2box-metadata-editor-part1.png" width="800">
 
-Review the title and keywords, and update them as necessary, and provide a description for your dataset.
+Review the title and keywords, update them as necessary, and provide a description for your dataset.
 
-Note there are options to change the 'WMO Data Policy' from 'core' to 'recommended' or to modify your default Metadata Identifier, please keep data-policy as 'core' and use the default Metadata Identifier.
+Note, there are options to change the 'WMO Data Policy' from 'core' to 'recommended' or to modify your default Metadata Identifier. Please keep data policy as 'core' and use the default Metadata Identifier.
 
 Next, review the section defining your 'Temporal Properties' and 'Spatial Properties'. You can adjust the bounding box by updating the 'North Latitude', 'South Latitude', 'East Longitude', and 'West Longitude' fields:
 
@@ -145,7 +144,7 @@ Once you are done filling out all the sections, click 'VALIDATE FORM' and check 
 
 If there are any errors, correct them and click 'VALIDATE FORM' again.
 
-Making sure you have no errors and that you get a pop-up indication your form has been validated:
+Make sure you have no errors and that you get a pop-up indicating your form has been validated:
 
 <img alt="Metadata Editor: validation success" src="/../assets/img/wis2box-metadata-validation-success.png" width="800">
 
@@ -153,11 +152,11 @@ Next, before submitting your dataset, review the data mappings for your dataset.
 
 ### Configuring data mappings
 
-Since you used a template to create your dataset, the dataset mappings have been pre-populated with the defaults plugins for the 'weather/surface-based-observations/synop' template. Data plugins are used in the wis2box to transform data before it is published using the WIS2 notification.
+Since you used a template to create your dataset, the dataset mappings have been pre-populated with the default plugins for the 'weather/surface-based-observations/synop' template. Data plugins are used in the wis2box to transform data before it is published using the WIS2 notification.
 
 <img alt="Data Mappings: update plugin" src="/../assets/img/wis2box-data-mappings.png" width="800">
 
-Note that you can click on the "update"-button to change settings for the plugin such as file-extension and the file-pattern, you can leave the default settings for now. This will be explained in more detail later when creating a custom dataset.
+Note that you can click on the "Update" button to change settings for the plugin such as file extension and the file pattern. You can leave the default settings for now.
 
 ### Submitting your dataset
 
@@ -173,9 +172,9 @@ After you click 'OK', you are redirected to the Dataset Editor home page. Now if
 
 <img alt="Dataset Editor: new dataset" src="/../assets/img/wis2box-dataset-editor-new-dataset.png" width="800">
 
-### Reviewing the WIS2-notification for your discovery metadata
+### Reviewing the WIS2 notification for your discovery metadata
 
-Go to MQTT Explorer, if you were connected to the broker, you should see a new WIS2 notification published on the topic `origin/a/wis2/<your-centre-id>/metadata`:
+Go to MQTT Explorer. If you were connected to the broker, you should see a new WIS2 notification published on the topic `origin/a/wis2/<your-centre-id>/metadata`:
 
 <img alt="MQTT Explorer: WIS2 notification" src="/../assets/img/mqtt-explorer-wis2-notification-metadata.png" width="800">
 
@@ -191,21 +190,21 @@ Inspect the content of the WIS2 notification you published. You should see a JSO
 
 !!! question
     
-    Try to find the title, description and keywords you provided in the discovery metadata in the WIS2 notification.  Can you find them?
+    Try to find the title, description, and keywords you provided in the discovery metadata in the WIS2 notification. Can you find them?
 
 ??? success "Click to reveal answer"
 
     **The title, description, and keywords you provided in the discovery metadata are not present in the WIS2 notification payload!** 
     
-    Instead, try to look for the canonical link  in the "links"-section in the WIS2 notification:
+    Instead, try to look for the canonical link in the "links" section in the WIS2 notification:
 
     <img alt="WIS2 notification for metadata, links sections" src="/../assets/img/wis2-notification-metadata-links.png" width="800">
 
     **The WIS2 notification contains a canonical link to the WCMP2 record that was published.** 
     
-    Copy-paste this canonical link into your browser to access the WCMP2 record, depending on your browser settings, you may be prompted to download the file or it may be displayed directly in your browser.
+    Copy-paste this canonical link into your browser to access the WCMP2 record. Depending on your browser settings, you may be prompted to download the file or it may be displayed directly in your browser.
 
-    You will find the title, description, and keywords your provided inside the WCMP2 record.
+    You will find the title, description, and keywords you provided inside the WCMP2 record.
 
 wis2box provides only a limited number of predefined templates. These templates are designed for common types of datasets, but they may not always match specialized data. For all other types of datasets, you can create your dataset by selecting Template=*other*.
 
@@ -217,11 +216,11 @@ Click on "Create New ..." again to create a new dataset. Use the same centre-id 
 
 <img alt="Create New Dataset Form: Initial information" src="/../assets/img/wis2box-create-new-dataset-form-initial-other.png" width="450">
 
-Click *continue to form* to proceed, you will now be presented with a the **Dataset Editor Form** that is slightly different from the previous one.
+Click *continue to form* to proceed, you will now be presented with the **Dataset Editor Form** again.
 
 ### Creating discovery metadata
 
-As before, you will need to complete the required fields in the Dataset Editor Form, including Title, Description and Local ID :
+Provide your own values for the 'Title' and 'Description' fields and make sure to replace the auto-generated 'Local ID' with a descriptive name for your dataset:
 
 <img alt="Metadata Editor: title, description, keywords" src="/../assets/img/wis2box-metadata-editor-part1-other.png" width="800">
 
@@ -269,7 +268,7 @@ Click "SAVE" to save the plugin settings and verify you now see the plugin liste
 
 <img alt="Data Mappings: update plugin" src="/../assets/img/wis2box-data-mappings-other3.png" width="800">
 
-Note that when you will ingest data the File extension and Fille Pattern of the filename must match the settings you have provided here, otherwise the data will not be processed and the wis2box-management container will log ERROR messages.
+Note that when you will ingest data the File extension and File Pattern of the filename must match the settings you have provided here, otherwise the data will not be processed and the wis2box-management container will log ERROR messages.
 
 ### Submit and review the result
 
@@ -283,7 +282,9 @@ Go to MQTT Explorer, if you were connected to your broker, you should see anothe
 
 !!! question
     
-    Visit the wis2box-UI at `http://YOUR-HOST` how many datasets do you see listed? How can you view the WIS2 Topic Hierarchy used for each dataset and how can you see the description of each dataset?
+    Visit the wis2box-UI at `http://YOUR-HOST`.
+    
+    How many datasets do you see listed? How can you view the WIS2 Topic Hierarchy used for each dataset and how can you see the description of each dataset?
 
 ??? success "Click to reveal answer"
 
@@ -312,9 +313,8 @@ Go to MQTT Explorer, if you were connected to your broker, you should see anothe
 !!! success "Congratulations!"
     In this practical session, you learned how to:
 
-    - how to use the wis2box-webapp dataset editor
+    - use the wis2box-webapp dataset editor
     - create new datasets using Template=*weather/surface-based-observations/synop* and Template=*other*
     - define your discovery metadata
     - review your data mappings
-    - publish discovery metadata
-    - review the WIS2 notification for your discovery metadata
+    - publish discovery metadata and review the WIS2 notification
