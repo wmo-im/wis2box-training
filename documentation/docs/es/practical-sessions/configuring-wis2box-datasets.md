@@ -8,7 +8,7 @@ title: Configuración de conjuntos de datos en wis2box
     Al final de esta sesión práctica, serás capaz de:
 
     - usar el editor de conjuntos de datos de wis2box-webapp
-    - crear nuevos conjuntos de datos utilizando Template=*weather/surface-based-observations/synop* y Template=*other*
+    - crear nuevos conjuntos de datos utilizando las plantillas Template=*weather/surface-based-observations/synop* y Template=*other*
     - definir tus metadatos de descubrimiento
     - revisar tus mapeos de datos
     - publicar una notificación WIS2 para tus metadatos de descubrimiento
@@ -17,17 +17,17 @@ title: Configuración de conjuntos de datos en wis2box
 
 wis2box utiliza **conjuntos de datos** que están asociados con **metadatos de descubrimiento** y **mapeos de datos**.
 
-**Metadatos de descubrimiento** se utilizan para crear un registro WCMP2 (WMO Core Metadata Profile 2) que se comparte mediante una notificación WIS2 publicada en tu wis2box-broker.
+Los **metadatos de descubrimiento** se utilizan para crear un registro del WMO Core Metadata Profile (WCMP2) que se comparte mediante una notificación WIS2 publicada en tu broker de wis2box.
 
-**Mapeos de datos** se utilizan para asociar complementos de datos a tus datos de entrada, permitiendo que tus datos se transformen antes de ser publicados en WIS2.
+Los **mapeos de datos** se utilizan para asociar complementos de datos a tus datos de entrada, permitiendo que tus datos se transformen antes de ser publicados en WIS2.
 
 En esta sesión práctica, aprenderás a crear y configurar conjuntos de datos utilizando el **editor de conjuntos de datos de wis2box-webapp**.
 
 !!! note "Configuración de conjuntos de datos sin usar wis2box-webapp"
 
-    wis2box también admite la configuración de conjuntos de datos utilizando el formato [archivo de control de metadatos (MCF)](https://geopython.github.io/pygeometa/reference/mcf).
+    wis2box también admite la configuración de conjuntos de datos utilizando el formato [archivo de control de metadatos (MCF)](https://geopython.github.io/pygeometa/reference/mcf) definido por la herramienta [pygeometa](https://geopython.github.io/pygeometa).
     
-    Usar MCF te permite más flexibilidad y control, pero puede ser más propenso a errores, ya que necesitas asegurarte de que el MCF esté correctamente formateado y cumpla con el esquema requerido.
+    Usar MCF permite mayor flexibilidad y control, pero debe escribirse con precisión para garantizar que el MCF esté correctamente formateado e indentado, cumpliendo con el esquema requerido.
     
     Los archivos MCF pueden publicarse desde la línea de comandos en el contenedor wis2box-management. Consulta la [documentación de wis2box](https://docs.wis2box.wis.wmo.int/en/latest/reference/running/discovery-metadata.html) para más información.
 
@@ -41,7 +41,7 @@ En lugar de usar las credenciales internas de tu broker, utiliza las credenciale
 
 !!! Note
 
-    Nunca necesitas compartir las credenciales de tu broker interno con usuarios externos. El usuario 'everyone' es un usuario público para habilitar el intercambio de notificaciones WIS2.
+    Nunca necesitas compartir las credenciales de tu broker interno con usuarios externos. El usuario 'everyone' es un usuario público que permite compartir notificaciones WIS2.
 
     Las credenciales `everyone/everyone` tienen acceso de solo lectura en el tema 'origin/a/wis2/#'. Este es el tema donde se publican las notificaciones WIS2. El Global Broker puede suscribirse con estas credenciales públicas para recibir las notificaciones.
     
@@ -55,7 +55,7 @@ Consulta la sección sobre [Inicialización de wis2box](./initializing-wis2box.m
 
 Necesitarás un token de autorización para el endpoint 'processes/wis2box' para publicar tu conjunto de datos.
 
-Para crear un token de autorización, accede a tu máquina virtual de entrenamiento a través de SSH y utiliza los siguientes comandos:
+Para crear un token de autorización, accede a tu máquina virtual de entrenamiento mediante SSH y utiliza los siguientes comandos:
 
 ```bash
 cd ~/wis2box
@@ -68,13 +68,13 @@ Luego ejecuta el siguiente comando para crear un token de autorización generado
 wis2box auth add-token --path processes/wis2box
 ```
 
-También puedes crear un token con un valor específico proporcionando el token como argumento del comando:
+También puedes crear un token con un valor específico proporcionando el token como argumento al comando:
 
 ```bash
 wis2box auth add-token --path processes/wis2box MyS3cretToken
 ```
 
-Asegúrate de copiar el valor del token y almacenarlo en tu máquina local, ya que lo necesitarás más adelante.
+Asegúrate de copiar el valor del token y guardarlo en tu máquina local, ya que lo necesitarás más adelante.
 
 Una vez que tengas tu token, puedes salir del contenedor wis2box-management:
 
@@ -84,7 +84,7 @@ exit
 
 ## El editor de conjuntos de datos de wis2box-webapp
 
-Navega a la página 'dataset editor' en la wis2box-webapp de tu instancia de wis2box yendo a `http://YOUR-HOST/wis2box-webapp` y seleccionando 'dataset editor' desde el menú en el lado izquierdo.
+Navega a la página 'dataset editor' en wis2box-webapp de tu instancia de wis2box accediendo a `http://YOUR-HOST/wis2box-webapp` y seleccionando 'dataset editor' desde el menú en el lado izquierdo.
 
 En la página 'dataset editor', bajo la pestaña 'Datasets', haz clic en "Create New ...":
 
@@ -93,9 +93,9 @@ En la página 'dataset editor', bajo la pestaña 'Datasets', haz clic en "Create
 Aparecerá una ventana emergente que te pedirá proporcionar:
 
 - **Centre ID**: este es el acrónimo de la agencia (en minúsculas y sin espacios), según lo especificado por el Miembro de la OMM, que identifica el centro de datos responsable de publicar los datos.
-- **Template**: El tipo de datos para los que estás creando metadatos. Puedes elegir entre usar una plantilla predefinida o seleccionar *other*.
+- **Template**: El tipo de datos para el que estás creando metadatos. Puedes elegir entre usar una plantilla predefinida o seleccionar *other*.
 
-<img alt="Ventana emergente para crear un nuevo conjunto de datos" src="/../assets/img/wis2box-create-new-dataset-pop-up.png" width="600">
+<img alt="Ventana emergente para crear nuevo conjunto de datos" src="/../assets/img/wis2box-create-new-dataset-pop-up.png" width="600">
 
 !!! Note "Centre ID"
 
@@ -103,20 +103,20 @@ Aparecerá una ventana emergente que te pedirá proporcionar:
 
 !!! Note "Template"
 
-    El campo *Template* te permite seleccionar de una lista de plantillas disponibles en el editor de conjuntos de datos de wis2box-webapp. Una plantilla pre-poblará el formulario con valores predeterminados sugeridos apropiados para el tipo de datos. Esto incluye un título y palabras clave sugeridas para los metadatos y complementos de datos preconfigurados.
+    El campo *Template* te permite seleccionar de una lista de plantillas disponibles en el editor de conjuntos de datos de wis2box-webapp. Una plantilla pre-poblará el formulario con valores predeterminados sugeridos apropiados para el tipo de datos. Esto incluye un título sugerido, palabras clave para los metadatos y complementos de datos preconfigurados.
     
     El tema se establece automáticamente en el tema predeterminado vinculado a la plantilla seleccionada, a menos que selecciones *other*. Si seleccionas *other*, el tema puede definirse desde una lista desplegable basada en la [Jerarquía de Temas de WIS2](https://codes.wmo.int/wis/topic-hierarchy/_earth-system-discipline).
 
 Para el propósito del entrenamiento, crearás dos conjuntos de datos:
     
 - Un conjunto de datos utilizando Template=*weather/surface-based-observations/synop*, que incluye complementos de datos que transforman los datos al formato BUFR antes de la publicación.
-- Un conjunto de datos utilizando Template=*other*, donde eres responsable de definir el Tema WIS2 y donde usarás el complemento "Universal" para publicar los datos sin transformación.
+- Un conjunto de datos utilizando Template=*other*, donde eres responsable de definir el Tema WIS2 y donde utilizarás el complemento "Universal" para publicar los datos sin transformación.
 
 ## Template=weather/surface-based-observations/synop
 
 Para **Template**, selecciona **weather/surface-based-observations/synop**:
 
-<img alt="Formulario para crear un nuevo conjunto de datos: Información inicial" src="/../assets/img/wis2box-create-new-dataset-form-initial.png" width="450">
+<img alt="Formulario para crear nuevo conjunto de datos: Información inicial" src="/../assets/img/wis2box-create-new-dataset-form-initial.png" width="450">
 
 Haz clic en *continue to form* para continuar. Ahora se te presentará el **Formulario del Editor de Conjuntos de Datos**.
 
@@ -146,13 +146,13 @@ Luego, completa la sección que define la 'Información de Contacto del Proveedo
 
 Finalmente, completa la sección que define la 'Información de Calidad de los Datos':
 
-Una vez que hayas completado todas las secciones, haz clic en 'VALIDATE FORM' y revisa el formulario para detectar errores:
+Una vez que hayas completado todas las secciones, haz clic en 'VALIDATE FORM' y verifica el formulario en busca de errores:
 
 <img alt="Editor de Metadatos: validación" src="/../assets/img/wis2box-metadata-validation-error.png" width="800">
 
 Si hay errores, corrígelos y haz clic en 'VALIDATE FORM' nuevamente.
 
-Asegúrate de no tener errores y de recibir una ventana emergente indicando que tu formulario ha sido validado:
+Asegúrate de que no haya errores y de que recibas una ventana emergente indicando que tu formulario ha sido validado:
 
 <img alt="Editor de Metadatos: validación exitosa" src="/../assets/img/wis2box-metadata-validation-success.png" width="800">
 
@@ -160,89 +160,89 @@ A continuación, antes de enviar tu conjunto de datos, revisa los mapeos de dato
 
 ### Configuración de mapeos de datos
 
-Dado que utilizaste una plantilla para crear tu conjunto de datos, los mapeos del conjunto de datos se han pre-poblado con los complementos predeterminados para la plantilla 'weather/surface-based-observations/synop'. Los complementos de datos se utilizan en wis2box para transformar los datos antes de que se publiquen utilizando la notificación WIS2.
+Dado que utilizaste una plantilla para crear tu conjunto de datos, los mapeos del conjunto de datos se han preconfigurado con los complementos predeterminados para la plantilla 'weather/surface-based-observations/synop'. Los complementos de datos se utilizan en el wis2box para transformar los datos antes de que se publiquen utilizando la notificación WIS2.
 
 <img alt="Data Mappings: update plugin" src="/../assets/img/wis2box-data-mappings.png" width="800">
 
-Tenga en cuenta que puede hacer clic en el botón "Update" para cambiar la configuración del plugin, como la extensión de archivo y el patrón de archivo. Por ahora, puede dejar la configuración predeterminada.
+Ten en cuenta que puedes hacer clic en el botón "Update" para cambiar la configuración del complemento, como la extensión del archivo y el patrón del archivo. Por ahora, puedes dejar la configuración predeterminada.
 
-### Enviar su conjunto de datos
+### Enviar tu conjunto de datos
 
-Finalmente, puede hacer clic en 'submit' para publicar su conjunto de datos.
+Finalmente, puedes hacer clic en 'submit' para publicar tu conjunto de datos.
 
-Deberá proporcionar el token de autorización para 'processes/wis2box' que creó anteriormente. Si no lo ha hecho, puede crear un nuevo token siguiendo las instrucciones en la sección de preparación.
+Deberás proporcionar el token de autorización para 'processes/wis2box' que creaste anteriormente. Si no lo has hecho, puedes crear un nuevo token siguiendo las instrucciones en la sección de preparación.
 
-Verifique que reciba el siguiente mensaje después de enviar su conjunto de datos, indicando que se envió correctamente:
+Verifica que recibas el siguiente mensaje después de enviar tu conjunto de datos, indicando que el conjunto de datos se envió correctamente:
 
 <img alt="Submit Dataset Success" src="/../assets/img/wis2box-submit-dataset-success.png" width="400">
 
-Después de hacer clic en 'OK', será redirigido a la página principal del Editor de Conjuntos de Datos. Ahora, si hace clic en la pestaña 'Dataset', debería ver su nuevo conjunto de datos listado:
+Después de hacer clic en 'OK', serás redirigido a la página de inicio del Editor de Conjuntos de Datos. Ahora, si haces clic en la pestaña 'Dataset', deberías ver tu nuevo conjunto de datos listado:
 
 <img alt="Dataset Editor: new dataset" src="/../assets/img/wis2box-dataset-editor-new-dataset.png" width="800">
 
-### Revisar la notificación WIS2 para sus metadatos de descubrimiento
+### Revisar la notificación WIS2 para tus metadatos de descubrimiento
 
-Vaya a MQTT Explorer. Si estaba conectado al broker, debería ver una nueva notificación WIS2 publicada en el tema `origin/a/wis2/<your-centre-id>/metadata`:
+Ve a MQTT Explorer. Si estabas conectado al broker, deberías ver una nueva notificación WIS2 publicada en el tema `origin/a/wis2/<your-centre-id>/metadata`:
 
 <img alt="MQTT Explorer: WIS2 notification" src="/../assets/img/mqtt-explorer-wis2-notification-metadata.png" width="800">
 
-Inspeccione el contenido de la notificación WIS2 que publicó. Debería ver un JSON con una estructura correspondiente al formato del Mensaje de Notificación WIS (WNM).
+Inspecciona el contenido de la notificación WIS2 que publicaste. Deberías ver un JSON con una estructura correspondiente al formato del WIS Notification Message (WNM).
 
 !!! question
 
     ¿En qué tema se publica la notificación WIS2?
 
-??? success "Haga clic para revelar la respuesta"
+??? success "Haz clic para revelar la respuesta"
 
     La notificación WIS2 se publica en el tema `origin/a/wis2/<your-centre-id>/metadata`.
 
 !!! question
     
-    Intente encontrar el título, la descripción y las palabras clave que proporcionó en los metadatos de descubrimiento dentro de la notificación WIS2. ¿Puede encontrarlos?
+    Intenta encontrar el título, la descripción y las palabras clave que proporcionaste en los metadatos de descubrimiento en la notificación WIS2. ¿Puedes encontrarlos?
 
-??? success "Haga clic para revelar la respuesta"
+??? success "Haz clic para revelar la respuesta"
 
-    **¡El título, la descripción y las palabras clave que proporcionó en los metadatos de descubrimiento no están presentes en el payload de la notificación WIS2!** 
+    **¡El título, la descripción y las palabras clave que proporcionaste en los metadatos de descubrimiento no están presentes en el payload de la notificación WIS2!** 
     
-    En su lugar, intente buscar el enlace canónico en la sección "links" de la notificación WIS2:
+    En su lugar, intenta buscar el enlace canónico en la sección "links" de la notificación WIS2:
 
     <img alt="WIS2 notification for metadata, links sections" src="/../assets/img/wis2-notification-metadata-links.png" width="800">
 
-    **La notificación WIS2 contiene un enlace canónico al registro WCMP2 que se publicó.** 
+    **La notificación WIS2 contiene un enlace canónico al registro WCMP2 que fue publicado.** 
     
-    Copie y pegue este enlace canónico en su navegador para acceder al registro WCMP2. Dependiendo de la configuración de su navegador, es posible que se le solicite descargar el archivo o que se muestre directamente en su navegador.
+    Copia y pega este enlace canónico en tu navegador para acceder al registro WCMP2. Dependiendo de la configuración de tu navegador, es posible que se te solicite descargar el archivo o que se muestre directamente en tu navegador.
 
-    Encontrará el título, la descripción y las palabras clave que proporcionó dentro del registro WCMP2.
+    Encontrarás el título, la descripción y las palabras clave que proporcionaste dentro del registro WCMP2.
 
-wis2box proporciona solo un número limitado de plantillas predefinidas. Estas plantillas están diseñadas para tipos comunes de conjuntos de datos, pero pueden no coincidir siempre con datos especializados. Para todos los demás tipos de conjuntos de datos, puede crear su conjunto de datos seleccionando Template=*other*.
+wis2box proporciona solo un número limitado de plantillas predefinidas. Estas plantillas están diseñadas para tipos comunes de conjuntos de datos, pero pueden no coincidir siempre con datos especializados. Para todos los demás tipos de conjuntos de datos, puedes crear tu conjunto de datos seleccionando Template=*other*.
 
 ## Template=other
 
 A continuación, crearemos un segundo conjunto de datos utilizando Template=*other*.
 
-Haga clic nuevamente en "Create New ..." para crear un nuevo conjunto de datos. Use el mismo centre-id que utilizó antes, debería estar disponible en la lista desplegable. Para **Template**, seleccione **other**:
+Haz clic en "Create New ..." nuevamente para crear un nuevo conjunto de datos. Usa el mismo centre-id que utilizaste antes, debería estar disponible en la lista desplegable. Para **Template**, selecciona **other**:
 
 <img alt="Create New Dataset Form: Initial information" src="/../assets/img/wis2box-create-new-dataset-form-initial-other.png" width="450">
 
-Haga clic en *continue to form* para continuar; ahora se le presentará nuevamente el **Dataset Editor Form**.
+Haz clic en *continue to form* para continuar, ahora se te presentará nuevamente el **Dataset Editor Form**.
 
 ### Crear metadatos de descubrimiento
 
-Proporcione sus propios valores para los campos 'Title' y 'Description' y asegúrese de reemplazar el 'Local ID' generado automáticamente con un nombre descriptivo para su conjunto de datos:
+Proporciona tus propios valores para los campos 'Title' y 'Description' y asegúrate de reemplazar el 'Local ID' autogenerado con un nombre descriptivo para tu conjunto de datos:
 
 <img alt="Metadata Editor: title, description, keywords" src="/../assets/img/wis2box-metadata-editor-part1-other.png" width="800">
 
-Tenga en cuenta que, dado que seleccionó Template=*other*, depende de usted definir la Jerarquía de Temas WIS2 utilizando las listas desplegables para 'Discipline' y 'Sub-Discipline'.
+Ten en cuenta que, dado que seleccionaste Template=*other*, depende de ti definir la Jerarquía de Temas WIS2 utilizando las listas desplegables para 'Discipline' y 'Sub-Discipline'.
 
-Para este ejercicio, seleccione el Tema de Subdisciplina "prediction/analysis/medium-range/deterministic/global":
+Para este ejercicio, selecciona el tema de Sub-Discipline "prediction/analysis/medium-range/deterministic/global":
 
 <img alt="Metadata Editor: title, description, keywords" src="/../assets/img/wis2box-metadata-editor-part1-other-topic.png" width="800">
 
-Dado que utilizó Template=*other*, no se definieron palabras clave previamente. Asegúrese de agregar al menos 3 palabras clave de su elección:
+Dado que utilizaste Template=*other*, no se definieron palabras clave previamente. Asegúrate de agregar al menos 3 palabras clave de tu propia elección:
 
 <img alt="Metadata Editor: title, description, keywords" src="/../assets/img/wis2box-metadata-editor-part1-other-2.png" width="800">
 
-Después de completar los campos requeridos, complete las secciones restantes del formulario, incluidas 'Temporal Properties', 'Spatial Properties' y 'Contact Information of the Data Provider', y asegúrese de validar el formulario.
+Después de completar los campos requeridos, llena las secciones restantes del formulario, incluyendo 'Temporal Properties', 'Spatial Properties' y 'Contact Information of the Data Provider', y asegúrate de validar el formulario.
 
 ### Configurar mapeos de datos
 
@@ -250,15 +250,15 @@ Cuando se utiliza Template=other, no se proporcionan mapeos de datos predetermin
 
 <img alt="Data Mappings: update plugin" src="/../assets/img/wis2box-data-mappings-other1.png" width="800">
 
-Haga clic en "ADD A PLUGIN +" para agregar un plugin de datos a su conjunto de datos.
+Haz clic en "ADD A PLUGIN +" para agregar un complemento de datos a tu conjunto de datos.
 
-Seleccione el plugin con el nombre **"Universal data without conversion"**. Este plugin está diseñado para publicar datos sin aplicar ninguna transformación.
+Selecciona el complemento con el nombre **"Universal data without conversion"**. Este complemento está diseñado para publicar datos sin aplicar ninguna transformación.
 
-Al agregar este plugin, deberá especificar la **File Extension** y un **File Pattern** (definido por una expresión regular) que coincida con el patrón de nombres de sus archivos de datos. En el caso del plugin "Universal", el File Pattern también se utiliza para determinar la propiedad "datetime" de los datos.
+Al agregar este complemento, deberás especificar la **File Extension** y un **File Pattern** (definido por una expresión regular) que coincida con el patrón de nombres de tus archivos de datos. En el caso del complemento "Universal", el File Pattern también se utiliza para determinar la propiedad "datetime" de los datos.
 
 !!! Note "Parsing datetime from filename"
 
-    El plugin "Universal" asume que el primer grupo en la expresión regular corresponde a la fecha y hora de los datos.
+    El complemento "Universal" asume que el primer grupo en la expresión regular corresponde a la fecha y hora de los datos. 
 
     El File Pattern predeterminado es `^.*?_(\d{8}).*?\..*$`, que coincide con 8 dígitos precedidos por un guion bajo y seguidos de cualquier carácter y un punto antes de la extensión del archivo. Por ejemplo:
 
@@ -266,51 +266,51 @@ Al agregar este plugin, deberá especificar la **File Extension** y un **File Pa
     - `mydata_2025010112.txt` no coincidirá, ya que hay 10 dígitos en lugar de 8.
     - `mydata-20250101.txt` no coincidirá, ya que hay un guion en lugar de un guion bajo antes de la fecha.
 
-    Al ingerir datos utilizando el plugin "Universal", renombre sus archivos para que coincidan con el valor predeterminado o actualice el File Pattern asegurándose de que el primer grupo en la expresión regular corresponda a la fecha y hora.
+    Al ingerir datos utilizando el complemento "Universal", renombra tus archivos para que coincidan con el patrón predeterminado o actualiza el File Pattern asegurándote de que el primer grupo en la expresión regular corresponda a la fecha y hora.
 
-Mantenga los valores predeterminados para "File Name" por ahora, ya que coinciden con los datos que ingerirá en la próxima sesión práctica:
+Mantén los valores predeterminados para "File Name" por ahora, ya que coinciden con los datos que ingerirás en la próxima sesión práctica:
 
 <img alt="Data Mappings: update plugin" src="/../assets/img/wis2box-data-mappings-other2.png" width="800">
 
-Haga clic en "SAVE" para guardar la configuración del plugin y verifique que ahora vea el plugin listado en el Editor de Mapeos de Conjuntos de Datos:
+Haz clic en "SAVE" para guardar la configuración del complemento y verifica que ahora veas el complemento listado en el Editor de Mapeos de Conjuntos de Datos:
 
 <img alt="Data Mappings: update plugin" src="/../assets/img/wis2box-data-mappings-other3.png" width="800">
 
-Tenga en cuenta que, cuando ingiera datos, la extensión del archivo y el patrón de archivo del nombre deben coincidir con la configuración que ha proporcionado aquí; de lo contrario, los datos no se procesarán y el contenedor wis2box-management registrará mensajes de ERROR.
+Ten en cuenta que, cuando ingreses datos, la extensión del archivo y el File Pattern del nombre del archivo deben coincidir con la configuración que proporcionaste aquí; de lo contrario, los datos no serán procesados y el contenedor wis2box-management registrará mensajes de ERROR.
 
 ### Enviar y revisar el resultado
 
-Finalmente, proporcione el token de autorización para 'processes/wis2box' que creó anteriormente y haga clic en 'submit' para publicar su conjunto de datos.
+Finalmente, proporciona el token de autorización para 'processes/wis2box' que creaste anteriormente y haz clic en 'submit' para publicar tu conjunto de datos.
 
-Después de un envío exitoso, su nuevo conjunto de datos aparecerá en la pestaña Dataset:
+Después de un envío exitoso, tu nuevo conjunto de datos aparecerá en la pestaña Dataset:
 
 <img alt="Dataset Editor: new dataset" src="/../assets/img/wis2box-dataset-editor-new-dataset-other.png" width="800">
 
-Vaya a MQTT Explorer, si estaba conectado a su broker, debería ver otra nueva notificación WIS2 publicada en el tema `origin/a/wis2/<your-centre-id>/metadata`.
+Ve a MQTT Explorer, si estabas conectado a tu broker, deberías ver otra nueva notificación WIS2 publicada en el tema `origin/a/wis2/<your-centre-id>/metadata`.
 
 !!! question
     
-    Visite la interfaz de usuario de wis2box en `http://YOUR-HOST`.
+    Visita la interfaz de usuario de wis2box en `http://YOUR-HOST`.
     
-    ¿Cuántos conjuntos de datos ve listados? ¿Cómo puede ver la Jerarquía de Temas WIS2 utilizada para cada conjunto de datos y cómo puede ver la descripción de cada conjunto de datos?
+    ¿Cuántos conjuntos de datos ves listados? ¿Cómo puedes ver la Jerarquía de Temas WIS2 utilizada para cada conjunto de datos y cómo puedes ver la descripción de cada conjunto de datos?
 
-??? success "Haga clic para revelar la respuesta"
+??? success "Haz clic para revelar la respuesta"
 
-    Al abrir la interfaz de usuario de wis2box en `http://YOUR-HOST`, debería ver 2 conjuntos de datos listados junto con su Jerarquía de Temas WIS2. Para ver la descripción de cada conjunto de datos, puede hacer clic en "metadata", lo que lo redirigirá al elemento correspondiente de 'discovery-metadata' tal como lo sirve la wis2box-api.
+    Al abrir la interfaz de usuario de wis2box en `http://YOUR-HOST`, deberías ver 2 conjuntos de datos listados junto con su Jerarquía de Temas WIS2. Para ver la descripción de cada conjunto de datos, puedes hacer clic en "metadata", lo que redirigirá al elemento 'discovery-metadata' correspondiente tal como lo sirve la wis2box-api.
 
 !!! question
 
-    Intente actualizar la descripción del último conjunto de datos que creó. Después de actualizar la descripción, ¿ve una nueva notificación WIS2 publicada en el tema `origin/a/wis2/<your-centre-id>/metadata`? ¿Cuál es la diferencia entre la nueva notificación y la anterior?
+    Intenta actualizar la descripción del último conjunto de datos que creaste. Después de actualizar la descripción, ¿ves una nueva notificación WIS2 publicada en el tema `origin/a/wis2/<your-centre-id>/metadata`? ¿Cuál es la diferencia entre la nueva notificación y la anterior?
 
-??? success "Haga clic para revelar la respuesta"
+??? success "Haz clic para revelar la respuesta"
 
-    Debería ver un nuevo mensaje de notificación de datos enviado después de actualizar su conjunto de datos en el tema `origin/a/wis2/<your-centre-id>/metadata`.
-    
-    En el mensaje, el valor de *"rel": "canonical"* cambiará a *"rel": "update"*, indicando que los datos publicados anteriormente han sido modificados. Para ver la descripción actualizada, copie y pegue la URL en su navegador y debería ver la descripción actualizada.
+    Deberías ver un nuevo mensaje de notificación de datos enviado después de actualizar tu conjunto de datos en el tema `origin/a/wis2/<your-centre-id>/metadata`.
+
+En el mensaje, el valor de *"rel": "canonical"* cambiará a *"rel": "update"*, indicando que los datos publicados previamente han sido modificados. Para ver la descripción actualizada, copia y pega la URL en tu navegador y deberías ver la descripción actualizada.
 
 !!! question
 
-Intenta actualizar la Jerarquía de Temas del último conjunto de datos que creaste cambiando la selección en "Temas de Subdisciplina". ¿Ves una nueva notificación de WIS2 publicada en el tema `origin/a/wis2/<your-centre-id>/metadata`?
+    Intenta actualizar la Jerarquía de Temas del último conjunto de datos que creaste cambiando la selección en "Sub-Discipline Topics". ¿Ves una nueva notificación de WIS2 publicada en el tema `origin/a/wis2/<your-centre-id>/metadata`?
 
 ??? success "Haz clic para revelar la respuesta"
 
@@ -322,7 +322,7 @@ Intenta actualizar la Jerarquía de Temas del último conjunto de datos que crea
     En esta sesión práctica, aprendiste a:
 
     - usar el editor de conjuntos de datos de wis2box-webapp
-    - crear nuevos conjuntos de datos utilizando las plantillas Template=*weather/surface-based-observations/synop* y Template=*other*
+    - crear nuevos conjuntos de datos utilizando Template=*weather/surface-based-observations/synop* y Template=*other*
     - definir tus metadatos de descubrimiento
-    - revisar tus asignaciones de datos
+    - revisar tus mapeos de datos
     - publicar metadatos de descubrimiento y revisar la notificación de WIS2

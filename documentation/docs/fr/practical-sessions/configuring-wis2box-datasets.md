@@ -7,7 +7,7 @@ title: Configuration des ensembles de données dans wis2box
 !!! abstract "Objectifs d'apprentissage"
     À la fin de cette session pratique, vous serez capable de :
 
-    - utiliser l'éditeur d'ensembles de données de wis2box-webapp
+    - utiliser l'éditeur d'ensembles de données dans wis2box-webapp
     - créer de nouveaux ensembles de données en utilisant Template=*weather/surface-based-observations/synop* et Template=*other*
     - définir vos métadonnées de découverte
     - examiner vos mappages de données
@@ -17,17 +17,17 @@ title: Configuration des ensembles de données dans wis2box
 
 wis2box utilise des **ensembles de données** associés à des **métadonnées de découverte** et des **mappages de données**.
 
-Les **métadonnées de découverte** sont utilisées pour créer un enregistrement WCMP2 (WMO Core Metadata Profile 2) qui est partagé via une notification WIS2 publiée sur votre wis2box-broker.
+Les **métadonnées de découverte** sont utilisées pour créer un enregistrement conforme au WMO Core Metadata Profile (WCMP2), partagé via une notification WIS2 publiée sur votre broker wis2box.
 
-Les **mappages de données** permettent d'associer des plugins de données à vos données d'entrée, permettant ainsi leur transformation avant leur publication sur WIS2.
+Les **mappages de données** permettent d'associer des plugins de données à vos données d'entrée, afin de transformer vos données avant leur publication sur WIS2.
 
-Dans cette session pratique, vous apprendrez à créer et configurer des ensembles de données en utilisant l'**éditeur d'ensembles de données de wis2box-webapp**.
+Dans cette session pratique, vous apprendrez à créer et configurer des ensembles de données en utilisant l'**éditeur d'ensembles de données dans wis2box-webapp**.
 
 !!! note "Configuration des ensembles de données sans utiliser wis2box-webapp"
 
-    wis2box prend également en charge la configuration des ensembles de données en utilisant le format [fichier de contrôle des métadonnées (MCF)](https://geopython.github.io/pygeometa/reference/mcf).
+    wis2box prend également en charge la configuration des ensembles de données en utilisant le format [fichier de contrôle des métadonnées (MCF)](https://geopython.github.io/pygeometa/reference/mcf) défini par l'outil [pygeometa](https://geopython.github.io/pygeometa).
     
-    L'utilisation de MCF offre plus de flexibilité et de contrôle, mais peut être plus sujette aux erreurs, car vous devez vous assurer que le MCF est correctement formaté et conforme au schéma requis.
+    L'utilisation du MCF offre plus de flexibilité et de contrôle, mais nécessite une rédaction précise pour s'assurer que le fichier MCF est correctement formaté et indenté, conformément au schéma requis.
     
     Les fichiers MCF peuvent être publiés depuis la ligne de commande dans le conteneur wis2box-management. Consultez la [documentation de wis2box](https://docs.wis2box.wis.wmo.int/en/latest/reference/running/discovery-metadata.html) pour plus d'informations.
 
@@ -35,7 +35,7 @@ Dans cette session pratique, vous apprendrez à créer et configurer des ensembl
 
 Connectez-vous à votre broker en utilisant MQTT Explorer.
 
-Au lieu d'utiliser vos identifiants internes de broker, utilisez les identifiants publics `everyone/everyone` :
+Au lieu d'utiliser les identifiants de votre broker interne, utilisez les identifiants publics `everyone/everyone` :
 
 <img alt="MQTT Explorer : Connexion au broker" src="/../assets/img/mqtt-explorer-wis2box-broker-everyone-everyone.png" width="800">
 
@@ -43,9 +43,9 @@ Au lieu d'utiliser vos identifiants internes de broker, utilisez les identifiant
 
     Vous n'avez jamais besoin de partager les identifiants de votre broker interne avec des utilisateurs externes. L'utilisateur 'everyone' est un utilisateur public permettant de partager les notifications WIS2.
 
-    Les identifiants `everyone/everyone` ont un accès en lecture seule sur le sujet 'origin/a/wis2/#'. C'est le sujet où les notifications WIS2 sont publiées. Le Global Broker peut s'abonner avec ces identifiants publics pour recevoir les notifications.
+    Les identifiants `everyone/everyone` ont un accès en lecture seule sur le topic 'origin/a/wis2/#'. C'est le topic où les notifications WIS2 sont publiées. Le Global Broker peut s'abonner avec ces identifiants publics pour recevoir les notifications.
     
-    L'utilisateur 'everyone' ne verra pas les sujets internes ni ne pourra publier de messages.
+    L'utilisateur 'everyone' ne verra pas les topics internes ni ne pourra publier de messages.
     
 Ouvrez un navigateur et accédez à `http://YOUR-HOST/wis2box-webapp`. Assurez-vous d'être connecté et d'avoir accès à la page 'dataset editor'.
 
@@ -53,7 +53,7 @@ Consultez la section sur [Initialisation de wis2box](./initializing-wis2box.md) 
 
 ## Créer un jeton d'autorisation pour processes/wis2box
 
-Vous aurez besoin d'un jeton d'autorisation pour le point de terminaison 'processes/wis2box' afin de publier votre ensemble de données.
+Vous aurez besoin d'un jeton d'autorisation pour l'endpoint 'processes/wis2box' afin de publier votre ensemble de données.
 
 Pour créer un jeton d'autorisation, accédez à votre machine virtuelle de formation via SSH et utilisez les commandes suivantes :
 
@@ -62,7 +62,7 @@ cd ~/wis2box
 python3 wis2box-ctl.py login
 ```
 
-Ensuite, exécutez la commande suivante pour créer un jeton d'autorisation généré aléatoirement pour le point de terminaison 'processes/wis2box' :
+Ensuite, exécutez la commande suivante pour créer un jeton d'autorisation généré aléatoirement pour l'endpoint 'processes/wis2box' :
 
 ```bash
 wis2box auth add-token --path processes/wis2box
@@ -82,7 +82,7 @@ Une fois que vous avez votre jeton, vous pouvez quitter le conteneur wis2box-man
 exit
 ```
 
-## L'éditeur d'ensembles de données de wis2box-webapp
+## L'éditeur d'ensembles de données dans wis2box-webapp
 
 Accédez à la page 'dataset editor' dans wis2box-webapp de votre instance wis2box en allant sur `http://YOUR-HOST/wis2box-webapp` et en sélectionnant 'dataset editor' dans le menu à gauche.
 
@@ -93,58 +93,58 @@ Sur la page 'dataset editor', sous l'onglet 'Datasets', cliquez sur "Create New 
 Une fenêtre contextuelle apparaîtra, vous demandant de fournir :
 
 - **Centre ID** : il s'agit de l'acronyme de l'agence (en minuscules et sans espaces), tel que spécifié par le Membre de l'OMM, qui identifie le centre de données responsable de la publication des données.
-- **Template** : Le type de données pour lequel vous créez des métadonnées. Vous pouvez choisir entre utiliser un modèle prédéfini ou sélectionner *other*.
+- **Template** : Le type de données pour lequel vous créez des métadonnées. Vous pouvez choisir entre un modèle prédéfini ou sélectionner *other*.
 
 <img alt="Créer un nouvel ensemble de données - fenêtre contextuelle" src="/../assets/img/wis2box-create-new-dataset-pop-up.png" width="600">
 
 !!! Note "Centre ID"
 
-    Votre Centre ID doit commencer par le TLD de votre pays, suivi d'un tiret (`-`) et d'un nom abrégé de votre organisation (par exemple `fr-meteofrance`). Le Centre ID doit être en minuscules et utiliser uniquement des caractères alphanumériques. La liste déroulante affiche tous les Centre IDs actuellement enregistrés sur WIS2 ainsi que tout Centre ID que vous avez déjà créé dans wis2box. Veuillez choisir un Centre ID approprié pour votre organisation.
+    Votre Centre ID doit commencer par le TLD de votre pays, suivi d'un tiret (`-`) et d'un nom abrégé de votre organisation (par exemple `fr-meteofrance`). Le Centre ID doit être en minuscules et utiliser uniquement des caractères alphanumériques. La liste déroulante montre tous les Centre ID actuellement enregistrés sur WIS2 ainsi que tout Centre ID que vous avez déjà créé dans wis2box. Veuillez choisir un Centre ID approprié pour votre organisation.
 
 !!! Note "Template"
 
     Le champ *Template* vous permet de sélectionner parmi une liste de modèles disponibles dans l'éditeur d'ensembles de données de wis2box-webapp. Un modèle pré-remplit le formulaire avec des valeurs par défaut suggérées adaptées au type de données. Cela inclut un titre et des mots-clés suggérés pour les métadonnées ainsi que des plugins de données préconfigurés.
     
-    Le sujet est automatiquement défini sur le sujet par défaut lié au modèle sélectionné, sauf si vous sélectionnez *other*. Si vous sélectionnez *other*, le sujet peut être défini à partir d'une liste déroulante basée sur la [Hiérarchie des Sujets WIS2](https://codes.wmo.int/wis/topic-hierarchy/_earth-system-discipline).
+    Le topic est automatiquement défini sur le topic par défaut lié au modèle sélectionné, sauf si vous sélectionnez *other*. Si vous sélectionnez *other*, le topic peut être défini à partir d'une liste déroulante basée sur la [Hiérarchie des Topics WIS2](https://codes.wmo.int/wis/topic-hierarchy/_earth-system-discipline).
 
 Dans le cadre de la formation, vous créerez deux ensembles de données :
     
 - Un ensemble de données utilisant Template=*weather/surface-based-observations/synop*, qui inclut des plugins de données transformant les données au format BUFR avant publication.
-- Un ensemble de données utilisant Template=*other*, où vous êtes responsable de définir le Sujet WIS2 et où vous utiliserez le plugin "Universal" pour publier les données sans transformation.
+- Un ensemble de données utilisant Template=*other*, où vous êtes responsable de définir le Topic WIS2 et où vous utiliserez le plugin "Universal" pour publier les données sans transformation.
 
 ## Template=weather/surface-based-observations/synop
 
 Pour **Template**, sélectionnez **weather/surface-based-observations/synop** :
 
-<img alt="Créer un nouvel ensemble de données : informations initiales" src="/../assets/img/wis2box-create-new-dataset-form-initial.png" width="450">
+<img alt="Créer un nouvel ensemble de données : Informations initiales" src="/../assets/img/wis2box-create-new-dataset-form-initial.png" width="450">
 
-Cliquez sur *continue to form* pour continuer. Vous serez alors présenté avec le **Formulaire de l'Éditeur d'Ensembles de Données**.
+Cliquez sur *continue to form* pour continuer. Vous serez alors présenté avec le **Dataset Editor Form**.
 
 Puisque vous avez sélectionné le modèle **weather/surface-based-observations/synop**, le formulaire sera pré-rempli avec certaines valeurs initiales liées à ce type de données.
 
 ### Création des métadonnées de découverte
 
-Le Formulaire de l'Éditeur d'Ensembles de Données vous permet de fournir les Métadonnées de Découverte pour votre ensemble de données que le conteneur wis2box-management utilisera pour publier un enregistrement WCMP2.
+Le Dataset Editor Form vous permet de fournir les métadonnées de découverte pour votre ensemble de données que le conteneur wis2box-management utilisera pour publier un enregistrement WCMP2.
 
 Puisque vous avez sélectionné le modèle 'weather/surface-based-observations/synop', le formulaire sera pré-rempli avec des valeurs par défaut.
 
-Veuillez vous assurer de remplacer l'ID local généré automatiquement par un nom descriptif pour votre ensemble de données, par exemple 'synop-dataset-wis2training' :
+Veuillez vous assurer de remplacer l'ID local généré automatiquement ('Local ID') par un nom descriptif pour votre ensemble de données, par exemple 'synop-dataset-wis2training' :
 
 <img alt="Éditeur de métadonnées : titre, description, mots-clés" src="/../assets/img/wis2box-metadata-editor-part1.png" width="800">
 
 Examinez le titre et les mots-clés, mettez-les à jour si nécessaire, et fournissez une description pour votre ensemble de données.
 
-Notez qu'il existe des options pour changer la 'Politique de Données de l'OMM' de 'core' à 'recommended' ou pour modifier votre Identifiant de Métadonnées par défaut. Veuillez conserver la politique de données comme 'core' et utiliser l'Identifiant de Métadonnées par défaut.
+Notez qu'il existe des options pour changer la 'Politique de données de l'OMM' de 'core' à 'recommended' ou pour modifier votre Identifiant de Métadonnées par défaut. Veuillez conserver la politique de données sur 'core' et utiliser l'Identifiant de Métadonnées par défaut.
 
-Ensuite, examinez la section définissant vos 'Propriétés Temporelles' et 'Propriétés Spatiales'. Vous pouvez ajuster le cadre géographique en mettant à jour les champs 'Latitude Nord', 'Latitude Sud', 'Longitude Est' et 'Longitude Ouest' :
+Ensuite, examinez la section définissant vos 'Propriétés temporelles' et 'Propriétés spatiales'. Vous pouvez ajuster la boîte englobante en mettant à jour les champs 'Latitude Nord', 'Latitude Sud', 'Longitude Est' et 'Longitude Ouest' :
 
 <img alt="Éditeur de métadonnées : propriétés temporelles, propriétés spatiales" src="/../assets/img/wis2box-metadata-editor-part2.png" width="800">
 
-Ensuite, remplissez la section définissant les 'Informations de Contact du Fournisseur de Données' :
+Ensuite, remplissez la section définissant les 'Informations de contact du fournisseur de données' :
 
 <img alt="Éditeur de métadonnées : informations de contact" src="/../assets/img/wis2box-metadata-editor-part3.png" width="800">
 
-Enfin, remplissez la section définissant les 'Informations sur la Qualité des Données'.
+Enfin, remplissez la section définissant les 'Informations sur la qualité des données' :
 
 Une fois que vous avez rempli toutes les sections, cliquez sur 'VALIDATE FORM' et vérifiez le formulaire pour détecter d'éventuelles erreurs :
 
@@ -160,11 +160,11 @@ Ensuite, avant de soumettre votre ensemble de données, examinez les mappages de
 
 ### Configuration des mappages de données
 
-Puisque vous avez utilisé un modèle pour créer votre ensemble de données, les mappages de données ont été pré-remplis avec les plugins par défaut pour le modèle 'weather/surface-based-observations/synop'. Les plugins de données sont utilisés dans wis2box pour transformer les données avant leur publication via la notification WIS2.
+Puisque vous avez utilisé un modèle pour créer votre jeu de données, les mappages de jeu de données ont été pré-remplis avec les plugins par défaut pour le modèle 'weather/surface-based-observations/synop'. Les plugins de données sont utilisés dans le wis2box pour transformer les données avant qu'elles ne soient publiées via la notification WIS2.
 
 <img alt="Data Mappings: update plugin" src="/../assets/img/wis2box-data-mappings.png" width="800">
 
-Notez que vous pouvez cliquer sur le bouton "Update" pour modifier les paramètres du plugin, tels que l'extension de fichier et le modèle de fichier. Vous pouvez laisser les paramètres par défaut pour l'instant.
+Notez que vous pouvez cliquer sur le bouton "Update" pour modifier les paramètres du plugin, tels que l'extension de fichier et le modèle de fichier. Vous pouvez laisser les paramètres par défaut pour le moment.
 
 ### Soumettre votre jeu de données
 
@@ -182,7 +182,7 @@ Après avoir cliqué sur 'OK', vous êtes redirigé vers la page d'accueil de l'
 
 ### Examiner la notification WIS2 pour vos métadonnées de découverte
 
-Accédez à MQTT Explorer. Si vous étiez connecté au broker, vous devriez voir une nouvelle notification WIS2 publiée sur le sujet `origin/a/wis2/<your-centre-id>/metadata` :
+Accédez à MQTT Explorer. Si vous êtes connecté au broker, vous devriez voir une nouvelle notification WIS2 publiée sur le sujet `origin/a/wis2/<your-centre-id>/metadata` :
 
 <img alt="MQTT Explorer: WIS2 notification" src="/../assets/img/mqtt-explorer-wis2-notification-metadata.png" width="800">
 
@@ -197,14 +197,14 @@ Inspectez le contenu de la notification WIS2 que vous avez publiée. Vous devrie
     La notification WIS2 est publiée sur le sujet `origin/a/wis2/<your-centre-id>/metadata`.
 
 !!! question
-
+    
     Essayez de trouver le titre, la description et les mots-clés que vous avez fournis dans les métadonnées de découverte dans la notification WIS2. Pouvez-vous les trouver ?
 
 ??? success "Cliquez pour révéler la réponse"
 
     **Le titre, la description et les mots-clés que vous avez fournis dans les métadonnées de découverte ne sont pas présents dans le contenu de la notification WIS2 !** 
     
-    À la place, essayez de rechercher le lien canonique dans la section "links" de la notification WIS2 :
+    À la place, essayez de chercher le lien canonique dans la section "links" de la notification WIS2 :
 
     <img alt="WIS2 notification for metadata, links sections" src="/../assets/img/wis2-notification-metadata-links.png" width="800">
 
@@ -214,17 +214,17 @@ Inspectez le contenu de la notification WIS2 que vous avez publiée. Vous devrie
 
     Vous trouverez le titre, la description et les mots-clés que vous avez fournis dans l'enregistrement WCMP2.
 
-wis2box fournit uniquement un nombre limité de modèles prédéfinis. Ces modèles sont conçus pour des types de jeux de données courants, mais ils peuvent ne pas toujours correspondre à des données spécialisées. Pour tous les autres types de jeux de données, vous pouvez créer votre jeu de données en sélectionnant Template=*other*.
+wis2box fournit un nombre limité de modèles prédéfinis. Ces modèles sont conçus pour des types de jeux de données courants, mais ils peuvent ne pas toujours correspondre à des données spécialisées. Pour tous les autres types de jeux de données, vous pouvez créer votre jeu de données en sélectionnant Template=*other*.
 
 ## Template=other
 
 Ensuite, nous allons créer un deuxième jeu de données en utilisant Template=*other*.
 
-Cliquez à nouveau sur "Create New ..." pour créer un nouveau jeu de données. Utilisez le même centre-id que vous avez utilisé précédemment, il devrait être disponible dans la liste déroulante. Pour **Template**, sélectionnez **other** :
+Cliquez à nouveau sur "Create New ..." pour créer un nouveau jeu de données. Utilisez le même centre-id que vous avez utilisé auparavant, il devrait être disponible dans la liste déroulante. Pour **Template**, sélectionnez **other** :
 
 <img alt="Create New Dataset Form: Initial information" src="/../assets/img/wis2box-create-new-dataset-form-initial-other.png" width="450">
 
-Cliquez sur *continue to form* pour continuer, vous serez à nouveau présenté avec le **Dataset Editor Form**.
+Cliquez sur *continue to form* pour continuer, vous serez maintenant présenté avec le **Dataset Editor Form** à nouveau.
 
 ### Créer des métadonnées de découverte
 
@@ -232,7 +232,7 @@ Fournissez vos propres valeurs pour les champs 'Title' et 'Description' et assur
 
 <img alt="Metadata Editor: title, description, keywords" src="/../assets/img/wis2box-metadata-editor-part1-other.png" width="800">
 
-Notez que puisque vous avez sélectionné Template=*other*, il vous revient de définir la hiérarchie des sujets WIS2 en utilisant les listes déroulantes pour 'Discipline' et 'Sub-Discipline'.
+Notez que puisque vous avez sélectionné Template=*other*, il vous appartient de définir la hiérarchie de sujets WIS2 en utilisant les listes déroulantes pour 'Discipline' et 'Sub-Discipline'.
 
 Pour cet exercice, veuillez sélectionner le sujet de sous-discipline "prediction/analysis/medium-range/deterministic/global" :
 
@@ -244,9 +244,9 @@ Puisque vous avez utilisé Template=*other*, aucun mot-clé n'a été prédéfin
 
 Après avoir rempli les champs requis, complétez les sections restantes du formulaire, y compris 'Temporal Properties', 'Spatial Properties' et 'Contact Information of the Data Provider', et assurez-vous de valider le formulaire.
 
-### Configurer les correspondances de données
+### Configurer les mappages de données
 
-Lorsque Template=other est utilisé, aucune correspondance de données par défaut n'est fournie. En conséquence, l'éditeur de correspondances de jeux de données sera vide et les utilisateurs doivent configurer les correspondances selon leurs besoins spécifiques.
+Lorsque Template=other est utilisé, aucun mappage de données par défaut n'est fourni. En conséquence, l'éditeur de mappages de jeu de données sera vide et les utilisateurs doivent configurer les mappages selon leurs besoins spécifiques.
 
 <img alt="Data Mappings: update plugin" src="/../assets/img/wis2box-data-mappings-other1.png" width="800">
 
@@ -256,23 +256,23 @@ Sélectionnez le plugin nommé **"Universal data without conversion"**. Ce plugi
 
 Lors de l'ajout de ce plugin, vous devrez spécifier l'**extension de fichier** et un **modèle de fichier** (défini par une expression régulière) qui correspond au modèle de nommage de vos fichiers de données. Dans le cas du plugin "Universal", le modèle de fichier est également utilisé pour déterminer la propriété "datetime" des données.
 
-!!! Note "Analyse de la date et de l'heure à partir du nom de fichier"
+!!! Note "Extraction de la date et heure à partir du nom de fichier"
 
-    Le plugin "Universal" suppose que le premier groupe dans l'expression régulière correspond à la date et à l'heure des données. 
+    Le plugin "Universal" suppose que le premier groupe dans l'expression régulière correspond à la date et heure des données. 
 
-    Le modèle de fichier par défaut est `^.*?_(\d{8}).*?\..*$`, qui correspond à 8 chiffres précédés d'un underscore et suivis de tout caractère et d'un point avant l'extension de fichier. Par exemple :
+    Le modèle de fichier par défaut est `^.*?_(\d{8}).*?\..*$` qui correspond à 8 chiffres précédés d'un underscore et suivis de n'importe quels caractères et d'un point avant l'extension de fichier. Par exemple :
 
-    - `mydata_20250101.txt` correspondra et extraira le 25 janvier 2025 comme propriété datetime des données
+    - `mydata_20250101.txt` correspondra et extraira le 25 janvier 2025 comme propriété datetime pour les données
     - `mydata_2025010112.txt` ne correspondra pas, car il y a 10 chiffres au lieu de 8
     - `mydata-20250101.txt` ne correspondra pas, car il y a un tiret au lieu d'un underscore avant la date
 
-    Lors de l'ingestion de données avec le plugin "Universal", renommez vos fichiers pour correspondre au modèle par défaut ou mettez à jour le modèle de fichier en veillant à ce que le premier groupe dans l'expression régulière corresponde à la date et à l'heure.
+    Lors de l'ingestion de données avec le plugin "Universal", renommez vos fichiers pour correspondre au modèle par défaut ou mettez à jour le modèle de fichier en vous assurant que le premier groupe dans l'expression régulière correspond à la date et heure.
 
-Gardez les valeurs par défaut pour "File Name" pour l'instant, car elles correspondent aux données que vous ingérerez lors de la prochaine session pratique :
+Gardez les valeurs par défaut pour "File Name" pour le moment, car elles correspondent aux données que vous allez ingérer lors de la prochaine session pratique :
 
 <img alt="Data Mappings: update plugin" src="/../assets/img/wis2box-data-mappings-other2.png" width="800">
 
-Cliquez sur "SAVE" pour enregistrer les paramètres du plugin et vérifiez que vous voyez maintenant le plugin listé dans l'éditeur de correspondances de jeux de données :
+Cliquez sur "SAVE" pour enregistrer les paramètres du plugin et vérifiez que vous voyez maintenant le plugin listé dans l'éditeur de mappages de jeu de données :
 
 <img alt="Data Mappings: update plugin" src="/../assets/img/wis2box-data-mappings-other3.png" width="800">
 
@@ -286,17 +286,17 @@ Après une soumission réussie, votre nouveau jeu de données apparaîtra dans l
 
 <img alt="Dataset Editor: new dataset" src="/../assets/img/wis2box-dataset-editor-new-dataset-other.png" width="800">
 
-Accédez à MQTT Explorer, si vous étiez connecté à votre broker, vous devriez voir une autre nouvelle notification WIS2 publiée sur le sujet `origin/a/wis2/<your-centre-id>/metadata`.
+Accédez à MQTT Explorer, si vous êtes connecté à votre broker, vous devriez voir une autre nouvelle notification WIS2 publiée sur le sujet `origin/a/wis2/<your-centre-id>/metadata`.
 
 !!! question
-
-    Visitez l'interface utilisateur wis2box à `http://YOUR-HOST`.
     
-    Combien de jeux de données voyez-vous listés ? Comment pouvez-vous visualiser la hiérarchie des sujets WIS2 utilisée pour chaque jeu de données et comment pouvez-vous voir la description de chaque jeu de données ?
+    Visitez l'interface wis2box-UI à `http://YOUR-HOST`.
+    
+    Combien de jeux de données voyez-vous listés ? Comment pouvez-vous consulter la hiérarchie de sujets WIS2 utilisée pour chaque jeu de données et comment pouvez-vous voir la description de chaque jeu de données ?
 
 ??? success "Cliquez pour révéler la réponse"
 
-    En ouvrant l'interface utilisateur wis2box à `http://YOUR-HOST`, vous devriez voir 2 jeux de données listés avec leur hiérarchie des sujets WIS2. Pour voir la description de chaque jeu de données, vous pouvez cliquer sur "metadata", ce qui redirigera vers l'élément 'discovery-metadata' correspondant tel que servi par l'API wis2box.
+    En ouvrant l'interface wis2box à `http://YOUR-HOST`, vous devriez voir 2 jeux de données listés avec leur hiérarchie de sujets WIS2. Pour voir la description de chaque jeu de données, vous pouvez cliquer sur "metadata", ce qui redirigera vers l'élément 'discovery-metadata' correspondant tel que servi par l'API wis2box.
 
 !!! question
 
@@ -304,25 +304,25 @@ Accédez à MQTT Explorer, si vous étiez connecté à votre broker, vous devrie
 
 ??? success "Cliquez pour révéler la réponse"
 
-    Vous devriez voir un nouveau message de notification de données envoyé après la mise à jour de votre jeu de données sur le sujet `origin/a/wis2/<your-centre-id>/metadata`.
-    
-    Dans le message, la valeur de *"rel": "canonical"* changera en *"rel": "update"*, indiquant que les données publiées précédemment ont été modifiées. Pour voir la description mise à jour, copiez-collez l'URL dans votre navigateur et vous devriez voir la description mise à jour.
+    Vous devriez voir un nouveau message de notification de données envoyé après avoir mis à jour votre jeu de données sur le sujet `origin/a/wis2/<your-centre-id>/metadata`.
+
+Dans le message, la valeur de *"rel": "canonical"* sera modifiée en *"rel": "update"*, indiquant que des données publiées précédemment ont été modifiées. Pour consulter la description mise à jour, copiez-collez l'URL dans votre navigateur et vous devriez voir la description actualisée.
 
 !!! question
 
-Essayez de mettre à jour la hiérarchie des sujets du dernier ensemble de données que vous avez créé en modifiant la sélection dans "Sujets de sous-discipline". Voyez-vous une nouvelle notification WIS2 publiée sur le sujet `origin/a/wis2/<your-centre-id>/metadata` ?
+    Essayez de mettre à jour la hiérarchie des sujets du dernier jeu de données que vous avez créé en modifiant la sélection dans "Sub-Discipline Topics". Voyez-vous une nouvelle notification WIS2 publiée sur le sujet `origin/a/wis2/<your-centre-id>/metadata` ?
 
 ??? success "Cliquez pour révéler la réponse"
 
-    Vous **ne pouvez pas** mettre à jour la hiérarchie des sujets d'un ensemble de données existant. Le champ Hiérarchie des sujets est désactivé dans le formulaire d'édition de l'ensemble de données après la création de celui-ci. Si vous souhaitez utiliser une hiérarchie des sujets différente, supprimez d'abord l'ensemble de données existant, puis créez un nouvel ensemble de données avec la hiérarchie des sujets souhaitée.
+    Vous **ne pouvez pas** mettre à jour la hiérarchie des sujets d'un jeu de données existant. Le champ Hiérarchie des sujets est désactivé dans le formulaire d'édition de jeu de données après la création du jeu de données. Si vous souhaitez utiliser une hiérarchie des sujets différente, supprimez d'abord le jeu de données existant, puis créez un nouveau jeu de données avec la hiérarchie des sujets souhaitée.
 
 ## Conclusion
 
 !!! success "Félicitations !"
     Au cours de cette session pratique, vous avez appris à :
 
-    - utiliser l'éditeur d'ensembles de données de wis2box-webapp
-    - créer de nouveaux ensembles de données en utilisant Template=*weather/surface-based-observations/synop* et Template=*other*
+    - utiliser l'éditeur de jeux de données de wis2box-webapp
+    - créer de nouveaux jeux de données en utilisant Template=*weather/surface-based-observations/synop* et Template=*other*
     - définir vos métadonnées de découverte
-    - examiner vos correspondances de données
+    - examiner vos mappages de données
     - publier des métadonnées de découverte et examiner la notification WIS2
