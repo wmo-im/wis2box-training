@@ -82,18 +82,29 @@ Open the file `GRIB2_CMA_global_ensemble_prediction.ipynb` in the `example-noteb
 
 Read the instructions in the notebook and run the cells to decode the downloaded data for the global ensemble prediction. Run each cell by clicking on the cell and then clicking the run button in the toolbar or by pressing `Shift+Enter`.
 
-At the end of the notebook you should see a map of displaying Pressure reduced to MSL (mean sea level):
+After you execute all cells, you should see visualization for one of the probabilistic predictions of Temperature Anomaly contained in the GRIB2 data
 
-![Global ensemble prediction temperature](../assets/img/grib2-global-ensemble-prediction-map.png)
+![Global ensemble prediction temperature anomaly](../assets/img/grib2-global-ensemble-prediction-map.png)
 
 !!! question 
 
-    The result displays the temperature at 2 meters above ground level. How would you update the notebook to display the wind speed at 10 meters above ground level?
+    How would you update the visualization in this notebook to display a prediction for "Wind speed (gust)"?
 
 ??? success "Click to reveal answer"
 
-    To update the notebook do the following.
+    To update the notebook find this line:
 
+    ```python
+    my_parameter_name = "Temperature anomaly"
+    ```
+
+    and change it to:
+
+    ```python
+    my_parameter_name = "Wind speed (gust)"
+    ```
+
+    Then re-run the cells in the notebook to see the updated plot.
 
 ### BUFR decoding example: Tropical cyclone tracks
 
