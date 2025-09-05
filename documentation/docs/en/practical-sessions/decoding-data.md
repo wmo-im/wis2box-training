@@ -82,26 +82,28 @@ Open the file `GRIB2_CMA_global_ensemble_prediction.ipynb` in the `example-noteb
 
 Read the instructions in the notebook and run the cells to decode the downloaded data for the global ensemble prediction. Run each cell by clicking on the cell and then clicking the run button in the toolbar or by pressing `Shift+Enter`.
 
-After you execute all cells, you should see visualization for one of the probabilistic predictions of Temperature Anomaly contained in the GRIB2 data
+After you execute all cells, you should see a visualization for "Probability of 850hPa temperature anomaly below -1.5 standard deviations"
 
 ![Global ensemble prediction temperature anomaly](../assets/img/grib2-global-ensemble-prediction-map.png)
 
 !!! question 
 
-    How would you update the visualization in this notebook to display a prediction for "Wind speed (gust)"?
+    How would you update the visualization in this notebook to visualize one of the other messages in the GRIB2 File ?
 
 ??? success "Click to reveal answer"
 
-    To update the notebook find this line:
+    In the last cell of the notebook, you will see the following code:
 
     ```python
-    my_parameter_name = "Temperature anomaly"
+    # show visualization for message number 8 (Probability of 850hPa temperature anomaly below -1.5 standard deviations)
+    show_map_visualization(grib_file, 8)
     ```
 
-    and change it to:
+    You can change this line or add another line to visualize one of the other messages in the GRIB2 file by changing the message number:
 
     ```python
-    my_parameter_name = "Wind speed (gust)"
+    # show visualization for message number 9
+    show_map_visualization(grib_file, 9)
     ```
 
     Then re-run the cells in the notebook to see the updated plot.
