@@ -1,22 +1,22 @@
 ---
-title: 发布数据的摄取
+title: 数据发布的摄取
 ---
 
-# 发布数据的摄取
+# 数据发布的摄取
 
-!!! abstract "学习目标"
+!!! abstract "学习成果"
 
     在本次实践课程结束时，您将能够：
     
-    - 通过使用 MinIO 网页界面、SFTP 或 Python 脚本上传数据，触发 wis2box 工作流。
-    - 访问 Grafana 仪表板以监控数据摄取状态并查看您的 wis2box 实例的日志。
+    - 通过使用 MinIO Web 界面、SFTP 或 Python 脚本上传数据，触发 wis2box 工作流。
+    - 访问 Grafana 仪表板，监控数据摄取状态并查看您的 wis2box 实例的日志。
     - 使用 MQTT Explorer 查看由您的 wis2box 发布的 WIS2 数据通知。
 
-## 简介
+## 介绍
 
-在 WIS2 中，数据通过 WIS2 数据通知实时共享，这些通知包含一个“规范”链接，可用于下载数据。
+在 WIS2 中，数据通过 WIS2 数据通知实时共享，这些通知包含一个“规范化”的链接，可用于下载数据。
 
-要使用 wis2box 软件在 WIS2 Node 中触发数据工作流，必须将数据上传到 **MinIO** 中的 **wis2box-incoming** 存储桶，这将启动 wis2box 工作流。此过程会通过 WIS2 数据通知发布数据。根据您在 wis2box 实例中配置的数据映射，数据可能会在发布之前转换为 BUFR 格式。
+要使用 wis2box 软件在 WIS2 Node 中触发数据工作流，必须将数据上传到 **MinIO** 中的 **wis2box-incoming** 存储桶，这将启动 wis2box 工作流。此过程会通过 WIS2 数据通知发布数据。根据您的 wis2box 实例中配置的数据映射，数据可能会在发布之前转换为 BUFR 格式。
 
 在本次练习中，我们将使用示例数据文件触发 wis2box 工作流，并为您在之前实践课程中配置的数据集**发布 WIS2 数据通知**。
 
@@ -40,7 +40,7 @@ python3 wis2box-ctl.py start
 python3 wis2box-ctl.py status
 ```
 
-确保 MQTT Explorer 正在运行并使用公共凭据 `everyone/everyone` 连接到您的实例，并订阅主题 `origin/a/wis2/#`。
+确保 MQTT Explorer 正在运行，并使用公共凭据 `everyone/everyone` 连接到您的实例，并订阅主题 `origin/a/wis2/#`。
 
 确保您已打开一个 Web 浏览器，并通过导航到 `http://YOUR-HOST:3000` 访问您的实例的 Grafana 仪表板。
 
@@ -53,23 +53,23 @@ cp -r ~/exercise-materials/data-ingest-exercises ~/wis2box-data/
 ```
 
 !!! note
-    `WIS2BOX_HOST_DATADIR` 由 `wis2box` 目录中 `docker-compose.yml` 文件挂载为 wis2box-management 容器内的 `/data/wis2box/`。
+    `WIS2BOX_HOST_DATADIR` 由 `wis2box` 目录中包含的 `docker-compose.yml` 文件挂载为 wis2box-management 容器内的 `/data/wis2box/`。
     
     这允许您在主机和容器之间共享数据。
 
 ## 使用 MinIO 界面摄取数据
 
-首先，我们将使用 MinIO 网页界面，该界面允许您通过 Web 浏览器下载和上传数据到 MinIO。
+首先，我们将使用 MinIO Web 界面，它允许您通过 Web 浏览器下载和上传数据到 MinIO。
 
 ### 访问 MinIO 界面
 
-打开 MinIO 网页界面（通常可通过 http://your-localhost:9001 访问）。
+打开 MinIO Web 界面（通常可通过 http://your-localhost:9001 访问）。
 
 WIS2BOX_STORAGE_USERNAME 和 WIS2BOX_STORAGE_PASSWORD 凭据可以在 wis2box.env 文件中找到。
 
 ### 使用 Universal 插件摄取和发布
 
-从以下链接下载本次练习的通用示例数据到本地环境：
+从以下链接下载本次练习的通用示例数据到您的本地环境：
 [sample-data-for-universal-plugin](../sample-data/Z_NAFP_C_BABJ_20250818000000_P_CMA-GEPS-GLB-024.grib2)
 
 选择存储桶 wis2box-incoming 并点击“Create new path”。目录名称必须与您在 [配置 wis2box 数据集](./configuring-wis2box-datasets.md) 实践课程中创建的 "other" 数据集的元数据标识符相对应。因此，在本例中，请创建目录：
@@ -86,7 +86,7 @@ urn:wmo:md:nl-knmi-test:customized-geps-dataset-wis2-training
 
 !!! question "将文件重命名为 sample-geps-data.grib2"
 
-    使用网页界面将重命名的文件上传到 MinIO 中与之前文件相同的路径。
+    使用 Web 界面将重命名的文件上传到 MinIO 中与之前文件相同的路径。
 
     重命名的文件会成功发布吗？为什么？
 
@@ -96,7 +96,7 @@ urn:wmo:md:nl-knmi-test:customized-geps-dataset-wis2-training
 
     <img alt="Metadata Editor: title, description, keywords" src="/../assets/img/mqtt-explorer-wis2-notification-geps-regex-error.png" width="800">
     
-    上传数据时，文件名必须符合由正则表达式定义的命名约定：
+    上传数据时，文件名必须符合正则表达式定义的命名约定：
 
     ```bash
     ^.*?_(\d{8}).*?\..*$
@@ -104,7 +104,7 @@ urn:wmo:md:nl-knmi-test:customized-geps-dataset-wis2-training
 
     此模式要求每个文件名包含：
 
-    一个下划线 (_)，紧接着是一个格式为 YYYYMMDD 的 8 位数字日期字符串（例如，20250904）。
+    一个下划线 (_)，后面紧跟一个格式为 YYYYMMDD 的 8 位数字日期字符串（例如，20250904）。
 
     例如，以下名称是有效的：
 
@@ -118,33 +118,33 @@ urn:wmo:md:nl-knmi-test:customized-geps-dataset-wis2-training
 
 !!! question "将文件扩展名从 .grib2 更改为 .bufr4（不更改文件的内部内容）"
 
-    使用网页界面将重命名的文件上传到 MinIO 中与之前文件相同的路径。
+    使用 Web 界面将重命名的文件上传到 MinIO 中与之前文件相同的路径。
 
     重命名的文件会成功发布吗？为什么？
 
 ??? success "点击查看答案"
 
-    不会，因为当您将数据格式从 "grib2" 更改为 "bufr4" 时，它将不符合您在创建数据集时定义的文件扩展名规则。
+    不会，因为当您将数据格式从 "grib2" 更改为 "bufr4" 时，它将不符合您在创建该数据集时定义的文件扩展名规则。
 
     <img alt="Metadata Editor: title, description, keywords" src="/../assets/img/mqtt-explorer-wis2-notification-geps-file-extension-error.png" width="800">
     
-    使用 Universal 插件上传数据时，文件必须具有与数据集配置中定义的文件扩展名一致的正确扩展名。此要求确保摄取过程能够正确识别和处理文件格式。例如，如果数据集配置为 grib2 文件，则只有以 .grib2 结尾的文件会被接受。使用不正确的扩展名（例如 .txt 或 .bin）将导致文件被拒绝且无法发布。
+    使用 Universal 插件上传数据时，文件必须具有数据集配置中定义的正确文件扩展名。此要求确保摄取过程能够正确识别和处理文件格式。例如，如果数据集配置为 grib2 文件，则仅接受以 .grib2 结尾的文件。使用不正确的扩展名（例如 .txt 或 .bin）将导致文件被拒绝且无法发布。
 
-!!! question "使用 MinIO 网页界面重新上传数据"
+!!! question "使用 MinIO Web 界面重新上传数据"
 
-    在浏览器中打开 MinIO 网页界面并浏览到 `wis2box-incoming` 存储桶。您将看到之前练习中上传的文件 `Z_NAFP_C_BABJ_20250818000000_P_CMA-GEPS-GLB-024.grib2`。
+    在浏览器中转到 MinIO Web 界面，浏览到 `wis2box-incoming` 存储桶。您将看到在之前练习中上传的文件 `Z_NAFP_C_BABJ_20250818000000_P_CMA-GEPS-GLB-024.grib2`。
 
-    点击文件，您将看到下载选项：
+    点击该文件，您将看到下载选项：
 
     <img alt="minio-wis2box-incoming-dataset-folder" src="/../assets/img/minio-download.png" width="800">
 
-    您可以下载此文件并将其重新上传到 MinIO 中的相同路径，以重新触发 wis2box 工作流。
+    您可以下载此文件并将其重新上传到 MinIO 中的相同路径以重新触发 wis2box 工作流。
 
     检查 Grafana 仪表板和 MQTT Explorer，查看数据是否成功摄取和发布。
 
 ??? success "点击查看答案"
 
-    您将看到一条消息，表明 wis2box 已经发布了此数据：
+    您将看到一条消息，指示 wis2box 已经发布了此数据：
 
     ```bash
     ERROR - Data already published for Z_NAFP_C_BABJ_20250818000000_P_CMA-GEPS-GLB-024-grib2; not publishing
@@ -152,11 +152,11 @@ urn:wmo:md:nl-knmi-test:customized-geps-dataset-wis2-training
     
     这表明数据工作流已被触发，但数据未重新发布。wis2box 不会重复发布相同的数据。
 
-### 使用 synop2bufr-plugin 摄取和发布数据
+### 使用 synop2bufr-plugin 摄取和发布
 
-下载练习所需的 synop 示例数据 [synop_202502040900.txt](../sample-data/synop_202502040900.txt) 到本地环境：
+下载用于本次练习的 synop 示例数据 [synop_202502040900.txt](../sample-data/synop_202502040900.txt) 到本地环境：
 
-选择存储桶 `wis2box-incoming` 并点击“Create new path”。目录名称必须与您在 [Configuring Datasets in wis2box](./configuring-wis2box-datasets.md) 实践环节中创建的 "surface-based-observations/synop" 数据集的元数据标识符一致。因此，在本例中，请创建以下目录：
+选择存储桶 `wis2box-incoming` 并点击“Create new path”。目录名称必须与您之前在 [Configuring Datasets in wis2box](./configuring-wis2box-datasets.md) 实践环节中创建的 "surface-based-observations/synop" 数据集的元数据标识符相对应。因此，在本例中，请创建以下目录：
 
 ```bash
 urn:wmo:md:nl-knmi-test:synop-dataset-wis2-training
@@ -168,21 +168,21 @@ urn:wmo:md:nl-knmi-test:synop-dataset-wis2-training
 
 ??? success "点击查看答案"
 
-    没有。在 Grafana 仪表板中，您会看到一条错误信息，表明数据摄取失败：
+    没有。在 Grafana 仪表板中，您会看到一条错误消息，表明数据摄取失败：
 
     <img alt="grafana_data_ingest" src="/../assets/img/grafana_data-ingest-error.png" width="800"> 
 
-    使用默认 synop 插件（支持 CSV、TXT 和 BUFR SYNOP 数据）的 synop 数据集模板时，每条记录必须包含有效的站点标识符。如果站点未在您的 `wis2box` 实例中定义，数据摄取将失败。因此，您必须先添加站点，然后再发布 SYNOP 数据。
+    使用 synop 数据集模板和默认的 synop 插件（支持 CSV、TXT 和 BUFR SYNOP 数据）时，每条记录都必须包含一个有效的站点标识符。如果站点未被您的 `wis2box` 实例识别，数据摄取将失败。因此，在发布 SYNOP 数据之前，您必须先添加站点。
 
     现在，让我们为本次练习添加一个测试站点。
 
-    使用 `wis2box-webapp` 中的站点编辑器，将 WIGOS 标识符为 `0-20000-0-64400` 的站点添加到您的 `wis2box` 实例中。
+    使用 `wis2box-webapp` 中的站点编辑器，将 WIGOS 标识符为 `0-20000-0-64400` 的站点添加到您的 `wis2box` 实例。
 
     从 OSCAR 检索站点信息：
 
     <img alt="oscar-station" src="/../assets/img/webapp-test-station-oscar-search.png" width="600">
 
-    将站点添加到您为 "../surface-based-observations/synop" 数据集创建的发布路径中，并使用您的身份验证令牌保存更改：
+    将站点添加到您为 "../surface-based-observations/synop" 创建的发布数据集中，并使用您的身份验证令牌保存更改：
 
     <img alt="webapp-test-station" src="/../assets/img/webapp-test-station-save.png" width="800">
 
@@ -196,13 +196,13 @@ urn:wmo:md:nl-knmi-test:synop-dataset-wis2-training
 
 在本次练习中，我们将使用 MinIO 的 Python 客户端将数据复制到 MinIO。
 
-MinIO 提供了一个 Python 客户端，可以通过以下命令安装：
+MinIO 提供了一个 Python 客户端，可以通过以下方式安装：
 
 ```bash
 pip3 install minio
 ```
 
-在您的学生虚拟机上，Python 的 `minio` 包已经安装。
+在您的学生虚拟机上，Python 的 `minio` 包已经预先安装。
 
 在 `exercise-materials/data-ingest-exercises` 目录中，您会找到一个示例脚本 `copy_file_to_incoming.py`，可用于将文件复制到 MinIO。
 
@@ -215,9 +215,9 @@ python3 copy_file_to_incoming.py synop_202501030900.txt
 
 !!! note
 
-    您会收到一个错误提示，因为脚本尚未配置为访问您的 `wis2box` 上的 MinIO 端点。
+    您会收到一个错误提示，因为脚本尚未配置为访问 `wis2box` 上的 MinIO 端点。
 
-脚本需要知道访问 `wis2box` 上 MinIO 的正确端点。如果 `wis2box` 运行在您的主机上，MinIO 端点可通过 `http://YOUR-HOST:9000` 访问。脚本还需要更新您的存储密码以及 MinIO 存储桶中存储数据的路径。
+脚本需要知道访问 `wis2box` 上 MinIO 的正确端点。如果 `wis2box` 运行在您的主机上，MinIO 的端点为 `http://YOUR-HOST:9000`。脚本还需要更新您的存储密码以及 MinIO 存储桶中存储数据的路径。
 
 !!! question "更新脚本并摄取 CSV 数据"
     
@@ -239,7 +239,7 @@ python3 copy_file_to_incoming.py synop_202501030900.txt
 
     确保错误已解决。
 
-当您成功运行脚本后，您会看到一条消息，表明文件已复制到 MinIO，您还应在 MQTT Explorer 中看到您的 `wis2box` 实例发布的数据通知。
+成功运行脚本后，您将看到一条消息，表明文件已复制到 MinIO，并且您应该在 MQTT Explorer 中看到由 `wis2box` 实例发布的数据通知。
 
 您还可以检查 Grafana 仪表板，查看数据是否成功摄取并发布。
 
@@ -257,19 +257,19 @@ python3 copy_file_to_incoming.py synop_202501030900.txt
 
 !!! question "验证数据摄取"
 
-    此数据样本发布到 MQTT broker 的消息数量是多少？
+    对于此数据样本，发布到 MQTT broker 的消息数量是多少？
 
 ??? success "点击查看答案"
 
-    您会在 Grafana 中看到错误报告，因为 BUFR 文件中的站点未在您的 `wis2box` 实例的站点列表中定义。
+    您将在 Grafana 中看到错误报告，因为 BUFR 文件中的站点未在 `wis2box` 实例的站点列表中定义。
 
-    如果 BUFR 文件中使用的所有站点都已在您的 `wis2box` 实例中定义，您应该会看到 10 条消息发布到 MQTT broker。每条通知对应一个站点的一个观测时间戳的数据。
+    如果 BUFR 文件中使用的所有站点都已在 `wis2box` 实例中定义，您应该会看到 10 条消息发布到 MQTT broker。每条通知对应一个站点的一个观测时间戳的数据。
 
-    插件 `wis2box.data.bufr4.ObservationDataBUFR` 会将 BUFR 文件拆分为单独的 BUFR 消息，并为每个站点和观测时间戳发布一条消息。
+    插件 `wis2box.data.bufr4.ObservationDataBUFR` 会将 BUFR 文件拆分为单个 BUFR 消息，并为每个站点和观测时间戳发布一条消息。
 
 ## 通过 SFTP 摄取数据（可选）
 
-`wis2box` 中的 MinIO 服务还可以通过 SFTP 访问。MinIO 的 SFTP 服务器绑定到主机的 8022 端口（22 端口用于 SSH）。
+`wis2box` 中的 MinIO 服务也可以通过 SFTP 访问。MinIO 的 SFTP 服务器绑定到主机的 8022 端口（22 端口用于 SSH）。
 
 在本次练习中，我们将演示如何使用 WinSCP 通过 SFTP 将数据上传到 MinIO。
 
@@ -283,7 +283,7 @@ SFTP 连接的凭据由 `wis2box.env` 文件中的 `WIS2BOX_STORAGE_USERNAME` �
 
 <img alt="winscp-sftp-bucket" src="/../assets/img/winscp-buckets.png" width="600">
 
-您可以导航到 `wis2box-incoming` 存储桶，然后进入您的数据集文件夹。您会看到之前练习中上传的文件：
+您可以导航到 `wis2box-incoming` 存储桶，然后进入您的数据集文件夹。您将看到之前练习中上传的文件：
 
 <img alt="winscp-sftp-incoming-path" src="/../assets/img/winscp-incoming-data-path.png" width="600">
 
@@ -291,9 +291,9 @@ SFTP 连接的凭据由 `wis2box.env` 文件中的 `WIS2BOX_STORAGE_USERNAME` �
 
     下载此示例文件到本地计算机：
 
-    [synop_202503030900.txt](./../sample-data/synop_202503030900.txt)（右键单击并选择“另存为”下载文件）。
+    [synop_202503030900.txt](./../sample-data/synop_202503030900.txt)（右键点击并选择“另存为”下载文件）。
 
-    然后使用 WinSCP 的 SFTP 会话将其上传到 MinIO 的 incoming 数据集路径中。
+    然后使用 WinSCP 的 SFTP 会话将其上传到 MinIO 的 incoming 数据集路径。
 
     检查 Grafana 仪表板和 MQTT Explorer，查看数据是否成功摄取并发布。
 
@@ -303,13 +303,13 @@ SFTP 连接的凭据由 `wis2box.env` 文件中的 `WIS2BOX_STORAGE_USERNAME` �
 
     <img alt="grafana_data_ingest" src="/../assets/img/grafana_data-ingest-test3.png" width="400"> 
 
-    如果路径错误，您将在日志中看到错误消息。
+    如果使用了错误的路径，您将在日志中看到一条错误消息。
 
 ## 总结
 
 !!! success "恭喜！"
-    在本次实践中，您学习了如何：
+    在本次实践环节中，您学会了：
 
     - 通过多种方法将数据上传到 MinIO 以触发 `wis2box` 工作流。
-    - 使用 Grafana 仪表板和 `wis2box` 实例的日志调试数据摄取过程中的常见错误。
+    - 使用 Grafana 仪表板和 `wis2box` 实例日志调试数据摄取过程中的常见错误。
     - 在 Grafana 仪表板和 MQTT Explorer 中监控由 `wis2box` 发布的 WIS2 数据通知。
