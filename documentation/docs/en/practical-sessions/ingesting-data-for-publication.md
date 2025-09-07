@@ -22,7 +22,7 @@ In this exercise, we will use sample data files to trigger the wis2box workflow 
 
 During the exercise, we will monitor the status of the data ingestion using the **Grafana dashboard** and **MQTT Explorer**. The Grafana dashboard uses data from Prometheus and Loki to display the status of your wis2box, while MQTT Explorer allows you to see the WIS2 data notifications published by your wis2box instance.
 
-Note that wis2box will transform the example data into BUFR format before publishing it to the MQTT broker, as per the data mappings pre-configured in your dataset. For this exercise, we will focus on the different methods to upload data to your wis2box instance and verify successful ingestion and publication. Data transformation will be covered later in the [Data Conversion Tools](./data-conversion-tools.md) practical session.
+For this exercise, we will focus on the different methods to upload data to your wis2box instance and verify successful ingestion and publication. Data transformation will be covered later in the [Data Conversion Tools](./data-conversion-tools.md) practical session.
 
 ## Preparation
 
@@ -44,102 +44,139 @@ Ensure MQTT Explorer is running and connected to your instance using the public 
 
 Ensure you have a web browser open with the Grafana dashboard for your instance by navigating to `http://YOUR-HOST:3000`.
 
-### Prepare Example Data
-
-Copy the directory `exercise-materials/data-ingest-exercises` to the directory you defined as the `WIS2BOX_HOST_DATADIR` in your `wis2box.env` file:
-
-```bash
-cp -r ~/exercise-materials/data-ingest-exercises ~/wis2box-data/
-```
-
-!!! note
-    The `WIS2BOX_HOST_DATADIR` is mounted as `/data/wis2box/` inside the wis2box-management container by the `docker-compose.yml` file included in the `wis2box` directory.
-    
-    This allows you to share data between the host and the container.
-
 ## Ingesting data using the MinIO Interface
 
 Firstly, we will use the MinIO web interface, which allows you to download and upload data to MinIO using a web browser.
 
 ### Accessing the MinIO Interface
 
-Open the MinIO web interface (usually available at http://your-localhost:9001).
+Open the MinIO web interface, usually available at `http://YOUR-HOST:9001`.
+
+<img alt="Minio UI: minio ui" src="/../assets/img/minio-ui.png" width="400">
 
 The credentials WIS2BOX_STORAGE_USERNAME and WIS2BOX_STORAGE_PASSWORD can be found in the wis2box.env file.
 
-### Ingest & Publish using Universal plugin 
-
-Download the universal sample data for this exercise from the link below in your local environment:
-[sample-data-for-universal-plugin](../sample-data/Z_NAFP_C_BABJ_20250818000000_P_CMA-GEPS-GLB-024.grib2)
-
-Select the bucket wis2box-incoming and click Create new path. The directory name must correspond to the Metadata Identifier of your "other" dataset, which you previously created in the [Configuring Datasets in wis2box](./configuring-wis2box-datasets.md) practical session. So in this case, please create the directory:
+If you are not sure about the values, please navigate to the root directory of your wis2box and run the following command to display only the relevant credentials:
 
 ```bash
-urn:wmo:md:nl-knmi-test:customized-geps-dataset-wis2-training
+grep -E '^(WIS2BOX_STORAGE_USERNAME|WIS2BOX_STORAGE_PASSWORD)=' wis2box.env
+```
+Use the values of WIS2BOX_STORAGE_USERNAME and WIS2BOX_STORAGE_PASSWORD as the username and password when logging into MinIO.
+
+### Ingest & Publish using Universal plugin 
+
+Download the geps sample data [geps_202508180000.grib2](../sample-data/geps_202508180000.grib2) in your local environment:
+
+Select the bucket wis2box-incoming and click `Create new path`. 
+
+<img alt="minio ui: create new path" src="/../assets/img/minio-create-new-path.png" width="800">
+
+The path name must correspond to the Metadata Identifier of your "other" dataset, which you previously created in the [Configuring Datasets in wis2box](./configuring-wis2box-datasets.md) practical session. 
+
+<img alt="minio ui: create new path empty" src="/../assets/img/minio-ui-create-path-empty.png" width="700">
+
+So in this case, please create the directory:
+
+```bash
+urn:wmo:md:my-centre-id:my-other-dataset
 ```
 
-Enter the newly created directory, click "Upload", and select the [sample-data-for-universal-plugin](../sample-data/Z_NAFP_C_BABJ_20250818000000_P_CMA-GEPS-GLB-024.grib2) you downloaded to your local machine before
+Enter the newly created directory, click `Upload`, find the [geps_202508180000.grib2](../sample-data/geps_202508180000.grib2) you downloaded to your local machine before and upload this file to wis2box-incoming bucket.
+
+<img alt="minio ui: upload your file" src="/../assets/img/minio-other-dataset-upload.png" width="650">
+
+Once you finish uploading it, you will see this file in MinoIO wis2box-incoming bucket:
+
+<img alt="minio ui: upload your file" src="/../assets/img/minio-geps-file-upload.png" width="650">
 
 After uploading, check with MQTT Explorer to confirm that the data was published successfully.
 
 <img alt="Metadata Editor: title, description, keywords" src="/../assets/img/mqtt-explorer-wis2-notification-geps-sample.png" width="800">
 
-!!! question "Rename the file to sample-geps-data.grib2"
+Next, download the geps sample data in a different file extension [geps_202508180000.nc](../sample-data/geps_202508180000.nc) in your local environment. Upload this file into the same directory as you did in the previous exercise.
 
-    Upload the renamed file using the web interface to the same path in MinIO as the previous file.
+!!! question "Question"
 
-    Will the renamed file be published successfully? Why or why not?
+    Can you successfully upload to the wis2box-incoming bucket?
 
 ??? success "Click to Reveal Answer"
 
-    No, because when you change the data name to "sample-geps-data.grib2", then it will not follow the regex rule.
+    Yes.
+    <img alt="Minio ui: geps nc file" src="/../assets/img/minio-upload-geps-with-nc-extension.png" width="800">
 
-    <img alt="Metadata Editor: title, description, keywords" src="/../assets/img/mqtt-explorer-wis2-notification-geps-regex-error.png" width="800">
-    
-    When uploading data, file names must comply with the required naming convention defined by a regular expression:
+!!! question "Question"
+
+    Can you successfully publish data notification messages through MinIO? 
+    Check the Grafana dashboard and MQTT Explorer to see if the data was successfully ingested and published.
+
+!!! hint
+
+    When creating a custom dataset, which plugin did you use?
+    Does the plugin have any file format requirements, and where are they specified?
+
+??? success "Click to Reveal Answer"
+
+    No.
+    You will see a message indicating that there is an unknown file type error.
 
     ```bash
-    ^.*?_(\d{8}).*?\..*$
-    ```
+    ERROR - Path validation error: Unknown file type (nc) for metadata_id=urn:wmo:md:nl-knmi-test:customized-geps-dataset-wis2-training. Did not match any of the following:grib2
+    ``` 
+    
+    This demonstrates that the data workflow was triggered, but the data was not re-published. The wis2box will not publish the data if it can not match grib2 file extension.
 
-    This pattern enforces that each file name contains:
+Then, download the renamed geps sample data [geps_renamed_sample_data.grib2](../sample-data/geps_renamed_sample_data.grib2) in your local environment. Upload this file into the same directory as you did in the previous two exercises.
 
-    An underscore (_), followed immediately by an 8-digit date string in the format YYYYMMDD (for example, 20250904).
+!!! question "Question"
 
-    For example, the following names are valid:
-
-    1. *Z_NAFP_C_BABJ_20250904_P_CMA-GEPS-GLB-024.grib2*
-
-    2. *forecast_20250904.grib2*
-
-    3. *sample-geps_20250101_data.grib2*
-
-    A name such as sample-geps-data.grib2 will not be accepted, because it does not contain the required 8-digit date.
-
-!!! question "Rename the file extension from .grib2 to .bufr4 (without changing the file’s internal content)"
-
-    Upload the renamed file using the web interface to the same path in MinIO as the previous file.
-
-    Will the renamed file be published successfully? Why or why not?
+    Can you successfully upload to the wis2box-incoming bucket?
 
 ??? success "Click to Reveal Answer"
 
-    No, because when you change the data format from "grib2" to "bufr4", then it will not follow the file extension rule you defined when you create that dataset.
+    Yes.
+    <img alt="Minio ui: geps nc file" src="/../assets/img/minio-upload-renamed-geps.png" width="800">
 
-    <img alt="Metadata Editor: title, description, keywords" src="/../assets/img/mqtt-explorer-wis2-notification-geps-file-extension-error.png" width="800">
+!!! question "Question"
+
+    Can you successfully publish data notification messages through MinIO? 
+    Check the Grafana dashboard and MQTT Explorer to see if the data was successfully ingested and published.
+
+!!! hint
+
+    Does the custom plugin you used impose any requirements or restrictions on the filename?
+
+??? success "Click to Reveal Answer"
+
+    No.
+        You will see a message indicating that there is an error about the data does not match the regex.
+
+    ```bash
+    ERROR - ERROR - geps_renamed_sample_data.grib2 did not match ^.*?_(\d{8}).*?\..*$
+    ``` 
     
-    When uploading data using the Universal plugin, the file must have the correct file extension as defined in the dataset configuration. This requirement ensures that the ingestion process can correctly recognize and handle the file format. For example, if the dataset is configured for grib2 files, only files ending with .grib2 will be accepted. Using an incorrect extension (e.g., .txt or .bin) will cause the file to be rejected and not published.
+    This demonstrates that the data workflow was triggered, but the data was not re-published. The wis2box will not publish the data if it can not match file pattern ^.*?_(\d{8}).*?\..*$.
 
-!!! question "Re-upload Data Using the MinIO Web Interface"
+The Universal plugin provides a generic mechanism to ingest and publish files without applying domain-specific decoding. Instead, it performs a set of basic checks before publishing a WIS2 notification:
 
-    Go to the MinIO web interface in your browser and browse to the `wis2box-incoming` bucket. You will see the file `sZ_NAFP_C_BABJ_20250818000000_P_CMA-GEPS-GLB-024.grib2` you uploaded in the previous exercises.
+`File extension` – the file must use the extension allowed by the dataset configuration.
 
-    Click on the file, and you will have the option to download it:
+`Filename pattern` – the file name must match the regular expression defined in the dataset.
 
-    <img alt="minio-wis2box-incoming-dataset-folder" src="/../assets/img/minio-download.png" width="800">
+If both conditions are met, the file is ingested and a notification is published.
 
-    You can download this file and re-upload it to the same path in MinIO to re-trigger the wis2box workflow.
+Uploading a file to MinIO always succeeds as long as the user has access. However, publishing a WIS2 data notification requires stricter validation. Files that do not satisfy the extension or filename rules will be stored in the incoming bucket, but the `Universal plugin` will not publish a notification for them. This explains why files with an unsupported extension (e.g. `geps_202508180000.nc`) or with an invalid filename (e.g. `geps_renamed_sample_data.grib2`) are accepted by MinIO but do not appear in WIS2.
 
+Next, go to the MinIO web interface in your browser and browse to the `wis2box-incoming` bucket. You will see the file `geps_202508180000.grib2` you uploaded in the previous exercises.
+
+Click on the file, and you will have the option to download it:
+
+<img alt="minio-wis2box-incoming-dataset-folder" src="/../assets/img/minio-download.png" width="800">
+
+Please download this file and re-upload it to the same path in MinIO to re-trigger the wis2box workflow.
+
+!!! question "Question"
+
+    Can you successfully re-publish data notification messages through MinIO? 
     Check the Grafana dashboard and MQTT Explorer to see if the data was successfully ingested and published.
 
 ??? success "Click to Reveal Answer"
@@ -147,46 +184,57 @@ After uploading, check with MQTT Explorer to confirm that the data was published
     You will see a message indicating that the wis2box already published this data:
 
     ```bash
-    ERROR - Data already published for Z_NAFP_C_BABJ_20250818000000_P_CMA-GEPS-GLB-024-grib2; not publishing
+    ERROR - Data already published for geps_202508180000-grib2; not publishing
     ``` 
     
     This demonstrates that the data workflow was triggered, but the data was not re-published. The wis2box will not publish the same data twice. 
 
 ### Ingest & Publish using synop2bufr-plugin
 
-Download the synop sample data [synop_202502040900.txt](../sample-data/synop_202502040900.txt) for this exercise from the link below in your local environment:
+Download the synop sample data [synop_202502040900.txt](../sample-data/synop_202502040900.txt) for this exercise in your local environment:
 
-Select the bucket wis2box-incoming and click Create new path. The directory name must correspond to the Metadata Identifier of your "surface-based-observations/synop" dataset, which you previously created in the [Configuring Datasets in wis2box](./configuring-wis2box-datasets.md) practical session. So in this case, please create the directory:
+As in the previous exercises, create a directory under the wis2box-incoming bucket that matches the Metadata Identifier of your surface-based-observations/synop dataset.
 
-```bash
-urn:wmo:md:nl-knmi-test:synop-dataset-wis2-training
-```
+Enter the newly created directory, click `Upload`, and select the [synop_202502040900.txt](../sample-data/synop_202502040900.txt) you downloaded to your local machine before and then upload.
 
-Enter the newly created directory, click "Upload", and select the [synop_202502040900.txt](../sample-data/synop_202502040900.txt) you downloaded to your local machine before and then upload.
+!!! question "Question"
 
-!!! question "Did you receive a new notification indicating that the data was published? Why?"
+    Can you successfully publish data notification messages through MinIO? 
+    Check the Grafana dashboard and MQTT Explorer to see if the data was successfully ingested and published.
 
 ??? success "Click to Reveal Answer"
 
-    No. In the Grafana Dashboard you will see an error indicating that ingestion failed:
+    No. 
+    In the Grafana Dashboard you will see a warning indicating that missing station 64400 record:
 
-    <img alt="grafana_data_ingest" src="/../assets/img/grafana_data-ingest-error.png" width="800"> 
-
-    When using the synop dataset template with the default synop plugins (for CSV, TXT, and BUFR SYNOP data), each record must include a valid station identifier. Ingest fails if the station is not known to your wis2box instance. Therefore, you must add the station first before publishing SYNOP data.
-
-    So now, let add a test station for this exercise.
+    ```bash
+    WARNING - Station 64400 not found in station file
+    ``` 
     
-    Add the station with WIGOS identifier `0-20000-0-64400` to your wis2box instance using the station editor in the wis2box-webapp.
+    This demonstrates that the data workflow was triggered, but a specific station metadata is needed. 
 
-    Retrieve the station from OSCAR:
+In this case, you are using the `FM-12 data converted to BUFR` plugin.
 
-    <img alt="oscar-station" src="/../assets/img/webapp-test-station-oscar-search.png" width="600">
+The purpose of this plugin is to handle FM-12 data provided in plain text format and convert it into binary BUFR.
+During this process, the plugin needs to parse and map the station information contained in the data.
 
-    Add the station to the datasets you created for publishing on "../surface-based-observations/synop" and save the changes using your authentication token:
+If essential station metadata is missing, the plugin cannot parse the file correctly and the conversion will fail.
 
-    <img alt="webapp-test-station" src="/../assets/img/webapp-test-station-save.png" width="800">
+Therefore, you must ensure that the relevant station metadata has been added to wis2box before publishing SYNOP data.
 
-    Note that you can remove this station from your dataset after the practical session.
+So now, let add a test station for this exercise.
+    
+Add the station with WIGOS identifier `0-20000-0-64400` to your wis2box instance using the station editor in the wis2box-webapp.
+
+Retrieve the station from OSCAR:
+
+<img alt="oscar-station" src="/../assets/img/webapp-test-station-oscar-search.png" width="600">
+
+Add the station to the datasets you created for publishing on "../surface-based-observations/synop" and save the changes using your authentication token:
+
+<img alt="webapp-test-station" src="/../assets/img/webapp-test-station-save.png" width="800">
+
+Note that you can remove this station from your dataset after the practical session.
 
 After finishing configuring the station metadata, check with MQTT Explorer to confirm that the data was published successfully. If you see the notification below then you publish the synop sample data successfully.
 
@@ -203,6 +251,17 @@ pip3 install minio
 ```
 
 On your student VM, the 'minio' package for Python will already be installed.
+
+Copy the directory `exercise-materials/data-ingest-exercises` to the directory you defined as the `WIS2BOX_HOST_DATADIR` in your `wis2box.env` file:
+
+```bash
+cp -r ~/exercise-materials/data-ingest-exercises ~/wis2box-data/
+```
+
+!!! note
+    The `WIS2BOX_HOST_DATADIR` is mounted as `/data/wis2box/` inside the wis2box-management container by the `docker-compose.yml` file included in the `wis2box` directory.
+    
+    This allows you to share data between the host and the container.
 
 In the `exercise-materials/data-ingest-exercises` directory, you will find an example script `copy_file_to_incoming.py` that can be used to copy files into MinIO.
 
