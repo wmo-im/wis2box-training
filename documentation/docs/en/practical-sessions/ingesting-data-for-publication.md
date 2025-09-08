@@ -91,9 +91,9 @@ Enter the new Folder Path = *new-directory" and upload this example file [mydata
     ERROR - Path validation error: Could not match http://minio:9000/wis2box-incoming/new-directory/mydata.nc to dataset, path should include one of the following: ['urn:wmo:md:int-wmo-example:synop-dataset-wis2-training', 'urn:wmo:md:int-wmo-example:forecast-dataset' ...
     ``` 
     
-## Ingest & Publish using Universal plugin 
+## Ingest & Publish: "Universal"-plugin 
 
-Now that you know how to upload data to MinIO, let's try to upload data for the dataset you created in the previous practical session using the `Universal` plugin.
+Now that you know how to upload data to MinIO, let's try to upload data for the forecast dataset you created in the previous practical session that is using the "Universal"-plugin.
 
 Go back to the MinIO web interface in your browser, select the bucket `wis2box-incoming`, and click `Create new path`.
 
@@ -162,7 +162,7 @@ You should see a new WIS2 data notification in MQTT Explorer:
 
     If you want to force re-sending the notification for the same data, delete the data from the 'wis2box-public' bucket before re-ingesting the data.
 
-## Ingest & Publish using synop2bufr-plugin
+## Ingest & Publish: "synop2bufr"-plugin
 
 Next you will dataset you created in the previous practical session using **Template='weather/surface-based-observations/synop'**. The template pre-configured the following data plugins for you:
 
@@ -236,6 +236,8 @@ Check the Grafana dashboard and check MQTT Explorer to confirm that the data was
     The file extension is `.bufr4`, indicating that the data was successfully transformed from FM-12 format to BUFR format by the plugin.
 
 ## Ingesting data using Python
+
+Using the MinIO web interface is a convenient way to manually upload data to MinIO for testing purposes. However, in a production environment you would typically use automated processes to upload data to MinIO, for example using scripts or applications that use the MinIO S3-compatible API.
 
 In this exercise, we will use the MinIO Python client to copy data into MinIO.
 
@@ -323,7 +325,9 @@ Check the Grafana dashboard and MQTT Explorer to see if the test data was succes
 
 ## Ingesting data over SFTP
 
-The MinIO service in wis2box can also be accessed over SFTP. The SFTP server for MinIO is bound to port 8022 on the host (port 22 is used for SSH).
+The MinIO service in wis2box can also be accessed over SFTP. If you have an existing system that can be configured to forward data over SFTP, you can use this as an alternative method to automate your data ingestion.
+
+The SFTP server for MinIO is bound to port 8022 on the host (port 22 is used for SSH).
 
 In this exercise, we will demonstrate how to use WinSCP to upload data to MinIO using SFTP.
 
