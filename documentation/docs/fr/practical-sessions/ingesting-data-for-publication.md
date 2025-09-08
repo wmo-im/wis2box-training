@@ -4,7 +4,7 @@ title: Ingestion des données pour publication
 
 # Ingestion des données pour publication
 
-!!! abstract "Résultats d'apprentissage"
+!!! abstract "Objectifs d'apprentissage"
 
     À la fin de cette session pratique, vous serez capable de :
     
@@ -16,23 +16,23 @@ title: Ingestion des données pour publication
 
 Dans WIS2, les données sont partagées en temps réel via des notifications de données WIS2 contenant un lien "canonique" à partir duquel les données peuvent être téléchargées.
 
-Pour déclencher le workflow de données dans un WIS2 Node en utilisant le logiciel wis2box, les données doivent être téléchargées dans le bucket **wis2box-incoming** de **MinIO**, ce qui initie le workflow de wis2box. Ce processus aboutit à la publication des données via une notification de données WIS2. Selon les mappages de données configurés dans votre instance wis2box, les données peuvent être transformées au format BUFR avant leur publication.
+Pour déclencher le workflow des données dans un WIS2 Node en utilisant le logiciel wis2box, les données doivent être téléchargées dans le bucket **wis2box-incoming** dans **MinIO**, ce qui initie le workflow de données de wis2box pour traiter et publier les données.
 
-Dans cet exercice, nous utiliserons des fichiers de données d'exemple pour déclencher le workflow de wis2box et **publier des notifications de données WIS2** pour le jeu de données que vous avez configuré lors de la session pratique précédente.
+Pour surveiller l'état du workflow de données de wis2box, vous pouvez utiliser le **tableau de bord Grafana** et **MQTT Explorer**. Le tableau de bord Grafana utilise les données de Prometheus et Loki pour afficher l'état de votre wis2box, tandis que MQTT Explorer vous permet de voir les notifications de données WIS2 publiées par votre instance wis2box.
 
-Pendant l'exercice, nous surveillerons l'état de l'ingestion des données à l'aide du **tableau de bord Grafana** et de **MQTT Explorer**. Le tableau de bord Grafana utilise des données de Prometheus et Loki pour afficher l'état de votre wis2box, tandis que MQTT Explorer vous permet de voir les notifications de données WIS2 publiées par votre instance wis2box.
+Dans cette section, nous nous concentrerons sur la manière de télécharger des données dans votre instance wis2box et de vérifier leur ingestion et publication réussies. La transformation des données sera abordée ultérieurement dans la session pratique [Outils de conversion de données](./data-conversion-tools.md).
 
-Pour cet exercice, nous nous concentrerons sur les différentes méthodes de téléchargement des données dans votre instance wis2box et sur la vérification de l'ingestion et de la publication réussies. La transformation des données sera abordée ultérieurement dans la session pratique [Outils de conversion de données](./data-conversion-tools.md).
+Pour tester manuellement le processus d'ingestion des données, nous utiliserons l'interface web de MinIO, qui vous permet de télécharger et téléverser des données dans MinIO à l'aide d'un navigateur web.
+
+Dans un environnement de production, les données seraient généralement ingérées à l'aide de processus automatisés, tels que des scripts ou des applications qui transmettent les données à MinIO via S3 ou SFTP.
 
 ## Préparation
 
-Cette section utilise le jeu de données pour "surface-based-observations/synop" et "other" précédemment créé dans la session pratique [Configuration des jeux de données dans wis2box](./configuring-wis2box-datasets.md).
+Cette section suppose que vous avez terminé avec succès la session pratique [Configuration des ensembles de données dans wis2box](./configuring-wis2box-datasets.md). Si vous avez suivi les instructions de cette session, vous devriez avoir un ensemble de données utilisant le plugin `Universal` et un autre utilisant le plugin `FM-12 data converted to BUFR`.
 
-Elle nécessite également des connaissances sur la configuration des stations dans le **wis2box-webapp**, comme décrit dans la session pratique [Configuration des métadonnées des stations](./configuring-station-metadata.md).
+Assurez-vous de pouvoir vous connecter à votre machine virtuelle étudiante en utilisant votre client SSH (par exemple, PuTTY).
 
-Assurez-vous de pouvoir vous connecter à votre VM étudiant en utilisant votre client SSH (par exemple, PuTTY).
-
-Assurez-vous que wis2box est en cours d'exécution :
+Assurez-vous que wis2box est opérationnel :
 
 ```bash
 cd ~/wis2box/
@@ -42,208 +42,201 @@ python3 wis2box-ctl.py status
 
 Assurez-vous que MQTT Explorer est en cours d'exécution et connecté à votre instance en utilisant les identifiants publics `everyone/everyone` avec un abonnement au sujet `origin/a/wis2/#`.
 
-Assurez-vous d'avoir un navigateur web ouvert avec le tableau de bord Grafana de votre instance en naviguant vers `http://YOUR-HOST:3000`.
+## Le tableau de bord Grafana
 
-## Ingestion des données via l'interface MinIO
+Ouvrez le tableau de bord Grafana disponible à l'adresse `http://YOUR-HOST:3000` et vous verrez le tableau de bord de publication des données de wis2box :
 
-Tout d'abord, nous utiliserons l'interface web de MinIO, qui vous permet de télécharger et téléverser des données dans MinIO à l'aide d'un navigateur web.
+<img alt="grafana_dashboard" src="/../assets/img/grafana-homepage.png" width="800">
 
-### Accéder à l'interface MinIO
+Gardez le tableau de bord Grafana ouvert dans votre navigateur, car nous l'utiliserons plus tard pour surveiller l'état de l'ingestion des données.
 
-Ouvrez l'interface web de MinIO, généralement disponible à `http://YOUR-HOST:9001`.
+## Utilisation de l'interface web de MinIO
 
-<img alt="Minio UI: minio ui" src="/../assets/img/minio-ui.png" width="400">
+Ouvrez l'interface web de MinIO disponible à l'adresse `http://YOUR-HOST:9001` et vous verrez l'écran de connexion :
 
-Les identifiants WIS2BOX_STORAGE_USERNAME et WIS2BOX_STORAGE_PASSWORD peuvent être trouvés dans le fichier wis2box.env.
+<img alt="Minio UI: minio ui" src="/../assets/img/minio-login.png" width="400">
 
-Si vous n'êtes pas sûr des valeurs, veuillez naviguer vers le répertoire racine de votre wis2box et exécuter la commande suivante pour afficher uniquement les identifiants pertinents :
-
-```bash
-grep -E '^(WIS2BOX_STORAGE_USERNAME|WIS2BOX_STORAGE_PASSWORD)=' wis2box.env
-```
-
-Utilisez les valeurs de WIS2BOX_STORAGE_USERNAME et WIS2BOX_STORAGE_PASSWORD comme nom d'utilisateur et mot de passe lors de la connexion à MinIO.
-
-### Ingestion et publication avec le plugin Universal
-
-Téléchargez les données d'exemple geps [geps_202508180000.grib2](../sample-data/geps_202508180000.grib2) dans votre environnement local :
-
-Sélectionnez le bucket wis2box-incoming et cliquez sur `Create new path`.
-
-<img alt="minio ui: create new path" src="/../assets/img/minio-create-new-path.png" width="800">
-
-Le nom du chemin doit correspondre à l'identifiant de métadonnées de votre jeu de données "other", que vous avez précédemment créé dans la session pratique [Configuration des jeux de données dans wis2box](./configuring-wis2box-datasets.md).
-
-<img alt="minio ui: create new path empty" src="/../assets/img/minio-ui-create-path-empty.png" width="700">
-
-Dans ce cas, veuillez créer le répertoire suivant :
+Pour vous connecter, vous devez utiliser les identifiants définis par WIS2BOX_STORAGE_USERNAME et WIS2BOX_STORAGE_PASSWORD dans le fichier wis2box.env. Vous pouvez vérifier les valeurs de ces variables en exécutant les commandes suivantes sur votre machine virtuelle étudiante :
 
 ```bash
-urn:wmo:md:my-centre-id:my-other-dataset
+cat wis2box.env | grep WIS2BOX_STORAGE_USERNAME
+cat wis2box.env | grep WIS2BOX_STORAGE_PASSWORD
 ```
 
-Entrez dans le répertoire nouvellement créé, cliquez sur `Upload`, trouvez le fichier [geps_202508180000.grib2](../sample-data/geps_202508180000.grib2) que vous avez téléchargé sur votre machine locale et téléversez ce fichier dans le bucket wis2box-incoming.
+Après vous être connecté, vous êtes dans la vue Object Browser de MinIO. Ici, vous pouvez voir les buckets utilisés par wis2box :
 
-<img alt="minio ui: upload your file" src="/../assets/img/minio-other-dataset-upload.png" width="650">
+- *wis2box-incoming* : C'est le bucket où vous téléchargez les données pour déclencher le workflow de wis2box.
+- *wis2box-public* : C'est le bucket où wis2box publie les données qui ont été ingérées et traitées avec succès.
 
-Une fois le téléversement terminé, vous verrez ce fichier dans le bucket wis2box-incoming de MinIO :
+Cliquez sur le bucket *wis2box-incoming*. Essayez l'option pour définir un nouveau chemin dans ce bucket en cliquant sur `Create new path` :
 
-<img alt="minio ui: upload your file" src="/../assets/img/minio-geps-file-upload.png" width="650">
+<img alt="minio ui: minio ui after login" src="/../assets/img/minio-incoming-create-new-path.png" width="800">
 
-Après le téléversement, vérifiez avec MQTT Explorer pour confirmer que les données ont été publiées avec succès.
+Entrez le nouveau chemin de dossier = *new-directory* et téléversez ce fichier exemple [mydata.nc](./../sample-data/mydata.nc) (cliquez avec le bouton droit et sélectionnez "enregistrer sous" pour télécharger le fichier). Vous pouvez utiliser le bouton "Upload" dans MinIO pour téléverser le fichier dans le nouveau répertoire :
+
+<img alt="minio ui: create new path" src="/../assets/img/minio-initial-example-upload.png" width="800">
+
+!!! question "Question"
+
+    Après avoir téléversé le fichier, comment pouvez-vous vérifier si le workflow de données dans wis2box a été déclenché avec succès ?
+
+??? success "Cliquez pour révéler la réponse"
+
+    Vous pouvez vérifier le tableau de bord Grafana pour voir si les données ont été ingérées et publiées avec succès.
+
+    Regardez le panneau inférieur du tableau de bord Grafana et vous verrez une **erreur de validation de chemin** indiquant que le chemin ne correspond à aucun ensemble de données configuré :
+
+    ```bash
+    ERROR - Path validation error: Could not match http://minio:9000/wis2box-incoming/new-directory/mydata.nc to dataset, path should include one of the following: ['urn:wmo:md:int-wmo-example:synop-dataset-wis2-training', 'urn:wmo:md:int-wmo-example:forecast-dataset' ...
+    ``` 
+    
+## Ingestion et publication à l'aide du plugin Universal
+
+Maintenant que vous savez comment téléverser des données dans MinIO, essayons de téléverser des données pour l'ensemble de données que vous avez créé lors de la session pratique précédente en utilisant le plugin `Universal`.
+
+Retournez à l'interface web de MinIO dans votre navigateur, sélectionnez le bucket `wis2box-incoming` et cliquez sur `Create new path`.
+
+Cette fois, assurez-vous de **créer un répertoire correspondant à l'identifiant de métadonnées pour l'ensemble de données de prévisions** que vous avez créé lors de la session pratique précédente :
+
+<img alt="minio-filepath-forecast-dataset" src="/../assets/img/minio-filepath-forecast-dataset.png" width="800">
+
+Entrez dans le répertoire nouvellement créé, cliquez sur `Upload` et téléversez le fichier que vous avez utilisé précédemment, *mydata.nc*, dans le nouveau répertoire. Vérifiez le tableau de bord Grafana pour voir si les données ont été ingérées et publiées avec succès.
+
+Vous devriez voir l'erreur suivante dans le tableau de bord Grafana :
+
+```bash
+ERROR - Path validation error: Unknown file type (nc) for metadata_id=urn:wmo:md:int-wmo-example:forecast-dataset. Did not match any of the following:grib2
+```
+
+!!! question "Question"
+
+    Pourquoi les données n'ont-elles pas été ingérées et publiées ?
+
+??? success "Cliquez pour révéler la réponse"
+
+    L'ensemble de données a été configuré pour ne traiter que les fichiers avec l'extension `.grib2`. La configuration de l'extension de fichier fait partie des mappages de données que vous avez définis lors de la session pratique précédente.
+
+Téléchargez ce fichier [GEPS_18August2025.grib2](../sample-data/GEPS_18August2025.grib2) sur votre ordinateur local et téléversez-le dans le répertoire que vous avez créé pour l'ensemble de données de prévisions. Vérifiez le tableau de bord Grafana et MQTT Explorer pour voir si les données ont été ingérées et publiées avec succès.
+
+Vous verrez l'erreur suivante dans le tableau de bord Grafana :
+
+```bash
+ERROR - Failed to transform file http://minio:9000/wis2box-incoming/urn:wmo:md:int-wmo-example:forecast-dataset/GEPS_18August2025.grib2 : GEPS_18August2025.grib2 did not match ^.*?_(\d{8}).*?\..*$
+```
+
+!!! question "Question"
+
+    Comment pouvez-vous résoudre cette erreur ?
+
+??? success "Cliquez pour révéler la réponse"
+
+    Le nom du fichier ne correspond pas à l'expression régulière que vous avez définie dans la configuration de l'ensemble de données. Le nom du fichier doit correspondre au modèle `^.*?_(\d{8}).*?\..*$`, qui exige une date à 8 chiffres (YYYYMMDD) dans le nom du fichier.
+
+    Renommez le fichier en *GEPS_202508180000.grib2* et téléversez-le à nouveau dans le même chemin dans MinIO pour relancer le workflow de wis2box. (ou téléchargez le fichier renommé ici : [GEPS_202508180000.grib2](../sample-data/GEPS_202508180000.grib2)).
+
+Après avoir corrigé le problème avec le nom du fichier, vérifiez le tableau de bord Grafana et MQTT Explorer pour voir si les données ont été ingérées et publiées avec succès.
+
+Vous devriez voir une nouvelle notification de données WIS2 dans MQTT Explorer :
 
 <img alt="mqtt explorer: message notification geps data" src="/../assets/img/mqtt-explorer-wis2-notification-geps-sample.png" width="800">
 
-Ensuite, téléchargez les données d'exemple geps dans une autre extension de fichier [geps_202508180000.nc](../sample-data/geps_202508180000.nc) dans votre environnement local. Téléversez ce fichier dans le même répertoire que dans l'exercice précédent.
+!!! note "À propos du plugin Universal"
 
-!!! question "Question"
+    Le plugin "Universal" vous permet de publier des données sans aucune transformation. C'est un plugin *pass-through* qui ingère le fichier de données et le publie tel quel. Afin d'ajouter la propriété "datetime" à la notification de données WIS2, le plugin s'appuie sur le premier groupe de l'expression régulière du modèle de fichier pour extraire la date des données que vous publiez.
 
-    Pouvez-vous téléverser avec succès dans le bucket wis2box-incoming ?
+!!! question "Question bonus"
 
-??? success "Cliquez pour révéler la réponse"
-
-    Oui.
-    <img alt="Minio ui: geps nc file" src="/../assets/img/minio-upload-geps-with-nc-extension.png" width="800">
-
-!!! question "Question"
-
-    Pouvez-vous publier avec succès des messages de notification de données via MinIO ? 
-    Consultez le tableau de bord Grafana et MQTT Explorer pour vérifier si les données ont été ingérées et publiées avec succès.
-
-!!! hint
-
-    Lors de la création d'un jeu de données personnalisé, quel plugin avez-vous utilisé ?
-    Le plugin impose-t-il des exigences sur le format des fichiers, et où sont-elles spécifiées ?
-
-??? success "Cliquez pour révéler la réponse"
-
-    Non.
-    Vous verrez un message indiquant qu'il y a une erreur de type de fichier inconnu.
-
-    ```bash
-    ERROR - Path validation error: Unknown file type (nc) for metadata_id=urn:wmo:md:nl-knmi-test:customized-geps-dataset-wis2-training. Did not match any of the following:grib2
-    ``` 
-    
-    Cela montre que le workflow des données a été déclenché, mais les données n'ont pas été re-publiées. Le wis2box ne publiera pas les données si elles ne correspondent pas à l'extension de fichier grib2.
-
-Ensuite, téléchargez les données d'exemple geps renommées [geps_renamed_sample_data.grib2](../sample-data/geps_renamed_sample_data.grib2) dans votre environnement local. Téléversez ce fichier dans le même répertoire que dans les deux exercices précédents.
-
-!!! question "Question"
-
-    Pouvez-vous téléverser avec succès dans le bucket wis2box-incoming ?
-
-??? success "Cliquez pour révéler la réponse"
-
-    Oui.
-    <img alt="Minio ui: geps nc file" src="/../assets/img/minio-upload-renamed-geps.png" width="800">
-
-!!! question "Question"
-
-    Pouvez-vous publier avec succès des messages de notification de données via MinIO ? 
-    Consultez le tableau de bord Grafana et MQTT Explorer pour vérifier si les données ont été ingérées et publiées avec succès.
-
-!!! hint
-
-    Le plugin personnalisé que vous avez utilisé impose-t-il des exigences ou des restrictions sur le nom du fichier ?
-
-??? success "Cliquez pour révéler la réponse"
-
-    Non.
-    Vous verrez un message indiquant qu'il y a une erreur concernant le fait que les données ne correspondent pas à l'expression régulière.
-
-    ```bash
-    ERROR - ERROR - geps_renamed_sample_data.grib2 did not match ^.*?_(\d{8}).*?\..*$
-    ``` 
-    
-    Cela montre que le workflow des données a été déclenché, mais les données n'ont pas été re-publiées. Le wis2box ne publiera pas les données si elles ne correspondent pas au modèle de fichier ^.*?_(\d{8}).*?\..*$.
-
-Le plugin Universal fournit un mécanisme générique pour ingérer et publier des fichiers sans appliquer de décodage spécifique au domaine. Au lieu de cela, il effectue un ensemble de vérifications de base avant de publier une notification WIS2 :
-
-`Extension de fichier` – le fichier doit utiliser l'extension autorisée par la configuration du jeu de données.
-
-`Modèle de nom de fichier` – le nom du fichier doit correspondre à l'expression régulière définie dans le jeu de données.
-
-Si les deux conditions sont remplies, le fichier est ingéré et une notification est publiée.
-
-Télécharger un fichier sur MinIO réussit toujours tant que l'utilisateur a accès. Cependant, publier une notification de données WIS2 nécessite une validation plus stricte. Les fichiers qui ne respectent pas les règles d'extension ou de nom de fichier seront stockés dans le bucket `incoming`, mais le `Universal plugin` ne publiera pas de notification pour eux. Cela explique pourquoi des fichiers avec une extension non prise en charge (par exemple, `geps_202508180000.nc`) ou avec un nom de fichier invalide (par exemple, `geps_renamed_sample_data.grib2`) sont acceptés par MinIO mais n'apparaissent pas dans WIS2.
-
-Ensuite, accédez à l'interface web de MinIO dans votre navigateur et parcourez le bucket `wis2box-incoming`. Vous verrez le fichier `geps_202508180000.grib2` que vous avez téléchargé lors des exercices précédents.
-
-Cliquez sur le fichier, et vous aurez l'option de le télécharger :
-
-<img alt="minio-wis2box-incoming-dataset-folder" src="/../assets/img/minio-download.png" width="800">
-
-Veuillez télécharger ce fichier et le re-téléverser au même emplacement dans MinIO pour relancer le workflow de wis2box.
-
-!!! question "Question"
-
-    Pouvez-vous republier avec succès les messages de notification de données via MinIO ? 
-    Vérifiez le tableau de bord Grafana et MQTT Explorer pour voir si les données ont été ingérées et publiées avec succès.
-
-??? success "Cliquez pour révéler la réponse"
-
-    Vous verrez un message indiquant que les données ont déjà été publiées par wis2box :
-
-    ```bash
-    ERROR - Data already published for geps_202508180000-grib2; not publishing
-    ``` 
-    
-    Cela démontre que le workflow des données a été déclenché, mais que les données n'ont pas été republiées. Wis2box ne publiera pas les mêmes données deux fois.
-
-### Ingestion et publication avec le plugin synop2bufr
-
-Téléchargez les données d'exemple synop [synop_202502040900.txt](../sample-data/synop_202502040900.txt) pour cet exercice dans votre environnement local :
-
-Comme dans les exercices précédents, créez un répertoire sous le bucket `wis2box-incoming` correspondant à l'identifiant de métadonnées de votre jeu de données surface-based-observations/synop.
-
-Entrez dans le répertoire nouvellement créé, cliquez sur `Upload`, sélectionnez le fichier [synop_202502040900.txt](../sample-data/synop_202502040900.txt) que vous avez téléchargé sur votre machine locale, puis téléversez-le.
-
-!!! question "Question"
-
-    Pouvez-vous publier avec succès les messages de notification de données via MinIO ? 
-    Vérifiez le tableau de bord Grafana et MQTT Explorer pour voir si les données ont été ingérées et publiées avec succès.
+    Essayez de téléverser à nouveau le même fichier dans le même chemin dans MinIO. Recevez-vous une autre notification dans MQTT Explorer ?
 
 ??? success "Cliquez pour révéler la réponse"
 
     Non. 
-    Dans le tableau de bord Grafana, vous verrez un avertissement indiquant qu'un enregistrement de station 64400 est manquant :
+    Dans le tableau de bord Grafana, vous verrez une erreur indiquant que les données ont déjà été publiées :
+
+```bash
+ERROR - Data already published for GEPS_202508180000-grib2; not publishing
+``` 
+
+Cela démontre que le workflow de données a été déclenché, mais que les données n'ont pas été re-publiées. Le wis2box ne publiera pas les mêmes données deux fois.
+
+Si vous souhaitez forcer l'envoi d'une notification pour les mêmes données, supprimez les données du bucket 'wis2box-public' avant de ré-ingérer les données.
+
+## Ingestion et publication avec le plugin synop2bufr
+
+Ensuite, vous utiliserez le jeu de données que vous avez créé lors de la session pratique précédente en utilisant **Template='weather/surface-based-observations/synop'**. Le modèle a préconfiguré les plugins de données suivants pour vous :
+
+<img alt="synop-dataset-plugins" src="/../assets/img/wis2box-data-mappings.png" width="1000">
+
+Notez que l'un des plugins est **FM-12 data converted to BUFR** (synop2bufr), qui est configuré pour fonctionner avec des fichiers ayant l'extension **txt**.
+
+Téléchargez cet exemple de données [synop_202502040900.txt](../sample-data/synop_202502040900.txt) (cliquez avec le bouton droit et sélectionnez "enregistrer sous" pour télécharger le fichier) sur votre ordinateur local. Créez un nouveau chemin dans MinIO correspondant à l'identifiant de métadonnées pour le jeu de données synop, et téléchargez les données d'exemple dans ce chemin.
+
+Vérifiez le tableau de bord Grafana et MQTT Explorer pour voir si les données ont été ingérées et publiées avec succès.
+
+!!! question "Question"
+
+    Pourquoi n'avez-vous pas reçu de notification dans MQTT Explorer ?
+
+??? success "Cliquez pour révéler la réponse"
+
+    Dans le tableau de bord Grafana, vous verrez un avertissement indiquant :
 
     ```bash
     WARNING - Station 64400 not found in station file
     ``` 
+
+    Ou si aucune station n'était associée au sujet, vous verrez :
+
+    ```bash
+    ERROR - No stations found
+    ```
+
+    Le workflow de données a été déclenché, mais le plugin de données n'a pas pu traiter les données en raison de métadonnées de station manquantes.
+
+!!! note "À propos du plugin FM-12 data converted to BUFR"
+
+    Ce plugin tente de transformer les données d'entrée FM-12 en format BUFR. 
     
-    Cela démontre que le workflow des données a été déclenché, mais qu'une métadonnée spécifique de station est nécessaire.
+    Dans le cadre de la transformation, le plugin ajoute des métadonnées manquantes aux données de sortie, telles que l'identifiant de station WIGOS, la localisation et la hauteur du baromètre de la station. Pour ajouter ces métadonnées, le plugin recherche ces informations dans la liste des stations de votre instance wis2box en utilisant l'identifiant traditionnel (à 5 chiffres) (64400 dans ce cas).
 
-Dans ce cas, vous utilisez le plugin `FM-12 data converted to BUFR`.
-
-L'objectif de ce plugin est de traiter les données FM-12 fournies au format texte brut et de les convertir en BUFR binaire. 
-Pendant ce processus, le plugin doit analyser et mapper les informations de station contenues dans les données.
-
-Si les métadonnées essentielles de la station sont manquantes, le plugin ne peut pas analyser correctement le fichier et la conversion échouera.
-
-Par conséquent, vous devez vous assurer que les métadonnées de station pertinentes ont été ajoutées à wis2box avant de publier des données SYNOP.
-
-Ajoutons maintenant une station de test pour cet exercice.
-
-Ajoutez la station avec l'identifiant WIGOS `0-20000-0-64400` à votre instance wis2box en utilisant l'éditeur de stations dans le wis2box-webapp.
+    Si la station n'est pas trouvée dans la liste des stations, le plugin ne peut pas ajouter les métadonnées manquantes et ne publiera aucune donnée.
+    
+Ajoutez la station avec l'identifiant WIGOS `0-20000-0-64400` à votre instance wis2box en utilisant l'éditeur de stations dans le wis2box-webapp, comme vous l'avez appris dans la session pratique [Configuring Station Metadata](./configuring-station-metadata.md).
 
 Récupérez la station depuis OSCAR :
 
 <img alt="oscar-station" src="/../assets/img/webapp-test-station-oscar-search.png" width="600">
 
-Ajoutez la station aux jeux de données que vous avez créés pour la publication sur "../surface-based-observations/synop" et enregistrez les modifications en utilisant votre jeton d'authentification :
+Ajoutez la station au sujet '../weather/surface-based-observations/synop' et enregistrez les modifications en utilisant votre jeton d'authentification.
 
-<img alt="webapp-test-station" src="/../assets/img/webapp-test-station-save.png" width="800">
+Après avoir ajouté la station, relancez le workflow wis2box en téléchargeant à nouveau le fichier de données d'exemple *synop_202502040900.txt* dans le même chemin dans MinIO.
 
-Notez que vous pouvez supprimer cette station de votre jeu de données après la session pratique.
-
-Après avoir terminé la configuration des métadonnées de la station, vérifiez avec MQTT Explorer pour confirmer que les données ont été publiées avec succès. Si vous voyez la notification ci-dessous, cela signifie que vous avez publié avec succès les données d'exemple synop.
+Vérifiez le tableau de bord Grafana et MQTT Explorer pour confirmer que les données ont été publiées avec succès. Si vous voyez la notification ci-dessous, cela signifie que vous avez publié avec succès les données d'exemple synop :
 
 <img alt="webapp-test-station" src="/../assets/img/mqtt-explorer-wis2box-notification-synop-sample.png" width="800">
 
-## Ingestion de données avec Python (optionnel)
+!!! question "Question"
 
-Dans cet exercice, nous utiliserons le client Python de MinIO pour copier des données dans MinIO.
+    Quelle est l'extension du fichier publié dans la notification de données WIS2 ?
+
+??? success "Cliquez pour révéler la réponse"
+
+    Consultez la section Links de la notification de données WIS2 dans MQTT Explorer, et vous verrez le lien canonique :
+
+    ```json
+    {
+      "rel": "canonical",
+      "type": "application/bufr",
+      "href": "http://example.wis2.training/data/2025-02-04/wis/urn:wmo:md:int-wmo-example:synop-dataset/WIGOS_0-20000-0-64400_20250204T090000.bufr4",
+      "length": 387
+    }
+    ```      
+
+    L'extension du fichier est `.bufr4`, indiquant que les données ont été transformées avec succès du format FM-12 au format BUFR par le plugin.
+
+## Ingestion de données avec Python
+
+Dans cet exercice, nous utiliserons le client Python MinIO pour copier des données dans MinIO.
 
 MinIO fournit un client Python, qui peut être installé comme suit :
 
@@ -260,7 +253,7 @@ cp -r ~/exercise-materials/data-ingest-exercises ~/wis2box-data/
 ```
 
 !!! note
-    Le `WIS2BOX_HOST_DATADIR` est monté en tant que `/data/wis2box/` dans le conteneur wis2box-management par le fichier `docker-compose.yml` inclus dans le répertoire `wis2box`.
+    Le `WIS2BOX_HOST_DATADIR` est monté comme `/data/wis2box/` dans le conteneur wis2box-management par le fichier `docker-compose.yml` inclus dans le répertoire `wis2box`.
     
     Cela vous permet de partager des données entre l'hôte et le conteneur.
 
@@ -275,7 +268,7 @@ python3 copy_file_to_incoming.py synop_202501030900.txt
 
 !!! note
 
-    Vous obtiendrez une erreur car le script n'est pas configuré pour accéder au point de terminaison MinIO sur votre wis2box.
+    Vous obtiendrez une erreur car le script n'est pas configuré pour accéder au point de terminaison MinIO de votre wis2box.
 
 Le script doit connaître le point de terminaison correct pour accéder à MinIO sur votre wis2box. Si wis2box s'exécute sur votre hôte, le point de terminaison MinIO est disponible à `http://YOUR-HOST:9000`. Le script doit également être mis à jour avec votre mot de passe de stockage et le chemin dans le bucket MinIO pour stocker les données.
 
@@ -283,7 +276,7 @@ Le script doit connaître le point de terminaison correct pour accéder à MinIO
     
     Modifiez le script `copy_file_to_incoming.py` pour résoudre les erreurs, en utilisant l'une des méthodes suivantes :
     - Depuis la ligne de commande : utilisez l'éditeur de texte `nano` ou `vim` pour modifier le script.
-    - En utilisant WinSCP : démarrez une nouvelle connexion en utilisant le protocole de fichier `SCP` et les mêmes identifiants que votre client SSH. Naviguez dans le répertoire `wis2box-data/data-ingest-exercises` et éditez `copy_file_to_incoming.py` en utilisant l'éditeur de texte intégré.
+    - En utilisant WinSCP : démarrez une nouvelle connexion en utilisant le protocole de fichier `SCP` et les mêmes identifiants que votre client SSH. Naviguez dans le répertoire `wis2box-data/data-ingest-exercises` et modifiez `copy_file_to_incoming.py` en utilisant l'éditeur de texte intégré.
     
     Assurez-vous de :
 
@@ -327,17 +320,17 @@ Vérifiez le tableau de bord Grafana et MQTT Explorer pour voir si les données 
 
     Le plugin `wis2box.data.bufr4.ObservationDataBUFR` divise le fichier BUFR en messages BUFR individuels et publie un message pour chaque station et horodatage d'observation.
 
-## Ingestion de données via SFTP (optionnel)
+## Ingestion de données via SFTP
 
 Le service MinIO dans wis2box peut également être accessible via SFTP. Le serveur SFTP pour MinIO est lié au port 8022 sur l'hôte (le port 22 est utilisé pour SSH).
 
-Dans cet exercice, nous allons démontrer comment utiliser WinSCP pour téléverser des données dans MinIO en utilisant SFTP.
+Dans cet exercice, nous allons démontrer comment utiliser WinSCP pour télécharger des données dans MinIO en utilisant SFTP.
 
-Vous pouvez configurer une nouvelle connexion WinSCP comme indiqué dans cette capture d'écran :
+Vous pouvez configurer une nouvelle connexion WinSCP comme illustré dans cette capture d'écran :
 
 <img alt="winscp-sftp-connection" src="/../assets/img/winscp-sftp-login.png" width="400">
 
-Les identifiants pour la connexion SFTP sont définis par `WIS2BOX_STORAGE_USERNAME` et `WIS2BOX_STORAGE_PASSWORD` dans votre fichier `wis2box.env` et sont les mêmes que ceux que vous avez utilisés pour vous connecter à l'interface utilisateur de MinIO.
+Les identifiants pour la connexion SFTP sont définis par `WIS2BOX_STORAGE_USERNAME` et `WIS2BOX_STORAGE_PASSWORD` dans votre fichier `wis2box.env` et sont identiques à ceux que vous avez utilisés pour vous connecter à l'interface utilisateur de MinIO.
 
 Lorsque vous vous connectez, vous verrez les buckets utilisés par wis2box dans MinIO :
 
@@ -349,17 +342,17 @@ Vous pouvez naviguer jusqu'au bucket `wis2box-incoming`, puis dans le dossier co
 
 !!! question "Télécharger des données via SFTP"
 
-    Téléchargez ce fichier exemple sur votre ordinateur local :
+    Téléchargez ce fichier d'exemple sur votre ordinateur local :
 
     [synop_202503030900.txt](./../sample-data/synop_202503030900.txt) (cliquez avec le bouton droit et sélectionnez "enregistrer sous" pour télécharger le fichier).
 
     Ensuite, téléversez-le dans le chemin du jeu de données incoming dans MinIO en utilisant votre session SFTP dans WinSCP.
 
-    Vérifiez le tableau de bord Grafana et MQTT Explorer pour confirmer si les données ont été correctement ingérées et publiées.
+    Vérifiez le tableau de bord Grafana et MQTT Explorer pour voir si les données ont été ingérées et publiées avec succès.
 
 ??? success "Cliquez pour révéler la réponse"
 
-    Vous devriez voir une nouvelle notification de données WIS2 publiée pour la station de test `0-20000-0-64400`, indiquant que les données ont été correctement ingérées et publiées.
+    Vous devriez voir une nouvelle notification de données WIS2 publiée pour la station de test `0-20000-0-64400`, indiquant que les données ont été ingérées et publiées avec succès.
 
     <img alt="grafana_data_ingest" src="/../assets/img/grafana_data-ingest-test3.png" width="400"> 
 
@@ -371,5 +364,5 @@ Vous pouvez naviguer jusqu'au bucket `wis2box-incoming`, puis dans le dossier co
     Au cours de cette session pratique, vous avez appris à :
 
     - Déclencher le workflow de wis2box en téléversant des données dans MinIO à l'aide de différentes méthodes.
-    - Déboguer les erreurs courantes dans le processus d'ingestion de données en utilisant le tableau de bord Grafana et les journaux de votre instance wis2box.
+    - Déboguer les erreurs courantes dans le processus d'ingestion des données à l'aide du tableau de bord Grafana et des journaux de votre instance wis2box.
     - Surveiller les notifications de données WIS2 publiées par votre wis2box dans le tableau de bord Grafana et MQTT Explorer.
