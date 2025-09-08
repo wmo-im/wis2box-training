@@ -133,7 +133,7 @@ ERROR - Failed to transform file http://minio:9000/wis2box-incoming/urn:wmo:md:i
 
     The filename does not match the regular expression you defined in the dataset configuration. The filename must match the pattern `^.*?_(\d{8}).*?\..*$`, which requires an 8-digit date (YYYYMMDD) in the filename.
 
-    Rename the file to *GEPS_202508180000.grib2* and upload it again to the same path in MinIO to re-trigger the wis2box workflow. (or download the renamed file from here: [GEPS_202508180000.grib2](../sample-data/GEPS_202508180000.grib2)).
+    Rename the file to *GEPS_202508180000.grib2* and upload it again to the same path in MinIO to re-trigger the wis2box workflow. (or download the renamed file from here: [GEPS_202508180000.grib2](../sample-data/GEPS_202508180000.grib2).
 
 After fixing the issue with the filename, check the Grafana dashboard and MQTT Explorer to see if the data was successfully ingested and published.
 
