@@ -91,7 +91,7 @@ Once you finish uploading it, you will see this file in MinoIO wis2box-incoming 
 
 After uploading, check with MQTT Explorer to confirm that the data was published successfully.
 
-<img alt="Metadata Editor: title, description, keywords" src="/../assets/img/mqtt-explorer-wis2-notification-geps-sample.png" width="800">
+<img alt="mqtt explorer: message notification geps data" src="/../assets/img/mqtt-explorer-wis2-notification-geps-sample.png" width="800">
 
 Next, download the geps sample data in a different file extension [geps_202508180000.nc](../sample-data/geps_202508180000.nc) in your local environment. Upload this file into the same directory as you did in the previous exercise.
 
