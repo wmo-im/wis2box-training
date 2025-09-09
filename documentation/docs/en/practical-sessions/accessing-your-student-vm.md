@@ -159,9 +159,7 @@ Open WinSCP and click on the "New Site". You can create a new SCP connection to 
 
 Click 'Save' and then 'Login' to connect to your VM.
 
-And you should be able to see the following content:
-
-<img alt="winscp-student-vm-exercise-materials.png" src="/../assets/img/winscp-student-vm-exercise-materials.png" width="600">
+You should now be able to see the content of the home directory on your student VM and access your files.
 
 ## Conclusion
 
