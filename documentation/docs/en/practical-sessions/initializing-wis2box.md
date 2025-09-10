@@ -179,12 +179,18 @@ To login to the wis2box-management container, use the following command:
 python3 wis2box-ctl.py login
 ```
 
+Note that after you login, your prompt will change, indicating you are now inside the wis2box-management container:
+
+```{bash}
+root@025381da3c40:/home/wis2box#
+```
+
 Inside the wis2box-management container you can run various commands to manage your wis2box, such as:
 
-- `wis2box auth add-token --path processes/wis2box` : to create an authorization token for the `processes/wis2box` endpoint
-- `wis2box data clean --days=<number-of-days>` : to clean up data older than a certain number of days from the `wis2box-public` bucket
+- `wis2box auth add-token --path processes/wis2box` : to create an authorization token for the *processes/wis2box*  endpoint
+- `wis2box data clean --days=<number-of-days>` : to clean up data older than a certain number of days from the *wis2box-public* bucket
 
-To exit the container and go back to the host machine, use the following command:
+To exit the container and go back to your host machine, use the following command:
 
 ```{.copy}
 exit
@@ -200,21 +206,22 @@ You should see the following containers running:
 
 ```{bash}
 NAMES                     STATUS                   IMAGE
-mqtt_metrics_collector    Up 31 hours              ghcr.io/world-meteorological-organization/wis2box-mqtt-metrics-collector:1.1.0
-wis2box-auth              Up 31 hours              ghcr.io/world-meteorological-organization/wis2box-auth:1.1.0
-nginx                     Up 31 hours              nginx:alpine
-wis2box-ui                Up 31 hours              ghcr.io/world-meteorological-organization/wis2box-ui:1.1.0
-wis2box-management        Up 31 hours              ghcr.io/world-meteorological-organization/wis2box-management:1.1.1
-wis2box-minio             Up 31 hours (healthy)    minio/minio:RELEASE.2024-08-03T04-33-23Z-cpuv1
-wis2box-api               Up 31 hours (healthy)    ghcr.io/world-meteorological-organization/wis2box-api:1.1.0
-wis2downloader            Up 31 hours (healthy)    ghcr.io/wmo-im/wis2downloader:v0.3.2
-wis2box-webapp            Up 31 hours (healthy)    ghcr.io/world-meteorological-organization/wis2box-webapp:1.1.0
-prometheus                Up 31 hours              prom/prometheus:v2.37.0
-elasticsearch-exporter    Up 31 hours              quay.io/prometheuscommunity/elasticsearch-exporter:latest
-elasticsearch             Up 31 hours (healthy)    docker.elastic.co/elasticsearch/elasticsearch:8.6.2
-loki                      Up 31 hours              grafana/loki:2.4.1
-grafana                   Up 31 hours              grafana/grafana-oss:9.0.3
-mosquitto                 Up 31 hours              ghcr.io/world-meteorological-organization/wis2box-broker:1.1.0
+nginx                     Up About a minute         nginx:alpine
+wis2box-auth              Up About a minute         ghcr.io/world-meteorological-organization/wis2box-auth:1.1.0
+mqtt_metrics_collector    Up About a minute         ghcr.io/world-meteorological-organization/wis2box-mqtt-metrics-collector:1.1.0
+wis2box-ui                Up 3 minutes              ghcr.io/world-meteorological-organization/wis2box-ui:1.1.0
+wis2box-management        Up About a minute         ghcr.io/world-meteorological-organization/wis2box-management:1.1.1
+wis2box-minio             Up 4 minutes (healthy)    minio/minio:RELEASE.2024-08-03T04-33-23Z-cpuv1
+wis2box-api               Up 3 minutes (healthy)    ghcr.io/world-meteorological-organization/wis2box-api:1.1.0
+wis2box-webapp            Up 4 minutes (healthy)    ghcr.io/world-meteorological-organization/wis2box-webapp:1.1.0
+elasticsearch             Up 4 minutes (healthy)    docker.elastic.co/elasticsearch/elasticsearch:8.6.2
+mosquitto                 Up 4 minutes              ghcr.io/world-meteorological-organization/wis2box-broker:1.1.0
+grafana                   Up 4 minutes              grafana/grafana-oss:9.0.3
+elasticsearch-exporter    Up 4 minutes              quay.io/prometheuscommunity/elasticsearch-exporter:latest
+wis2downloader            Up 4 minutes (healthy)    ghcr.io/wmo-im/wis2downloader:v0.3.2
+prometheus                Up 4 minutes              prom/prometheus:v2.37.0
+loki                      Up 4 minutes              grafana/loki:2.4.1
+
 ```
 
 These containers are part of the wis2box software stack and provide the various services required to run the wis2box.
