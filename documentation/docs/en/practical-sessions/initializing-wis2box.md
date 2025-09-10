@@ -16,7 +16,7 @@ title: Initializing wis2box
 
 !!! note
 
-    The current training materials are based on wis2box-release 1.0.0. 
+    The current training materials are based on wis2box-release 1.1.0. 
     
     See [accessing-your-student-vm](./accessing-your-student-vm.md) for instructions on how to download and install the wis2box software stack if you are running this training outside of a local training session.
 
@@ -148,11 +148,11 @@ When running this command for the first time, you will see the following output:
 
 ```
 No docker-compose.images-*.yml files found, creating one
-Current version=Undefined, latest version=1.0.0
+Current version=Undefined, latest version=1.1.0
 Would you like to update ? (y/n/exit)
 ```
 
-Select ``y`` and the the script will create the file ``docker-compose.images-1.0.0.yml``, download the required Docker images and start the services.
+Select ``y`` and the the script will create the file ``docker-compose.images-1.1.0.yml``, download the required Docker images and start the services.
 
 Downloading the images may take some time depending on your internet connection speed. This step is only required the first time you start wis2box.
 
@@ -192,26 +192,25 @@ exit
 
 Run the following command to see the docker containers running on your host machine:
 
-```{.copy}
-docker ps
-```
-
-You should see the following containers running:
-
 - wis2box-management
 - wis2box-api
-- wis2box-minio
+- minio
 - wis2box-webapp
 - wis2box-auth
 - wis2box-ui
 - wis2downloader
 - elasticsearch
 - elasticsearch-exporter
-- nginx
+- web-proxy
 - mosquitto
 - prometheus
 - grafana
-- loki
+
+```{.copy}
+docker ps
+```
+
+You should see the following containers running:
 
 These containers are part of the wis2box software stack and provide the various services required to run the wis2box.
 

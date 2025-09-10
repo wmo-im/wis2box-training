@@ -61,11 +61,16 @@ In this practical session you will learn how to use the MQTT Explorer tool to se
 
 MQTT Explorer is a useful tool to browse and review the topic structure for a given MQTT broker to review data being published.
 
-Note that MQTT is primarily used for "machine-to-machine" communication; meaning that there would normally be a client automatically parsing the messages as they are received. To work with MQTT programmatically (for example, in Python), you can use MQTT client libraries such as [paho-mqtt](https://pypi.org/project/paho-mqtt) to connect to an MQTT broker and process incoming messages. There exist numerous MQTT client and server software, depending on your requirements and technical environment.
+!!! note "About MQTT"
+    MQTT Explorer provides a user-friendly interface to connect to an MQTT broker and explore the topics and message structure used by WIS2.
+    
+    In practice, MQTT intended to be used for machine-to-machine communication, where an application or service subscribes to topics and processes messages programmatically in real-time.
+    
+    To work with MQTT programmatically (for example, in Python), you can use MQTT client libraries such as [paho-mqtt](https://pypi.org/project/paho-mqtt) to connect to an MQTT broker and process incoming messages. There exist numerous MQTT client and server software, depending on your requirements and technical environment.
 
 ## Using MQTT Explorer to connect to the Global Broker
 
-To view messages published by a WIS2 Global Broker you can "MQTT Explorer" which can be downloaded from the [MQTT Explorer website](https://mqtt-explorer.com).
+To view messages published by a WIS2 Global Broker you can use "MQTT Explorer" which can be downloaded from the [MQTT Explorer website](https://mqtt-explorer.com).
 
 Open MQTT Explorer and add a new connection to the Global Broker hosted by MeteoFrance using the following details:
 
