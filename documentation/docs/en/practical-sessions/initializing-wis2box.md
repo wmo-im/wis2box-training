@@ -193,7 +193,7 @@ exit
 Run the following command to see the docker containers running on your host machine:
 
 ```{.copy}
-docker ps
+docker ps --format "table {{.Names}} \t{{.Status}} \t{{.Image}}"
 ```
 
 You should see the following containers running:
