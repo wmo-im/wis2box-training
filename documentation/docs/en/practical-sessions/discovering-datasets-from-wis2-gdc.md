@@ -12,7 +12,7 @@ title: Discovering datasets from the WIS2 Global Discovery Catalogue
 
 ## Introduction
 
-In this session you will learn how to discover data from the WIS2 Global Discovery Catalogue (GDC).
+In this session you will learn how to discover data from the WIS2 Global Discovery Catalogue (GDC) using [pywiscat](https://github.com/wmo-im/pywiscat), a command line tool to search and retrieve metadata from a WIS2 GDC.
 
 At the moment, the following GDCs are available:
 
@@ -60,19 +60,22 @@ pywiscat --version
 
 ## Finding data with pywiscat
 
-By default, pywiscat connects to Canada's Global Discovery Catalogue.  Let's configure pywiscat to query the training GDC by setting the `PYWISCAT_GDC_URL` environment variable:
+By default, pywsicat connects to Global Discovery Catalogue (GDC) hosted by Environment and Climate Change Canada (ECCC).
 
-```bash
-export PYWISCAT_GDC_URL=http://gdc.wis2.training:5002
-```
+!!! note "Changing the GDC URL"
+    If you are doing this exercise during a local training session, you can configure pywiscat to query the local GDC by setting the `PYWISCAT_GDC_URL` environment variable:
 
-Let's use [pywiscat](https://github.com/wmo-im/pywiscat) to query the GDC setup as part of the training.
+    ```bash
+    export PYWISCAT_GDC_URL=http://gdc.wis2.training:5002
+    ```
+
+To see the available options, run:
 
 ```bash
 pywiscat search --help
 ```
 
-Now search the GDC for all records:
+You can search the GDC for all records:
 
 ```bash
 pywiscat search
