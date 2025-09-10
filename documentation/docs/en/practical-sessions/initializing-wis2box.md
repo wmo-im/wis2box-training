@@ -198,19 +198,24 @@ docker ps --format "table {{.Names}} \t{{.Status}} \t{{.Image}}"
 
 You should see the following containers running:
 
-- wis2box-management
-- wis2box-api
-- minio
-- wis2box-webapp
-- wis2box-auth
-- wis2box-ui
-- wis2downloader
-- elasticsearch
-- elasticsearch-exporter
-- web-proxy
-- mosquitto
-- prometheus
-- grafana
+```{bash}
+NAMES                     STATUS                   IMAGE
+mqtt_metrics_collector    Up 31 hours              ghcr.io/world-meteorological-organization/wis2box-mqtt-metrics-collector:1.1.0
+wis2box-auth              Up 31 hours              ghcr.io/world-meteorological-organization/wis2box-auth:1.1.0
+nginx                     Up 31 hours              nginx:alpine
+wis2box-ui                Up 31 hours              ghcr.io/world-meteorological-organization/wis2box-ui:1.1.0
+wis2box-management        Up 31 hours              ghcr.io/world-meteorological-organization/wis2box-management:1.1.1
+wis2box-minio             Up 31 hours (healthy)    minio/minio:RELEASE.2024-08-03T04-33-23Z-cpuv1
+wis2box-api               Up 31 hours (healthy)    ghcr.io/world-meteorological-organization/wis2box-api:1.1.0
+wis2downloader            Up 31 hours (healthy)    ghcr.io/wmo-im/wis2downloader:v0.3.2
+wis2box-webapp            Up 31 hours (healthy)    ghcr.io/world-meteorological-organization/wis2box-webapp:1.1.0
+prometheus                Up 31 hours              prom/prometheus:v2.37.0
+elasticsearch-exporter    Up 31 hours              quay.io/prometheuscommunity/elasticsearch-exporter:latest
+elasticsearch             Up 31 hours (healthy)    docker.elastic.co/elasticsearch/elasticsearch:8.6.2
+loki                      Up 31 hours              grafana/loki:2.4.1
+grafana                   Up 31 hours              grafana/grafana-oss:9.0.3
+mosquitto                 Up 31 hours              ghcr.io/world-meteorological-organization/wis2box-broker:1.1.0
+```
 
 These containers are part of the wis2box software stack and provide the various services required to run the wis2box.
 
