@@ -1,5 +1,5 @@
 ---
-title: Ingesting Data for Publication
+title: Ingesting data for Publication
 ---
 
 # Ingesting data for publication
@@ -8,9 +8,9 @@ title: Ingesting Data for Publication
 
     By the end of this practical session, you will be able to:
     
-    - Trigger the wis2box workflow by uploading data to MinIO using the MinIO web interface, SFTP, or a Python script.
-    - Access the Grafana dashboard to monitor the status of data ingestion and view logs of your wis2box instance.
-    - View WIS2 data notifications published by your wis2box using MQTT Explorer.
+    - trigger the wis2box workflow by uploading data to MinIO using the MinIO web interface, SFTP, or a Python script.
+    - access the Grafana dashboard to monitor the status of data ingestion and view logs of your wis2box instance.
+    - view WIS2 data notifications published by your wis2box using MQTT Explorer.
 
 ## Introduction
 
@@ -79,7 +79,7 @@ Enter the new Folder Path = *new-directory" and upload this example file [mydata
 
 !!! question "Question"
 
-    After uploading the file, how do you see if data workflow in wis2box was triggered successfully?F
+    After uploading the file, how do you see if data workflow in wis2box was triggered successfully?
 
 ??? success "Click to Reveal Answer"
 
@@ -368,7 +368,7 @@ You can navigate to the `wis2box-incoming` bucket and then to the folder for you
 !!! success "Congratulations!"
     In this practical session, you learned how to:
 
-    - Trigger the wis2box workflow by uploading data to MinIO using various methods.
-    - Debug common errors in the data ingestion process using the Grafana dashboard and the logs of your wis2box instance.
-    - Monitor WIS2 data notifications published by your wis2box in the Grafana dashboard and MQTT Explorer.
+    - trigger the wis2box workflow by uploading data to MinIO using various methods.
+    - debug common errors in the data ingestion process using the Grafana dashboard and the logs of your wis2box instance.
+    - monitor WIS2 data notifications published by your wis2box in the Grafana dashboard and MQTT Explorer.
 

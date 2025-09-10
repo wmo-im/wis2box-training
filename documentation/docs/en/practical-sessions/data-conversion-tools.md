@@ -383,6 +383,7 @@ synop2bufr data transform --metadata station_list.csv --output-dir ./ --year 202
     longitude=23.9405
     heightOfStationGroundAboveMeanSeaLevel=503
     heightOfBarometerAboveMeanSeaLevel=504
+    ...
     ```
 
     Note that this includes the data provided by the `station_list.csv` file.
@@ -543,6 +544,7 @@ This returns a large JSON file, providing the mapping for 43 CSV columns.
 Let's attempt to convert the file to BUFR format using the `csv2bufr` command:
 
 ```{.copy}
+cd /root/data-conversion-exercises
 csv2bufr data transform --bufr-template aws-template ./aws-example.csv
 ```
 

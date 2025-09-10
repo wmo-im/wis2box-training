@@ -296,19 +296,7 @@ Check the contents of the downloads directory again:
 ls -R ~/wis2box-data/downloads
 ```
 
-You should see two new directories named `origin/a/wis2/int-wis2-training/data/core/weather/prediction/forecast/medium-range/probabilistic/global` and `origin/a/wis2/int-wis2-training/data/core/climate/experimental/anomalies/monthly/surface-temperature` containing the downloaded data.
-
-!!! question "Review the downloaded data for the two new topics"
-    
-    What is the file format of the downloaded data for the `../prediction/forecast/medium-range/probabilistic/global` topic?
-
-    What is the file format of the downloaded data for the `../climate/experimental/anomalies/monthly/surface-temperature` topic?
-
-??? success "Click to reveal answer"
-
-    The downloaded data for the `../prediction/forecast/medium-range/probabilistic/global` topic is in GRIB2 format as indicated by the `.grib2` file extension. 
-
-    The downloaded data for the `../climate/experimental/anomalies/monthly/surface-temperature` topic is in NetCDF format as indicated by the `.nc` file extension.
+You should see the new directories corresponding to the topics you subscribed to, containing the downloaded data.
 
 ## Conclusion
 
