@@ -1,36 +1,35 @@
 ---
-title: Découverte de jeux de données depuis le Catalogue de Découverte Global WIS2
+title: Découverte des ensembles de données depuis le WIS2 Global Discovery Catalogue
 ---
 
-# Découverte de jeux de données depuis le Catalogue de Découverte Global WIS2
+# Découverte des ensembles de données depuis le WIS2 Global Discovery Catalogue
 
-!!! abstract "Résultats d'apprentissage !"
+!!! abstract "Objectifs d'apprentissage !"
 
     À la fin de cette session pratique, vous serez capable de :
 
-    - utiliser pywiscat pour découvrir des jeux de données depuis le Catalogue de Découverte Global (GDC)
+    - utiliser pywiscat pour découvrir des ensembles de données depuis le Global Discovery Catalogue (GDC)
 
 ## Introduction
 
-Dans cette session, vous apprendrez à découvrir des données depuis le Catalogue de Découverte Global WIS2 (GDC).
+Dans cette session, vous apprendrez à découvrir des données depuis le WIS2 Global Discovery Catalogue (GDC) en utilisant [pywiscat](https://github.com/wmo-im/pywiscat), un outil en ligne de commande permettant de rechercher et de récupérer des métadonnées depuis un WIS2 GDC.
 
 Actuellement, les GDC suivants sont disponibles :
 
-- Environnement et Changement Climatique Canada, Service Météorologique du Canada : <https://wis2-gdc.weather.gc.ca>
-- Administration Météorologique de Chine : <https://gdc.wis.cma.cn>
-- Service Météorologique Allemand : <https://wis2.dwd.de/gdc>
+- Environnement et Changement climatique Canada, Service météorologique du Canada : <https://wis2-gdc.weather.gc.ca>
+- Administration météorologique de Chine : <https://gdc.wis.cma.cn>
+- Deutscher Wetterdienst : <https://wis2.dwd.de/gdc>
 
-
-Lors des sessions de formation locales, un GDC local est mis en place pour permettre aux participants de consulter le GDC pour les métadonnées qu'ils ont publiées depuis leurs instances wis2box. Dans ce cas, les formateurs fourniront l'URL du GDC local.
+Lors des sessions de formation locales, un GDC local est configuré pour permettre aux participants d'interroger le GDC pour les métadonnées qu'ils ont publiées depuis leurs instances de wis2box. Dans ce cas, les formateurs fourniront l'URL du GDC local.
 
 ## Préparation
 
 !!! note
-    Avant de commencer, veuillez vous connecter à votre VM étudiant.
+    Avant de commencer, veuillez vous connecter à votre machine virtuelle étudiante.
 
 ## Installation de pywiscat
 
-Utilisez l'installateur de paquets Python `pip3` pour installer pywiscat sur votre VM :
+Utilisez l'installateur de paquets Python `pip3` pour installer pywiscat sur votre machine virtuelle :
 ```bash
 pip3 install pywiscat
 ```
@@ -50,29 +49,32 @@ pip3 install pywiscat
     export PATH=$PATH:/home/$USER/.local/bin
     ```
 
-    ...où `$USER` est votre nom d'utilisateur sur votre VM.
+    ...où `$USER` est votre nom d'utilisateur sur votre machine virtuelle.
 
-Vérifiez que l'installation a été réussie :
+Vérifiez que l'installation a réussi :
 
 ```bash
 pywiscat --version
 ```
 
-## Trouver des données avec pywiscat
+## Recherche de données avec pywiscat
 
-Par défaut, pywiscat se connecte au Catalogue de Découverte Global du Canada. Configurons pywiscat pour interroger le GDC de formation en définissant la variable d'environnement `PYWISCAT_GDC_URL` :
+Par défaut, pywiscat se connecte au Global Discovery Catalogue (GDC) hébergé par Environnement et Changement climatique Canada (ECCC).
 
-```bash
-export PYWISCAT_GDC_URL=http://gdc.wis2.training:5002
-```
+!!! note "Changer l'URL du GDC"
+    Si vous effectuez cet exercice lors d'une session de formation locale, vous pouvez configurer pywiscat pour interroger le GDC local en définissant la variable d'environnement `PYWISCAT_GDC_URL` :
 
-Utilisons [pywiscat](https://github.com/wmo-im/pywiscat) pour interroger le GDC configuré dans le cadre de la formation.
+    ```bash
+    export PYWISCAT_GDC_URL=http://gdc.wis2.training:5002
+    ```
+
+Pour voir les options disponibles, exécutez :
 
 ```bash
 pywiscat search --help
 ```
 
-Recherchez maintenant dans le GDC tous les enregistrements :
+Vous pouvez rechercher tous les enregistrements dans le GDC :
 
 ```bash
 pywiscat search
@@ -80,10 +82,10 @@ pywiscat search
 
 !!! question
 
-    Combien d'enregistrements sont retournés de la recherche ?
+    Combien d'enregistrements sont retournés par la recherche ?
 
 ??? success "Cliquez pour révéler la réponse"
-    Le nombre d'enregistrements dépend du GDC que vous interrogez. Lors de l'utilisation du GDC de formation local, vous devriez voir que le nombre d'enregistrements est égal au nombre de jeux de données qui ont été ingérés dans le GDC lors des autres sessions pratiques.
+    Le nombre d'enregistrements dépend du GDC que vous interrogez. Lors de l'utilisation du GDC de formation locale, vous devriez constater que le nombre d'enregistrements est égal au nombre d'ensembles de données qui ont été ingérés dans le GDC pendant les autres sessions pratiques.
 
 Essayons d'interroger le GDC avec un mot-clé :
 
@@ -96,22 +98,22 @@ pywiscat search -q observations
     Quelle est la politique de données des résultats ?
 
 ??? success "Cliquez pour révéler la réponse"
-    Toutes les données retournées doivent spécifier des données "core"
+    Toutes les données retournées devraient spécifier des données "core".
 
-Essayez des requêtes supplémentaires avec `-q`
+Essayez des requêtes supplémentaires avec `-q`.
 
 !!! tip
 
-    Le drapeau `-q` permet la syntaxe suivante :
+    L'option `-q` permet la syntaxe suivante :
 
-    - `-q synop` : trouve tous les enregistrements avec le mot "synop"
-    - `-q temp` : trouve tous les enregistrements avec le mot "temp"
-    - `-q "observations AND oman"` : trouve tous les enregistrements avec les mots "observations" et "oman"
-    - `-q "observations NOT oman"` : trouve tous les enregistrements contenant le mot "observations" mais pas le mot "oman"
-    - `-q "synop OR temp"` : trouve tous les enregistrements avec "synop" ou "temp"
-    - `-q "obs*"` : recherche floue
+    - `-q synop` : trouver tous les enregistrements contenant le mot "synop"
+    - `-q temp` : trouver tous les enregistrements contenant le mot "temp"
+    - `-q "observations AND oman"` : trouver tous les enregistrements contenant les mots "observations" et "oman"
+    - `-q "observations NOT oman"` : trouver tous les enregistrements contenant le mot "observations" mais pas le mot "oman"
+    - `-q "synop OR temp"` : trouver tous les enregistrements contenant "synop" ou "temp"
+    - `-q "obs*"` : recherche approximative
 
-    Lors de la recherche de termes avec des espaces, les encadrer de guillemets doubles.
+    Lorsque vous recherchez des termes avec des espaces, utilisez des guillemets doubles.
 
 Obtenons plus de détails sur un résultat de recherche spécifique qui nous intéresse :
 
@@ -121,8 +123,7 @@ pywiscat get <id>
 
 !!! tip
 
-    Utilisez la valeur `id` de la recherche précédente.
-
+    Utilisez la valeur `id` obtenue lors de la recherche précédente.
 
 ## Conclusion
 
@@ -130,4 +131,4 @@ pywiscat get <id>
 
     Dans cette session pratique, vous avez appris à :
 
-    - utiliser pywiscat pour découvrir des jeux de données depuis le Catalogue de Découverte Global WIS2
+    - utiliser pywiscat pour découvrir des ensembles de données depuis le WIS2 Global Discovery Catalogue
