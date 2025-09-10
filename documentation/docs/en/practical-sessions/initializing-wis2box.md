@@ -16,7 +16,7 @@ title: Initializing wis2box
 
 !!! note
 
-    The current training materials are based on wis2box-release 1.0.0. 
+    The current training materials are based on wis2box-release 1.1.0. 
     
     See [accessing-your-student-vm](./accessing-your-student-vm.md) for instructions on how to download and install the wis2box software stack if you are running this training outside of a local training session.
 
@@ -148,11 +148,11 @@ When running this command for the first time, you will see the following output:
 
 ```
 No docker-compose.images-*.yml files found, creating one
-Current version=Undefined, latest version=1.0.0
+Current version=Undefined, latest version=1.1.0
 Would you like to update ? (y/n/exit)
 ```
 
-Select ``y`` and the the script will create the file ``docker-compose.images-1.0.0.yml``, download the required Docker images and start the services.
+Select ``y`` and the the script will create the file ``docker-compose.images-1.1.0.yml``, download the required Docker images and start the services.
 
 Downloading the images may take some time depending on your internet connection speed. This step is only required the first time you start wis2box.
 
@@ -179,12 +179,18 @@ To login to the wis2box-management container, use the following command:
 python3 wis2box-ctl.py login
 ```
 
+Note that after you login, your prompt will change, indicating you are now inside the wis2box-management container:
+
+```{bash}
+root@025381da3c40:/home/wis2box#
+```
+
 Inside the wis2box-management container you can run various commands to manage your wis2box, such as:
 
-- `wis2box auth add-token --path processes/wis2box` : to create an authorization token for the `processes/wis2box` endpoint
-- `wis2box data clean --days=<number-of-days>` : to clean up data older than a certain number of days from the `wis2box-public` bucket
+- `wis2box auth add-token --path processes/wis2box` : to create an authorization token for the *processes/wis2box*  endpoint
+- `wis2box data clean --days=<number-of-days>` : to clean up data older than a certain number of days from the *wis2box-public* bucket
 
-To exit the container and go back to the host machine, use the following command:
+To exit the container and go back to your host machine, use the following command:
 
 ```{.copy}
 exit
@@ -193,25 +199,30 @@ exit
 Run the following command to see the docker containers running on your host machine:
 
 ```{.copy}
-docker ps
+docker ps --format "table {{.Names}} \t{{.Status}} \t{{.Image}}"
 ```
 
 You should see the following containers running:
 
-- wis2box-management
-- wis2box-api
-- wis2box-minio
-- wis2box-webapp
-- wis2box-auth
-- wis2box-ui
-- wis2downloader
-- elasticsearch
-- elasticsearch-exporter
-- nginx
-- mosquitto
-- prometheus
-- grafana
-- loki
+```{bash}
+NAMES                     STATUS                   IMAGE
+nginx                     Up About a minute         nginx:alpine
+wis2box-auth              Up About a minute         ghcr.io/world-meteorological-organization/wis2box-auth:1.1.0
+mqtt_metrics_collector    Up About a minute         ghcr.io/world-meteorological-organization/wis2box-mqtt-metrics-collector:1.1.0
+wis2box-ui                Up 3 minutes              ghcr.io/world-meteorological-organization/wis2box-ui:1.1.0
+wis2box-management        Up About a minute         ghcr.io/world-meteorological-organization/wis2box-management:1.1.1
+wis2box-minio             Up 4 minutes (healthy)    minio/minio:RELEASE.2024-08-03T04-33-23Z-cpuv1
+wis2box-api               Up 3 minutes (healthy)    ghcr.io/world-meteorological-organization/wis2box-api:1.1.0
+wis2box-webapp            Up 4 minutes (healthy)    ghcr.io/world-meteorological-organization/wis2box-webapp:1.1.0
+elasticsearch             Up 4 minutes (healthy)    docker.elastic.co/elasticsearch/elasticsearch:8.6.2
+mosquitto                 Up 4 minutes              ghcr.io/world-meteorological-organization/wis2box-broker:1.1.0
+grafana                   Up 4 minutes              grafana/grafana-oss:9.0.3
+elasticsearch-exporter    Up 4 minutes              quay.io/prometheuscommunity/elasticsearch-exporter:latest
+wis2downloader            Up 4 minutes (healthy)    ghcr.io/wmo-im/wis2downloader:v0.3.2
+prometheus                Up 4 minutes              prom/prometheus:v2.37.0
+loki                      Up 4 minutes              grafana/loki:2.4.1
+
+```
 
 These containers are part of the wis2box software stack and provide the various services required to run the wis2box.
 
