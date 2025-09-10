@@ -64,7 +64,7 @@ MQTT Explorer is a useful tool to browse and review the topic structure for a gi
 !!! note "About MQTT"
     MQTT Explorer provides a user-friendly interface to connect to an MQTT broker and explore the topics and message structure used by WIS2.
     
-    In practice, MQTT intended to be used for machine-to-machine communication, where an application or service subscribes to topics and processes messages programmatically in real-time.
+    In practice, MQTT is intended to be used for machine-to-machine communication, where an application or service subscribes to topics and processes messages programmatically in real-time.
     
     To work with MQTT programmatically (for example, in Python), you can use MQTT client libraries such as [paho-mqtt](https://pypi.org/project/paho-mqtt) to connect to an MQTT broker and process incoming messages. There exist numerous MQTT client and server software, depending on your requirements and technical environment.
 
