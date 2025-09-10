@@ -192,6 +192,12 @@ exit
 
 Run the following command to see the docker containers running on your host machine:
 
+```{.copy}
+docker ps
+```
+
+You should see the following containers running:
+
 - wis2box-management
 - wis2box-api
 - minio
@@ -205,12 +211,6 @@ Run the following command to see the docker containers running on your host mach
 - mosquitto
 - prometheus
 - grafana
-
-```{.copy}
-docker ps
-```
-
-You should see the following containers running:
 
 These containers are part of the wis2box software stack and provide the various services required to run the wis2box.
 
