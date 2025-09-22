@@ -163,16 +163,24 @@ and remove the subscription you made from the wis2downloader, using the followin
 wis2downloader remove-subscription --topic cache/a/wis2/de-dwd-gts-to-wis2/#
 ```
 
-Remove the downloaded data using the following command:
+Remove the downloaded data using the following command in the wis2downloader container:
 
 ```bash
-rm -rf /wis2box-data/downloads/cache/*
+rm -rf app/data/downloads/*
 ```
+
+The directory `app/data/downloads` in the wis2downloader container is mapped to the `downloads` directory in the directory you defined as the `WIS2BOX_HOST_DATADIR` in your `wis2box.env` file. The command above removes all downloaded data.
 
 And exit the wis2downloader container by typing `exit`:
     
 ```bash
 exit
+```
+
+Check that the downloads-directory on your host is empty again:
+
+```bash
+ls -R ~/wis2box-data/downloads
 ```
 
 Check the wis2downloader dashboard in Grafana to see the subscription removed. You should see the downloads stopping.
