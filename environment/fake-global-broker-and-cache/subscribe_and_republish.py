@@ -70,7 +70,7 @@ def on_message(client, userdata, msg):
     idx = 0
     for link in payload.get("links"):
         if link.get("rel") is not None:
-            if link.get("rel") == "canonical":
+            if link.get("rel") == "canonical" or link.get("rel") == "update":
                 canonical = link.get("href")
                 canonical_idx = idx
                 break
