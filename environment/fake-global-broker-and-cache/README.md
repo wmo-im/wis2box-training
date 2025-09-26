@@ -22,6 +22,8 @@ To check the status of the connections to the local MQTT brokers defined in ``ho
 docker logs -f republisher
 ```
 
+After starting the stack for the first time, make sure to login to the MinIO web interface at `http://YOUR-HOST:9001` and change the access policy of the bucket 'cache' to 'public'.
+
 # Environment variables
 
 Environment values are defined `wis2-gb-gc.csv`, no need to update these when using the local training hardware
