@@ -35,8 +35,13 @@ PARAMS = {
     "format": "json"
 }
 
-response = requests.get(URL, params=PARAMS)
-response.raise_for_status()
+try:
+    response = requests.get(URL, params=PARAMS)
+    response.raise_for_status()
+except requests.exceptions.RequestException as e:
+    print(f"Error fetching data from {URL}")
+    sys.exit(1)
+
 data = response.json()
 
 print(f"Number of features: {len(data['features'])}")
