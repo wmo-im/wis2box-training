@@ -30,7 +30,7 @@ my_date_range_str = f"{sys.argv[1]}T00:00:00Z/{sys.argv[1]}T23:59:59Z",
 URL = f"{WIS2BOX_API_URL}/collections/{COLLECTION_ID}/items"
 PARAMS = {
     "datetime":  my_date_range_str,
-    "name": "air_temperature",
+    "name": "air_temperature", # filter on air_temperature parameter, take care unit is CELSIUS
     "wigos_station_identifier": wigos_id,
     "format": "json"
 }
@@ -55,7 +55,8 @@ for feature in data['features']:
     name = feature['properties'].get('name')
     value = feature['properties'].get('value')
     if name == 'air_temperature' and value is not None:
-        temps.append(value)
+        # convert from Celsius to Kelvin before appending to list
+        temps.append(value + 273.15)
 if len(temps) == 0:
     print("No temperature data found")
     exit(1)
