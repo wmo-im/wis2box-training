@@ -186,6 +186,15 @@ Go to MQTT Explorer. If you were connected to the broker, you should see a new W
 
 <img alt="MQTT Explorer: WIS2 notification" src="/../assets/img/mqtt-explorer-wis2-notification-metadata.png" width="800">
 
+!!! note "Triggering republishing of discovery metadata"
+    The WIS2 notification is published as soon as the discovery metadata is successfully submitted. If you do not see the notification, it may be because you were not connected to the broker at the time of publishing.
+    
+    If you do not see the WIS2 notification, you can manually trigger the republishing of the discovery metadata using the following command:
+    
+    ```bash
+    python3 wis2box-ctl.py execute wis2box metadata discovery republish
+    ```
+
 Inspect the content of the WIS2 notification you published. You should see a JSON with a structure corresponding to the WIS Notification Message (WNM) format.
 
 !!! question
