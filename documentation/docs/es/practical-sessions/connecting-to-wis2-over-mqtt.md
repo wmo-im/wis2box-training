@@ -1,12 +1,12 @@
 ---
-title: Conexión a WIS2 mediante MQTT
+title: Conectarse a WIS2 mediante MQTT
 ---
 
-# Conexión a WIS2 mediante MQTT
+# Conectarse a WIS2 mediante MQTT
 
 !!! abstract "Resultados de aprendizaje"
 
-    Al final de esta sesión práctica, serás capaz de:
+    Al final de esta sesión práctica, podrás:
 
     - conectarte al WIS2 Global Broker utilizando MQTT Explorer
     - revisar la estructura de los temas de WIS2
@@ -14,9 +14,9 @@ title: Conexión a WIS2 mediante MQTT
 
 ## Introducción
 
-WIS2 utiliza el protocolo MQTT para anunciar la disponibilidad de datos meteorológicos, climáticos e hidrológicos. El WIS2 Global Broker se suscribe a todos los WIS2 Nodes en la red y republica los mensajes que recibe. El Global Cache se suscribe al Global Broker, descarga los datos del mensaje y luego vuelve a publicar el mensaje en el tema `cache` con una nueva URL. El Global Discovery Catalogue publica metadatos de descubrimiento desde el Broker y proporciona una API de búsqueda.
+WIS2 utiliza el protocolo MQTT para anunciar la disponibilidad de datos meteorológicos, climáticos e hidrológicos. El WIS2 Global Broker se suscribe a todos los WIS2 Nodes en la red y republica los mensajes que recibe. El Global Cache se suscribe al Global Broker, descarga los datos del mensaje y luego republica el mensaje en el tema `cache` con una nueva URL. El Global Discovery Catalogue publica metadatos de descubrimiento desde el Broker y proporciona una API de búsqueda.
 
-Este es un ejemplo de la estructura de un mensaje de notificación de WIS2 recibido en el tema `origin/a/wis2/br-inmet/data/core/weather/surface-based-observations/synop`:	
+Este es un ejemplo de la estructura de un mensaje de notificación de WIS2 para un mensaje recibido en el tema `origin/a/wis2/br-inmet/data/core/weather/surface-based-observations/synop`:	
 
 ```json
 {
@@ -32,9 +32,10 @@ Este es un ejemplo de la estructura de un mensaje de notificación de WIS2 recib
     "type": "Point"
   },
   "properties": {
-    "data_id": "br-inmet/data/core/weather/surface-based-observations/synop/WIGOS_0-76-2-2900801000W83499_20240815T060000",
-    "datetime": "2024-08-15T06:00:00Z",
-    "pubtime": "2024-08-15T09:52:02Z",
+    "data_id": "br-inmet:synop-obs/WIGOS_0-20000-0-82022_20251114T180000",
+    "datetime": "2025-11-14T18:00:00Z",
+    "pubtime": "2025-11-14T20:49:31Z",
+    "metadata_id": "urn:wmo:md:br-inmet:synop-obs",
     "integrity": {
       "method": "sha512",
       "value": "TBuWycx/G0lIiTo47eFPBViGutxcIyk7eikppAKPc4aHgOmTIS5Wb9+0v3awMOyCgwpFhTruRRCVReMQMp5kYw=="
@@ -44,29 +45,29 @@ Este es un ejemplo de la estructura de un mensaje de notificación de WIS2 recib
       "value": "QlVGUgAA+gQAABYAACsAAAAAAAIAHAAH6AgPBgAAAAALAAABgMGWx1AAAM0ABOIAAAODM0OTkAAAAAAAAAAAAAAKb5oKEpJ6YkJ6mAAAAAAAAAAAAAAAAv0QeYA29WQa87ZhH4CQP//z+P//BD////+ASznXuUb///8MgAS3/////8X///e+AP////AB/+R/yf////////////////////6/1/79H/3///gEt////////4BLP6QAf/+/pAB//4H0YJ/YeAh/f2///7TH/////9+j//f///////////////////v0f//////////////////////wNzc3Nw==",
       "size": 250
     },
-    "wigos_station_identifier": "0-76-2-2900801000W83499"
+    "wigos_station_identifier": "0-20000-0-82022"
   },
   "links": [
     {
       "rel": "canonical",
       "type": "application/bufr",
-      "href": "http://wis2bra.inmet.gov.br/data/2024-08-15/wis/br-inmet/data/core/weather/surface-based-observations/synop/WIGOS_0-76-2-2900801000W83499_20240815T060000.bufr4",
+      "href": "http://wis2bra.inmet.gov.br/data/2025-11-14/wis/urn:wmo:md:br-inmet:synop-man/WIGOS_0-20000-0-82022_20251114T180000.bufr4"",
       "length": 250
     }
   ]
 }
 ``` 
 
-En esta sesión práctica aprenderás a utilizar la herramienta MQTT Explorer para configurar una conexión de cliente MQTT a un WIS2 Global Broker y visualizar mensajes de notificación de WIS2.
+En esta sesión práctica aprenderás cómo usar la herramienta MQTT Explorer para configurar una conexión de cliente MQTT a un WIS2 Global Broker y poder visualizar mensajes de notificación de WIS2.
 
-MQTT Explorer es una herramienta útil para explorar y revisar la estructura de temas de un broker MQTT y analizar los datos que se publican.
+MQTT Explorer es una herramienta útil para explorar y revisar la estructura de temas de un broker MQTT y analizar los datos que se están publicando.
 
 !!! note "Acerca de MQTT"
     MQTT Explorer proporciona una interfaz fácil de usar para conectarse a un broker MQTT y explorar los temas y la estructura de mensajes utilizados por WIS2.
     
-    En la práctica, MQTT está diseñado para la comunicación máquina a máquina, donde una aplicación o servicio se suscribe a temas y procesa mensajes de forma programada en tiempo real.
+    En la práctica, MQTT está diseñado para ser utilizado en comunicación máquina a máquina, donde una aplicación o servicio se suscribe a temas y procesa mensajes programáticamente en tiempo real.
     
-    Para trabajar con MQTT de forma programada (por ejemplo, en Python), puedes utilizar bibliotecas de cliente MQTT como [paho-mqtt](https://pypi.org/project/paho-mqtt) para conectarte a un broker MQTT y procesar mensajes entrantes. Existen numerosos clientes y servidores MQTT, dependiendo de tus requisitos y entorno técnico.
+    Para trabajar con MQTT de manera programática (por ejemplo, en Python), puedes usar bibliotecas de cliente MQTT como [paho-mqtt](https://pypi.org/project/paho-mqtt) para conectarte a un broker MQTT y procesar mensajes entrantes. Existen numerosos software de cliente y servidor MQTT, dependiendo de tus requisitos y entorno técnico.
 
 ## Usar MQTT Explorer para conectarse al Global Broker
 
@@ -88,7 +89,7 @@ Haz clic en el botón 'ADVANCED', elimina los temas preconfigurados y agrega los
 <img alt="mqtt-explorer-global-broker-advanced" src="/../assets/img/mqtt-explorer-global-broker-sub-origin.png" width="800">
 
 !!! note
-    Al configurar suscripciones MQTT puedes usar los siguientes comodines:
+    Al configurar suscripciones MQTT, puedes usar los siguientes comodines:
 
     - **Nivel único (+)**: un comodín de nivel único reemplaza un nivel de tema
     - **Nivel múltiple (#)**: un comodín de nivel múltiple reemplaza múltiples niveles de tema
@@ -119,7 +120,7 @@ Usa MQTT para explorar la estructura de temas bajo los temas `origin`.
 
     `origin/a/wis2/br-inmet/data/core/weather/surface-based-observations/synop`
 
-    nos indica que los datos fueron publicados por un centro WIS con el centre-id `br-inmet`, que corresponde al Instituto Nacional de Meteorologia - INMET, Brasil.
+    nos indica que los datos fueron publicados por un centro WIS con el centre-id `br-inmet`, que es el centre-id del Instituto Nacional de Meteorologia - INMET, Brasil.
 
 !!! question
 
@@ -131,11 +132,11 @@ Usa MQTT para explorar la estructura de temas bajo los temas `origin`.
 
     `origin/a/wis2/de-dwd-gts-to-wis2/data/core/I/S/A/I/01/sbbr`
 
-    nos indica que los datos fueron publicados por el gateway GTS-to-WIS2 alojado por Deutscher Wetterdienst (DWD), Alemania. El gateway GTS-to-WIS2 es un tipo especial de publicador de datos que publica datos del Global Telecommunication System (GTS) en WIS2. La estructura de temas está compuesta por los encabezados TTAAii CCCC para los mensajes GTS.
+    nos indica que los datos fueron publicados por el gateway GTS-to-WIS2 alojado por Deutscher Wetterdienst (DWD), Alemania. El gateway GTS-to-WIS2 es un tipo especial de publicador de datos que publica datos del Global Telecommunication System (GTS) a WIS2. La estructura de temas está compuesta por los encabezados TTAAii CCCC para los mensajes GTS.
 
 ## Ejercicio 2: Revisar la estructura de mensajes de WIS2
 
-Desconéctate de MQTT Explorer y actualiza la sección 'Advanced' para cambiar la suscripción a lo siguiente:
+Desconéctate de MQTT Explorer y actualiza las secciones 'Advanced' para cambiar la suscripción a lo siguiente:
 
 * `origin/a/wis2/+/data/core/weather/surface-based-observations/synop`
 * `cache/a/wis2/+/data/core/weather/surface-based-observations/synop`
@@ -145,9 +146,9 @@ Desconéctate de MQTT Explorer y actualiza la sección 'Advanced' para cambiar l
 !!! note
     El comodín `+` se utiliza para suscribirse a todos los centros WIS.
 
-Vuelve a conectarte al Global Broker y espera a que aparezcan mensajes. 
+Vuelve a conectarte al Global Broker y espera a que aparezcan los mensajes. 
 
-Puedes ver el contenido del mensaje WIS2 en la sección "Value" en el lado derecho. Intenta expandir la estructura de temas para ver los diferentes niveles del mensaje hasta llegar al último nivel y revisa el contenido de uno de los mensajes.
+Puedes ver el contenido del mensaje de WIS2 en la sección "Value" en el lado derecho. Intenta expandir la estructura de temas para ver los diferentes niveles del mensaje hasta llegar al último nivel y revisar el contenido de uno de los mensajes.
 
 !!! question
 
@@ -173,9 +174,9 @@ Puedes ver el contenido del mensaje WIS2 en la sección "Value" en el lado derec
 
 ## Ejercicio 3: Revisar la diferencia entre los temas 'origin' y 'cache'
 
-Asegúrate de que sigues conectado al Global Broker utilizando las suscripciones a los temas `origin/a/wis2/+/data/core/weather/surface-based-observations/synop` y `cache/a/wis2/+/data/core/weather/surface-based-observations/synop` como se describe en el Ejercicio 2.
+Asegúrate de que sigues conectado al Global Broker utilizando las suscripciones de temas `origin/a/wis2/+/data/core/weather/surface-based-observations/synop` y `cache/a/wis2/+/data/core/weather/surface-based-observations/synop` como se describe en el Ejercicio 2.
 
-Intenta identificar un mensaje del mismo centre-id publicado tanto en los temas `origin` como en los temas `cache`.
+Intenta identificar un mensaje para el mismo centre-id publicado en ambos temas `origin` y `cache`.
 
 !!! question
 
@@ -189,7 +190,7 @@ Intenta identificar un mensaje del mismo centre-id publicado tanto en los temas 
     
     Hay múltiples Global Caches en la red WIS2, por lo que recibirás un mensaje de cada Global Cache que haya descargado el mensaje.
 
-    El Global Cache solo descarga y vuelve a publicar mensajes que fueron publicados en la jerarquía de temas `../data/core/...`.
+    El Global Cache solo descargará y republicará mensajes que hayan sido publicados en la jerarquía de temas `../data/core/...`.
 
 ## Conclusión
 
