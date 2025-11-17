@@ -32,9 +32,10 @@ This is an example of the WIS2 notification message structure for a message rece
     "type": "Point"
   },
   "properties": {
-    "data_id": "br-inmet/data/core/weather/surface-based-observations/synop/WIGOS_0-76-2-2900801000W83499_20240815T060000",
-    "datetime": "2024-08-15T06:00:00Z",
-    "pubtime": "2024-08-15T09:52:02Z",
+    "data_id": "br-inmet:synop-obs/WIGOS_0-20000-0-82022_20251114T180000",
+    "datetime": "2025-11-14T18:00:00Z",
+    "pubtime": "2025-11-14T20:49:31Z",
+    "metadata_id": "urn:wmo:md:br-inmet:synop-obs",
     "integrity": {
       "method": "sha512",
       "value": "TBuWycx/G0lIiTo47eFPBViGutxcIyk7eikppAKPc4aHgOmTIS5Wb9+0v3awMOyCgwpFhTruRRCVReMQMp5kYw=="
@@ -44,13 +45,13 @@ This is an example of the WIS2 notification message structure for a message rece
       "value": "QlVGUgAA+gQAABYAACsAAAAAAAIAHAAH6AgPBgAAAAALAAABgMGWx1AAAM0ABOIAAAODM0OTkAAAAAAAAAAAAAAKb5oKEpJ6YkJ6mAAAAAAAAAAAAAAAAv0QeYA29WQa87ZhH4CQP//z+P//BD////+ASznXuUb///8MgAS3/////8X///e+AP////AB/+R/yf////////////////////6/1/79H/3///gEt////////4BLP6QAf/+/pAB//4H0YJ/YeAh/f2///7TH/////9+j//f///////////////////v0f//////////////////////wNzc3Nw==",
       "size": 250
     },
-    "wigos_station_identifier": "0-76-2-2900801000W83499"
+    "wigos_station_identifier": "0-20000-0-82022"
   },
   "links": [
     {
       "rel": "canonical",
       "type": "application/bufr",
-      "href": "http://wis2bra.inmet.gov.br/data/2024-08-15/wis/br-inmet/data/core/weather/surface-based-observations/synop/WIGOS_0-76-2-2900801000W83499_20240815T060000.bufr4",
+      "href": "http://wis2bra.inmet.gov.br/data/2025-11-14/wis/urn:wmo:md:br-inmet:synop-man/WIGOS_0-20000-0-82022_20251114T180000.bufr4"",
       "length": 250
     }
   ]
