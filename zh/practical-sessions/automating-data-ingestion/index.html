@@ -1,0 +1,1348 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="WIS2 in a box (wis2box) is a Free and Open Source (FOSS) Reference Implementation of a WMO WIS2 Node. The project provides a plug and play toolset to ingest, process, and publish weather/climate/water data using standards-based approaches in alignment with the WIS2 principles. wis2box also provides access to all data in the WIS2 network. wis2box is designed to have a low barrier to entry for data providers, providing enabling infrastructure and services for data discovery, access, and visualization.">
+      
+      
+        <meta name="author" content="World Meteorological Organization">
+      
+      
+        <link rel="canonical" href="https://training.wis2box.wis.wmo.int/zh/practical-sessions/automating-data-ingestion/">
+      
+      
+        <link rel="prev" href="../adding-gts-headers-to-wis2-notifications/">
+      
+      
+        <link rel="next" href="../bufr-command-line-tools/">
+      
+      
+        
+          <link rel="alternate" href="/" hreflang="en">
+        
+          <link rel="alternate" href="/fr/" hreflang="fr">
+        
+          <link rel="alternate" href="/es/" hreflang="es">
+        
+          <link rel="alternate" href="./" hreflang="zh">
+        
+          <link rel="alternate" href="/ru/" hreflang="ru">
+        
+          <link rel="alternate" href="/ar/" hreflang="ar">
+        
+      
+      
+      <link rel="icon" href="https://public.wmo.int/sites/all/themes/wmo/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+    
+    
+      
+        <title>自动化数据摄取 - WIS2 in a box training</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.618322db.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/css/custom.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../../" title="WIS2 in a box training" class="md-header__button md-logo" aria-label="WIS2 in a box training" data-md-component="logo">
+      
+  <img src="../../../assets/img/wmo-logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            WIS2 in a box training
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              自动化数据摄取
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+      <div class="md-header__option">
+  <div class="md-select">
+    
+    <button class="md-header__button md-icon" aria-label="选择当前语言">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12.87 15.07-2.54-2.51.03-.03A17.5 17.5 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2zm-2.62 7 1.62-4.33L19.12 17z"/></svg>
+    </button>
+    <div class="md-select__inner">
+      <ul class="md-select__list">
+        
+          <li class="md-select__item">
+            <a href="/" hreflang="en" class="md-select__link">
+              English
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="/fr/" hreflang="fr" class="md-select__link">
+              Français
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="/es/" hreflang="es" class="md-select__link">
+              Español
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="./" hreflang="zh" class="md-select__link">
+              中文
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="/ru/" hreflang="ru" class="md-select__link">
+              Русский
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="/ar/" hreflang="ar" class="md-select__link">
+              العربية
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</div>
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../" title="WIS2 in a box training" class="md-nav__button md-logo" aria-label="WIS2 in a box training" data-md-component="logo">
+      
+  <img src="../../../assets/img/wmo-logo.png" alt="logo">
+
+    </a>
+    WIS2 in a box training
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    首页
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    csv2bufr 模板
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    csv2bufr 模板
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../csv2bufr-templates/aws-template/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AWS 模板
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../csv2bufr-templates/daycli-template/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    DAYCLI 模板
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    备忘单
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    备忘单
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cheatsheets/linux/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Linux 速查表
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cheatsheets/docker/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Docker 速查表
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cheatsheets/wis2box/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    WIS2 盒装版速查表
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    实践课程
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    实践课程
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../connecting-to-wis2-over-mqtt/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    使用 MQTT 连接到 WIS2
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../accessing-your-student-vm/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    访问你的学生虚拟机
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../initializing-wis2box/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    初始化 wis2box
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../configuring-wis2box-datasets/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    在 wis2box 中配置数据集
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../configuring-station-metadata/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    配置站点元数据
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ingesting-data-for-publication/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    数据发布的摄取
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../data-conversion-tools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    数据转换工具
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../csv2bufr-templates/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CSV至BUFR映射模板
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../adding-gts-headers-to-wis2-notifications/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    为 WIS2 通知添加 GTS 头信息
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../datasets-with-access-control/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    设置推荐数据集
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../downloading-data-from-wis2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    使用 wis2downloader 从 WIS2 下载数据
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../decoding-data/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    解码WMO二进制格式数据
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../discovering-datasets-from-wis2-gdc/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    从 WIS2 全球发现目录中发现数据集
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        引言
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        准备工作
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-python-minio" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        练习 1：设置 Python 脚本将数据摄取到 MinIO
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        练习 2：摄取二进制数据
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-ascii-synop" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        练习 3：摄取 ASCII 格式的 SYNOP 数据
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-sftp-minio" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        练习 4：使用 SFTP 将数据摄取到 MinIO
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        结论
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="_1">自动化数据摄取</h1>
+<div class="admonition abstract">
+<p class="admonition-title">学习成果</p>
+<p>通过本实践课程，您将能够：</p>
+<ul>
+<li>理解您的数据集的数据插件如何决定数据摄取工作流</li>
+<li>使用 MinIO Python 客户端脚本将数据摄取到 wis2box</li>
+<li>通过 SFTP 访问 MinIO 将数据摄取到 wis2box</li>
+</ul>
+</div>
+<h2 id="_2">引言</h2>
+<p><strong>wis2box-management</strong> 容器监听来自 MinIO 存储服务的事件，根据为您的数据集配置的数据插件触发数据摄取。这允许您将数据上传到 MinIO 存储桶，并触发 wis2box 工作流以在 WIS2 代理上发布数据。</p>
+<p>数据插件定义了由 <strong>wis2box-management</strong> 容器加载的 Python 模块，并确定如何转换和发布数据。</p>
+<p>在上一个练习中，您应该使用模板 <code>surface-based-observations/synop</code> 创建了一个数据集，其中包括以下数据插件：</p>
+<p><img alt="数据映射" src="/../assets/img/wis2box-data-mappings.png" width="800"></p>
+<p>当文件被上传到 MinIO 时，wis2box 将根据文件路径包含的数据集 id (<code>metadata_id</code>) 匹配文件到一个数据集，并根据在数据集映射中定义的文件扩展名和文件模式确定使用哪些数据插件。</p>
+<p>在之前的课程中，我们通过使用 wis2box 命令行功能触发了数据摄取工作流，该功能将数据上传到正确路径的 MinIO 存储中。</p>
+<p>同样的步骤可以通过使用任何 MinIO 或 S3 客户端软件以编程方式完成，允许您将数据摄取自动化为您的运营工作流的一部分。</p>
+<p>或者，您也可以使用 SFTP 协议访问 MinIO 上传数据并触发数据摄取工作流。</p>
+<h2 id="_3">准备工作</h2>
+<p>使用您的 SSH 客户端（PuTTY 或其他）登录到您的学生 VM。</p>
+<p>确保 wis2box 正在运行：</p>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>~/wis2box-1.0.0rc1/
+python3<span class="w"> </span>wis2box-ctl.py<span class="w"> </span>start
+python3<span class="w"> </span>wis2box-ctl.py<span class="w"> </span>status
+</code></pre></div>
+<p>确保 MQTT Explorer 正在运行并连接到您的实例。如果您仍然从上一次会话连接，清除您可能从队列收到的任何先前消息。
+这可以通过断开连接并重新连接或点击给定主题的垃圾桶图标来完成。</p>
+<p>确保您的 Web 浏览器打开了您实例的 Grafana 仪表板，通过访问 <code>http://&lt;your-host&gt;:3000</code></p>
+<p>同时确保您打开了第二个标签页，其中显示了 MinIO 用户界面 <code>http://&lt;your-host&gt;:9001</code>。记住您需要使用在 <code>wis2box.env</code> 文件中定义的 <code>WIS2BOX_STORAGE_USER</code> 和 <code>WIS2BOX_STORAGE_PASSWORD</code> 登录。</p>
+<h2 id="1-python-minio">练习 1：设置 Python 脚本将数据摄取到 MinIO</h2>
+<p>在这个练习中，我们将使用 MinIO Python 客户端将数据复制到 MinIO。</p>
+<p>MinIO 提供了一个 Python 客户端，可以按如下方式安装：</p>
+<div class="highlight"><pre><span></span><code>pip3<span class="w"> </span>install<span class="w"> </span>minio
+</code></pre></div>
+<p>在您的学生 VM 上，Python 的 'minio' 包已经安装好了。</p>
+<p>转到目录 <code>exercise-materials/data-ingest-exercises</code>；这个目录包含一个使用 MinIO Python 客户端将文件复制到 MinIO 的示例脚本 <code>copy_file_to_incoming.py</code>。</p>
+<p>尝试运行脚本将样本数据文件 <code>csv-aws-example.csv</code> 复制到 MinIO 的 <code>wis2box-incoming</code> 存储桶中，如下所示：</p>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>~/exercise-materials/data-ingest-exercises
+python3<span class="w"> </span>copy_file_to_incoming.py<span class="w"> </span>csv-aws-example.csv
+</code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>您将收到一个错误，因为脚本尚未配置为访问您的 wis2box 上的 MinIO 端点。</p>
+</div>
+<p>脚本需要知道访问您的 wis2box 上的 MinIO 的正确端点。如果 wis2box 在您的主机上运行，MinIO 端点可在 <code>http://&lt;your-host&gt;:9000</code> 获得。脚本还需要更新您的存储密码和存储数据的 MinIO 存储桶中的路径。</p>
+<div class="admonition question">
+<p class="admonition-title">更新脚本并摄取 CSV 数据</p>
+<p>编辑脚本 <code>copy_file_to_incoming.py</code> 以解决错误，使用以下方法之一：
+- 从命令行：使用 <code>nano</code> 或 <code>vim</code> 文本编辑器编辑脚本
+- 使用 WinSCP：使用文件协议 <code>SCP</code> 启动一个新连接，并使用与您的 SSH 客户端相同的凭据。导航到目录 <code>exercise-materials/data-ingest-exercises</code> 并使用内置文本编辑器编辑 <code>copy_file_to_incoming.py</code></p>
+<p>确保您：</p>
+<ul>
+<li>定义了您的主机的正确 MinIO 端点</li>
+<li>为您的 MinIO 实例提供了正确的存储密码</li>
+<li>提供了存储数据的 MinIO 存储桶中的正确路径</li>
+</ul>
+<p>重新运行脚本将样本数据文件 <code>csv-aws-example.csv</code> 摄取到 MinIO：</p>
+<div class="highlight"><pre><span></span><code>python3<span class="w"> </span>copy_file_to_incoming.py<span class="w"> </span>csv-aws-example.csv
+</code></pre></div>
+<p>并确保错误已解决。</p>
+</div>
+<p>您可以通过检查 MinIO 用户界面来验证数据是否正确上传，并查看样本数据是否在 <code>wis2box-incoming</code> 存储桶的正确目录中。</p>
+<p>您可以使用 Grafana 仪表板来检查数据摄取工作流的状态。</p>
+<p>最后，您可以使用 MQTT Explorer 检查是否为您摄取的数据发布了通知。您应该看到 CSV 数据被转换为 BUFR 格式，并且发布了一个带有 "canonical" url 的 WIS2 数据通知，以启用下载 BUFR 数据。</p>
+<h2 id="2">练习 2：摄取二进制数据</h2>
+<p>接下来，我们尝试使用 MinIO Python 客户端摄取 BUFR 格式的二进制数据。</p>
+<p>wis2box 可以使用 <code>wis2box.data.bufr4.ObservationDataBUFR</code> 插件摄取 BUFR 格式的二进制数据。</p>
+<p>此插件将 BUFR 文件拆分为单个 BUFR 消息，并将每个消息发布到 MQTT 代理。如果相应的 BUFR 消息的站点未在 wis2box 站点元数据中定义，则不会发布该消息。</p>
+<p>由于您在上一次会话中使用了 <code>surface-based-observations/synop</code> 模板，您的数据映射包括了插件 <code>FM-12 数据转换为 BUFR</code>。此插件加载模块 <code>wis2box.data.synop2bufr.ObservationDataSYNOP2BUFR</code> 来摄取数据。</p>
+<div class="admonition question">
+<p class="admonition-title">摄取 BUFR 格式的二进制数据</p>
+<p>运行以下命令将二进制数据文件 <code>bufr-example.bin</code> 复制到 MinIO 的 <code>wis2box-incoming</code> 存储桶中：</p>
+<div class="highlight"><pre><span></span><code>python3<span class="w"> </span>copy_file_to_incoming.py<span class="w"> </span>bufr-example.bin
+</code></pre></div>
+</div>
+<p>检查 Grafana 仪表板和 MQTT Explorer，看看测试数据是否成功摄取和发布，如果您看到任何错误，请尝试解决它们。</p>
+<div class="admonition question">
+<p class="admonition-title">验证数据摄取</p>
+<p>这个数据样本发布了多少条消息到 MQTT 代理？</p>
+</div>
+<details class="success">
+<summary>点击以显示答案</summary>
+<p>如果您成功摄取并发布了最后一个数据样本，您应该在 wis2box MQTT 代理上收到了 10 条新通知。每条通知对应一次观测时间戳的一个站点的数据。</p>
+<p>插件 <code>wis2box.data.bufr4.ObservationDataBUFR</code> 将 BUFR 文件拆分为单个 BUFR 消息，并为每个站点和观测时间戳发布一条消息。</p>
+</details>
+<h2 id="3-ascii-synop">练习 3：摄取 ASCII 格式的 SYNOP 数据</h2>
+<p>在上一次会话中，我们使用 <strong>wis2box-webapp</strong> 中的 SYNOP 表单摄取了 ASCII 格式的 SYNOP 数据。您也可以通过将数据上传到 MinIO 来摄取 ASCII 格式的 SYNOP 数据。</p>
+<p>在上一次会话中，您应该已经创建了一个包括插件 'FM-12 数据转换为 BUFR' 的数据集：</p>
+<p><img alt="数据集映射" src="/../assets/img/wis2box-data-mappings.png" width="800"></p>
+<p>此插件加载模块 <code>wis2box.data.synop2bufr.ObservationDataSYNOP2BUFR</code> 来摄取数据。</p>
+<p>尝试使用 MinIO Python 客户端摄取测试数据 <code>synop-202307.txt</code> 和 <code>synop-202308.txt</code> 到您的 wis2box 实例中。</p>
+<p>注意这两个文件包含相同的内容，但文件名不同。文件名用于确定数据样本的日期。</p>
+<p>synop2bufr 插件依赖于一个文件模式来从文件名中提取日期。正则表达式中的第一个组用于提取年份，第二个组用于提取月份。</p>
+<div class="admonition question">
+<p class="admonition-title">摄取 FM-12 SYNOP ASCII 格式数据</p>
+<p>回到您的浏览器中的 MinIO 界面，导航到 <code>wis2box-incoming</code> 存储桶并进入您在上一个练习中上传测试数据的路径。</p>
+<p>上传新文件到 MinIO 的 <code>wis2box-incoming</code> 存储桶中正确的路径以触发数据摄取工作流。</p>
+<p>检查 Grafana 仪表板和 MQTT Explorer，看看测试数据是否成功摄取和发布。</p>
+<p>发布到 MQTT 代理的两条消息中的 <code>properties.datetime</code> 有什么不同？</p>
+</div>
+<details class="success">
+<summary>点击以显示答案</summary>
+<p>检查 MQTT Explorer 中最后两个通知的属性，您将注意到一个通知有：</p>
+<div class="highlight"><pre><span></span><code>&quot;properties&quot;: {
+    &quot;data_id&quot;: &quot;wis2/urn:wmo:md:nl-knmi-test:surface-based-observations.synop/WIGOS_0-20000-0-60355_20230703T090000&quot;,
+    &quot;datetime&quot;: &quot;2023-07-03T09:00:00Z&quot;,
+    ...
+</code></pre></div>
+<p>而另一个通知有：</p>
+<div class="highlight"><pre><span></span><code>&quot;properties&quot;: {
+    &quot;data_id&quot;: &quot;wis2/urn:wmo:md:nl-knmi-test:surface-based-observations.synop/WIGOS_0-20000-0-60355_20230803T090000&quot;,
+    &quot;datetime&quot;: &quot;2023-08-03T09:00:00Z&quot;,
+    ...
+</code></pre></div>
+<p>文件名被用来确定数据样本的年份和月份。</p>
+</details>
+<h2 id="4-sftp-minio">练习 4：使用 SFTP 将数据摄取到 MinIO</h2>
+<p>数据也可以通过 SFTP 摄取到 MinIO。</p>
+<p>wis2box 堆栈中启用的 MinIO 服务在端口 8022 上启用了 SFTP。您可以使用与 MinIO 用户界面相同的凭据通过 SFTP 访问 MinIO。在这个练习中，我们将使用 MinIO 服务中定义的 <code>wis2box.env</code> 中的管理员凭据，但您也可以在 MinIO 用户界面中创建额外的用户。</p>
+<p>要通过 SFTP 访问 MinIO，您可以使用任何 SFTP 客户端软件。在这个练习中，我们将使用 WinSCP，这是一个适用于 Windows 的免费 SFTP 客户端。</p>
+<p>使用 WinSCP，您的连接如下所示：</p>
+<p><img alt="winscp-sftp-connection" src="/../assets/img/winscp-sftp-connection.png" width="400"></p>
+<p>对于用户名和密码，请使用您的 <code>wis2box.env</code> 文件中的 <code>WIS2BOX_STORAGE_USERNAME</code> 和 <code>WIS2BOX_STORAGE_PASSWORD</code> 环境变量的值。点击 'save' 保存会话，然后点击 'login' 连接。</p>
+<p>登录后，您将看到根目录中的 MinIO 存储桶 <code>wis2box-incoming</code> 和 <code>wis2box-public</code>。您可以将数据上传到 <code>wis2box-incoming</code> 存储桶以触发数据摄取工作流。</p>
+<p>点击 <code>wis2box-incoming</code> 存储桶进入此存储桶，然后右键选择 <em>New</em>-&gt;<em>Directory</em> 在 <code>wis2box-incoming</code> 存储桶中创建一个新目录。</p>
+<p>创建目录 <em>not-a-valid-path</em> 并上传文件 <em>randomfile.txt</em> 到此目录中（您可以使用您喜欢的任何文件）。</p>
+<p>然后检查端口 3000 的 Grafana 仪表板，看看是否触发了数据摄取工作流。您应该看到：</p>
+<p><em>ERROR - Path validation error: Could not match http://minio:9000/wis2box-incoming/not-a-valid-path/randomfile.txt to dataset, path should include one of the following: ...</em></p>
+<p>错误表明文件已上传到 MinIO 并触发了数据摄取工作流，但由于路径与 wis2box 实例中的任何数据集不匹配，数据映射失败。</p>
+<p>您也可以使用命令行中的 <code>sftp</code>：</p>
+<p><div class="highlight"><pre><span></span><code>sftp<span class="w"> </span>-P<span class="w"> </span><span class="m">8022</span><span class="w"> </span>-oBatchMode<span class="o">=</span>no<span class="w"> </span>-o<span class="w"> </span><span class="nv">StrictHostKeyChecking</span><span class="o">=</span>no<span class="w"> </span>&lt;my-hostname-or-ip&gt;
+</code></pre></div>
+使用在 <code>wis2box.env</code> 中为 <code>WIS2BOX_STORAGE_USERNAME</code> 和 <code>WIS2BOX_STORAGE_PASSWORD</code> 环境变量定义的凭据登录，导航到 <code>wis2box-incoming</code> 存储桶，然后创建一个目录并按如下方式上传一个文件：</p>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>wis2box-incoming
+mkdir<span class="w"> </span>not-a-valid-path
+<span class="nb">cd</span><span class="w"> </span>not-a-valid-path
+put<span class="w"> </span>~/exercise-materials/data-ingest-exercises/synop.txt<span class="w"> </span>.
+</code></pre></div>
+<p>这将在 Grafana 仪表板中导致一个“路径验证错误”，表明文件已上传到 MinIO。</p>
+<p>要退出 sftp 客户端，请输入 <code>exit</code>。</p>
+<div class="admonition question">
+<p class="admonition-title">使用 SFTP 将数据摄取到 MinIO</p>
+<p>尝试使用 SFTP 将文件 <code>synop.txt</code> 摄取到您的 wis2box 实例中以触发数据摄取工作流。</p>
+<p>检查 MinIO 用户界面，看看文件是否上传到 <code>wis2box-incoming</code> 存储桶中的正确路径。</p>
+<p>检查 Grafana 仪表板，看看数据摄取工作流是否被触发或是否有任何错误。</p>
+</div>
+<p>为确保您的数据正确摄取，请确保文件上传到与您数据集的数据集 id 或主题匹配的 <code>wis2box-incoming</code> 存储桶中的目录。</p>
+<h2 id="_4">结论</h2>
+<div class="admonition success">
+<p class="admonition-title">恭喜！</p>
+<p>在这个实践课程中，您学会了如何：</p>
+<ul>
+<li>使用 Python 脚本和 MinIO Python 客户端触发 wis2box 工作流</li>
+<li>使用不同的数据插件摄取不同的数据格式</li>
+<li>使用 SFTP 上传数据到 MinIO</li>
+</ul>
+</div>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      &copy; 2025 World Meteorological Organization
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.indexes", "content.code.copy"], "search": "../../../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.e71a0d61.min.js"></script>
+      
+        <script src="../../../assets/js/disclaimer.js"></script>
+      
+    
+  </body>
+</html>

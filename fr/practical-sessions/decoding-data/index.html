@@ -1,0 +1,1451 @@
+
+<!doctype html>
+<html lang="fr" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="WIS2 in a box (wis2box) is a Free and Open Source (FOSS) Reference Implementation of a WMO WIS2 Node. The project provides a plug and play toolset to ingest, process, and publish weather/climate/water data using standards-based approaches in alignment with the WIS2 principles. wis2box also provides access to all data in the WIS2 network. wis2box is designed to have a low barrier to entry for data providers, providing enabling infrastructure and services for data discovery, access, and visualization.">
+      
+      
+        <meta name="author" content="World Meteorological Organization">
+      
+      
+        <link rel="canonical" href="https://training.wis2box.wis.wmo.int/fr/practical-sessions/decoding-data/">
+      
+      
+        <link rel="prev" href="../downloading-data-from-wis2/">
+      
+      
+        <link rel="next" href="../discovering-datasets-from-wis2-gdc/">
+      
+      
+        
+          <link rel="alternate" href="../../../practical-sessions/decoding-data/" hreflang="en">
+        
+          <link rel="alternate" href="./" hreflang="fr">
+        
+          <link rel="alternate" href="../../../es/practical-sessions/decoding-data/" hreflang="es">
+        
+          <link rel="alternate" href="../../../zh/practical-sessions/decoding-data/" hreflang="zh">
+        
+          <link rel="alternate" href="../../../ru/practical-sessions/decoding-data/" hreflang="ru">
+        
+          <link rel="alternate" href="../../../ar/practical-sessions/decoding-data/" hreflang="ar">
+        
+      
+      
+      <link rel="icon" href="https://public.wmo.int/sites/all/themes/wmo/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+    
+    
+      
+        <title>Décodage des données à partir des formats binaires de l'OMM - WIS2 in a box training</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.618322db.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/css/custom.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#decodage-des-donnees-a-partir-des-formats-binaires-de-lomm" class="md-skip">
+          Aller au contenu
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="En-tête">
+    <a href="../../" title="WIS2 in a box training" class="md-header__button md-logo" aria-label="WIS2 in a box training" data-md-component="logo">
+      
+  <img src="../../../assets/img/wmo-logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            WIS2 in a box training
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Décodage des données à partir des formats binaires de l'OMM
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+      <div class="md-header__option">
+  <div class="md-select">
+    
+    <button class="md-header__button md-icon" aria-label="Sélectionner la langue">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12.87 15.07-2.54-2.51.03-.03A17.5 17.5 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2zm-2.62 7 1.62-4.33L19.12 17z"/></svg>
+    </button>
+    <div class="md-select__inner">
+      <ul class="md-select__list">
+        
+          <li class="md-select__item">
+            <a href="../../../practical-sessions/decoding-data/" hreflang="en" class="md-select__link">
+              English
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="./" hreflang="fr" class="md-select__link">
+              Français
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="../../../es/practical-sessions/decoding-data/" hreflang="es" class="md-select__link">
+              Español
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="../../../zh/practical-sessions/decoding-data/" hreflang="zh" class="md-select__link">
+              中文
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="../../../ru/practical-sessions/decoding-data/" hreflang="ru" class="md-select__link">
+              Русский
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="../../../ar/practical-sessions/decoding-data/" hreflang="ar" class="md-select__link">
+              العربية
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</div>
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Rechercher" placeholder="Rechercher" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Recherche">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Effacer" aria-label="Effacer" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initialisation de la recherche
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../" title="WIS2 in a box training" class="md-nav__button md-logo" aria-label="WIS2 in a box training" data-md-component="logo">
+      
+  <img src="../../../assets/img/wmo-logo.png" alt="logo">
+
+    </a>
+    WIS2 in a box training
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Accueil
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Aide-mémoire
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Aide-mémoire
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cheatsheets/linux/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Linux cheatsheet
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cheatsheets/docker/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Docker cheatsheet
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cheatsheets/wis2box/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    WIS2 in a box cheatsheet
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Modèles csv2bufr
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Modèles csv2bufr
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../csv2bufr-templates/aws-template/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Modèle AWS
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../csv2bufr-templates/daycli-template/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Modèle DAYCLI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sessions Pratiques
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Sessions Pratiques
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../connecting-to-wis2-over-mqtt/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Connexion à WIS2 via MQTT
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../accessing-your-student-vm/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Accéder à votre VM étudiant
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../initializing-wis2box/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Initialisation de wis2box
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../configuring-wis2box-datasets/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configuration des ensembles de données dans wis2box
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../configuring-station-metadata/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configuration des métadonnées des stations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ingesting-data-for-publication/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ingestion des données pour publication
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../data-conversion-tools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Outils de Conversion de Données
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../csv2bufr-templates/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Modèles de mappage de CSV à BUFR
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../adding-gts-headers-to-wis2-notifications/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ajout d'en-têtes GTS aux notifications WIS2
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../datasets-with-access-control/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configuration d'un jeu de données recommandé
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../downloading-data-from-wis2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Télécharger des données depuis WIS2 en utilisant wis2downloader
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Décodage des données à partir des formats binaires de l'OMM
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Décodage des données à partir des formats binaires de l'OMM
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table des matières">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table des matières
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Introduction
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#decodage-des-donnees-telechargees-dans-un-notebook-jupyter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Décodage des données téléchargées dans un notebook Jupyter
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Décodage des données téléchargées dans un notebook Jupyter">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#exemple-de-decodage-grib2-donnees-geps-de-cma-grapes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exemple de décodage GRIB2 : Données GEPS de CMA GRAPES
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exemple-de-decodage-bufr-trajectoires-de-cyclones-tropicaux" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exemple de décodage BUFR : Trajectoires de cyclones tropicaux
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exemple-de-decodage-netcdf-anomalies-de-temperature-mensuelles" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exemple de décodage NetCDF : Anomalies de température mensuelles
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#utilisation-dautres-outils-pour-visualiser-et-decoder-les-formats-binaires-de-lomm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Utilisation d'autres outils pour visualiser et décoder les formats binaires de l'OMM
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conclusion
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../discovering-datasets-from-wis2-gdc/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Découverte des ensembles de données depuis le WIS2 Global Discovery Catalogue
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table des matières">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table des matières
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Introduction
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#decodage-des-donnees-telechargees-dans-un-notebook-jupyter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Décodage des données téléchargées dans un notebook Jupyter
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Décodage des données téléchargées dans un notebook Jupyter">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#exemple-de-decodage-grib2-donnees-geps-de-cma-grapes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exemple de décodage GRIB2 : Données GEPS de CMA GRAPES
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exemple-de-decodage-bufr-trajectoires-de-cyclones-tropicaux" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exemple de décodage BUFR : Trajectoires de cyclones tropicaux
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exemple-de-decodage-netcdf-anomalies-de-temperature-mensuelles" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exemple de décodage NetCDF : Anomalies de température mensuelles
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#utilisation-dautres-outils-pour-visualiser-et-decoder-les-formats-binaires-de-lomm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Utilisation d'autres outils pour visualiser et décoder les formats binaires de l'OMM
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conclusion
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="decodage-des-donnees-a-partir-des-formats-binaires-de-lomm">Décodage des données à partir des formats binaires de l'OMM</h1>
+<div class="admonition abstract">
+<p class="admonition-title">Objectifs d'apprentissage !</p>
+<p>À la fin de cette session pratique, vous serez capable de :</p>
+<ul>
+<li>exécuter un conteneur Docker pour l'image "demo-decode-eccodes-jupyter"</li>
+<li>exécuter les notebooks Jupyter d'exemple pour décoder les données aux formats GRIB2, NetCDF et BUFR</li>
+<li>découvrir d'autres outils pour décoder et visualiser les formats basés sur les tables de codes de l'OMM (TDCF)</li>
+</ul>
+</div>
+<h2 id="introduction">Introduction</h2>
+<p>Les formats binaires de l'OMM tels que BUFR et GRIB sont largement utilisés dans la communauté météorologique pour l'échange de données d'observation et de modèles, et nécessitent généralement des outils spécialisés pour décoder et visualiser les données.</p>
+<p>Après avoir téléchargé des données depuis WIS2, vous devrez souvent les décoder pour pouvoir les utiliser davantage.</p>
+<p>Diverses bibliothèques de code sont disponibles pour écrire des scripts ou des programmes afin de décoder les formats binaires de l'OMM. Il existe également des outils qui fournissent une interface utilisateur pour décoder et visualiser les données sans avoir besoin d'écrire un programme logiciel.</p>
+<p>Dans cette session pratique, nous démontrons comment décoder 3 types de données différents en utilisant un notebook Jupyter :</p>
+<ul>
+<li>GRIB2 contenant des données pour une prévision globale d'ensemble réalisée par le système CMA Global Regional Assimilation PrEdiction System (GRAPES)</li>
+<li>BUFR contenant des données de trajectoire de cyclone tropical issues du système de prévision d'ensemble de l'ECMWF</li>
+<li>NetCDF contenant des données sur les anomalies de température mensuelles</li>
+</ul>
+<h2 id="decodage-des-donnees-telechargees-dans-un-notebook-jupyter">Décodage des données téléchargées dans un notebook Jupyter</h2>
+<p>Pour démontrer comment vous pouvez décoder les données téléchargées, nous allons démarrer un nouveau conteneur en utilisant l'image 'decode-bufr-jupyter'.</p>
+<p>Ce conteneur démarrera un serveur de notebook Jupyter sur votre instance, qui inclut la bibliothèque <a href="https://sites.ecmwf.int/docs/eccodes">ecCodes</a> que vous pouvez utiliser pour décoder les données BUFR.</p>
+<p>Nous utiliserons les notebooks d'exemple inclus dans <code>~/exercise-materials/notebook-examples</code> pour décoder les données téléchargées concernant les trajectoires des cyclones.</p>
+<p>Pour démarrer le conteneur, utilisez la commande suivante :</p>
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>--name<span class="w"> </span>demo-decode-eccodes-jupyter<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-v<span class="w"> </span>~/wis2box-data/downloads:/root/downloads<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-p<span class="w"> </span><span class="m">8888</span>:8888<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-e<span class="w"> </span><span class="nv">JUPYTER_TOKEN</span><span class="o">=</span>dataismagic!<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>ghcr.io/wmo-im/wmo-im/demo-decode-eccodes-jupyter:latest
+</code></pre></div>
+<p>Voici une explication de la commande ci-dessus :</p>
+<ul>
+<li><code>docker run -d --name demo-decode-eccodes-jupyter</code> démarre un nouveau conteneur en mode détaché (<code>-d</code>) et le nomme <code>demo-decode-eccodes-jupyter</code></li>
+<li><code>-v ~/wis2box-data/downloads:/root/downloads</code> monte le répertoire <code>~/wis2box-data/downloads</code> de votre VM dans <code>/root/downloads</code> dans le conteneur. C'est là que sont stockées les données téléchargées depuis WIS2</li>
+<li><code>-p 8888:8888</code> mappe le port 8888 de votre VM au port 8888 dans le conteneur. Cela rend le serveur de notebook Jupyter accessible depuis votre navigateur web à l'adresse <code>http://YOUR-HOST:8888</code></li>
+<li><code>-e JUPYTER_TOKEN=dataismagic!</code> définit le jeton requis pour accéder au serveur de notebook Jupyter. Vous devrez fournir ce jeton lorsque vous accéderez au serveur depuis votre navigateur web</li>
+<li><code>ghrc.io/wmo-im/demo-decode-eccodes-jupyter:latest</code> spécifie l'image utilisée par le conteneur, qui inclut les notebooks Jupyter d'exemple utilisés dans les exercices suivants</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">À propos de l'image demo-decode-eccodes-jupyter</p>
+<p>L'image <code>demo-decode-eccodes-jupyter</code> a été développée pour cette formation. Elle utilise une image de base incluant la bibliothèque ecCodes et ajoute un serveur de notebook Jupyter, ainsi que des packages Python pour l'analyse et la visualisation des données.</p>
+<p>Le code source de cette image, y compris les notebooks d'exemple, est disponible à <a href="https://github.com/wmo-im/demo-decode-eccodes-jupyter">wmo-im/demo-decode-eccodes-jupyter</a>.</p>
+</div>
+<p>Une fois le conteneur démarré, vous pouvez accéder au serveur de notebook Jupyter sur votre VM étudiante en naviguant à l'adresse <code>http://YOUR-HOST:8888</code> dans votre navigateur web.</p>
+<p>Vous verrez un écran vous demandant d'entrer un "Mot de passe ou jeton".</p>
+<p>Fournissez le jeton <code>dataismagic!</code> pour vous connecter au serveur de notebook Jupyter (sauf si vous avez utilisé un jeton différent dans la commande ci-dessus).</p>
+<p>Après votre connexion, vous devriez voir l'écran suivant listant les répertoires dans le conteneur :</p>
+<p><img alt="Accueil du notebook Jupyter" src="../../../assets/img/jupyter-files-screen1.png" /></p>
+<p>Double-cliquez sur le répertoire <code>example-notebooks</code> pour l'ouvrir. Vous devriez voir l'écran suivant listant les notebooks d'exemple :</p>
+<p><img alt="Notebooks d'exemple Jupyter" src="../../../assets/img/jupyter-files-screen2.png" /></p>
+<p>Vous pouvez maintenant ouvrir les notebooks d'exemple pour décoder les données téléchargées.</p>
+<h3 id="exemple-de-decodage-grib2-donnees-geps-de-cma-grapes">Exemple de décodage GRIB2 : Données GEPS de CMA GRAPES</h3>
+<p>Ouvrez le fichier <code>GRIB2_CMA_global_ensemble_prediction.ipynb</code> dans le répertoire <code>example-notebooks</code> :</p>
+<p><img alt="Prédiction globale d'ensemble GRIB2" src="../../../assets/img/jupyter-grib2-global-ensemble-prediction.png" /></p>
+<p>Lisez les instructions dans le notebook et exécutez les cellules pour décoder les données téléchargées pour la prévision globale d'ensemble. Exécutez chaque cellule en cliquant dessus puis en cliquant sur le bouton d'exécution dans la barre d'outils ou en appuyant sur <code>Shift+Enter</code>.</p>
+<p>Après avoir exécuté toutes les cellules, vous devriez voir une visualisation pour "Probabilité d'anomalie de température à 850 hPa inférieure à -1,5 écarts-types" :</p>
+<p><img alt="Anomalie de température de la prévision globale d'ensemble" src="../../../assets/img/grib2-global-ensemble-prediction-map.png" /></p>
+<div class="admonition question">
+<p class="admonition-title">Question</p>
+<p>Comment mettriez-vous à jour la visualisation dans ce notebook pour visualiser un autre message dans le fichier GRIB2 ?</p>
+</div>
+<details class="success">
+<summary>Cliquez pour révéler la réponse</summary>
+<p>Dans la dernière cellule du notebook, vous verrez le code suivant :</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># afficher la visualisation pour le message numéro 8 (Probabilité d&#39;anomalie de température à 850 hPa inférieure à -1,5 écarts-types)</span>
+<span class="n">show_map_visualization</span><span class="p">(</span><span class="n">grib_file</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
+</code></pre></div>
+<p>Vous pouvez modifier cette ligne ou en ajouter une autre pour visualiser un autre message dans le fichier GRIB2 en changeant le numéro du message :</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># afficher la visualisation pour le message numéro 9</span>
+<span class="n">show_map_visualization</span><span class="p">(</span><span class="n">grib_file</span><span class="p">,</span> <span class="mi">9</span><span class="p">)</span>
+</code></pre></div>
+<p>Ensuite, réexécutez les cellules du notebook pour voir le graphique mis à jour.</p>
+</details>
+<h3 id="exemple-de-decodage-bufr-trajectoires-de-cyclones-tropicaux">Exemple de décodage BUFR : Trajectoires de cyclones tropicaux</h3>
+<p>Ouvrez le fichier <code>BUFR_tropical_cyclone_track.ipynb</code> dans le répertoire <code>example-notebooks</code> :</p>
+<p><img alt="Trajectoire de cyclone tropical BUFR" src="../../../assets/img/jupyter-tropical-cyclone-track.png" /></p>
+<p>Lisez les instructions dans le notebook et exécutez les cellules pour décoder les données téléchargées pour les trajectoires des cyclones tropicaux. Exécutez chaque cellule en cliquant dessus puis en cliquant sur le bouton d'exécution dans la barre d'outils ou en appuyant sur <code>Shift+Enter</code>.</p>
+<p>À la fin, vous devriez voir un graphique de la probabilité de trajectoire des cyclones tropicaux :</p>
+<p><img alt="Trajectoires des cyclones tropicaux" src="../../../assets/img/tropical-cyclone-track-map.png" /></p>
+<div class="admonition question">
+<p class="admonition-title">Question</p>
+<p>Le résultat affiche la probabilité prévue de trajectoire de tempête tropicale dans un rayon de 200 km. Comment mettriez-vous à jour le notebook pour afficher la probabilité prévue dans un rayon de 300 km ?</p>
+</div>
+<details class="success">
+<summary>Cliquez pour révéler la réponse</summary>
+<p>Pour mettre à jour le notebook afin d'afficher la probabilité prévue de trajectoire de tempête tropicale dans une distance différente, vous pouvez mettre à jour la variable <code>distance_threshold</code> dans le bloc de code qui calcule la probabilité de trajectoire.</p>
+<p>Pour afficher la probabilité prévue dans un rayon de 300 km :</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># définir le seuil de distance (en mètres)</span>
+<span class="n">distance_threshold</span> <span class="o">=</span> <span class="mi">300000</span>  <span class="c1"># 300 km en mètres</span>
+</code></pre></div>
+<p>Ensuite, réexécutez les cellules du notebook pour voir le graphique mis à jour.</p>
+</details>
+<div class="admonition note">
+<p class="admonition-title">Décodage des données BUFR</p>
+<p>L'exercice que vous venez de réaliser a fourni un exemple spécifique de la manière dont vous pouvez décoder les données BUFR en utilisant la bibliothèque ecCodes. Différents types de données peuvent nécessiter des étapes de décodage différentes, et vous devrez peut-être consulter la documentation pour le type de données avec lequel vous travaillez.</p>
+<p>Pour plus d'informations, veuillez consulter la <a href="https://confluence.ecmwf.int/display/ECC">documentation ecCodes</a>.</p>
+</div>
+<h3 id="exemple-de-decodage-netcdf-anomalies-de-temperature-mensuelles">Exemple de décodage NetCDF : Anomalies de température mensuelles</h3>
+<p>Ouvrez le fichier <code>NetCDF4_monthly_temperature_anomaly.ipynb</code> dans le répertoire <code>example-notebooks</code> :</p>
+<p><img alt="Anomalies de température mensuelles NetCDF" src="../../../assets/img/jupyter-netcdf4-monthly-temperature-anomalies.png" /></p>
+<p>Lisez les instructions dans le notebook et exécutez les cellules pour décoder les données téléchargées sur les anomalies de température mensuelles. Exécutez chaque cellule en cliquant dessus puis en cliquant sur le bouton d'exécution dans la barre d'outils ou en appuyant sur <code>Shift+Enter</code>.</p>
+<p>À la fin, vous devriez voir une carte des anomalies de température :</p>
+<p><img alt="Carte des anomalies de température mensuelles" src="../../../assets/img/netcdf4-monthly-temperature-anomalies-map.png" /></p>
+<div class="admonition note">
+<p class="admonition-title">Décodage des données NetCDF</p>
+<p>NetCDF est un format flexible qui, dans cet exemple, rapporte les valeurs pour la variable 'anomaly' selon les dimensions 'lat', 'lon'. Différents ensembles de données NetCDF peuvent utiliser des noms de variables et des dimensions différents.</p>
+</div>
+<h2 id="utilisation-dautres-outils-pour-visualiser-et-decoder-les-formats-binaires-de-lomm">Utilisation d'autres outils pour visualiser et décoder les formats binaires de l'OMM</h2>
+<p>Les notebooks d'exemple ont démontré comment vous pouvez décoder les formats binaires couramment utilisés de l'OMM en utilisant Python.</p>
+<p>Vous pouvez également utiliser d'autres outils pour décoder et visualiser les formats basés sur les tables de codes de l'OMM sans avoir besoin d'écrire de logiciel, tels que :</p>
+<ul>
+<li><a href="https://www.giss.nasa.gov/tools/panoply/">Panoply</a> - une application multiplateforme qui trace des tableaux géo-référencés et d'autres tableaux à partir de fichiers NetCDF, HDF, GRIB et autres</li>
+<li><a href="https://confluence.ecmwf.int/display/METV/Metview">ECMWF Metview</a> - une application météorologique pour l'analyse et la visualisation des données, qui prend en charge les formats GRIB et BUFR</li>
+<li><a href="https://www.unidata.ucar.edu/software/idv/">Integrated Data Viewer (IDV)</a> - un cadre logiciel gratuit basé sur Java pour analyser et visualiser les données géoscientifiques, y compris la prise en charge des formats GRIB et NetCDF</li>
+</ul>
+<h2 id="conclusion">Conclusion</h2>
+<div class="admonition success">
+<p class="admonition-title">Félicitations !</p>
+<p>Au cours de cette session pratique, vous avez appris à :</p>
+<ul>
+<li>exécuter un conteneur Docker pour l'image "demo-decode-eccodes-jupyter"</li>
+<li>exécuter les notebooks Jupyter d'exemple pour décoder les données aux formats GRIB2, NetCDF et BUFR</li>
+</ul>
+</div>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      &copy; 2025 World Meteorological Organization
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.indexes", "content.code.copy"], "search": "../../../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copi\u00e9 dans le presse-papier", "clipboard.copy": "Copier dans le presse-papier", "search.result.more.one": "1 de plus sur cette page", "search.result.more.other": "# de plus sur cette page", "search.result.none": "Aucun document trouv\u00e9", "search.result.one": "1 document trouv\u00e9", "search.result.other": "# documents trouv\u00e9s", "search.result.placeholder": "Taper pour d\u00e9marrer la recherche", "search.result.term.missing": "Non trouv\u00e9", "select.version": "S\u00e9lectionner la version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.e71a0d61.min.js"></script>
+      
+        <script src="../../../assets/js/disclaimer.js"></script>
+      
+    
+  </body>
+</html>

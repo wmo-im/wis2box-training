@@ -1,0 +1,1451 @@
+
+<!doctype html>
+<html lang="ru" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="WIS2 in a box (wis2box) is a Free and Open Source (FOSS) Reference Implementation of a WMO WIS2 Node. The project provides a plug and play toolset to ingest, process, and publish weather/climate/water data using standards-based approaches in alignment with the WIS2 principles. wis2box also provides access to all data in the WIS2 network. wis2box is designed to have a low barrier to entry for data providers, providing enabling infrastructure and services for data discovery, access, and visualization.">
+      
+      
+        <meta name="author" content="World Meteorological Organization">
+      
+      
+        <link rel="canonical" href="https://training.wis2box.wis.wmo.int/ru/practical-sessions/decoding-data/">
+      
+      
+        <link rel="prev" href="../downloading-data-from-wis2/">
+      
+      
+        <link rel="next" href="../discovering-datasets-from-wis2-gdc/">
+      
+      
+        
+          <link rel="alternate" href="../../../practical-sessions/decoding-data/" hreflang="en">
+        
+          <link rel="alternate" href="../../../fr/practical-sessions/decoding-data/" hreflang="fr">
+        
+          <link rel="alternate" href="../../../es/practical-sessions/decoding-data/" hreflang="es">
+        
+          <link rel="alternate" href="../../../zh/practical-sessions/decoding-data/" hreflang="zh">
+        
+          <link rel="alternate" href="./" hreflang="ru">
+        
+          <link rel="alternate" href="../../../ar/practical-sessions/decoding-data/" hreflang="ar">
+        
+      
+      
+      <link rel="icon" href="https://public.wmo.int/sites/all/themes/wmo/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+    
+    
+      
+        <title>Декодирование данных из бинарных форматов ВМО - WIS2 in a box training</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.618322db.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/css/custom.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          Перейти к содержанию
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Верхний колонтитул">
+    <a href="../../" title="WIS2 in a box training" class="md-header__button md-logo" aria-label="WIS2 in a box training" data-md-component="logo">
+      
+  <img src="../../../assets/img/wmo-logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            WIS2 in a box training
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Декодирование данных из бинарных форматов ВМО
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+      <div class="md-header__option">
+  <div class="md-select">
+    
+    <button class="md-header__button md-icon" aria-label="Выберите язык">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12.87 15.07-2.54-2.51.03-.03A17.5 17.5 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2zm-2.62 7 1.62-4.33L19.12 17z"/></svg>
+    </button>
+    <div class="md-select__inner">
+      <ul class="md-select__list">
+        
+          <li class="md-select__item">
+            <a href="../../../practical-sessions/decoding-data/" hreflang="en" class="md-select__link">
+              English
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="../../../fr/practical-sessions/decoding-data/" hreflang="fr" class="md-select__link">
+              Français
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="../../../es/practical-sessions/decoding-data/" hreflang="es" class="md-select__link">
+              Español
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="../../../zh/practical-sessions/decoding-data/" hreflang="zh" class="md-select__link">
+              中文
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="./" hreflang="ru" class="md-select__link">
+              Русский
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="../../../ar/practical-sessions/decoding-data/" hreflang="ar" class="md-select__link">
+              العربية
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</div>
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Поиск" placeholder="Поиск" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Поиск">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Очистить" aria-label="Очистить" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Инициализация поиска
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Навигация" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../" title="WIS2 in a box training" class="md-nav__button md-logo" aria-label="WIS2 in a box training" data-md-component="logo">
+      
+  <img src="../../../assets/img/wmo-logo.png" alt="logo">
+
+    </a>
+    WIS2 in a box training
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Главная
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Практические занятия
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Практические занятия
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../connecting-to-wis2-over-mqtt/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Подключение к WIS2 через MQTT
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../accessing-your-student-vm/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Доступ к вашей учебной виртуальной машине
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../initializing-wis2box/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Инициализация wis2box
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../configuring-wis2box-datasets/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Настройка наборов данных в wis2box
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../configuring-station-metadata/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Настройка метаданных станции
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ingesting-data-for-publication/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Загрузка данных для публикации
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../data-conversion-tools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Инструменты преобразования данных
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../csv2bufr-templates/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Шаблоны преобразования CSV в BUFR
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../adding-gts-headers-to-wis2-notifications/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Добавление заголовков GTS в уведомления WIS2
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../datasets-with-access-control/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Настройка рекомендованного набора данных
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../downloading-data-from-wis2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Загрузка данных из WIS2 с использованием wis2downloader
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Декодирование данных из бинарных форматов ВМО
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Декодирование данных из бинарных форматов ВМО
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Содержание">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Содержание
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Введение
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#jupyter-" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Декодирование загруженных данных в Jupyter-ноутбуке
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Декодирование загруженных данных в Jupyter-ноутбуке">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#grib2-geps-cma-grapes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Пример декодирования GRIB2: данные GEPS от CMA GRAPES
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bufr" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Пример декодирования BUFR: треки тропических циклонов
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#netcdf" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Пример декодирования NetCDF: ежемесячные аномалии температуры
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Использование других инструментов для просмотра и декодирования бинарных форматов ВМО
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Заключение
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../discovering-datasets-from-wis2-gdc/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Обнаружение наборов данных из WIS2 Global Discovery Catalogue
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Шаблоны csv2bufr
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Шаблоны csv2bufr
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../csv2bufr-templates/aws-template/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Шаблон AWS
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../csv2bufr-templates/daycli-template/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Шаблон DAYCLI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Шпаргалки
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Шпаргалки
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cheatsheets/linux/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Шпаргалка по Linux
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cheatsheets/docker/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Шпаргалка по Docker
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cheatsheets/wis2box/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Шпаргалка WIS2 in a box
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Содержание">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Содержание
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Введение
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#jupyter-" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Декодирование загруженных данных в Jupyter-ноутбуке
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Декодирование загруженных данных в Jupyter-ноутбуке">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#grib2-geps-cma-grapes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Пример декодирования GRIB2: данные GEPS от CMA GRAPES
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bufr" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Пример декодирования BUFR: треки тропических циклонов
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#netcdf" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Пример декодирования NetCDF: ежемесячные аномалии температуры
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Использование других инструментов для просмотра и декодирования бинарных форматов ВМО
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Заключение
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="_1">Декодирование данных из бинарных форматов ВМО</h1>
+<div class="admonition abstract">
+<p class="admonition-title">Результаты обучения!</p>
+<p>К концу этой практической сессии вы сможете:</p>
+<ul>
+<li>запустить контейнер Docker для образа "demo-decode-eccodes-jupyter"</li>
+<li>запустить пример Jupyter-ноутбуков для декодирования данных в форматах GRIB2, NetCDF и BUFR</li>
+<li>узнать о других инструментах для декодирования и визуализации форматов, управляемых таблицами ВМО (TDCF)</li>
+</ul>
+</div>
+<h2 id="_2">Введение</h2>
+<p>Бинарные форматы ВМО, такие как BUFR и GRIB, широко используются в метеорологическом сообществе для обмена данными наблюдений и моделирования. Для их декодирования и визуализации обычно требуются специализированные инструменты.</p>
+<p>После загрузки данных из WIS2 вам часто потребуется декодировать их для дальнейшего использования.</p>
+<p>Существуют различные библиотеки кода, которые позволяют писать скрипты или программы для декодирования бинарных форматов ВМО. Также доступны инструменты с пользовательским интерфейсом, которые позволяют декодировать и визуализировать данные без необходимости написания программного обеспечения.</p>
+<p>В этой практической сессии мы демонстрируем, как декодировать три разных типа данных с использованием Jupyter-ноутбука:</p>
+<ul>
+<li>GRIB2, содержащий данные для Глобального ансамблевого прогноза, созданного системой CMA Global Regional Assimilation PrEdiction System (GRAPES)</li>
+<li>BUFR, содержащий данные о треках тропических циклонов из системы ансамблевого прогнозирования ECMWF</li>
+<li>NetCDF, содержащий данные о ежемесячных аномалиях температуры</li>
+</ul>
+<h2 id="jupyter-">Декодирование загруженных данных в Jupyter-ноутбуке</h2>
+<p>Чтобы продемонстрировать, как можно декодировать загруженные данные, мы запустим новый контейнер с использованием образа 'decode-bufr-jupyter'.</p>
+<p>Этот контейнер запустит сервер Jupyter-ноутбуков на вашей виртуальной машине, который включает библиотеку <a href="https://sites.ecmwf.int/docs/eccodes">ecCodes</a>, позволяющую декодировать данные BUFR.</p>
+<p>Мы будем использовать пример ноутбуков, находящихся в <code>~/exercise-materials/notebook-examples</code>, чтобы декодировать загруженные данные о треках циклонов.</p>
+<p>Для запуска контейнера используйте следующую команду:</p>
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>--name<span class="w"> </span>demo-decode-eccodes-jupyter<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-v<span class="w"> </span>~/wis2box-data/downloads:/root/downloads<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-p<span class="w"> </span><span class="m">8888</span>:8888<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-e<span class="w"> </span><span class="nv">JUPYTER_TOKEN</span><span class="o">=</span>dataismagic!<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>ghcr.io/wmo-im/wmo-im/demo-decode-eccodes-jupyter:latest
+</code></pre></div>
+<p>Разберем эту команду:</p>
+<ul>
+<li><code>docker run -d --name demo-decode-eccodes-jupyter</code> запускает новый контейнер в фоновом режиме (<code>-d</code>) и присваивает ему имя <code>demo-decode-eccodes-jupyter</code></li>
+<li><code>-v ~/wis2box-data/downloads:/root/downloads</code> монтирует каталог <code>~/wis2box-data/downloads</code> на вашей виртуальной машине в <code>/root/downloads</code> в контейнере. Здесь хранятся данные, загруженные из WIS2</li>
+<li><code>-p 8888:8888</code> отображает порт 8888 на вашей виртуальной машине на порт 8888 в контейнере. Это делает сервер Jupyter-ноутбуков доступным из вашего веб-браузера по адресу <code>http://YOUR-HOST:8888</code></li>
+<li><code>-e JUPYTER_TOKEN=dataismagic!</code> задает токен, необходимый для доступа к серверу Jupyter-ноутбуков. Этот токен потребуется при доступе к серверу через веб-браузер</li>
+<li><code>ghrc.io/wmo-im/demo-decode-eccodes-jupyter:latest</code> указывает образ, используемый контейнером, который уже включает пример Jupyter-ноутбуков, используемых в следующих упражнениях</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">О контейнере demo-decode-eccodes-jupyter</p>
+<p>Образ <code>demo-decode-eccodes-jupyter</code> был разработан для этого обучения и использует базовый образ с библиотекой ecCodes, а также сервер Jupyter-ноутбуков и Python-пакеты для анализа и визуализации данных.</p>
+<p>Исходный код этого образа, включая пример ноутбуков, можно найти в репозитории <a href="https://github.com/wmo-im/demo-decode-eccodes-jupyter">wmo-im/demo-decode-eccodes-jupyter</a>.</p>
+</div>
+<p>После запуска контейнера вы можете получить доступ к серверу Jupyter-ноутбуков на вашей виртуальной машине, перейдя по адресу <code>http://YOUR-HOST:8888</code> в веб-браузере.</p>
+<p>Вы увидите экран с запросом "Password or token".</p>
+<p>Введите токен <code>dataismagic!</code>, чтобы войти в сервер Jupyter-ноутбуков (если вы не использовали другой токен в команде выше).</p>
+<p>После входа вы увидите следующий экран с перечнем каталогов в контейнере:</p>
+<p><img alt="Jupyter notebook home" src="../../../assets/img/jupyter-files-screen1.png" /></p>
+<p>Дважды щелкните на каталоге <code>example-notebooks</code>, чтобы открыть его. Вы увидите следующий экран с перечнем примерных ноутбуков:</p>
+<p><img alt="Jupyter notebook example notebooks" src="../../../assets/img/jupyter-files-screen2.png" /></p>
+<p>Теперь вы можете открыть примерные ноутбуки для декодирования загруженных данных.</p>
+<h3 id="grib2-geps-cma-grapes">Пример декодирования GRIB2: данные GEPS от CMA GRAPES</h3>
+<p>Откройте файл <code>GRIB2_CMA_global_ensemble_prediction.ipynb</code> в каталоге <code>example-notebooks</code>:</p>
+<p><img alt="Jupyter notebook GRIB2 global ensemble prediction" src="../../../assets/img/jupyter-grib2-global-ensemble-prediction.png" /></p>
+<p>Прочитайте инструкции в ноутбуке и выполните ячейки для декодирования загруженных данных для глобального ансамблевого прогноза. Выполняйте каждую ячейку, щелкая на ней и нажимая кнопку запуска на панели инструментов или нажимая <code>Shift+Enter</code>.</p>
+<p>После выполнения всех ячеек вы должны увидеть визуализацию "Вероятность аномалии температуры на уровне 850 гПа ниже -1,5 стандартных отклонений":</p>
+<p><img alt="Global ensemble prediction temperature anomaly" src="../../../assets/img/grib2-global-ensemble-prediction-map.png" /></p>
+<div class="admonition question">
+<p class="admonition-title">Question</p>
+<p>Как можно обновить визуализацию в этом ноутбуке, чтобы отобразить одно из других сообщений в файле GRIB2?</p>
+</div>
+<details class="success">
+<summary>Нажмите, чтобы увидеть ответ</summary>
+<p>В последней ячейке ноутбука вы увидите следующий код:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># show visualization for message number 8 (Probability of 850hPa temperature anomaly below -1.5 standard deviations)</span>
+<span class="n">show_map_visualization</span><span class="p">(</span><span class="n">grib_file</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
+</code></pre></div>
+<p>Вы можете изменить эту строку или добавить другую строку, чтобы визуализировать одно из других сообщений в файле GRIB2, изменив номер сообщения:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># show visualization for message number 9</span>
+<span class="n">show_map_visualization</span><span class="p">(</span><span class="n">grib_file</span><span class="p">,</span> <span class="mi">9</span><span class="p">)</span>
+</code></pre></div>
+<p>Затем выполните ячейки в ноутбуке заново, чтобы увидеть обновленный график.</p>
+</details>
+<h3 id="bufr">Пример декодирования BUFR: треки тропических циклонов</h3>
+<p>Откройте файл <code>BUFR_tropical_cyclone_track.ipynb</code> в каталоге <code>example-notebooks</code>:</p>
+<p><img alt="Jupyter notebook tropical cyclone track" src="../../../assets/img/jupyter-tropical-cyclone-track.png" /></p>
+<p>Прочитайте инструкции в ноутбуке и выполните ячейки для декодирования загруженных данных о треках тропических циклонов. Выполняйте каждую ячейку, щелкая на ней и нажимая кнопку запуска на панели инструментов или нажимая <code>Shift+Enter</code>.</p>
+<p>В конце вы должны увидеть график вероятности трека тропического циклона:</p>
+<p><img alt="Tropical cyclone tracks" src="../../../assets/img/tropical-cyclone-track-map.png" /></p>
+<div class="admonition question">
+<p class="admonition-title">Question</p>
+<p>Результат отображает предсказанную вероятность трека тропического циклона в пределах 200 км. Как можно обновить ноутбук, чтобы отобразить вероятность трека в пределах 300 км?</p>
+</div>
+<details class="success">
+<summary>Нажмите, чтобы увидеть ответ</summary>
+<p>Чтобы обновить ноутбук для отображения вероятности трека тропического циклона в пределах другого расстояния, вы можете обновить переменную <code>distance_threshold</code> в блоке кода, который рассчитывает вероятность удара.</p>
+<p>Чтобы отобразить вероятность трека тропического циклона в пределах 300 км:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># set distance threshold (meters)</span>
+<span class="n">distance_threshold</span> <span class="o">=</span> <span class="mi">300000</span>  <span class="c1"># 300 км в метрах</span>
+</code></pre></div>
+<p>Затем выполните ячейки в ноутбуке заново, чтобы увидеть обновленный график.</p>
+</details>
+<div class="admonition note">
+<p class="admonition-title">Декодирование данных BUFR</p>
+<p>Упражнение, которое вы только что выполнили, предоставило конкретный пример того, как можно декодировать данные BUFR с использованием библиотеки ecCodes. Разные типы данных могут требовать различных шагов декодирования, и вам может потребоваться обратиться к документации для типа данных, с которым вы работаете.</p>
+<p>Для получения дополнительной информации обратитесь к <a href="https://confluence.ecmwf.int/display/ECC">документации ecCodes</a>.</p>
+</div>
+<h3 id="netcdf">Пример декодирования NetCDF: ежемесячные аномалии температуры</h3>
+<p>Откройте файл <code>NetCDF4_monthly_temperature_anomaly.ipynb</code> в каталоге <code>example-notebooks</code>:</p>
+<p><img alt="Jupyter notebook monthly temperature anomalies" src="../../../assets/img/jupyter-netcdf4-monthly-temperature-anomalies.png" /></p>
+<p>Прочитайте инструкции в ноутбуке и выполните ячейки для декодирования загруженных данных об ежемесячных аномалиях температуры. Выполняйте каждую ячейку, щелкая на ней и нажимая кнопку запуска на панели инструментов или нажимая <code>Shift+Enter</code>.</p>
+<p>В конце вы должны увидеть карту аномалий температуры:</p>
+<p><img alt="Monthly temperature anomalies" src="../../../assets/img/netcdf4-monthly-temperature-anomalies-map.png" /></p>
+<div class="admonition note">
+<p class="admonition-title">Декодирование данных NetCDF</p>
+<p>Формат NetCDF является гибким. В этом примере он содержит значения для переменной 'anomaly', представленные вдоль измерений 'lat' и 'lon'. Разные наборы данных NetCDF могут использовать разные имена переменных и измерений.</p>
+</div>
+<h2 id="_3">Использование других инструментов для просмотра и декодирования бинарных форматов ВМО</h2>
+<p>Примерные ноутбуки продемонстрировали, как можно декодировать широко используемые бинарные форматы ВМО с использованием Python.</p>
+<p>Вы также можете использовать другие инструменты для декодирования и визуализации форматов, управляемых таблицами ВМО, без необходимости написания программного обеспечения, такие как:</p>
+<ul>
+<li><a href="https://www.giss.nasa.gov/tools/panoply/">Panoply</a> — кроссплатформенное приложение для построения графиков геопривязанных и других массивов из форматов NetCDF, HDF, GRIB и других наборов данных</li>
+<li><a href="https://confluence.ecmwf.int/display/METV/Metview">ECMWF Metview</a> — метеорологическое приложение для анализа и визуализации данных, поддерживающее форматы GRIB и BUFR</li>
+<li><a href="https://www.unidata.ucar.edu/software/idv/">Integrated Data Viewer (IDV)</a> — бесплатная программная платформа на базе Java для анализа и визуализации данных геонаук, включая поддержку форматов GRIB и NetCDF</li>
+</ul>
+<h2 id="_4">Заключение</h2>
+<div class="admonition success">
+<p class="admonition-title">Поздравляем!</p>
+<p>В этой практической сессии вы научились:</p>
+<ul>
+<li>запускать контейнер Docker для образа "demo-decode-eccodes-jupyter"</li>
+<li>запускать примерные Jupyter-ноутбуки для декодирования данных в форматах GRIB2, NetCDF и BUFR</li>
+</ul>
+</div>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      &copy; 2025 World Meteorological Organization
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.indexes", "content.code.copy"], "search": "../../../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "\u0421\u043a\u043e\u043f\u0438\u0440\u043e\u0432\u0430\u043d\u043e \u0432 \u0431\u0443\u0444\u0435\u0440", "clipboard.copy": "\u041a\u043e\u043f\u0438\u0440\u043e\u0432\u0430\u0442\u044c \u0432 \u0431\u0443\u0444\u0435\u0440", "search.result.more.one": "\u0415\u0449\u0451 1 \u043d\u0430 \u044d\u0442\u043e\u0439 \u0441\u0442\u0440\u0430\u043d\u0438\u0446\u0435", "search.result.more.other": "\u0415\u0449\u0451 # \u043d\u0430 \u044d\u0442\u043e\u0439 \u0441\u0442\u0440\u0430\u043d\u0438\u0446\u0435", "search.result.none": "\u0421\u043e\u0432\u043f\u0430\u0434\u0435\u043d\u0438\u0439 \u043d\u0435 \u043d\u0430\u0439\u0434\u0435\u043d\u043e", "search.result.one": "\u041d\u0430\u0439\u0434\u0435\u043d\u043e 1 \u0441\u043e\u0432\u043f\u0430\u0434\u0435\u043d\u0438\u0435", "search.result.other": "\u041d\u0430\u0439\u0434\u0435\u043d\u043e \u0441\u043e\u0432\u043f\u0430\u0434\u0435\u043d\u0438\u0439: #", "search.result.placeholder": "\u041d\u0430\u0447\u043d\u0438\u0442\u0435 \u043f\u0435\u0447\u0430\u0442\u0430\u0442\u044c \u0434\u043b\u044f \u043f\u043e\u0438\u0441\u043a\u0430", "search.result.term.missing": "\u041e\u0442\u0441\u0443\u0442\u0441\u0442\u0432\u0443\u0435\u0442", "select.version": "\u0412\u044b\u0431\u0435\u0440\u0438\u0442\u0435 \u0432\u0435\u0440\u0441\u0438\u044e"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.e71a0d61.min.js"></script>
+      
+        <script src="../../../assets/js/disclaimer.js"></script>
+      
+    
+  </body>
+</html>

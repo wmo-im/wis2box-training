@@ -1,0 +1,1703 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="WIS2 in a box (wis2box) is a Free and Open Source (FOSS) Reference Implementation of a WMO WIS2 Node. The project provides a plug and play toolset to ingest, process, and publish weather/climate/water data using standards-based approaches in alignment with the WIS2 principles. wis2box also provides access to all data in the WIS2 network. wis2box is designed to have a low barrier to entry for data providers, providing enabling infrastructure and services for data discovery, access, and visualization.">
+      
+      
+        <meta name="author" content="World Meteorological Organization">
+      
+      
+        <link rel="canonical" href="https://training.wis2box.wis.wmo.int/zh/practical-sessions/downloading-data-from-wis2/">
+      
+      
+        <link rel="prev" href="../datasets-with-access-control/">
+      
+      
+        <link rel="next" href="../decoding-data/">
+      
+      
+        
+          <link rel="alternate" href="../../../practical-sessions/downloading-data-from-wis2/" hreflang="en">
+        
+          <link rel="alternate" href="../../../fr/practical-sessions/downloading-data-from-wis2/" hreflang="fr">
+        
+          <link rel="alternate" href="../../../es/practical-sessions/downloading-data-from-wis2/" hreflang="es">
+        
+          <link rel="alternate" href="./" hreflang="zh">
+        
+          <link rel="alternate" href="../../../ru/practical-sessions/downloading-data-from-wis2/" hreflang="ru">
+        
+          <link rel="alternate" href="../../../ar/practical-sessions/downloading-data-from-wis2/" hreflang="ar">
+        
+      
+      
+      <link rel="icon" href="https://public.wmo.int/sites/all/themes/wmo/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+    
+    
+      
+        <title>使用 wis2downloader 从 WIS2 下载数据 - WIS2 in a box training</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.618322db.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/css/custom.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#wis2downloader-wis2" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../../" title="WIS2 in a box training" class="md-header__button md-logo" aria-label="WIS2 in a box training" data-md-component="logo">
+      
+  <img src="../../../assets/img/wmo-logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            WIS2 in a box training
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              使用 wis2downloader 从 WIS2 下载数据
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+      <div class="md-header__option">
+  <div class="md-select">
+    
+    <button class="md-header__button md-icon" aria-label="选择当前语言">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12.87 15.07-2.54-2.51.03-.03A17.5 17.5 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2zm-2.62 7 1.62-4.33L19.12 17z"/></svg>
+    </button>
+    <div class="md-select__inner">
+      <ul class="md-select__list">
+        
+          <li class="md-select__item">
+            <a href="../../../practical-sessions/downloading-data-from-wis2/" hreflang="en" class="md-select__link">
+              English
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="../../../fr/practical-sessions/downloading-data-from-wis2/" hreflang="fr" class="md-select__link">
+              Français
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="../../../es/practical-sessions/downloading-data-from-wis2/" hreflang="es" class="md-select__link">
+              Español
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="./" hreflang="zh" class="md-select__link">
+              中文
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="../../../ru/practical-sessions/downloading-data-from-wis2/" hreflang="ru" class="md-select__link">
+              Русский
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="../../../ar/practical-sessions/downloading-data-from-wis2/" hreflang="ar" class="md-select__link">
+              العربية
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</div>
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../" title="WIS2 in a box training" class="md-nav__button md-logo" aria-label="WIS2 in a box training" data-md-component="logo">
+      
+  <img src="../../../assets/img/wmo-logo.png" alt="logo">
+
+    </a>
+    WIS2 in a box training
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    首页
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    csv2bufr 模板
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    csv2bufr 模板
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../csv2bufr-templates/aws-template/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AWS 模板
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../csv2bufr-templates/daycli-template/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    DAYCLI 模板
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    备忘单
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    备忘单
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cheatsheets/linux/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Linux 速查表
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cheatsheets/docker/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Docker 速查表
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cheatsheets/wis2box/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    WIS2 盒装版速查表
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    实践课程
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    实践课程
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../connecting-to-wis2-over-mqtt/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    使用 MQTT 连接到 WIS2
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../accessing-your-student-vm/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    访问你的学生虚拟机
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../initializing-wis2box/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    初始化 wis2box
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../configuring-wis2box-datasets/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    在 wis2box 中配置数据集
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../configuring-station-metadata/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    配置站点元数据
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ingesting-data-for-publication/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    数据发布的摄取
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../data-conversion-tools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    数据转换工具
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../csv2bufr-templates/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CSV至BUFR映射模板
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../adding-gts-headers-to-wis2-notifications/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    为 WIS2 通知添加 GTS 头信息
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../datasets-with-access-control/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    设置推荐数据集
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    使用 wis2downloader 从 WIS2 下载数据
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    使用 wis2downloader 从 WIS2 下载数据
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        介绍
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        准备工作
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#wis2downloader" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        wis2downloader 基础知识
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="wis2downloader 基础知识">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#grafana-wis2downloader" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        在 Grafana 中查看 wis2downloader 仪表板
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#wis2downloader_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        查看 wis2downloader 配置
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#wis2downloader_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        wis2downloader 命令行界面
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#wis2-global-broker-gts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        使用 WIS2 Global Broker 下载 GTS 数据
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="使用 WIS2 Global Broker 下载 GTS 数据">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        设置订阅
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        检查下载的数据
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#wis2-training-broker" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        从 WIS2 Training Broker 下载示例数据
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="从 WIS2 Training Broker 下载示例数据">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#wis2downloader_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        更改 wis2downloader 配置
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        设置新订阅
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        检查下载的数据
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        总结
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../decoding-data/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    解码WMO二进制格式数据
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../discovering-datasets-from-wis2-gdc/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    从 WIS2 全球发现目录中发现数据集
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        介绍
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        准备工作
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#wis2downloader" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        wis2downloader 基础知识
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="wis2downloader 基础知识">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#grafana-wis2downloader" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        在 Grafana 中查看 wis2downloader 仪表板
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#wis2downloader_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        查看 wis2downloader 配置
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#wis2downloader_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        wis2downloader 命令行界面
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#wis2-global-broker-gts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        使用 WIS2 Global Broker 下载 GTS 数据
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="使用 WIS2 Global Broker 下载 GTS 数据">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        设置订阅
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        检查下载的数据
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#wis2-training-broker" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        从 WIS2 Training Broker 下载示例数据
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="从 WIS2 Training Broker 下载示例数据">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#wis2downloader_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        更改 wis2downloader 配置
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        设置新订阅
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        检查下载的数据
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        总结
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="wis2downloader-wis2">使用 wis2downloader 从 WIS2 下载数据</h1>
+<div class="admonition abstract">
+<p class="admonition-title">学习目标！</p>
+<p>在本次实践课程结束时，您将能够：</p>
+<ul>
+<li>使用 "wis2downloader" 订阅 WIS2 数据通知并将数据下载到本地系统</li>
+<li>在 Grafana 仪表板中查看下载状态</li>
+<li>学习如何配置 wis2downloader 以订阅非默认的 Broker</li>
+</ul>
+</div>
+<h2 id="_1">介绍</h2>
+<p>在本次课程中，您将学习如何设置对 WIS2 Broker 的订阅，并使用 wis2box 中包含的 "wis2downloader" 服务自动将数据下载到本地系统。</p>
+<div class="admonition note">
+<p class="admonition-title">关于 wis2downloader</p>
+<p>wis2downloader 也可以作为独立服务运行，可以在与发布 WIS2 通知的系统不同的系统上运行。有关作为独立服务使用 wis2downloader 的更多信息，请参阅 <a href="https://pypi.org/project/wis2downloader/">wis2downloader</a>。</p>
+<p>如果您希望开发自己的服务来订阅 WIS2 通知并下载数据，可以参考 <a href="https://github.com/World-Meteorological-Organization/wis2downloader">wis2downloader 源代码</a>。</p>
+</div>
+<h2 id="_2">准备工作</h2>
+<p>在开始之前，请登录到您的学生虚拟机，并确保您的 wis2box 实例正在运行。</p>
+<h2 id="wis2downloader">wis2downloader 基础知识</h2>
+<p>wis2downloader 作为 wis2box 中的一个独立容器包含在 Docker Compose 文件中定义的服务中。wis2box 中的 Prometheus 容器被配置为从 wis2downloader 容器中抓取指标，这些指标可以通过 Grafana 仪表板进行可视化。</p>
+<h3 id="grafana-wis2downloader">在 Grafana 中查看 wis2downloader 仪表板</h3>
+<p>打开一个网页浏览器，导航到您的 wis2box 实例的 Grafana 仪表板，地址为 <code>http://YOUR-HOST:3000</code>。</p>
+<p>点击左侧菜单中的仪表板，然后选择 <strong>wis2downloader dashboard</strong>。</p>
+<p>您应该会看到以下仪表板：</p>
+<p><img alt="wis2downloader dashboard" src="../../../assets/img/wis2downloader-dashboard.png" /></p>
+<p>此仪表板基于 wis2downloader 服务发布的指标，显示当前正在进行的下载状态。</p>
+<p>在左上角，您可以看到当前活动的订阅。</p>
+<p>保持此仪表板打开，因为您将在下一次练习中使用它来监控下载进度。</p>
+<h3 id="wis2downloader_1">查看 wis2downloader 配置</h3>
+<p>wis2box 中的 wis2downloader 服务可以通过 <code>wis2box.env</code> 文件中定义的环境变量进行配置。</p>
+<p>以下是 wis2downloader 使用的环境变量：</p>
+<pre><code>- DOWNLOAD_BROKER_HOST: 要连接的 MQTT Broker 的主机名。默认为 globalbroker.meteo.fr
+- DOWNLOAD_BROKER_PORT: 要连接的 MQTT Broker 的端口。默认为 443（用于 WebSocket 的 HTTPS）
+- DOWNLOAD_BROKER_USERNAME: 连接 MQTT Broker 时使用的用户名。默认为 everyone
+- DOWNLOAD_BROKER_PASSWORD: 连接 MQTT Broker 时使用的密码。默认为 everyone
+- DOWNLOAD_BROKER_TRANSPORT: 连接 MQTT Broker 时使用的传输机制（websockets 或 tcp）。默认为 websockets
+- DOWNLOAD_RETENTION_PERIOD_HOURS: 下载数据的保留时间（小时）。默认为 24
+- DOWNLOAD_WORKERS: 使用的下载工作线程数量。默认为 8，决定并行下载的数量。
+- DOWNLOAD_MIN_FREE_SPACE_GB: 保留在存储下载数据的卷上的最小空闲空间（GB）。默认为 1。
+</code></pre>
+<p>要查看 wis2downloader 的当前配置，可以使用以下命令：</p>
+<div class="highlight"><pre><span></span><code>cat<span class="w"> </span>~/wis2box/wis2box.env<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>DOWNLOAD
+</code></pre></div>
+<div class="admonition question">
+<p class="admonition-title">查看 wis2downloader 配置</p>
+<p>wis2downloader 默认连接的 MQTT Broker 是什么？</p>
+<p>下载数据的默认保留时间是多少？</p>
+</div>
+<details class="success">
+<summary>点击查看答案</summary>
+<p>wis2downloader 默认连接的 MQTT Broker 是 <code>globalbroker.meteo.fr</code>。</p>
+<p>下载数据的默认保留时间是 24 小时。</p>
+</details>
+<div class="admonition note">
+<p class="admonition-title">更新 wis2downloader 配置</p>
+<p>要更新 wis2downloader 的配置，您可以编辑 <code>wis2box.env</code> 文件。要应用更改，可以重新运行 wis2box 堆栈的启动命令：</p>
+<div class="highlight"><pre><span></span><code>python3<span class="w"> </span>wis2box-ctl.py<span class="w"> </span>start
+</code></pre></div>
+<p>您将看到 wis2downloader 服务使用新配置重新启动。</p>
+</div>
+<p>您可以在下一次练习中保持默认配置。</p>
+<h3 id="wis2downloader_2">wis2downloader 命令行界面</h3>
+<p>要访问 wis2box 中 wis2downloader 的命令行界面，您可以使用以下命令登录到 <strong>wis2downloader</strong> 容器：</p>
+<div class="highlight"><pre><span></span><code>python3<span class="w"> </span>wis2box-ctl.py<span class="w"> </span>login<span class="w"> </span>wis2downloader
+</code></pre></div>
+<p>使用以下命令列出当前活动的订阅：</p>
+<div class="highlight"><pre><span></span><code>wis2downloader<span class="w"> </span>list-subscriptions
+</code></pre></div>
+<p>此命令返回一个空列表，因为尚未设置任何订阅。</p>
+<h2 id="wis2-global-broker-gts">使用 WIS2 Global Broker 下载 GTS 数据</h2>
+<p>如果您保持 wis2downloader 的默认配置，它当前连接到由 Météo-France 托管的 WIS2 Global Broker。</p>
+<h3 id="_3">设置订阅</h3>
+<p>使用以下命令 <code>cache/a/wis2/de-dwd-gts-to-wis2/#</code> 订阅由 DWD 托管的 GTS-to-WIS2 网关通过 Global Caches 发布的数据：</p>
+<div class="highlight"><pre><span></span><code>wis2downloader<span class="w"> </span>add-subscription<span class="w"> </span>--topic<span class="w"> </span>cache/a/wis2/de-dwd-gts-to-wis2/#
+</code></pre></div>
+<p>然后通过输入 <code>exit</code> 退出 <strong>wis2downloader</strong> 容器：</p>
+<div class="highlight"><pre><span></span><code><span class="nb">exit</span>
+</code></pre></div>
+<h3 id="_4">检查下载的数据</h3>
+<p>在 Grafana 中查看 wis2downloader 仪表板，查看新添加的订阅。等待几分钟，您应该会看到开始下载的第一个数据。确认下载开始后，继续下一次练习。</p>
+<p>wis2box 中的 wis2downloader 服务将数据下载到您在 <code>wis2box.env</code> 文件中定义的 <code>WIS2BOX_HOST_DATADIR</code> 目录中的 <code>downloads</code> 目录。要查看下载目录的内容，请使用以下命令：</p>
+<div class="highlight"><pre><span></span><code>ls<span class="w"> </span>-R<span class="w"> </span>~/wis2box-data/downloads
+</code></pre></div>
+<p>请注意，下载的数据存储在以 WIS2 通知发布的主题命名的目录中。</p>
+<div class="admonition question">
+<p class="admonition-title">查看下载的数据</p>
+<p>您在下载目录中看到了哪些目录？</p>
+<p>您是否在这些目录中看到了任何下载的文件？</p>
+</div>
+<details class="success">
+<summary>点击查看答案</summary>
+<p>您应该会看到一个目录结构，从 <code>cache/a/wis2/de-dwd-gts-to-wis2/</code> 开始，在其下方是以下载数据的 GTS 公报头命名的更多目录。</p>
+<p>根据您开始订阅的时间，您可能会或可能不会在此目录中看到任何下载的文件。如果您尚未看到任何文件，请再等待几分钟并再次检查。</p>
+</details>
+<p>让我们在继续下一次练习之前清理订阅和下载的数据。</p>
+<p>登录回 wis2downloader 容器：</p>
+<div class="highlight"><pre><span></span><code>python3<span class="w"> </span>wis2box-ctl.py<span class="w"> </span>login<span class="w"> </span>wis2downloader
+</code></pre></div>
+<p>并使用以下命令从 wis2downloader 中删除您创建的订阅：</p>
+<div class="highlight"><pre><span></span><code>wis2downloader<span class="w"> </span>remove-subscription<span class="w"> </span>--topic<span class="w"> </span>cache/a/wis2/de-dwd-gts-to-wis2/#
+</code></pre></div>
+<p>使用以下命令删除下载的数据：</p>
+<div class="highlight"><pre><span></span><code>rm<span class="w"> </span>-rf<span class="w"> </span>/wis2box-data/downloads/cache/*
+</code></pre></div>
+<p>然后通过输入 <code>exit</code> 退出 wis2downloader 容器：</p>
+<div class="highlight"><pre><span></span><code><span class="nb">exit</span>
+</code></pre></div>
+<p>在 Grafana 中查看 wis2downloader 仪表板，确认订阅已被删除。您应该会看到下载停止。</p>
+<div class="admonition note">
+<p class="admonition-title">关于 GTS-to-WIS2 网关</p>
+<p>当前有两个 GTS-to-WIS2 网关通过 WIS2 Global Broker 和 Global Caches 发布数据：</p>
+<ul>
+<li>DWD（德国）：centre-id=<em>de-dwd-gts-to-wis2</em></li>
+<li>JMA（日本）：centre-id=<em>jp-jma-gts-to-wis2</em></li>
+</ul>
+<p>如果在上一个练习中将 <code>de-dwd-gts-to-wis2</code> 替换为 <code>jp-jma-gts-to-wis2</code>，您将收到由 JMA GTS-to-WIS2 网关发布的通知和数据。</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">origin 与 cache 主题</p>
+<p>当订阅以 <code>origin/</code> 开头的主题时，您将收到带有规范 URL 的通知，该 URL 指向由发布数据的 WIS 中心提供的数据服务器。</p>
+<p>当订阅以 <code>cache/</code> 开头的主题时，您将为同一数据收到多个通知，每个 Global Cache 都会发送一个通知。每个通知都包含一个规范 URL，指向相应 Global Cache 的数据服务器。wis2downloader 将从它能够访问的第一个规范 URL 下载数据。</p>
+</div>
+<h2 id="wis2-training-broker">从 WIS2 Training Broker 下载示例数据</h2>
+<p>在本次练习中，您将订阅 WIS2 Training Broker，该 Broker 发布用于培训的示例数据。</p>
+<h3 id="wis2downloader_3">更改 wis2downloader 配置</h3>
+<p>此操作演示如何订阅非默认的 Broker，并允许您下载由 WIS2 Training Broker 发布的一些数据。</p>
+<p>编辑 <code>wis2box.env</code> 文件，将 <code>DOWNLOAD_BROKER_HOST</code> 更改为 <code>wis2training-broker.wis2dev.io</code>，将 <code>DOWNLOAD_BROKER_PORT</code> 更改为 <code>1883</code>，并将 <code>DOWNLOAD_BROKER_TRANSPORT</code> 更改为 <code>tcp</code>：</p>
+<div class="highlight"><pre><span></span><code># downloader settings
+DOWNLOAD_BROKER_HOST=wis2training-broker.wis2dev.io
+DOWNLOAD_BROKER_PORT=1883
+DOWNLOAD_BROKER_USERNAME=everyone
+DOWNLOAD_BROKER_PASSWORD=everyone
+# download transport mechanism (tcp or websockets)
+DOWNLOAD_BROKER_TRANSPORT=tcp
+</code></pre></div>
+<p>然后再次运行 'start' 命令以应用更改：</p>
+<div class="highlight"><pre><span></span><code>python3<span class="w"> </span>wis2box-ctl.py<span class="w"> </span>start
+</code></pre></div>
+<p>检查 wis2downloader 的日志，查看是否成功连接到新的 Broker：</p>
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>logs<span class="w"> </span>wis2downloader
+</code></pre></div>
+<p>您应该会看到以下日志消息：</p>
+<div class="highlight"><pre><span></span><code>...
+INFO - Connecting...
+INFO - Host: wis2training-broker.wis2dev.io, port: 1883
+INFO - Connected successfully
+</code></pre></div>
+<h3 id="_5">设置新订阅</h3>
+<p>现在我们将设置一个新订阅，订阅 WIS2 Training Broker 发布的气旋轨迹数据。</p>
+<p>登录到 <strong>wis2downloader</strong> 容器：</p>
+<div class="highlight"><pre><span></span><code>python3<span class="w"> </span>wis2box-ctl.py<span class="w"> </span>login<span class="w"> </span>wis2downloader
+</code></pre></div>
+<p>并执行以下命令（复制粘贴以避免输入错误）：</p>
+<div class="highlight"><pre><span></span><code>wis2downloader<span class="w"> </span>add-subscription<span class="w"> </span>--topic<span class="w"> </span>origin/a/wis2/int-wis2-training/data/core/weather/prediction/forecast/medium-range/probabilistic/trajectory
+</code></pre></div>
+<p>通过输入 <code>exit</code> 退出 <strong>wis2downloader</strong> 容器。</p>
+<h3 id="_6">检查下载的数据</h3>
+<p>等待直到您在 Grafana 中的 wis2downloader 仪表板中看到下载开始。</p>
+<p>再次检查 wis2downloader 的日志，确认数据已下载：</p>
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>logs<span class="w"> </span>wis2downloader
+</code></pre></div>
+<p>您应该会看到类似以下的日志消息：</p>
+<div class="highlight"><pre><span></span><code>[...] INFO - Message received under topic origin/a/wis2/int-wis2-training/data/core/weather/prediction/forecast/medium-range/probabilistic/trajectory
+[...] INFO - Downloaded A_JSXX05ECEP020000_C_ECMP_...
+</code></pre></div>
+<p>再次检查下载目录的内容：</p>
+<div class="highlight"><pre><span></span><code>ls<span class="w"> </span>-R<span class="w"> </span>~/wis2box-data/downloads
+</code></pre></div>
+<p>您应该会看到一个名为 <code>origin/a/wis2/int-wis2-training/data/core/weather/prediction/forecast/medium-range/probabilistic/trajectory</code> 的新目录，其中包含下载的数据。</p>
+<div class="admonition question">
+<p class="admonition-title">查看下载的数据</p>
+<p>下载数据的文件格式是什么？</p>
+</div>
+<details class="success">
+<summary>点击查看答案</summary>
+<p>下载的数据是 BUFR 格式，文件扩展名为 <code>.bufr</code>。</p>
+</details>
+<p>接下来，尝试添加另外两个订阅，分别下载月度地表温度异常数据和全球集合预报数据，主题如下：</p>
+<ul>
+<li><code>origin/a/wis2/int-wis2-training/data/core/weather/prediction/forecast/medium-range/probabilistic/global</code></li>
+<li><code>origin/a/wis2/int-wis2-training/data/core/climate/experimental/anomalies/monthly/surface-temperature</code></li>
+</ul>
+<p>等待直到您在 Grafana 中的 wis2downloader 仪表板中看到下载开始。</p>
+<p>再次检查下载目录的内容：</p>
+<div class="highlight"><pre><span></span><code>ls<span class="w"> </span>-R<span class="w"> </span>~/wis2box-data/downloads
+</code></pre></div>
+<p>您应该会看到与您订阅的主题对应的新目录，其中包含下载的数据。</p>
+<h2 id="_7">总结</h2>
+<div class="admonition success">
+<p class="admonition-title">恭喜！</p>
+<p>在本次实践课程中，您学习了如何：</p>
+<ul>
+<li>使用 'wis2downloader' 订阅 WIS2 Broker 并将数据下载到本地系统</li>
+<li>在 Grafana 仪表板中查看下载状态</li>
+<li>更改 wis2downloader 的默认配置以订阅不同的 Broker</li>
+<li>在本地系统上查看下载的数据</li>
+</ul>
+</div>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      &copy; 2025 World Meteorological Organization
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.indexes", "content.code.copy"], "search": "../../../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.e71a0d61.min.js"></script>
+      
+        <script src="../../../assets/js/disclaimer.js"></script>
+      
+    
+  </body>
+</html>

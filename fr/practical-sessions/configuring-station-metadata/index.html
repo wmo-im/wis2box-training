@@ -1,0 +1,1407 @@
+
+<!doctype html>
+<html lang="fr" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="WIS2 in a box (wis2box) is a Free and Open Source (FOSS) Reference Implementation of a WMO WIS2 Node. The project provides a plug and play toolset to ingest, process, and publish weather/climate/water data using standards-based approaches in alignment with the WIS2 principles. wis2box also provides access to all data in the WIS2 network. wis2box is designed to have a low barrier to entry for data providers, providing enabling infrastructure and services for data discovery, access, and visualization.">
+      
+      
+        <meta name="author" content="World Meteorological Organization">
+      
+      
+        <link rel="canonical" href="https://training.wis2box.wis.wmo.int/fr/practical-sessions/configuring-station-metadata/">
+      
+      
+        <link rel="prev" href="../configuring-wis2box-datasets/">
+      
+      
+        <link rel="next" href="../ingesting-data-for-publication/">
+      
+      
+        
+          <link rel="alternate" href="../../../practical-sessions/configuring-station-metadata/" hreflang="en">
+        
+          <link rel="alternate" href="./" hreflang="fr">
+        
+          <link rel="alternate" href="../../../es/practical-sessions/configuring-station-metadata/" hreflang="es">
+        
+          <link rel="alternate" href="../../../zh/practical-sessions/configuring-station-metadata/" hreflang="zh">
+        
+          <link rel="alternate" href="../../../ru/practical-sessions/configuring-station-metadata/" hreflang="ru">
+        
+          <link rel="alternate" href="../../../ar/practical-sessions/configuring-station-metadata/" hreflang="ar">
+        
+      
+      
+      <link rel="icon" href="https://public.wmo.int/sites/all/themes/wmo/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+    
+    
+      
+        <title>Configuration des métadonnées des stations - WIS2 in a box training</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.618322db.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/css/custom.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#configuration-des-metadonnees-des-stations" class="md-skip">
+          Aller au contenu
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="En-tête">
+    <a href="../../" title="WIS2 in a box training" class="md-header__button md-logo" aria-label="WIS2 in a box training" data-md-component="logo">
+      
+  <img src="../../../assets/img/wmo-logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            WIS2 in a box training
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Configuration des métadonnées des stations
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+      <div class="md-header__option">
+  <div class="md-select">
+    
+    <button class="md-header__button md-icon" aria-label="Sélectionner la langue">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12.87 15.07-2.54-2.51.03-.03A17.5 17.5 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2zm-2.62 7 1.62-4.33L19.12 17z"/></svg>
+    </button>
+    <div class="md-select__inner">
+      <ul class="md-select__list">
+        
+          <li class="md-select__item">
+            <a href="../../../practical-sessions/configuring-station-metadata/" hreflang="en" class="md-select__link">
+              English
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="./" hreflang="fr" class="md-select__link">
+              Français
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="../../../es/practical-sessions/configuring-station-metadata/" hreflang="es" class="md-select__link">
+              Español
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="../../../zh/practical-sessions/configuring-station-metadata/" hreflang="zh" class="md-select__link">
+              中文
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="../../../ru/practical-sessions/configuring-station-metadata/" hreflang="ru" class="md-select__link">
+              Русский
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="../../../ar/practical-sessions/configuring-station-metadata/" hreflang="ar" class="md-select__link">
+              العربية
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</div>
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Rechercher" placeholder="Rechercher" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Recherche">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Effacer" aria-label="Effacer" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initialisation de la recherche
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../" title="WIS2 in a box training" class="md-nav__button md-logo" aria-label="WIS2 in a box training" data-md-component="logo">
+      
+  <img src="../../../assets/img/wmo-logo.png" alt="logo">
+
+    </a>
+    WIS2 in a box training
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Accueil
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Aide-mémoire
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Aide-mémoire
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cheatsheets/linux/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Linux cheatsheet
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cheatsheets/docker/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Docker cheatsheet
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cheatsheets/wis2box/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    WIS2 in a box cheatsheet
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Modèles csv2bufr
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Modèles csv2bufr
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../csv2bufr-templates/aws-template/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Modèle AWS
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../csv2bufr-templates/daycli-template/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Modèle DAYCLI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sessions Pratiques
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Sessions Pratiques
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../connecting-to-wis2-over-mqtt/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Connexion à WIS2 via MQTT
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../accessing-your-student-vm/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Accéder à votre VM étudiant
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../initializing-wis2box/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Initialisation de wis2box
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../configuring-wis2box-datasets/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configuration des ensembles de données dans wis2box
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configuration des métadonnées des stations
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configuration des métadonnées des stations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table des matières">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table des matières
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Introduction
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#creer-un-jeton-dautorisation-pour-collectionsstations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Créer un jeton d'autorisation pour collections/stations
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ajouter-des-metadonnees-de-station-en-utilisant-le-wis2box-webapp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ajouter des métadonnées de station en utilisant le wis2box-webapp
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reviser-vos-metadonnees-de-station" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Réviser vos métadonnées de station
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#telechargement-en-masse-des-metadonnees-de-station" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Téléchargement en masse des métadonnées de station
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conclusion
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ingesting-data-for-publication/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ingestion des données pour publication
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../data-conversion-tools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Outils de Conversion de Données
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../csv2bufr-templates/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Modèles de mappage de CSV à BUFR
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../adding-gts-headers-to-wis2-notifications/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ajout d'en-têtes GTS aux notifications WIS2
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../datasets-with-access-control/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configuration d'un jeu de données recommandé
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../downloading-data-from-wis2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Télécharger des données depuis WIS2 en utilisant wis2downloader
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../decoding-data/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Décodage des données à partir des formats binaires de l'OMM
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../discovering-datasets-from-wis2-gdc/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Découverte des ensembles de données depuis le WIS2 Global Discovery Catalogue
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table des matières">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table des matières
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Introduction
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#creer-un-jeton-dautorisation-pour-collectionsstations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Créer un jeton d'autorisation pour collections/stations
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ajouter-des-metadonnees-de-station-en-utilisant-le-wis2box-webapp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ajouter des métadonnées de station en utilisant le wis2box-webapp
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reviser-vos-metadonnees-de-station" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Réviser vos métadonnées de station
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#telechargement-en-masse-des-metadonnees-de-station" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Téléchargement en masse des métadonnées de station
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conclusion
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="configuration-des-metadonnees-des-stations">Configuration des métadonnées des stations</h1>
+<div class="admonition abstract">
+<p class="admonition-title">Résultats d'apprentissage</p>
+<p>À la fin de cette session pratique, vous serez capable de :</p>
+<ul>
+<li>créer un jeton d'autorisation pour l'endpoint <code>collections/stations</code></li>
+<li>ajouter des métadonnées de station à wis2box</li>
+<li>mettre à jour/supprimer des métadonnées de station en utilisant le <strong>wis2box-webapp</strong></li>
+</ul>
+</div>
+<h2 id="introduction">Introduction</h2>
+<p>Pour partager des données à l'international entre les membres de l'OMM, il est important de comprendre les stations qui produisent les données. Le Système mondial d'observation intégré de l'OMM (WIGOS) fournit un cadre pour l'intégration des systèmes d'observation et des systèmes de gestion des données. L'<strong>Identifiant de Station WIGOS (WSI)</strong> est utilisé comme référence unique de la station qui a produit un ensemble spécifique de données d'observation.</p>
+<p>wis2box possède une collection de métadonnées de station qui est utilisée pour décrire les stations produisant les données d'observation et doit être récupérée depuis <strong>OSCAR/Surface</strong>. Les métadonnées de station dans wis2box sont utilisées par les outils de transformation BUFR pour vérifier que les données entrantes contiennent un Identifiant de Station WIGOS (WSI) valide et pour fournir une correspondance entre le WSI et les métadonnées de la station.</p>
+<h2 id="creer-un-jeton-dautorisation-pour-collectionsstations">Créer un jeton d'autorisation pour collections/stations</h2>
+<p>Pour éditer des stations via le <strong>wis2box-webapp</strong>, vous devrez d'abord créer un jeton d'autorisation.</p>
+<p>Connectez-vous à votre VM étudiant et assurez-vous que vous êtes dans le répertoire <code>wis2box</code> :</p>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>~/wis2box
+</code></pre></div>
+<p>Ensuite, connectez-vous au conteneur <strong>wis2box-management</strong> avec la commande suivante :</p>
+<div class="highlight"><pre><span></span><code>python3<span class="w"> </span>wis2box-ctl.py<span class="w"> </span>login
+</code></pre></div>
+<p>Dans le conteneur <strong>wis2box-management</strong>, vous pouvez créer un jeton d'autorisation pour un endpoint spécifique en utilisant la commande : <code>wis2box auth add-token --path &lt;my-endpoint&gt;</code>.</p>
+<p>Par exemple, pour utiliser un jeton généré automatiquement aléatoire pour l'endpoint <code>collections/stations</code> :</p>
+<div class="highlight"><pre><span></span><code>wis2box auth add-token --path collections/stations
+</code></pre></div>
+<p>Le résultat sera le suivant :</p>
+<div class="highlight"><pre><span></span><code>Continue with token: 7ca20386a131f0de384e6ffa288eb1ae385364b3694e47e3b451598c82e899d1 [y/N]? y
+Token successfully created
+</code></pre></div>
+<p>Ou, si vous souhaitez définir votre propre jeton pour l'endpoint <code>collections/stations</code>, vous pouvez utiliser l'exemple suivant :</p>
+<div class="highlight"><pre><span></span><code>wis2box auth add-token --path collections/stations DataIsMagic
+</code></pre></div>
+<p>Résultat :</p>
+<div class="highlight"><pre><span></span><code>Continue with token: DataIsMagic [y/N]? y
+Token successfully created
+</code></pre></div>
+<p>Veuillez créer un jeton d'autorisation pour l'endpoint <code>collections/stations</code> en utilisant les instructions ci-dessus.</p>
+<h2 id="ajouter-des-metadonnees-de-station-en-utilisant-le-wis2box-webapp">Ajouter des métadonnées de station en utilisant le <strong>wis2box-webapp</strong></h2>
+<p>Le <strong>wis2box-webapp</strong> fournit une interface utilisateur graphique pour éditer les métadonnées des stations.</p>
+<p>Ouvrez le <strong>wis2box-webapp</strong> dans votre navigateur en naviguant vers <code>http://YOUR-HOST/wis2box-webapp</code>, et sélectionnez les stations :</p>
+<p><img alt="wis2box-webapp-select-stations" src="/../assets/img/wis2box-webapp-select-stations.png" width="250"></p>
+<p>Lorsque vous cliquez sur 'ajouter une nouvelle station', il vous est demandé de fournir l'identifiant de station WIGOS pour la station que vous souhaitez ajouter :</p>
+<p><img alt="wis2box-webapp-import-station-from-oscar" src="/../assets/img/wis2box-webapp-import-station-from-oscar.png" width="800"></p>
+<div class="admonition note">
+<p class="admonition-title">Ajouter des métadonnées de station pour 3 stations ou plus</p>
+<p>Veuillez ajouter trois stations ou plus à la collection de métadonnées de station de votre wis2box. </p>
+<p>Veuillez utiliser des stations de votre pays si possible, surtout si vous avez apporté vos propres données.</p>
+<p>Si votre pays n'a pas de stations dans OSCAR/Surface, vous pouvez utiliser les stations suivantes pour cet exercice :</p>
+<ul>
+<li>0-20000-0-91334</li>
+<li>0-20000-0-96323 (notez l'absence d'élévation de la station dans OSCAR)</li>
+<li>0-20000-0-96749 (notez l'absence d'élévation de la station dans OSCAR)</li>
+</ul>
+</div>
+<p>Lorsque vous cliquez sur rechercher, les données de la station sont récupérées depuis OSCAR/Surface, veuillez noter que cela peut prendre quelques secondes.</p>
+<p>Examinez les données renvoyées par OSCAR/Surface et ajoutez les données manquantes si nécessaire. Sélectionnez un sujet pour la station et fournissez votre jeton d'autorisation pour l'endpoint <code>collections/stations</code> et cliquez sur 'enregistrer' :</p>
+<p><img alt="wis2box-webapp-create-station-save" src="/../assets/img/wis2box-webapp-create-station-save.png" width="800"></p>
+<p><img alt="wis2box-webapp-create-station-success" src="/../assets/img/wis2box-webapp-create-station-success.png" width="500"></p>
+<p>Revenez à la liste des stations et vous verrez la station que vous avez ajoutée :</p>
+<p><img alt="wis2box-webapp-stations-with-one-station" src="/../assets/img/wis2box-webapp-stations-with-one-station.png" width="800"></p>
+<p>Répétez ce processus jusqu'à ce que vous ayez configuré au moins 3 stations.</p>
+<div class="admonition tip">
+<p class="admonition-title">Dérivation des informations d'élévation manquantes</p>
+<p>Si l'élévation de votre station est manquante, il existe des services en ligne pour aider à rechercher l'élévation en utilisant des données d'élévation ouvertes. Un tel exemple est l'<a href="https://www.opentopodata.org">API Open Topo Data</a>.</p>
+<p>Par exemple, pour obtenir l'élévation à la latitude -6.15558 et à la longitude 106.84204, vous pouvez copier-coller l'URL suivante dans un nouvel onglet de navigateur :</p>
+<div class="highlight"><pre><span></span><code>https://api.opentopodata.org/v1/aster30m?locations=-6.15558,106.84204
+</code></pre></div>
+<p>Résultat :</p>
+<div class="highlight"><pre><span></span><code>{
+  &quot;results&quot;: [
+    {
+      &quot;dataset&quot;: &quot;aster30m&quot;, 
+      &quot;elevation&quot;: 7.0, 
+      &quot;location&quot;: {
+        &quot;lat&quot;: -6.15558, 
+        &quot;lng&quot;: 106.84204
+      }
+    }
+  ], 
+  &quot;status&quot;: &quot;OK&quot;
+}
+</code></pre></div>
+</div>
+<h2 id="reviser-vos-metadonnees-de-station">Réviser vos métadonnées de station</h2>
+<p>Les métadonnées de station sont stockées dans le backend de wis2box et sont disponibles via le <strong>wis2box-api</strong>. </p>
+<p>Si vous ouvrez un navigateur et naviguez vers <code>http://YOUR-HOST/oapi/collections/stations/items</code> vous verrez les métadonnées de station que vous avez ajoutées :</p>
+<p><img alt="wis2box-api-stations" src="/../assets/img/wis2box-api-stations.png" width="800"></p>
+<div class="admonition note">
+<p class="admonition-title">Révisez vos métadonnées de station</p>
+<p>Vérifiez que les stations que vous avez ajoutées sont associées à votre ensemble de données en visitant <code>http://YOUR-HOST/oapi/collections/stations/items</code> dans votre navigateur.</p>
+</div>
+<p>Vous avez également la possibilité de voir/mettre à jour/supprimer la station dans le <strong>wis2box-webapp</strong>. Notez que vous devez fournir votre jeton d'autorisation pour l'endpoint <code>collections/stations</code> pour mettre à jour/supprimer la station.</p>
+<div class="admonition note">
+<p class="admonition-title">Mettre à jour/supprimer des métadonnées de station</p>
+<p>Essayez de voir si vous pouvez mettre à jour/supprimer les métadonnées de station pour l'une des stations que vous avez ajoutées en utilisant le <strong>wis2box-webapp</strong>.</p>
+</div>
+<h2 id="telechargement-en-masse-des-metadonnees-de-station">Téléchargement en masse des métadonnées de station</h2>
+<p>Notez que wis2box a également la capacité de charger en masse des métadonnées de station à partir d'un fichier CSV en utilisant la ligne de commande dans le conteneur <strong>wis2box-management</strong>.</p>
+<div class="highlight"><pre><span></span><code>python3<span class="w"> </span>wis2box-ctl.py<span class="w"> </span>login
+wis2box<span class="w"> </span>metadata<span class="w"> </span>station<span class="w"> </span>publish-collection<span class="w"> </span>-p<span class="w"> </span>/data/wis2box/metadata/station/station_list.csv<span class="w"> </span>-th<span class="w"> </span>origin/a/wis2/centre-id/weather/surface-based-observations/synop
+</code></pre></div>
+<p>Cela vous permet de télécharger un grand nombre de stations à la fois et de les associer à un sujet spécifique.</p>
+<p>Vous pouvez créer le fichier CSV en utilisant Excel ou un éditeur de texte, puis le télécharger dans wis2box-host-datadir pour le rendre disponible au conteneur <strong>wis2box-management</strong> dans le répertoire <code>/data/wis2box/</code>.</p>
+<p>Après avoir effectué un téléchargement en masse de stations, il est recommandé de réviser les stations dans le <strong>wis2box-webapp</strong> pour vous assurer que les données ont été téléchargées correctement.</p>
+<p>Consultez la <a href="https://docs.wis2box.wis.wmo.int">documentation officielle de wis2box</a> pour plus d'informations sur comment utiliser cette fonctionnalité.</p>
+<h2 id="conclusion">Conclusion</h2>
+<div class="admonition success">
+<p class="admonition-title">Félicitations !</p>
+<p>Dans cette session pratique, vous avez appris à :</p>
+<ul>
+<li>créer un jeton d'autorisation pour l'endpoint <code>collections/stations</code> à utiliser avec le <strong>wis2box-webapp</strong></li>
+<li>ajouter des métadonnées de station à wis2box en utilisant le <strong>wis2box-webapp</strong></li>
+<li>voir/mettre à jour/supprimer des métadonnées de station en utilisant le <strong>wis2box-webapp</strong></li>
+</ul>
+</div>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      &copy; 2025 World Meteorological Organization
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.indexes", "content.code.copy"], "search": "../../../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copi\u00e9 dans le presse-papier", "clipboard.copy": "Copier dans le presse-papier", "search.result.more.one": "1 de plus sur cette page", "search.result.more.other": "# de plus sur cette page", "search.result.none": "Aucun document trouv\u00e9", "search.result.one": "1 document trouv\u00e9", "search.result.other": "# documents trouv\u00e9s", "search.result.placeholder": "Taper pour d\u00e9marrer la recherche", "search.result.term.missing": "Non trouv\u00e9", "select.version": "S\u00e9lectionner la version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.e71a0d61.min.js"></script>
+      
+        <script src="../../../assets/js/disclaimer.js"></script>
+      
+    
+  </body>
+</html>

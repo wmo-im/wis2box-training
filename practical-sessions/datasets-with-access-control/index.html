@@ -1,0 +1,1550 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="WIS2 in a box (wis2box) is a Free and Open Source (FOSS) Reference Implementation of a WMO WIS2 Node. The project provides a plug and play toolset to ingest, process, and publish weather/climate/water data using standards-based approaches in alignment with the WIS2 principles. wis2box also provides access to all data in the WIS2 network. wis2box is designed to have a low barrier to entry for data providers, providing enabling infrastructure and services for data discovery, access, and visualization.">
+      
+      
+        <meta name="author" content="World Meteorological Organization">
+      
+      
+        <link rel="canonical" href="https://training.wis2box.wis.wmo.int/practical-sessions/datasets-with-access-control/">
+      
+      
+        <link rel="prev" href="../adding-gts-headers-to-wis2-notifications/">
+      
+      
+        <link rel="next" href="../downloading-data-from-wis2/">
+      
+      
+        
+          <link rel="alternate" href="./" hreflang="en">
+        
+          <link rel="alternate" href="../../fr/practical-sessions/datasets-with-access-control/" hreflang="fr">
+        
+          <link rel="alternate" href="../../es/practical-sessions/datasets-with-access-control/" hreflang="es">
+        
+          <link rel="alternate" href="../../zh/practical-sessions/datasets-with-access-control/" hreflang="zh">
+        
+          <link rel="alternate" href="../../ru/practical-sessions/datasets-with-access-control/" hreflang="ru">
+        
+          <link rel="alternate" href="../../ar/practical-sessions/datasets-with-access-control/" hreflang="ar">
+        
+      
+      
+      <link rel="icon" href="https://public.wmo.int/sites/all/themes/wmo/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+    
+    
+      
+        <title>Setting up a recommended dataset - WIS2 in a box training</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.618322db.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/css/custom.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#setting-up-a-recommended-dataset" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="WIS2 in a box training" class="md-header__button md-logo" aria-label="WIS2 in a box training" data-md-component="logo">
+      
+  <img src="../../assets/img/wmo-logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            WIS2 in a box training
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Setting up a recommended dataset
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+      <div class="md-header__option">
+  <div class="md-select">
+    
+    <button class="md-header__button md-icon" aria-label="Select language">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12.87 15.07-2.54-2.51.03-.03A17.5 17.5 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2zm-2.62 7 1.62-4.33L19.12 17z"/></svg>
+    </button>
+    <div class="md-select__inner">
+      <ul class="md-select__list">
+        
+          <li class="md-select__item">
+            <a href="./" hreflang="en" class="md-select__link">
+              English
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="../../fr/practical-sessions/datasets-with-access-control/" hreflang="fr" class="md-select__link">
+              Français
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="../../es/practical-sessions/datasets-with-access-control/" hreflang="es" class="md-select__link">
+              Español
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="../../zh/practical-sessions/datasets-with-access-control/" hreflang="zh" class="md-select__link">
+              中文
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="../../ru/practical-sessions/datasets-with-access-control/" hreflang="ru" class="md-select__link">
+              Русский
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="../../ar/practical-sessions/datasets-with-access-control/" hreflang="ar" class="md-select__link">
+              العربية
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</div>
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="WIS2 in a box training" class="md-nav__button md-logo" aria-label="WIS2 in a box training" data-md-component="logo">
+      
+  <img src="../../assets/img/wmo-logo.png" alt="logo">
+
+    </a>
+    WIS2 in a box training
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Practical Sessions
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Practical Sessions
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../connecting-to-wis2-over-mqtt/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Connecting to WIS2 over MQTT
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../accessing-your-student-vm/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Accessing your student VM
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../initializing-wis2box/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Initializing wis2box
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../configuring-wis2box-datasets/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configuring datasets in wis2box
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../configuring-station-metadata/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configuring station metadata
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ingesting-data-for-publication/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ingesting data for Publication
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../data-conversion-tools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data Conversion Tools
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../csv2bufr-templates/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CSV-to-BUFR mapping templates
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../adding-gts-headers-to-wis2-notifications/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Adding GTS headers to WIS2 notifications
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Setting up a recommended dataset
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Setting up a recommended dataset
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Introduction
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#preparation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Preparation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#create-a-new-dataset-with-data-policy-recommended" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Create a new dataset with data policy 'recommended'
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#review-your-new-dataset-in-the-wis2box-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Review your new dataset in the wis2box-api
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#add-the-license-file-to-your-wis2box-instance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Add the license file to your wis2box instance
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#add-an-access-token-to-the-dataset" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Add an access token to the dataset
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#publish-some-data-to-the-dataset" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Publish some data to the dataset
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#add-the-access-token-to-http-headers-to-access-the-dataset" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Add the access token to HTTP headers to access the dataset
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#remove-the-access-token-from-the-dataset" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Remove the access token from the dataset
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conclusion
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../downloading-data-from-wis2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Downloading data from WIS2 using wis2downloader
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../decoding-data/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Decoding data from WMO binary formats
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../discovering-datasets-from-wis2-gdc/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Discovering datasets from the WIS2 Global Discovery Catalogue
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    cheatsheets
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    cheatsheets
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cheatsheets/linux/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Linux cheatsheet
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cheatsheets/docker/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Docker cheatsheet
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cheatsheets/wis2box/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    WIS2 in a box cheatsheet
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    csv2bufr-templates
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    csv2bufr-templates
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../csv2bufr-templates/aws-template/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AWS Template
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../csv2bufr-templates/daycli-template/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    DAYCLI Template
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Introduction
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#preparation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Preparation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#create-a-new-dataset-with-data-policy-recommended" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Create a new dataset with data policy 'recommended'
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#review-your-new-dataset-in-the-wis2box-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Review your new dataset in the wis2box-api
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#add-the-license-file-to-your-wis2box-instance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Add the license file to your wis2box instance
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#add-an-access-token-to-the-dataset" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Add an access token to the dataset
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#publish-some-data-to-the-dataset" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Publish some data to the dataset
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#add-the-access-token-to-http-headers-to-access-the-dataset" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Add the access token to HTTP headers to access the dataset
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#remove-the-access-token-from-the-dataset" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Remove the access token from the dataset
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conclusion
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="setting-up-a-recommended-dataset">Setting up a recommended dataset</h1>
+<div class="admonition abstract">
+<p class="admonition-title">Learning outcomes</p>
+<p>By the end of this practical session, you will be able to:</p>
+<ul>
+<li>create a new dataset with data policy 'recommended'</li>
+<li>add an access token to the dataset</li>
+<li>validate the dataset can not be accessed without the access token</li>
+<li>add the access token to HTTP headers to access the dataset</li>
+<li>add a custom license file hosted on your wis2box instance</li>
+</ul>
+</div>
+<h2 id="introduction">Introduction</h2>
+<p>Data are shared on WIS2 according to the WMO Unified Data Policy which defines two categories of data.</p>
+<p><strong>core</strong> : data that is provided on a free and unrestricted basis, without charge and with no conditions on use</p>
+<p><strong>recommended</strong> : data that may be provided with conditions on use and/or subject to a license</p>
+<p>Data that are shared as recommended:</p>
+<ul>
+<li>may be subject to conditions on use and reuse</li>
+<li>may have access controls applied to the data</li>
+<li>are not cached by WIS2 Global Caches</li>
+<li>must have a metadata record that includes a license URL</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Downloading recommended data</p>
+<p>Since the WIS Global Caches do not cache recommended data, you will <strong>not</strong> see notifications on the topic <code>cache/a/wis2/&lt;centre-id&gt;/data/recommended/..</code> </p>
+<p>The data consumer must download data from the data server hosted by the data provider, using the canonical URL provided in the notifications on the topic <code>origin/a/wis2/&lt;centre-id&gt;/data/recommended/...</code></p>
+</div>
+<p>In this practical session, you will create a new dataset with data policy 'recommended' using the dataset editor in wis2box-webapp.
+You will also learn how provide a self-hosted license and how to optionally add access control.</p>
+<div class="admonition note">
+<p class="admonition-title">Aviation data in WIS2</p>
+<p>For this exercise you are asked to create a dataset to share METAR data, a standard format for reporting aviation weather observations.</p>
+<p>Aviation data on WIS2 should always be shared as 'recommended' in order to align with the regulations for sharing aviation data as specified by the International Civil Aviation Organization (ICAO).</p>
+</div>
+<h2 id="preparation">Preparation</h2>
+<p>Ensure you have SSH access to your student VM and that your wis2box instance is up and running.</p>
+<p>Make sure you are connected to the MQTT broker of your wis2box instance using MQTT Explorer. You can use the public credentials <code>everyone/everyone</code> to connect to the broker.</p>
+<p>Ensure you have a web browser open with the wis2box-webapp for your instance by going to <code>http://YOUR-HOST/wis2box-webapp</code>.</p>
+<h2 id="create-a-new-dataset-with-data-policy-recommended">Create a new dataset with data policy 'recommended'</h2>
+<p>Go to the 'dataset editor' page in the wis2box-webapp and create a new dataset. </p>
+<p>For "Centre ID", use the same as you used in the previous practical sessions.</p>
+<p>Select Template = 'other' to indicate you will not use a predefined template for the dataset:</p>
+<p><img alt="create-dataset-recommended" src="/../assets/img/create-dataset-template-other.png" width="500"></p>
+<p>Click 'CONTINUE TO FORM' to proceed.</p>
+<p>For this exercise, please create a dataset for aviation METAR data;</p>
+<ul>
+<li>choose an appropriate 'Local ID' for the dataset, for example 'aviation-metar'</li>
+<li>provide a title and description for the dataset</li>
+<li>choose WMO Data Policy = 'recommended'</li>
+</ul>
+<p><img alt="create-dataset-recommended" src="/../assets/img/create-dataset-aviation-metar-example.png" width="800"></p>
+<p>Note that when you selected WMO Data Policy = 'recommended', the dataset editor automatically added a field for 'License URL' which is mandatory for recommended datasets.</p>
+<p>Next:</p>
+<ul>
+<li>Use <code>WIS2BOX_URL/data/aviation-license.html</code> to point to a custom license file hosted on your instance, replacing <code>WIS2BOX_URL</code> with the URL of your wis2box instance.</li>
+<li>Select 'Sub Disciple Topic' = 'aviation/metar' to define the correct topic for this dataset.</li>
+</ul>
+<p><img alt="create-dataset-license-url" src="../../assets/img/create-dataset-license-custom.png" /></p>
+<div class="admonition note">
+<p class="admonition-title">About the license URL</p>
+<p>The license URL associated with a recommended dataset informs data consumers for this dataset about the conditions of use of the data.</p>
+<p>You can use a URL pointing to a license file hosted on your wis2box instance, or you can use a URL pointing to a license file hosted on an external website.</p>
+<p>For this exercise, we will use a self-hosted license file. You will add the file 'aviation-license.html' to your wis2box instance later in this practical session to ensure the license URL is valid.</p>
+</div>
+<p>Since you selected Template = 'other' no keywords are pre-filled for the dataset. Add a minimum of 3 keywords relevant for the dataset:</p>
+<p><img alt="create-dataset-metar-keywords" src="../../assets/img/create-dataset-metar-keywords.png" /></p>
+<p>Continue to fill the required fields for Spatial Properties and Contact Information.  Click 'Validate form' to check that all mandatory fields are filled.</p>
+<p>Since you selected Template = 'other', no dataset mappings are defined.</p>
+<p>Please add the plugin for 'Universal data without conversion' and make sure to set the file-extension to <code>.txt</code> to match the METAR data files you will publish to this dataset later in this practical session:</p>
+<p><img alt="create-dataset-plugin-universal-txt" src="../../assets/img/create-dataset-plugin-universal-txt.png" /></p>
+<p>Submit the dataset, using the previously created authentication token, and check that the new dataset is created in the wis2box-webapp.</p>
+<p>Check MQTT Explorer to verify that you receive the WIS2 Notification Message announcing the new Discovery Metadata record on the topic <code>origin/a/wis2/&lt;your-centre-id&gt;/metadata</code>.   </p>
+<h2 id="review-your-new-dataset-in-the-wis2box-api">Review your new dataset in the wis2box-api</h2>
+<p>View the list of datasets in the wis2box-api by opening the URL <code>WIS2BOX_URL/oapi/collections/discovery-metadata/items</code> in your web browser, replacing <code>WIS2BOX_URL</code> with the URL of your wis2box instance.</p>
+<p>Open the link of the dataset just created and scroll down to the 'links' section of the JSON response:</p>
+<p><img alt="wis2box-api-recommended-dataset-links" src="/../assets/img/wis2box-api-recommended-dataset-links.png" width="600"></p>
+<p>You should see a link for "License for this dataset" pointing to the URL provided in the dataset editor.</p>
+<p>If you click on the link, you will get an error since the license file is not yet added to your wis2box instance.</p>
+<h2 id="add-the-license-file-to-your-wis2box-instance">Add the license file to your wis2box instance</h2>
+<p>Ensure the link for "License for this dataset" in the metadata of your recommended dataset works as expected.</p>
+<p>Download this example aviation license file: <a href="../../sample-data/aviation-license.html">aviation-license.html</a></p>
+<div class="admonition note">
+<p class="admonition-title">About the example aviation license file</p>
+<p>This is an example license file for aviation data. You may want to edit the file to include information relevant for your organization.</p>
+</div>
+<p>To upload this file, use the MinIO Console available at port 9001 of the wis2box instance, by going to a web browser and visiting <code>http://YOUR-HOST:9001</code></p>
+<p>The credentials to access the MinIO Console in the wis2box.env file are defined by <code>WIS2BOX_STORAGE_USERNAME</code> and <code>WIS2BOX_STORAGE_PASSWORD</code> environment variables.</p>
+<p>You can find these in <code>wis2box.env</code> file as follows:</p>
+<div class="highlight"><pre><span></span><code>cat<span class="w"> </span>wis2box.env<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>WIS2BOX_STORAGE_USERNAME
+cat<span class="w"> </span>wis2box.env<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>WIS2BOX_STORAGE_PASSWORD
+</code></pre></div>
+<p>Once you have logged in to the MinIO Console, upload the license file into base path of the <strong>wis2box-public</strong> bucket using the “Upload” button:</p>
+<p><img alt="minio-upload-license" src="/../assets/img/minio-upload-license.png" width="800"></p>
+<p>After uploading the license file, check if the file is accessible by visiting <code>WIS2BOX_URL/data/aviation-license.html</code> in your web browser, replacing <code>WIS2BOX_URL</code> with the URL of your wis2box instance. </p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The web-proxy in wis2box proxies all files stored in the "wis2box-public" bucket under the path <code>WIS2BOX_URL/data/</code></p>
+</div>
+<p>The link for "License for this dataset" included in the metadata of your recommended dataset should now work as expected.</p>
+<h2 id="add-an-access-token-to-the-dataset">Add an access token to the dataset</h2>
+<p>Log in to the wis2box-management container,</p>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>~/wis2box
+python3<span class="w"> </span>wis2box-ctl.py<span class="w"> </span>login
+</code></pre></div>
+<p>From command line inside the container you can secure a dataset using the <code>wis2box auth add-token</code> command, using the flag <code>--metadata-id</code> to specify the metadata-identifier of the dataset and the access token as an argument.</p>
+<p>For example, to add the access token <code>S3cr3tT0k3n</code> to the dataset with metadata-identifier <code>urn:wmo:md:my-centre-id:core.surface-based-observations.synop</code>: </p>
+<div class="highlight"><pre><span></span><code>wis2box<span class="w"> </span>auth<span class="w"> </span>add-token<span class="w"> </span>--metadata-id<span class="w"> </span>urn:wmo:md:my-centre-id:aviation-metar<span class="w"> </span>S3cr3tT0k3n
+</code></pre></div>
+<p>Exit the wis2box-management container:</p>
+<div class="highlight"><pre><span></span><code><span class="nb">exit</span>
+</code></pre></div>
+<h2 id="publish-some-data-to-the-dataset">Publish some data to the dataset</h2>
+<p>Download the following example METAR data file to your local machine:</p>
+<p><a href="../../sample-data/A_SAKO31RKSL290000_C_RKSL_20250729000055.txt">A_SAKO31RKSL290000_C_RKSL_20250729000055.txt</a></p>
+<p>Then ingest this file into your dataset using the MinIO Console. To access the MinIO Console got to a web browser and visit <code>http://YOUR-HOST:9001</code> and login the using the credentials defined in the <code>wis2box.env</code> file by the <code>WIS2BOX_STORAGE_USERNAME</code> and <code>WIS2BOX_STORAGE_PASSWORD</code> environment variables.</p>
+<p>To ingest the file into your dataset, go to the <strong>wis2box-incoming</strong> bucket and create a new folder with the name of the metadata-identifier of your dataset and upload the example METAR data file into this folder using the “Upload” button:</p>
+<p><img alt="minio-wis2box-incoming-metar-data-uploaded" src="../../assets/img/minio-wis2box-incoming-metar-data-uploaded.png" /></p>
+<p>Make sure that the folder-name is equal to the metadata-identifier for your dataset and check that you receive WIS2 data-notifications in MQTT Explorer, on the topic <code>origin/a/wis2/&lt;your-centre-id&gt;/data/recommended/aviation/metar</code>:</p>
+<p><img alt="mqtt-explorer-data-aviation-metar" src="../../assets/img/mqtt-explorer-data-aviation-metar.png" /></p>
+<div class="admonition note">
+<p class="admonition-title">Troubleshooting</p>
+<p>If you did not receive a notification after uploading you data, you can check recent logs of the <code>wis2box-management</code> container to troubleshoot the issue:</p>
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>logs<span class="w"> </span>-n100<span class="w"> </span>wis2box-management
+</code></pre></div>
+</div>
+<p>Copy-paste the URL for the canonical-link from the WIS2 Notification Message into your web browser. The URL should look similar to this:</p>
+<div class="highlight"><pre><span></span><code>http://example.wis2.training/data/2025-07-29/wis/urn:wmo:md:int-wmo-example:aviation-metar/A_SAKO31RKSL290000_C_RKSL_20250729000055.txt
+</code></pre></div>
+<p>If you added the access token correctly to the dataset, you should <strong>not</strong> be able to access the data in your web browser, instead you see an ERROR <em>401 Authorization Required</em>.</p>
+<h2 id="add-the-access-token-to-http-headers-to-access-the-dataset">Add the access token to HTTP headers to access the dataset</h2>
+<p>In order to demonstrate that the access token is required to access the dataset we will reproduce the error you saw in the browser using the command line function <code>wget</code>.</p>
+<p>From the command line in your student VM, use the <code>wget</code> command with the canonical-link you copied from the WIS2 Notification Message.</p>
+<div class="highlight"><pre><span></span><code>wget<span class="w"> </span>http://example.wis2.training/data/2025-07-29/wis/urn:wmo:md:int-wmo-example:aviation-metar/A_SAKO31RKSL290000_C_RKSL_20250729000055.txt
+</code></pre></div>
+<p>You should see that the HTTP request returns with <em>401 Unauthorized</em> and the data is not downloaded.</p>
+<p>Now add the access token to the HTTP headers to access the dataset.</p>
+<div class="highlight"><pre><span></span><code>wget<span class="w"> </span>--header<span class="o">=</span><span class="s2">&quot;Authorization: Bearer S3cr3tT0k3n&quot;</span><span class="w"> </span>&lt;canonical-link&gt;
+</code></pre></div>
+<p>Now the data should be downloaded successfully.</p>
+<h2 id="remove-the-access-token-from-the-dataset">Remove the access token from the dataset</h2>
+<p>To remove the access token from the dataset, log in to the wis2box-management container,</p>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>~/wis2box
+python3<span class="w"> </span>wis2box-ctl.py<span class="w"> </span>login
+</code></pre></div>
+<p>And use the command <code>wis2box auth remove-token</code> to remove the access token from the dataset, using the flag <code>--metadata-id</code> to specify the metadata-identifier of the dataset and the access token as an argument:</p>
+<div class="highlight"><pre><span></span><code>wis2box<span class="w"> </span>auth<span class="w"> </span>remove-token<span class="w"> </span>--metadata-id<span class="w"> </span>urn:wmo:md:my-centre-id:aviation-metar<span class="w"> </span>S3cr3tT0k3n
+</code></pre></div>
+<p>Make sure to replace <code>urn:wmo:md:my-centre-id:aviation-metar</code> with the metadata-identifier of your dataset.</p>
+<p>Logout of the wis2box-management container:</p>
+<div class="highlight"><pre><span></span><code><span class="nb">exit</span>
+</code></pre></div>
+<p>And verify that the access token has been removed by trying to download the data again using <code>wget</code> with the access token in the HTTP headers, or by trying to access the data in your web browser.</p>
+<div class="admonition note">
+<p class="admonition-title">Access control is optional, for recommended datasets only</p>
+<p>WIS2 specifies that recommended datasets <em>may</em> have access controls applied to the data. It is not mandatory to add access control to a recommended dataset and you may rely on the license URL only to inform data consumers about the conditions of use of the data. If do you apply access control you are responsible to share the access token to any data consumers that need to access this data.</p>
+<p>If you apply <code>wis2box auth add-token</code> to a dataset with WMO Data Policy 'core', the Global Caches will report an error to the Global Monitoring as they can not download the data and your dataset will be considered to be <em>non-compliant</em> with the WIS2 Technical Regulations.</p>
+</div>
+<h2 id="conclusion">Conclusion</h2>
+<div class="admonition success">
+<p class="admonition-title">Congratulations!</p>
+<p>In this practical session, you learned how to:</p>
+<ul>
+<li>create a new dataset with data policy 'recommended'</li>
+<li>add a custom license file to your wis2box instance</li>
+<li>add an access token to the dataset</li>
+<li>validate the dataset can not be accessed without the access token</li>
+<li>add the access token to HTTP headers to access the dataset</li>
+</ul>
+</div>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      &copy; 2025 World Meteorological Organization
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.indexes", "content.code.copy"], "search": "../../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.e71a0d61.min.js"></script>
+      
+        <script src="../../assets/js/disclaimer.js"></script>
+      
+    
+  </body>
+</html>
