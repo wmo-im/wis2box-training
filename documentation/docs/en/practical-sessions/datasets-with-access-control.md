@@ -39,9 +39,11 @@ You will also learn how provide a self-hosted license and how to optionally add 
 
 !!! note "Aviation data in WIS2"
     
-    For this exercise you are asked to create a dataset to share METAR data, a standard format for reporting aviation weather observations.
+    For this exercise you are asked to create a dataset to share METAR data, a standard format for reporting aviation weather observations. 
     
-    Aviation data on WIS2 should always be shared as 'recommended' in order to align with the regulations for sharing aviation data as specified by the International Civil Aviation Organization (ICAO).
+    Since aeronautical meteorology data is subject to usage restrictions the **Recommended** data policy applies.
+
+    For more information see [the section on publishing aeronautical meteorology data in the WIS2 Cookbook](https://wmo-im.github.io/wis2-cookbook/cookbook/latest/wis2-cookbook-STABLE.html#_publishing_aeronautical_meteorology_data_on_wis2).
 
 ## Preparation
 
@@ -120,7 +122,7 @@ If you click on the link, you will get an error since the license file is not ye
 
 Ensure the link for "License for this dataset" in the metadata of your recommended dataset works as expected.
 
-Download this example aviation license file: [aviation-license.html](./../../sample-data/aviation-license.html)
+Download this example aviation license file: [aviation-license.html](./../../sample-data/aviation-license.html). 
 
 !!! note "About the example aviation license file"
 
