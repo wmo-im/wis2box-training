@@ -39,9 +39,9 @@ You will also learn how provide a self-hosted license and how to optionally add 
 
 !!! note "Aviation data in WIS2"
     
-    For this exercise you are asked to create a dataset to share METAR data, a standard format for reporting aviation weather observations.
-    
-    Aviation data on WIS2 should always be shared as 'recommended' in order to align with the regulations for sharing aviation data as specified by the International Civil Aviation Organization (ICAO).
+    For this exercise you are asked to create a dataset to share METAR data, a standard format for reporting aviation weather observations. Since aeronautical meteorology data is subject to usage restrictions the **Recommended** data policy applies, as per the WMO Unified Data Policy, Resolution 1 (Cg-Ext(2021)).
+
+    Please refer to the !["WIS2 Cookbook"](https://wmo-im.github.io/wis2-cookbook/cookbook/latest/wis2-cookbook-STABLE.html#_publishing_aeronautical_meteorology_data_on_wis2) for the approved "recipe" for publishing aeronautical meteorology data on WIS2.
 
 ## Preparation
 
