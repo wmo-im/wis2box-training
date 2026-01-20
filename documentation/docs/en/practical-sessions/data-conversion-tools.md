@@ -49,19 +49,40 @@ These modules can be used standalone or as part of the wis2box stack.
 
 To use the BUFR command-line tools, you will need to be logged in to the wis2box-api container. Unless specified otherwise, all commands should be run on this container. You will also need to have MQTT Explorer open and connected to your broker.
 
-First, connect to your student VM via your SSH client and copy the exercise materials to the wis2box-api container:
+First, connect to your student VM via your SSH client and copy the exercise materials to a directory that is accessible by a non-root user inside the wis2box-api container (for example, /tmp):
 
 ```bash
-docker cp ~/exercise-materials/data-conversion-exercises wis2box-api:/root
+docker cp ~/exercise-materials/data-conversion-exercises wis2box-api:/tmp
 ```
 
-Then log in to the wis2box-api container and change to the directory where the exercise materials are located:
+Adjust permissions for the non-root user
+
+When copying files into the container using docker cp, the files may retain the host user ID and may not be writable by the wis2box-api user.
+To avoid permission issues during the exercises, update the ownership of the copied directory inside the container.
+
+Log in to the wis2box-api container:
 
 ```bash
 cd ~/wis2box
 python3 wis2box-ctl.py login wis2box-api
-cd /root/data-conversion-exercises
+cd /tmp/data-conversion-exercises
 ```
+Exit the container session, then as root, change the ownership of the exercise directory:
+
+```bash
+exit
+docker exec -it --user root wis2box-api bash -lc \
+'chown -R wis2box-api:wis2box-api /tmp/data-conversion-exercises'
+```
+
+Now log in again as the regular user and change to the exercise directory:
+
+```bash
+python3 wis2box-ctl.py login wis2box-api
+cd /tmp/data-conversion-exercises
+```
+
+At this point, the directory is writable and ready for the exercises.
 
 Confirm that the tools are available, starting with ecCodes:
 
@@ -281,7 +302,7 @@ The next few exercises will demonstrate how the `synop2bufr`-module works and ho
 Inspect the example SYNOP message file for this exercise `synop_message.txt`:
 
 ```bash
-cd /root/data-conversion-exercises
+cd /tmp/data-conversion-exercises
 more synop_message.txt
 ```
 
@@ -434,12 +455,12 @@ Into the `SYNOP message` text area:
 ## csv2bufr conversion
 
 !!! note
-    Make sure you are still logged in the wis2box-api container and in the directory `/root/data-conversion-exercises`, if you exited the container in the previous exercise, you can log in again as follows:
+    Make sure you are still logged in the wis2box-api container and in the directory `/tmp/data-conversion-exercises`, if you exited the container in the previous exercise, you can log in again as follows:
 
     ```bash
     cd ~/wis2box
     python3 wis2box-ctl.py login wis2box-api
-    cd /root/data-conversion-exercises
+    cd /tmp/data-conversion-exercises
     ```
 
 Now let's look at how the convert CSV data to BUFR format using the `csv2bufr` module. The module is installed in the wis2box-api container and can be used from the command line as follows:
@@ -544,7 +565,7 @@ This returns a large JSON file, providing the mapping for 43 CSV columns.
 Let's attempt to convert the file to BUFR format using the `csv2bufr` command:
 
 ```{.copy}
-cd /root/data-conversion-exercises
+cd /tmp/data-conversion-exercises
 csv2bufr data transform --bufr-template aws-template ./aws-example.csv
 ```
 
