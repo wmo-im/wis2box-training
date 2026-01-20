@@ -72,7 +72,7 @@ bufr_dump -V
 You should get the following response:
 
 ```
-ecCodes Version 2.36.0
+ecCodes Version 2.44.0
 ```
 
 Next, check the synop2bufr version:
