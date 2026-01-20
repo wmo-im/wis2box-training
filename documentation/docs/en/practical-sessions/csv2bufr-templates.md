@@ -148,10 +148,10 @@ cat /data/wis2box/mappings/my_custom_template.json
     - **airTemperature** maps to `"eccodes_key": "#1#airTemperature"` (BUFR element 012101)
     - **nonCoordinatePressure** maps to `"eccodes_key": "#1#nonCoordinatePressure"` (BUFR element 010004)
 
-Check the content of the file `custom_template_data.csv` in the directory `/root/data-conversion-exercises`:
+Check the content of the file `custom_template_data.csv` in the directory `/tmp/data-conversion-exercises`:
 
 ```bash
-cat /root/data-conversion-exercises/custom_template_data.csv
+cat /tmp/data-conversion-exercises/custom_template_data.csv
 ```
 
 Note that the headers of this CSV file are the same as the CSV headers in the mapping template you created.
@@ -159,13 +159,13 @@ Note that the headers of this CSV file are the same as the CSV headers in the ma
 To test the data conversion we can use the `csv2bufr` command line tool to convert the CSV file to BUFR using the mapping template we created:
 
 ```bash
-csv2bufr data transform --bufr-template my_custom_template /root/data-conversion-exercises/custom_template_data.csv
+csv2bufr data transform --bufr-template my_custom_template /tmp/data-conversion-exercises/custom_template_data.csv
 ```
 
 You should see the following output:
 
 ```bash
-CLI:    ... Transforming /root/data-conversion-exercises/custom_template_data.csv to BUFR ...
+CLI:    ... Transforming /tmp/data-conversion-exercises/custom_template_data.csv to BUFR ...
 CLI:    ... Processing subsets:
 CLI:    ..... 94 bytes written to ./WIGOS_0-20000-0-15015_20250412T210000.bufr4
 CLI:    End of processing, exiting.
