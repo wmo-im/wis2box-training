@@ -6,7 +6,7 @@ title: Подключение к WIS2 через MQTT
 
 !!! abstract "Результаты обучения"
 
-    К концу этой практической сессии вы сможете:
+    По завершении этой практической сессии вы сможете:
 
     - подключиться к WIS2 Global Broker с использованием MQTT Explorer
     - изучить структуру тем WIS2
@@ -14,84 +14,67 @@ title: Подключение к WIS2 через MQTT
 
 ## Введение
 
-WIS2 использует протокол MQTT для уведомления о доступности данных о погоде, климате и воде. WIS2 Global Broker подписывается на все WIS2 Nodes в сети и перепубликует полученные сообщения. Global Cache подписывается на Global Broker, загружает данные из сообщения и затем перепубликует сообщение в теме `cache` с новым URL. Global Discovery Catalogue публикует метаданные для поиска из Broker и предоставляет API для поиска.
+WIS2 использует протокол MQTT для уведомления о доступности данных о погоде, климате и водных ресурсах. WIS2 Global Broker подписывается на все WIS2 Nodes в сети и повторно публикует полученные сообщения. Global Cache подписывается на Global Broker, загружает данные из сообщения и затем повторно публикует сообщение в теме `cache` с новым URL. Global Discovery Catalogue публикует метаданные для поиска из Broker и предоставляет API для поиска.
 
 Пример структуры уведомления WIS2 для сообщения, полученного по теме `origin/a/wis2/br-inmet/data/core/weather/surface-based-observations/synop`:
 
 ```json
 {
-   "id":"7a34051b-aa92-40f3-bbab-439143657c8c",
+   "id":"3c14d7bf-e6b9-4f59-b4ea-f2fc52a33cd3",
    "type":"Feature",
    "conformsTo":[
       "http://wis.wmo.int/spec/wnm/1/conf/core"
    ],
    "geometry":{
-      "type":"Polygon",
       "coordinates":[
-         [
-            [
-               -73.98723548042966,
-               5.244486395687602
-            ],
-            [
-               -34.729993455533034,
-               5.244486395687602
-            ],
-            [
-               -34.729993455533034,
-               -33.768377780900764
-            ],
-            [
-               -73.98723548042966,
-               -33.768377780900764
-            ],
-            [
-               -73.98723548042966,
-               5.244486395687602
-            ]
-         ]
-      ]
+         -99.1964,
+         19.404,
+         2314
+      ],
+      "type":"Point"
    },
    "properties":{
-      "data_id":"br-inmet/metadata/urn:wmo:md:br-inmet:rr1ieq",
-      "datetime":"2026-01-20T08:30:21Z",
-      "pubtime":"2026-01-20T08:30:22Z",
+      "data_id":"br-inmet:data:core:weather:surface-based-observations:synop/WIGOS_0-20000-0-76679_20250206T231600",
+      "datetime":"2025-02-06T23:16:00Z",
+      "pubtime":"2026-01-20T13:14:52Z",
       "integrity":{
          "method":"sha512",
-         "value":"RN+GzqgONURtkzOCo5vQJ5t7SzlAvaGONywEnTXHrHew9RQmUhrHbASvmDlCeRTb8vhE+1/h/7/20f2XJFHCcA=="
+         "value":"qtlI3Noay2I4zcdA1XCpn8vzVLIt0RKrR398VGFgTttc1XRUVb4dHWNCDKPXUo4mNkiFKx5TTHBvrxlzqWmMnQ=="
       },
-      "content":{
-         "encoding":"base64",
-         "value":"eyJpZCI6ICJ1cm46d21vOm1kOmJyLWlubWV0OnJyMWllcSIsICJjb25mb3Jtc1RvIjogWyJodHRwOi8vd2lzLndtby5pbnQvc3BlYy93Y21wLzIvY29uZi9jb3JlIl0sICJ0eXBlIjogIkZlYXR1cmUiLCAidGltZSI6IHsiaW50ZXJ2YWwiOiBbIjIwMjYtMDEtMjAiLCAiLi4iXSwgInJlc29sdXRpb24iOiAiUFQxSCJ9LCAiZ2VvbWV0cnkiOiB7InR5cGUiOiAiUG9seWdvbiIsICJjb29yZGluYXRlcyI6IFtbWy03My45ODcyMzU0ODA0Mjk2NiwgNS4yNDQ0ODYzOTU2ODc2MDJdLCBbLTM0LjcyOTk5MzQ1NTUzMzAzNCwgNS4yNDQ0ODYzOTU2ODc2MDJdLCBbLTM0LjcyOTk5MzQ1NTUzMzAzNCwgLTMzLjc2ODM3Nzc4MDkwMDc2NF0sIFstNzMuOTg3MjM1NDgwNDI5NjYsIC0zMy43NjgzNzc3ODA5MDA3NjRdLCBbLTczLjk4NzIzNTQ4MDQyOTY2LCA1LjI0NDQ4NjM5NTY4NzYwMl1dXX0sICJwcm9wZXJ0aWVzIjogeyJ0eXBlIjogImRhdGFzZXQiLCAiaWRlbnRpZmllciI6ICJ1cm46d21vOm1kOmJyLWlubWV0OnJyMWllcSIsICJ0aXRsZSI6ICJIb3VybHkgc3lub3B0aWMgb2JzZXJ2YXRpb25zIGZyb20gZml4ZWQtbGFuZCBzdGF0aW9ucyAoU1lOT1ApIChici1pbm1ldCkiLCAiZGVzY3JpcHRpb24iOiAidGVzdCIsICJrZXl3b3JkcyI6IFsib2JzZXJ2YXRpb25zIiwgInRlbXBlcmF0dXJlIiwgInZpc2liaWxpdHkiLCAicHJlY2lwaXRhdGlvbiIsICJwcmVzc3VyZSIsICJjbG91ZHMiLCAic25vdyBkZXB0aCIsICJldmFwb3JhdGlvbiIsICJyYWRpYXRpb24iLCAid2luZCIsICJ0b3RhbCBzdW5zaGluZSIsICJodW1pZGl0eSJdLCAidGhlbWVzIjogW3siY29uY2VwdHMiOiBbeyJpZCI6ICJ3ZWF0aGVyIiwgInRpdGxlIjogIldlYXRoZXIifV0sICJzY2hlbWUiOiAiaHR0cDovL2NvZGVzLndtby5pbnQvd2lzL3RvcGljLWhpZXJhcmNoeS9lYXJ0aC1zeXN0ZW0tZGlzY2lwbGluZSJ9XSwgImNvbnRhY3RzIjogW3sib3JnYW5pemF0aW9uIjogIndtbyIsICJlbWFpbHMiOiBbeyJ2YWx1ZSI6ICJ0ZXN0QGNuLmNvbSJ9XSwgImFkZHJlc3NlcyI6IFt7ImNvdW50cnkiOiAiQlJBIn1dLCAibGlua3MiOiBbeyJyZWwiOiAiYWJvdXQiLCAiaHJlZiI6ICJodHRwOi8vdGVzdC5jb20iLCAidHlwZSI6ICJ0ZXh0L2h0bWwifV0sICJyb2xlcyI6IFsiaG9zdCJdfV0sICJjcmVhdGVkIjogIjIwMjYtMDEtMjBUMDg6MzA6MjFaIiwgInVwZGF0ZWQiOiAiMjAyNi0wMS0yMFQwODozMDoyMVoiLCAid21vOmRhdGFQb2xpY3kiOiAiY29yZSIsICJpZCI6ICJ1cm46d21vOm1kOmJyLWlubWV0OnJyMWllcSJ9LCAibGlua3MiOiBbeyJocmVmIjogIm1xdHQ6Ly9ldmVyeW9uZTpldmVyeW9uZUBsb2NhbGhvc3Q6MTg4MyIsICJ0eXBlIjogImFwcGxpY2F0aW9uL2pzb24iLCAibmFtZSI6ICJvcmlnaW4vYS93aXMyL2JyLWlubWV0L2RhdGEvY29yZS93ZWF0aGVyL3N1cmZhY2UtYmFzZWQtb2JzZXJ2YXRpb25zL3N5bm9wIiwgInJlbCI6ICJpdGVtcyIsICJjaGFubmVsIjogIm9yaWdpbi9hL3dpczIvYnItaW5tZXQvZGF0YS9jb3JlL3dlYXRoZXIvc3VyZmFjZS1iYXNlZC1vYnNlcnZhdGlvbnMvc3lub3AiLCAiZmlsdGVycyI6IHsid2lnb3Nfc3RhdGlvbl9pZGVudGlmaWVyIjogeyJ0eXBlIjogInN0cmluZyIsICJ0aXRsZSI6ICJXSUdPUyBTdGF0aW9uIElkZW50aWZpZXIiLCAiZGVzY3JpcHRpb24iOiAiRmlsdGVyIGJ5IFdJR09TIFN0YXRpb24gSWRlbnRpZmllciJ9fSwgInRpdGxlIjogIk5vdGlmaWNhdGlvbnMifSwgeyJocmVmIjogImh0dHA6Ly9sb2NhbGhvc3QvbWV0YWRhdGEvZGF0YS91cm46d21vOm1kOmJyLWlubWV0OnJyMWllcS5qc29uIiwgInR5cGUiOiAiYXBwbGljYXRpb24vZ2VvK2pzb24iLCAibmFtZSI6ICJ1cm46d21vOm1kOmJyLWlubWV0OnJyMWllcSIsICJyZWwiOiAiY2Fub25pY2FsIiwgInRpdGxlIjogInVybjp3bW86bWQ6YnItaW5tZXQ6cnIxaWVxIn1dfQ==",
-         "size":1957
-      }
+      "metadata_id":"urn:wmo:md:br-inmet:data:core:weather:surface-based-observations:synop",
+      "wigos_station_identifier":"0-20000-0-76679"
    },
    "links":[
       {
          "rel":"canonical",
-         "type":"application/geo+json",
-         "href":"http://localhost/data/metadata/urn:wmo:md:br-inmet:rr1ieq.json",
-         "length":1957
+         "type":"application/bufr",
+         "href":"http://localhost/data/2025-02-06/wis/urn:wmo:md:br-inmet:data:core:weather:surface-based-observations:synop/WIGOS_0-20000-0-76679_20250206T231600.bufr4",
+         "length":125117
+      },
+      {
+         "rel":"via",
+         "type":"text/html",
+         "href":"https://oscar.wmo.int/surface/#/search/station/stationReportDetails/0-20000-0-76679"
       }
    ],
    "generated_by":"wis2box 1.2.0"
 }
 ```
 
-В этом практическом занятии вы научитесь использовать инструмент MQTT Explorer для настройки подключения MQTT-клиента к WIS2 Global Broker и отображения уведомлений WIS2.
+В этой практической сессии вы научитесь использовать инструмент MQTT Explorer для настройки подключения MQTT клиента к WIS2 Global Broker и сможете отображать уведомления WIS2.
 
-MQTT Explorer — это полезный инструмент для просмотра и анализа структуры тем для заданного MQTT-брокера, чтобы изучить публикуемые данные.
+MQTT Explorer — это полезный инструмент для просмотра и анализа структуры тем для заданного MQTT брокера, чтобы изучить публикуемые данные.
 
 !!! note "О MQTT"
-    MQTT Explorer предоставляет удобный интерфейс для подключения к MQTT-брокеру и изучения структуры тем и сообщений, используемых в WIS2.
+    MQTT Explorer предоставляет удобный интерфейс для подключения к MQTT брокеру и изучения используемых тем и структуры сообщений.
     
-    На практике MQTT предназначен для связи между машинами, где приложение или сервис подписывается на темы и обрабатывает сообщения программно в реальном времени.
+    На практике MQTT предназначен для машинного взаимодействия, где приложение или сервис подписывается на темы и обрабатывает сообщения программно в реальном времени.
     
-    Для работы с MQTT программно (например, на Python) вы можете использовать библиотеки MQTT-клиентов, такие как [paho-mqtt](https://pypi.org/project/paho-mqtt), чтобы подключиться к MQTT-брокеру и обрабатывать входящие сообщения. Существует множество программных решений для MQTT-клиентов и серверов, в зависимости от ваших требований и технической среды.
+    Для работы с MQTT программно (например, на Python) можно использовать библиотеки клиентов MQTT, такие как [paho-mqtt](https://pypi.org/project/paho-mqtt), чтобы подключиться к MQTT брокеру и обрабатывать входящие сообщения. Существует множество программных решений для клиентов и серверов MQTT, в зависимости от ваших требований и технической среды.
 
 ## Использование MQTT Explorer для подключения к Global Broker
 
-Чтобы просматривать сообщения, публикуемые WIS2 Global Broker, вы можете использовать "MQTT Explorer", который можно скачать с [веб-сайта MQTT Explorer](https://mqtt-explorer.com).
+Чтобы просмотреть сообщения, публикуемые WIS2 Global Broker, вы можете использовать "MQTT Explorer", который можно скачать с [веб-сайта MQTT Explorer](https://mqtt-explorer.com).
 
 Откройте MQTT Explorer и добавьте новое подключение к Global Broker, размещенному MeteoFrance, используя следующие данные:
 
@@ -102,7 +85,7 @@ MQTT Explorer — это полезный инструмент для просм
 
 <img alt="mqtt-explorer-global-broker-connection" src="/../assets/img/mqtt-explorer-global-broker-connection.png" width="800">
 
-Нажмите кнопку 'ADVANCED', удалите предустановленные темы и добавьте следующие темы для подписки:
+Нажмите кнопку 'ADVANCED', удалите предварительно настроенные темы и добавьте следующие темы для подписки:
 
 - `origin/a/wis2/#`
 
@@ -111,8 +94,8 @@ MQTT Explorer — это полезный инструмент для просм
 !!! note
     При настройке подписок MQTT вы можете использовать следующие подстановочные знаки:
 
-    - **Одноуровневый (+)**: подстановочный знак для одного уровня заменяет один уровень темы.
-    - **Многоуровневый (#)**: подстановочный знак для нескольких уровней заменяет несколько уровней темы.
+    - **Одноуровневый (+)**: подстановочный знак для одного уровня темы
+    - **Многоуровневый (#)**: подстановочный знак для нескольких уровней темы
 
     В данном случае `origin/a/wis2/#` подпишется на все темы под `origin/a/wis2`.
 
@@ -122,7 +105,7 @@ MQTT Explorer — это полезный инструмент для просм
 
 <img alt="mqtt-explorer-global-broker-topics" src="/../assets/img/mqtt-explorer-global-broker-msg-origin.png" width="800">
 
-Теперь вы готовы начать изучение тем и структуры сообщений WIS2.
+Теперь вы готовы начать изучение тем WIS2 и структуры сообщений.
 
 ## Упражнение 1: Изучение структуры тем WIS2
 
@@ -130,29 +113,29 @@ MQTT Explorer — это полезный инструмент для просм
 
 !!! question
     
-    Как мы можем определить WIS-центр, который опубликовал данные?
+    Как мы можем определить WIS центр, который опубликовал данные?
 
 ??? success "Нажмите, чтобы увидеть ответ"
 
-    Вы можете нажать на окно слева в MQTT Explorer, чтобы развернуть структуру тем.
+    Вы можете нажать на левую часть окна в MQTT Explorer, чтобы развернуть структуру тем.
     
-    Мы можем определить WIS-центр, который опубликовал данные, посмотрев на четвертый уровень структуры темы. Например, следующая тема:
+    Мы можем определить WIS центр, который опубликовал данные, посмотрев на четвертый уровень структуры тем. Например, следующая тема:
 
     `origin/a/wis2/br-inmet/data/core/weather/surface-based-observations/synop`
 
-    говорит нам, что данные были опубликованы WIS-центром с идентификатором `br-inmet`, который является идентификатором для Instituto Nacional de Meteorologia - INMET, Бразилия.
+    указывает, что данные были опубликованы WIS центром с идентификатором центра `br-inmet`, который соответствует Instituto Nacional de Meteorologia - INMET, Бразилия.
 
 !!! question
 
-    Как мы можем отличить сообщения, опубликованные WIS-центрами, которые размещают шлюз GTS-to-WIS2, от сообщений, опубликованных WIS-центрами, которые размещают WIS2 Node?
+    Как мы можем различить сообщения, опубликованные WIS-центрами, которые размещают шлюз GTS-to-WIS2, и сообщения, опубликованные WIS-центрами, которые размещают WIS2 Node?
 
 ??? success "Нажмите, чтобы увидеть ответ"
 
-    Мы можем отличить сообщения, поступающие от шлюза GTS-to-WIS2, посмотрев на идентификатор центра в структуре темы. Например, следующая тема:
+    Мы можем различить сообщения, поступающие от шлюза GTS-to-WIS2, посмотрев на идентификатор центра в структуре тем. Например, следующая тема:
 
     `origin/a/wis2/de-dwd-gts-to-wis2/data/core/I/S/A/I/01/sbbr`
 
-    говорит нам, что данные были опубликованы шлюзом GTS-to-WIS2, размещенным Deutscher Wetterdienst (DWD), Германия. Шлюз GTS-to-WIS2 — это особый тип издателя данных, который публикует данные из Global Telecommunication System (GTS) в WIS2. Структура темы состоит из заголовков TTAAii CCCC для сообщений GTS.
+    указывает, что данные были опубликованы шлюзом GTS-to-WIS2, размещенным Deutscher Wetterdienst (DWD), Германия. Шлюз GTS-to-WIS2 — это особый тип издателя данных, который публикует данные из Global Telecommunication System (GTS) в WIS2. Структура тем состоит из заголовков TTAAii CCCC для сообщений GTS.
 
 ## Упражнение 2: Изучение структуры сообщений WIS2
 
@@ -166,9 +149,9 @@ MQTT Explorer — это полезный инструмент для просм
 !!! note
     Подстановочный знак `+` используется для подписки на все WIS-центры.
 
-Подключитесь снова к Global Broker и дождитесь появления сообщений. 
+Переподключитесь к Global Broker и дождитесь появления сообщений.
 
-Вы можете просмотреть содержимое сообщения WIS2 в разделе "Value" справа. Попробуйте развернуть структуру темы, чтобы увидеть различные уровни сообщения, пока не дойдете до последнего уровня, и изучите содержимое одного из сообщений.
+Вы можете просмотреть содержимое сообщения WIS2 в разделе "Value" справа. Попробуйте развернуть структуру тем, чтобы увидеть различные уровни сообщения, пока не достигнете последнего уровня, и изучите содержимое одного из сообщений.
 
 !!! question
 
@@ -204,18 +187,18 @@ MQTT Explorer — это полезный инструмент для просм
 
 ??? success "Нажмите, чтобы увидеть ответ"
 
-    Сообщения, опубликованные в темах `origin`, — это оригинальные сообщения, которые Global Broker перепубликовывает из WIS2 Nodes в сети. 
+    Сообщения, опубликованные в темах `origin`, являются оригинальными сообщениями, которые Global Broker повторно публикует из WIS2 Nodes в сети.
 
     Сообщения, опубликованные в темах `cache`, — это сообщения для данных, которые были загружены Global Cache. Если вы проверите содержимое сообщения из темы, начинающейся с `cache`, вы увидите, что ссылка 'canonical' была обновлена на новый URL.
     
     В сети WIS2 существует несколько Global Cache, поэтому вы получите одно сообщение от каждого Global Cache, который загрузил сообщение.
 
-    Global Cache будет загружать и перепубликовывать только сообщения, которые были опубликованы в иерархии тем `../data/core/...`.
+    Global Cache загружает и повторно публикует только сообщения, которые были опубликованы в иерархии тем `../data/core/...`.
 
 ## Заключение
 
 !!! success "Поздравляем!"
-    В этом практическом занятии вы узнали:
+    В этой практической сессии вы узнали:
 
     - как подписываться на сервисы WIS2 Global Broker с использованием MQTT Explorer
     - структуру тем WIS2

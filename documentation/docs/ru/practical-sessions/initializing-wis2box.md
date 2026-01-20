@@ -68,7 +68,7 @@ The directory /home/username/wis2box-data has been created.
 
 ### URL для wis2box
 
-Далее вам будет предложено ввести URL для вашего wis2box. Этот URL будет использоваться для доступа к веб-приложению, API и пользовательскому интерфейсу wis2box.
+Далее вам будет предложено ввести URL для вашего wis2box. Этот URL будет использоваться для доступа к веб-приложению, API и интерфейсу wis2box.
 
 Используйте `http://<your-hostname-or-ip>` в качестве URL.
 
@@ -84,13 +84,13 @@ Is this correct? (y/n/exit)
 
 ### Пароли для WEBAPP, STORAGE и BROKER
 
-Вы можете использовать опцию генерации случайных паролей, когда вас попросят указать `WIS2BOX_WEBAPP_PASSWORD`, `WIS2BOX_STORAGE_PASSWORD`, `WIS2BOX_BROKER_PASSWORD`, или задать свои собственные.
+Вы можете использовать опцию генерации случайных паролей для `WIS2BOX_WEBAPP_PASSWORD`, `WIS2BOX_STORAGE_PASSWORD`, `WIS2BOX_BROKER_PASSWORD` или задать свои собственные.
 
-Не беспокойтесь о запоминании этих паролей — они будут сохранены в файле `wis2box.env` в вашей директории wis2box.
+Не беспокойтесь о запоминании этих паролей, они будут сохранены в файле `wis2box.env` в вашей директории wis2box.
 
 ### Проверка файла `wis2box.env`
 
-После завершения работы скрипта проверьте содержимое файла `wis2box.env` в вашей текущей директории:
+После завершения работы скрипта проверьте содержимое файла `wis2box.env` в текущей директории:
 
 ```bash
 cat ~/wis2box/wis2box.env
@@ -106,7 +106,7 @@ cat ~/wis2box/wis2box.env
 
     Значение по умолчанию для WIS2BOX_BASEMAP_URL — `https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png`.
 
-    Этот URL ссылается на сервер тайлов OpenStreetMap. Если вы хотите использовать другого провайдера карт, вы можете изменить этот URL, чтобы он указывал на другой сервер тайлов.
+    Этот URL ссылается на сервер тайлов OpenStreetMap. Если вы хотите использовать другого поставщика карт, вы можете изменить этот URL на адрес другого сервера тайлов.
 
 !!! question 
 
@@ -116,7 +116,7 @@ cat ~/wis2box/wis2box.env
 
     Значение по умолчанию для WIS2BOX_STORAGE_DATA_RETENTION_DAYS — 30 дней. Вы можете изменить это значение на другое количество дней, если хотите.
     
-    Контейнер wis2box-management выполняет cron-задачу ежедневно для удаления данных, старше количества дней, определенного в WIS2BOX_STORAGE_DATA_RETENTION_DAYS, из бакета `wis2box-public` и API-бэкенда:
+    Контейнер wis2box-management выполняет cron-задачу ежедневно, чтобы удалять данные, старше указанного количества дней, из бакета `wis2box-public` и API-бэкенда:
     
     ```{.copy}
     0 0 * * * su wis2box -c "wis2box data clean --days=$WIS2BOX_STORAGE_DATA_RETENTION_DAYS"
@@ -126,7 +126,7 @@ cat ~/wis2box/wis2box.env
 
     Файл `wis2box.env` содержит переменные окружения, определяющие конфигурацию вашего wis2box. Для получения дополнительной информации обратитесь к [wis2box-documentation](https://docs.wis2box.wis.wmo.int/en/latest/reference/configuration.html).
 
-    Не редактируйте файл `wis2box.env`, если вы не уверены в вносимых изменениях. Неправильные изменения могут привести к остановке работы wis2box.
+    Не редактируйте файл `wis2box.env`, если вы не уверены в вносимых изменениях. Неправильные изменения могут привести к сбою работы вашего wis2box.
 
     Не делитесь содержимым файла `wis2box.env` с кем-либо, так как он содержит конфиденциальную информацию, такую как пароли.
 
@@ -169,7 +169,7 @@ python3 wis2box-ctl.py status
     
     Сервисы определены в различных файлах `docker-compose*.yml`, которые можно найти в директории `~/wis2box/`.
     
-    Python-скрипт `wis2box-ctl.py` используется для выполнения базовых команд Docker Compose, управляющих сервисами wis2box.
+    Python-скрипт `wis2box-ctl.py` используется для выполнения команд Docker Compose, управляющих сервисами wis2box.
 
     Вам не нужно знать детали контейнеров Docker для работы с программным стеком wis2box, но вы можете изучить файлы `docker-compose*.yml`, чтобы увидеть, как определены сервисы. Если вы хотите узнать больше о Docker, вы можете найти дополнительную информацию в [документации Docker](https://docs.docker.com/).
 
@@ -196,7 +196,7 @@ root@025381da3c40:/home/wis2box#
 exit
 ```
 
-Выполните следующую команду, чтобы увидеть запущенные контейнеры Docker на вашей хост-машине:
+Запустите следующую команду, чтобы увидеть запущенные контейнеры Docker на вашей хост-машине:
 
 ```{.copy}
 docker ps --format "table {{.Names}} \t{{.Status}} \t{{.Image}}"
@@ -206,21 +206,21 @@ docker ps --format "table {{.Names}} \t{{.Status}} \t{{.Image}}"
 
 ```{bash}
 NAMES                     STATUS                   IMAGE
-elasticsearch            docker.elastic.co/elasticsearch/elasticsearch:8.6.2                              "/bin/tini -- /usr/l…"   elasticsearch            22 hours ago   Up 22 hours (healthy)   9200/tcp, 9300/tcp
-elasticsearch-exporter   quay.io/prometheuscommunity/elasticsearch-exporter:latest                        "/bin/elasticsearch_…"   elasticsearch-exporter   22 hours ago   Up 22 hours             7979/tcp
-grafana                  grafana/grafana-oss:9.0.3                                                        "/run.sh"                grafana                  22 hours ago   Up 22 hours             0.0.0.0:3000->3000/tcp
-loki                     grafana/loki:2.4.1                                                               "/usr/bin/loki -conf…"   loki                     22 hours ago   Up 22 hours             3100/tcp
-mosquitto                ghcr.io/world-meteorological-organization/wis2box-broker:1.2.0                   "/docker-entrypoint.…"   mosquitto                22 hours ago   Up 22 hours             0.0.0.0:1883->1883/tcp, 0.0.0.0:8884->8884/tcp
-mqtt_metrics_collector   ghcr.io/world-meteorological-organization/wis2box-mqtt-metrics-collector:1.2.0   "python3 -u mqtt_met…"   mqtt_metrics_collector   22 hours ago   Up 22 hours             8000/tcp, 0.0.0.0:8001->8001/tcp
-nginx                    nginx:alpine                                                                     "/docker-entrypoint.…"   web-proxy                22 hours ago   Up 22 hours             0.0.0.0:80->80/tcp
-prometheus               prom/prometheus:v2.37.0                                                          "/bin/prometheus --c…"   prometheus               22 hours ago   Up 22 hours             9090/tcp
-wis2box-api              ghcr.io/world-meteorological-organization/wis2box-api:1.2.0                      "/app/docker/es-entr…"   wis2box-api              22 hours ago   Up 22 hours (healthy)   
-wis2box-auth             ghcr.io/world-meteorological-organization/wis2box-auth:1.2.0                     "/entrypoint.sh"         wis2box-auth             22 hours ago   Up 22 hours             
-wis2box-management       ghcr.io/world-meteorological-organization/wis2box-management:1.2.0               "/home/wis2box/entry…"   wis2box-management       22 hours ago   Up 22 hours             
-wis2box-minio            minio/minio:RELEASE.2024-08-03T04-33-23Z-cpuv1                                   "/usr/bin/docker-ent…"   minio                    22 hours ago   Up 22 hours (healthy)   0.0.0.0:8022->8022/tcp, 0.0.0.0:9000-9001->9000-9001/tcp
-wis2box-ui               ghcr.io/world-meteorological-organization/wis2box-ui:1.2.0                       "/docker-entrypoint.…"   wis2box-ui               22 hours ago   Up 22 hours             0.0.0.0:9999->80/tcp
-wis2box-webapp           ghcr.io/world-meteorological-organization/wis2box-webapp:1.2.0                   "sh /wis2box-webapp/…"   wis2box-webapp           22 hours ago   Up 22 hours (healthy)   4173/tcp
-wis2downloader           ghcr.io/wmo-im/wis2downloader:v0.3.2                                             "/home/wis2downloade…"   wis2downloader           22 hours ago   Up 16 hours (healthy) 
+elasticsearch            docker.elastic.co/elasticsearch/elasticsearch:8.6.2                              "/bin/tini -- /usr/l…"   elasticsearch            Около минуты назад   Работает около минуты (healthy)     9200/tcp, 9300/tcp
+elasticsearch-exporter   quay.io/prometheuscommunity/elasticsearch-exporter:latest                        "/bin/elasticsearch_…"   elasticsearch-exporter   Около минуты назад   Работает около минуты               7979/tcp
+grafana                  grafana/grafana-oss:9.0.3                                                        "/run.sh"                grafana                  Около минуты назад   Работает около минуты               0.0.0.0:3000->3000/tcp
+loki                     grafana/loki:2.4.1                                                               "/usr/bin/loki -conf…"   loki                     Около минуты назад   Работает около минуты               3100/tcp
+mosquitto                ghcr.io/world-meteorological-organization/wis2box-broker:1.2.0                   "/docker-entrypoint.…"   mosquitto                Около минуты назад   Работает около минуты               0.0.0.0:1883->1883/tcp, 0.0.0.0:8884->8884/tcp
+mqtt_metrics_collector   ghcr.io/world-meteorological-organization/wis2box-mqtt-metrics-collector:1.2.0   "python3 -u mqtt_met…"   mqtt_metrics_collector   Около минуты назад   Работает 10 секунд                   8000/tcp, 0.0.0.0:8001->8001/tcp
+nginx                    nginx:alpine                                                                     "/docker-entrypoint.…"   web-proxy                Около минуты назад   Работает 9 секунд                    0.0.0.0:80->80/tcp
+prometheus               prom/prometheus:v2.37.0                                                          "/bin/prometheus --c…"   prometheus               Около минуты назад   Работает около минуты               9090/tcp
+wis2box-api              ghcr.io/world-meteorological-organization/wis2box-api:1.2.0                      "/app/docker/es-entr…"   wis2box-api              Около минуты назад   Работает 36 секунд (healthy)         
+wis2box-auth             ghcr.io/world-meteorological-organization/wis2box-auth:1.2.0                     "/entrypoint.sh"         wis2box-auth             Около минуты назад   Работает 10 секунд                   
+wis2box-management       ghcr.io/world-meteorological-organization/wis2box-management:1.2.0               "/home/wis2box/entry…"   wis2box-management       Около минуты назад   Работает 12 секунд                   
+wis2box-minio            minio/minio:RELEASE.2024-08-03T04-33-23Z-cpuv1                                   "/usr/bin/docker-ent…"   minio                    Около минуты назад   Работает около минуты (healthy)     0.0.0.0:8022->8022/tcp, 0.0.0.0:9000-9001->9000-9001/tcp
+wis2box-ui               ghcr.io/world-meteorological-organization/wis2box-ui:1.2.0                       "/docker-entrypoint.…"   wis2box-ui               Около минуты назад   Работает 35 секунд                   0.0.0.0:9999->80/tcp
+wis2box-webapp           ghcr.io/world-meteorological-organization/wis2box-webapp:1.2.0                   "sh /wis2box-webapp/…"   wis2box-webapp           Около минуты назад   Работает около минуты (unhealthy)   4173/tcp
+wis2downloader           ghcr.io/wmo-im/wis2downloader:v0.3.2                                             "/home/wis2downloade…"   wis2downloader           Около минуты назад   Работает около минуты (healthy)
 
 ```
 
@@ -247,7 +247,7 @@ docker volume ls
 
 ## wis2box API
 
-Wis2box содержит API (интерфейс прикладного программирования), который предоставляет доступ к данным и процессы для интерактивной визуализации, преобразования данных и их публикации.
+wis2box содержит API (интерфейс прикладного программирования), который предоставляет доступ к данным и процессы для интерактивной визуализации, преобразования данных и их публикации.
 
 Откройте новую вкладку и перейдите на страницу `http://YOUR-HOST/oapi`.
 
@@ -261,7 +261,7 @@ Wis2box содержит API (интерфейс прикладного прог
 
 ??? success "Нажмите, чтобы увидеть ответ"
     
-    Чтобы увидеть коллекции, доступные через API, нажмите `View the collections in this service`:
+    Чтобы просмотреть коллекции, доступные через API, нажмите `View the collections in this service`:
 
     <img alt="wis2box-api-collections.png" src="/../assets/img/wis2box-api-collections.png" width="600">
 
@@ -280,7 +280,7 @@ Wis2box содержит API (интерфейс прикладного прог
 
     Нажмите на "Data notifications", затем нажмите на `Browse through the items of "Data Notifications"`. 
     
-    Вы увидите, что на странице указано "No items", так как уведомления о данных еще не были опубликованы.
+    Вы заметите, что на странице указано "No items", так как уведомления о данных еще не были опубликованы.
 
 ## wis2box webapp
 
@@ -296,7 +296,7 @@ Wis2box содержит API (интерфейс прикладного прог
     cat ~/wis2box/wis2box.env | grep WIS2BOX_WEBAPP_PASSWORD
     ```
 
-После входа переместите курсор мыши на меню слева, чтобы увидеть доступные опции в веб-приложении wis2box:
+После входа в систему наведите курсор на меню слева, чтобы увидеть доступные опции в веб-приложении wis2box:
 
 <img alt="wis2box-webapp-menu.png" src="/../assets/img/wis2box-webapp-menu.png" width="400">
 
@@ -305,7 +305,7 @@ Wis2box содержит API (интерфейс прикладного прог
 - создавать и управлять наборами данных
 - обновлять/просматривать метаданные станций
 - загружать ручные наблюдения с использованием формы FM-12 synop
-- отслеживать уведомления, опубликованные на вашем wis2box-broker
+- отслеживать уведомления, опубликованные в вашем wis2box-broker
 
 Мы будем использовать это веб-приложение в следующем занятии.
 
@@ -326,7 +326,7 @@ Wis2box содержит API (интерфейс прикладного прог
 
 !!! note
 
-    Тема `#` является универсальной подпиской, которая подписывается на все темы, опубликованные на брокере.
+    Тема `#` является универсальной подпиской, которая подписывается на все темы, опубликованные в брокере.
 
     Сообщения, опубликованные в теме `$SYS`, являются системными сообщениями, публикуемыми самим сервисом mosquitto.
 
@@ -363,9 +363,9 @@ Wis2box содержит API (интерфейс прикладного прог
 ## Заключение
 
 !!! success "Поздравляем!"
-    В ходе этой практической сессии вы научились:
+    В ходе этой практической сессии вы узнали, как:
 
-    - запускать скрипт `wis2box-create-config.py` для создания начальной конфигурации
-    - запускать wis2box и проверять статус его компонентов
-    - получать доступ к wis2box-webapp и wis2box-API через браузер
-    - подключаться к MQTT брокеру на вашей учебной виртуальной машине с использованием MQTT Explorer
+    - запустить скрипт `wis2box-create-config.py` для создания начальной конфигурации
+    - запустить wis2box и проверить статус его компонентов
+    - получить доступ к wis2box-webapp и wis2box-API в браузере
+    - подключиться к MQTT брокеру на вашей учебной виртуальной машине с использованием MQTT Explorer
