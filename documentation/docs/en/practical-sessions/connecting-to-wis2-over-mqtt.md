@@ -34,21 +34,21 @@ This is an example of the WIS2 notification message structure for a message rece
       "type":"Point"
    },
    "properties":{
-      "data_id":"br-inmet:fci2wb/WIGOS_0-20000-0-76679_20250206T231600",
+      "data_id":"br-inmet:data:core:weather:surface-based-observations:synop/WIGOS_0-20000-0-76679_20250206T231600",
       "datetime":"2025-02-06T23:16:00Z",
       "pubtime":"2026-01-20T13:14:52Z",
       "integrity":{
          "method":"sha512",
          "value":"qtlI3Noay2I4zcdA1XCpn8vzVLIt0RKrR398VGFgTttc1XRUVb4dHWNCDKPXUo4mNkiFKx5TTHBvrxlzqWmMnQ=="
       },
-      "metadata_id":"urn:wmo:md:br-inmet:fci2wb",
+      "metadata_id":"urn:wmo:md:br-inmet:data:core:weather:surface-based-observations:synop",
       "wigos_station_identifier":"0-20000-0-76679"
    },
    "links":[
       {
          "rel":"canonical",
          "type":"application/bufr",
-         "href":"http://localhost/data/2025-02-06/wis/urn:wmo:md:br-inmet:fci2wb/WIGOS_0-20000-0-76679_20250206T231600.bufr4",
+         "href":"http://localhost/data/2025-02-06/wis/urn:wmo:md:br-inmet:data:core:weather:surface-based-observations:synop/WIGOS_0-20000-0-76679_20250206T231600.bufr4",
          "length":125117
       },
       {
