@@ -14,7 +14,7 @@ title: Conectarse a WIS2 mediante MQTT
 
 ## Introducción
 
-WIS2 utiliza el protocolo MQTT para anunciar la disponibilidad de datos meteorológicos, climáticos e hidrológicos. El WIS2 Global Broker se suscribe a todos los WIS2 Nodes en la red y republica los mensajes que recibe. El Global Cache se suscribe al Global Broker, descarga los datos del mensaje y luego republica el mensaje en el tema `cache` con una nueva URL. El Global Discovery Catalogue publica metadatos de descubrimiento desde el Broker y proporciona una API de búsqueda.
+WIS2 utiliza el protocolo MQTT para anunciar la disponibilidad de datos sobre clima/meteorología/agua. El WIS2 Global Broker se suscribe a todos los WIS2 Nodes en la red y republica los mensajes que recibe. El Global Cache se suscribe al Global Broker, descarga los datos del mensaje y luego republica el mensaje en el tema `cache` con una nueva URL. El Global Discovery Catalogue publica metadatos de descubrimiento desde el Broker y proporciona una API de búsqueda.
 
 Este es un ejemplo de la estructura de un mensaje de notificación de WIS2 para un mensaje recibido en el tema `origin/a/wis2/br-inmet/data/core/weather/surface-based-observations/synop`:	
 
@@ -61,20 +61,20 @@ Este es un ejemplo de la estructura de un mensaje de notificación de WIS2 para 
 }
 ``` 
 
-En esta sesión práctica aprenderás a usar la herramienta MQTT Explorer para configurar una conexión de cliente MQTT a un WIS2 Global Broker y poder visualizar mensajes de notificación de WIS2.
+En esta sesión práctica aprenderás a usar la herramienta MQTT Explorer para configurar una conexión de cliente MQTT a un WIS2 Global Broker y podrás visualizar mensajes de notificación de WIS2.
 
-MQTT Explorer es una herramienta útil para explorar y revisar la estructura de temas de un broker MQTT y analizar los datos que se están publicando.
+MQTT Explorer es una herramienta útil para explorar y revisar la estructura de temas de un broker MQTT y analizar los datos publicados.
 
-!!! note "Acerca de MQTT"
+!!! note "Sobre MQTT"
     MQTT Explorer proporciona una interfaz fácil de usar para conectarse a un broker MQTT y explorar los temas y la estructura de mensajes utilizados por WIS2.
     
     En la práctica, MQTT está diseñado para ser utilizado en comunicación máquina a máquina, donde una aplicación o servicio se suscribe a temas y procesa mensajes programáticamente en tiempo real.
     
-    Para trabajar con MQTT de forma programática (por ejemplo, en Python), puedes usar bibliotecas de cliente MQTT como [paho-mqtt](https://pypi.org/project/paho-mqtt) para conectarte a un broker MQTT y procesar mensajes entrantes. Existen numerosos software de cliente y servidor MQTT, dependiendo de tus requisitos y entorno técnico.
+    Para trabajar con MQTT de manera programática (por ejemplo, en Python), puedes usar bibliotecas de cliente MQTT como [paho-mqtt](https://pypi.org/project/paho-mqtt) para conectarte a un broker MQTT y procesar mensajes entrantes. Existen numerosos software de cliente y servidor MQTT, dependiendo de tus requisitos y entorno técnico.
 
 ## Usar MQTT Explorer para conectarse al Global Broker
 
-Para ver los mensajes publicados por un WIS2 Global Broker, puedes usar "MQTT Explorer", que se puede descargar desde el [sitio web de MQTT Explorer](https://mqtt-explorer.com).
+Para visualizar los mensajes publicados por un WIS2 Global Broker, puedes usar "MQTT Explorer", que se puede descargar desde el [sitio web de MQTT Explorer](https://mqtt-explorer.com).
 
 Abre MQTT Explorer y agrega una nueva conexión al Global Broker alojado por MeteoFrance utilizando los siguientes detalles:
 
@@ -123,11 +123,11 @@ Usa MQTT para explorar la estructura de temas bajo los temas `origin`.
 
     `origin/a/wis2/br-inmet/data/core/weather/surface-based-observations/synop`
 
-    nos indica que los datos fueron publicados por un centro WIS con el centre-id `br-inmet`, que es el centre-id del Instituto Nacional de Meteorologia - INMET, Brasil.
+    nos indica que los datos fueron publicados por un centro WIS con el centre-id `br-inmet`, que es el centre-id del Instituto Nacional de Meteorología - INMET, Brasil.
 
 !!! question
 
-    ¿Cómo podemos distinguir entre mensajes publicados por centros WIS que alojan un gateway GTS-to-WIS2 y mensajes publicados por centros WIS que alojan un WIS2 Node?
+    ¿Cómo podemos distinguir entre mensajes publicados por centros WIS que alojan un gateway GTS-to-WIS2 y mensajes publicados por centros WIS que alojan un nodo WIS2?
 
 ??? success "Haz clic para revelar la respuesta"
 
@@ -135,7 +135,7 @@ Usa MQTT para explorar la estructura de temas bajo los temas `origin`.
 
     `origin/a/wis2/de-dwd-gts-to-wis2/data/core/I/S/A/I/01/sbbr`
 
-    nos indica que los datos fueron publicados por el gateway GTS-to-WIS2 alojado por Deutscher Wetterdienst (DWD), Alemania. El gateway GTS-to-WIS2 es un tipo especial de publicador de datos que publica datos del Global Telecommunication System (GTS) a WIS2. La estructura de temas está compuesta por los encabezados TTAAii CCCC de los mensajes GTS.
+    nos indica que los datos fueron publicados por el gateway GTS-to-WIS2 alojado por Deutscher Wetterdienst (DWD), Alemania. El gateway GTS-to-WIS2 es un tipo especial de publicador de datos que publica datos del Sistema Global de Telecomunicaciones (GTS) a WIS2. La estructura de temas está compuesta por los encabezados TTAAii CCCC para los mensajes GTS.
 
 ## Ejercicio 2: Revisar la estructura de mensajes de WIS2
 
@@ -149,9 +149,9 @@ Desconéctate de MQTT Explorer y actualiza la sección 'Advanced' para cambiar l
 !!! note
     El comodín `+` se utiliza para suscribirse a todos los centros WIS.
 
-Reconéctate al Global Broker y espera a que aparezcan mensajes. 
+Vuelve a conectarte al Global Broker y espera a que aparezcan los mensajes. 
 
-Puedes ver el contenido del mensaje de WIS2 en la sección "Value" en el lado derecho. Intenta expandir la estructura de temas para ver los diferentes niveles del mensaje hasta llegar al último nivel y revisar el contenido de uno de los mensajes.
+Puedes visualizar el contenido del mensaje de WIS2 en la sección "Value" en el lado derecho. Intenta expandir la estructura de temas para ver los diferentes niveles del mensaje hasta llegar al último nivel y revisar el contenido de uno de los mensajes.
 
 !!! question
 
@@ -159,9 +159,9 @@ Puedes ver el contenido del mensaje de WIS2 en la sección "Value" en el lado de
 
 ??? success "Haz clic para revelar la respuesta"
 
-    La marca de tiempo en la que se publicaron los datos está contenida en la sección `properties` del mensaje con la clave `pubtime`.
+    La marca de tiempo en la que se publicaron los datos está contenida en la sección `properties` del mensaje con una clave de `pubtime`.
 
-    La marca de tiempo en la que se recopilaron los datos está contenida en la sección `properties` del mensaje con la clave `datetime`.
+    La marca de tiempo en la que se recopilaron los datos está contenida en la sección `properties` del mensaje con una clave de `datetime`.
 
     <img alt="mqtt-explorer-global-broker-msg-properties" src="/../assets/img/mqtt-explorer-global-broker-msg-properties.png" width="800">
 
@@ -179,7 +179,7 @@ Puedes ver el contenido del mensaje de WIS2 en la sección "Value" en el lado de
 
 Asegúrate de que sigues conectado al Global Broker utilizando las suscripciones a los temas `origin/a/wis2/+/data/core/weather/surface-based-observations/synop` y `cache/a/wis2/+/data/core/weather/surface-based-observations/synop` como se describe en el Ejercicio 2.
 
-Intenta identificar un mensaje para el mismo centre-id publicado en ambos temas, `origin` y `cache`.
+Intenta identificar un mensaje para el mismo centre-id publicado en ambos temas `origin` y `cache`.
 
 !!! question
 

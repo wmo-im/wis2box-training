@@ -14,13 +14,13 @@ title: أدوات تحويل البيانات
 
 ## المقدمة
 
-يجب أن تلتزم البيانات المنشورة على WIS2 بالمتطلبات والمعايير التي تحددها مجتمعات الخبراء في مجالات وأنظمة الأرض المختلفة. لتسهيل عملية نشر البيانات للملاحظات السطحية البرية، يوفر `wis2box` أدوات لتحويل البيانات إلى تنسيق BUFR. هذه الأدوات متاحة عبر حاوية `wis2box-api` ويمكن استخدامها من سطر الأوامر لاختبار عملية تحويل البيانات.
+يجب أن تلتزم البيانات المنشورة على WIS2 بالمتطلبات والمعايير التي تحددها مجتمعات الخبراء في مختلف مجالات نظام الأرض. لتسهيل عملية نشر البيانات للملاحظات السطحية الأرضية، يوفر `wis2box` أدوات لتحويل البيانات إلى تنسيق BUFR. هذه الأدوات متاحة عبر حاوية `wis2box-api` ويمكن استخدامها من سطر الأوامر لاختبار عملية تحويل البيانات.
 
-التحويلات الرئيسية التي يدعمها `wis2box` حاليًا هي تقارير FM-12 SYNOP إلى BUFR وبيانات CSV إلى BUFR. يتم دعم بيانات FM-12 لأنها لا تزال تُستخدم على نطاق واسع ويتم تبادلها داخل مجتمع WMO، بينما يتم دعم بيانات CSV للسماح بربط البيانات التي تنتجها محطات الطقس الآلية بتنسيق BUFR.
+التحويلات الرئيسية المدعومة حاليًا بواسطة `wis2box` هي تقارير FM-12 SYNOP إلى BUFR وبيانات CSV إلى BUFR. يتم دعم بيانات FM-12 لأنها لا تزال تُستخدم على نطاق واسع ويتم تبادلها في مجتمع WMO، بينما يتم دعم بيانات CSV للسماح بتعيين البيانات التي تنتجها محطات الطقس الآلية إلى تنسيق BUFR.
 
 ### حول FM-12 SYNOP
 
-تُبلغ تقارير الطقس السطحية من المحطات البرية تاريخيًا كل ساعة أو في الساعات الرئيسية (00، 06، 12، و18 بالتوقيت العالمي) والساعات الوسيطة (03، 09، 15، 21 بالتوقيت العالمي). قبل الانتقال إلى BUFR، كانت هذه التقارير تُرمز بتنسيق النص العادي FM-12 SYNOP. على الرغم من أن الانتقال إلى BUFR كان من المقرر أن يكتمل بحلول عام 2012، إلا أن عددًا كبيرًا من التقارير لا يزال يتم تبادلها بتنسيق FM-12 SYNOP القديم. يمكن العثور على مزيد من المعلومات حول تنسيق FM-12 SYNOP في دليل WMO للأكواد، المجلد I.1 (WMO-No. 306، المجلد I.1).
+تم الإبلاغ عن تقارير الطقس السطحي من المحطات السطحية الأرضية تاريخيًا كل ساعة أو في الساعات الرئيسية (00، 06، 12، و18 بالتوقيت العالمي) والساعات الوسيطة (03، 09، 15، و21 بالتوقيت العالمي). قبل الانتقال إلى BUFR، تم ترميز هذه التقارير في شكل نصي بسيط باستخدام كود FM-12 SYNOP. على الرغم من أن الانتقال إلى BUFR كان من المقرر أن يكتمل بحلول عام 2012، إلا أن عددًا كبيرًا من التقارير لا يزال يتم تبادلها بتنسيق FM-12 SYNOP القديم. يمكن العثور على مزيد من المعلومات حول تنسيق FM-12 SYNOP في دليل WMO للكودات، المجلد I.1 (WMO-No. 306، المجلد I.1).
 
 ### حول ecCodes
 
@@ -32,8 +32,8 @@ title: أدوات تحويل البيانات
 
 بالإضافة إلى ecCodes، يستخدم `wis2box` الوحدات البرمجية التالية المكتوبة بلغة Python والتي تعمل مع ecCodes لتحويل البيانات إلى تنسيق BUFR:
 
-- **synop2bufr**: لدعم تنسيق FM-12 SYNOP القديم الذي يُستخدم تقليديًا من قبل المراقبين اليدويين. تعتمد وحدة synop2bufr على بيانات وصفية إضافية للمحطات لترميز معلمات إضافية في ملف BUFR. راجع [مستودع synop2bufr على GitHub](https://github.com/World-Meteorological-Organization/synop2bufr)
-- **csv2bufr**: لتمكين تحويل ملفات CSV التي تنتجها محطات الطقس الآلية إلى تنسيق BUFR. تُستخدم وحدة csv2bufr لتحويل بيانات CSV إلى تنسيق BUFR باستخدام قالب تعيين يحدد كيفية ربط بيانات CSV بتنسيق BUFR. راجع [مستودع csv2bufr على GitHub](https://github.com/World-Meteorological-Organization/csv2bufr)
+- **synop2bufr**: لدعم تنسيق FM-12 SYNOP القديم الذي كان يُستخدم تقليديًا من قبل المراقبين اليدويين. تعتمد وحدة synop2bufr على بيانات وصفية إضافية للمحطة لترميز معلمات إضافية في ملف BUFR. راجع [مستودع synop2bufr على GitHub](https://github.com/World-Meteorological-Organization/synop2bufr)
+- **csv2bufr**: لتمكين تحويل ملفات CSV التي تنتجها محطات الطقس الآلية إلى تنسيق BUFR. تُستخدم وحدة csv2bufr لتحويل بيانات CSV إلى تنسيق BUFR باستخدام قالب تعيين يحدد كيفية تعيين بيانات CSV إلى تنسيق BUFR. راجع [مستودع csv2bufr على GitHub](https://github.com/World-Meteorological-Organization/csv2bufr)
 
 يمكن استخدام هذه الوحدات بشكل مستقل أو كجزء من حزمة `wis2box`.
 
@@ -43,27 +43,36 @@ title: أدوات تحويل البيانات
 
     - تأكد من أن `wis2box` الخاص بك قد تم تكوينه وتشغيله
     - تأكد من أنك قمت بإعداد مجموعة بيانات وقمت بتكوين محطة واحدة على الأقل في `wis2box`
-    - قم بالاتصال بوسيط MQTT الخاص بمثيل `wis2box` الخاص بك باستخدام `MQTT Explorer`
+    - الاتصال بوسيط MQTT الخاص بمثيل `wis2box` الخاص بك باستخدام `MQTT Explorer`
     - افتح تطبيق `wis2box` على الويب (`http://YOUR-HOST/wis2box-webapp`) وتأكد من تسجيل الدخول
-    - افتح لوحة تحكم Grafana لمثيلك عن طريق الانتقال إلى `http://YOUR-HOST:3000`
+    - افتح لوحة معلومات Grafana لمثيلك عن طريق الانتقال إلى `http://YOUR-HOST:3000`
 
 لاستخدام أدوات BUFR من سطر الأوامر، ستحتاج إلى تسجيل الدخول إلى حاوية `wis2box-api`. ما لم يُذكر خلاف ذلك، يجب تشغيل جميع الأوامر على هذه الحاوية. ستحتاج أيضًا إلى فتح `MQTT Explorer` والاتصال بوسيطك.
 
-أولاً، قم بالاتصال بجهاز الطالب الافتراضي الخاص بك عبر عميل SSH الخاص بك وانسخ مواد التمرين إلى حاوية `wis2box-api`:
+أولاً، قم بالاتصال بجهاز الطالب الافتراضي الخاص بك عبر عميل SSH الخاص بك ونسخ مواد التمرين إلى دليل يمكن الوصول إليه بواسطة مستخدم غير الجذر داخل حاوية `wis2box-api` (على سبيل المثال، /tmp):
 
 ```bash
-docker cp ~/exercise-materials/data-conversion-exercises wis2box-api:/root
+docker cp ~/exercise-materials/data-conversion-exercises wis2box-api:/tmp
 ```
 
-ثم قم بتسجيل الدخول إلى حاوية `wis2box-api` وانتقل إلى الدليل الذي توجد به مواد التمرين:
+قد لا تكون الملفات التي تم نسخها باستخدام `docker cp` قابلة للكتابة بواسطة مستخدم `wis2box-api`. قم بتشغيل الأمر التالي كمستخدم الجذر لتحديث الملكية:
 
 ```bash
-cd ~/wis2box
+exit
+docker exec -it --user root wis2box-api bash -lc \
+'chown -R wis2box-api:wis2box-api /tmp/data-conversion-exercises'
+```
+
+الآن قم بتسجيل الدخول مرة أخرى كمستخدم عادي وانتقل إلى دليل التمرين:
+
+```bash
 python3 wis2box-ctl.py login wis2box-api
-cd /root/data-conversion-exercises
+cd /tmp/data-conversion-exercises
 ```
 
-تأكد من أن الأدوات متاحة، بدءًا من ecCodes:
+في هذه المرحلة، أصبح الدليل قابلاً للكتابة وجاهزًا للتمارين.
+
+تأكد من توفر الأدوات، بدءًا من ecCodes:
 
 ```bash
 bufr_dump -V
@@ -75,7 +84,7 @@ bufr_dump -V
 ecCodes Version 2.44.0
 ```
 
-بعد ذلك، تحقق من إصدار `synop2bufr`:
+بعد ذلك، تحقق من إصدار synop2bufr:
 
 ```bash
 synop2bufr --version
@@ -87,7 +96,7 @@ synop2bufr --version
 synop2bufr, version 0.7.0
 ```
 
-بعد ذلك، تحقق من `csv2bufr`:
+بعد ذلك، تحقق من csv2bufr:
 
 ```bash
 csv2bufr --version
@@ -101,7 +110,7 @@ csv2bufr, version 0.8.6
 
 ## أدوات سطر الأوامر ecCodes
 
-تتضمن مكتبة ecCodes الموجودة في حاوية `wis2box-api` عددًا من أدوات سطر الأوامر للعمل مع ملفات BUFR. 
+توفر مكتبة ecCodes المضمنة في حاوية `wis2box-api` عددًا من أدوات سطر الأوامر للعمل مع ملفات BUFR. 
 توضح التمارين التالية كيفية استخدام `bufr_ls` و`bufr_dump` لفحص محتوى ملف BUFR.
 
 ### bufr_ls
@@ -125,7 +134,7 @@ cnmc                       29                         0                         
 1 of 1 total messages in 1 file
 ```
 
-يمكن تمرير خيارات مختلفة إلى `bufr_ls` لتغيير كل من التنسيق وحقول الرؤوس المطبوعة.
+يمكن تمرير خيارات مختلفة إلى `bufr_ls` لتغيير كل من التنسيق وحقول الرأس المطبوعة.
 
 !!! question
      
@@ -153,48 +162,48 @@ cnmc                       29                         0                         
     ]}
     ```
 
-يمثل الإخراج المطبوع قيم بعض مفاتيح الرؤوس في ملف BUFR.
+يمثل الإخراج المطبوع قيم بعض مفاتيح الرأس في ملف BUFR.
 
-بمفرده، هذه المعلومات ليست مفيدة جدًا، حيث توفر معلومات محدودة فقط عن محتويات الملف.
+بمفرده، لا يكون هذا الإخراج مفيدًا جدًا، حيث يوفر معلومات محدودة فقط عن محتويات الملف.
 
 عند فحص ملف BUFR، غالبًا ما نرغب في تحديد نوع البيانات الموجودة في الملف والتاريخ/الوقت النموذجي للبيانات في الملف. يمكن إدراج هذه المعلومات باستخدام الخيار `-p` لتحديد الرؤوس التي سيتم إخراجها. يمكن تضمين رؤوس متعددة باستخدام قائمة مفصولة بفواصل.
 
-يمكنك استخدام الأمر التالي لإدراج فئة البيانات، الفئة الفرعية، التاريخ النموذجي، والوقت:
-
+يمكنك استخدام الأمر التالي لإدراج فئة البيانات، الفئة الفرعية، التاريخ النموذجي، والوقت النموذجي:
+    
 ```bash
 bufr_ls -p dataCategory,internationalDataSubCategory,typicalDate,typicalTime -j bufr-cli-ex1.bufr4
 ```
 
 !!! question
 
-    قم بتنفيذ الأمر السابق وفسر الإخراج باستخدام [جدول الأكواد المشترك C-13](https://github.com/wmo-im/CCT/blob/master/C13.csv) لتحديد فئة البيانات والفئة الفرعية.
+    قم بتنفيذ الأمر السابق وفسر الإخراج باستخدام [جدول الكود المشترك C-13](https://github.com/wmo-im/CCT/blob/master/C13.csv) لتحديد فئة البيانات والفئة الفرعية.
 
     ما نوع البيانات (فئة البيانات والفئة الفرعية) الموجودة في الملف؟ ما هو التاريخ والوقت النموذجي للبيانات؟
 
 ??? success "اضغط للكشف عن الإجابة"
-    
-    ```
-    { "messages" : [
-      {
-        "dataCategory": 2,
-        "internationalDataSubCategory": 4,
-        "typicalDate": 20231002,
-        "typicalTime": "000000"
-      }
-    ]}
-    ```
 
-    من هذا، نرى أن:
+```
+{ "messages" : [
+  {
+    "dataCategory": 2,
+    "internationalDataSubCategory": 4,
+    "typicalDate": 20231002,
+    "typicalTime": "000000"
+  }
+]}
+```
 
-- فئة البيانات هي 2، مما يشير إلى بيانات **"الرصدات الرأسية (غير الساتلية)"**.
+من هذا، نلاحظ أن:
+
+- فئة البيانات هي 2، مما يشير إلى بيانات **"القياسات الرأسية (غير الساتلية)"**.
 - الفئة الفرعية الدولية هي 4، مما يشير إلى بيانات **"تقارير درجة الحرارة/الرطوبة/الرياح على المستويات العليا من محطات أرضية ثابتة (TEMP)"**.
 - التاريخ والوقت النموذجيان هما 2023-10-02 و00:00:00z على التوالي.
 
 ### bufr_dump
 
-يمكن استخدام أمر `bufr_dump` لعرض وفحص محتويات ملف BUFR، بما في ذلك البيانات نفسها.
+يمكن استخدام الأمر `bufr_dump` لعرض وفحص محتويات ملف BUFR، بما في ذلك البيانات نفسها.
 
-حاول تشغيل أمر `bufr_dump` على ملف المثال الثاني `bufr-cli-ex2.bufr4`:
+حاول تشغيل الأمر `bufr_dump` على ملف المثال الثاني `bufr-cli-ex2.bufr4`:
 
 ```{.copy}
 bufr_dump bufr-cli-ex2.bufr4
@@ -208,7 +217,7 @@ bufr_dump -p bufr-cli-ex2.bufr4
 
 سترى عددًا كبيرًا من المفاتيح في الإخراج، العديد منها مفقود. هذا أمر شائع مع البيانات الواقعية حيث لا يتم تعبئة جميع مفاتيح eccodes بالبيانات المبلغ عنها.
 
-يمكنك استخدام أمر `grep` لتصفية الإخراج وعرض المفاتيح غير المفقودة فقط. على سبيل المثال، لعرض جميع المفاتيح غير المفقودة، يمكنك استخدام الأمر التالي:
+يمكنك استخدام الأمر `grep` لتصفية الإخراج وعرض المفاتيح غير المفقودة فقط. على سبيل المثال، لعرض جميع المفاتيح غير المفقودة، يمكنك استخدام الأمر التالي:
 
 ```{.copy}
 bufr_dump -p bufr-cli-ex2.bufr4 | grep -v MISSING
@@ -216,9 +225,9 @@ bufr_dump -p bufr-cli-ex2.bufr4 | grep -v MISSING
 
 !!! question
 
-    ما هو الضغط المعدل إلى مستوى سطح البحر المبلغ عنه في ملف BUFR `bufr-cli-ex2.bufr4`؟
+    ما هو الضغط المخفض إلى مستوى سطح البحر المبلغ عنه في ملف BUFR `bufr-cli-ex2.bufr4`؟
 
-??? success "اضغط لعرض الإجابة"
+??? success "Click to reveal answer"
 
     باستخدام الأمر التالي:
 
@@ -226,18 +235,18 @@ bufr_dump -p bufr-cli-ex2.bufr4 | grep -v MISSING
     bufr_dump -p bufr-cli-ex2.bufr4 | grep -i 'pressureReducedToMeanSeaLevel'
     ```
 
-    يجب أن ترى الإخراج التالي:
+    سترى الإخراج التالي:
 
     ```
     pressureReducedToMeanSeaLevel=105590
     ```
-    يشير هذا إلى أن الضغط المعدل إلى مستوى سطح البحر هو 105590 باسكال (1055.90 هكتوباسكال).
+    يشير هذا إلى أن الضغط المخفض إلى مستوى سطح البحر هو 105590 باسكال (1055.90 هكتوباسكال).
 
 !!! question
 
     ما هو معرف محطة WIGOS للمحطة التي أبلغت عن البيانات في ملف BUFR `bufr-cli-ex2.bufr4`؟
 
-??? success "اضغط لعرض الإجابة"
+??? success "Click to reveal answer"
 
     باستخدام الأمر التالي:
 
@@ -245,7 +254,7 @@ bufr_dump -p bufr-cli-ex2.bufr4 | grep -v MISSING
     bufr_dump -p bufr-cli-ex2.bufr4 | grep -i 'wigos'
     ```
 
-    يجب أن ترى الإخراج التالي:
+    سترى الإخراج التالي:
 
     ```
     wigosIdentifierSeries=0
@@ -258,7 +267,7 @@ bufr_dump -p bufr-cli-ex2.bufr4 | grep -v MISSING
 
 ## تحويل synop2bufr
 
-بعد ذلك، دعنا نلقي نظرة على كيفية تحويل بيانات FM-12 SYNOP إلى تنسيق BUFR باستخدام وحدة `synop2bufr`. تُستخدم وحدة `synop2bufr` لتحويل بيانات FM-12 SYNOP إلى تنسيق BUFR. يتم تثبيت الوحدة في حاوية wis2box-api ويمكن استخدامها من سطر الأوامر كما يلي:
+بعد ذلك، دعنا نلقي نظرة على كيفية تحويل بيانات FM-12 SYNOP إلى تنسيق BUFR باستخدام الوحدة `synop2bufr`. تُستخدم الوحدة `synop2bufr` لتحويل بيانات FM-12 SYNOP إلى تنسيق BUFR. يتم تثبيت الوحدة في حاوية wis2box-api ويمكن استخدامها من سطر الأوامر كما يلي:
 
 ```{.copy}
 synop2bufr data transform \
@@ -269,19 +278,19 @@ synop2bufr data transform \
     <input-fm12.txt>
 ```
 
-يُستخدم الوسيط `--metadata` لتحديد ملف بيانات تعريف المحطة، الذي يوفر معلومات إضافية ليتم ترميزها في ملف BUFR.
+يُستخدم الوسيط `--metadata` لتحديد ملف بيانات المحطة الوصفية، الذي يوفر معلومات إضافية ليتم ترميزها في ملف BUFR.
 يُستخدم الوسيط `--output-dir` لتحديد الدليل الذي سيتم كتابة ملفات BUFR المحولة فيه. تُستخدم الوسيطتان `--year` و`--month` لتحديد سنة وشهر الملاحظة.
 
-تُستخدم وحدة `synop2bufr` أيضًا في wis2box-webapp لتحويل بيانات FM-12 SYNOP إلى تنسيق BUFR باستخدام نموذج إدخال مستند إلى الويب.
+تُستخدم الوحدة `synop2bufr` أيضًا في wis2box-webapp لتحويل بيانات FM-12 SYNOP إلى تنسيق BUFR باستخدام نموذج إدخال مستند إلى الويب.
 
 ستوضح التمارين التالية كيفية عمل وحدة `synop2bufr` وكيفية استخدامها لتحويل بيانات FM-12 SYNOP إلى تنسيق BUFR.
 
-### مراجعة رسالة SYNOP كمثال
+### مراجعة رسالة SYNOP النموذجية
 
-افحص ملف رسالة SYNOP كمثال لهذا التمرين `synop_message.txt`:
+افحص ملف رسالة SYNOP النموذجية لهذا التمرين `synop_message.txt`:
 
 ```bash
-cd /root/data-conversion-exercises
+cd /tmp/data-conversion-exercises
 more synop_message.txt
 ```
 
@@ -289,7 +298,7 @@ more synop_message.txt
 
     كم عدد تقارير SYNOP الموجودة في هذا الملف؟
 
-??? success "اضغط لعرض الإجابة"
+??? success "Click to reveal answer"
     
     يظهر الإخراج التالي:
 
@@ -300,7 +309,7 @@ more synop_message.txt
     15090 02997 53102 10139 21075 30271 40364 58031 60001 82046=
     ```
 
-    هناك 3 تقارير SYNOP في الملف، تتوافق مع 3 محطات مختلفة (يتم تحديدها بواسطة معرفات المحطات التقليدية المكونة من 5 أرقام: 15015، 15020، و15090).
+    هناك 3 تقارير SYNOP في الملف، تتوافق مع 3 محطات مختلفة (تم تحديدها بواسطة معرفات المحطات التقليدية المكونة من 5 أرقام: 15015، 15020، و15090).
     لاحظ أن نهاية كل تقرير يتم تمييزها بالحرف `=`.
 
 ### مراجعة قائمة المحطات
@@ -317,7 +326,7 @@ more station_list.csv
 
     كم عدد المحطات المدرجة في قائمة المحطات؟ ما هي معرفات محطات WIGOS لهذه المحطات؟
 
-??? success "اضغط لعرض الإجابة"
+??? success "Click to reveal answer"
 
     يظهر الإخراج التالي:
 
@@ -327,7 +336,7 @@ more station_list.csv
     BOTOSANI,0-20000-0-15020,15020,landFixed,47.7356532437,26.6455501701,161.0,162.1,ROU,europe
     ```
 
-    يتوافق هذا مع بيانات تعريف المحطات لمحطتين: لمعرفات محطات WIGOS `0-20000-0-15015` و`0-20000-0-15020`.
+    يتوافق هذا مع بيانات المحطة الوصفية لمحطتين: لمعرفات محطات WIGOS `0-20000-0-15015` و`0-20000-0-15020`.
 
 ### تحويل SYNOP إلى BUFR
 
@@ -340,7 +349,7 @@ synop2bufr data transform --metadata station_list.csv --output-dir ./ --year 202
 !!! question
     كم عدد ملفات BUFR التي تم إنشاؤها؟ ماذا يعني تحذير الرسالة في الإخراج؟
 
-??? success "اضغط لعرض الإجابة"
+??? success "Click to reveal answer"
     يظهر الإخراج التالي:
 
     ```{.copy}
@@ -352,11 +361,11 @@ synop2bufr data transform --metadata station_list.csv --output-dir ./ --year 202
     تشير رسالة التحذير إلى أن المحطة ذات المعرف التقليدي `15090` لم يتم العثور عليها في ملف قائمة المحطات `station_list.csv`. وهذا يعني أن تقرير SYNOP لهذه المحطة لم يتم تحويله إلى تنسيق BUFR.
 
 !!! question
-    تحقق من محتويات ملف BUFR `WIGOS_0-20000-0-15015_20240921T120000.bufr4` باستخدام أمر `bufr_dump`.
+    تحقق من محتويات ملف BUFR `WIGOS_0-20000-0-15015_20240921T120000.bufr4` باستخدام الأمر `bufr_dump`.
 
     هل يمكنك التحقق من أن المعلومات المقدمة في ملف `station_list.csv` موجودة في ملف BUFR؟
 
-??? success "اضغط لعرض الإجابة"
+??? success "Click to reveal answer"
     يمكنك استخدام الأمر التالي للتحقق من محتويات ملف BUFR:
 
     ```bash
@@ -365,32 +374,17 @@ synop2bufr data transform --metadata station_list.csv --output-dir ./ --year 202
 
     ستلاحظ الإخراج التالي:
 
-    ```{.copy}
-    wigosIdentifierSeries=0
-    wigosIssuerOfIdentifier=20000
-    wigosIssueNumber=0
-    wigosLocalIdentifierCharacter="15015"
-    blockNumber=15
-    stationNumber=15
-    stationOrSiteName="OCNA SUGATAG"
-    stationType=1
-    year=2024
-    month=9
-    day=21
-    hour=12
-    minute=0
-    latitude=47.7771
-    longitude=23.9405
-    heightOfStationGroundAboveMeanSeaLevel=503
-    heightOfBarometerAboveMeanSeaLevel=504
-    ...
-    ```
-
-    لاحظ أن هذا يتضمن البيانات المقدمة في ملف `station_list.csv`.
+```{.copy}
+    "airTemperature": {
+        "csv": "air_temperature",
+        "min": -273.15,
+        "max": 60
+    },
+```
 
 ### نموذج SYNOP في wis2box-webapp
 
-يُستخدم أيضًا الوحدة `synop2bufr` في `wis2box-webapp` لتحويل بيانات FM-12 SYNOP إلى صيغة BUFR باستخدام نموذج إدخال عبر الويب.  
+يتم استخدام الوحدة `synop2bufr` أيضًا في `wis2box-webapp` لتحويل بيانات FM-12 SYNOP إلى تنسيق BUFR باستخدام نموذج إدخال عبر الويب.  
 لاختبار ذلك، انتقل إلى `http://YOUR-HOST/wis2box-webapp` وقم بتسجيل الدخول.
 
 اختر `SYNOP Form` من القائمة على اليسار، ثم انسخ والصق محتويات ملف `synop_message.txt`:
@@ -411,11 +405,11 @@ AAXX 21121
 
 ??? success "انقر للكشف عن الإجابة"
 
-    تحتاج إلى اختيار مجموعة بيانات وتوفير الرمز المميز لـ "processes/wis2box" الذي أنشأته في التمرين السابق لإرسال النموذج.
+    تحتاج إلى اختيار مجموعة بيانات وتوفير الرمز المميز لـ "processes/wis2box" الذي قمت بإنشائه في التمرين السابق لإرسال النموذج.
 
     إذا قمت بتوفير رمز مميز غير صالح، سترى:
-    
-    - النتيجة: غير مصرح، يرجى توفير رمز مميز صالح لـ 'processes/wis2box'
+
+    - النتيجة: غير مصرح بها، يرجى تقديم رمز مميز صالح لـ 'processes/wis2box'
 
     إذا قمت بتوفير رمز مميز صالح، سترى "WARNINGS: 3". انقر على "WARNINGS" لفتح القائمة المنسدلة التي ستظهر:
 
@@ -423,26 +417,26 @@ AAXX 21121
     - المحطة 15020 غير موجودة في ملف المحطات
     - المحطة 15090 غير موجودة في ملف المحطات
 
-    لتحويل هذه البيانات إلى صيغة BUFR، ستحتاج إلى تكوين المحطات المقابلة في `wis2box` والتأكد من أن المحطات مرتبطة بالموضوع الخاص بمجموعة بياناتك.
+    لتحويل هذه البيانات إلى تنسيق BUFR، ستحتاج إلى تكوين المحطات المقابلة في wis2box والتأكد من أن المحطات مرتبطة بالموضوع الخاص بمجموعة البيانات الخاصة بك.
 
 !!! note
 
-    في التمرين الخاص بـ [ingesting-data-for-publication](./ingesting-data-for-publication.md)، قمت بإدخال الملف "synop_202412030900.txt" وتم تحويله إلى صيغة BUFR بواسطة وحدة `synop2bufr`.
+    في التمرين الخاص بـ [ingesting-data-for-publication](./ingesting-data-for-publication.md)، قمت بإدخال الملف "synop_202412030900.txt" وتم تحويله إلى تنسيق BUFR بواسطة وحدة synop2bufr.
 
-    في سير العمل الآلي في `wis2box`، يتم استخراج السنة والشهر تلقائيًا من اسم الملف واستخدامهما لملء الوسيطتين `--year` و `--month` المطلوبتين بواسطة `synop2bufr`، بينما يتم استخراج بيانات المحطة تلقائيًا من تكوين المحطة في `wis2box`.
+    في سير العمل الآلي في wis2box، يتم استخراج السنة والشهر تلقائيًا من اسم الملف واستخدامهما لملء الوسيطتين `--year` و `--month` المطلوبتين بواسطة synop2bufr، بينما يتم استخراج بيانات المحطة تلقائيًا من تكوين المحطة في wis2box.
 
 ## تحويل csv2bufr
 
 !!! note
-    تأكد من أنك لا تزال مسجل الدخول في حاوية `wis2box-api` وفي الدليل `/root/data-conversion-exercises`. إذا خرجت من الحاوية في التمرين السابق، يمكنك تسجيل الدخول مرة أخرى كما يلي:
+    تأكد من أنك لا تزال مسجل الدخول في حاوية wis2box-api وفي الدليل `/tmp/data-conversion-exercises`. إذا خرجت من الحاوية في التمرين السابق، يمكنك تسجيل الدخول مرة أخرى كما يلي:
 
     ```bash
     cd ~/wis2box
     python3 wis2box-ctl.py login wis2box-api
-    cd /root/data-conversion-exercises
+    cd /tmp/data-conversion-exercises
     ```
 
-الآن دعنا نلقي نظرة على كيفية تحويل بيانات CSV إلى صيغة BUFR باستخدام وحدة `csv2bufr`. الوحدة مثبتة في حاوية `wis2box-api` ويمكن استخدامها من سطر الأوامر كما يلي:
+الآن دعنا نلقي نظرة على كيفية تحويل بيانات CSV إلى تنسيق BUFR باستخدام الوحدة `csv2bufr`. الوحدة مثبتة في حاوية wis2box-api ويمكن استخدامها من سطر الأوامر كما يلي:
 
 ```{.copy}
 csv2bufr data transform \
@@ -450,7 +444,7 @@ csv2bufr data transform \
     <input-csv-file>
 ```
 
-تُستخدم الوسيطة `--bufr-template` لتحديد ملف قالب تعيين BUFR، الذي يوفر التعيين بين بيانات CSV المدخلة وبيانات BUFR الناتجة، ويتم تحديده في ملف JSON. يتم تثبيت قوالب التعيين الافتراضية في الدليل `/opt/csv2bufr/templates` داخل حاوية `wis2box-api`.
+يُستخدم الوسيط `--bufr-template` لتحديد ملف قالب تعيين BUFR، الذي يوفر التعيين بين بيانات CSV المدخلة وبيانات BUFR الناتجة، ويتم تحديده في ملف JSON. يتم تثبيت قوالب التعيين الافتراضية في الدليل `/opt/csv2bufr/templates` في حاوية wis2box-api.
 
 ### مراجعة ملف CSV المثال
 
@@ -461,11 +455,11 @@ more aws-example.csv
 ```
 
 !!! question
-    كم عدد صفوف البيانات الموجودة في ملف CSV؟ ما هو معرف محطة WIGOS للمحطات التي تُبلغ في ملف CSV؟
+    كم عدد صفوف البيانات الموجودة في ملف CSV؟ ما هو معرف محطة WIGOS للمحطات التي تقدم تقارير في ملف CSV؟
 
 ??? question "انقر للكشف عن الإجابة"
 
-    يُظهر الإخراج ما يلي:
+    تُظهر النتيجة ما يلي:
 
     ```{.copy}
     wsi_series,wsi_issuer,wsi_issue_number,wsi_local,wmo_block_number,wmo_station_number,station_type,year,month,day,hour,minute,latitude,longitude,station_height_above_msl,barometer_height_above_msl,station_pressure,msl_pressure,geopotential_height,thermometer_height,air_temperature,dewpoint_temperature,relative_humidity,method_of_ground_state_measurement,ground_state,method_of_snow_depth_measurement,snow_depth,precipitation_intensity,anemometer_height,time_period_of_wind,wind_direction,wind_speed,maximum_wind_gust_direction_10_minutes,maximum_wind_gust_speed_10_minutes,maximum_wind_gust_direction_1_hour,maximum_wind_gust_speed_1_hour,maximum_wind_gust_direction_3_hours,maximum_wind_gust_speed_3_hours,rain_sensor_height,total_precipitation_1_hour,total_precipitation_3_hours,total_precipitation_6_hours,total_precipitation_12_hours,total_precipitation_24_hours
@@ -476,18 +470,19 @@ more aws-example.csv
 
     يحتوي الصف الأول من ملف CSV على رؤوس الأعمدة، التي تُستخدم لتحديد البيانات في كل عمود.
 
-    بعد صف الرؤوس، هناك 3 صفوف من البيانات، تمثل 3 ملاحظات جوية من نفس المحطة بمعرف محطة WIGOS `0-20000-0-60355` في ثلاث طوابع زمنية مختلفة: `2024-03-31 01:00:00`، `2024-03-31 02:00:00`، و `2024-03-31 03:00:00`.
+    بعد صف الرأس، هناك 3 صفوف من البيانات، تمثل 3 ملاحظات جوية من نفس المحطة بمعرف محطة WIGOS `0-20000-0-60355` في ثلاث طوابع زمنية مختلفة `2024-03-31 01:00:00`، `2024-03-31 02:00:00`، و `2024-03-31 03:00:00`.
 
 ### مراجعة aws-template
 
-يتضمن `wis2box-api` مجموعة من قوالب تعيين BUFR المعرفة مسبقًا والتي تم تثبيتها في الدليل `/opt/csv2bufr/templates`.
+تتضمن wis2box-api مجموعة من قوالب تعيين BUFR المعرفة مسبقًا والتي يتم تثبيتها في الدليل `/opt/csv2bufr/templates`.
 
 تحقق من محتوى الدليل `/opt/csv2bufr/templates`:
 
 ```bash
 ls /opt/csv2bufr/templates
 ```
-يجب أن ترى الإخراج التالي:
+
+يجب أن ترى النتيجة التالية:
 
 ```{.copy}
 CampbellAfrica-v1-template.json  aws-template.json  daycli-template.json
@@ -499,61 +494,70 @@ CampbellAfrica-v1-template.json  aws-template.json  daycli-template.json
 cat /opt/csv2bufr/templates/aws-template.json
 ```
 
-يُرجع هذا ملف JSON كبيرًا، يوفر التعيين لـ 43 عمودًا من أعمدة CSV.
+يُرجع هذا ملف JSON كبيرًا، يوفر التعيين لـ 43 عمودًا في CSV.
 
 !!! question
-    ما هو عمود CSV الذي يتم تعيينه إلى المفتاح `airTemperature` في eccodes؟ ما هي القيم الدنيا والعليا الصالحة لهذا المفتاح؟
+    ما هو عمود CSV الذي يتم تعيينه إلى مفتاح eccodes `airTemperature`؟ ما هي القيم الدنيا والقصوى الصالحة لهذا المفتاح؟
 
 ??? success "انقر للكشف عن الإجابة"
 
-    باستخدام الأمر التالي لتصفية الإخراج:
+    باستخدام الأمر التالي لتصفية النتيجة:
 
     ```bash
     cat /opt/csv2bufr/templates/aws-template.json | grep -i airTemperature
     ```
-    يجب أن ترى الإخراج التالي:
+
+    يجب أن ترى النتيجة التالية:
 
     ```{.copy}
+    "airTemperature": {
+        "csv": "air_temperature",
+        "min": -273.15,
+        "max": 60
+    },
+    ```
+
+```{.copy}
     {"eccodes_key": "#1#airTemperature", "value": "data:air_temperature", "valid_min": "const:193.15", "valid_max": "const:333.15"},
     ```
 
-    القيمة التي سيتم ترميزها للمفتاح `airTemperature` في eccodes سيتم أخذها من البيانات في عمود CSV: **air_temperature**.
+    القيمة التي سيتم ترميزها للمفتاح `airTemperature` في eccodes سيتم أخذها من البيانات في العمود CSV: **air_temperature**.
 
     القيم الدنيا والعليا لهذا المفتاح هي `193.15` و `333.15` على التوالي.
 
 !!! question
 
-    ما هو عمود CSV الذي يتم تعيينه إلى المفتاح `internationalDataSubCategory` في eccodes؟ ما هي قيمة هذا المفتاح؟
+    ما هو عمود CSV المرتبط بالمفتاح `internationalDataSubCategory` في eccodes؟ وما هي قيمة هذا المفتاح؟
 
-??? success "انقر للكشف عن الإجابة"
-    باستخدام الأمر التالي لتصفية الإخراج:
+??? success "اضغط للكشف عن الإجابة"
+    باستخدام الأمر التالي لتصفية المخرجات:
 
     ```bash
     cat /opt/csv2bufr/templates/aws-template.json | grep -i internationalDataSubCategory
     ```
-    يجب أن ترى الإخراج التالي:
+    يجب أن ترى المخرجات التالية:
 
     ```{.copy}
     {"eccodes_key": "internationalDataSubCategory", "value": "const:2"},
     ```
 
-**لا يوجد عمود CSV مرتبط بالمفتاح `internationalDataSubCategory` في eccodes**، وبدلاً من ذلك يتم استخدام القيمة الثابتة 2 والتي سيتم ترميزها في جميع ملفات BUFR التي يتم إنتاجها باستخدام قالب التعيين هذا.
+    **لا يوجد عمود CSV مرتبط بالمفتاح `internationalDataSubCategory` في eccodes**، بدلاً من ذلك يتم استخدام القيمة الثابتة 2 وسيتم ترميزها في جميع ملفات BUFR التي يتم إنتاجها باستخدام قالب التعيين هذا.
 
 ### تحويل CSV إلى BUFR
 
 لنحاول تحويل الملف إلى صيغة BUFR باستخدام الأمر `csv2bufr`:
 
 ```{.copy}
-cd /root/data-conversion-exercises
+cd /tmp/data-conversion-exercises
 csv2bufr data transform --bufr-template aws-template ./aws-example.csv
 ```
 
 !!! question
     كم عدد ملفات BUFR التي تم إنشاؤها؟
 
-??? success "اضغط لعرض الإجابة"
+??? success "اضغط للكشف عن الإجابة"
 
-    يُظهر الإخراج ما يلي:
+    المخرجات تظهر ما يلي:
 
     ```{.copy}
     CLI:    ... Transforming ./aws-example.csv to BUFR ...
@@ -565,7 +569,7 @@ csv2bufr data transform --bufr-template aws-template ./aws-example.csv
     CLI:    End of processing, exiting.
     ```
 
-    يشير الإخراج إلى أنه تم إنشاء 3 ملفات BUFR: `WIGOS_0-20000-0-60355_20240331T010000.bufr4`، `WIGOS_0-20000-0-60355_20240331T020000.bufr4`، و`WIGOS_0-20000-0-60355_20240331T030000.bufr4`.
+    المخرجات تشير إلى أنه تم إنشاء 3 ملفات BUFR: `WIGOS_0-20000-0-60355_20240331T010000.bufr4`، `WIGOS_0-20000-0-60355_20240331T020000.bufr4`، و `WIGOS_0-20000-0-60355_20240331T030000.bufr4`.
 
 للتحقق من محتوى ملفات BUFR مع تجاهل القيم المفقودة، يمكنك استخدام الأمر التالي:
 
@@ -574,27 +578,27 @@ bufr_dump -p WIGOS_0-20000-0-60355_20240331T010000.bufr4 | grep -v MISSING
 ```
 
 !!! question
-    ما هي قيمة المفتاح `airTemperature` في ملف BUFR `WIGOS_0-20000-0-60355_20240331T010000.bufr4`؟ ماذا عن ملف BUFR `WIGOS_0-20000-0-60355_20240331T020000.bufr4`؟
+    ما هي قيمة المفتاح `airTemperature` في ملف BUFR `WIGOS_0-20000-0-60355_20240331T010000.bufr4`؟ وماذا عن ملف BUFR `WIGOS_0-20000-0-60355_20240331T020000.bufr4`؟
 
-??? success "اضغط لعرض الإجابة"
-    لتصفية الإخراج، يمكنك استخدام الأمر التالي:
+??? success "اضغط للكشف عن الإجابة"
+    لتصفية المخرجات، يمكنك استخدام الأمر التالي:
 
     ```bash
     bufr_dump -p WIGOS_0-20000-0-60355_20240331T010000.bufr4 | grep -v MISSING | grep airTemperature
     ```
-    يجب أن ترى الإخراج التالي:
+    يجب أن ترى المخرجات التالية:
 
     ```{.copy}
     #1#airTemperature=298.15
     ```
 
-    أما بالنسبة للملف الثاني:
+    بينما بالنسبة للملف الثاني:
 
     ```bash
     bufr_dump -p WIGOS_0-20000-0-60355_20240331T020000.bufr4 | grep -v MISSING | grep airTemperature
     ```
 
-    لن تحصل على أي نتيجة، مما يشير إلى أن القيمة للمفتاح `airTemperature` مفقودة في ملف BUFR `WIGOS_0-20000-0-60355_20240331T020000.bufr4`. رفض `csv2bufr` ترميز القيمة `25.0` من بيانات CSV لأنها تقع خارج النطاق المسموح به بين `193.15` و`333.15` كما هو محدد في قالب التعيين.
+    لن تحصل على أي نتيجة، مما يشير إلى أن القيمة للمفتاح `airTemperature` مفقودة في ملف BUFR `WIGOS_0-20000-0-60355_20240331T020000.bufr4`. رفض `csv2bufr` ترميز القيمة `25.0` من بيانات CSV لأنها خارج النطاق المسموح به `193.15` و `333.15` كما هو محدد في قالب التعيين.
 
 لاحظ أن تحويل CSV إلى BUFR باستخدام أحد قوالب التعيين المحددة مسبقًا له قيود:
 
@@ -602,7 +606,7 @@ bufr_dump -p WIGOS_0-20000-0-60355_20240331T010000.bufr4 | grep -v MISSING
 - يمكنك فقط ترميز المفاتيح المحددة في قالب التعيين.
 - عمليات التحقق من الجودة محدودة بالتحقق المحدد في قالب التعيين.
 
-للحصول على معلومات حول كيفية إنشاء واستخدام قوالب تعيين BUFR مخصصة، راجع التمرين العملي التالي [csv2bufr-templates](./csv2bufr-templates.md).
+لمزيد من المعلومات حول كيفية إنشاء واستخدام قوالب BUFR مخصصة، راجع التمرين العملي التالي [csv2bufr-templates](./csv2bufr-templates.md).
 
 ## الخلاصة
 
