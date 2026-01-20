@@ -55,19 +55,8 @@ First, connect to your student VM via your SSH client and copy the exercise mate
 docker cp ~/exercise-materials/data-conversion-exercises wis2box-api:/tmp
 ```
 
-Adjust permissions for the non-root user
-
-When copying files into the container using docker cp, the files may retain the host user ID and may not be writable by the wis2box-api user.
-To avoid permission issues during the exercises, update the ownership of the copied directory inside the container.
-
-Log in to the wis2box-api container:
-
-```bash
-cd ~/wis2box
-python3 wis2box-ctl.py login wis2box-api
-cd /tmp/data-conversion-exercises
-```
-Exit the container session, then as root, change the ownership of the exercise directory:
+Files copied with docker cp may not be writable by the wis2box-api user.
+Run the following command as root to update ownership:
 
 ```bash
 exit
