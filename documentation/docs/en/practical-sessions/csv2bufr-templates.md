@@ -151,7 +151,8 @@ cat /data/wis2box/mappings/my_custom_template.json
 Check the content of the file `custom_template_data.csv` in the directory `/wis2box-api/data-conversion-exercises`:
 
 ```bash
-cat /wis2box-api/data-conversion-exercises/custom_template_data.csv
+cd /wis2box-api/data-conversion-exercises
+cat custom_template_data.csv
 ```
 
 Note that the headers of this CSV file are the same as the CSV headers in the mapping template you created.

@@ -35,7 +35,13 @@ The wis2downloader is included as a separate container in wis2box as defined in 
 
 Open a web browser and navigate to the Grafana dashboard for your wis2box instance by going to `http://YOUR-HOST:3000`.
 
-Click on dashboards in the left-hand menu, and then select the **wis2downloader dashboard**.
+Click on dashboards in the left-hand menu:
+
+![grafana dashboard selection](../assets/img/grafana-dashboard-selection.png)
+
+ and then select the **wis2downloader dashboard**:
+
+![grafana dashboard options, select wis2downloader](../assets/img/grafana-select-wis2downloader-dashboard.png)
 
 You should see the following dashboard:
 
@@ -149,6 +155,12 @@ Note that the downloaded data is stored in directories named after the topic the
 
     Depending on when you started the subscription, you may or may not see any downloaded files in this directory yet. If you do not see any files yet, wait a few more minutes and check again.
 
+Checkout the wis2downloader dashboard in Grafana to see the download progress, you will see the subscription you added in the top left corner of the dashboard, and the number of downloads increasing as data is downloaded:
+
+![wis2downloader dashboard with active subscription](../assets/img/wis2downloader-dashboard-with-subscription.png)
+
+### Removing the subscription and downloaded data
+
 Let's cleanup the subscription and the downloaded data before moving to the next exercise.
 
 Log back in to the wis2downloader container:
@@ -163,15 +175,21 @@ and remove the subscription you made from the wis2downloader, using the followin
 wis2downloader remove-subscription --topic cache/a/wis2/de-dwd-gts-to-wis2/#
 ```
 
-Remove the downloaded data using the following command in the wis2downloader container:
+Visit the Grafana dashboard to confirm that the subscription has been removed and that the downloads have stopped, you should see the subscription disappear from the top left corner of the dashboard.
+
+**Wait a few minutes until the dashboard shows that the download have stopped.**
+
+Finally, you can remove the downloaded data using the following command in the wis2downloader container:
 
 ```bash
 rm -rf app/data/downloads/*
 ```
 
-The directory `app/data/downloads` in the wis2downloader container is mapped to the `downloads` directory in the directory you defined as the `WIS2BOX_HOST_DATADIR` in your `wis2box.env` file. The command above removes all downloaded data.
+!!! note
+    
+    The directory `app/data/downloads` in the wis2downloader container is mapped to the `downloads` directory in the `WIS2BOX_HOST_DATADIR` as defined in your `wis2box.env` file. The command above removes all downloaded data.
 
-And exit the wis2downloader container by typing `exit`:
+Exit the wis2downloader container by typing `exit`:
     
 ```bash
 exit
@@ -182,8 +200,6 @@ Check that the downloads-directory on your host is empty again:
 ```bash
 ls -R ~/wis2box-data/downloads
 ```
-
-Check the wis2downloader dashboard in Grafana to see the subscription removed. You should see the downloads stopping.
 
 !!! note "About GTS-to-WIS2 gateways"
     There are currently two GTS-to-WIS2 gateways currently publishing data through the WIS2 Global Broker and the Global Caches:
@@ -219,10 +235,16 @@ DOWNLOAD_BROKER_PASSWORD=everyone
 DOWNLOAD_BROKER_TRANSPORT=tcp
 ```
 
-Then run the 'start' command again to apply the changes:
+Double-check check the changes you made match the above by running:
 
 ```bash
-python3 wis2box-ctl.py start
+cat ~/wis2box/wis2box.env | grep DOWNLOAD
+```
+
+Then run the 'restart' command to apply the changes:
+
+```bash
+python3 wis2box-ctl.py restart
 ```
 
 Check the logs of the wis2downloader to see if the connection to the new broker was successful:
