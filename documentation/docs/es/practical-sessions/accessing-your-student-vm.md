@@ -28,9 +28,9 @@ Tu VM de estudiante tiene el siguiente software preinstalado:
 
     Si deseas realizar este entrenamiento fuera de una sesión de entrenamiento local, puedes proporcionar tu propia instancia utilizando cualquier proveedor de nube, por ejemplo:
 
-    - GCP (Google Cloud Platform) VM instance `e2-medium`
-    - AWS (Amazon Web Services)  ec2-instance `t3a.medium` 
-    - Azure (Microsoft) Azure Virtual Machine `standard_b2s`
+    - GCP (Google Cloud Platform) instancia VM `e2-medium`
+    - AWS (Amazon Web Services) instancia ec2 `t3a.medium`
+    - Azure (Microsoft) Máquina Virtual Azure `standard_b2s`
 
     Selecciona Ubuntu Server 22.0.4 LTS como sistema operativo.
     
@@ -45,7 +45,7 @@ Tu VM de estudiante tiene el siguiente software preinstalado:
     
     Siempre puedes encontrar el archivo más reciente de 'wis2box-setup' en [https://github.com/World-Meteorological-Organization/wis2box/releases](https://github.com/World-Meteorological-Organization/wis2box-release/releases).
 
-    Los materiales de los ejercicios utilizados en este entrenamiento pueden descargarse de la siguiente manera:
+    El material de ejercicios utilizado en este entrenamiento puede descargarse de la siguiente manera:
 
     ```bash
     wget https://training.wis2box.wis.wmo.int/exercise-materials.zip
@@ -86,7 +86,7 @@ Retype new password:
 passwd: password updated successfully
 ```
 
-## Verifica las versiones del software
+## Verificar versiones de software
 
 Para poder ejecutar wis2box, la VM de estudiante debe tener Python, Docker y Docker Compose preinstalados. 
 
@@ -119,7 +119,7 @@ Docker Compose version v2.21.0
 
 Para asegurarte de que tu usuario puede ejecutar comandos de Docker, tu usuario ha sido añadido al grupo `docker`. 
 
-Para probar que tu usuario puede ejecutar docker hello-world, ejecuta el siguiente comando:
+Para probar que tu usuario puede ejecutar el comando docker hello-world, ejecuta el siguiente comando:
 ```bash
 docker run hello-world
 ```
@@ -135,7 +135,7 @@ This message shows that your installation appears to be working correctly.
 ...
 ```
 
-## Inspecciona los materiales de los ejercicios
+## Inspeccionar los materiales de los ejercicios
 
 Inspecciona el contenido de tu directorio home; estos son los materiales utilizados como parte del entrenamiento y las sesiones prácticas.
 
@@ -164,7 +164,7 @@ Ahora deberías poder ver el contenido del directorio home en tu VM de estudiant
 ## Conclusión
 
 !!! success "¡Felicidades!"
-    En esta sesión práctica, aprendiste cómo:
+    En esta sesión práctica, aprendiste a:
 
     - acceder a tu VM de estudiante mediante SSH y WinSCP
     - verificar que el software requerido para los ejercicios prácticos está instalado
