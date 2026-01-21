@@ -6,7 +6,7 @@ title: Descubriendo conjuntos de datos del WIS2 Global Discovery Catalogue
 
 !!! abstract "¡Resultados de aprendizaje!"
 
-    Al final de esta sesión práctica, podrás:
+    Al final de esta sesión práctica, serás capaz de:
 
     - usar pywiscat para descubrir conjuntos de datos del Global Discovery Catalogue (GDC)
 
@@ -20,7 +20,7 @@ Actualmente, los siguientes GDCs están disponibles:
 - China Meteorological Administration: <https://gdc.wis.cma.cn>
 - Deutscher Wetterdienst: <https://wis2.dwd.de/gdc>
 
-Durante las sesiones de capacitación local, se configura un GDC local para que los participantes puedan consultar el GDC por los metadatos que publicaron desde sus instancias de wis2box. En este caso, los instructores proporcionarán la URL del GDC local.
+Durante las sesiones de capacitación local, se configura un GDC local para permitir que los participantes consulten el GDC por los metadatos que publicaron desde sus instancias de wis2box. En este caso, los instructores proporcionarán la URL del GDC local.
 
 ## Preparación
 
@@ -113,7 +113,7 @@ Prueba consultas adicionales con `-q`
     - `-q "synop OR temp"`: encuentra todos los registros con "synop" o "temp"
     - `-q "obs*"`: búsqueda difusa
 
-    Cuando busques términos con espacios, enciérralos entre comillas dobles.
+    Cuando busques términos con espacios, encierra en comillas dobles.
 
 Obtengamos más detalles sobre un resultado de búsqueda específico que nos interese:
 
@@ -123,7 +123,7 @@ pywiscat get <id>
 
 !!! tip
 
-    Usa el valor `id` del resultado de búsqueda anterior.
+    Usa el valor de `id` del resultado de búsqueda anterior.
 
 ## Conclusión
 

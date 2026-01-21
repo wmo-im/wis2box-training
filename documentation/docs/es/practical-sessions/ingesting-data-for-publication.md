@@ -6,7 +6,7 @@ title: Ingestión de datos para publicación
 
 !!! abstract "Resultados de aprendizaje"
 
-    Al final de esta sesión práctica, serás capaz de:
+    Al final de esta sesión práctica, podrás:
     
     - activar el flujo de trabajo de wis2box subiendo datos a MinIO utilizando la interfaz web de MinIO, SFTP o un script en Python.
     - acceder al panel de Grafana para monitorear el estado de la ingestión de datos y ver los registros de tu instancia de wis2box.
@@ -16,19 +16,19 @@ title: Ingestión de datos para publicación
 
 En WIS2, los datos se comparten en tiempo real utilizando notificaciones de datos WIS2 que contienen un enlace "canónico" desde el cual se pueden descargar los datos.
 
-Para activar el flujo de trabajo de datos en un WIS2 Node utilizando el software wis2box, los datos deben subirse al bucket **wis2box-incoming** en **MinIO**, lo que inicia el flujo de trabajo de datos de wis2box para procesar y publicar los datos.
+Para activar el flujo de trabajo de datos en un Nodo WIS2 utilizando el software wis2box, los datos deben subirse al bucket **wis2box-incoming** en **MinIO**, lo que inicia el flujo de trabajo de datos de wis2box para procesar y publicar los datos.
 
 Para monitorear el estado del flujo de trabajo de datos de wis2box, puedes usar el **panel de Grafana** y **MQTT Explorer**. El panel de Grafana utiliza datos de Prometheus y Loki para mostrar el estado de tu wis2box, mientras que MQTT Explorer te permite ver las notificaciones de datos WIS2 publicadas por tu instancia de wis2box.
 
-En esta sección, nos enfocaremos en cómo subir datos a tu instancia de wis2box y verificar la ingestión y publicación exitosa. La transformación de datos se cubrirá más adelante en la sesión práctica [Herramientas de conversión de datos](./data-conversion-tools.md).
+En esta sección, nos centraremos en cómo subir datos a tu instancia de wis2box y verificar la ingestión y publicación exitosa. La transformación de datos se cubrirá más adelante en la sesión práctica [Herramientas de conversión de datos](./data-conversion-tools.md).
 
 Para probar manualmente el proceso de ingestión de datos, utilizaremos la interfaz web de MinIO, que permite descargar y subir datos a MinIO utilizando un navegador web.
 
-En un entorno de producción, los datos normalmente se ingieren utilizando procesos automatizados, como scripts o aplicaciones que envían datos a MinIO a través de S3 o SFTP.
+En un entorno de producción, los datos normalmente se ingresarían utilizando procesos automatizados, como scripts o aplicaciones que envían datos a MinIO a través de S3 o SFTP.
 
 ## Preparación
 
-Esta sección asume que has completado con éxito la sesión práctica [Configuración de conjuntos de datos en wis2box](./configuring-wis2box-datasets.md). Si seguiste las instrucciones en esa sesión, deberías tener un conjunto de datos utilizando el plugin `Universal` y otro que utiliza el plugin `FM-12 data converted to BUFR`.
+Esta sección asume que has completado con éxito la sesión práctica [Configuración de conjuntos de datos en wis2box](./configuring-wis2box-datasets.md). Si seguiste las instrucciones en esa sesión, deberías tener un conjunto de datos que utiliza el plugin `Universal` y otro que utiliza el plugin `FM-12 data converted to BUFR`.
 
 Asegúrate de poder iniciar sesión en tu VM de estudiante utilizando tu cliente SSH (por ejemplo, PuTTY).
 
@@ -66,23 +66,23 @@ cat wis2box.env | grep WIS2BOX_STORAGE_PASSWORD
 Después de iniciar sesión, estarás en la vista del navegador de objetos de MinIO. Aquí puedes ver los buckets utilizados por wis2box:
 
 - *wis2box-incoming*: Este es el bucket donde subes datos para activar el flujo de trabajo de wis2box.
-- *wis2box-public*: Este es el bucket donde wis2box publica datos que han sido ingeridos y procesados exitosamente.
+- *wis2box-public*: Este es el bucket donde wis2box publica datos que han sido ingresados y procesados exitosamente.
 
 Haz clic en el bucket *wis2box-incoming*. Prueba la opción para definir una nueva ruta en este bucket haciendo clic en `Create new path`:
 
 <img alt="minio ui: minio ui after login" src="/../assets/img/minio-incoming-create-new-path.png" width="800">
 
-Ingresa la nueva Ruta de Carpeta = *new-directory* y sube este archivo de ejemplo [mydata.nc](./../sample-data/mydata.nc) (haz clic derecho y selecciona "guardar como" para descargar el archivo). Puedes usar el botón "Upload" en MinIO para subir el archivo al nuevo directorio:
+Introduce la nueva Ruta de Carpeta = *new-directory* y sube este archivo de ejemplo [mydata.nc](./../sample-data/mydata.nc) (haz clic derecho y selecciona "guardar como" para descargar el archivo). Puedes usar el botón "Upload" en MinIO para subir el archivo al nuevo directorio:
 
 <img alt="minio ui: create new path" src="/../assets/img/minio-initial-example-upload.png" width="800">
 
 !!! question "Pregunta"
 
-    Después de subir el archivo, ¿cómo verificas si el flujo de trabajo de datos en wis2box se activó exitosamente?
+    Después de subir el archivo, ¿cómo puedes verificar si el flujo de trabajo de datos en wis2box se activó exitosamente?
 
 ??? success "Haz clic para revelar la respuesta"
 
-    Puedes verificar el panel de Grafana para ver si los datos fueron ingeridos y publicados exitosamente.
+    Puedes verificar el panel de Grafana para ver si los datos fueron ingresados y publicados exitosamente.
 
     Mira el panel inferior del panel de Grafana y verás un **error de validación de ruta** indicando que la ruta no coincide con ningún conjunto de datos configurado:
 
@@ -90,7 +90,7 @@ Ingresa la nueva Ruta de Carpeta = *new-directory* y sube este archivo de ejempl
     ERROR - Path validation error: Could not match http://minio:9000/wis2box-incoming/new-directory/mydata.nc to dataset, path should include one of the following: ['urn:wmo:md:int-wmo-example:synop-dataset-wis2-training', 'urn:wmo:md:int-wmo-example:forecast-dataset' ...
     ``` 
     
-## Ingestión y publicación: Plugin "Universal"
+## Ingesta y publicación: Plugin "Universal"
 
 Ahora que sabes cómo subir datos a MinIO, intentemos subir datos para el conjunto de datos de pronóstico que creaste en la sesión práctica anterior que utiliza el plugin "Universal".
 
@@ -100,7 +100,7 @@ Esta vez asegúrate de **crear un directorio que coincida con el identificador d
 
 <img alt="minio-filepath-forecast-dataset" src="/../assets/img/minio-filepath-forecast-dataset.png" width="800">
 
-Ingresa al directorio recién creado, haz clic en `Upload` y sube el archivo que usaste previamente, *mydata.nc*, al nuevo directorio. Verifica el panel de Grafana para ver si los datos fueron ingeridos y publicados exitosamente.
+Ingresa al directorio recién creado, haz clic en `Upload` y sube el archivo que utilizaste anteriormente, *mydata.nc*, al nuevo directorio. Verifica el panel de Grafana para ver si los datos fueron ingresados y publicados exitosamente.
 
 Deberías ver el siguiente error en el panel de Grafana:
 
@@ -110,13 +110,13 @@ ERROR - Path validation error: Unknown file type (nc) for metadata_id=urn:wmo:md
 
 !!! question "Pregunta"
 
-    ¿Por qué los datos no fueron ingeridos y publicados?
+    ¿Por qué los datos no fueron ingresados y publicados?
 
 ??? success "Haz clic para revelar la respuesta"
 
-    El conjunto de datos fue configurado para procesar únicamente archivos con la extensión `.grib2`. La configuración de la extensión de archivo es parte de los mapeos de datos que definiste en la sesión práctica anterior.
+    El conjunto de datos fue configurado para procesar solo archivos con la extensión `.grib2`. La configuración de la extensión de archivo es parte de los mapeos de datos que definiste en la sesión práctica anterior.
 
-Descarga este archivo [GEPS_18August2025.grib2](../sample-data/GEPS_18August2025.grib2) en tu computadora local y súbelo al directorio que creaste para el conjunto de datos de pronóstico. Verifica el panel de Grafana y MQTT Explorer para ver si los datos fueron ingeridos y publicados exitosamente.
+Descarga este archivo [GEPS_18August2025.grib2](../sample-data/GEPS_18August2025.grib2) a tu computadora local y súbelo al directorio que creaste para el conjunto de datos de pronóstico. Verifica el panel de Grafana y MQTT Explorer para ver si los datos fueron ingresados y publicados exitosamente.
 
 Verás el siguiente ERROR en el panel de Grafana:
 
@@ -134,7 +134,7 @@ ERROR - Failed to transform file http://minio:9000/wis2box-incoming/urn:wmo:md:i
 
     Renombra el archivo a *GEPS_202508180000.grib2* y súbelo nuevamente a la misma ruta en MinIO para reactivar el flujo de trabajo de wis2box. (o descarga el archivo renombrado desde aquí: [GEPS_202508180000.grib2](../sample-data/GEPS_202508180000.grib2).
 
-Después de solucionar el problema con el nombre del archivo, verifica el panel de Grafana y MQTT Explorer para ver si los datos fueron ingeridos y publicados exitosamente.
+Después de solucionar el problema con el nombre del archivo, verifica el panel de Grafana y MQTT Explorer para ver si los datos fueron ingresados y publicados exitosamente.
 
 Deberías ver una nueva notificación de datos WIS2 en MQTT Explorer:
 
@@ -142,7 +142,7 @@ Deberías ver una nueva notificación de datos WIS2 en MQTT Explorer:
 
 !!! note "Sobre el plugin Universal"
 
-    El plugin "Universal" te permite publicar datos sin ninguna transformación. Es un plugin de *paso directo* que ingiere el archivo de datos y lo publica tal cual. Para agregar la propiedad "datetime" a la notificación de datos WIS2, el plugin depende del primer grupo en el Patrón de Archivo para coincidir con la fecha de los datos que estás publicando.
+    El plugin "Universal" te permite publicar datos sin ninguna transformación. Es un plugin de *paso directo* que ingresa el archivo de datos y lo publica tal cual. Para agregar la propiedad "datetime" a la notificación de datos WIS2, el plugin depende del primer grupo en el Patrón de Archivo para coincidir con la fecha de los datos que estás publicando.
 
 !!! question "Pregunta adicional"
 
@@ -159,7 +159,7 @@ ERROR - Data already published for GEPS_202508180000-grib2; not publishing
 
 Esto demuestra que el flujo de trabajo de datos fue activado, pero los datos no se volvieron a publicar. El wis2box no publicará los mismos datos dos veces.
 
-Si deseas forzar el reenvío de la notificación para los mismos datos, elimina los datos del bucket 'wis2box-public' antes de volver a ingerirlos.
+Si deseas forzar el reenvío de la notificación para los mismos datos, elimina los datos del bucket 'wis2box-public' antes de reingresar los datos.
 
 ## Ingestar y Publicar: Plugin "synop2bufr"
 
@@ -167,11 +167,11 @@ A continuación, trabajarás con el conjunto de datos que creaste en la sesión 
 
 <img alt="synop-dataset-plugins" src="/../assets/img/wis2box-data-mappings.png" width="1000">
 
-Nota que uno de los plugins es **FM-12 data converted to BUFR** (synop2bufr), que está configurado para ejecutarse en archivos con la extensión **txt**.
+Nota que uno de los plugins es **FM-12 data converted to BUFR** (synop2bufr), el cual está configurado para ejecutarse en archivos con la extensión **txt**.
 
-Descarga este archivo de datos de ejemplo [synop_202502040900.txt](../sample-data/synop_202502040900.txt) (haz clic derecho y selecciona "guardar como" para descargar el archivo) en tu computadora local. Crea una nueva ruta en MinIO que coincida con el identificador de metadatos del conjunto de datos synop y sube los datos de ejemplo a esta ruta.
+Descarga este archivo de datos de ejemplo [synop_202502040900.txt](../sample-data/synop_202502040900.txt) (haz clic derecho y selecciona "guardar como" para descargar el archivo) en tu computadora local. Crea una nueva ruta en MinIO que coincida con el identificador de metadatos para el conjunto de datos synop y sube los datos de ejemplo a esta ruta.
 
-Revisa el panel de Grafana y MQTT Explorer para verificar si los datos fueron ingeridos y publicados correctamente.
+Revisa el panel de Grafana y MQTT Explorer para verificar si los datos fueron ingresados y publicados exitosamente.
 
 !!! question "Pregunta"
 
@@ -179,7 +179,7 @@ Revisa el panel de Grafana y MQTT Explorer para verificar si los datos fueron in
 
 ??? success "Haz clic para revelar la respuesta"
 
-    En el panel de Grafana verás una advertencia indicando:
+    En el panel de Grafana verás una advertencia que indica:
 
     ```bash
     WARNING - Station 64400 not found in station file
@@ -193,7 +193,7 @@ Revisa el panel de Grafana y MQTT Explorer para verificar si los datos fueron in
 
     El flujo de trabajo de datos fue activado, pero el plugin de datos no pudo procesar los datos debido a la falta de metadatos de la estación.
 
-!!! note "Sobre el plugin FM-12 data converted to BUFR"
+!!! note "Acerca del plugin FM-12 data converted to BUFR"
 
     Este plugin intenta transformar los datos de entrada FM-12 al formato BUFR.
 
@@ -211,17 +211,17 @@ Agrega la estación al tema '../weather/surface-based-observations/synop' y guar
 
 Después de agregar la estación, vuelve a activar el flujo de trabajo de wis2box subiendo nuevamente el archivo de datos de ejemplo *synop_202502040900.txt* en la misma ruta en MinIO.
 
-Revisa el panel de Grafana y MQTT Explorer para confirmar que los datos fueron publicados correctamente. Si ves la siguiente notificación, entonces publicaste los datos de ejemplo synop correctamente:
+Revisa el panel de Grafana y MQTT Explorer para confirmar que los datos fueron publicados exitosamente. Si ves la siguiente notificación, entonces publicaste los datos de ejemplo synop exitosamente:
 
 <img alt="webapp-test-station" src="/../assets/img/mqtt-explorer-wis2box-notification-synop-sample.png" width="800">
 
 !!! question "Pregunta"
 
-    ¿Cuál es la extensión del archivo que se publicó en la notificación de datos WIS2?
+    ¿Cuál es la extensión del archivo que fue publicado en la notificación de datos WIS2?
 
 ??? success "Haz clic para revelar la respuesta"
 
-    Revisa la sección de Enlaces de la notificación de datos WIS2 en MQTT Explorer y verás el enlace canónico:
+    Revisa la sección de enlaces de la notificación de datos WIS2 en MQTT Explorer y verás el enlace canónico:
 
     ```json
     {
@@ -236,11 +236,11 @@ Revisa el panel de Grafana y MQTT Explorer para confirmar que los datos fueron p
 
 ## Ingestar datos usando Python
 
-Usar la interfaz web de MinIO es una forma conveniente de subir datos manualmente a MinIO para propósitos de prueba. Sin embargo, en un entorno de producción normalmente usarías procesos automatizados para subir datos a MinIO, por ejemplo, utilizando scripts o aplicaciones que empleen la API compatible con S3 de MinIO.
+Usar la interfaz web de MinIO es una forma conveniente de subir datos manualmente a MinIO para propósitos de prueba. Sin embargo, en un entorno de producción típicamente se utilizan procesos automatizados para subir datos a MinIO, por ejemplo, utilizando scripts o aplicaciones que empleen la API compatible con S3 de MinIO.
 
-En este ejercicio, usaremos el cliente de Python de MinIO para copiar datos a MinIO.
+En este ejercicio, utilizaremos el cliente Python de MinIO para copiar datos a MinIO.
 
-MinIO proporciona un cliente de Python, que puede instalarse de la siguiente manera:
+MinIO proporciona un cliente Python, que puede instalarse de la siguiente manera:
 
 ```bash
 pip3 install minio
@@ -257,9 +257,9 @@ cp -r ~/exercise-materials/data-ingest-exercises ~/wis2box-data/
 !!! note
     El `WIS2BOX_HOST_DATADIR` está montado como `/data/wis2box/` dentro del contenedor wis2box-management por el archivo `docker-compose.yml` incluido en el directorio `wis2box`.
 
-    Esto te permite compartir datos entre el host y el contenedor.
+    Esto permite compartir datos entre el host y el contenedor.
 
-En el directorio `exercise-materials/data-ingest-exercises`, encontrarás un script de ejemplo `copy_file_to_incoming.py` que puede usarse para copiar archivos a MinIO.
+En el directorio `exercise-materials/data-ingest-exercises`, encontrarás un script de ejemplo `copy_file_to_incoming.py` que puede ser utilizado para copiar archivos a MinIO.
 
 Intenta ejecutar el script para copiar el archivo de datos de ejemplo `synop_202501030900.txt` al bucket `wis2box-incoming` en MinIO de la siguiente manera:
 
@@ -270,37 +270,37 @@ python3 copy_file_to_incoming.py synop_202501030900.txt
 
 !!! note
 
-    Obtendrás un error porque el script no está configurado para acceder al endpoint de MinIO en tu wis2box.
+    Obtendrás un error ya que el script no está configurado para acceder al endpoint de MinIO en tu wis2box aún.
 
 El script necesita conocer el endpoint correcto para acceder a MinIO en tu wis2box. Si wis2box está ejecutándose en tu host, el endpoint de MinIO está disponible en `http://YOUR-HOST:9000`. El script también necesita ser actualizado con tu contraseña de almacenamiento y la ruta en el bucket de MinIO para almacenar los datos.
 
-!!! question "Actualiza el Script e Ingresa los Datos CSV"
+!!! question "Actualizar el Script e Ingestar los Datos CSV"
 
-    Edita el script `copy_file_to_incoming.py` para solucionar los errores, utilizando uno de los siguientes métodos:
-    - Desde la línea de comandos: usa el editor de texto `nano` o `vim` para editar el script.
-    - Usando WinSCP: inicia una nueva conexión utilizando el protocolo de archivo `SCP` y las mismas credenciales que tu cliente SSH. Navega al directorio `wis2box-data/data-ingest-exercises` y edita `copy_file_to_incoming.py` usando el editor de texto integrado.
+    Edita el script `copy_file_to_incoming.py` para resolver los errores, utilizando uno de los siguientes métodos:
+    - Desde la línea de comandos: utiliza el editor de texto `nano` o `vim` para editar el script.
+    - Usando WinSCP: inicia una nueva conexión utilizando el protocolo de archivo `SCP` y las mismas credenciales que tu cliente SSH. Navega al directorio `wis2box-data/data-ingest-exercises` y edita `copy_file_to_incoming.py` utilizando el editor de texto integrado.
 
     Asegúrate de:
 
     - Definir el endpoint correcto de MinIO para tu host.
-    - Proporcionar la contraseña de almacenamiento correcta para tu instancia de MinIO.
+    - Proporcionar la contraseña correcta de almacenamiento para tu instancia de MinIO.
     - Proporcionar la ruta correcta en el bucket de MinIO para almacenar los datos.
 
     Vuelve a ejecutar el script para ingresar el archivo de datos de ejemplo `synop_202501030900.txt` en MinIO:
 
     ```bash
-    python3 ~/wis2box-data/ ~/wis2box-data/synop_202501030900.txt
+    python3 ~/wis2box-data/data-ingest-exercises/copy_file_to_incoming.py synop_202501030900.txt
     ```
 
-    Asegúrate de que los errores se hayan resuelto.
+    Asegúrate de que los errores sean resueltos.
 
-Una vez que logres ejecutar el script correctamente, verás un mensaje indicando que el archivo fue copiado a MinIO, y deberías ver notificaciones de datos publicadas por tu instancia de wis2box en MQTT Explorer.
+Una vez que logres ejecutar el script exitosamente, verás un mensaje indicando que el archivo fue copiado a MinIO, y deberías ver notificaciones de datos publicadas por tu instancia de wis2box en MQTT Explorer.
 
-También puedes revisar el panel de Grafana para verificar si los datos fueron ingeridos y publicados correctamente.
+También puedes revisar el panel de Grafana para verificar si los datos fueron ingresados y publicados exitosamente.
 
-Ahora que el script está funcionando, puedes intentar copiar otros archivos a MinIO usando el mismo script.
+Ahora que el script está funcionando, puedes intentar copiar otros archivos a MinIO utilizando el mismo script.
 
-!!! question "Ingresar Datos Binarios en Formato BUFR"
+!!! question "Ingestar Datos Binarios en Formato BUFR"
 
     Ejecuta el siguiente comando para copiar el archivo de datos binarios `bufr-example.bin` al bucket `wis2box-incoming` en MinIO:
 
@@ -308,7 +308,7 @@ Ahora que el script está funcionando, puedes intentar copiar otros archivos a M
     python3 copy_file_to_incoming.py bufr-example.bin
     ```
 
-Revisa el panel de Grafana y MQTT Explorer para verificar si los datos de prueba fueron ingeridos y publicados correctamente. Si ves algún error, intenta resolverlo.
+Revisa el panel de Grafana y MQTT Explorer para verificar si los datos de prueba fueron ingresados y publicados exitosamente. Si ves algún error, intenta resolverlo.
 
 !!! question "Verificar la Ingesta de Datos"
 
@@ -316,16 +316,16 @@ Revisa el panel de Grafana y MQTT Explorer para verificar si los datos de prueba
 
 ??? success "Haz clic para revelar la respuesta"
 
-    Verás errores reportados en Grafana porque las estaciones en el archivo BUFR no están definidas en la lista de estaciones de tu instancia de wis2box.
+    Verás errores reportados en Grafana ya que las estaciones en el archivo BUFR no están definidas en la lista de estaciones de tu instancia de wis2box.
 
-    Si todas las estaciones utilizadas en el archivo BUFR están definidas en tu instancia de wis2box, deberías ver 10 mensajes publicados al broker MQTT. Cada notificación corresponde a datos para una estación en un momento de observación.
+    Si todas las estaciones utilizadas en el archivo BUFR están definidas en tu instancia de wis2box, deberías ver 10 mensajes publicados al broker MQTT. Cada notificación corresponde a datos para una estación y un timestamp de observación.
 
-    El plugin `wis2box.data.bufr4.ObservationDataBUFR` divide el archivo BUFR en mensajes BUFR individuales y publica un mensaje por cada estación y momento de observación.
+    El plugin `wis2box.data.bufr4.ObservationDataBUFR` divide el archivo BUFR en mensajes BUFR individuales y publica un mensaje por cada estación y timestamp de observación.
 
 ## Ingestar datos mediante SFTP
 ```
 
-El servicio MinIO en wis2box también se puede acceder mediante SFTP. Si tienes un sistema existente que puede configurarse para enviar datos a través de SFTP, puedes usar esto como un método alternativo para automatizar la ingesta de tus datos.
+El servicio MinIO en wis2box también puede ser accedido mediante SFTP. Si tienes un sistema existente que puede configurarse para enviar datos a través de SFTP, puedes utilizar este método como una alternativa para automatizar la ingesta de datos.
 
 El servidor SFTP para MinIO está vinculado al puerto 8022 en el host (el puerto 22 se utiliza para SSH).
 
@@ -335,7 +335,7 @@ Puedes configurar una nueva conexión en WinSCP como se muestra en esta captura 
 
 <img alt="winscp-sftp-connection" src="/../assets/img/winscp-sftp-login.png" width="400">
 
-Las credenciales para la conexión SFTP están definidas por `WIS2BOX_STORAGE_USERNAME` y `WIS2BOX_STORAGE_PASSWORD` en tu archivo `wis2box.env` y son las mismas que usaste para conectarte a la interfaz de usuario de MinIO.
+Las credenciales para la conexión SFTP están definidas por `WIS2BOX_STORAGE_USERNAME` y `WIS2BOX_STORAGE_PASSWORD` en tu archivo `wis2box.env` y son las mismas que utilizaste para conectarte a la interfaz de MinIO.
 
 Cuando inicies sesión, verás los buckets utilizados por wis2box en MinIO:
 
@@ -345,23 +345,23 @@ Puedes navegar al bucket `wis2box-incoming` y luego a la carpeta de tu conjunto 
 
 <img alt="winscp-sftp-incoming-path" src="/../assets/img/winscp-incoming-data-path.png" width="600">
 
-!!! question "Cargar datos usando SFTP"
+!!! question "Cargar datos utilizando SFTP"
 
-    Descarga este archivo de ejemplo en tu computadora local:
+    Descarga este archivo de muestra en tu computadora local:
 
     [synop_202503030900.txt](./../sample-data/synop_202503030900.txt) (haz clic derecho y selecciona "guardar como" para descargar el archivo).
 
-    Luego, cárgalo en la ruta del conjunto de datos de entrada en MinIO utilizando tu sesión SFTP en WinSCP.
+    Luego, súbelo a la ruta del conjunto de datos en MinIO utilizando tu sesión SFTP en WinSCP.
 
-    Verifica el panel de Grafana y MQTT Explorer para confirmar si los datos fueron ingeridos y publicados correctamente.
+    Verifica el panel de Grafana y MQTT Explorer para comprobar si los datos fueron ingeridos y publicados exitosamente.
 
 ??? success "Haz clic para revelar la respuesta"
 
-    Deberías ver una nueva notificación de datos WIS2 publicada para la estación de prueba `0-20000-0-64400`, indicando que los datos fueron ingeridos y publicados correctamente.
+    Deberías ver una nueva notificación de datos WIS2 publicada para la estación de prueba `0-20000-0-64400`, indicando que los datos fueron ingeridos y publicados exitosamente.
 
     <img alt="grafana_data_ingest" src="/../assets/img/grafana_data-ingest-test3.png" width="400"> 
 
-    Si utilizas una ruta incorrecta, verás un mensaje de error en los registros.
+    Si utilizas la ruta incorrecta, verás un mensaje de error en los registros.
 
 ## Conclusión
 

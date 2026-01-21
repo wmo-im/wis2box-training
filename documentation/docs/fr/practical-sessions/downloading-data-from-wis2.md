@@ -18,15 +18,15 @@ Dans cette session, vous apprendrez à configurer un abonnement à un Broker WIS
 
 !!! note "À propos de wis2downloader"
      
-     Le wis2downloader est également disponible en tant que service autonome qui peut être exécuté sur un système différent de celui qui publie les notifications WIS2. Consultez [wis2downloader](https://pypi.org/project/wis2downloader/) pour plus d'informations sur l'utilisation de wis2downloader comme service autonome.
+     Le wis2downloader est également disponible en tant que service autonome qui peut être exécuté sur un système différent de celui qui publie les notifications WIS2. Consultez [wis2downloader](https://pypi.org/project/wis2downloader/) pour plus d'informations sur l'utilisation de wis2downloader en tant que service autonome.
 
      Si vous souhaitez développer votre propre service pour vous abonner aux notifications WIS2 et télécharger des données, vous pouvez utiliser le [code source de wis2downloader](https://github.com/World-Meteorological-Organization/wis2downloader) comme référence.
 
 ## Préparation
 
-Avant de commencer, connectez-vous à votre VM étudiant et assurez-vous que votre instance wis2box est opérationnelle.
+Avant de commencer, connectez-vous à votre machine virtuelle étudiante et assurez-vous que votre instance wis2box est opérationnelle.
 
-## Notions de base sur wis2downloader
+## Bases de wis2downloader
 
 Le wis2downloader est inclus en tant que conteneur séparé dans wis2box, tel que défini dans les fichiers Docker Compose. Le conteneur Prometheus dans wis2box est configuré pour collecter les métriques du conteneur wis2downloader, et ces métriques peuvent être visualisées via un tableau de bord dans Grafana.
 
@@ -111,7 +111,7 @@ Utilisez la commande suivante pour lister les abonnements actuellement actifs :
 wis2downloader list-subscriptions
 ```
 
-Cette commande renvoie une liste vide, car aucun abonnement n'a encore été configuré.
+Cette commande retourne une liste vide, car aucun abonnement n'a encore été configuré.
 
 ## Télécharger des données GTS en utilisant un WIS2 Global Broker
 
@@ -119,7 +119,7 @@ Si vous avez conservé la configuration par défaut de wis2downloader, il est ac
 
 ### Configurer l'abonnement
 
-Utilisez la commande suivante `cache/a/wis2/de-dwd-gts-to-wis2/#`, pour vous abonner aux données publiées par la passerelle GTS-to-WIS2 hébergée par DWD, rendues disponibles via les Global Caches :
+Utilisez la commande suivante `cache/a/wis2/de-dwd-gts-to-wis2/#` pour vous abonner aux données publiées par la passerelle GTS-to-WIS2 hébergée par DWD, disponible via les Global Caches :
 
 ```bash
 wis2downloader add-subscription --topic cache/a/wis2/de-dwd-gts-to-wis2/#
@@ -135,7 +135,7 @@ exit
 
 Consultez le tableau de bord wis2downloader dans Grafana pour voir le nouvel abonnement ajouté. Attendez quelques minutes et vous devriez voir les premiers téléchargements commencer. Passez à l'exercice suivant une fois que vous avez confirmé que les téléchargements ont commencé.
 
-Le service wis2downloader dans wis2box télécharge les données dans le répertoire 'downloads' du répertoire que vous avez défini comme `WIS2BOX_HOST_DATADIR` dans votre fichier `wis2box.env`. Pour afficher le contenu du répertoire des téléchargements, utilisez la commande suivante :
+Le service wis2downloader dans wis2box télécharge les données dans le répertoire 'downloads' situé dans le répertoire que vous avez défini comme `WIS2BOX_HOST_DATADIR` dans votre fichier `wis2box.env`. Pour afficher le contenu du répertoire des téléchargements, utilisez la commande suivante :
 
 ```bash
 ls -R ~/wis2box-data/downloads
@@ -147,12 +147,12 @@ Notez que les données téléchargées sont stockées dans des répertoires nomm
 
     Quels répertoires voyez-vous dans le répertoire des téléchargements ?
 
-    Voyez-vous des fichiers téléchargés dans ces répertoires ?
+    Pouvez-vous voir des fichiers téléchargés dans ces répertoires ?
 
 ??? success "Cliquez pour révéler la réponse"
     Vous devriez voir une structure de répertoires commençant par `cache/a/wis2/de-dwd-gts-to-wis2/` sous laquelle vous verrez d'autres répertoires nommés d'après les en-têtes des bulletins GTS des données téléchargées.
 
-    Selon le moment où vous avez démarré l'abonnement, vous pouvez ou non voir des fichiers téléchargés dans ce répertoire pour l'instant. Si vous ne voyez pas encore de fichiers, attendez quelques minutes de plus et vérifiez à nouveau.
+    Selon le moment où vous avez démarré l'abonnement, vous pouvez ou non voir des fichiers téléchargés dans ce répertoire. Si vous ne voyez pas encore de fichiers, attendez quelques minutes de plus et vérifiez à nouveau.
 
 Consultez le tableau de bord wis2downloader dans Grafana pour voir la progression des téléchargements. Vous verrez l'abonnement que vous avez ajouté dans le coin supérieur gauche du tableau de bord, et le nombre de téléchargements augmenter à mesure que les données sont téléchargées :
 
@@ -168,7 +168,7 @@ Reconnectez-vous au conteneur wis2downloader :
 python3 wis2box-ctl.py login wis2downloader
 ```
 
-et supprimez l'abonnement que vous avez configuré dans wis2downloader, en utilisant la commande suivante :
+et supprimez l'abonnement que vous avez créé dans wis2downloader en utilisant la commande suivante :
 
 ```bash
 wis2downloader remove-subscription --topic cache/a/wis2/de-dwd-gts-to-wis2/#
@@ -218,23 +218,23 @@ Si, dans l'exercice précédent, vous remplacez `de-dwd-gts-to-wis2` par `jp-jma
 
 Dans cet exercice, vous allez vous abonner au WIS2 Training Broker, qui publie des données d'exemple à des fins de formation.
 
-### Modifier la configuration de wis2downloader
+### Modifier la configuration du wis2downloader
 
-Cela démontre comment s'abonner à un broker qui n'est pas le broker par défaut et vous permettra de télécharger des données publiées par le WIS2 Training Broker.
+Cela montre comment s'abonner à un broker qui n'est pas le broker par défaut et vous permettra de télécharger des données publiées par le WIS2 Training Broker.
 
 Modifiez le fichier `wis2box.env` et changez `DOWNLOAD_BROKER_HOST` en `wis2training-broker.wis2dev.io`, `DOWNLOAD_BROKER_PORT` en `1883` et `DOWNLOAD_BROKER_TRANSPORT` en `tcp` :
 
 ```copy
-# downloader settings
+# paramètres du téléchargeur
 DOWNLOAD_BROKER_HOST=wis2training-broker.wis2dev.io
 DOWNLOAD_BROKER_PORT=1883
 DOWNLOAD_BROKER_USERNAME=everyone
 DOWNLOAD_BROKER_PASSWORD=everyone
-# download transport mechanism (tcp or websockets)
+# mécanisme de transport pour le téléchargement (tcp ou websockets)
 DOWNLOAD_BROKER_TRANSPORT=tcp
 ```
 
-Vérifiez que les modifications effectuées correspondent à ce qui précède en exécutant :
+Vérifiez que les modifications effectuées correspondent bien à ce qui précède en exécutant :
 
 ```bash
 cat ~/wis2box/wis2box.env | grep DOWNLOAD
@@ -246,7 +246,7 @@ Ensuite, exécutez la commande 'restart' pour appliquer les modifications :
 python3 wis2box-ctl.py restart
 ```
 
-Vérifiez les journaux de wis2downloader pour voir si la connexion au nouveau broker a réussi :
+Vérifiez les journaux du wis2downloader pour voir si la connexion au nouveau broker a réussi :
 
 ```bash
 docker logs wis2downloader
@@ -281,9 +281,9 @@ Quittez le conteneur **wis2downloader** en tapant `exit`.
 
 ### Vérifier les données téléchargées
 
-Attendez jusqu'à ce que vous voyiez les téléchargements commencer dans le tableau de bord Grafana de wis2downloader.
+Attendez de voir les téléchargements commencer dans le tableau de bord Grafana du wis2downloader.
 
-Vérifiez que les données ont été téléchargées en consultant à nouveau les journaux de wis2downloader avec :
+Vérifiez que les données ont été téléchargées en consultant à nouveau les journaux du wis2downloader avec :
 
 ```bash
 docker logs wis2downloader
@@ -296,7 +296,7 @@ Vous devriez voir un message de journal similaire au suivant :
 [...] INFO - Downloaded A_JSXX05ECEP020000_C_ECMP_...
 ```
 
-Vérifiez à nouveau le contenu du répertoire des téléchargements :
+Vérifiez le contenu du répertoire des téléchargements à nouveau :
 
 ```bash
 ls -R ~/wis2box-data/downloads
@@ -306,18 +306,18 @@ Vous devriez voir un nouveau répertoire nommé `origin/a/wis2/int-wis2-training
 
 !!! question "Examiner les données téléchargées"
     
-    Quel est le format des fichiers téléchargés ?
+    Quel est le format des fichiers des données téléchargées ?
 
 ??? success "Cliquez pour révéler la réponse"
 
     Les données téléchargées sont au format BUFR, comme indiqué par l'extension de fichier `.bufr`.
 
-Ensuite, essayez d'ajouter deux autres abonnements pour télécharger les anomalies mensuelles de température de surface et les données de prévisions globales d'ensemble depuis les sujets suivants :
+Ensuite, essayez d'ajouter deux autres abonnements pour télécharger les anomalies mensuelles de température de surface et les données de prévision globale d'ensemble depuis les sujets suivants :
 
 - `origin/a/wis2/int-wis2-training/data/core/weather/prediction/forecast/medium-range/probabilistic/global`
 - `origin/a/wis2/int-wis2-training/data/core/climate/experimental/anomalies/monthly/surface-temperature`
 
-Attendez jusqu'à ce que vous voyiez les téléchargements commencer dans le tableau de bord Grafana de wis2downloader.
+Attendez de voir les téléchargements commencer dans le tableau de bord Grafana du wis2downloader.
 
 Vérifiez à nouveau le contenu du répertoire des téléchargements :
 
@@ -335,5 +335,5 @@ Vous devriez voir les nouveaux répertoires correspondant aux sujets auxquels vo
 
     - utiliser le 'wis2downloader' pour vous abonner à un WIS2 Broker et télécharger des données sur votre système local
     - consulter l'état des téléchargements dans le tableau de bord Grafana
-    - modifier la configuration par défaut de wis2downloader pour s'abonner à un autre broker
+    - modifier la configuration par défaut du wis2downloader pour s'abonner à un autre broker
     - consulter les données téléchargées sur votre système local

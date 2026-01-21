@@ -25,7 +25,7 @@ Lors des sessions de formation locale, un GDC local est configuré pour permettr
 ## Préparation
 
 !!! note
-    Avant de commencer, veuillez vous connecter à votre VM étudiant.
+    Avant de commencer, veuillez vous connecter à votre machine virtuelle étudiante (VM).
 
 ## Installation de pywiscat
 
@@ -49,7 +49,7 @@ pip3 install pywiscat
     export PATH=$PATH:/home/$USER/.local/bin
     ```
 
-    ...où `$USER` correspond à votre nom d'utilisateur sur votre VM.
+    ...où `$USER` est votre nom d'utilisateur sur votre VM.
 
 Vérifiez que l'installation a réussi :
 
@@ -85,7 +85,7 @@ pywiscat search
     Combien d'enregistrements sont retournés par la recherche ?
 
 ??? success "Cliquez pour révéler la réponse"
-    Le nombre d'enregistrements dépend du GDC que vous interrogez. Lors de l'utilisation du GDC de formation locale, vous devriez constater que le nombre d'enregistrements est égal au nombre d'ensembles de données qui ont été ingérés dans le GDC pendant les autres sessions pratiques.
+    Le nombre d'enregistrements dépend du GDC que vous interrogez. Lors de l'utilisation du GDC local de formation, vous devriez constater que le nombre d'enregistrements est égal au nombre d'ensembles de données qui ont été ingérés dans le GDC lors des autres sessions pratiques.
 
 Essayons d'interroger le GDC avec un mot-clé :
 
@@ -98,7 +98,7 @@ pywiscat search -q observations
     Quelle est la politique de données des résultats ?
 
 ??? success "Cliquez pour révéler la réponse"
-    Toutes les données retournées devraient spécifier des données "core".
+    Toutes les données retournées doivent spécifier des données "core".
 
 Essayez des requêtes supplémentaires avec `-q`.
 
@@ -129,6 +129,6 @@ pywiscat get <id>
 
 !!! success "Félicitations !"
 
-    Dans cette session pratique, vous avez appris à :
+    Lors de cette session pratique, vous avez appris à :
 
     - utiliser pywiscat pour découvrir des ensembles de données depuis le WIS2 Global Discovery Catalogue
