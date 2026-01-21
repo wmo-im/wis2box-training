@@ -16,7 +16,7 @@ title: Accéder à votre VM étudiant
 
 Dans le cadre des ateliers de formation WIS2 organisés localement, vous pouvez accéder à votre VM étudiant personnelle sur le réseau de formation local nommé "WIS2-training".
 
-Votre VM étudiant dispose des logiciels suivants préinstallés :
+Votre VM étudiant dispose des logiciels préinstallés suivants :
 
 - Ubuntu 22.04 LTS [ubuntu-22.04.5-live-server-amd64.iso](https://releases.ubuntu.com/jammy/ubuntu-22.04.5-live-server-amd64.iso)
 - Python 3.10.12
@@ -43,7 +43,7 @@ Votre VM étudiant dispose des logiciels suivants préinstallés :
     unzip wis2box-setup-1.2.0.zip
     ```
     
-    Vous pouvez toujours trouver la dernière archive 'wis2box-setup' à l'adresse suivante : [https://github.com/World-Meteorological-Organization/wis2box/releases](https://github.com/World-Meteorological-Organization/wis2box-release/releases).
+    Vous pouvez toujours trouver la dernière archive 'wis2box-setup' à l'adresse [https://github.com/World-Meteorological-Organization/wis2box/releases](https://github.com/World-Meteorological-Organization/wis2box-release/releases).
 
     Les supports d'exercice utilisés dans cette formation peuvent être téléchargés comme suit :
 
@@ -117,14 +117,14 @@ résultat :
 Docker Compose version v2.21.0
 ```
 
-Pour vous assurer que votre utilisateur peut exécuter des commandes Docker, votre utilisateur a été ajouté au groupe `docker`. 
+Pour vous assurer que votre utilisateur peut exécuter des commandes Docker, votre utilisateur a été ajouté au groupe `docker`.
 
 Pour tester que votre utilisateur peut exécuter docker hello-world, exécutez la commande suivante :
 ```bash
 docker run hello-world
 ```
 
-Cela devrait télécharger l'image hello-world et exécuter un conteneur qui affiche un message. 
+Cela devrait télécharger l'image hello-world et exécuter un conteneur qui affiche un message.
 
 Vérifiez que vous voyez le message suivant dans la sortie :
 
@@ -147,7 +147,7 @@ résultat :
 exercise-materials  wis2box
 ```
 
-Si vous avez installé WinSCP sur votre PC local, vous pouvez l'utiliser pour vous connecter à votre VM étudiant et inspecter le contenu de votre répertoire personnel, ainsi que télécharger ou téléverser des fichiers entre votre VM et votre PC local. 
+Si vous avez installé WinSCP sur votre PC local, vous pouvez l'utiliser pour vous connecter à votre VM étudiant et inspecter le contenu de votre répertoire personnel, ainsi que télécharger ou téléverser des fichiers entre votre VM et votre PC local.
 
 WinSCP n'est pas requis pour la formation, mais il peut être utile si vous souhaitez modifier des fichiers sur votre VM en utilisant un éditeur de texte sur votre PC local.
 
@@ -157,7 +157,7 @@ Ouvrez WinSCP et cliquez sur "New Site". Vous pouvez créer une nouvelle connexi
 
 <img alt="winscp-student-vm-scp.png" src="/../assets/img/winscp-student-vm-scp.png" width="400">
 
-Cliquez sur 'Save', puis sur 'Login' pour vous connecter à votre VM.
+Cliquez sur 'Save' puis sur 'Login' pour vous connecter à votre VM.
 
 Vous devriez maintenant pouvoir voir le contenu du répertoire personnel sur votre VM étudiant et accéder à vos fichiers.
 
