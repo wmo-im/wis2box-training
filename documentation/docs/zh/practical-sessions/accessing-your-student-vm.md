@@ -14,9 +14,9 @@ title: 访问您的学生虚拟机
 
 ## 简介
 
-作为本地运行的 WIS2 培训工作坊的一部分，您可以通过名为 "WIS2-training" 的本地培训网络访问您的个人学生虚拟机。
+作为本地 WIS2 培训工作坊的一部分，您可以通过名为 "WIS2-training" 的本地培训网络访问您的个人学生虚拟机。
 
-您的学生虚拟机预装了以下软件：
+您的学生虚拟机已预装以下软件：
 
 - Ubuntu 22.04 LTS [ubuntu-22.04.5-live-server-amd64.iso](https://releases.ubuntu.com/jammy/ubuntu-22.04.5-live-server-amd64.iso)
 - Python 3.10.12
@@ -26,7 +26,7 @@ title: 访问您的学生虚拟机
 
 !!! note
 
-    如果您希望在本地培训课程之外运行此培训，您可以使用任何云服务提供商提供的实例，例如：
+    如果您希望在本地培训课程之外运行本次培训，您可以使用任何云服务提供商提供的实例，例如：
 
     - GCP (Google Cloud Platform) VM 实例 `e2-medium`
     - AWS (Amazon Web Services) ec2 实例 `t3a.medium`
@@ -34,9 +34,9 @@ title: 访问您的学生虚拟机
 
     选择 Ubuntu Server 22.0.4 LTS 作为操作系统。
     
-    创建虚拟机后，请确保已安装 python、docker 和 docker compose，如 [wis2box-software-dependencies](https://docs.wis2box.wis.wmo.int/en/latest/user/getting-started.html#software-dependencies) 中所述。
+    创建虚拟机后，请确保已安装 Python、Docker 和 Docker Compose，具体说明请参见 [wis2box-software-dependencies](https://docs.wis2box.wis.wmo.int/en/latest/user/getting-started.html#software-dependencies)。
     
-    本次培训使用的 wis2box 发行版归档文件可以通过以下方式下载：
+    本次培训使用的 wis2box 发行归档文件可通过以下方式下载：
 
     ```bash
     wget https://github.com/World-Meteorological-Organization/wis2box-release/releases/download/1.2.0/wis2box-setup-1.2.0.zip
@@ -45,27 +45,27 @@ title: 访问您的学生虚拟机
     
     您始终可以在 [https://github.com/World-Meteorological-Organization/wis2box/releases](https://github.com/World-Meteorological-Organization/wis2box-release/releases) 找到最新的 'wis2box-setup' 归档文件。
 
-    本次培训使用的练习材料可以通过以下方式下载：
+    本次培训使用的练习材料可通过以下方式下载：
 
     ```bash
     wget https://training.wis2box.wis.wmo.int/exercise-materials.zip
     unzip exercise-materials.zip
     ```
 
-    运行练习材料所需的以下额外 Python 包：
+    要运行练习材料，还需要安装以下额外的 Python 包：
 
     ```bash
     pip3 install minio
     pip3 install pywiscat==0.2.2
     ```
 
-    如果您使用的是本地 WIS2 培训课程中提供的学生虚拟机，则所需软件已经安装完毕。
+    如果您使用的是本地 WIS2 培训课程中提供的学生虚拟机，则所需的软件已经预装。
 
 ## 连接到本地培训网络上的学生虚拟机
 
-将您的电脑连接到 WIS2 培训期间房间内广播的本地 Wi-Fi，具体操作请参考培训师提供的说明。
+将您的电脑连接到 WIS2 培训期间房间内广播的本地 Wi-Fi，具体说明请参见培训师提供的指导。
 
-使用 SSH 客户端通过以下信息连接到您的学生虚拟机：
+使用 SSH 客户端连接到您的学生虚拟机，连接信息如下：
 
 - **主机名: (由现场培训提供)**
 - **端口: 22**
@@ -73,7 +73,7 @@ title: 访问您的学生虚拟机
 - **密码: (由现场培训提供)**
 
 !!! tip
-    如果您不确定主机名/用户名，或在连接时遇到问题，请联系培训师。
+    如果您不确定主机名或用户名，或者在连接时遇到问题，请联系培训师。
 
 连接后，请更改您的密码以确保其他人无法访问您的虚拟机：
 
@@ -117,9 +117,9 @@ docker compose version
 Docker Compose version v2.21.0
 ```
 
-为了确保您的用户可以运行 Docker 命令，您的用户已被添加到 `docker` 组中。
+为了确保您的用户可以运行 Docker 命令，您的用户已被添加到 `docker` 组。
 
-测试您的用户是否可以运行 Docker hello-world，请运行以下命令：
+测试您的用户是否可以运行 Docker 的 hello-world，请运行以下命令：
 ```bash
 docker run hello-world
 ```
@@ -147,19 +147,19 @@ ls ~/
 exercise-materials  wis2box
 ```
 
-如果您的本地电脑上安装了 WinSCP，您可以使用它连接到您的学生虚拟机，检查主目录的内容，并在虚拟机和本地电脑之间上传或下载文件。
+如果您的本地电脑已安装 WinSCP，您可以使用它连接到您的学生虚拟机，检查主目录的内容，并在虚拟机和本地电脑之间下载或上传文件。
 
-WinSCP 不是培训的必需工具，但如果您希望使用本地电脑上的文本编辑器编辑虚拟机上的文件，它可能会很有用。
+WinSCP 并非培训必需，但如果您希望使用本地电脑上的文本编辑器编辑虚拟机上的文件，它会非常有用。
 
 以下是使用 WinSCP 连接到学生虚拟机的方法：
 
-打开 WinSCP 并点击 "New Site"。您可以按以下方式创建一个新的 SCP 连接到您的虚拟机：
+打开 WinSCP 并点击 "New Site"。您可以创建一个新的 SCP 连接，具体如下：
 
 <img alt="winscp-student-vm-scp.png" src="/../assets/img/winscp-student-vm-scp.png" width="400">
 
 点击 'Save' 然后点击 'Login' 以连接到您的虚拟机。
 
-现在您应该能够看到学生虚拟机主目录的内容并访问您的文件。
+现在，您应该能够看到学生虚拟机主目录的内容并访问您的文件。
 
 ## 总结
 

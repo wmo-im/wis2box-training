@@ -1,12 +1,12 @@
 ---
-title: Conectarse a WIS2 mediante MQTT
+title: Conexión a WIS2 mediante MQTT
 ---
 
-# Conectarse a WIS2 mediante MQTT
+# Conexión a WIS2 mediante MQTT
 
 !!! abstract "Resultados de aprendizaje"
 
-    Al final de esta sesión práctica, podrás:
+    Al final de esta sesión práctica, serás capaz de:
 
     - conectarte al WIS2 Global Broker utilizando MQTT Explorer
     - revisar la estructura de los temas de WIS2
@@ -63,14 +63,14 @@ Este es un ejemplo de la estructura de un mensaje de notificación de WIS2 para 
 
 En esta sesión práctica aprenderás a usar la herramienta MQTT Explorer para configurar una conexión de cliente MQTT a un WIS2 Global Broker y poder visualizar mensajes de notificación de WIS2.
 
-MQTT Explorer es una herramienta útil para explorar y revisar la estructura de temas de un broker MQTT y revisar los datos que se están publicando.
+MQTT Explorer es una herramienta útil para explorar y revisar la estructura de temas de un broker MQTT y analizar los datos publicados.
 
 !!! note "Sobre MQTT"
     MQTT Explorer proporciona una interfaz fácil de usar para conectarse a un broker MQTT y explorar los temas y la estructura de mensajes utilizados por WIS2.
     
-    En la práctica, MQTT está diseñado para ser utilizado en comunicaciones máquina a máquina, donde una aplicación o servicio se suscribe a temas y procesa mensajes programáticamente en tiempo real.
+    En la práctica, MQTT está diseñado para comunicación máquina a máquina, donde una aplicación o servicio se suscribe a temas y procesa mensajes programáticamente en tiempo real.
     
-    Para trabajar con MQTT programáticamente (por ejemplo, en Python), puedes usar bibliotecas de cliente MQTT como [paho-mqtt](https://pypi.org/project/paho-mqtt) para conectarte a un broker MQTT y procesar mensajes entrantes. Existen numerosos software de cliente y servidor MQTT, dependiendo de tus requisitos y entorno técnico.
+    Para trabajar con MQTT programáticamente (por ejemplo, en Python), puedes usar bibliotecas de cliente MQTT como [paho-mqtt](https://pypi.org/project/paho-mqtt) para conectarte a un broker MQTT y procesar mensajes entrantes. Existen numerosos softwares de cliente y servidor MQTT, dependiendo de tus requisitos y entorno técnico.
 
 ## Usar MQTT Explorer para conectarse al Global Broker
 
@@ -127,7 +127,7 @@ Usa MQTT para explorar la estructura de temas bajo los temas `origin`.
 
 !!! question
 
-    ¿Cómo podemos distinguir entre los mensajes publicados por centros WIS que alojan un gateway GTS-to-WIS2 y los mensajes publicados por centros WIS que alojan un WIS2 Node?
+    ¿Cómo podemos distinguir entre mensajes publicados por centros WIS que alojan un gateway GTS-to-WIS2 y mensajes publicados por centros WIS que alojan un nodo WIS2?
 
 ??? success "Haz clic para revelar la respuesta"
 
@@ -135,7 +135,7 @@ Usa MQTT para explorar la estructura de temas bajo los temas `origin`.
 
     `origin/a/wis2/de-dwd-gts-to-wis2/data/core/I/S/A/I/01/sbbr`
 
-    nos indica que los datos fueron publicados por el gateway GTS-to-WIS2 alojado por Deutscher Wetterdienst (DWD), Alemania. El gateway GTS-to-WIS2 es un tipo especial de publicador de datos que publica datos del Global Telecommunication System (GTS) a WIS2. La estructura de temas está compuesta por los encabezados TTAAii CCCC para los mensajes GTS.
+    nos indica que los datos fueron publicados por el gateway GTS-to-WIS2 alojado por Deutscher Wetterdienst (DWD), Alemania. El gateway GTS-to-WIS2 es un tipo especial de publicador de datos que publica datos del Global Telecommunication System (GTS) a WIS2. La estructura de temas está compuesta por los encabezados TTAAii CCCC de los mensajes GTS.
 
 ## Ejercicio 2: Revisar la estructura de mensajes de WIS2
 
@@ -159,9 +159,9 @@ Puedes ver el contenido del mensaje de WIS2 en la sección "Value" en el lado de
 
 ??? success "Haz clic para revelar la respuesta"
 
-    La marca de tiempo en la que se publicaron los datos está contenida en la sección `properties` del mensaje con la clave `pubtime`.
+    La marca de tiempo en la que se publicaron los datos está contenida en la sección `properties` del mensaje con una clave llamada `pubtime`.
 
-    La marca de tiempo en la que se recopilaron los datos está contenida en la sección `properties` del mensaje con la clave `datetime`.
+    La marca de tiempo en la que se recopilaron los datos está contenida en la sección `properties` del mensaje con una clave llamada `datetime`.
 
     <img alt="mqtt-explorer-global-broker-msg-properties" src="/../assets/img/mqtt-explorer-global-broker-msg-properties.png" width="800">
 
@@ -177,9 +177,9 @@ Puedes ver el contenido del mensaje de WIS2 en la sección "Value" en el lado de
 
 ## Ejercicio 3: Revisar la diferencia entre los temas 'origin' y 'cache'
 
-Asegúrate de que aún estás conectado al Global Broker utilizando las suscripciones de temas `origin/a/wis2/+/data/core/weather/surface-based-observations/synop` y `cache/a/wis2/+/data/core/weather/surface-based-observations/synop` como se describe en el Ejercicio 2.
+Asegúrate de que sigues conectado al Global Broker utilizando las suscripciones a los temas `origin/a/wis2/+/data/core/weather/surface-based-observations/synop` y `cache/a/wis2/+/data/core/weather/surface-based-observations/synop` como se describe en el Ejercicio 2.
 
-Intenta identificar un mensaje para el mismo centre-id publicado en ambos temas, `origin` y `cache`.
+Intenta identificar un mensaje para el mismo centre-id publicado en ambos temas `origin` y `cache`.
 
 !!! question
 
@@ -189,7 +189,7 @@ Intenta identificar un mensaje para el mismo centre-id publicado en ambos temas,
 
     Los mensajes publicados en los temas `origin` son los mensajes originales que el Global Broker republica desde los WIS2 Nodes en la red. 
 
-    Los mensajes publicados en los temas `cache` son los mensajes para los cuales los datos han sido descargados por el Global Cache. Si revisas el contenido del mensaje del tema que comienza con `cache`, verás que el enlace 'canonical' ha sido actualizado a una nueva URL.
+    Los mensajes publicados en los temas `cache` son los mensajes cuyos datos han sido descargados por el Global Cache. Si revisas el contenido del mensaje del tema que comienza con `cache`, verás que el enlace 'canonical' ha sido actualizado a una nueva URL.
     
     Hay múltiples Global Caches en la red WIS2, por lo que recibirás un mensaje de cada Global Cache que haya descargado el mensaje.
 

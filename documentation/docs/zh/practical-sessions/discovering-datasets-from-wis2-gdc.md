@@ -16,7 +16,7 @@ title: 从 WIS2 全球发现目录中发现数据集
 
 目前，可用的 GDC 包括：
 
-- 加拿大环境与气候变化部，气象服务：<https://wis2-gdc.weather.gc.ca>
+- 加拿大环境与气候变化部，气象服务部：<https://wis2-gdc.weather.gc.ca>
 - 中国气象局：<https://gdc.wis.cma.cn>
 - 德国气象局：<https://wis2.dwd.de/gdc>
 
@@ -25,11 +25,11 @@ title: 从 WIS2 全球发现目录中发现数据集
 ## 准备工作
 
 !!! note
-    开始之前，请登录到您的学生虚拟机 (VM)。
+    在开始之前，请登录到您的学生虚拟机 (VM)。
 
 ## 安装 pywiscat
 
-使用 `pip3` Python 包管理工具在您的虚拟机上安装 pywiscat：
+使用 `pip3` Python 包管理器在您的虚拟机上安装 pywiscat：
 ```bash
 pip3 install pywiscat
 ```
@@ -85,7 +85,7 @@ pywiscat search
     搜索返回了多少条记录？
 
 ??? success "点击查看答案"
-    返回的记录数量取决于您查询的 GDC。当使用本地培训 GDC 时，您应该看到记录数量等于在其他实践课程中已导入 GDC 的数据集数量。
+    返回的记录数量取决于您查询的 GDC。当使用本地培训 GDC 时，您应该会发现记录数量等于在其他实践课程中导入到 GDC 的数据集数量。
 
 让我们尝试使用关键字查询 GDC：
 
@@ -100,11 +100,11 @@ pywiscat search -q observations
 ??? success "点击查看答案"
     所有返回的数据都应指定为“核心”数据。
 
-尝试使用 `-q` 进行更多查询。
+尝试使用其他 `-q` 查询。
 
 !!! tip
 
-    `-q` 标志允许以下语法：
+    `-q` 标志支持以下语法：
 
     - `-q synop`：查找包含单词 "synop" 的所有记录
     - `-q temp`：查找包含单词 "temp" 的所有记录
@@ -123,7 +123,7 @@ pywiscat get <id>
 
 !!! tip
 
-    使用前一次搜索中的 `id` 值。
+    使用上一条搜索结果中的 `id` 值。
 
 ## 总结
 

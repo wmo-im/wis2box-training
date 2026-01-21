@@ -8,7 +8,7 @@ title: تهيئة wis2box
 
     بنهاية هذه الجلسة العملية، ستكون قادرًا على:
 
-    - تشغيل سكربت `wis2box-create-config.py` لإنشاء التهيئة الأولية
+    - تشغيل سكريبت `wis2box-create-config.py` لإنشاء التهيئة الأولية
     - بدء تشغيل wis2box والتحقق من حالة مكوناته
     - عرض محتويات **wis2box-api**
     - الوصول إلى **wis2box-webapp**
@@ -16,13 +16,13 @@ title: تهيئة wis2box
 
 !!! note
 
-    تعتمد المواد التدريبية الحالية على الإصدار 1.2.0 من wis2box.
-    
-    راجع [accessing-your-student-vm](./accessing-your-student-vm.md) للحصول على تعليمات حول كيفية تنزيل وتثبيت مجموعة برامج wis2box إذا كنت تقوم بإجراء هذا التدريب خارج جلسة تدريب محلية.
+    تعتمد المواد التدريبية الحالية على الإصدار wis2box-release 1.2.0.
+
+    راجع [accessing-your-student-vm](./accessing-your-student-vm.md) للحصول على تعليمات حول كيفية تنزيل وتثبيت حزمة برامج wis2box إذا كنت تقوم بإجراء هذا التدريب خارج جلسة تدريب محلية.
 
 ## التحضير
 
-قم بتسجيل الدخول إلى الجهاز الافتراضي المخصص لك باستخدام اسم المستخدم وكلمة المرور الخاصة بك وتأكد من أنك في دليل `wis2box`:
+قم بتسجيل الدخول إلى الجهاز الافتراضي (VM) المخصص لك باستخدام اسم المستخدم وكلمة المرور الخاصة بك، وتأكد من أنك في دليل `wis2box`:
 
 ```bash
 cd ~/wis2box
@@ -30,18 +30,18 @@ cd ~/wis2box
 
 ## إنشاء التهيئة الأولية
 
-تتطلب التهيئة الأولية لـ wis2box:
+تتطلب التهيئة الأولية لـ wis2box ما يلي:
 
 - ملف بيئة `wis2box.env` يحتوي على معلمات التهيئة
-- دليل على الجهاز المضيف للمشاركة بين الجهاز المضيف وحاويات wis2box المحددة بواسطة متغير البيئة `WIS2BOX_HOST_DATADIR`
+- دليل على الجهاز المضيف لمشاركته بين الجهاز المضيف وحاويات wis2box، يتم تعريفه بواسطة متغير البيئة `WIS2BOX_HOST_DATADIR`
 
-يمكن استخدام سكربت `wis2box-create-config.py` لإنشاء التهيئة الأولية لـ wis2box.
+يمكن استخدام سكريبت `wis2box-create-config.py` لإنشاء التهيئة الأولية لـ wis2box.
 
-سيطلب منك مجموعة من الأسئلة للمساعدة في إعداد التهيئة.
+سيطرح عليك مجموعة من الأسئلة للمساعدة في إعداد التهيئة.
 
-ستتمكن من مراجعة وتحديث ملفات التهيئة بعد انتهاء السكربت.
+ستتمكن من مراجعة وتحديث ملفات التهيئة بعد اكتمال السكريبت.
 
-قم بتشغيل السكربت كما يلي:
+قم بتشغيل السكريبت كما يلي:
 
 ```bash
 python3 wis2box-create-config.py
@@ -49,7 +49,7 @@ python3 wis2box-create-config.py
 
 ### دليل wis2box-host-data
 
-سيطلب منك السكربت إدخال الدليل الذي سيتم استخدامه لمتغير البيئة `WIS2BOX_HOST_DATADIR`.
+سيطلب منك السكريبت إدخال الدليل الذي سيتم استخدامه لمتغير البيئة `WIS2BOX_HOST_DATADIR`.
 
 لاحظ أنه يجب عليك تحديد المسار الكامل لهذا الدليل.
 
@@ -66,9 +66,9 @@ y
 The directory /home/username/wis2box-data has been created.
 ```
 
-### عنوان URL لـ wis2box
+### عنوان URL الخاص بـ wis2box
 
-بعد ذلك، سيُطلب منك إدخال عنوان URL الخاص بـ wis2box. هذا هو العنوان الذي سيتم استخدامه للوصول إلى تطبيق الويب، API وواجهة المستخدم الخاصة بـ wis2box.
+بعد ذلك، سيُطلب منك إدخال عنوان URL الخاص بـ wis2box. هذا هو عنوان URL الذي سيتم استخدامه للوصول إلى تطبيق الويب، وواجهة API، وواجهة المستخدم الخاصة بـ wis2box.
 
 يرجى استخدام `http://<your-hostname-or-ip>` كعنوان URL.
 
@@ -76,27 +76,27 @@ The directory /home/username/wis2box-data has been created.
 Please enter the URL of the wis2box:
  For local testing the URL is http://localhost
  To enable remote access, the URL should point to the public IP address or domain name of the server hosting the wis2box.
-http://username.wis2.training
+http://username.training.wis2dev.io
 The URL of the wis2box will be set to:
-  http://username.wis2.training
+  http://username.training.wis2dev.io
 Is this correct? (y/n/exit)
 ```
 
 ### كلمات مرور WEBAPP، STORAGE وBROKER
 
-يمكنك استخدام خيار إنشاء كلمات مرور عشوائية عند الطلب لـ `WIS2BOX_WEBAPP_PASSWORD`، `WIS2BOX_STORAGE_PASSWORD`، و`WIS2BOX_BROKER_PASSWORD` أو تحديد كلمات مرور خاصة بك.
+يمكنك استخدام خيار إنشاء كلمات مرور عشوائية عند المطالبة بـ `WIS2BOX_WEBAPP_PASSWORD`، `WIS2BOX_STORAGE_PASSWORD`، و`WIS2BOX_BROKER_PASSWORD` أو تحديد كلمات المرور الخاصة بك.
 
 لا تقلق بشأن تذكر هذه الكلمات، حيث سيتم تخزينها في ملف `wis2box.env` داخل دليل wis2box الخاص بك.
 
 ### مراجعة `wis2box.env`
 
-بمجرد اكتمال السكربت، تحقق من محتويات ملف `wis2box.env` في الدليل الحالي:
+بمجرد اكتمال السكريبت، تحقق من محتويات ملف `wis2box.env` في الدليل الحالي:
 
 ```bash
 cat ~/wis2box/wis2box.env
 ```
 
-أو تحقق من محتويات الملف عبر WinSCP.
+أو تحقق من محتوى الملف عبر WinSCP.
 
 !!! question
 
@@ -106,7 +106,7 @@ cat ~/wis2box/wis2box.env
 
     القيمة الافتراضية لـ WIS2BOX_BASEMAP_URL هي `https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png`.
 
-    يشير هذا العنوان إلى خادم OpenStreetMap للبلاط. إذا كنت ترغب في استخدام مزود خرائط مختلف، يمكنك تغيير هذا العنوان للإشارة إلى خادم بلاط مختلف.
+    يشير هذا العنوان إلى خادم OpenStreetMap لتوفير الخرائط. إذا كنت ترغب في استخدام مزود خرائط مختلف، يمكنك تغيير هذا العنوان للإشارة إلى خادم خرائط آخر.
 
 !!! question 
 
@@ -116,7 +116,7 @@ cat ~/wis2box/wis2box.env
 
     القيمة الافتراضية لـ WIS2BOX_STORAGE_DATA_RETENTION_DAYS هي 30 يومًا. يمكنك تغيير هذه القيمة إلى عدد مختلف من الأيام إذا كنت ترغب.
 
-    يقوم حاوية wis2box-management بتشغيل مهمة مجدولة يوميًا لإزالة البيانات الأقدم من عدد الأيام المحددة بواسطة WIS2BOX_STORAGE_DATA_RETENTION_DAYS من دلو `wis2box-public` والواجهة الخلفية لـ API:
+    يقوم حاوية wis2box-management بتشغيل مهمة مجدولة يوميًا لإزالة البيانات الأقدم من عدد الأيام المحدد بواسطة WIS2BOX_STORAGE_DATA_RETENTION_DAYS من حاوية `wis2box-public` والواجهة الخلفية لـ API:
 
     ```{.copy}
     0 0 * * * su wis2box -c "wis2box data clean --days=$WIS2BOX_STORAGE_DATA_RETENTION_DAYS"
@@ -124,15 +124,15 @@ cat ~/wis2box/wis2box.env
 
 !!! note
 
-    يحتوي ملف `wis2box.env` على متغيرات البيئة التي تحدد تهيئة wis2box. لمزيد من المعلومات، راجع [wis2box-documentation](https://docs.wis2box.wis.wmo.int/en/latest/reference/configuration.html).
+    يحتوي ملف `wis2box.env` على متغيرات البيئة التي تحدد تهيئة wis2box الخاص بك. لمزيد من المعلومات، راجع [wis2box-documentation](https://docs.wis2box.wis.wmo.int/en/latest/reference/configuration.html).
 
-    لا تقم بتحرير ملف `wis2box.env` إلا إذا كنت متأكدًا من التغييرات التي تقوم بها. قد تتسبب التغييرات غير الصحيحة في توقف wis2box عن العمل.
+    لا تقم بتعديل ملف `wis2box.env` إلا إذا كنت متأكدًا من التغييرات التي تقوم بها. قد تؤدي التغييرات غير الصحيحة إلى توقف wis2box عن العمل.
 
     لا تشارك محتويات ملف `wis2box.env` مع أي شخص، حيث يحتوي على معلومات حساسة مثل كلمات المرور.
 
 ## بدء تشغيل wis2box
 
-تأكد من أنك في الدليل الذي يحتوي على ملفات تعريف مجموعة برامج wis2box:
+تأكد من أنك في الدليل الذي يحتوي على ملفات تعريف حزمة برامج wis2box:
 
 ```{.copy}
 cd ~/wis2box
@@ -144,7 +144,7 @@ cd ~/wis2box
 python3 wis2box-ctl.py start
 ```
 
-عند تشغيل هذا الأمر لأول مرة، سترى الإخراج التالي:
+عند تشغيل هذا الأمر لأول مرة، سترى المخرجات التالية:
 
 ```
 No docker-compose.images-*.yml files found, creating one
@@ -152,9 +152,9 @@ Current version=Undefined, latest version=1.2.0
 Would you like to update ? (y/n/exit)
 ```
 
-اختر ``y`` وسيقوم السكربت بإنشاء الملف ``docker-compose.images-1.2.0.yml``، وتنزيل صور Docker المطلوبة وبدء الخدمات.
+اختر ``y`` وسيقوم السكريبت بإنشاء الملف ``docker-compose.images-1.2.0.yml``، وتنزيل صور Docker المطلوبة وبدء الخدمات.
 
-قد يستغرق تنزيل الصور بعض الوقت اعتمادًا على سرعة اتصالك بالإنترنت. هذه الخطوة مطلوبة فقط عند بدء تشغيل wis2box لأول مرة.
+قد يستغرق تنزيل الصور بعض الوقت بناءً على سرعة اتصالك بالإنترنت. هذه الخطوة مطلوبة فقط في المرة الأولى التي تبدأ فيها تشغيل wis2box.
 
 تحقق من الحالة باستخدام الأمر التالي:
 
@@ -167,11 +167,11 @@ python3 wis2box-ctl.py status
 !!! note "wis2box وDocker"
     يعمل wis2box كمجموعة من حاويات Docker التي تتم إدارتها بواسطة docker-compose.
     
-    يتم تعريف الخدمات في ملفات `docker-compose*.yml` المختلفة الموجودة في دليل `~/wis2box/`.
+    يتم تعريف الخدمات في ملفات `docker-compose*.yml` المختلفة التي يمكن العثور عليها في دليل `~/wis2box/`.
     
-    يتم استخدام سكربت Python `wis2box-ctl.py` لتشغيل أوامر Docker Compose الأساسية التي تتحكم في خدمات wis2box.
+    يتم استخدام سكريبت Python `wis2box-ctl.py` لتشغيل أوامر Docker Compose الأساسية التي تتحكم في خدمات wis2box.
 
-    لا تحتاج إلى معرفة تفاصيل حاويات Docker لتشغيل مجموعة برامج wis2box، ولكن يمكنك فحص ملفات `docker-compose*.yml` لمعرفة كيفية تعريف الخدمات. إذا كنت مهتمًا بتعلم المزيد عن Docker، يمكنك العثور على المزيد من المعلومات في [وثائق Docker](https://docs.docker.com/).
+    لا تحتاج إلى معرفة تفاصيل حاويات Docker لتشغيل حزمة برامج wis2box، ولكن يمكنك فحص ملفات `docker-compose*.yml` لمعرفة كيفية تعريف الخدمات. إذا كنت مهتمًا بمعرفة المزيد عن Docker، يمكنك العثور على مزيد من المعلومات في [وثائق Docker](https://docs.docker.com/).
 
 لتسجيل الدخول إلى حاوية wis2box-management، استخدم الأمر التالي:
 
@@ -188,7 +188,7 @@ root@025381da3c40:/home/wis2box#
 داخل حاوية wis2box-management، يمكنك تشغيل أوامر مختلفة لإدارة wis2box الخاص بك، مثل:
 
 - `wis2box auth add-token --path processes/wis2box` : لإنشاء رمز تفويض لنقطة النهاية *processes/wis2box*
-- `wis2box data clean --days=<number-of-days>` : لتنظيف البيانات الأقدم من عدد معين من الأيام من دلو *wis2box-public*
+- `wis2box data clean --days=<number-of-days>` : لتنظيف البيانات الأقدم من عدد معين من الأيام من حاوية *wis2box-public*
 
 للخروج من الحاوية والعودة إلى جهازك المضيف، استخدم الأمر التالي:
 
@@ -241,7 +241,7 @@ docker volume ls
 - wis2box_project_loki-data
 - wis2box_project_mosquitto-config
 
-بالإضافة إلى بعض وحدات التخزين المجهولة التي تستخدمها الحاويات المختلفة.
+بالإضافة إلى بعض وحدات التخزين المجهولة التي تُستخدم بواسطة الحاويات المختلفة.
 
 تُستخدم وحدات التخزين التي تبدأ بـ `wis2box_project_` لتخزين البيانات الدائمة للخدمات المختلفة في حزمة برامج `wis2box`.
 
@@ -280,13 +280,13 @@ docker volume ls
 
     اضغط على "إشعارات البيانات"، ثم اضغط على `Browse through the items of "Data Notifications"`. 
     
-    ستلاحظ أن الصفحة تقول "لا توجد عناصر" حيث لم يتم نشر أي إشعارات بيانات حتى الآن.
+    ستلاحظ أن الصفحة تقول "No items" حيث لم يتم نشر أي إشعارات بيانات حتى الآن.
 
 ## تطبيق الويب الخاص بـ wis2box
 
-افتح متصفح ويب وانتقل إلى الصفحة `http://YOUR-HOST/wis2box-webapp`.
+افتح متصفح الويب وقم بزيارة الصفحة `http://YOUR-HOST/wis2box-webapp`.
 
-ستظهر نافذة منبثقة تطلب اسم المستخدم وكلمة المرور الخاصة بك. استخدم اسم المستخدم الافتراضي `wis2box-user` وكلمة المرور `WIS2BOX_WEBAPP_PASSWORD` المحددة في ملف `wis2box.env` واضغط على "تسجيل الدخول":
+ستظهر نافذة منبثقة تطلب اسم المستخدم وكلمة المرور. استخدم اسم المستخدم الافتراضي `wis2box-user` وكلمة المرور `WIS2BOX_WEBAPP_PASSWORD` المحددة في ملف `wis2box.env` واضغط على "تسجيل الدخول":
 
 !!! note 
 
@@ -296,14 +296,14 @@ docker volume ls
     cat ~/wis2box/wis2box.env | grep WIS2BOX_WEBAPP_PASSWORD
     ```
 
-بمجرد تسجيل الدخول، حرك مؤشر الماوس إلى القائمة الموجودة على اليسار لرؤية الخيارات المتاحة في تطبيق الويب الخاص بـ `wis2box`:
+بمجرد تسجيل الدخول، قم بتحريك الماوس إلى القائمة الموجودة على اليسار لرؤية الخيارات المتاحة في تطبيق الويب الخاص بـ `wis2box`:
 
 <img alt="wis2box-webapp-menu.png" src="/../assets/img/wis2box-webapp-menu.png" width="400">
 
 هذا هو تطبيق الويب الخاص بـ `wis2box` الذي يتيح لك التفاعل مع `wis2box` الخاص بك:
 
 - إنشاء وإدارة مجموعات البيانات
-- تحديث/مراجعة بيانات وصف المحطات
+- تحديث/مراجعة بيانات المحطات الوصفية
 - تحميل الملاحظات اليدوية باستخدام نموذج FM-12 synop
 - مراقبة الإشعارات المنشورة على `wis2box-broker`
 
@@ -311,13 +311,13 @@ docker volume ls
 
 ## الوسيط الخاص بـ wis2box
 
-افتح تطبيق `MQTT Explorer` على جهاز الكمبيوتر الخاص بك واستعد لإنشاء اتصال جديد للاتصال بالوسيط الخاص بك (يعمل عبر الحاوية **wis2box-broker**).
+افتح تطبيق `MQTT Explorer` على جهاز الكمبيوتر الخاص بك وقم بإعداد اتصال جديد للاتصال بالوسيط الخاص بك (يعمل عبر الحاوية **wis2box-broker**).
 
 اضغط على `+` لإضافة اتصال جديد:
 
 <img alt="mqtt-explorer-new-connection.png" src="/../assets/img/mqtt-explorer-new-connection.png" width="300">
 
-يمكنك الضغط على زر 'ADVANCED' والتحقق من أنك مشترك في المواضيع التالية:
+يمكنك الضغط على زر 'ADVANCED' والتحقق من أن لديك اشتراكات في المواضيع التالية:
 
 - `#`
 - `$SYS/#`
@@ -328,7 +328,7 @@ docker volume ls
 
     الموضوع `#` هو اشتراك شامل يقوم بالاشتراك في جميع المواضيع المنشورة على الوسيط.
 
-    الرسائل المنشورة تحت الموضوع `$SYS` هي رسائل نظام يتم نشرها بواسطة خدمة `mosquitto` نفسها.
+    الرسائل المنشورة تحت الموضوع `$SYS` هي رسائل نظام يتم نشرها بواسطة خدمة mosquitto نفسها.
 
 استخدم تفاصيل الاتصال التالية، مع التأكد من استبدال قيمة `<your-host>` باسم المضيف الخاص بك وقيمة `<WIS2BOX_BROKER_PASSWORD>` بالقيمة الموجودة في ملف `wis2box.env` الخاص بك:
 
@@ -346,11 +346,11 @@ docker volume ls
     cat ~/wis2box/wis2box.env | grep WIS2BOX_BROKER_PASSWORD
     ```
 
-    لاحظ أن هذه هي كلمة المرور **الداخلية** الخاصة بالوسيط، وسيستخدم الوسيط العالمي بيانات اعتماد مختلفة (للقراءة فقط) للاشتراك في الوسيط الخاص بك. لا تشارك هذه الكلمة مع أي شخص.
+    لاحظ أن هذه هي كلمة المرور الخاصة بالوسيط **الداخلي** الخاص بك، وسيستخدم الوسيط العالمي بيانات اعتماد مختلفة (للقراءة فقط) للاشتراك في الوسيط الخاص بك. لا تشارك هذه الكلمة مع أي شخص.
 
 تأكد من الضغط على "SAVE" لحفظ تفاصيل الاتصال الخاصة بك.
 
-ثم اضغط على "CONNECT" للاتصال بـ **wis2box-broker**.
+ثم اضغط على "CONNECT" للاتصال بـ **wis2box-broker** الخاص بك.
 
 <img alt="mqtt-explorer-wis2box-broker.png" src="/../assets/img/mqtt-explorer-wis2box-broker.png" width="600">
 
