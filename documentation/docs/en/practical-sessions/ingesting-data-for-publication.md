@@ -228,7 +228,7 @@ Check the Grafana dashboard and check MQTT Explorer to confirm that the data was
     {
       "rel": "canonical",
       "type": "application/bufr",
-      "href": "http://example.wis2.training/data/2025-02-04/wis/urn:wmo:md:int-wmo-example:synop-dataset/WIGOS_0-20000-0-64400_20250204T090000.bufr4",
+      "href": "http://example.training.wis2dev.io/data/2025-02-04/wis/urn:wmo:md:int-wmo-example:synop-dataset/WIGOS_0-20000-0-64400_20250204T090000.bufr4",
       "length": 387
     }
     ```      

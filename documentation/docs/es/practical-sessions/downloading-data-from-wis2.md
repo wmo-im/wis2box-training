@@ -4,27 +4,27 @@ title: Descargando datos de WIS2 usando wis2downloader
 
 # Descargando datos de WIS2 usando wis2downloader
 
-!!! abstract "¡Resultados de aprendizaje!"
+!!! abstract "Resultados de aprendizaje"
 
     Al final de esta sesión práctica, serás capaz de:
 
-    - usar el "wis2downloader" para suscribirte a notificaciones de datos de WIS2 y descargar datos en tu sistema local
+    - usar el "wis2downloader" para suscribirte a notificaciones de datos de WIS2 y descargar datos a tu sistema local
     - visualizar el estado de las descargas en el panel de Grafana
-    - aprender a configurar el wis2downloader para suscribirte a un broker no predeterminado
+    - aprender cómo configurar el wis2downloader para suscribirte a un broker no predeterminado
 
 ## Introducción
 
-En esta sesión aprenderás a configurar una suscripción a un WIS2 Broker y descargar automáticamente datos en tu sistema local utilizando el servicio "wis2downloader" incluido en el wis2box.
+En esta sesión aprenderás cómo configurar una suscripción a un WIS2 Broker y descargar automáticamente datos a tu sistema local utilizando el servicio "wis2downloader" incluido en el wis2box.
 
 !!! note "Acerca de wis2downloader"
      
-     El wis2downloader también está disponible como un servicio independiente que puede ejecutarse en un sistema diferente al que publica las notificaciones de WIS2. Consulta [wis2downloader](https://pypi.org/project/wis2downloader/) para obtener más información sobre cómo usar el wis2downloader como un servicio independiente.
+     El wis2downloader también está disponible como un servicio independiente que puede ejecutarse en un sistema diferente al que publica las notificaciones de WIS2. Consulta [wis2downloader](https://pypi.org/project/wis2downloader/) para más información sobre cómo usar el wis2downloader como servicio independiente.
 
      Si deseas desarrollar tu propio servicio para suscribirte a notificaciones de WIS2 y descargar datos, puedes usar el [código fuente de wis2downloader](https://github.com/World-Meteorological-Organization/wis2downloader) como referencia.
 
 ## Preparación
 
-Antes de comenzar, inicia sesión en tu máquina virtual de estudiante y asegúrate de que tu instancia de wis2box esté en funcionamiento.
+Antes de comenzar, inicia sesión en tu máquina virtual de estudiante y asegúrate de que tu instancia de wis2box esté funcionando correctamente.
 
 ## Conceptos básicos de wis2downloader
 
@@ -34,13 +34,19 @@ El wis2downloader está incluido como un contenedor separado en wis2box, tal com
 
 Abre un navegador web y navega al panel de Grafana de tu instancia de wis2box accediendo a `http://YOUR-HOST:3000`.
 
-Haz clic en "dashboards" en el menú de la izquierda y luego selecciona el **wis2downloader dashboard**.
+Haz clic en dashboards en el menú de la izquierda:
+
+![selección de panel en grafana](../assets/img/grafana-dashboard-selection.png)
+
+y luego selecciona el **panel de wis2downloader**:
+
+![opciones de panel en grafana, selecciona wis2downloader](../assets/img/grafana-select-wis2downloader-dashboard.png)
 
 Deberías ver el siguiente panel:
 
-![wis2downloader dashboard](../assets/img/wis2downloader-dashboard.png)
+![panel de wis2downloader](../assets/img/wis2downloader-dashboard.png)
 
-Este panel se basa en métricas publicadas por el servicio wis2downloader y te mostrará el estado de las descargas que están en curso.
+Este panel se basa en métricas publicadas por el servicio wis2downloader y te mostrará el estado de las descargas que están actualmente en progreso.
 
 En la esquina superior izquierda puedes ver las suscripciones que están activas actualmente.
 
@@ -105,7 +111,7 @@ Usa el siguiente comando para listar las suscripciones que están activas actual
 wis2downloader list-subscriptions
 ```
 
-Este comando devuelve una lista vacía, ya que aún no se han configurado suscripciones.
+Este comando devuelve una lista vacía, ya que no hay suscripciones configuradas aún.
 
 ## Descargar datos GTS usando un WIS2 Global Broker
 
@@ -113,7 +119,7 @@ Si mantuviste la configuración predeterminada de wis2downloader, actualmente es
 
 ### Configurar la suscripción
 
-Usa el siguiente comando `cache/a/wis2/de-dwd-gts-to-wis2/#` para suscribirte a los datos publicados por el gateway GTS-to-WIS2 alojado por DWD, disponible a través de los Global Caches:
+Usa el siguiente comando `cache/a/wis2/de-dwd-gts-to-wis2/#`, para suscribirte a los datos publicados por el gateway GTS-to-WIS2 alojado por DWD, disponible a través de los Global Caches:
 
 ```bash
 wis2downloader add-subscription --topic cache/a/wis2/de-dwd-gts-to-wis2/#
@@ -127,7 +133,7 @@ exit
 
 ### Verificar los datos descargados
 
-Consulta el panel de wis2downloader en Grafana para ver la nueva suscripción añadida. Espera unos minutos y deberías ver que las primeras descargas comienzan. Pasa al siguiente ejercicio una vez que hayas confirmado que las descargas están comenzando.
+Verifica el panel de wis2downloader en Grafana para ver la nueva suscripción añadida. Espera unos minutos y deberías ver que comienzan las primeras descargas. Continúa al siguiente ejercicio una vez que hayas confirmado que las descargas están comenzando.
 
 El servicio wis2downloader en wis2box descarga los datos en el directorio 'downloads' dentro del directorio que definiste como `WIS2BOX_HOST_DATADIR` en tu archivo `wis2box.env`. Para ver el contenido del directorio de descargas, usa el siguiente comando:
 
@@ -144,51 +150,69 @@ Ten en cuenta que los datos descargados se almacenan en directorios nombrados se
     ¿Puedes ver algún archivo descargado en estos directorios?
 
 ??? success "Haz clic para revelar la respuesta"
-    Deberías ver una estructura de directorios que comienza con `cache/a/wis2/de-dwd-gts-to-wis2/`, debajo de la cual verás más directorios nombrados según los encabezados de los boletines GTS de los datos descargados.
+    Deberías ver una estructura de directorios que comienza con `cache/a/wis2/de-dwd-gts-to-wis2/` debajo de la cual verás más directorios nombrados según los encabezados de los boletines GTS de los datos descargados.
 
-    Dependiendo de cuándo comenzaste la suscripción, es posible que veas o no archivos descargados en este directorio. Si no ves ningún archivo todavía, espera unos minutos más y verifica nuevamente.
+    Dependiendo de cuándo comenzaste la suscripción, es posible que veas o no archivos descargados en este directorio aún. Si no ves ningún archivo todavía, espera unos minutos más y verifica nuevamente.
+
+Consulta el panel de wis2downloader en Grafana para ver el progreso de las descargas. Verás la suscripción que añadiste en la esquina superior izquierda del panel y el número de descargas aumentando a medida que se descargan los datos:
+
+![panel de wis2downloader con suscripción activa](../assets/img/wis2downloader-dashboard-with-subscription.png)
+
+### Eliminando la suscripción y los datos descargados
 
 Vamos a limpiar la suscripción y los datos descargados antes de pasar al siguiente ejercicio.
 
-Inicia sesión nuevamente en el contenedor wis2downloader:
+Vuelve a iniciar sesión en el contenedor wis2downloader:
 
 ```bash
 python3 wis2box-ctl.py login wis2downloader
 ```
 
-y elimina la suscripción que realizaste del wis2downloader usando el siguiente comando:
+y elimina la suscripción que configuraste en wis2downloader usando el siguiente comando:
 
 ```bash
 wis2downloader remove-subscription --topic cache/a/wis2/de-dwd-gts-to-wis2/#
 ```
 
-Elimina los datos descargados usando el siguiente comando:
+Visita el panel de Grafana para confirmar que la suscripción ha sido eliminada y que las descargas se han detenido. Deberías ver que la suscripción desaparece de la esquina superior izquierda del panel.
+
+**Espera unos minutos hasta que el panel muestre que las descargas se han detenido.**
+
+Finalmente, puedes eliminar los datos descargados usando el siguiente comando en el contenedor wis2downloader:
 
 ```bash
-rm -rf /wis2box-data/downloads/cache/*
+rm -rf app/data/downloads/*
 ```
 
-Y sal del contenedor wis2downloader escribiendo `exit`:
+!!! note
+    
+    El directorio `app/data/downloads` en el contenedor wis2downloader está mapeado al directorio `downloads` en el `WIS2BOX_HOST_DATADIR` definido en tu archivo `wis2box.env`. El comando anterior elimina todos los datos descargados.
+
+Sal del contenedor wis2downloader escribiendo `exit`:
     
 ```bash
 exit
 ```
 
-Consulta el panel de wis2downloader en Grafana para ver la suscripción eliminada. Deberías ver que las descargas se detienen.
+Verifica que el directorio de descargas en tu host esté vacío nuevamente:
+
+```bash
+ls -R ~/wis2box-data/downloads
+```
 
 !!! note "Acerca de los gateways GTS-to-WIS2"
     Actualmente hay dos gateways GTS-to-WIS2 que publican datos a través del WIS2 Global Broker y los Global Caches:
 
-    - DWD (Alemania): centre-id=*de-dwd-gts-to-wis2*
-    - JMA (Japón): centre-id=*jp-jma-gts-to-wis2*
-    
-    Si en el ejercicio anterior reemplazas `de-dwd-gts-to-wis2` con `jp-jma-gts-to-wis2`, recibirías las notificaciones y datos publicados por el gateway GTS-to-WIS2 de JMA.
+- DWD (Alemania): centre-id=*de-dwd-gts-to-wis2*
+- JMA (Japón): centre-id=*jp-jma-gts-to-wis2*
+
+Si en el ejercicio anterior reemplazas `de-dwd-gts-to-wis2` con `jp-jma-gts-to-wis2`, recibirás las notificaciones y los datos publicados por el gateway JMA GTS-to-WIS2.
 
 !!! note "Temas de origen vs temas de caché"
 
-    Al suscribirte a un tema que comienza con `origin/`, recibirás notificaciones con una URL canónica que apunta a un servidor de datos proporcionado por el Centro WIS que publica los datos.
+Cuando te suscribes a un tema que comienza con `origin/`, recibirás notificaciones con una URL canónica que apunta a un servidor de datos proporcionado por el Centro WIS que publica los datos.
 
-    Al suscribirte a un tema que comienza con `cache/`, recibirás múltiples notificaciones para los mismos datos, una por cada Global Cache. Cada notificación contendrá una URL canónica que apunta al servidor de datos de la respectiva Global Cache. El wis2downloader descargará los datos desde la primera URL canónica que pueda alcanzar.
+Cuando te suscribes a un tema que comienza con `cache/`, recibirás múltiples notificaciones para los mismos datos, una por cada Global Cache. Cada notificación contendrá una URL canónica que apunta al servidor de datos de la respectiva Global Cache. El wis2downloader descargará los datos desde la primera URL canónica que pueda alcanzar.
 
 ## Descargar datos de ejemplo del WIS2 Training Broker
 
@@ -196,33 +220,39 @@ En este ejercicio, te suscribirás al WIS2 Training Broker, que publica datos de
 
 ### Cambiar la configuración de wis2downloader
 
-Esto demuestra cómo suscribirse a un broker que no es el predeterminado y te permitirá descargar algunos datos publicados desde el WIS2 Training Broker.
+Esto demuestra cómo suscribirse a un broker que no es el broker predeterminado y te permitirá descargar algunos datos publicados desde el WIS2 Training Broker.
 
 Edita el archivo `wis2box.env` y cambia `DOWNLOAD_BROKER_HOST` a `wis2training-broker.wis2dev.io`, `DOWNLOAD_BROKER_PORT` a `1883` y `DOWNLOAD_BROKER_TRANSPORT` a `tcp`:
 
 ```copy
-# downloader settings
+# configuraciones del downloader
 DOWNLOAD_BROKER_HOST=wis2training-broker.wis2dev.io
 DOWNLOAD_BROKER_PORT=1883
 DOWNLOAD_BROKER_USERNAME=everyone
 DOWNLOAD_BROKER_PASSWORD=everyone
-# download transport mechanism (tcp or websockets)
+# mecanismo de transporte de descarga (tcp o websockets)
 DOWNLOAD_BROKER_TRANSPORT=tcp
 ```
 
-Luego ejecuta nuevamente el comando 'start' para aplicar los cambios:
+Verifica que los cambios realizados coincidan con los anteriores ejecutando:
 
 ```bash
-python3 wis2box-ctl.py start
+cat ~/wis2box/wis2box.env | grep DOWNLOAD
 ```
 
-Consulta los logs de wis2downloader para verificar si la conexión al nuevo broker fue exitosa:
+Luego ejecuta el comando 'restart' para aplicar los cambios:
+
+```bash
+python3 wis2box-ctl.py restart
+```
+
+Revisa los registros de wis2downloader para verificar si la conexión al nuevo broker fue exitosa:
 
 ```bash
 docker logs wis2downloader
 ```
 
-Deberías ver el siguiente mensaje en los logs:
+Deberías ver el siguiente mensaje en los registros:
 
 ```copy
 ...
@@ -253,20 +283,20 @@ Sal del contenedor **wis2downloader** escribiendo `exit`.
 
 Espera hasta que veas que las descargas comienzan en el panel de wis2downloader en Grafana.
 
-Verifica que los datos se hayan descargado revisando nuevamente los logs de wis2downloader con:
+Verifica que los datos se hayan descargado revisando nuevamente los registros de wis2downloader con:
 
 ```bash
 docker logs wis2downloader
 ```
 
-Deberías ver un mensaje en los logs similar al siguiente:
+Deberías ver un mensaje en los registros similar al siguiente:
 
 ```copy
 [...] INFO - Message received under topic origin/a/wis2/int-wis2-training/data/core/weather/prediction/forecast/medium-range/probabilistic/trajectory
 [...] INFO - Downloaded A_JSXX05ECEP020000_C_ECMP_...
 ```
 
-Consulta nuevamente el contenido del directorio de descargas:
+Revisa el contenido del directorio de descargas nuevamente:
 
 ```bash
 ls -R ~/wis2box-data/downloads
@@ -280,16 +310,16 @@ Deberías ver un nuevo directorio llamado `origin/a/wis2/int-wis2-training/data/
 
 ??? success "Haz clic para revelar la respuesta"
 
-    Los datos descargados están en formato BUFR, como lo indica la extensión de archivo `.bufr`.
+    Los datos descargados están en formato BUFR, como se indica por la extensión de archivo `.bufr`.
 
-A continuación, intenta añadir otras dos suscripciones para descargar anomalías mensuales de temperatura superficial y datos globales de pronóstico de conjunto desde los siguientes temas:
+A continuación, intenta agregar otras dos suscripciones para descargar anomalías mensuales de temperatura superficial y datos de pronósticos globales de conjunto desde los siguientes temas:
 
 - `origin/a/wis2/int-wis2-training/data/core/weather/prediction/forecast/medium-range/probabilistic/global`
 - `origin/a/wis2/int-wis2-training/data/core/climate/experimental/anomalies/monthly/surface-temperature`
 
 Espera hasta que veas que las descargas comienzan en el panel de wis2downloader en Grafana.
 
-Consulta nuevamente el contenido del directorio de descargas:
+Revisa el contenido del directorio de descargas nuevamente:
 
 ```bash
 ls -R ~/wis2box-data/downloads
@@ -303,7 +333,7 @@ Deberías ver los nuevos directorios correspondientes a los temas a los que te s
 
     En esta sesión práctica, aprendiste a:
 
-    - usar el 'wis2downloader' para suscribirte a un WIS2 Broker y descargar datos en tu sistema local
-    - visualizar el estado de las descargas en el panel de Grafana
-    - cambiar la configuración predeterminada de wis2downloader para suscribirte a un broker diferente
-    - visualizar los datos descargados en tu sistema local
+    - usar el 'wis2downloader' para suscribirte a un WIS2 Broker y descargar datos a tu sistema local
+    - ver el estado de las descargas en el panel de Grafana
+    - cómo cambiar la configuración predeterminada de wis2downloader para suscribirte a un broker diferente
+    - cómo ver los datos descargados en tu sistema local
