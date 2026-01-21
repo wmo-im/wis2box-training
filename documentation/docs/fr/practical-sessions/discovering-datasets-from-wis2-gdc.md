@@ -1,14 +1,14 @@
 ---
-title: Découverte des ensembles de données depuis le WIS2 Global Discovery Catalogue
+title: Découverte de jeux de données depuis le WIS2 Global Discovery Catalogue
 ---
 
-# Découverte des ensembles de données depuis le WIS2 Global Discovery Catalogue
+# Découverte de jeux de données depuis le WIS2 Global Discovery Catalogue
 
 !!! abstract "Objectifs d'apprentissage !"
 
     À la fin de cette session pratique, vous serez capable de :
 
-    - utiliser pywiscat pour découvrir des ensembles de données depuis le Global Discovery Catalogue (GDC)
+    - utiliser pywiscat pour découvrir des jeux de données depuis le Global Discovery Catalogue (GDC)
 
 ## Introduction
 
@@ -43,7 +43,7 @@ pip3 install pywiscat
     Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
     ```
 
-    Alors exécutez la commande suivante :
+    Exécutez alors la commande suivante :
 
     ```bash
     export PATH=$PATH:/home/$USER/.local/bin
@@ -65,7 +65,7 @@ Par défaut, pywiscat se connecte au Global Discovery Catalogue (GDC) hébergé 
     Si vous effectuez cet exercice lors d'une session de formation locale, vous pouvez configurer pywiscat pour interroger le GDC local en définissant la variable d'environnement `PYWISCAT_GDC_URL` :
 
     ```bash
-    export PYWISCAT_GDC_URL=http://gdc.wis2.training:5002
+    export PYWISCAT_GDC_URL=http://gdc.training.wis2dev.io
     ```
 
 Pour voir les options disponibles, exécutez :
@@ -74,7 +74,7 @@ Pour voir les options disponibles, exécutez :
 pywiscat search --help
 ```
 
-Vous pouvez rechercher tous les enregistrements dans le GDC :
+Vous pouvez rechercher dans le GDC tous les enregistrements :
 
 ```bash
 pywiscat search
@@ -85,7 +85,7 @@ pywiscat search
     Combien d'enregistrements sont retournés par la recherche ?
 
 ??? success "Cliquez pour révéler la réponse"
-    Le nombre d'enregistrements dépend du GDC que vous interrogez. Lors de l'utilisation du GDC de formation locale, vous devriez constater que le nombre d'enregistrements est égal au nombre d'ensembles de données qui ont été ingérés dans le GDC pendant les autres sessions pratiques.
+    Le nombre d'enregistrements dépend du GDC que vous interrogez. Lors de l'utilisation du GDC local de formation, vous devriez constater que le nombre d'enregistrements est égal au nombre de jeux de données qui ont été ingérés dans le GDC pendant les autres sessions pratiques.
 
 Essayons d'interroger le GDC avec un mot-clé :
 
@@ -104,7 +104,7 @@ Essayez des requêtes supplémentaires avec `-q`.
 
 !!! tip
 
-    L'option `-q` permet la syntaxe suivante :
+    Le drapeau `-q` permet la syntaxe suivante :
 
     - `-q synop` : trouver tous les enregistrements contenant le mot "synop"
     - `-q temp` : trouver tous les enregistrements contenant le mot "temp"
@@ -113,7 +113,7 @@ Essayez des requêtes supplémentaires avec `-q`.
     - `-q "synop OR temp"` : trouver tous les enregistrements contenant "synop" ou "temp"
     - `-q "obs*"` : recherche approximative
 
-    Lorsque vous recherchez des termes avec des espaces, utilisez des guillemets doubles.
+    Lors de la recherche de termes contenant des espaces, encadrez-les avec des guillemets doubles.
 
 Obtenons plus de détails sur un résultat de recherche spécifique qui nous intéresse :
 
@@ -131,4 +131,4 @@ pywiscat get <id>
 
     Dans cette session pratique, vous avez appris à :
 
-    - utiliser pywiscat pour découvrir des ensembles de données depuis le WIS2 Global Discovery Catalogue
+    - utiliser pywiscat pour découvrir des jeux de données depuis le WIS2 Global Discovery Catalogue

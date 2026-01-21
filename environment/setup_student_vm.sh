@@ -30,7 +30,7 @@ ssh -o StrictHostKeyChecking=no wmo_admin@`echo $HOST_IP` "echo "$USERNAME":wis2
 ssh -o StrictHostKeyChecking=no wmo_admin@`echo $HOST_IP` "sudo hostnamectl set-hostname student-vm-`echo $USERNAME`"
 
 # copy the latest wis2box-setup.zip to the student-vm
-ssh -o StrictHostKeyChecking=no wmo_admin@`echo $HOST_IP` "wget https://github.com/World-Meteorological-Organization/wis2box-release/releases/download/1.0.0/wis2box-setup.zip -O /tmp/wis2box-setup.zip"
+ssh -o StrictHostKeyChecking=no wmo_admin@`echo $HOST_IP` "wget https://github.com/World-Meteorological-Organization/wis2box-release/releases/download/1.2.0/wis2box-setup.zip -O /tmp/wis2box-setup.zip"
 # unzip the wis2box-setup.zip
 ssh -o StrictHostKeyChecking=no wmo_admin@`echo $HOST_IP` "sudo unzip -o /tmp/wis2box-setup.zip -d /home/`echo $USERNAME`/"
 # remove the wis2box-setup.zip
