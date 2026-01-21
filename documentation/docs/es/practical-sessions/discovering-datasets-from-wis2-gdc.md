@@ -6,7 +6,7 @@ title: Descubriendo conjuntos de datos del WIS2 Global Discovery Catalogue
 
 !!! abstract "¡Resultados de aprendizaje!"
 
-    Al final de esta sesión práctica, serás capaz de:
+    Al final de esta sesión práctica, podrás:
 
     - usar pywiscat para descubrir conjuntos de datos del Global Discovery Catalogue (GDC)
 
@@ -20,7 +20,7 @@ Actualmente, los siguientes GDCs están disponibles:
 - China Meteorological Administration: <https://gdc.wis.cma.cn>
 - Deutscher Wetterdienst: <https://wis2.dwd.de/gdc>
 
-Durante las sesiones de entrenamiento locales, se configura un GDC local para permitir que los participantes consulten el GDC por los metadatos que publicaron desde sus instancias de wis2box. En este caso, los instructores proporcionarán la URL del GDC local.
+Durante las sesiones de capacitación local, se configura un GDC local para que los participantes puedan consultar el GDC por los metadatos que publicaron desde sus instancias de wis2box. En este caso, los instructores proporcionarán la URL del GDC local.
 
 ## Preparación
 
@@ -29,7 +29,7 @@ Durante las sesiones de entrenamiento locales, se configura un GDC local para pe
 
 ## Instalando pywiscat
 
-Usa el instalador de paquetes de Python `pip3` para instalar pywiscat en tu VM:
+Utiliza el instalador de paquetes de Python `pip3` para instalar pywiscat en tu VM:
 ```bash
 pip3 install pywiscat
 ```
@@ -62,7 +62,7 @@ pywiscat --version
 Por defecto, pywiscat se conecta al Global Discovery Catalogue (GDC) alojado por Environment and Climate Change Canada (ECCC).
 
 !!! note "Cambiando la URL del GDC"
-    Si estás realizando este ejercicio durante una sesión de entrenamiento local, puedes configurar pywiscat para consultar el GDC local estableciendo la variable de entorno `PYWISCAT_GDC_URL`:
+    Si estás realizando este ejercicio durante una sesión de capacitación local, puedes configurar pywiscat para consultar el GDC local estableciendo la variable de entorno `PYWISCAT_GDC_URL`:
 
     ```bash
     export PYWISCAT_GDC_URL=http://gdc.training.wis2dev.io
@@ -85,7 +85,7 @@ pywiscat search
     ¿Cuántos registros se devuelven de la búsqueda?
 
 ??? success "Haz clic para revelar la respuesta"
-    El número de registros depende del GDC que estés consultando. Al usar el GDC de entrenamiento local, deberías ver que el número de registros es igual al número de conjuntos de datos que se han ingresado en el GDC durante las otras sesiones prácticas.
+    El número de registros depende del GDC que estás consultando. Al usar el GDC de capacitación local, deberías ver que el número de registros es igual al número de conjuntos de datos que se han ingresado en el GDC durante las otras sesiones prácticas.
 
 Intentemos consultar el GDC con una palabra clave:
 
@@ -113,9 +113,9 @@ Prueba consultas adicionales con `-q`
     - `-q "synop OR temp"`: encuentra todos los registros con "synop" o "temp"
     - `-q "obs*"`: búsqueda difusa
 
-    Al buscar términos con espacios, encierra el texto entre comillas dobles.
+    Cuando busques términos con espacios, enciérralos entre comillas dobles.
 
-Obtengamos más detalles sobre un resultado específico de búsqueda que nos interese:
+Obtengamos más detalles sobre un resultado de búsqueda específico que nos interese:
 
 ```bash
 pywiscat get <id>
@@ -123,7 +123,7 @@ pywiscat get <id>
 
 !!! tip
 
-    Usa el valor de `id` del resultado de búsqueda anterior.
+    Usa el valor `id` del resultado de búsqueda anterior.
 
 ## Conclusión
 

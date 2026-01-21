@@ -7,32 +7,34 @@ title: CSV-to-BUFR 映射模板
 !!! abstract "学习目标"
     在本次实践课程结束时，您将能够：
 
-    - 为您的 CSV 数据创建新的 BUFR 映射模板
+    - 为您的 CSV 数据创建一个新的 BUFR 映射模板
     - 从命令行编辑和调试自定义 BUFR 映射模板
     - 配置 CSV-to-BUFR 数据插件以使用自定义 BUFR 映射模板
     - 使用内置的 AWS 和 DAYCLI 模板将 CSV 数据转换为 BUFR
 
 ## 简介
 
-逗号分隔值（CSV）数据文件通常用于以表格格式记录观测数据和其他数据。  
-大多数用于记录传感器输出的数据记录器都能够以分隔文件（包括 CSV 格式）导出观测数据。  
-同样，当数据被导入数据库时，也可以轻松地以 CSV 格式的文件导出所需的数据。
+逗号分隔值 (CSV) 数据文件通常用于以表格格式记录观测数据和其他数据。  
+大多数用于记录传感器输出的数据记录器能够以分隔文件（包括 CSV 格式）导出观测数据。  
+同样，当数据被导入数据库时，也很容易以 CSV 格式的文件导出所需数据。
 
-`wis2box csv2bufr` 模块提供了一个命令行工具，用于将 CSV 数据转换为 BUFR 格式。使用 `csv2bufr` 时，您需要提供一个 BUFR 映射模板，将 CSV 列映射到相应的 BUFR 元素。如果您不想创建自己的映射模板，可以使用内置的 AWS 和 DAYCLI 模板将 CSV 数据转换为 BUFR，但需要确保您使用的 CSV 数据符合这些模板的正确格式。如果您需要解码 AWS 和 DAYCLI 模板中未包含的参数，则需要创建自己的映射模板。
+`wis2box csv2bufr` 模块提供了一个命令行工具，用于将 CSV 数据转换为 BUFR 格式。使用 `csv2bufr` 时，您需要提供一个 BUFR 映射模板，该模板将 CSV 列映射到相应的 BUFR 元素。如果您不想创建自己的映射模板，可以使用内置的 AWS 和 DAYCLI 模板将 CSV 数据转换为 BUFR，但您需要确保所使用的 CSV 数据符合这些模板的正确格式。如果您需要解码 AWS 和 DAYCLI 模板中未包含的参数，则需要创建自己的映射模板。
 
-在本次课程中，您将学习如何创建自己的映射模板以将 CSV 数据转换为 BUFR。您还将学习如何使用内置的 AWS 和 DAYCLI 模板将 CSV 数据转换为 BUFR。
+在本课程中，您将学习如何创建自己的映射模板以将 CSV 数据转换为 BUFR。您还将学习如何使用内置的 AWS 和 DAYCLI 模板将 CSV 数据转换为 BUFR。
 
 ## 准备工作
 
-确保已使用以下命令启动 `wis2box-stack`：`python3 wis2box.py start`
+确保已使用以下命令启动 `wis2box-stack`：  
+`python3 wis2box.py start`
 
-确保您已打开一个 Web 浏览器，并通过访问 `http://YOUR-HOST:9000` 打开 MinIO UI。如果您不记得 MinIO 的凭据，可以在学生虚拟机的 `wis2box` 目录下的 `wis2box.env` 文件中找到它们。
+确保您已打开一个 Web 浏览器，并通过访问 `http://YOUR-HOST:9000` 打开您的实例的 MinIO UI。  
+如果您不记得 MinIO 的凭据，可以在学生虚拟机的 `wis2box` 目录中的 `wis2box.env` 文件中找到它们。
 
 确保您已打开 MQTT Explorer，并使用凭据 `everyone/everyone` 连接到您的代理。
 
 ## 创建映射模板
 
-`csv2bufr` 模块附带了一个命令行工具，可使用一组 BUFR 序列和/或 BUFR 元素作为输入来创建自己的映射模板。
+`csv2bufr` 模块附带一个命令行工具，可使用一组 BUFR 序列和/或 BUFR 元素作为输入来创建您自己的映射模板。
 
 要查找特定的 BUFR 序列和元素，您可以参考 BUFR 表：[https://confluence.ecmwf.int/display/ECC/BUFR+tables](https://confluence.ecmwf.int/display/ECC/BUFR+tables)。
 
@@ -53,7 +55,7 @@ csv2bufr mappings --help
 
 帮助页面显示了两个子命令：
 
-- `csv2bufr mappings create`：创建新的映射模板
+- `csv2bufr mappings create`：创建一个新的映射模板
 - `csv2bufr mappings list`：列出系统中可用的映射模板
 
 !!! Note "csv2bufr mapping list"
@@ -61,9 +63,9 @@ csv2bufr mappings --help
     `csv2bufr mapping list` 命令将显示系统中可用的映射模板。  
     默认模板存储在容器中的目录 `/opt/wis2box/csv2bufr/templates` 中。
 
-    要与系统共享自定义映射模板，您可以将它们存储在由 `$CSV2BUFR_TEMPLATES` 定义的目录中，该目录在容器中默认设置为 `/data/wis2box/mappings`。由于容器中的目录 `/data/wis2box/mappings` 挂载到主机上的目录 `$WIS2BOX_HOST_DATADIR/mappings`，因此您将在主机上的目录 `$WIS2BOX_HOST_DATADIR/mappings` 中找到您的自定义映射模板。
+    要与系统共享自定义映射模板，您可以将它们存储在 `$CSV2BUFR_TEMPLATES` 定义的目录中，该目录在容器中默认设置为 `/data/wis2box/mappings`。由于容器中的目录 `/data/wis2box/mappings` 挂载到主机上的目录 `$WIS2BOX_HOST_DATADIR/mappings`，因此您将在主机上的目录 `$WIS2BOX_HOST_DATADIR/mappings` 中找到您的自定义映射模板。
 
-让我们尝试使用 BUFR 序列 301150 和 BUFR 元素 012101 作为输入，使用 `csv2bufr mapping create` 命令创建一个新的自定义映射模板。
+让我们尝试使用 `csv2bufr mapping create` 命令创建一个新的自定义映射模板，输入 BUFR 序列 301150 和 BUFR 元素 012101：
 
 ```bash
 csv2bufr mappings create 301150 012101 --output /data/wis2box/mappings/my_custom_template.json
@@ -77,7 +79,7 @@ cat /data/wis2box/mappings/my_custom_template.json
 
 !!! question "检查映射模板"
 
-    有多少个 CSV 列被映射到 BUFR 元素？每个 BUFR 元素映射的 CSV 标题是什么？
+    有多少 CSV 列被映射到 BUFR 元素？每个 BUFR 元素映射的 CSV 标题是什么？
 
 ??? success "点击查看答案"
     
@@ -85,13 +87,13 @@ cat /data/wis2box/mappings/my_custom_template.json
 
     以下 CSV 列被映射到 BUFR 元素：
 
-    - **wigosIdentifierSeries** 映射到 `"eccodes_key": "#1#wigosIdentifierSeries"`（BUFR 元素 001125）
-    - **wigosIssuerOfIdentifier** 映射到 `"eccodes_key": "#1#wigosIssuerOfIdentifier"`（BUFR 元素 001126）
-    - **wigosIssueNumber** 映射到 `"eccodes_key": "#1#wigosIssueNumber"`（BUFR 元素 001127）
-    - **wigosLocalIdentifierCharacter** 映射到 `"eccodes_key": "#1#wigosLocalIdentifierCharacter"`（BUFR 元素 001128）
-    - **airTemperature** 映射到 `"eccodes_key": "#1#airTemperature"`（BUFR 元素 012101）
+    - **wigosIdentifierSeries** 映射到 `"eccodes_key": "#1#wigosIdentifierSeries"` (BUFR 元素 001125)
+    - **wigosIssuerOfIdentifier** 映射到 `"eccodes_key": "#1#wigosIssuerOfIdentifier` (BUFR 元素 001126)
+    - **wigosIssueNumber** 映射到 `"eccodes_key": "#1#wigosIssueNumber"` (BUFR 元素 001127)
+    - **wigosLocalIdentifierCharacter** 映射到 `"eccodes_key": "#1#wigosLocalIdentifierCharacter"` (BUFR 元素 001128)
+    - **airTemperature** 映射到 `"eccodes_key": "#1#airTemperature"` (BUFR 元素 012101)
 
-您创建的映射模板缺少关于观测的关键信息，例如观测的日期和时间，以及站点的纬度和经度。
+您创建的映射模板缺少关于观测的关键元数据，例如观测的日期和时间，以及站点的纬度和经度。
 
 接下来，我们将更新映射模板并添加以下序列：
 
@@ -107,7 +109,7 @@ cat /data/wis2box/mappings/my_custom_template.json
 执行以下命令更新映射模板：
 
 ```bash
-csv2bufr mappings create 301150 301011 301012 301023 007031 012101 010004 --output /data/wis2box/mappings/my_custom_template.json
+csv2bufr mappings create 301150 301011 301012 301023 007031 012101 010004  --output /data/wis2box/mappings/my_custom_template.json
 ```
 
 再次检查映射模板的内容：
@@ -118,7 +120,7 @@ cat /data/wis2box/mappings/my_custom_template.json
 
 !!! question "检查更新后的映射模板"
 
-    现在有多少个 CSV 列被映射到 BUFR 元素？每个 BUFR 元素映射的 CSV 标题是什么？
+    现在有多少 CSV 列被映射到 BUFR 元素？每个 BUFR 元素映射的 CSV 标题是什么？
 
 ??? success "点击查看答案"
     
@@ -132,20 +134,20 @@ cat /data/wis2box/mappings/my_custom_template.json
 
     以下 CSV 列被映射到 BUFR 元素：
 
-    - **wigosIdentifierSeries** 映射到 `"eccodes_key": "#1#wigosIdentifierSeries"`（BUFR 元素 001125）
-    - **wigosIssuerOfIdentifier** 映射到 `"eccodes_key": "#1#wigosIssuerOfIdentifier"`（BUFR 元素 001126）
-    - **wigosIssueNumber** 映射到 `"eccodes_key": "#1#wigosIssueNumber"`（BUFR 元素 001127）
-    - **wigosLocalIdentifierCharacter** 映射到 `"eccodes_key": "#1#wigosLocalIdentifierCharacter"`（BUFR 元素 001128）
-    - **year** 映射到 `"eccodes_key": "#1#year"`（BUFR 元素 004001）
-    - **month** 映射到 `"eccodes_key": "#1#month"`（BUFR 元素 004002）
-    - **day** 映射到 `"eccodes_key": "#1#day"`（BUFR 元素 004003）
-    - **hour** 映射到 `"eccodes_key": "#1#hour"`（BUFR 元素 004004）
-    - **minute** 映射到 `"eccodes_key": "#1#minute"`（BUFR 元素 004005）
-    - **latitude** 映射到 `"eccodes_key": "#1#latitude"`（BUFR 元素 005002）
-    - **longitude** 映射到 `"eccodes_key": "#1#longitude"`（BUFR 元素 006002）
-    - **heightOfBarometerAboveMeanSeaLevel** 映射到 `"eccodes_key": "#1#heightOfBarometerAboveMeanSeaLevel"`（BUFR 元素 007031）
-    - **airTemperature** 映射到 `"eccodes_key": "#1#airTemperature"`（BUFR 元素 012101）
-    - **nonCoordinatePressure** 映射到 `"eccodes_key": "#1#nonCoordinatePressure"`（BUFR 元素 010004）
+    - **wigosIdentifierSeries** 映射到 `"eccodes_key": "#1#wigosIdentifierSeries"` (BUFR 元素 001125)
+    - **wigosIssuerOfIdentifier** 映射到 `"eccodes_key": "#1#wigosIssuerOfIdentifier` (BUFR 元素 001126)
+    - **wigosIssueNumber** 映射到 `"eccodes_key": "#1#wigosIssueNumber"` (BUFR 元素 001127)
+    - **wigosLocalIdentifierCharacter** 映射到 `"eccodes_key": "#1#wigosLocalIdentifierCharacter"` (BUFR 元素 001128)
+    - **year** 映射到 `"eccodes_key": "#1#year"` (BUFR 元素 004001)
+    - **month** 映射到 `"eccodes_key": "#1#month"` (BUFR 元素 004002)
+    - **day** 映射到 `"eccodes_key": "#1#day"` (BUFR 元素 004003)
+    - **hour** 映射到 `"eccodes_key": "#1#hour"` (BUFR 元素 004004)
+    - **minute** 映射到 `"eccodes_key": "#1#minute"` (BUFR 元素 004005)
+    - **latitude** 映射到 `"eccodes_key": "#1#latitude"` (BUFR 元素 005002)
+    - **longitude** 映射到 `"eccodes_key": "#1#longitude"` (BUFR 元素 006002)
+    - **heightOfBarometerAboveMeanSeaLevel** 映射到 `"eccodes_key": "#1#heightOfBarometerAboveMeanSeaLevel"` (BUFR 元素 007031)
+    - **airTemperature** 映射到 `"eccodes_key": "#1#airTemperature"` (BUFR 元素 012101)
+    - **nonCoordinatePressure** 映射到 `"eccodes_key": "#1#nonCoordinatePressure"` (BUFR 元素 010004)
 
 检查目录 `/wis2box-api/data-conversion-exercises` 中文件 `custom_template_data.csv` 的内容：
 
@@ -154,9 +156,9 @@ cd /wis2box-api/data-conversion-exercises
 cat custom_template_data.csv
 ```
 
-请注意，此 CSV 文件的标题与您创建的映射模板中的 CSV 标题相同。
+请注意，此 CSV 文件的表头与您创建的映射模板中的 CSV 表头相同。
 
-要测试数据转换，我们可以使用 `csv2bufr` 命令行工具，通过我们创建的映射模板将 CSV 文件转换为 BUFR：
+为了测试数据转换，我们可以使用 `csv2bufr` 命令行工具，通过我们创建的映射模板将 CSV 文件转换为 BUFR：
 
 ```bash
 csv2bufr data transform --bufr-template my_custom_template /wis2box-api/data-conversion-exercises/custom_template_data.csv
@@ -173,12 +175,12 @@ CLI:    End of processing, exiting.
 
 !!! question "检查 BUFR 文件的内容"
     
-    如何检查刚刚创建的 BUFR 文件的内容，并验证数据是否正确编码？
+    如何检查刚刚创建的 BUFR 文件的内容，并验证其是否正确编码了数据？
 
 ??? success "点击查看答案"
 
     您可以使用 `bufr_dump -p` 命令检查刚刚创建的 BUFR 文件的内容。
-    该命令将以人类可读的格式显示 BUFR 文件的内容。
+    该命令会以人类可读的格式显示 BUFR 文件的内容。
 
     ```bash
     bufr_dump -p ./WIGOS_0-20000-0-15015_20250412T210000.bufr4
@@ -198,7 +200,7 @@ exit
 
 ### 在 wis2box 中使用映射模板
 
-为了确保 wis2box-api 容器能够识别新的映射模板，您需要重启容器：
+为了确保 wis2box-api 容器能够识别新的映射模板，您需要重启该容器：
 
 ```bash
 docker restart wis2box-api
@@ -206,11 +208,11 @@ docker restart wis2box-api
 
 您现在可以在 wis2box-webapp 中配置您的数据集，以使用 CSV 到 BUFR 转换插件的自定义映射模板。
 
-wis2box-webapp 将自动检测您创建的映射模板，并在 CSV 到 BUFR 转换插件的模板列表中提供该模板。
+wis2box-webapp 会自动检测您创建的映射模板，并将其列入 CSV 到 BUFR 转换插件的模板列表中。
 
-点击您在之前实践课程中创建的数据集，然后点击插件名称为 "CSV data converted to BUFR" 旁边的 "UPDATE" 按钮：
+点击您在之前实践中创建的数据集，然后点击插件名称为 "CSV data converted to BUFR" 旁边的 "UPDATE" 按钮：
 
-<img alt="显示 wis2box-webapp 中数据集编辑器的图片" src="/../assets/img/wis2box-webapp-data-mapping-update-csv2bufr.png"/>
+<img alt="显示 wis2box-webapp 数据集编辑器的图片" src="/../assets/img/wis2box-webapp-data-mapping-update-csv2bufr.png"/>
 
 您应该会在可用模板列表中看到您创建的新模板：
 
@@ -218,38 +220,38 @@ wis2box-webapp 将自动检测您创建的映射模板，并在 CSV 到 BUFR 转
 
 !!! hint
 
-    如果您没有看到创建的新模板，请尝试刷新页面或在新的隐身窗口中打开页面。
+    如果您没有看到新创建的模板，请尝试刷新页面或在新的隐私窗口中打开页面。
 
-目前，请保持默认选择的 AWS 模板（点击右上角关闭插件配置）。
+目前，请保持 AWS 模板的默认选择（点击右上角关闭插件配置）。
 
 ## 使用 'AWS' 模板
 
-'AWS' 模板提供了将 CSV 数据映射到 BUFR 序列 301150 和 307096 的映射模板，以支持最低 GBON 要求。
+'AWS' 模板提供了将 CSV 数据映射到 BUFR 序列 301150 和 307096 的模板，以支持最低 GBON 要求。
 
 AWS 模板的描述可以在此处找到：[aws-template](./../csv2bufr-templates/aws-template.md)。
 
 ### 查看 aws-example 输入数据
 
-从以下链接下载本次练习的示例文件：
+从以下链接下载本练习的示例文件：
 
 [aws-example.csv](./../sample-data/aws-example.csv)
 
 在编辑器中打开您下载的文件并检查内容：
 
 !!! question
-    检查日期、时间以及标识字段（WIGOS 和传统标识符），您注意到了什么？今天的日期将如何表示？
+    检查日期、时间和标识字段（WIGOS 和传统标识符），您注意到了什么？今天的日期将如何表示？
 
 ??? success "点击查看答案"
-    每列包含一条信息。例如，日期被分为年、月和日，这与 BUFR 中数据的存储方式一致。今天的日期将分布在 "year"、"month" 和 "day" 列中。同样，时间需要分为 "hour" 和 "minute"，而 WIGOS 站点标识符需要分为其各自的组成部分。
+    每列包含一条独立的信息。例如，日期被分为年、月和日，与 BUFR 中数据的存储方式一致。今天的日期将分布在 "year"、"month" 和 "day" 列中。同样，时间需要分为 "hour" 和 "minute"，WIGOS 站点标识符需要分为其各自的组成部分。
 
 !!! question
     查看数据文件，缺失数据是如何编码的？
     
 ??? success "点击查看答案"
-    文件中的缺失数据通过空单元格表示。在 CSV 文件中，这将被编码为 ``,,``。请注意，这是一个空单元格，而不是编码为零长度字符串，例如 ``,"",``。
+    文件中的缺失数据通过空单元格表示。在 CSV 文件中，这将编码为 ``,,``。请注意，这是一个空单元格，而不是编码为零长度字符串，例如 ``,"",``。
 
 !!! hint "缺失数据"
-    需要注意的是，由于传感器故障或参数未被观测等原因，数据可能会缺失。在这些情况下，缺失数据可以按照上述答案进行编码，报告中的其他数据仍然有效。
+    我们认识到数据可能由于各种原因缺失，例如传感器故障或未观测到的参数。在这些情况下，缺失数据可以按照上述答案进行编码，报告中的其他数据仍然有效。
 
 ### 更新示例文件
 
@@ -271,17 +273,17 @@ AWS 模板的描述可以在此处找到：[aws-template](./../csv2bufr-template
 
 <img alt="显示 MinIO UI 中上传 aws-example 的图片" src="/../assets/img/minio-upload-aws-example.png"/></center>
 
-在 `http://YOUR-HOST:3000` 的 Grafana 仪表板中检查是否有 WARNINGS 或 ERRORS。如果看到任何警告或错误，请尝试修复并重复练习。
+检查 Grafana 仪表板 `http://YOUR-HOST:3000` 是否有任何 WARNINGS 或 ERRORS。如果有，请尝试修复并重复练习。
 
-检查 MQTT Explorer，查看是否收到 WIS2 数据通知。
+检查 MQTT Explorer 是否接收到 WIS2 数据通知。
 
-如果您成功导入了数据，您应该会在 MQTT Explorer 中的主题 `origin/a/wis2/<centre-id>/data/weather/surface-weather-observations/synop` 上看到 3 条通知，这些通知对应于您报告数据的 3 个站点：
+如果您成功导入了数据，您应该会在 MQTT Explorer 的主题 `origin/a/wis2/<centre-id>/data/weather/surface-weather-observations/synop` 中看到 3 条通知，这些通知对应于您报告数据的 3 个站点：
 
-<img width="450" alt="显示上传 AWS 后 MQTT explorer 的图片" src="/../assets/img/mqtt-explorer-aws-upload.png"/>
+<img width="450" alt="显示上传 AWS 后的 MQTT Explorer 图片" src="/../assets/img/mqtt-explorer-aws-upload.png"/>
 
 ## 使用 'DayCLI' 模板
 
-**DayCLI** 模板提供了将每日气候 CSV 数据映射到 BUFR 序列 307075 的映射模板，以支持每日气候数据的报告。
+**DayCLI** 模板提供了将每日气候 CSV 数据映射到 BUFR 序列 307075 的模板，以支持每日气候数据的报告。
 
 DAYCLI 模板的描述可以在此处找到：[daycli-template](./../csv2bufr-templates/daycli-template.md)。
 
@@ -289,23 +291,23 @@ DAYCLI 模板的描述可以在此处找到：[daycli-template](./../csv2bufr-te
 
 ### 为发布 DAYCLI 消息创建 wis2box 数据集
 
-转到 wis2box-webapp 中的数据集编辑器并创建一个新数据集。使用与之前实践课程相同的 centre-id，并选择 **Data Type='climate/surface-based-observations/daily'**：
+转到 wis2box-webapp 中的数据集编辑器并创建一个新数据集。使用与之前实践中相同的 centre-id，并选择 **Data Type='climate/surface-based-observations/daily'**：
 
 <img alt="在 wis2box-webapp 中为 DAYCLI 创建新数据集的图片" src="/../assets/img/wis2box-webapp-create-dataset-daycli.png"/>
 
-点击 "CONTINUE TO FORM"，为您的数据集添加描述，设置边界框，并提供数据集的联系信息。完成所有部分后，点击 'VALIDATE FORM' 并检查表单。
+点击 "CONTINUE TO FORM"，为您的数据集添加描述，设置边界框并提供数据集的联系信息。完成所有部分后，点击 'VALIDATE FORM' 并检查表单。
 
 查看数据集的数据插件。点击插件名称为 "CSV data converted to BUFR" 旁边的 "UPDATE"，您将看到模板设置为 **DayCLI**：
 
 <img alt="将数据插件更新为使用 DAYCLI 模板的图片" src="/../assets/img/wis2box-webapp-update-data-plugin-daycli.png"/>
 
-关闭插件配置，并使用您在之前实践课程中创建的身份验证令牌提交表单。
+关闭插件配置，并使用您在之前实践中创建的身份验证令牌提交表单。
 
 现在，您应该在 wis2box-webapp 中有第二个数据集，该数据集配置为使用 DAYCLI 模板将 CSV 数据转换为 BUFR。
 
 ### 查看 daycli-example 输入数据
 
-从以下链接下载本次练习的示例文件：
+从以下链接下载本练习的示例文件：
 
 [daycli-example.csv](./../sample-data/daycli-example.csv)
 
@@ -322,14 +324,15 @@ DAYCLI 模板的描述可以在此处找到：[daycli-template](./../csv2bufr-te
 示例文件包含一个月中每天的一行数据，并报告一个站点的数据。更新您下载的示例文件以使用今天的日期和时间，并将 WIGOS 站点标识符更改为您在 wis2box-webapp 中注册的站点。
 
 ### 将数据上传到 MinIO 并检查结果
+```
 
-如前所述，您需要将数据上传到 MinIO 中的 'wis2box-incoming' 存储桶，以便通过 csv2bufr 转换器进行处理。这次，您需要在 MinIO 存储桶中创建一个新文件夹，该文件夹名称需与您使用模板 `climate/surface-based-observations/daily` 创建的数据集的 dataset-id 相匹配，这将与您在之前练习中使用的 dataset-id 不同：
+正如之前所述，您需要将数据上传到 MinIO 中的 'wis2box-incoming' 存储桶，以便通过 csv2bufr 转换器进行处理。这次，您需要在 MinIO 存储桶中创建一个新文件夹，该文件夹名称需与您使用模板 `climate/surface-based-observations/daily` 创建的数据集的 dataset-id 相匹配，这将与您在上一个练习中使用的 dataset-id 不同：
 
 <img alt="Image showing MinIO UI with DAYCLI-example uploaded" src="/../assets/img/minio-upload-daycli-example.png"/></center>
 
-上传数据后，请检查 Grafana 仪表板中是否没有 WARNINGS 或 ERRORS，并使用 MQTT Explorer 检查是否接收到 WIS2 数据通知。
+上传数据后，请检查 Grafana 仪表板中是否没有 WARNINGS 或 ERRORS，并使用 MQTT Explorer 检查是否收到 WIS2 数据通知。
 
-如果您成功导入了数据，您应该会在 MQTT Explorer 中的主题 `origin/a/wis2/<centre-id>/data/climate/surface-based-observations/daily` 上看到 30 条通知，这对应于您报告数据的月份中的 30 天：
+如果您成功导入了数据，您应该在 MQTT Explorer 中的主题 `origin/a/wis2/<centre-id>/data/climate/surface-based-observations/daily` 上看到 30 条通知，表示您报告的月份中有 30 天的数据：
 
 <img width="450" alt="Image showing MQTT explorer after uploading DAYCLI" src="/../assets/img/mqtt-daycli-template-success.png"/>
 

@@ -1,8 +1,8 @@
 ---
-title: Découvrir des ensembles de données depuis le WIS2 Global Discovery Catalogue
+title: Découverte des ensembles de données depuis le WIS2 Global Discovery Catalogue
 ---
 
-# Découvrir des ensembles de données depuis le WIS2 Global Discovery Catalogue
+# Découverte des ensembles de données depuis le WIS2 Global Discovery Catalogue
 
 !!! abstract "Objectifs d'apprentissage !"
 
@@ -20,14 +20,14 @@ Actuellement, les GDC suivants sont disponibles :
 - Administration météorologique de Chine : <https://gdc.wis.cma.cn>
 - Deutscher Wetterdienst : <https://wis2.dwd.de/gdc>
 
-Pendant les sessions de formation locale, un GDC local est configuré pour permettre aux participants d'interroger le GDC pour les métadonnées qu'ils ont publiées depuis leurs instances de wis2box. Dans ce cas, les formateurs fourniront l'URL du GDC local.
+Lors des sessions de formation locale, un GDC local est configuré pour permettre aux participants d'interroger le GDC pour les métadonnées qu'ils ont publiées depuis leurs instances de wis2box. Dans ce cas, les formateurs fourniront l'URL du GDC local.
 
 ## Préparation
 
 !!! note
     Avant de commencer, veuillez vous connecter à votre VM étudiant.
 
-## Installer pywiscat
+## Installation de pywiscat
 
 Utilisez l'installateur de paquets Python `pip3` pour installer pywiscat sur votre VM :
 ```bash
@@ -57,7 +57,7 @@ Vérifiez que l'installation a réussi :
 pywiscat --version
 ```
 
-## Trouver des données avec pywiscat
+## Recherche de données avec pywiscat
 
 Par défaut, pywiscat se connecte au Global Discovery Catalogue (GDC) hébergé par Environnement et Changement climatique Canada (ECCC).
 
@@ -113,7 +113,7 @@ Essayez des requêtes supplémentaires avec `-q`.
     - `-q "synop OR temp"` : trouver tous les enregistrements contenant "synop" ou "temp"
     - `-q "obs*"` : recherche approximative
 
-    Lorsque vous recherchez des termes avec des espaces, placez-les entre guillemets doubles.
+    Lors de la recherche de termes contenant des espaces, utilisez des guillemets doubles.
 
 Obtenons plus de détails sur un résultat de recherche spécifique qui nous intéresse :
 
