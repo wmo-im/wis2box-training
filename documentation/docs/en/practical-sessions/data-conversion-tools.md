@@ -49,10 +49,10 @@ These modules can be used standalone or as part of the wis2box stack.
 
 To use the BUFR command-line tools, you will need to be logged in to the wis2box-api container. Unless specified otherwise, all commands should be run on this container. You will also need to have MQTT Explorer open and connected to your broker.
 
-First, connect to your student VM via your SSH client and copy the exercise materials to the wis2box-api container:
+First, connect to your student VM via your SSH client and copy the exercise materials to "/wis2box-api"-directory inside the wis2box-api container:
 
 ```bash
-docker cp ~/exercise-materials/data-conversion-exercises wis2box-api:/root
+docker cp ~/exercise-materials/data-conversion-exercises wis2box-api:/wis2box-api
 ```
 
 Then log in to the wis2box-api container and change to the directory where the exercise materials are located:
@@ -60,7 +60,6 @@ Then log in to the wis2box-api container and change to the directory where the e
 ```bash
 cd ~/wis2box
 python3 wis2box-ctl.py login wis2box-api
-cd /root/data-conversion-exercises
 ```
 
 Confirm that the tools are available, starting with ecCodes:
@@ -72,7 +71,7 @@ bufr_dump -V
 You should get the following response:
 
 ```
-ecCodes Version 2.36.0
+ecCodes Version 2.44.1
 ```
 
 Next, check the synop2bufr version:
@@ -105,6 +104,12 @@ The ecCodes library included in the wis2box-api container provides a number of c
 The next exercises demonstrate how to use `bufr_ls` and `bufr_dump` to check the content of a BUFR file.
 
 ### bufr_ls
+
+Make sure you are in the directory `/wis2box-api/data-conversion-exercises`:
+
+```bash
+cd /wis2box-api/data-conversion-exercises
+```
 
 In this first exercise, you will use the `bufr_ls` command to inspect the headers of a BUFR file and determine the type of the contents of the file.
 
@@ -281,7 +286,7 @@ The next few exercises will demonstrate how the `synop2bufr`-module works and ho
 Inspect the example SYNOP message file for this exercise `synop_message.txt`:
 
 ```bash
-cd /root/data-conversion-exercises
+cd /wis2box-api/data-conversion-exercises
 more synop_message.txt
 ```
 
@@ -434,12 +439,16 @@ Into the `SYNOP message` text area:
 ## csv2bufr conversion
 
 !!! note
-    Make sure you are still logged in the wis2box-api container and in the directory `/root/data-conversion-exercises`, if you exited the container in the previous exercise, you can log in again as follows:
+    Make sure you are still logged in the wis2box-api container and in the directory `/wis2box-api/data-conversion-exercises`, if you exited the container in the previous exercise, you can log in again as follows:
 
     ```bash
     cd ~/wis2box
     python3 wis2box-ctl.py login wis2box-api
-    cd /root/data-conversion-exercises
+    ```
+    And change to the exercise directory:
+    
+    ```bash
+    cd /wis2box-api/data-conversion-exercises
     ```
 
 Now let's look at how the convert CSV data to BUFR format using the `csv2bufr` module. The module is installed in the wis2box-api container and can be used from the command line as follows:
@@ -543,8 +552,7 @@ This returns a large JSON file, providing the mapping for 43 CSV columns.
 
 Let's attempt to convert the file to BUFR format using the `csv2bufr` command:
 
-```{.copy}
-cd /root/data-conversion-exercises
+```bash
 csv2bufr data transform --bufr-template aws-template ./aws-example.csv
 ```
 
@@ -613,4 +621,3 @@ For information on how to create and use custom BUFR-mapping-templates see the n
     - how to use `synop2bufr` to convert FM-12 SYNOP reports to BUFR from the command line
     - how to use the SYNOP Form in the wis2box-webapp to convert FM-12 SYNOP reports to BUFR
     - how to use `csv2bufr` to convert CSV data to BUFR from the command line
-
