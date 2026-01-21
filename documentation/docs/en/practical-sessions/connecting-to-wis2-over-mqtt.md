@@ -20,41 +20,44 @@ This is an example of the WIS2 notification message structure for a message rece
 
 ```json
 {
-  "id": "59f9b013-c4b3-410a-a52d-fff18f3f1b47",
-  "type": "Feature",
-  "version": "v04",
-  "geometry": {
-    "coordinates": [
-      -38.69389,
-      -17.96472,
-      60
-    ],
-    "type": "Point"
-  },
-  "properties": {
-    "data_id": "br-inmet:synop-obs/WIGOS_0-20000-0-82022_20251114T180000",
-    "datetime": "2025-11-14T18:00:00Z",
-    "pubtime": "2025-11-14T20:49:31Z",
-    "metadata_id": "urn:wmo:md:br-inmet:synop-obs",
-    "integrity": {
-      "method": "sha512",
-      "value": "TBuWycx/G0lIiTo47eFPBViGutxcIyk7eikppAKPc4aHgOmTIS5Wb9+0v3awMOyCgwpFhTruRRCVReMQMp5kYw=="
-    },
-    "content": {
-      "encoding": "base64",
-      "value": "QlVGUgAA+gQAABYAACsAAAAAAAIAHAAH6AgPBgAAAAALAAABgMGWx1AAAM0ABOIAAAODM0OTkAAAAAAAAAAAAAAKb5oKEpJ6YkJ6mAAAAAAAAAAAAAAAAv0QeYA29WQa87ZhH4CQP//z+P//BD////+ASznXuUb///8MgAS3/////8X///e+AP////AB/+R/yf////////////////////6/1/79H/3///gEt////////4BLP6QAf/+/pAB//4H0YJ/YeAh/f2///7TH/////9+j//f///////////////////v0f//////////////////////wNzc3Nw==",
-      "size": 250
-    },
-    "wigos_station_identifier": "0-20000-0-82022"
-  },
-  "links": [
-    {
-      "rel": "canonical",
-      "type": "application/bufr",
-      "href": "http://wis2bra.inmet.gov.br/data/2025-11-14/wis/urn:wmo:md:br-inmet:synop-man/WIGOS_0-20000-0-82022_20251114T180000.bufr4"",
-      "length": 250
-    }
-  ]
+   "id":"3c14d7bf-e6b9-4f59-b4ea-f2fc52a33cd3",
+   "type":"Feature",
+   "conformsTo":[
+      "http://wis.wmo.int/spec/wnm/1/conf/core"
+   ],
+   "geometry":{
+      "coordinates":[
+         -99.1964,
+         19.404,
+         2314
+      ],
+      "type":"Point"
+   },
+   "properties":{
+      "data_id":"br-inmet:data:core:weather:surface-based-observations:synop/WIGOS_0-20000-0-76679_20250206T231600",
+      "datetime":"2025-02-06T23:16:00Z",
+      "pubtime":"2026-01-20T13:14:52Z",
+      "integrity":{
+         "method":"sha512",
+         "value":"qtlI3Noay2I4zcdA1XCpn8vzVLIt0RKrR398VGFgTttc1XRUVb4dHWNCDKPXUo4mNkiFKx5TTHBvrxlzqWmMnQ=="
+      },
+      "metadata_id":"urn:wmo:md:br-inmet:data:core:weather:surface-based-observations:synop",
+      "wigos_station_identifier":"0-20000-0-76679"
+   },
+   "links":[
+      {
+         "rel":"canonical",
+         "type":"application/bufr",
+         "href":"http://localhost/data/2025-02-06/wis/urn:wmo:md:br-inmet:data:core:weather:surface-based-observations:synop/WIGOS_0-20000-0-76679_20250206T231600.bufr4",
+         "length":125117
+      },
+      {
+         "rel":"via",
+         "type":"text/html",
+         "href":"https://oscar.wmo.int/surface/#/search/station/stationReportDetails/0-20000-0-76679"
+      }
+   ],
+   "generated_by":"wis2box 1.2.0"
 }
 ``` 
 
