@@ -1,8 +1,8 @@
 ---
-title: Initialisation de wis2box
+title: Initialiser wis2box
 ---
 
-# Initialisation de wis2box
+# Initialiser wis2box
 
 !!! abstract "Objectifs d'apprentissage"
 
@@ -12,17 +12,17 @@ title: Initialisation de wis2box
     - démarrer wis2box et vérifier l'état de ses composants
     - consulter le contenu de **wis2box-api**
     - accéder à **wis2box-webapp**
-    - se connecter au **wis2box-broker** local en utilisant MQTT Explorer
+    - se connecter au **wis2box-broker** local à l'aide de MQTT Explorer
 
 !!! note
 
     Les supports de formation actuels sont basés sur wis2box-release 1.2.0. 
     
-    Consultez [accessing-your-student-vm](./accessing-your-student-vm.md) pour des instructions sur la manière de télécharger et d'installer la pile logicielle wis2box si vous suivez cette formation en dehors d'une session de formation locale.
+    Consultez [accessing-your-student-vm](./accessing-your-student-vm.md) pour des instructions sur la façon de télécharger et d'installer la pile logicielle wis2box si vous suivez cette formation en dehors d'une session de formation locale.
 
 ## Préparation
 
-Connectez-vous à votre VM désignée avec votre nom d'utilisateur et mot de passe, et assurez-vous d'être dans le répertoire `wis2box` :
+Connectez-vous à votre VM désignée avec votre nom d'utilisateur et votre mot de passe, et assurez-vous d'être dans le répertoire `wis2box` :
 
 ```bash
 cd ~/wis2box
@@ -35,7 +35,7 @@ La configuration initiale de wis2box nécessite :
 - un fichier d'environnement `wis2box.env` contenant les paramètres de configuration
 - un répertoire sur la machine hôte à partager entre la machine hôte et les conteneurs wis2box, défini par la variable d'environnement `WIS2BOX_HOST_DATADIR`
 
-Le script `wis2box-create-config.py` peut être utilisé pour créer la configuration initiale de votre wis2box.
+Le script `wis2box-create-config.py` peut être utilisé pour créer la configuration initiale de votre wis2box. 
 
 Il vous posera une série de questions pour vous aider à configurer votre environnement.
 
@@ -53,7 +53,7 @@ Le script vous demandera d'entrer le répertoire à utiliser pour la variable d'
 
 Notez que vous devez définir le chemin complet vers ce répertoire.
 
-Par exemple, si votre nom d'utilisateur est `username`, le chemin complet du répertoire est `/home/username/wis2box-data` :
+Par exemple, si votre nom d'utilisateur est `username`, le chemin complet vers le répertoire est `/home/username/wis2box-data` :
 
 ```{.copy}
 username@student-vm-username:~/wis2box$ python3 wis2box-create-config.py
@@ -68,7 +68,7 @@ The directory /home/username/wis2box-data has been created.
 
 ### URL de wis2box
 
-Ensuite, il vous sera demandé d'entrer l'URL de votre wis2box. C'est l'URL qui sera utilisée pour accéder à l'application web, à l'API et à l'interface utilisateur de wis2box.
+Ensuite, il vous sera demandé d'entrer l'URL de votre wis2box. Il s'agit de l'URL qui sera utilisée pour accéder à l'application web, à l'API et à l'interface utilisateur de wis2box.
 
 Veuillez utiliser `http://<your-hostname-or-ip>` comme URL.
 
@@ -88,7 +88,7 @@ Vous pouvez utiliser l'option de génération aléatoire de mots de passe lorsqu
 
 Ne vous inquiétez pas de mémoriser ces mots de passe, ils seront stockés dans le fichier `wis2box.env` dans votre répertoire wis2box.
 
-### Vérification de `wis2box.env`
+### Vérification du fichier `wis2box.env`
 
 Une fois le script terminé, vérifiez le contenu du fichier `wis2box.env` dans votre répertoire actuel :
 
@@ -116,7 +116,7 @@ Ou vérifiez le contenu du fichier via WinSCP.
 
     La valeur par défaut pour WIS2BOX_STORAGE_DATA_RETENTION_DAYS est de 30 jours. Vous pouvez modifier cette valeur pour un autre nombre de jours si vous le souhaitez.
     
-    Le conteneur wis2box-management exécute un cronjob quotidien pour supprimer les données plus anciennes que le nombre de jours défini par WIS2BOX_STORAGE_DATA_RETENTION_DAYS du bucket `wis2box-public` et du backend API :
+    Le conteneur wis2box-management exécute une tâche cron quotidiennement pour supprimer les données plus anciennes que le nombre de jours défini par WIS2BOX_STORAGE_DATA_RETENTION_DAYS du bucket `wis2box-public` et du backend de l'API :
     
     ```{.copy}
     0 0 * * * su wis2box -c "wis2box data clean --days=$WIS2BOX_STORAGE_DATA_RETENTION_DAYS"
@@ -165,13 +165,13 @@ python3 wis2box-ctl.py status
 Répétez cette commande jusqu'à ce que tous les services soient opérationnels.
 
 !!! note "wis2box et Docker"
-    wis2box fonctionne comme un ensemble de conteneurs Docker gérés par docker-compose.
+    wis2box s'exécute sous forme d'un ensemble de conteneurs Docker gérés par docker-compose.
     
     Les services sont définis dans les différents fichiers `docker-compose*.yml` qui se trouvent dans le répertoire `~/wis2box/`.
     
     Le script Python `wis2box-ctl.py` est utilisé pour exécuter les commandes Docker Compose sous-jacentes qui contrôlent les services wis2box.
 
-    Vous n'avez pas besoin de connaître les détails des conteneurs Docker pour exécuter la pile logicielle wis2box, mais vous pouvez inspecter les fichiers `docker-compose*.yml` pour voir comment les services sont définis. Si vous souhaitez en savoir plus sur Docker, vous pouvez consulter la [documentation Docker](https://docs.docker.com/).
+    Vous n'avez pas besoin de connaître les détails des conteneurs Docker pour exécuter la pile logicielle wis2box, mais vous pouvez inspecter les fichiers `docker-compose*.yml` pour voir comment les services sont définis. Si vous souhaitez en savoir plus sur Docker, vous pouvez trouver plus d'informations dans la [documentation Docker](https://docs.docker.com/).
 
 Pour vous connecter au conteneur wis2box-management, utilisez la commande suivante :
 
@@ -179,13 +179,13 @@ Pour vous connecter au conteneur wis2box-management, utilisez la commande suivan
 python3 wis2box-ctl.py login
 ```
 
-Notez qu'après vous être connecté, votre invite changera, indiquant que vous êtes maintenant dans le conteneur wis2box-management :
+Notez qu'après vous être connecté, votre invite changera, indiquant que vous êtes maintenant à l'intérieur du conteneur wis2box-management :
 
 ```{bash}
 root@025381da3c40:/home/wis2box#
 ```
 
-Dans le conteneur wis2box-management, vous pouvez exécuter diverses commandes pour gérer votre wis2box, telles que :
+À l'intérieur du conteneur wis2box-management, vous pouvez exécuter diverses commandes pour gérer votre wis2box, telles que :
 
 - `wis2box auth add-token --path processes/wis2box` : pour créer un jeton d'autorisation pour le point de terminaison *processes/wis2box*
 - `wis2box data clean --days=<number-of-days>` : pour nettoyer les données plus anciennes qu'un certain nombre de jours du bucket *wis2box-public*
@@ -211,14 +211,14 @@ elasticsearch-exporter   quay.io/prometheuscommunity/elasticsearch-exporter:late
 grafana                  grafana/grafana-oss:9.0.3                                                        "/run.sh"                grafana                  Il y a environ une minute   En cours depuis environ une minute               0.0.0.0:3000->3000/tcp
 loki                     grafana/loki:2.4.1                                                               "/usr/bin/loki -conf…"   loki                     Il y a environ une minute   En cours depuis environ une minute               3100/tcp
 mosquitto                ghcr.io/world-meteorological-organization/wis2box-broker:1.2.0                   "/docker-entrypoint.…"   mosquitto                Il y a environ une minute   En cours depuis environ une minute               0.0.0.0:1883->1883/tcp, 0.0.0.0:8884->8884/tcp
-mqtt_metrics_collector   ghcr.io/world-meteorological-organization/wis2box-mqtt-metrics-collector:1.2.0   "python3 -u mqtt_met…"   mqtt_metrics_collector   Il y a environ une minute   En cours depuis 10 secondes                      8000/tcp, 0.0.0.0:8001->8001/tcp
-nginx                    nginx:alpine                                                                     "/docker-entrypoint.…"   web-proxy                Il y a environ une minute   En cours depuis 9 secondes                       0.0.0.0:80->80/tcp
+mqtt_metrics_collector   ghcr.io/world-meteorological-organization/wis2box-mqtt-metrics-collector:1.2.0   "python3 -u mqtt_met…"   mqtt_metrics_collector   Il y a environ une minute   En cours depuis 10 secondes                   8000/tcp, 0.0.0.0:8001->8001/tcp
+nginx                    nginx:alpine                                                                     "/docker-entrypoint.…"   web-proxy                Il y a environ une minute   En cours depuis 9 secondes                    0.0.0.0:80->80/tcp
 prometheus               prom/prometheus:v2.37.0                                                          "/bin/prometheus --c…"   prometheus               Il y a environ une minute   En cours depuis environ une minute               9090/tcp
-wis2box-api              ghcr.io/world-meteorological-organization/wis2box-api:1.2.0                      "/app/docker/es-entr…"   wis2box-api              Il y a environ une minute   En cours depuis 36 secondes (healthy)           
-wis2box-auth             ghcr.io/world-meteorological-organization/wis2box-auth:1.2.0                     "/entrypoint.sh"         wis2box-auth             Il y a environ une minute   En cours depuis 10 secondes                     
-wis2box-management       ghcr.io/world-meteorological-organization/wis2box-management:1.2.0               "/home/wis2box/entry…"   wis2box-management       Il y a environ une minute   En cours depuis 12 secondes                     
+wis2box-api              ghcr.io/world-meteorological-organization/wis2box-api:1.2.0                      "/app/docker/es-entr…"   wis2box-api              Il y a environ une minute   En cours depuis 36 secondes (healthy)         
+wis2box-auth             ghcr.io/world-meteorological-organization/wis2box-auth:1.2.0                     "/entrypoint.sh"         wis2box-auth             Il y a environ une minute   En cours depuis 10 secondes                   
+wis2box-management       ghcr.io/world-meteorological-organization/wis2box-management:1.2.0               "/home/wis2box/entry…"   wis2box-management       Il y a environ une minute   En cours depuis 12 secondes                   
 wis2box-minio            minio/minio:RELEASE.2024-08-03T04-33-23Z-cpuv1                                   "/usr/bin/docker-ent…"   minio                    Il y a environ une minute   En cours depuis environ une minute (healthy)     0.0.0.0:8022->8022/tcp, 0.0.0.0:9000-9001->9000-9001/tcp
-wis2box-ui               ghcr.io/world-meteorological-organization/wis2box-ui:1.2.0                       "/docker-entrypoint.…"   wis2box-ui               Il y a environ une minute   En cours depuis 35 secondes                      0.0.0.0:9999->80/tcp
+wis2box-ui               ghcr.io/world-meteorological-organization/wis2box-ui:1.2.0                       "/docker-entrypoint.…"   wis2box-ui               Il y a environ une minute   En cours depuis 35 secondes                   0.0.0.0:9999->80/tcp
 wis2box-webapp           ghcr.io/world-meteorological-organization/wis2box-webapp:1.2.0                   "sh /wis2box-webapp/…"   wis2box-webapp           Il y a environ une minute   En cours depuis environ une minute (unhealthy)   4173/tcp
 wis2downloader           ghcr.io/wmo-im/wis2downloader:v0.3.2                                             "/home/wis2downloade…"   wis2downloader           Il y a environ une minute   En cours depuis environ une minute (healthy)
 
@@ -247,7 +247,7 @@ Les volumes commençant par `wis2box_project_` sont utilisés pour stocker des d
 
 ## wis2box API
 
-Le wis2box contient une API (Interface de Programmation d'Applications) qui fournit un accès aux données et des processus pour la visualisation interactive, la transformation des données et leur publication.
+Le wis2box contient une API (Interface de Programmation d'Applications) qui fournit un accès aux données et des processus pour la visualisation interactive, la transformation et la publication des données.
 
 Ouvrez un nouvel onglet et accédez à la page `http://YOUR-HOST/oapi`.
 
@@ -280,13 +280,13 @@ Ceci est la page d'accueil de l'API wis2box (exécutée via le conteneur **wis2b
 
     Cliquez sur "Data notifications", puis cliquez sur `Browse through the items of "Data Notifications"`. 
     
-    Vous noterez que la page indique "No items" car aucune notification de données n'a encore été publiée.
+    Vous remarquerez que la page indique "No items" car aucune notification de données n'a encore été publiée.
 
 ## wis2box webapp
 
 Ouvrez un navigateur web et visitez la page `http://YOUR-HOST/wis2box-webapp`.
 
-Vous verrez une fenêtre contextuelle demandant votre nom d'utilisateur et votre mot de passe. Utilisez le nom d'utilisateur par défaut `wis2box-user` et le `WIS2BOX_WEBAPP_PASSWORD` défini dans le fichier `wis2box.env`, puis cliquez sur "Sign in" :
+Vous verrez une fenêtre contextuelle demandant votre nom d'utilisateur et votre mot de passe. Utilisez le nom d'utilisateur par défaut `wis2box-user` et le mot de passe `WIS2BOX_WEBAPP_PASSWORD` défini dans le fichier `wis2box.env`, puis cliquez sur "Sign in" :
 
 !!! note 
 
@@ -304,14 +304,14 @@ Ceci est l'application web wis2box qui vous permet d'interagir avec votre wis2bo
 
 - créer et gérer des ensembles de données
 - mettre à jour/vérifier les métadonnées de vos stations
-- télécharger des observations manuelles à l'aide du formulaire synop FM-12
+- télécharger des observations manuelles en utilisant le formulaire FM-12 synop
 - surveiller les notifications publiées sur votre wis2box-broker
 
 Nous utiliserons cette application web dans une session ultérieure.
 
 ## wis2box-broker
 
-Ouvrez MQTT Explorer sur votre ordinateur et préparez une nouvelle connexion pour vous connecter à votre broker (exécuté via le conteneur **wis2box-broker**).
+Ouvrez le MQTT Explorer sur votre ordinateur et préparez une nouvelle connexion pour vous connecter à votre broker (exécuté via le conteneur **wis2box-broker**).
 
 Cliquez sur `+` pour ajouter une nouvelle connexion :
 
@@ -346,13 +346,14 @@ Utilisez les détails de connexion suivants, en veillant à remplacer la valeur 
     cat ~/wis2box/wis2box.env | grep WIS2BOX_BROKER_PASSWORD
     ```
 
-    Notez que ceci est votre mot de passe **interne** pour le broker. Le Global Broker utilisera des identifiants différents (en lecture seule) pour s'abonner à votre broker. Ne partagez jamais ce mot de passe avec quiconque.
+    Notez que ceci est votre mot de passe **interne** du broker, le Global Broker utilisera des identifiants différents (en lecture seule) pour s'abonner à votre broker. Ne partagez jamais ce mot de passe avec quiconque.
 
 Assurez-vous de cliquer sur "SAVE" pour enregistrer vos détails de connexion.
 
 Ensuite, cliquez sur "CONNECT" pour vous connecter à votre **wis2box-broker**.
 
 <img alt="mqtt-explorer-wis2box-broker.png" src="/../assets/img/mqtt-explorer-wis2box-broker.png" width="600">
+```
 
 Une fois connecté, vérifiez que les statistiques internes de mosquitto sont publiées par votre broker sous le sujet `$SYS` :
 

@@ -1,36 +1,36 @@
 ---
-title: Modèles de mappage CSV-vers-BUFR
+title: Modèles de correspondance CSV-vers-BUFR
 ---
 
-# Modèles de mappage CSV-vers-BUFR
+# Modèles de correspondance CSV-vers-BUFR
 
 !!! abstract "Objectifs d'apprentissage"
     À la fin de cette session pratique, vous serez capable de :
 
-    - créer un nouveau modèle de mappage BUFR pour vos données CSV
-    - modifier et déboguer votre modèle de mappage BUFR personnalisé depuis la ligne de commande
-    - configurer le plugin de données CSV-vers-BUFR pour utiliser un modèle de mappage BUFR personnalisé
+    - créer un nouveau modèle de correspondance BUFR pour vos données CSV
+    - modifier et déboguer votre modèle de correspondance BUFR personnalisé depuis la ligne de commande
+    - configurer le plugin de données CSV-vers-BUFR pour utiliser un modèle de correspondance BUFR personnalisé
     - utiliser les modèles intégrés AWS et DAYCLI pour convertir des données CSV en BUFR
 
 ## Introduction
 
-Les fichiers de données au format CSV (valeurs séparées par des virgules) sont souvent utilisés pour enregistrer des données d'observation et d'autres données sous forme tabulaire. La plupart des enregistreurs de données utilisés pour capturer les sorties des capteurs peuvent exporter les observations dans des fichiers délimités, y compris au format CSV. De même, lorsqu'on ingère des données dans une base de données, il est facile d'exporter les données nécessaires dans des fichiers au format CSV.
+Les fichiers de données au format CSV (valeurs séparées par des virgules) sont souvent utilisés pour enregistrer des observations et d'autres données sous forme tabulaire. La plupart des enregistreurs de données utilisés pour collecter les sorties des capteurs peuvent exporter les observations dans des fichiers délimités, y compris au format CSV. De même, lorsqu'on ingère des données dans une base de données, il est facile d'exporter les données nécessaires sous forme de fichiers formatés en CSV.
 
-Le module `wis2box csv2bufr` fournit un outil en ligne de commande pour convertir des données CSV au format BUFR. Lors de l'utilisation de `csv2bufr`, vous devez fournir un modèle de mappage BUFR qui associe les colonnes CSV aux éléments BUFR correspondants. Si vous ne souhaitez pas créer votre propre modèle de mappage, vous pouvez utiliser les modèles intégrés AWS et DAYCLI pour convertir des données CSV en BUFR, mais vous devrez vous assurer que les données CSV que vous utilisez sont au format correct pour ces modèles. Si vous souhaitez décoder des paramètres qui ne sont pas inclus dans les modèles AWS et DAYCLI, vous devrez créer votre propre modèle de mappage.
+Le module `wis2box csv2bufr` fournit un outil en ligne de commande pour convertir des données CSV au format BUFR. Lors de l'utilisation de `csv2bufr`, vous devez fournir un modèle de correspondance BUFR qui associe les colonnes CSV aux éléments BUFR correspondants. Si vous ne souhaitez pas créer votre propre modèle de correspondance, vous pouvez utiliser les modèles intégrés AWS et DAYCLI pour convertir des données CSV en BUFR, mais vous devrez vous assurer que les données CSV que vous utilisez sont au format correct pour ces modèles. Si vous souhaitez décoder des paramètres qui ne sont pas inclus dans les modèles AWS et DAYCLI, vous devrez créer votre propre modèle de correspondance.
 
-Dans cette session, vous apprendrez à créer votre propre modèle de mappage pour convertir des données CSV en BUFR. Vous apprendrez également à utiliser les modèles intégrés AWS et DAYCLI pour convertir des données CSV en BUFR.
+Dans cette session, vous apprendrez à créer votre propre modèle de correspondance pour convertir des données CSV en BUFR. Vous apprendrez également à utiliser les modèles intégrés AWS et DAYCLI pour effectuer cette conversion.
 
 ## Préparation
 
-Assurez-vous que le `wis2box-stack` a été démarré avec `python3 wis2box.py start`.
+Assurez-vous que le `wis2box-stack` a été démarré avec la commande `python3 wis2box.py start`.
 
-Assurez-vous d'avoir un navigateur web ouvert avec l'interface utilisateur MinIO pour votre instance en accédant à `http://YOUR-HOST:9000`. Si vous ne vous souvenez pas de vos identifiants MinIO, vous pouvez les trouver dans le fichier `wis2box.env` dans le répertoire `wis2box` sur votre machine virtuelle étudiante.
+Assurez-vous d'avoir un navigateur web ouvert avec l'interface utilisateur MinIO pour votre instance en accédant à `http://YOUR-HOST:9000`. Si vous ne vous souvenez pas de vos identifiants MinIO, vous pouvez les trouver dans le fichier `wis2box.env` situé dans le répertoire `wis2box` sur votre machine virtuelle étudiante.
 
-Assurez-vous d'avoir ouvert MQTT Explorer et connecté à votre broker en utilisant les identifiants `everyone/everyone`.
+Assurez-vous que `MQTT Explorer` est ouvert et connecté à votre broker en utilisant les identifiants `everyone/everyone`.
 
-## Création d'un modèle de mappage
+## Création d'un modèle de correspondance
 
-Le module `csv2bufr` est fourni avec un outil en ligne de commande permettant de créer votre propre modèle de mappage en utilisant un ensemble de séquences BUFR et/ou d'éléments BUFR comme entrée.
+Le module `csv2bufr` est livré avec un outil en ligne de commande permettant de créer votre propre modèle de correspondance en utilisant un ensemble de séquences BUFR et/ou d'éléments BUFR comme entrée.
 
 Pour trouver des séquences et éléments BUFR spécifiques, vous pouvez consulter les tables BUFR à l'adresse [https://confluence.ecmwf.int/display/ECC/BUFR+tables](https://confluence.ecmwf.int/display/ECC/BUFR+tables).
 
@@ -51,35 +51,34 @@ csv2bufr mappings --help
 
 La page d'aide affiche deux sous-commandes :
 
-- `csv2bufr mappings create` : Créer un nouveau modèle de mappage
-- `csv2bufr mappings list` : Lister les modèles de mappage disponibles dans le système
+- `csv2bufr mappings create` : Créer un nouveau modèle de correspondance
+- `csv2bufr mappings list` : Lister les modèles de correspondance disponibles dans le système
 
 !!! Note "csv2bufr mapping list"
 
-    La commande `csv2bufr mapping list` affichera les modèles de mappage disponibles dans le système.  
-    Les modèles par défaut sont stockés dans le répertoire `/opt/wis2box/csv2bufr/templates` dans le conteneur.
+    La commande `csv2bufr mapping list` affichera les modèles de correspondance disponibles dans le système. Les modèles par défaut sont stockés dans le répertoire `/opt/wis2box/csv2bufr/templates` dans le conteneur.
 
-    Pour partager des modèles de mappage personnalisés avec le système, vous pouvez les stocker dans le répertoire défini par `$CSV2BUFR_TEMPLATES`, qui est défini par défaut sur `/data/wis2box/mappings` dans le conteneur. Comme le répertoire `/data/wis2box/mappings` dans le conteneur est monté sur le répertoire `$WIS2BOX_HOST_DATADIR/mappings` sur l'hôte, vous trouverez vos modèles de mappage personnalisés dans le répertoire `$WIS2BOX_HOST_DATADIR/mappings` sur l'hôte.
+    Pour partager des modèles de correspondance personnalisés avec le système, vous pouvez les stocker dans le répertoire défini par `$CSV2BUFR_TEMPLATES`, qui est défini par défaut à `/data/wis2box/mappings` dans le conteneur. Étant donné que le répertoire `/data/wis2box/mappings` dans le conteneur est monté sur le répertoire `$WIS2BOX_HOST_DATADIR/mappings` sur l'hôte, vous trouverez vos modèles de correspondance personnalisés dans le répertoire `$WIS2BOX_HOST_DATADIR/mappings` sur l'hôte.
 
-Essayons de créer un nouveau modèle de mappage personnalisé en utilisant la commande `csv2bufr mapping create` avec comme entrée la séquence BUFR 301150 et l'élément BUFR 012101.
+Essayons de créer un nouveau modèle de correspondance personnalisé en utilisant la commande `csv2bufr mapping create` avec comme entrée la séquence BUFR 301150 et l'élément BUFR 012101.
 
 ```bash
 csv2bufr mappings create 301150 012101 --output /data/wis2box/mappings/my_custom_template.json
 ```
 
-Vous pouvez vérifier le contenu du modèle de mappage que vous venez de créer en utilisant la commande `cat` :
+Vous pouvez vérifier le contenu du modèle de correspondance que vous venez de créer en utilisant la commande `cat` :
 
 ```bash
 cat /data/wis2box/mappings/my_custom_template.json
 ```
 
-!!! question "Inspection du modèle de mappage"
+!!! question "Inspection du modèle de correspondance"
 
     Combien de colonnes CSV sont mappées aux éléments BUFR ? Quel est l'en-tête CSV pour chaque élément BUFR mappé ?
 
 ??? success "Cliquez pour révéler la réponse"
     
-    Le modèle de mappage que vous avez créé mappe **5** colonnes CSV aux éléments BUFR, à savoir les 4 éléments BUFR de la séquence 301150 plus l'élément BUFR 012101.
+    Le modèle de correspondance que vous avez créé mappe **5** colonnes CSV aux éléments BUFR, à savoir les 4 éléments BUFR de la séquence 301150 plus l'élément BUFR 012101.
 
     Les colonnes CSV suivantes sont mappées aux éléments BUFR :
 
@@ -89,44 +88,44 @@ cat /data/wis2box/mappings/my_custom_template.json
     - **wigosLocalIdentifierCharacter** est mappé à `"eccodes_key": "#1#wigosLocalIdentifierCharacter"` (élément BUFR 001128)
     - **airTemperature** est mappé à `"eccodes_key": "#1#airTemperature"` (élément BUFR 012101)
 
-Le modèle de mappage que vous avez créé manque d'importantes métadonnées sur l'observation effectuée, la date et l'heure de l'observation, ainsi que la latitude et la longitude de la station.
+Le modèle de correspondance que vous avez créé manque d'importantes métadonnées sur l'observation effectuée, la date et l'heure de l'observation, ainsi que la latitude et la longitude de la station.
 
-Ensuite, nous allons mettre à jour le modèle de mappage et ajouter les séquences suivantes :
+Ensuite, nous allons mettre à jour le modèle de correspondance et ajouter les séquences suivantes :
     
 - **301011** pour la date (année, mois, jour)
 - **301012** pour l'heure (heure, minute)
-- **301023** pour la localisation (latitude/longitude avec précision grossière)
+- **301023** pour la localisation (latitude/longitude avec précision approximative)
 
 Et les éléments suivants :
 
 - **010004** pour la pression
 - **007031** pour la hauteur du baromètre au-dessus du niveau moyen de la mer
 
-Exécutez la commande suivante pour mettre à jour le modèle de mappage :
+Exécutez la commande suivante pour mettre à jour le modèle de correspondance :
 
 ```bash
-csv2bufr mappings create 301150 301011 301012 301023 007031 012101 010004  --output /data/wis2box/mappings/my_custom_template.json
+csv2bufr mappings create 301150 301011 301012 301023 007031 012101 010004 --output /data/wis2box/mappings/my_custom_template.json
 ```
 
-Et inspectez à nouveau le contenu du modèle de mappage :
+Et inspectez à nouveau le contenu du modèle de correspondance :
 
 ```bash
 cat /data/wis2box/mappings/my_custom_template.json
 ```
 
-!!! question "Inspection du modèle de mappage mis à jour"
+!!! question "Inspection du modèle de correspondance mis à jour"
 
     Combien de colonnes CSV sont maintenant mappées aux éléments BUFR ? Quel est l'en-tête CSV pour chaque élément BUFR mappé ?
 
 ??? success "Cliquez pour révéler la réponse"
     
-    Le modèle de mappage que vous avez créé mappe maintenant **18** colonnes CSV aux éléments BUFR :
+    Le modèle de correspondance que vous avez créé mappe maintenant **18** colonnes CSV aux éléments BUFR :
     - 4 éléments BUFR de la séquence BUFR 301150
     - 3 éléments BUFR de la séquence BUFR 301011
     - 2 éléments BUFR de la séquence BUFR 301012
     - 2 éléments BUFR de la séquence BUFR 301023
-    - Élément BUFR 007031
-    - Élément BUFR 012101
+    - L'élément BUFR 007031
+    - L'élément BUFR 012101
 
     Les colonnes CSV suivantes sont mappées aux éléments BUFR :
 
@@ -152,7 +151,7 @@ cd /wis2box-api/data-conversion-exercises
 cat custom_template_data.csv
 ```
 
-Notez que les en-têtes de ce fichier CSV sont les mêmes que les en-têtes du CSV dans le modèle de mappage que vous avez créé.
+Notez que les en-têtes de ce fichier CSV sont les mêmes que les en-têtes du fichier de mappage que vous avez créé.
 
 Pour tester la conversion des données, nous pouvons utiliser l'outil en ligne de commande `csv2bufr` pour convertir le fichier CSV en BUFR en utilisant le modèle de mappage que nous avons créé :
 
@@ -171,7 +170,7 @@ CLI:    End of processing, exiting.
 
 !!! question "Vérifiez le contenu du fichier BUFR"
     
-    Comment pouvez-vous vérifier le contenu du fichier BUFR que vous venez de créer et confirmer qu'il a correctement encodé les données ?
+    Comment pouvez-vous vérifier le contenu du fichier BUFR que vous venez de créer et vous assurer qu'il a correctement encodé les données ?
 
 ??? success "Cliquez pour révéler la réponse"
 
@@ -182,7 +181,7 @@ CLI:    End of processing, exiting.
     bufr_dump -p ./WIGOS_0-20000-0-15015_20250412T210000.bufr4
     ```
 
-    Dans la sortie, vous verrez les valeurs des éléments BUFR que vous avez mappés dans le modèle. Par exemple, la "airTemperature" affichera :
+    Dans la sortie, vous verrez les valeurs des éléments BUFR que vous avez mappés dans le modèle, par exemple, la "airTemperature" affichera :
     
     ```bash
     airTemperature=298.15
@@ -194,9 +193,9 @@ Vous pouvez maintenant quitter le conteneur :
 exit
 ```
 
-### Utilisation du modèle de mappage dans le wis2box
+### Utiliser le modèle de mappage dans le wis2box
 
-Pour garantir que le nouveau modèle de mappage est reconnu par le conteneur wis2box-api, vous devez redémarrer le conteneur :
+Pour vous assurer que le nouveau modèle de mappage est reconnu par le conteneur wis2box-api, vous devez redémarrer le conteneur :
 
 ```bash
 docker restart wis2box-api
@@ -218,11 +217,11 @@ Vous devriez voir le nouveau modèle que vous avez créé dans la liste des mod�
 
     Notez que si vous ne voyez pas le nouveau modèle que vous avez créé, essayez de rafraîchir la page ou de l'ouvrir dans une nouvelle fenêtre de navigation privée.
 
-Pour l'instant, conservez la sélection par défaut du modèle AWS (cliquez en haut à droite pour fermer la configuration du plugin).
+Pour l'instant, gardez la sélection par défaut du modèle AWS (cliquez en haut à droite pour fermer la configuration du plugin).
 
-## Utilisation du modèle 'AWS'
+## Utiliser le modèle 'AWS'
 
-Le modèle 'AWS' fournit un modèle de mappage pour convertir les données CSV en séquence BUFR 301150, 307096, en support des exigences minimales de GBON.
+Le modèle 'AWS' fournit un modèle de mappage pour convertir les données CSV en séquences BUFR 301150, 307096, en support des exigences minimales de GBON.
 
 La description du modèle AWS peut être trouvée ici [aws-template](./../csv2bufr-templates/aws-template.md).
 
@@ -235,7 +234,7 @@ Téléchargez l'exemple pour cet exercice depuis le lien ci-dessous :
 Ouvrez le fichier que vous avez téléchargé dans un éditeur et inspectez le contenu :
 
 !!! question
-    En examinant les champs date, heure et identifiants (WIGOS et identifiants traditionnels), que remarquez-vous ? Comment la date d'aujourd'hui serait-elle représentée ?
+    En examinant les champs de date, d'heure et d'identification (identifiants WIGOS et traditionnels), que remarquez-vous ? Comment la date d'aujourd'hui serait-elle représentée ?
 
 ??? success "Cliquez pour révéler la réponse"
     Chaque colonne contient une seule information. Par exemple, la date est divisée en année, mois et jour, reflétant la manière dont les données sont stockées dans BUFR. La date d'aujourd'hui serait répartie sur les colonnes "year", "month" et "day". De même, l'heure doit être divisée en "hour" et "minute", et l'identifiant de station WIGOS dans ses composants respectifs.
@@ -249,23 +248,23 @@ Ouvrez le fichier que vous avez téléchargé dans un éditeur et inspectez le c
 !!! hint "Données manquantes"
     Il est reconnu que des données peuvent manquer pour diverses raisons, qu'il s'agisse d'une panne de capteur ou d'un paramètre non observé. Dans ces cas, les données manquantes peuvent être encodées comme indiqué ci-dessus, les autres données du rapport restant valides.
 
-### Mettre à jour le fichier d'exemple
+### Mettre à jour le fichier exemple
 
-Mettez à jour le fichier d'exemple que vous avez téléchargé pour utiliser la date et l'heure d'aujourd'hui et modifiez les identifiants de station WIGOS pour utiliser des stations que vous avez enregistrées dans le wis2box-webapp.
+Mettez à jour le fichier exemple que vous avez téléchargé pour utiliser la date et l'heure d'aujourd'hui et modifiez les identifiants de station WIGOS pour utiliser des stations que vous avez enregistrées dans le wis2box-webapp.
 
 ### Téléchargez les données sur MinIO et vérifiez le résultat
 
 Accédez à l'interface utilisateur de MinIO et connectez-vous en utilisant les identifiants du fichier `wis2box.env`.
 
-Accédez à **wis2box-incoming** et cliquez sur le bouton "Create new path" :
+Naviguez vers **wis2box-incoming** et cliquez sur le bouton "Create new path" :
 
-<img alt="Image montrant l'interface utilisateur de MinIO avec le bouton de création de dossier mis en évidence" src="/../assets/img/minio-create-new-path.png"/>
+<img alt="Image montrant l'interface utilisateur de MinIO avec le bouton créer un dossier mis en évidence" src="/../assets/img/minio-create-new-path.png"/>
 
-Créez un nouveau dossier dans le bucket MinIO qui correspond à l'identifiant du jeu de données que vous avez créé avec le template='weather/surface-weather-observations/synop' :
+Créez un nouveau dossier dans le bucket MinIO correspondant à l'identifiant du jeu de données que vous avez créé avec le modèle='weather/surface-weather-observations/synop' :
 
-<img alt="Image montrant l'interface utilisateur de MinIO avec le bouton de création de dossier mis en évidence" src="/../assets/img/minio-create-new-path-metadata_id.png"/>
+<img alt="Image montrant l'interface utilisateur de MinIO avec le bouton créer un dossier mis en évidence" src="/../assets/img/minio-create-new-path-metadata_id.png"/>
 
-Téléchargez le fichier d'exemple que vous avez téléchargé dans le dossier que vous avez créé dans le bucket MinIO :
+Téléchargez le fichier exemple que vous avez téléchargé dans le dossier que vous avez créé dans le bucket MinIO :
 
 <img alt="Image montrant l'interface utilisateur de MinIO avec aws-example téléchargé" src="/../assets/img/minio-upload-aws-example.png"/></center>
 
@@ -275,9 +274,9 @@ Vérifiez MQTT Explorer pour voir si vous recevez des notifications de données 
 
 Si vous avez ingéré les données avec succès, vous devriez voir 3 notifications dans MQTT Explorer sur le sujet `origin/a/wis2/<centre-id>/data/weather/surface-weather-observations/synop` pour les 3 stations pour lesquelles vous avez rapporté des données :
 
-<img width="450" alt="Image montrant MQTT Explorer après le téléchargement de AWS" src="/../assets/img/mqtt-explorer-aws-upload.png"/>
+<img width="450" alt="Image montrant MQTT explorer après le téléchargement AWS" src="/../assets/img/mqtt-explorer-aws-upload.png"/>
 
-## Utilisation du modèle 'DayCLI'
+## Utiliser le modèle 'DayCLI'
 
 Le modèle **DayCLI** fournit un modèle de mappage pour convertir les données climatiques quotidiennes CSV en séquence BUFR 307075, en support du rapport des données climatiques quotidiennes.
 
@@ -285,7 +284,7 @@ La description du modèle DAYCLI peut être trouvée ici [daycli-template](./../
 
 Pour partager ces données sur WIS2, vous devrez créer un nouveau jeu de données dans le wis2box-webapp qui a la hiérarchie de sujet WIS2 correcte et qui utilise le modèle DAYCLI pour convertir les données CSV en BUFR.
 
-### Création d'un jeu de données wis2box pour publier des messages DAYCLI
+### Créer un jeu de données wis2box pour publier des messages DAYCLI
 
 Accédez à l'éditeur de jeu de données dans le wis2box-webapp et créez un nouveau jeu de données. Utilisez le même centre-id que dans les sessions pratiques précédentes et sélectionnez **Data Type='climate/surface-based-observations/daily'** :
 
@@ -315,18 +314,17 @@ Ouvrez le fichier que vous avez téléchargé dans un éditeur et inspectez le c
 ??? success "Cliquez pour révéler la réponse"
     Le modèle daycli inclut des métadonnées importantes sur l'emplacement des instruments et les classifications de qualité des mesures pour la température et l'humidité, des indicateurs de contrôle qualité et des informations sur la manière dont la température moyenne quotidienne a été calculée.
 
-### Mettre à jour le fichier d'exemple
+### Mettre à jour le fichier exemple
 
-Le fichier d'exemple contient une ligne de données pour chaque jour d'un mois et rapporte des données pour une station. Mettez à jour le fichier d'exemple que vous avez téléchargé pour utiliser la date et l'heure d'aujourd'hui et modifiez les identifiants de station WIGOS pour utiliser une station que vous avez enregistrée dans le wis2box-webapp.
+Le fichier exemple contient une ligne de données pour chaque jour d'un mois et rapporte des données pour une station. Mettez à jour le fichier exemple que vous avez téléchargé pour utiliser la date et l'heure d'aujourd'hui et modifiez les identifiants de station WIGOS pour utiliser une station que vous avez enregistrée dans le wis2box-webapp.
 
 ### Téléchargez les données sur MinIO et vérifiez le résultat
-```
 
 Comme précédemment, vous devrez télécharger les données dans le bucket 'wis2box-incoming' de MinIO pour qu'elles soient traitées par le convertisseur csv2bufr. Cette fois, vous devrez créer un nouveau dossier dans le bucket MinIO correspondant à l'identifiant du jeu de données (dataset-id) pour le jeu de données que vous avez créé avec le template='climate/surface-based-observations/daily', qui sera différent de l'identifiant du jeu de données utilisé dans l'exercice précédent :
 
 <img alt="Image montrant l'interface utilisateur de MinIO avec DAYCLI-example téléchargé" src="/../assets/img/minio-upload-daycli-example.png"/></center>
 
-Après avoir téléchargé les données, vérifiez qu'il n'y a pas d'AVERTISSEMENTS (WARNINGS) ou d'ERREURS (ERRORS) dans le tableau de bord Grafana et consultez MQTT Explorer pour vérifier si vous recevez des notifications de données WIS2.
+Après avoir téléchargé les données, vérifiez qu'il n'y a pas d'AVERTISSEMENTS (WARNINGS) ou d'ERREURS (ERRORS) dans le tableau de bord Grafana et vérifiez dans MQTT Explorer si vous recevez des notifications de données WIS2.
 
 Si vous avez ingéré les données avec succès, vous devriez voir 30 notifications dans MQTT Explorer sur le sujet `origin/a/wis2/<centre-id>/data/climate/surface-based-observations/daily` pour les 30 jours du mois pour lesquels vous avez rapporté des données :
 

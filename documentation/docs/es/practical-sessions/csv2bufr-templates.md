@@ -1,32 +1,32 @@
 ---
-title: Plantillas de mapeo de CSV a BUFR
+title: Plantillas de mapeo CSV-a-BUFR
 ---
 
-# Plantillas de mapeo de CSV a BUFR
+# Plantillas de mapeo CSV-a-BUFR
 
 !!! abstract "Resultados de aprendizaje"
-    Al final de esta sesión práctica, serás capaz de:
+    Al final de esta sesión práctica, podrás:
 
     - crear una nueva plantilla de mapeo BUFR para tus datos CSV
     - editar y depurar tu plantilla de mapeo BUFR personalizada desde la línea de comandos
-    - configurar el plugin de datos CSV a BUFR para usar una plantilla de mapeo BUFR personalizada
+    - configurar el complemento de datos CSV-a-BUFR para usar una plantilla de mapeo BUFR personalizada
     - usar las plantillas integradas AWS y DAYCLI para convertir datos CSV a BUFR
 
 ## Introducción
 
-Los archivos de datos con valores separados por comas (CSV) se utilizan frecuentemente para registrar datos observacionales y otros datos en un formato tabular. 
-La mayoría de los registradores de datos utilizados para registrar la salida de sensores pueden exportar las observaciones en archivos delimitados, incluyendo CSV.
-De manera similar, cuando los datos se ingresan en una base de datos, es fácil exportar los datos requeridos en archivos con formato CSV. 
+Los archivos de datos con valores separados por comas (CSV) se utilizan frecuentemente para registrar datos observacionales y otros en un formato tabular. 
+La mayoría de los registradores de datos utilizados para registrar la salida de sensores pueden exportar las observaciones en archivos delimitados, incluidos los CSV. 
+De manera similar, cuando los datos se ingresan en una base de datos, es fácil exportar los datos requeridos en archivos con formato CSV.
 
-El módulo wis2box csv2bufr proporciona una herramienta de línea de comandos para convertir datos CSV al formato BUFR. Al usar csv2bufr, necesitas proporcionar una plantilla de mapeo BUFR que asocie las columnas del CSV con los elementos correspondientes de BUFR. Si no deseas crear tu propia plantilla de mapeo, puedes usar las plantillas integradas AWS y DAYCLI para convertir datos CSV a BUFR, pero deberás asegurarte de que los datos CSV que estás utilizando estén en el formato correcto para estas plantillas. Si deseas decodificar parámetros que no están incluidos en las plantillas AWS y DAYCLI, necesitarás crear tu propia plantilla de mapeo.
+El módulo wis2box csv2bufr proporciona una herramienta de línea de comandos para convertir datos CSV al formato BUFR. Al usar csv2bufr, necesitas proporcionar una plantilla de mapeo BUFR que asocie las columnas CSV con los elementos correspondientes de BUFR. Si no deseas crear tu propia plantilla de mapeo, puedes usar las plantillas integradas AWS y DAYCLI para convertir datos CSV a BUFR, pero deberás asegurarte de que los datos CSV que estás utilizando estén en el formato correcto para estas plantillas. Si deseas decodificar parámetros que no están incluidos en las plantillas AWS y DAYCLI, necesitarás crear tu propia plantilla de mapeo.
 
 En esta sesión aprenderás cómo crear tu propia plantilla de mapeo para convertir datos CSV a BUFR. También aprenderás cómo usar las plantillas integradas AWS y DAYCLI para convertir datos CSV a BUFR.
 
 ## Preparación
 
-Asegúrate de que el wis2box-stack se haya iniciado con `python3 wis2box.py start`.
+Asegúrate de que el wis2box-stack haya sido iniciado con `python3 wis2box.py start`.
 
-Asegúrate de tener un navegador web abierto con la interfaz de usuario de MinIO para tu instancia accediendo a `http://YOUR-HOST:9000`.
+Asegúrate de tener un navegador web abierto con la interfaz de usuario de MinIO para tu instancia accediendo a `http://YOUR-HOST:9000`. 
 Si no recuerdas tus credenciales de MinIO, puedes encontrarlas en el archivo `wis2box.env` en el directorio `wis2box` de tu máquina virtual de estudiante.
 
 Asegúrate de tener MQTT Explorer abierto y conectado a tu broker utilizando las credenciales `everyone/everyone`.
@@ -62,7 +62,7 @@ La página de ayuda muestra 2 subcomandos:
     El comando `csv2bufr mapping list` mostrará las plantillas de mapeo disponibles en el sistema. 
     Las plantillas predeterminadas se almacenan en el directorio `/opt/wis2box/csv2bufr/templates` dentro del contenedor.
 
-    Para compartir plantillas de mapeo personalizadas con el sistema, puedes almacenarlas en el directorio definido por `$CSV2BUFR_TEMPLATES`, que está configurado como `/data/wis2box/mappings` de manera predeterminada en el contenedor. Dado que el directorio `/data/wis2box/mappings` en el contenedor está montado en el directorio `$WIS2BOX_HOST_DATADIR/mappings` en el host, encontrarás tus plantillas de mapeo personalizadas en el directorio `$WIS2BOX_HOST_DATADIR/mappings` en el host.
+    Para compartir plantillas de mapeo personalizadas con el sistema, puedes almacenarlas en el directorio definido por `$CSV2BUFR_TEMPLATES`, que está configurado como `/data/wis2box/mappings` por defecto en el contenedor. Dado que el directorio `/data/wis2box/mappings` en el contenedor está montado en el directorio `$WIS2BOX_HOST_DATADIR/mappings` en el host, encontrarás tus plantillas de mapeo personalizadas en el directorio `$WIS2BOX_HOST_DATADIR/mappings` en el host.
 
 Intentemos crear una nueva plantilla de mapeo personalizada utilizando el comando `csv2bufr mapping create` con la secuencia BUFR 301150 más el elemento BUFR 012101 como entrada.
 
@@ -78,11 +78,11 @@ cat /data/wis2box/mappings/my_custom_template.json
 
 !!! question "Inspección de la plantilla de mapeo"
 
-    ¿Cuántas columnas CSV están siendo mapeadas a elementos BUFR? ¿Cuál es el encabezado CSV para cada elemento BUFR que se está mapeando?
+    ¿Cuántas columnas CSV están siendo mapeadas a elementos BUFR? ¿Cuál es el encabezado CSV para cada elemento BUFR mapeado?
 
 ??? success "Haz clic para revelar la respuesta"
     
-    La plantilla de mapeo que creaste mapea **5** columnas CSV a elementos BUFR, específicamente los 4 elementos BUFR de la secuencia 301150 más el elemento BUFR 012101. 
+    La plantilla de mapeo que creaste mapea **5** columnas CSV a elementos BUFR, específicamente los 4 elementos BUFR en la secuencia 301150 más el elemento BUFR 012101.
 
     Las siguientes columnas CSV están siendo mapeadas a elementos BUFR:
 
@@ -98,7 +98,7 @@ A continuación, actualizaremos la plantilla de mapeo y añadiremos las siguient
     
 - **301011** para Fecha (Año, mes, día)
 - **301012** para Hora (Hora, minuto)
-- **301023** para Ubicación (Latitud/longitud (precisión baja))
+- **301023** para Ubicación (Latitud/longitud (precisión aproximada))
 
 Y los siguientes elementos:
 
@@ -119,7 +119,7 @@ cat /data/wis2box/mappings/my_custom_template.json
 
 !!! question "Inspección de la plantilla de mapeo actualizada"
 
-    ¿Cuántas columnas CSV están siendo mapeadas ahora a elementos BUFR? ¿Cuál es el encabezado CSV para cada elemento BUFR que se está mapeando?
+    ¿Cuántas columnas CSV están siendo mapeadas ahora a elementos BUFR? ¿Cuál es el encabezado CSV para cada elemento BUFR mapeado?
 
 ??? success "Haz clic para revelar la respuesta"
     
@@ -157,7 +157,7 @@ cat custom_template_data.csv
 
 Nota que los encabezados de este archivo CSV son los mismos que los encabezados del CSV en la plantilla de mapeo que creaste.
 
-Para probar la conversión de datos, podemos usar la herramienta de línea de comandos `csv2bufr` para convertir el archivo CSV a BUFR utilizando la plantilla de mapeo que creaste:
+Para probar la conversión de datos, podemos usar la herramienta de línea de comandos `csv2bufr` para convertir el archivo CSV a BUFR utilizando la plantilla de mapeo que creamos:
 
 ```bash
 csv2bufr data transform --bufr-template my_custom_template /wis2box-api/data-conversion-exercises/custom_template_data.csv
@@ -166,10 +166,10 @@ csv2bufr data transform --bufr-template my_custom_template /wis2box-api/data-con
 Deberías ver el siguiente resultado:
 
 ```bash
-CLI:    ... Transforming /wis2box-api/data-conversion-exercises/custom_template_data.csv to BUFR ...
-CLI:    ... Processing subsets:
-CLI:    ..... 94 bytes written to ./WIGOS_0-20000-0-15015_20250412T210000.bufr4
-CLI:    End of processing, exiting.
+CLI:    ... Transformando /wis2box-api/data-conversion-exercises/custom_template_data.csv a BUFR ...
+CLI:    ... Procesando subconjuntos:
+CLI:    ..... 94 bytes escritos en ./WIGOS_0-20000-0-15015_20250412T210000.bufr4
+CLI:    Fin del procesamiento, saliendo.
 ```
 
 !!! question "Verifica el contenido del archivo BUFR"
@@ -185,7 +185,7 @@ CLI:    End of processing, exiting.
     bufr_dump -p ./WIGOS_0-20000-0-15015_20250412T210000.bufr4
     ```
 
-    En el resultado verás los valores de los elementos BUFR que mapeaste en la plantilla, por ejemplo, "airTemperature" mostrará:
+    En el resultado, verás los valores de los elementos BUFR que mapeaste en la plantilla, por ejemplo, "airTemperature" mostrará:
     
     ```bash
     airTemperature=298.15
@@ -205,11 +205,11 @@ Para asegurarte de que la nueva plantilla de mapeo sea reconocida por el contene
 docker restart wis2box-api
 ```
 
-Ahora puedes configurar tu conjunto de datos en la wis2box-webapp para usar la plantilla de mapeo personalizada en el plugin de conversión de CSV a BUFR.
+Ahora puedes configurar tu conjunto de datos en la wis2box-webapp para usar la plantilla de mapeo personalizada con el plugin de conversión de CSV a BUFR.
 
 La wis2box-webapp detectará automáticamente la plantilla de mapeo que creaste y la hará disponible en la lista de plantillas para el plugin de conversión de CSV a BUFR.
 
-Haz clic en el conjunto de datos que creaste en la sesión práctica anterior y haz clic en "UPDATE" junto al plugin con el nombre "CSV data converted to BUFR":
+Haz clic en el conjunto de datos que creaste en la sesión práctica anterior y haz clic en "ACTUALIZAR" junto al plugin con el nombre "CSV data converted to BUFR":
 
 <img alt="Imagen mostrando el editor de conjuntos de datos en la wis2box-webapp" src="/../assets/img/wis2box-webapp-data-mapping-update-csv2bufr.png"/>
 
@@ -225,11 +225,11 @@ Por ahora, mantén la selección predeterminada de la plantilla AWS (haz clic en
 
 ## Usar la plantilla 'AWS'
 
-La plantilla 'AWS' proporciona una plantilla de mapeo para convertir datos CSV a la secuencia BUFR 301150, 307096, en apoyo a los requisitos mínimos de GBON.
+La plantilla 'AWS' proporciona una plantilla de mapeo para convertir datos CSV a la secuencia BUFR 301150, 307096, en apoyo de los requisitos mínimos de GBON.
 
 La descripción de la plantilla AWS se puede encontrar aquí [aws-template](./../csv2bufr-templates/aws-template.md).
 
-### Revisar los datos de entrada aws-example
+### Revisar los datos de entrada del ejemplo aws
 
 Descarga el ejemplo para este ejercicio desde el enlace a continuación:
 
@@ -238,19 +238,19 @@ Descarga el ejemplo para este ejercicio desde el enlace a continuación:
 Abre el archivo que descargaste en un editor e inspecciona el contenido:
 
 !!! question
-    Al examinar los campos de fecha, hora e identificación (identificadores WIGOS y tradicionales), ¿qué notas? ¿Cómo se representaría la fecha de hoy?
+    Examinando los campos de fecha, hora e identificación (identificadores WIGOS y tradicionales), ¿qué notas? ¿Cómo se representaría la fecha de hoy?
 
 ??? success "Haz clic para revelar la respuesta"
-    Cada columna contiene una sola pieza de información. Por ejemplo, la fecha está dividida en año, mes y día, reflejando cómo los datos se almacenan en BUFR. La fecha de hoy se dividiría entre las columnas "year", "month" y "day". De manera similar, la hora necesita dividirse en "hour" y "minute", y el identificador de estación WIGOS en sus respectivos componentes.
+    Cada columna contiene una pieza única de información. Por ejemplo, la fecha está dividida en año, mes y día, reflejando cómo los datos se almacenan en BUFR. La fecha de hoy estaría dividida entre las columnas "year", "month" y "day". De manera similar, la hora necesita dividirse en "hour" y "minute", y el identificador de estación WIGOS en sus componentes respectivos.
 
 !!! question
-    Al observar el archivo de datos, ¿cómo se codifican los datos faltantes?
+    Observando el archivo de datos, ¿cómo se codifican los datos faltantes?
     
 ??? success "Haz clic para revelar la respuesta"
-    Los datos faltantes dentro del archivo están representados por celdas vacías. En un archivo CSV esto se codificaría como ``,,``. Nota que esto es una celda vacía y no está codificada como una cadena de longitud cero, por ejemplo, ``,"",``.
+    Los datos faltantes dentro del archivo están representados por celdas vacías. En un archivo CSV esto se codificaría como ``,,``. Nota que esto es una celda vacía y no está codificada como una cadena de longitud cero, e.g. ``,"",``.
 
 !!! hint "Datos faltantes"
-    Se reconoce que los datos pueden faltar por una variedad de razones, ya sea por fallos en el sensor o porque el parámetro no fue observado. En estos casos, los datos faltantes pueden codificarse según la respuesta anterior, mientras que los demás datos del informe permanecen válidos.
+    Se reconoce que los datos pueden faltar por una variedad de razones, ya sea por fallos en el sensor o porque el parámetro no fue observado. En estos casos, los datos faltantes pueden codificarse como se indica en la respuesta anterior, mientras que los demás datos del informe permanecen válidos.
 
 ### Actualizar el archivo de ejemplo
 
@@ -260,7 +260,7 @@ Actualiza el archivo de ejemplo que descargaste para usar la fecha y hora de hoy
 
 Navega a la interfaz de usuario de MinIO e inicia sesión utilizando las credenciales del archivo `wis2box.env`.
 
-Navega a **wis2box-incoming** y haz clic en el botón "Create new path":
+Navega a **wis2box-incoming** y haz clic en el botón "Crear nueva ruta":
 
 <img alt="Imagen mostrando la interfaz de usuario de MinIO con el botón para crear carpeta resaltado" src="/../assets/img/minio-create-new-path.png"/>
 
@@ -272,9 +272,9 @@ Sube el archivo de ejemplo que descargaste a la carpeta que creaste en el bucket
 
 <img alt="Imagen mostrando la interfaz de usuario de MinIO con aws-example subido" src="/../assets/img/minio-upload-aws-example.png"/></center>
 
-Verifica el panel de Grafana en `http://YOUR-HOST:3000` para ver si hay WARNINGS o ERRORS. Si ves alguno, intenta solucionarlo y repite el ejercicio.
+Revisa el panel de Grafana en `http://YOUR-HOST:3000` para ver si hay advertencias o errores. Si ves alguno, intenta solucionarlo y repite el ejercicio.
 
-Verifica el MQTT Explorer para ver si recibes notificaciones de datos WIS2.
+Revisa el MQTT Explorer para ver si recibes notificaciones de datos WIS2.
 
 Si ingresaste los datos correctamente, deberías ver 3 notificaciones en MQTT Explorer en el tema `origin/a/wis2/<centre-id>/data/weather/surface-weather-observations/synop` para las 3 estaciones para las que reportaste datos:
 
@@ -282,7 +282,7 @@ Si ingresaste los datos correctamente, deberías ver 3 notificaciones en MQTT Ex
 
 ## Usar la plantilla 'DayCLI'
 
-La plantilla **DayCLI** proporciona una plantilla de mapeo para convertir datos climáticos diarios en CSV a la secuencia BUFR 307075, en apoyo al reporte de datos climáticos diarios.
+La plantilla **DayCLI** proporciona una plantilla de mapeo para convertir datos climáticos diarios en CSV a la secuencia BUFR 307075, en apoyo del reporte de datos climáticos diarios.
 
 La descripción de la plantilla DAYCLI se puede encontrar aquí [daycli-template](./../csv2bufr-templates/daycli-template.md).
 
@@ -294,9 +294,9 @@ Ve al editor de conjuntos de datos en la wis2box-webapp y crea un nuevo conjunto
 
 <img alt="Crear un nuevo conjunto de datos en la wis2box-webapp para DAYCLI" src="/../assets/img/wis2box-webapp-create-dataset-daycli.png"/>
 
-Haz clic en "CONTINUE TO FORM" y agrega una descripción para tu conjunto de datos, establece el cuadro delimitador y proporciona la información de contacto para el conjunto de datos. Una vez que hayas completado todas las secciones, haz clic en 'VALIDATE FORM' y verifica el formulario.
+Haz clic en "CONTINUAR AL FORMULARIO" y agrega una descripción para tu conjunto de datos, establece el cuadro delimitador y proporciona la información de contacto para el conjunto de datos. Una vez que hayas completado todas las secciones, haz clic en 'VALIDAR FORMULARIO' y revisa el formulario.
 
-Revisa los plugins de datos para los conjuntos de datos. Haz clic en "UPDATE" junto al plugin con el nombre "CSV data converted to BUFR" y verás que la plantilla está configurada como **DayCLI**:
+Revisa los plugins de datos para los conjuntos de datos. Haz clic en "ACTUALIZAR" junto al plugin con el nombre "CSV data converted to BUFR" y verás que la plantilla está configurada como **DayCLI**:
 
 <img alt="Actualizar el plugin de datos para el conjunto de datos para usar la plantilla DAYCLI" src="/../assets/img/wis2box-webapp-update-data-plugin-daycli.png"/>
 
@@ -304,7 +304,7 @@ Cierra la configuración del plugin y envía el formulario utilizando el token d
 
 Ahora deberías tener un segundo conjunto de datos en la wis2box-webapp configurado para usar la plantilla DAYCLI para convertir datos CSV a BUFR.
 
-### Revisar los datos de entrada daycli-example
+### Revisar los datos de entrada del ejemplo daycli
 
 Descarga el ejemplo para este ejercicio desde el enlace a continuación:
 
@@ -313,10 +313,10 @@ Descarga el ejemplo para este ejercicio desde el enlace a continuación:
 Abre el archivo que descargaste en un editor e inspecciona el contenido:
 
 !!! question
-    ¿Qué variables adicionales se incluyen en la plantilla daycli?
+    ¿Qué variables adicionales están incluidas en la plantilla daycli?
 
 ??? success "Haz clic para revelar la respuesta"
-    La plantilla daycli incluye metadatos importantes sobre la ubicación del instrumento y clasificaciones de calidad de medición para temperatura y humedad, indicadores de control de calidad e información sobre cómo se ha calculado la temperatura promedio diaria.
+    La plantilla daycli incluye metadatos importantes sobre la ubicación del instrumento y las clasificaciones de calidad de medición para temperatura y humedad, banderas de control de calidad e información sobre cómo se ha calculado la temperatura promedio diaria.
 
 ### Actualizar el archivo de ejemplo
 
@@ -324,11 +324,11 @@ El archivo de ejemplo contiene una fila de datos para cada día de un mes y repo
 
 ### Subir los datos a MinIO y verificar el resultado
 
-Como antes, necesitarás cargar los datos en el bucket 'wis2box-incoming' en MinIO para que sean procesados por el convertidor csv2bufr. Esta vez, deberás crear una nueva carpeta en el bucket de MinIO que coincida con el dataset-id del conjunto de datos que creaste con la plantilla='climate/surface-based-observations/daily', la cual será diferente del dataset-id que utilizaste en el ejercicio anterior:
+Como antes, necesitarás cargar los datos en el bucket 'wis2box-incoming' en MinIO para que sean procesados por el convertidor csv2bufr. Esta vez, necesitarás crear una nueva carpeta en el bucket de MinIO que coincida con el dataset-id del conjunto de datos que creaste con el template='climate/surface-based-observations/daily', el cual será diferente del dataset-id que utilizaste en el ejercicio anterior:
 
 <img alt="Image showing MinIO UI with DAYCLI-example uploaded" src="/../assets/img/minio-upload-daycli-example.png"/></center>
 
-Después de cargar los datos, verifica que no haya WARNINGS ni ERRORES en el panel de control de Grafana y revisa el MQTT Explorer para confirmar si recibes notificaciones de datos WIS2.
+Después de cargar los datos, verifica que no haya WARNINGS ni ERRORS en el panel de Grafana y revisa el MQTT Explorer para confirmar si recibes notificaciones de datos WIS2.
 
 Si los datos se ingirieron correctamente, deberías ver 30 notificaciones en MQTT Explorer en el tema `origin/a/wis2/<centre-id>/data/climate/surface-based-observations/daily` correspondientes a los 30 días del mes para los cuales reportaste datos:
 
@@ -340,4 +340,4 @@ Si los datos se ingirieron correctamente, deberías ver 30 notificaciones en MQT
     En esta sesión práctica has aprendido:
 
     - cómo crear una plantilla de mapeo personalizada para convertir datos CSV a BUFR
-    - cómo utilizar las plantillas integradas de AWS y DAYCLI para convertir datos CSV a BUFR
+    - cómo usar las plantillas integradas de AWS y DAYCLI para convertir datos CSV a BUFR
