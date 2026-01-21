@@ -5,9 +5,9 @@ title: Configuración de un conjunto de datos recomendado
 # Configuración de un conjunto de datos recomendado
 
 !!! abstract "Resultados de aprendizaje"
-    Al final de esta sesión práctica, serás capaz de:
+    Al final de esta sesión práctica, podrás:
 
-    - crear un nuevo conjunto de datos con la política de datos 'recommended'
+    - crear un nuevo conjunto de datos con política de datos 'recommended'
     - añadir un token de acceso al conjunto de datos
     - validar que el conjunto de datos no puede ser accedido sin el token de acceso
     - añadir el token de acceso a los encabezados HTTP para acceder al conjunto de datos
@@ -17,9 +17,9 @@ title: Configuración de un conjunto de datos recomendado
 
 Los datos se comparten en WIS2 de acuerdo con la Política Unificada de Datos de la OMM, que define dos categorías de datos.
 
-**core** : datos que se proporcionan de manera gratuita y sin restricciones, sin costo y sin condiciones de uso.
+**core**: datos que se proporcionan de forma gratuita y sin restricciones, sin costo y sin condiciones de uso.
 
-**recommended** : datos que pueden proporcionarse con condiciones de uso y/o sujetos a una licencia.
+**recommended**: datos que pueden proporcionarse con condiciones de uso y/o sujetos a una licencia.
 
 Los datos que se comparten como recommended:
 
@@ -32,13 +32,13 @@ Los datos que se comparten como recommended:
     
     Dado que los Global Caches de WIS no almacenan en caché los datos recomendados, **no** verás notificaciones en el tema `cache/a/wis2/<centre-id>/data/recommended/..`
 
-    El consumidor de datos debe descargar los datos del servidor de datos alojado por el proveedor de datos, utilizando la URL canónica proporcionada en las notificaciones del tema `origin/a/wis2/<centre-id>/data/recommended/...`
+    El consumidor de datos debe descargar los datos desde el servidor de datos alojado por el proveedor de datos, utilizando la URL canónica proporcionada en las notificaciones en el tema `origin/a/wis2/<centre-id>/data/recommended/...`
 
-En esta sesión práctica, crearás un nuevo conjunto de datos con la política de datos 'recommended' utilizando el editor de conjuntos de datos en wis2box-webapp. También aprenderás cómo proporcionar una licencia autoalojada y cómo añadir opcionalmente control de acceso.
+En esta sesión práctica, crearás un nuevo conjunto de datos con política de datos 'recommended' utilizando el editor de conjuntos de datos en wis2box-webapp. También aprenderás cómo proporcionar una licencia autoalojada y cómo añadir opcionalmente control de acceso.
 
 !!! note "Datos de aviación en WIS2"
     
-    Para este ejercicio, se te pedirá que crees un conjunto de datos para compartir datos METAR, un formato estándar para reportar observaciones meteorológicas de aviación.
+    Para este ejercicio se te pedirá crear un conjunto de datos para compartir datos METAR, un formato estándar para reportar observaciones meteorológicas de aviación.
 
     Dado que los datos de meteorología aeronáutica están sujetos a restricciones de uso, se aplica la política de datos **Recommended**.
 
@@ -48,13 +48,13 @@ En esta sesión práctica, crearás un nuevo conjunto de datos con la política 
 
 Asegúrate de tener acceso SSH a tu máquina virtual de estudiante y que tu instancia de wis2box esté funcionando.
 
-Asegúrate de estar conectado al broker MQTT de tu instancia de wis2box utilizando MQTT Explorer. Puedes usar las credenciales públicas `everyone/everyone` para conectarte al broker.
+Verifica que estás conectado al broker MQTT de tu instancia de wis2box utilizando MQTT Explorer. Puedes usar las credenciales públicas `everyone/everyone` para conectarte al broker.
 
 Asegúrate de tener un navegador web abierto con el wis2box-webapp de tu instancia accediendo a `http://YOUR-HOST/wis2box-webapp`.
 
-## Crear un nuevo conjunto de datos con la política de datos 'recommended'
+## Crear un nuevo conjunto de datos con política de datos 'recommended'
 
-Ve a la página 'dataset editor' en el wis2box-webapp y crea un nuevo conjunto de datos.
+Accede a la página 'dataset editor' en el wis2box-webapp y crea un nuevo conjunto de datos.
 
 Para "Centre ID", utiliza el mismo que usaste en las sesiones prácticas anteriores.
 
@@ -64,10 +64,10 @@ Selecciona Template = 'other' para indicar que no usarás una plantilla predefin
 
 Haz clic en 'CONTINUE TO FORM' para continuar.
 
-Para este ejercicio, por favor crea un conjunto de datos para datos METAR de aviación;
+Para este ejercicio, crea un conjunto de datos para datos METAR de aviación;
 
 - elige un 'Local ID' apropiado para el conjunto de datos, por ejemplo 'aviation-metar'
-- proporciona un título y una descripción para el conjunto de datos
+- proporciona un título y descripción para el conjunto de datos
 - elige WMO Data Policy = 'recommended'
 
 <img alt="create-dataset-recommended" src="/../assets/img/create-dataset-aviation-metar-example.png" width="800">
@@ -85,7 +85,7 @@ A continuación:
     
     La URL de licencia asociada con un conjunto de datos recomendado informa a los consumidores de datos sobre las condiciones de uso de los datos.
 
-    Puedes usar una URL que apunte a un archivo de licencia alojado en tu instancia de wis2box, o puedes usar una URL que apunte a un archivo de licencia alojado en un sitio web externo.
+    Puedes usar una URL que apunte a un archivo de licencia alojado en tu instancia de wis2box, o una URL que apunte a un archivo de licencia alojado en un sitio web externo.
 
     Para este ejercicio, usaremos un archivo de licencia autoalojado. Añadirás el archivo 'aviation-license.html' a tu instancia de wis2box más adelante en esta sesión práctica para garantizar que la URL de licencia sea válida.
 
@@ -93,7 +93,7 @@ Dado que seleccionaste Template = 'other', no se rellenan palabras clave automá
 
 ![create-dataset-metar-keywords](../assets/img/create-dataset-metar-keywords.png)
 
-Continúa rellenando los campos obligatorios para Propiedades Espaciales e Información de Contacto. Haz clic en 'Validate form' para verificar que todos los campos obligatorios estén completos.
+Continúa completando los campos obligatorios para Propiedades Espaciales e Información de Contacto. Haz clic en 'Validate form' para verificar que todos los campos obligatorios estén completos.
 
 Dado que seleccionaste Template = 'other', no se definen mapeos de conjuntos de datos.
 
@@ -103,7 +103,7 @@ Por favor, añade el plugin para 'Universal data without conversion' y asegúrat
 
 Envía el conjunto de datos, utilizando el token de autenticación creado previamente, y verifica que el nuevo conjunto de datos se haya creado en el wis2box-webapp.
 
-Verifica en MQTT Explorer que recibes el mensaje de notificación de WIS2 anunciando el nuevo registro de metadatos de descubrimiento en el tema `origin/a/wis2/<your-centre-id>/metadata`.	
+Verifica en MQTT Explorer que recibes el Mensaje de Notificación WIS2 anunciando el nuevo registro de Metadatos de Descubrimiento en el tema `origin/a/wis2/<your-centre-id>/metadata`.
 
 ## Revisa tu nuevo conjunto de datos en el wis2box-api
 
@@ -121,15 +121,15 @@ Si haces clic en el enlace, obtendrás un error ya que el archivo de licencia a�
 
 Asegúrate de que el enlace para "License for this dataset" en los metadatos de tu conjunto de datos recomendado funcione como se espera.
 
-Descarga este archivo de licencia de aviación de ejemplo: [aviation-license.html](./../../sample-data/aviation-license.html). 
+Descarga este archivo de licencia de aviación de ejemplo: [aviation-license.html](./../../sample-data/aviation-license.html).
 
 !!! note "Sobre el archivo de licencia de aviación de ejemplo"
 
     Este es un archivo de licencia de ejemplo para datos de aviación. Es posible que desees editar el archivo para incluir información relevante para tu organización.
 
-Para subir este archivo, utiliza la consola de MinIO disponible en el puerto 9001 de la instancia de wis2box, accediendo a un navegador web y visitando `http://YOUR-HOST:9001`
+Para subir este archivo, utiliza la consola MinIO disponible en el puerto 9001 de la instancia de wis2box, accediendo a un navegador web y visitando `http://YOUR-HOST:9001`.
 
-Las credenciales para acceder a la consola de MinIO en el archivo wis2box.env están definidas por las variables de entorno `WIS2BOX_STORAGE_USERNAME` y `WIS2BOX_STORAGE_PASSWORD`.
+Las credenciales para acceder a la consola MinIO en el archivo wis2box.env están definidas por las variables de entorno `WIS2BOX_STORAGE_USERNAME` y `WIS2BOX_STORAGE_PASSWORD`.
 
 Puedes encontrarlas en el archivo `wis2box.env` de la siguiente manera:
 
@@ -138,11 +138,11 @@ cat wis2box.env | grep WIS2BOX_STORAGE_USERNAME
 cat wis2box.env | grep WIS2BOX_STORAGE_PASSWORD
 ```
 
-Una vez que hayas iniciado sesión en la consola de MinIO, sube el archivo de licencia en la ruta base del bucket **wis2box-public** utilizando el botón “Upload”:
+Una vez que hayas iniciado sesión en la consola MinIO, sube el archivo de licencia al directorio base del bucket **wis2box-public** utilizando el botón “Upload”:
 
 <img alt="minio-upload-license" src="/../assets/img/minio-upload-license.png" width="800">
 
-Después de subir el archivo de licencia, verifica si el archivo es accesible visitando `WIS2BOX_URL/data/aviation-license.html` en tu navegador web, reemplazando `WIS2BOX_URL` con la URL de tu instancia de wis2box. 
+Después de subir el archivo de licencia, verifica si el archivo es accesible visitando `WIS2BOX_URL/data/aviation-license.html` en tu navegador web, reemplazando `WIS2BOX_URL` con la URL de tu instancia de wis2box.
 
 !!! note
 
@@ -159,7 +159,7 @@ cd ~/wis2box
 python3 wis2box-ctl.py login
 ```
 
-Desde la línea de comandos dentro del contenedor, puedes proteger un conjunto de datos utilizando el comando `wis2box auth add-token`, usando la bandera `--metadata-id` para especificar el identificador de metadatos del conjunto de datos y el token de acceso como argumento.
+Desde la línea de comandos dentro del contenedor, puedes asegurar un conjunto de datos utilizando el comando `wis2box auth add-token`, usando la bandera `--metadata-id` para especificar el identificador de metadatos del conjunto de datos y el token de acceso como argumento.
 
 Por ejemplo, para añadir el token de acceso `S3cr3tT0k3n` al conjunto de datos con identificador de metadatos `urn:wmo:md:my-centre-id:core.surface-based-observations.synop`:	
 
@@ -179,7 +179,7 @@ Descarga el siguiente archivo de datos METAR de ejemplo a tu máquina local:
 
 [A_SAKO31RKSL290000_C_RKSL_20250729000055.txt](../../sample-data/A_SAKO31RKSL290000_C_RKSL_20250729000055.txt)
 
-Luego, ingesta este archivo en tu conjunto de datos utilizando la consola de MinIO. Para acceder a la consola de MinIO, abre un navegador web y visita `http://YOUR-HOST:9001`, iniciando sesión con las credenciales definidas en el archivo `wis2box.env` mediante las variables de entorno `WIS2BOX_STORAGE_USERNAME` y `WIS2BOX_STORAGE_PASSWORD`.
+Luego, ingesta este archivo en tu conjunto de datos utilizando la consola de MinIO. Para acceder a la consola de MinIO, abre un navegador web y visita `http://YOUR-HOST:9001` e inicia sesión utilizando las credenciales definidas en el archivo `wis2box.env` por las variables de entorno `WIS2BOX_STORAGE_USERNAME` y `WIS2BOX_STORAGE_PASSWORD`.
 
 Para ingresar el archivo en tu conjunto de datos, ve al bucket **wis2box-incoming** y crea una nueva carpeta con el nombre del identificador de metadatos de tu conjunto de datos. Luego, sube el archivo de datos METAR de ejemplo a esta carpeta utilizando el botón “Upload”:
 
@@ -197,10 +197,10 @@ Asegúrate de que el nombre de la carpeta sea igual al identificador de metadato
     docker logs -n100 wis2box-management
     ```
 
-Copia y pega la URL del enlace canónico desde el mensaje de notificación WIS2 en tu navegador web. La URL debería verse similar a esta:
+Copia y pega la URL del enlace canónico desde el mensaje de notificación de WIS2 en tu navegador web. La URL debería verse similar a esta:
 
 ```
-http://example.wis2.training/data/2025-07-29/wis/urn:wmo:md:int-wmo-example:aviation-metar/A_SAKO31RKSL290000_C_RKSL_20250729000055.txt
+http://example.training.wis2dev.io/data/2025-07-29/wis/urn:wmo:md:int-wmo-example:aviation-metar/A_SAKO31RKSL290000_C_RKSL_20250729000055.txt
 ```
 
 Si agregaste correctamente el token de acceso al conjunto de datos, **no** deberías poder acceder a los datos en tu navegador web. En su lugar, verás un ERROR *401 Authorization Required*.
@@ -209,10 +209,10 @@ Si agregaste correctamente el token de acceso al conjunto de datos, **no** deber
 
 Para demostrar que el token de acceso es necesario para acceder al conjunto de datos, reproduciremos el error que viste en el navegador utilizando la función de línea de comandos `wget`.
 
-Desde la línea de comandos en tu máquina virtual de estudiante, utiliza el comando `wget` con el enlace canónico que copiaste del mensaje de notificación WIS2.
+Desde la línea de comandos en tu máquina virtual de estudiante, utiliza el comando `wget` con el enlace canónico que copiaste del mensaje de notificación de WIS2.
 
 ```bash
-wget http://example.wis2.training/data/2025-07-29/wis/urn:wmo:md:int-wmo-example:aviation-metar/A_SAKO31RKSL290000_C_RKSL_20250729000055.txt
+wget http://example.training.wis2dev.io/data/2025-07-29/wis/urn:wmo:md:int-wmo-example:aviation-metar/A_SAKO31RKSL290000_C_RKSL_20250729000055.txt
 ```
 
 Deberías ver que la solicitud HTTP devuelve *401 Unauthorized* y los datos no se descargan.
@@ -248,7 +248,7 @@ Cierra sesión en el contenedor wis2box-management:
 exit
 ```
 
-Y verifica que el token de acceso haya sido eliminado intentando descargar los datos nuevamente utilizando `wget` con el token de acceso en los encabezados HTTP, o intentando acceder a los datos en tu navegador web.
+Y verifica que el token de acceso ha sido eliminado intentando descargar los datos nuevamente utilizando `wget` con el token de acceso en los encabezados HTTP, o intentando acceder a los datos en tu navegador web.
 
 !!! note "El control de acceso es opcional, solo para conjuntos de datos recomendados"
 

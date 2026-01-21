@@ -201,7 +201,7 @@ Make sure that the folder-name is equal to the metadata-identifier for your data
 Copy-paste the URL for the canonical-link from the WIS2 Notification Message into your web browser. The URL should look similar to this:
 
 ```
-http://example.wis2.training/data/2025-07-29/wis/urn:wmo:md:int-wmo-example:aviation-metar/A_SAKO31RKSL290000_C_RKSL_20250729000055.txt
+http://example.training.wis2dev.io/data/2025-07-29/wis/urn:wmo:md:int-wmo-example:aviation-metar/A_SAKO31RKSL290000_C_RKSL_20250729000055.txt
 ```
 
 If you added the access token correctly to the dataset, you should **not** be able to access the data in your web browser, instead you see an ERROR *401 Authorization Required*.
@@ -213,7 +213,7 @@ In order to demonstrate that the access token is required to access the dataset 
 From the command line in your student VM, use the `wget` command with the canonical-link you copied from the WIS2 Notification Message.
 
 ```bash
-wget http://example.wis2.training/data/2025-07-29/wis/urn:wmo:md:int-wmo-example:aviation-metar/A_SAKO31RKSL290000_C_RKSL_20250729000055.txt
+wget http://example.training.wis2dev.io/data/2025-07-29/wis/urn:wmo:md:int-wmo-example:aviation-metar/A_SAKO31RKSL290000_C_RKSL_20250729000055.txt
 ```
 
 You should see that the HTTP request returns with *401 Unauthorized* and the data is not downloaded.

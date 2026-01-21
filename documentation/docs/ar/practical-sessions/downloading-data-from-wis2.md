@@ -8,8 +8,8 @@ title: تنزيل البيانات من WIS2 باستخدام wis2downloader
 
     بنهاية هذه الجلسة العملية، ستكون قادرًا على:
 
-    - استخدام "wis2downloader" للاشتراك في إشعارات بيانات WIS2 وتنزيل البيانات على نظامك المحلي
-    - عرض حالة التنزيلات في لوحة معلومات Grafana
+    - استخدام "wis2downloader" للاشتراك في إشعارات بيانات WIS2 وتنزيل البيانات إلى نظامك المحلي
+    - عرض حالة التنزيلات في لوحة تحكم Grafana
     - تعلم كيفية تكوين wis2downloader للاشتراك في وسيط غير افتراضي
 
 ## المقدمة
@@ -20,23 +20,29 @@ title: تنزيل البيانات من WIS2 باستخدام wis2downloader
      
      يتوفر wis2downloader أيضًا كخدمة مستقلة يمكن تشغيلها على نظام مختلف عن النظام الذي ينشر إشعارات WIS2. راجع [wis2downloader](https://pypi.org/project/wis2downloader/) لمزيد من المعلومات حول استخدام wis2downloader كخدمة مستقلة.
 
-     إذا كنت ترغب في تطوير خدمتك الخاصة للاشتراك في إشعارات WIS2 وتنزيل البيانات، يمكنك استخدام [كود المصدر الخاص بـ wis2downloader](https://github.com/World-Meteorological-Organization/wis2downloader) كمرجع.
+     إذا كنت ترغب في تطوير خدمتك الخاصة للاشتراك في إشعارات WIS2 وتنزيل البيانات، يمكنك استخدام [كود مصدر wis2downloader](https://github.com/World-Meteorological-Organization/wis2downloader) كمرجع.
 
 ## التحضير
 
-قبل البدء، يرجى تسجيل الدخول إلى جهاز الطالب الافتراضي الخاص بك والتأكد من أن مثيل wis2box الخاص بك يعمل بشكل صحيح.
+قبل البدء، يرجى تسجيل الدخول إلى جهاز الطالب الافتراضي الخاص بك والتأكد من أن مثيل wis2box الخاص بك يعمل.
 
 ## أساسيات wis2downloader
 
-يتم تضمين wis2downloader كحاوية منفصلة في wis2box كما هو محدد في ملفات Docker Compose. يتم تكوين حاوية Prometheus في wis2box لجمع المقاييس من حاوية wis2downloader، ويمكن عرض هذه المقاييس من خلال لوحة معلومات في Grafana.
+يتم تضمين wis2downloader كحاوية منفصلة في wis2box كما هو محدد في ملفات Docker Compose. يتم تكوين حاوية Prometheus في wis2box لجمع المقاييس من حاوية wis2downloader، ويمكن تصور هذه المقاييس من خلال لوحة تحكم في Grafana.
 
-### عرض لوحة معلومات wis2downloader في Grafana
+### عرض لوحة تحكم wis2downloader في Grafana
 
-افتح متصفح الويب وانتقل إلى لوحة معلومات Grafana لمثيل wis2box الخاص بك عن طريق الذهاب إلى `http://YOUR-HOST:3000`.
+افتح متصفح الويب وانتقل إلى لوحة تحكم Grafana لمثيل wis2box الخاص بك عن طريق الذهاب إلى `http://YOUR-HOST:3000`.
 
-انقر على "لوحات المعلومات" في القائمة الجانبية، ثم اختر **لوحة معلومات wis2downloader**.
+انقر على لوحات التحكم في القائمة الجانبية:
 
-يجب أن ترى لوحة المعلومات التالية:
+![grafana dashboard selection](../assets/img/grafana-dashboard-selection.png)
+
+ثم اختر **لوحة تحكم wis2downloader**:
+
+![grafana dashboard options, select wis2downloader](../assets/img/grafana-select-wis2downloader-dashboard.png)
+
+يجب أن ترى لوحة التحكم التالية:
 
 ![wis2downloader dashboard](../assets/img/wis2downloader-dashboard.png)
 
@@ -44,22 +50,22 @@ title: تنزيل البيانات من WIS2 باستخدام wis2downloader
 
 في الزاوية العلوية اليسرى، يمكنك رؤية الاشتراكات النشطة حاليًا.
 
-ابقِ هذه اللوحة مفتوحة حيث ستستخدمها لمراقبة تقدم التنزيل في التمرين التالي.
+ابقَ هذه اللوحة مفتوحة حيث ستستخدمها لمراقبة تقدم التنزيل في التمرين التالي.
 
 ### مراجعة تكوين wis2downloader
 
-يمكن تكوين خدمة wis2downloader في wis2box باستخدام متغيرات البيئة المحددة في ملف `wis2box.env`.
+يمكن تكوين خدمة wis2downloader في wis2box باستخدام متغيرات البيئة المحددة في ملف `wis2box.env` الخاص بك.
 
 تُستخدم متغيرات البيئة التالية بواسطة wis2downloader:
 
-    - DOWNLOAD_BROKER_HOST: اسم المضيف الخاص بـ MQTT broker للاتصال به. القيمة الافتراضية هي globalbroker.meteo.fr
-    - DOWNLOAD_BROKER_PORT: المنفذ الخاص بـ MQTT broker للاتصال به. القيمة الافتراضية هي 443 (HTTPS للويب سوكيت)
-    - DOWNLOAD_BROKER_USERNAME: اسم المستخدم للاتصال بـ MQTT broker. القيمة الافتراضية هي everyone
-    - DOWNLOAD_BROKER_PASSWORD: كلمة المرور للاتصال بـ MQTT broker. القيمة الافتراضية هي everyone
-    - DOWNLOAD_BROKER_TRANSPORT: websockets أو tcp، آلية النقل للاتصال بـ MQTT broker. القيمة الافتراضية هي websockets
-    - DOWNLOAD_RETENTION_PERIOD_HOURS: فترة الاحتفاظ بالبيانات التي تم تنزيلها بالساعات. القيمة الافتراضية هي 24
-    - DOWNLOAD_WORKERS: عدد عمال التنزيل المستخدمين. القيمة الافتراضية هي 8. تحدد عدد التنزيلات المتوازية.
-    - DOWNLOAD_MIN_FREE_SPACE_GB: الحد الأدنى من المساحة الحرة بالجيجابايت للحفاظ عليها على وحدة التخزين التي تستضيف التنزيلات. القيمة الافتراضية هي 1.
+    - DOWNLOAD_BROKER_HOST: اسم المضيف للوسيط MQTT الذي سيتم الاتصال به. الافتراضي هو globalbroker.meteo.fr
+    - DOWNLOAD_BROKER_PORT: المنفذ الخاص بوسيط MQTT الذي سيتم الاتصال به. الافتراضي هو 443 (HTTPS للويب سوكيت)
+    - DOWNLOAD_BROKER_USERNAME: اسم المستخدم المستخدم للاتصال بوسيط MQTT. الافتراضي هو everyone
+    - DOWNLOAD_BROKER_PASSWORD: كلمة المرور المستخدمة للاتصال بوسيط MQTT. الافتراضي هو everyone
+    - DOWNLOAD_BROKER_TRANSPORT: websockets أو tcp، آلية النقل المستخدمة للاتصال بوسيط MQTT. الافتراضي هو websockets
+    - DOWNLOAD_RETENTION_PERIOD_HOURS: فترة الاحتفاظ بالبيانات التي تم تنزيلها بالساعات. الافتراضي هو 24
+    - DOWNLOAD_WORKERS: عدد عمال التنزيل المستخدمين. الافتراضي هو 8. يحدد عدد التنزيلات المتوازية.
+    - DOWNLOAD_MIN_FREE_SPACE_GB: الحد الأدنى للمساحة الحرة بالجيجابايت التي يجب الاحتفاظ بها على وحدة التخزين التي تستضيف التنزيلات. الافتراضي هو 1.
 
 لمراجعة التكوين الحالي لـ wis2downloader، يمكنك استخدام الأمر التالي:
 
@@ -69,31 +75,31 @@ cat ~/wis2box/wis2box.env | grep DOWNLOAD
 
 !!! question "مراجعة تكوين wis2downloader"
     
-    ما هو MQTT broker الافتراضي الذي يتصل به wis2downloader؟
+    ما هو وسيط MQTT الافتراضي الذي يتصل به wis2downloader؟
 
     ما هي فترة الاحتفاظ الافتراضية للبيانات التي تم تنزيلها؟
 
 ??? success "انقر للكشف عن الإجابة"
 
-    MQTT broker الافتراضي الذي يتصل به wis2downloader هو `globalbroker.meteo.fr`.
+    وسيط MQTT الافتراضي الذي يتصل به wis2downloader هو `globalbroker.meteo.fr`.
 
     فترة الاحتفاظ الافتراضية للبيانات التي تم تنزيلها هي 24 ساعة.
 
 !!! note "تحديث تكوين wis2downloader"
 
-    لتحديث تكوين wis2downloader، يمكنك تحرير ملف wis2box.env. لتطبيق التغييرات، يمكنك إعادة تشغيل أمر البدء الخاص بـ wis2box-stack:
+    لتحديث تكوين wis2downloader، يمكنك تحرير ملف wis2box.env. لتطبيق التغييرات، يمكنك إعادة تشغيل أمر بدء تشغيل wis2box-stack:
 
     ```bash
     python3 wis2box-ctl.py start
     ```
 
-    وسترى خدمة wis2downloader تعيد التشغيل بالتكوين الجديد.
+    وسترى خدمة wis2downloader تُعاد تشغيلها بالتكوين الجديد.
 
 يمكنك الاحتفاظ بالتكوين الافتراضي للتمرين التالي.
 
-### واجهة سطر الأوامر الخاصة بـ wis2downloader
+### واجهة سطر الأوامر لـ wis2downloader
 
-للوصول إلى واجهة سطر الأوامر الخاصة بـ wis2downloader داخل wis2box، يمكنك تسجيل الدخول إلى حاوية **wis2downloader** باستخدام الأمر التالي:
+للوصول إلى واجهة سطر الأوامر لـ wis2downloader داخل wis2box، يمكنك تسجيل الدخول إلى حاوية **wis2downloader** باستخدام الأمر التالي:
 
 ```bash
 python3 wis2box-ctl.py login wis2downloader
@@ -105,11 +111,11 @@ python3 wis2box-ctl.py login wis2downloader
 wis2downloader list-subscriptions
 ```
 
-سيعيد هذا الأمر قائمة فارغة، حيث لم يتم إعداد أي اشتراكات بعد.
+يعيد هذا الأمر قائمة فارغة، حيث لم يتم إعداد أي اشتراكات بعد.
 
 ## تنزيل بيانات GTS باستخدام WIS2 Global Broker
 
-إذا احتفظت بالتكوين الافتراضي لـ wis2downloader، فإنه متصل حاليًا بـ WIS2 Global Broker المستضاف بواسطة Météo-France.
+إذا احتفظت بالتكوين الافتراضي لـ wis2downloader، فهو متصل حاليًا بـ WIS2 Global Broker المستضاف بواسطة Météo-France.
 
 ### إعداد الاشتراك
 
@@ -119,7 +125,7 @@ wis2downloader list-subscriptions
 wis2downloader add-subscription --topic cache/a/wis2/de-dwd-gts-to-wis2/#
 ```
 
-ثم اخرج من حاوية **wis2downloader** بكتابة `exit`:
+ثم اخرج من حاوية **wis2downloader** عن طريق كتابة `exit`:
 
 ```bash
 exit
@@ -127,9 +133,9 @@ exit
 
 ### التحقق من البيانات التي تم تنزيلها
 
-تحقق من لوحة معلومات wis2downloader في Grafana لرؤية الاشتراك الجديد المضاف. انتظر بضع دقائق ويجب أن ترى التنزيلات تبدأ. انتقل إلى التمرين التالي بمجرد تأكيد بدء التنزيلات.
+تحقق من لوحة تحكم wis2downloader في Grafana لرؤية الاشتراك الجديد المضاف. انتظر بضع دقائق ويجب أن ترى التنزيلات الأولى تبدأ. انتقل إلى التمرين التالي بمجرد تأكيدك أن التنزيلات قد بدأت.
 
-تقوم خدمة wis2downloader في wis2box بتنزيل البيانات في دليل 'downloads' في الدليل الذي حددته كـ `WIS2BOX_HOST_DATADIR` في ملف `wis2box.env`. لعرض محتويات دليل التنزيلات، استخدم الأمر التالي:
+تقوم خدمة wis2downloader في wis2box بتنزيل البيانات في دليل 'downloads' في الدليل الذي حددته كـ `WIS2BOX_HOST_DATADIR` في ملف `wis2box.env` الخاص بك. لعرض محتويات دليل التنزيلات، استخدم الأمر التالي:
 
 ```bash
 ls -R ~/wis2box-data/downloads
@@ -144,11 +150,17 @@ ls -R ~/wis2box-data/downloads
     هل يمكنك رؤية أي ملفات تم تنزيلها في هذه الأدلة؟
 
 ??? success "انقر للكشف عن الإجابة"
-    يجب أن ترى بنية دليل تبدأ بـ `cache/a/wis2/de-dwd-gts-to-wis2/` تحتها ستجد المزيد من الأدلة المسماة بناءً على رؤوس نشرات GTS للبيانات التي تم تنزيلها.
+    يجب أن ترى بنية دليل تبدأ بـ `cache/a/wis2/de-dwd-gts-to-wis2/` تحتها سترى المزيد من الأدلة المسماة بناءً على رؤوس نشرات GTS للبيانات التي تم تنزيلها.
 
     بناءً على وقت بدء الاشتراك، قد ترى أو لا ترى أي ملفات تم تنزيلها في هذا الدليل حتى الآن. إذا لم ترَ أي ملفات بعد، انتظر بضع دقائق أخرى وتحقق مرة أخرى.
 
-دعنا ننظف الاشتراك والبيانات التي تم تنزيلها قبل الانتقال إلى التمرين التالي.
+تحقق من لوحة تحكم wis2downloader في Grafana لرؤية تقدم التنزيل، سترى الاشتراك الذي أضفته في الزاوية العلوية اليسرى من اللوحة، وعدد التنزيلات يزداد مع تنزيل البيانات:
+
+![wis2downloader dashboard with active subscription](../assets/img/wis2downloader-dashboard-with-subscription.png)
+
+### إزالة الاشتراك والبيانات التي تم تنزيلها
+
+لنقم بتنظيف الاشتراك والبيانات التي تم تنزيلها قبل الانتقال إلى التمرين التالي.
 
 سجل الدخول مرة أخرى إلى حاوية wis2downloader:
 
@@ -162,58 +174,76 @@ python3 wis2box-ctl.py login wis2downloader
 wis2downloader remove-subscription --topic cache/a/wis2/de-dwd-gts-to-wis2/#
 ```
 
-قم بإزالة البيانات التي تم تنزيلها باستخدام الأمر التالي:
+قم بزيارة لوحة تحكم Grafana لتأكيد أن الاشتراك قد تمت إزالته وأن التنزيلات قد توقفت، يجب أن ترى الاشتراك يختفي من الزاوية العلوية اليسرى من اللوحة.
+
+**انتظر بضع دقائق حتى تظهر اللوحة أن التنزيلات قد توقفت.**
+
+أخيرًا، يمكنك إزالة البيانات التي تم تنزيلها باستخدام الأمر التالي في حاوية wis2downloader:
 
 ```bash
-rm -rf /wis2box-data/downloads/cache/*
+rm -rf app/data/downloads/*
 ```
 
-واخرج من حاوية wis2downloader بكتابة `exit`:
+!!! note
+    
+    الدليل `app/data/downloads` في حاوية wis2downloader يتم ربطه بدليل `downloads` في `WIS2BOX_HOST_DATADIR` كما هو محدد في ملف `wis2box.env`. الأمر أعلاه يزيل جميع البيانات التي تم تنزيلها.
+
+اخرج من حاوية wis2downloader عن طريق كتابة `exit`:
     
 ```bash
 exit
 ```
 
-تحقق من لوحة معلومات wis2downloader في Grafana لرؤية الاشتراك الذي تمت إزالته. يجب أن ترى التنزيلات تتوقف.
+تحقق من أن دليل التنزيلات على مضيفك فارغ مرة أخرى:
+
+```bash
+ls -R ~/wis2box-data/downloads
+```
 
 !!! note "حول بوابات GTS-to-WIS2"
-    هناك حاليًا بوابتان GTS-to-WIS2 تنشران البيانات من خلال WIS2 Global Broker وGlobal Caches:
+    هناك حاليًا بوابتان لـ GTS-to-WIS2 تنشران البيانات عبر WIS2 Global Broker وGlobal Caches:
 
-    - DWD (ألمانيا): centre-id=*de-dwd-gts-to-wis2*
-    - JMA (اليابان): centre-id=*jp-jma-gts-to-wis2*
-    
-    إذا قمت في التمرين السابق باستبدال `de-dwd-gts-to-wis2` بـ `jp-jma-gts-to-wis2`، ستتلقى الإشعارات والبيانات المنشورة بواسطة بوابة JMA GTS-to-WIS2.
+- DWD (ألمانيا): centre-id=*de-dwd-gts-to-wis2*  
+- JMA (اليابان): centre-id=*jp-jma-gts-to-wis2*  
 
-!!! note "المواضيع الأصلية مقابل مواضيع التخزين المؤقت"
+إذا قمت في التمرين السابق باستبدال `de-dwd-gts-to-wis2` بـ `jp-jma-gts-to-wis2`، ستتلقى الإشعارات والبيانات التي ينشرها بوابة JMA GTS-to-WIS2.
 
-    عند الاشتراك في موضوع يبدأ بـ `origin/`، ستتلقى إشعارات تحتوي على عنوان URL قانوني يشير إلى خادم بيانات يوفره مركز WIS الذي ينشر البيانات.
+!!! note "الموضوعات الأصلية مقابل موضوعات التخزين المؤقت"
 
-    عند الاشتراك في موضوع يبدأ بـ `cache/`، ستتلقى إشعارات متعددة لنفس البيانات، واحدة لكل Global Cache. ستحتوي كل إشعار على عنوان URL قانوني يشير إلى خادم البيانات الخاص بـ Global Cache المعني. سيقوم wis2downloader بتنزيل البيانات من أول عنوان URL قانوني يمكنه الوصول إليه.
+عند الاشتراك في موضوع يبدأ بـ `origin/`، ستتلقى إشعارات تحتوي على عنوان URL قانوني يشير إلى خادم بيانات يوفره مركز WIS الذي ينشر البيانات.
 
-## تنزيل بيانات تجريبية من WIS2 Training Broker
+عند الاشتراك في موضوع يبدأ بـ `cache/`، ستتلقى إشعارات متعددة لنفس البيانات، واحدة لكل Global Cache. كل إشعار سيحتوي على عنوان URL قانوني يشير إلى خادم البيانات الخاص بـ Global Cache المعني. سيقوم wis2downloader بتنزيل البيانات من أول عنوان URL قانوني يمكنه الوصول إليه.
 
-في هذا التمرين، ستشترك في WIS2 Training Broker الذي ينشر بيانات تجريبية لأغراض التدريب.
+## تنزيل بيانات مثال من WIS2 Training Broker
 
-### تغيير تكوين wis2downloader
+في هذا التمرين، ستشترك في WIS2 Training Broker الذي ينشر بيانات أمثلة لأغراض التدريب.
+
+### تغيير إعدادات wis2downloader
 
 يوضح هذا كيفية الاشتراك في وسيط ليس الوسيط الافتراضي وسيسمح لك بتنزيل بعض البيانات المنشورة من WIS2 Training Broker.
 
-حرر ملف `wis2box.env` وقم بتغيير `DOWNLOAD_BROKER_HOST` إلى `wis2training-broker.wis2dev.io`، و`DOWNLOAD_BROKER_PORT` إلى `1883`، و`DOWNLOAD_BROKER_TRANSPORT` إلى `tcp`:
+قم بتحرير ملف `wis2box.env` وقم بتغيير `DOWNLOAD_BROKER_HOST` إلى `wis2training-broker.wis2dev.io`، و`DOWNLOAD_BROKER_PORT` إلى `1883`، و`DOWNLOAD_BROKER_TRANSPORT` إلى `tcp`:
 
 ```copy
-# downloader settings
+# إعدادات التنزيل
 DOWNLOAD_BROKER_HOST=wis2training-broker.wis2dev.io
 DOWNLOAD_BROKER_PORT=1883
 DOWNLOAD_BROKER_USERNAME=everyone
 DOWNLOAD_BROKER_PASSWORD=everyone
-# download transport mechanism (tcp or websockets)
+# آلية نقل التنزيل (tcp أو websockets)
 DOWNLOAD_BROKER_TRANSPORT=tcp
 ```
 
-ثم قم بتشغيل أمر 'start' مرة أخرى لتطبيق التغييرات:
+تحقق جيدًا من أن التغييرات التي أجريتها تطابق ما سبق عن طريق تشغيل الأمر التالي:
 
 ```bash
-python3 wis2box-ctl.py start
+cat ~/wis2box/wis2box.env | grep DOWNLOAD
+```
+
+ثم قم بتشغيل أمر 'restart' لتطبيق التغييرات:
+
+```bash
+python3 wis2box-ctl.py restart
 ```
 
 تحقق من سجلات wis2downloader لمعرفة ما إذا كان الاتصال بالوسيط الجديد ناجحًا:
@@ -233,27 +263,27 @@ INFO - Connected successfully
 
 ### إعداد اشتراكات جديدة
 
-الآن سنقوم بإعداد اشتراك جديد للموضوع لتنزيل بيانات مسار الأعاصير من WIS2 Training Broker.
+الآن سنقوم بإعداد اشتراك جديد في الموضوع لتنزيل بيانات مسار الأعاصير من WIS2 Training Broker.
 
-سجل الدخول إلى حاوية **wis2downloader**:
+قم بتسجيل الدخول إلى حاوية **wis2downloader**:
 
 ```bash
 python3 wis2box-ctl.py login wis2downloader
 ```
 
-ونفذ الأمر التالي (انسخه والصقه لتجنب الأخطاء الإملائية):
+وقم بتنفيذ الأمر التالي (انسخه والصقه لتجنب الأخطاء الإملائية):
 
 ```bash
 wis2downloader add-subscription --topic origin/a/wis2/int-wis2-training/data/core/weather/prediction/forecast/medium-range/probabilistic/trajectory
 ```
 
-اخرج من حاوية **wis2downloader** بكتابة `exit`.
+اخرج من حاوية **wis2downloader** عن طريق كتابة `exit`.
 
 ### التحقق من البيانات التي تم تنزيلها
 
-انتظر حتى ترى التنزيلات تبدأ في لوحة معلومات wis2downloader في Grafana.
+انتظر حتى ترى التنزيلات تبدأ في لوحة تحكم wis2downloader في Grafana.
 
-تحقق من تنزيل البيانات عن طريق التحقق من سجلات wis2downloader مرة أخرى باستخدام:
+تحقق من أن البيانات قد تم تنزيلها عن طريق التحقق من سجلات wis2downloader مرة أخرى باستخدام:
 
 ```bash
 docker logs wis2downloader
@@ -278,16 +308,16 @@ ls -R ~/wis2box-data/downloads
     
     ما هو تنسيق الملفات للبيانات التي تم تنزيلها؟
 
-??? success "انقر للكشف عن الإجابة"
+??? success "اضغط للكشف عن الإجابة"
 
     البيانات التي تم تنزيلها بتنسيق BUFR كما هو موضح بامتداد الملف `.bufr`.
 
-بعد ذلك، حاول إضافة اشتراكين آخرين لتنزيل بيانات شذوذ درجة حرارة السطح الشهرية وبيانات التنبؤ العالمي من المواضيع التالية:
+بعد ذلك، حاول إضافة اشتراكين آخرين لتنزيل بيانات شذوذ درجة حرارة السطح الشهرية وبيانات التنبؤ العالمية من الموضوعات التالية:
 
 - `origin/a/wis2/int-wis2-training/data/core/weather/prediction/forecast/medium-range/probabilistic/global`
 - `origin/a/wis2/int-wis2-training/data/core/climate/experimental/anomalies/monthly/surface-temperature`
 
-انتظر حتى ترى التنزيلات تبدأ في لوحة معلومات wis2downloader في Grafana.
+انتظر حتى ترى التنزيلات تبدأ في لوحة تحكم wis2downloader في Grafana.
 
 تحقق من محتويات دليل التنزيلات مرة أخرى:
 
@@ -295,7 +325,7 @@ ls -R ~/wis2box-data/downloads
 ls -R ~/wis2box-data/downloads
 ```
 
-يجب أن ترى الأدلة الجديدة المقابلة للمواضيع التي اشتركت فيها، تحتوي على البيانات التي تم تنزيلها.
+يجب أن ترى الدلائل الجديدة المقابلة للمواضيع التي اشتركت فيها، تحتوي على البيانات التي تم تنزيلها.
 
 ## الخاتمة
 
@@ -304,6 +334,6 @@ ls -R ~/wis2box-data/downloads
     في هذه الجلسة العملية، تعلمت كيفية:
 
     - استخدام 'wis2downloader' للاشتراك في WIS2 Broker وتنزيل البيانات إلى نظامك المحلي
-    - عرض حالة التنزيلات في لوحة معلومات Grafana
-    - كيفية تغيير التكوين الافتراضي لـ wis2downloader للاشتراك في وسيط مختلف
+    - عرض حالة التنزيلات في لوحة تحكم Grafana
+    - كيفية تغيير الإعداد الافتراضي لـ wis2downloader للاشتراك في وسيط مختلف
     - كيفية عرض البيانات التي تم تنزيلها على نظامك المحلي

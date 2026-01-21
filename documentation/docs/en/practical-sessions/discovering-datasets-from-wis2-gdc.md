@@ -66,7 +66,7 @@ By default, pywsicat connects to Global Discovery Catalogue (GDC) hosted by Envi
     If you are doing this exercise during a local training session, you can configure pywiscat to query the local GDC by setting the `PYWISCAT_GDC_URL` environment variable:
 
     ```bash
-    export PYWISCAT_GDC_URL=http://gdc.wis2.training:5002
+    export PYWISCAT_GDC_URL=http://gdc.training.wis2dev.io
     ```
 
 To see the available options, run:
