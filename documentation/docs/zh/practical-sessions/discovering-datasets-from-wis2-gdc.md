@@ -12,7 +12,7 @@ title: 从 WIS2 全球发现目录中发现数据集
 
 ## 简介
 
-在本次课程中，您将学习如何使用 [pywiscat](https://github.com/wmo-im/pywiscat) 从 WIS2 全球发现目录 (GDC) 中发现数据。pywiscat 是一个命令行工具，用于搜索和检索 WIS2 GDC 的元数据。
+在本次课程中，您将学习如何使用 [pywiscat](https://github.com/wmo-im/pywiscat) 从 WIS2 全球发现目录 (GDC) 中发现数据。pywiscat 是一个命令行工具，用于从 WIS2 GDC 中搜索和检索元数据。
 
 目前，可用的 GDC 包括：
 
@@ -25,7 +25,7 @@ title: 从 WIS2 全球发现目录中发现数据集
 ## 准备工作
 
 !!! note
-    在开始之前，请登录到您的学生虚拟机 (VM)。
+    开始之前，请登录到您的学生虚拟机 (VM)。
 
 ## 安装 pywiscat
 
@@ -85,9 +85,9 @@ pywiscat search
     搜索返回了多少条记录？
 
 ??? success "点击查看答案"
-    返回的记录数量取决于您查询的 GDC。当使用本地培训 GDC 时，您应该会发现记录数量等于在其他实践课程中导入到 GDC 的数据集数量。
+    返回的记录数量取决于您查询的 GDC。当使用本地培训 GDC 时，您应该会看到记录数量等于在其他实践课程中导入到 GDC 的数据集数量。
 
-让我们尝试使用关键字查询 GDC：
+让我们尝试使用关键词查询 GDC：
 
 ```bash
 pywiscat search -q observations
@@ -98,18 +98,18 @@ pywiscat search -q observations
     结果的数据政策是什么？
 
 ??? success "点击查看答案"
-    所有返回的数据都应指定为“核心”数据。
+    所有返回的数据都应指定为 "核心" 数据。
 
-尝试使用其他 `-q` 查询。
+尝试使用 `-q` 进行其他查询。
 
 !!! tip
 
-    `-q` 标志支持以下语法：
+    `-q` 标志允许使用以下语法：
 
-    - `-q synop`：查找包含单词 "synop" 的所有记录
-    - `-q temp`：查找包含单词 "temp" 的所有记录
-    - `-q "observations AND oman"`：查找包含单词 "observations" 和 "oman" 的所有记录
-    - `-q "observations NOT oman"`：查找包含单词 "observations" 但不包含单词 "oman" 的所有记录
+    - `-q synop`：查找包含 "synop" 的所有记录
+    - `-q temp`：查找包含 "temp" 的所有记录
+    - `-q "observations AND oman"`：查找包含 "observations" 和 "oman" 的所有记录
+    - `-q "observations NOT oman"`：查找包含 "observations" 但不包含 "oman" 的所有记录
     - `-q "synop OR temp"`：查找包含 "synop" 或 "temp" 的所有记录
     - `-q "obs*"`：模糊搜索
 
