@@ -10,7 +10,7 @@ title: Accéder à votre VM étudiant
 
     - accéder à votre VM étudiant via SSH et WinSCP
     - vérifier que les logiciels requis pour les exercices pratiques sont installés
-    - vérifier que vous avez accès aux supports d'exercice pour cette formation sur votre VM étudiant locale
+    - vérifier que vous avez accès aux supports d'exercices pour cette formation sur votre VM étudiant locale
 
 ## Introduction
 
@@ -26,11 +26,11 @@ Votre VM étudiant dispose des logiciels préinstallés suivants :
 
 !!! note
 
-    Si vous souhaitez suivre cette formation en dehors d'une session de formation locale, vous pouvez fournir votre propre instance en utilisant n'importe quel fournisseur de cloud, par exemple :
+    Si vous souhaitez suivre cette formation en dehors d'une session locale, vous pouvez fournir votre propre instance en utilisant n'importe quel fournisseur de cloud, par exemple :
 
-    - GCP (Google Cloud Platform) instance VM `e2-medium`
-    - AWS (Amazon Web Services) instance ec2 `t3a.medium`
-    - Azure (Microsoft) Azure Virtual Machine `standard_b2s`
+    - Instance VM `e2-medium` sur GCP (Google Cloud Platform)
+    - Instance ec2 `t3a.medium` sur AWS (Amazon Web Services)
+    - Machine virtuelle Azure `standard_b2s` sur Azure (Microsoft)
 
     Sélectionnez Ubuntu Server 22.0.4 LTS comme système d'exploitation.
     
@@ -43,16 +43,16 @@ Votre VM étudiant dispose des logiciels préinstallés suivants :
     unzip wis2box-setup-1.2.0.zip
     ```
     
-    Vous pouvez toujours trouver la dernière archive 'wis2box-setup' à l'adresse [https://github.com/World-Meteorological-Organization/wis2box/releases](https://github.com/World-Meteorological-Organization/wis2box-release/releases).
+    Vous pouvez toujours trouver la dernière archive 'wis2box-setup' à l'adresse suivante : [https://github.com/World-Meteorological-Organization/wis2box/releases](https://github.com/World-Meteorological-Organization/wis2box-release/releases).
 
-    Les supports d'exercice utilisés dans cette formation peuvent être téléchargés comme suit :
+    Les supports d'exercices utilisés dans cette formation peuvent être téléchargés comme suit :
 
     ```bash
     wget https://training.wis2box.wis.wmo.int/exercise-materials.zip
     unzip exercise-materials.zip
     ```
 
-    Les packages Python supplémentaires suivants sont nécessaires pour exécuter les supports d'exercice :
+    Les packages Python supplémentaires suivants sont nécessaires pour exécuter les supports d'exercices :
 
     ```bash
     pip3 install minio
@@ -75,7 +75,7 @@ Utilisez un client SSH pour vous connecter à votre VM étudiant en utilisant le
 !!! tip
     Contactez un formateur si vous n'êtes pas sûr du nom d'hôte/nom d'utilisateur ou si vous rencontrez des problèmes de connexion.
 
-Une fois connecté, veuillez changer votre mot de passe pour vous assurer que personne d'autre ne peut accéder à votre VM :
+Une fois connecté, veuillez changer votre mot de passe pour garantir que personne d'autre ne puisse accéder à votre VM :
 
 ```bash
 limper@student-vm:~$ passwd
@@ -88,7 +88,7 @@ passwd: password updated successfully
 
 ## Vérifier les versions des logiciels
 
-Pour pouvoir exécuter wis2box, la VM étudiant doit avoir Python, Docker et Docker Compose préinstallés. 
+Pour pouvoir exécuter wis2box, la VM étudiant doit avoir Python, Docker et Docker Compose préinstallés.
 
 Vérifiez la version de Python :
 ```bash
@@ -117,9 +117,9 @@ résultat :
 Docker Compose version v2.21.0
 ```
 
-Pour vous assurer que votre utilisateur peut exécuter des commandes Docker, votre utilisateur a été ajouté au groupe `docker`.
+Pour garantir que votre utilisateur peut exécuter des commandes Docker, il a été ajouté au groupe `docker`.
 
-Pour tester que votre utilisateur peut exécuter docker hello-world, exécutez la commande suivante :
+Pour tester que votre utilisateur peut exécuter le conteneur hello-world, exécutez la commande suivante :
 ```bash
 docker run hello-world
 ```
@@ -135,7 +135,7 @@ This message shows that your installation appears to be working correctly.
 ...
 ```
 
-## Inspecter les supports d'exercice
+## Inspecter les supports d'exercices
 
 Inspectez le contenu de votre répertoire personnel ; ce sont les supports utilisés dans le cadre de la formation et des sessions pratiques.
 
@@ -149,7 +149,7 @@ exercise-materials  wis2box
 
 Si vous avez installé WinSCP sur votre PC local, vous pouvez l'utiliser pour vous connecter à votre VM étudiant et inspecter le contenu de votre répertoire personnel, ainsi que télécharger ou téléverser des fichiers entre votre VM et votre PC local.
 
-WinSCP n'est pas requis pour la formation, mais il peut être utile si vous souhaitez modifier des fichiers sur votre VM en utilisant un éditeur de texte sur votre PC local.
+WinSCP n'est pas requis pour la formation, mais il peut être utile si vous souhaitez modifier des fichiers sur votre VM à l'aide d'un éditeur de texte sur votre PC local.
 
 Voici comment vous connecter à votre VM étudiant en utilisant WinSCP :
 
@@ -157,15 +157,15 @@ Ouvrez WinSCP et cliquez sur "New Site". Vous pouvez créer une nouvelle connexi
 
 <img alt="winscp-student-vm-scp.png" src="/../assets/img/winscp-student-vm-scp.png" width="400">
 
-Cliquez sur 'Save' puis sur 'Login' pour vous connecter à votre VM.
+Cliquez sur 'Save', puis sur 'Login' pour vous connecter à votre VM.
 
 Vous devriez maintenant pouvoir voir le contenu du répertoire personnel sur votre VM étudiant et accéder à vos fichiers.
 
 ## Conclusion
 
 !!! success "Félicitations !"
-    Au cours de cette session pratique, vous avez appris à :
+    Lors de cette session pratique, vous avez appris à :
 
     - accéder à votre VM étudiant via SSH et WinSCP
     - vérifier que les logiciels requis pour les exercices pratiques sont installés
-    - vérifier que vous avez accès aux supports d'exercice pour cette formation sur votre VM étudiant locale
+    - vérifier que vous avez accès aux supports d'exercices pour cette formation sur votre VM étudiant locale
