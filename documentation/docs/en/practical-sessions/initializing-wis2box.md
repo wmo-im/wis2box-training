@@ -76,9 +76,9 @@ Please use `http://<your-hostname-or-ip>` as the URL.
 Please enter the URL of the wis2box:
  For local testing the URL is http://localhost
  To enable remote access, the URL should point to the public IP address or domain name of the server hosting the wis2box.
-http://username.wis2.training
+http://username.training.wis2dev.io
 The URL of the wis2box will be set to:
-  http://username.wis2.training
+  http://username.training.wis2dev.io
 Is this correct? (y/n/exit)
 ```
 
