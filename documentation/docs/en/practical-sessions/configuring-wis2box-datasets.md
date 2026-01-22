@@ -166,6 +166,14 @@ Since you used a template to create your dataset, the dataset mappings have been
 
 Note that you can click on the "Update" button to change settings for the plugin such as file extension and the file pattern. You can leave the default settings for now.
 
+!!! note "About the checkbox for caching core-data"
+
+    You will see the following checkbox:
+
+    <img alt="Dataset editor: cache-option" src="/../assets/img/wis2box-dataset-editor-cache-option.png" width="700">
+
+    If you uncheck this checkbox, the wis2box will add `properties.cache=False` indicating that you do not wish the Global Cache to download and store a copy of your data. By default, this checkbox is checked, meaning that the Global Cache will cache your core data, which is the recommended setting for most datasets.
+
 ### Submitting your dataset
 
 Finally, you can click 'submit' to publish your dataset. 

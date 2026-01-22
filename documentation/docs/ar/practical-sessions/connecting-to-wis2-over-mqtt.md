@@ -14,60 +14,63 @@ title: الاتصال بـ WIS2 عبر MQTT
 
 ## المقدمة
 
-يستخدم WIS2 بروتوكول MQTT للإعلان عن توفر بيانات الطقس/المناخ/المياه. يقوم WIS2 Global Broker بالاشتراك في جميع WIS2 Nodes في الشبكة ويعيد نشر الرسائل التي يتلقاها. يقوم Global Cache بالاشتراك في Global Broker، وتنزيل البيانات الموجودة في الرسالة، ثم يعيد نشر الرسالة على موضوع `cache` مع عنوان URL جديد. ينشر Global Discovery Catalogue بيانات الاكتشاف الوصفية من Broker ويوفر واجهة برمجة تطبيقات للبحث.
+يستخدم WIS2 بروتوكول MQTT للإعلان عن توفر بيانات الطقس/المناخ/المياه. يقوم WIS2 Global Broker بالاشتراك في جميع WIS2 Nodes في الشبكة وإعادة نشر الرسائل التي يتلقاها. يقوم Global Cache بالاشتراك في Global Broker، وتنزيل البيانات الموجودة في الرسالة، ثم إعادة نشر الرسالة على موضوع `cache` مع عنوان URL جديد. ينشر Global Discovery Catalogue بيانات الاكتشاف الوصفية من Broker ويوفر واجهة برمجة تطبيقات للبحث.
 
-هذا مثال على هيكل رسالة الإشعار في WIS2 لرسالة تم استلامها على الموضوع `origin/a/wis2/br-inmet/data/core/weather/surface-based-observations/synop`:
+هذا مثال على هيكل رسالة إشعار WIS2 لرسالة تم استلامها على الموضوع `origin/a/wis2/br-inmet/data/core/weather/surface-based-observations/synop`:
 
 ```json
 {
-  "id": "59f9b013-c4b3-410a-a52d-fff18f3f1b47",
-  "type": "Feature",
-  "version": "v04",
-  "geometry": {
-    "coordinates": [
-      -38.69389,
-      -17.96472,
-      60
-    ],
-    "type": "Point"
-  },
-  "properties": {
-    "data_id": "br-inmet:synop-obs/WIGOS_0-20000-0-82022_20251114T180000",
-    "datetime": "2025-11-14T18:00:00Z",
-    "pubtime": "2025-11-14T20:49:31Z",
-    "metadata_id": "urn:wmo:md:br-inmet:synop-obs",
-    "integrity": {
-      "method": "sha512",
-      "value": "TBuWycx/G0lIiTo47eFPBViGutxcIyk7eikppAKPc4aHgOmTIS5Wb9+0v3awMOyCgwpFhTruRRCVReMQMp5kYw=="
-    },
-    "content": {
-      "encoding": "base64",
-      "value": "QlVGUgAA+gQAABYAACsAAAAAAAIAHAAH6AgPBgAAAAALAAABgMGWx1AAAM0ABOIAAAODM0OTkAAAAAAAAAAAAAAKb5oKEpJ6YkJ6mAAAAAAAAAAAAAAAAv0QeYA29WQa87ZhH4CQP//z+P//BD////+ASznXuUb///8MgAS3/////8X///e+AP////AB/+R/yf////////////////////6/1/79H/3///gEt////////4BLP6QAf/+/pAB//4H0YJ/YeAh/f2///7TH/////9+j//f///////////////////v0f//////////////////////wNzc3Nw==",
-      "size": 250
-    },
-    "wigos_station_identifier": "0-20000-0-82022"
-  },
-  "links": [
-    {
-      "rel": "canonical",
-      "type": "application/bufr",
-      "href": "http://wis2bra.inmet.gov.br/data/2025-11-14/wis/urn:wmo:md:br-inmet:synop-man/WIGOS_0-20000-0-82022_20251114T180000.bufr4"",
-      "length": 250
-    }
-  ]
+   "id":"3c14d7bf-e6b9-4f59-b4ea-f2fc52a33cd3",
+   "type":"Feature",
+   "conformsTo":[
+      "http://wis.wmo.int/spec/wnm/1/conf/core"
+   ],
+   "geometry":{
+      "coordinates":[
+         -99.1964,
+         19.404,
+         2314
+      ],
+      "type":"Point"
+   },
+   "properties":{
+      "data_id":"br-inmet:data:core:weather:surface-based-observations:synop/WIGOS_0-20000-0-76679_20250206T231600",
+      "datetime":"2025-02-06T23:16:00Z",
+      "pubtime":"2026-01-20T13:14:52Z",
+      "integrity":{
+         "method":"sha512",
+         "value":"qtlI3Noay2I4zcdA1XCpn8vzVLIt0RKrR398VGFgTttc1XRUVb4dHWNCDKPXUo4mNkiFKx5TTHBvrxlzqWmMnQ=="
+      },
+      "metadata_id":"urn:wmo:md:br-inmet:data:core:weather:surface-based-observations:synop",
+      "wigos_station_identifier":"0-20000-0-76679"
+   },
+   "links":[
+      {
+         "rel":"canonical",
+         "type":"application/bufr",
+         "href":"http://localhost/data/2025-02-06/wis/urn:wmo:md:br-inmet:data:core:weather:surface-based-observations:synop/WIGOS_0-20000-0-76679_20250206T231600.bufr4",
+         "length":125117
+      },
+      {
+         "rel":"via",
+         "type":"text/html",
+         "href":"https://oscar.wmo.int/surface/#/search/station/stationReportDetails/0-20000-0-76679"
+      }
+   ],
+   "generated_by":"wis2box 1.2.0"
 }
 ```
 
-في هذه الجلسة العملية، ستتعلم كيفية استخدام أداة MQTT Explorer لإعداد اتصال عميل MQTT بـ WIS2 Global Broker وعرض رسائل الإشعارات في WIS2.
+في هذه الجلسة العملية، ستتعلم كيفية استخدام أداة MQTT Explorer لإعداد اتصال عميل MQTT بـ WIS2 Global Broker وعرض رسائل إشعارات WIS2.
 
-يُعد MQTT Explorer أداة مفيدة لتصفح ومراجعة هيكل المواضيع لأي MQTT broker لمراجعة البيانات التي يتم نشرها.
+يعد MQTT Explorer أداة مفيدة لتصفح ومراجعة هيكل المواضيع لأي MQTT broker لمراجعة البيانات التي يتم نشرها.
 
 !!! note "حول MQTT"
     يوفر MQTT Explorer واجهة سهلة الاستخدام للاتصال بـ MQTT broker واستكشاف المواضيع وهيكل الرسائل المستخدمة في WIS2.
     
-    في الواقع، يُقصد باستخدام MQTT للتواصل بين الآلات، حيث يشترك تطبيق أو خدمة في المواضيع ويعالج الرسائل برمجيًا في الوقت الفعلي.
+    في الممارسة العملية، يتم استخدام MQTT للتواصل بين الآلات، حيث يشترك تطبيق أو خدمة في المواضيع ويعالج الرسائل برمجيًا في الوقت الفعلي.
     
-    للعمل مع MQTT برمجيًا (على سبيل المثال، باستخدام Python)، يمكنك استخدام مكتبات عملاء MQTT مثل [paho-mqtt](https://pypi.org/project/paho-mqtt) للاتصال بـ MQTT broker ومعالجة الرسائل الواردة. هناك العديد من برامج عملاء وخوادم MQTT، حسب احتياجاتك وبيئتك التقنية.
+    للعمل مع MQTT برمجيًا (على سبيل المثال، باستخدام Python)، يمكنك استخدام مكتبات عملاء MQTT مثل [paho-mqtt](https://pypi.org/project/paho-mqtt) للاتصال بـ MQTT broker ومعالجة الرسائل الواردة. توجد العديد من برامج العملاء والخوادم لـ MQTT، حسب متطلباتك وبيئتك التقنية.
 
 ## استخدام MQTT Explorer للاتصال بـ Global Broker
 
@@ -75,10 +78,10 @@ title: الاتصال بـ WIS2 عبر MQTT
 
 افتح MQTT Explorer وأضف اتصالًا جديدًا بـ Global Broker المستضاف من قبل MeteoFrance باستخدام التفاصيل التالية:
 
-- المضيف: globalbroker.meteo.fr
-- المنفذ: 8883
-- اسم المستخدم: everyone
-- كلمة المرور: everyone
+- host: globalbroker.meteo.fr
+- port: 8883
+- username: everyone
+- password: everyone
 
 <img alt="mqtt-explorer-global-broker-connection" src="/../assets/img/mqtt-explorer-global-broker-connection.png" width="800">
 
@@ -89,22 +92,22 @@ title: الاتصال بـ WIS2 عبر MQTT
 <img alt="mqtt-explorer-global-broker-advanced" src="/../assets/img/mqtt-explorer-global-broker-sub-origin.png" width="800">
 
 !!! note
-    عند إعداد اشتراكات MQTT، يمكنك استخدام الرموز التالية:
+    عند إعداد اشتراكات MQTT، يمكنك استخدام الرموز العامة التالية:
 
-    - **مستوى واحد (+)**: رمز استبدال لمستوى واحد من المواضيع
-    - **متعدد المستويات (#)**: رمز استبدال لمستويات متعددة من المواضيع
+    - **مستوى واحد (+)**: الرمز العام لمستوى واحد يستبدل مستوى واحدًا من الموضوع
+    - **مستويات متعددة (#)**: الرمز العام لمستويات متعددة يستبدل مستويات متعددة من الموضوع
 
-    في هذه الحالة، سيشترك `origin/a/wis2/#` في جميع المواضيع تحت موضوع `origin/a/wis2`.
+    في هذه الحالة، `origin/a/wis2/#` سيشترك في جميع المواضيع تحت موضوع `origin/a/wis2`.
 
 انقر على 'BACK'، ثم 'SAVE' لحفظ تفاصيل الاتصال والاشتراك. ثم انقر على 'CONNECT':
 
-يجب أن تبدأ الرسائل بالظهور في جلسة MQTT Explorer كما يلي:
+يجب أن تبدأ الرسائل في الظهور في جلسة MQTT Explorer كما يلي:
 
 <img alt="mqtt-explorer-global-broker-topics" src="/../assets/img/mqtt-explorer-global-broker-msg-origin.png" width="800">
 
 أنت الآن جاهز لبدء استكشاف مواضيع WIS2 وهيكل الرسائل.
 
-## التمرين 1: مراجعة هيكل المواضيع في WIS2
+## التمرين 1: مراجعة هيكل مواضيع WIS2
 
 استخدم MQTT لتصفح هيكل المواضيع تحت مواضيع `origin`.
 
@@ -120,7 +123,7 @@ title: الاتصال بـ WIS2 عبر MQTT
 
     `origin/a/wis2/br-inmet/data/core/weather/surface-based-observations/synop`
 
-    يخبرنا أن البيانات نُشرت من مركز WIS بمُعرف المركز `br-inmet`، وهو مُعرف المركز الخاص بـ Instituto Nacional de Meteorologia - INMET، البرازيل.
+    يخبرنا أن البيانات تم نشرها من مركز WIS مع المعرف `br-inmet`، وهو المعرف الخاص بـ Instituto Nacional de Meteorologia - INMET، البرازيل.
 
 !!! question
 
@@ -128,15 +131,15 @@ title: الاتصال بـ WIS2 عبر MQTT
 
 ??? success "انقر للكشف عن الإجابة"
 
-    يمكننا التمييز بين الرسائل القادمة من بوابة GTS-to-WIS2 من خلال النظر إلى مُعرف المركز في هيكل المواضيع. على سبيل المثال، الموضوع التالي:
+    يمكننا التمييز بين الرسائل القادمة من بوابة GTS-to-WIS2 من خلال النظر إلى معرف المركز في هيكل المواضيع. على سبيل المثال، الموضوع التالي:
 
     `origin/a/wis2/de-dwd-gts-to-wis2/data/core/I/S/A/I/01/sbbr`
 
-    يخبرنا أن البيانات نُشرت من بوابة GTS-to-WIS2 المستضافة من قبل Deutscher Wetterdienst (DWD)، ألمانيا. بوابة GTS-to-WIS2 هي نوع خاص من ناشري البيانات الذين ينشرون البيانات من نظام الاتصالات العالمي (GTS) إلى WIS2. يتكون هيكل المواضيع من رؤوس TTAAii CCCC لرسائل GTS.
+    يخبرنا أن البيانات تم نشرها من بوابة GTS-to-WIS2 المستضافة من قبل Deutscher Wetterdienst (DWD)، ألمانيا. بوابة GTS-to-WIS2 هي نوع خاص من ناشري البيانات الذين ينشرون البيانات من نظام الاتصالات العالمي (GTS) إلى WIS2. يتكون هيكل المواضيع من رؤوس TTAAii CCCC لرسائل GTS.
 
-## التمرين 2: مراجعة هيكل الرسائل في WIS2
+## التمرين 2: مراجعة هيكل رسائل WIS2
 
-افصل الاتصال بـ MQTT Explorer وقم بتحديث قسم 'Advanced' لتغيير الاشتراك إلى التالي:
+افصل الاتصال بـ MQTT Explorer وقم بتحديث قسم 'Advanced' لتغيير الاشتراك إلى ما يلي:
 
 * `origin/a/wis2/+/data/core/weather/surface-based-observations/synop`
 * `cache/a/wis2/+/data/core/weather/surface-based-observations/synop`
@@ -144,7 +147,7 @@ title: الاتصال بـ WIS2 عبر MQTT
 <img alt="mqtt-explorer-global-broker-topics-exercise2" src="/../assets/img/mqtt-explorer-global-broker-sub-origin-cache-synop.png" width="800">
 
 !!! note
-    يتم استخدام الرمز `+` للاشتراك في جميع مراكز WIS.
+    يتم استخدام الرمز العام `+` للاشتراك في جميع مراكز WIS.
 
 أعد الاتصال بـ Global Broker وانتظر حتى تظهر الرسائل.
 
@@ -168,7 +171,7 @@ title: الاتصال بـ WIS2 عبر MQTT
 
 ??? success "انقر للكشف عن الإجابة"
 
-    عنوان URL موجود في قسم `links` مع `rel="canonical"` ومُعرّف بواسطة المفتاح `href`.
+    عنوان URL موجود في قسم `links` مع `rel="canonical"` ومحدد بواسطة المفتاح `href`.
 
     يمكنك نسخ عنوان URL ولصقه في متصفح ويب لتنزيل البيانات.
 
@@ -176,7 +179,7 @@ title: الاتصال بـ WIS2 عبر MQTT
 
 تأكد من أنك لا تزال متصلًا بـ Global Broker باستخدام اشتراكات المواضيع `origin/a/wis2/+/data/core/weather/surface-based-observations/synop` و `cache/a/wis2/+/data/core/weather/surface-based-observations/synop` كما هو موضح في التمرين 2.
 
-حاول تحديد رسالة لنفس مُعرف المركز المنشورة على كل من مواضيع `origin` و `cache`.
+حاول تحديد رسالة لنفس معرف المركز تم نشرها على كل من مواضيع `origin` و `cache`.
 
 !!! question
 
@@ -186,7 +189,7 @@ title: الاتصال بـ WIS2 عبر MQTT
 
     الرسائل المنشورة على مواضيع `origin` هي الرسائل الأصلية التي يعيد Global Broker نشرها من WIS2 Nodes في الشبكة.
 
-    الرسائل المنشورة على مواضيع `cache` هي الرسائل التي تم تنزيل البيانات الخاصة بها بواسطة Global Cache. إذا قمت بفحص محتوى الرسالة من الموضوع الذي يبدأ بـ `cache`، ستلاحظ أن الرابط 'canonical' تم تحديثه إلى عنوان URL جديد.
+    الرسائل المنشورة على مواضيع `cache` هي الرسائل التي تم تنزيل البيانات الخاصة بها من قبل Global Cache. إذا قمت بفحص محتوى الرسالة من الموضوع الذي يبدأ بـ `cache`، ستلاحظ أن الرابط 'canonical' تم تحديثه إلى عنوان URL جديد.
     
     هناك العديد من Global Caches في شبكة WIS2، لذلك ستتلقى رسالة واحدة من كل Global Cache قامت بتنزيل الرسالة.
 
