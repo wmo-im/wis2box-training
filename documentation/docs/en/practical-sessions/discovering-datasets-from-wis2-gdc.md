@@ -16,9 +16,9 @@ In this session you will learn how to discover data from the WIS2 Global Discove
 
 At the moment, the following GDCs are available:
 
-- Environment and Climate Change Canada, Meteorological Service of Canada: <https://wis2-gdc.weather.gc.ca>
-- China Meteorological Administration: <https://gdc.wis.cma.cn>
-- Deutscher Wetterdienst: <https://wis2.dwd.de/gdc>
+- Environment and Climate Change Canada, Meteorological Service of Canada: <https://wis2-gdc.weather.gc.ca/collections/wis2-discovery-metadata>
+- China Meteorological Administration: <https://gdc.wis.cma.cn/collections/wis2-discovery-metadata>
+- Deutscher Wetterdienst: <https://wis2.dwd.de/gdc/collections/wis2-discovery-metadata>
 
 
 During local training sessions, a local GDC is set up to allow participants to query the GDC for the metadata they published from their wis2box-instances. In this case the trainers will provide the URL to the local GDC.
@@ -66,7 +66,7 @@ By default, pywsicat connects to Global Discovery Catalogue (GDC) hosted by Envi
     If you are doing this exercise during a local training session, you can configure pywiscat to query the local GDC by setting the `PYWISCAT_GDC_URL` environment variable:
 
     ```bash
-    export PYWISCAT_GDC_URL=http://gdc.training.wis2dev.io
+    export PYWISCAT_GDC_URL=http://gdc.training.wis2dev.io/collections/wis2-discovery-metadata
     ```
 
 To see the available options, run:

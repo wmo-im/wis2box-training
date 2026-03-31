@@ -45,4 +45,4 @@ ssh -o StrictHostKeyChecking=no wmo_admin@`echo $HOST_IP` "rm -rf /tmp/exercise-
 
 ssh -o StrictHostKeyChecking=no wmo_admin@`echo $HOST_IP` "sudo chown -R `echo $USERNAME`:`echo $USERNAME` /home/`echo $USERNAME`"
 
-ssh -o StrictHostKeyChecking=no wmo_admin@`echo $HOST_IP` "sudo pip3 install pywiscat==0.2.2"
+ssh -o StrictHostKeyChecking=no wmo_admin@`echo $HOST_IP` "sudo pip3 install pywiscat==0.4.0"
