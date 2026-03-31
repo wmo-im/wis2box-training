@@ -1,22 +1,22 @@
 ---
-title: Accediendo a tu VM estudiantil
+title: Accediendo a tu VM de estudiante
 ---
 
-# Accediendo a tu VM estudiantil
+# Accediendo a tu VM de estudiante
 
 !!! abstract "Resultados de aprendizaje"
 
     Al final de esta sesión práctica, serás capaz de:
 
-    - acceder a tu VM estudiantil mediante SSH y WinSCP
+    - acceder a tu VM de estudiante mediante SSH y WinSCP
     - verificar que el software requerido para los ejercicios prácticos está instalado
-    - verificar que tienes acceso a los materiales de los ejercicios para este entrenamiento en tu VM estudiantil local
+    - verificar que tienes acceso a los materiales de los ejercicios para este entrenamiento en tu VM de estudiante local
 
 ## Introducción
 
-Como parte de los talleres de entrenamiento de WIS2 realizados localmente, puedes acceder a tu VM estudiantil personal en la red de entrenamiento local llamada "WIS2-training".
+Como parte de los talleres de entrenamiento de WIS2 realizados localmente, puedes acceder a tu VM de estudiante personal en la red de entrenamiento local llamada "WIS2-training".
 
-Tu VM estudiantil tiene el siguiente software preinstalado:
+Tu VM de estudiante tiene el siguiente software preinstalado:
 
 - Ubuntu 22.04 LTS [ubuntu-22.04.5-live-server-amd64.iso](https://releases.ubuntu.com/jammy/ubuntu-22.04.5-live-server-amd64.iso)
 - Python 3.10.12
@@ -45,7 +45,7 @@ Tu VM estudiantil tiene el siguiente software preinstalado:
     
     Siempre puedes encontrar el archivo más reciente de 'wis2box-setup' en [https://github.com/World-Meteorological-Organization/wis2box/releases](https://github.com/World-Meteorological-Organization/wis2box-release/releases).
 
-    Los materiales de los ejercicios utilizados en este entrenamiento pueden descargarse de la siguiente manera:
+    El material de ejercicios utilizado en este entrenamiento puede descargarse de la siguiente manera:
 
     ```bash
     wget https://training.wis2box.wis.wmo.int/exercise-materials.zip
@@ -56,16 +56,16 @@ Tu VM estudiantil tiene el siguiente software preinstalado:
 
     ```bash
     pip3 install minio
-    pip3 install pywiscat==0.2.2
+    pip3 install pywiscat==0.4.0
     ```
 
-    Si estás utilizando la VM estudiantil proporcionada durante las sesiones locales de entrenamiento de WIS2, el software requerido ya estará instalado.
+    Si estás utilizando la VM de estudiante proporcionada durante las sesiones locales de entrenamiento de WIS2, el software requerido ya estará instalado.
 
-## Conéctate a tu VM estudiantil en la red de entrenamiento local
+## Conéctate a tu VM de estudiante en la red de entrenamiento local
 
-Conecta tu PC a la red Wi-Fi local transmitida en la sala durante el entrenamiento de WIS2 según las instrucciones proporcionadas por el instructor.
+Conecta tu PC a la red Wi-Fi local transmitida en la sala durante el entrenamiento de WIS2, según las instrucciones proporcionadas por el instructor.
 
-Utiliza un cliente SSH para conectarte a tu VM estudiantil utilizando lo siguiente:
+Utiliza un cliente SSH para conectarte a tu VM de estudiante utilizando lo siguiente:
 
 - **Host: (proporcionado durante el entrenamiento presencial)**
 - **Port: 22**
@@ -73,7 +73,7 @@ Utiliza un cliente SSH para conectarte a tu VM estudiantil utilizando lo siguien
 - **Password: (proporcionado durante el entrenamiento presencial)**
 
 !!! tip
-    Contacta a un instructor si no estás seguro del nombre del host/usuario o tienes problemas para conectarte.
+    Contacta a un instructor si no estás seguro del nombre del host/usuario o si tienes problemas para conectarte.
 
 Una vez conectado, por favor cambia tu contraseña para asegurarte de que otros no puedan acceder a tu VM:
 
@@ -88,7 +88,7 @@ passwd: password updated successfully
 
 ## Verifica las versiones del software
 
-Para poder ejecutar wis2box, la VM estudiantil debe tener Python, Docker y Docker Compose preinstalados. 
+Para poder ejecutar wis2box, la VM de estudiante debe tener Python, Docker y Docker Compose preinstalados. 
 
 Verifica la versión de Python:
 ```bash
@@ -117,14 +117,14 @@ devuelve:
 Docker Compose version v2.21.0
 ```
 
-Para asegurarte de que tu usuario puede ejecutar comandos de Docker, tu usuario ha sido añadido al grupo `docker`.
+Para asegurarte de que tu usuario puede ejecutar comandos de Docker, tu usuario ha sido añadido al grupo `docker`. 
 
-Para probar que tu usuario puede ejecutar el comando docker hello-world, ejecuta el siguiente comando:
+Para probar que tu usuario puede ejecutar el comando hello-world de Docker, ejecuta el siguiente comando:
 ```bash
 docker run hello-world
 ```
 
-Esto debería descargar la imagen hello-world y ejecutar un contenedor que imprime un mensaje.
+Esto debería descargar la imagen hello-world y ejecutar un contenedor que imprime un mensaje. 
 
 Verifica que ves lo siguiente en la salida:
 
@@ -147,11 +147,11 @@ devuelve:
 exercise-materials  wis2box
 ```
 
-Si tienes WinSCP instalado en tu PC local, puedes usarlo para conectarte a tu VM estudiantil e inspeccionar el contenido de tu directorio home y descargar o subir archivos entre tu VM y tu PC local.
+Si tienes WinSCP instalado en tu PC local, puedes usarlo para conectarte a tu VM de estudiante e inspeccionar el contenido de tu directorio home, así como descargar o subir archivos entre tu VM y tu PC local. 
 
 WinSCP no es necesario para el entrenamiento, pero puede ser útil si deseas editar archivos en tu VM utilizando un editor de texto en tu PC local.
 
-Aquí está cómo puedes conectarte a tu VM estudiantil utilizando WinSCP:
+Aquí te mostramos cómo puedes conectarte a tu VM de estudiante utilizando WinSCP:
 
 Abre WinSCP y haz clic en "New Site". Puedes crear una nueva conexión SCP a tu VM de la siguiente manera:
 
@@ -159,13 +159,13 @@ Abre WinSCP y haz clic en "New Site". Puedes crear una nueva conexión SCP a tu 
 
 Haz clic en 'Save' y luego en 'Login' para conectarte a tu VM.
 
-Ahora deberías poder ver el contenido del directorio home en tu VM estudiantil y acceder a tus archivos.
+Ahora deberías poder ver el contenido del directorio home en tu VM de estudiante y acceder a tus archivos.
 
 ## Conclusión
 
 !!! success "¡Felicidades!"
     En esta sesión práctica, aprendiste a:
 
-    - acceder a tu VM estudiantil mediante SSH y WinSCP
+    - acceder a tu VM de estudiante mediante SSH y WinSCP
     - verificar que el software requerido para los ejercicios prácticos está instalado
-    - verificar que tienes acceso a los materiales de los ejercicios para este entrenamiento en tu VM estudiantil local
+    - verificar que tienes acceso a los materiales de los ejercicios para este entrenamiento en tu VM de estudiante local

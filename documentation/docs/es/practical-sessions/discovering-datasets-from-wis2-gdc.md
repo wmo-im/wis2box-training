@@ -4,7 +4,7 @@ title: Descubriendo conjuntos de datos del WIS2 Global Discovery Catalogue
 
 # Descubriendo conjuntos de datos del WIS2 Global Discovery Catalogue
 
-!!! abstract "¡Resultados de aprendizaje!"
+!!! abstract "Resultados de aprendizaje"
 
     Al final de esta sesión práctica, serás capaz de:
 
@@ -14,22 +14,22 @@ title: Descubriendo conjuntos de datos del WIS2 Global Discovery Catalogue
 
 En esta sesión aprenderás cómo descubrir datos del WIS2 Global Discovery Catalogue (GDC) utilizando [pywiscat](https://github.com/wmo-im/pywiscat), una herramienta de línea de comandos para buscar y recuperar metadatos de un WIS2 GDC.
 
-Actualmente, los siguientes GDCs están disponibles:
+En este momento, los siguientes GDC están disponibles:
 
-- Environment and Climate Change Canada, Meteorological Service of Canada: <https://wis2-gdc.weather.gc.ca>
-- China Meteorological Administration: <https://gdc.wis.cma.cn>
-- Deutscher Wetterdienst: <https://wis2.dwd.de/gdc>
+- Environment and Climate Change Canada, Meteorological Service of Canada: <https://wis2-gdc.weather.gc.ca/collections/wis2-discovery-metadata>
+- China Meteorological Administration: <https://gdc.wis.cma.cn/collections/wis2-discovery-metadata>
+- Deutscher Wetterdienst: <https://wis2.dwd.de/gdc/collections/wis2-discovery-metadata>
 
 Durante las sesiones de capacitación local, se configura un GDC local para permitir que los participantes consulten el GDC por los metadatos que publicaron desde sus instancias de wis2box. En este caso, los instructores proporcionarán la URL del GDC local.
 
 ## Preparación
 
 !!! note
-    Antes de comenzar, por favor inicia sesión en tu VM de estudiante.
+    Antes de comenzar, por favor inicia sesión en tu máquina virtual de estudiante (VM).
 
 ## Instalando pywiscat
 
-Utiliza el instalador de paquetes de Python `pip3` para instalar pywiscat en tu VM:
+Usa el instalador de paquetes de Python `pip3` para instalar pywiscat en tu VM:
 ```bash
 pip3 install pywiscat
 ```
@@ -62,10 +62,10 @@ pywiscat --version
 Por defecto, pywiscat se conecta al Global Discovery Catalogue (GDC) alojado por Environment and Climate Change Canada (ECCC).
 
 !!! note "Cambiando la URL del GDC"
-    Si estás realizando este ejercicio durante una sesión de capacitación local, puedes configurar pywiscat para consultar el GDC local estableciendo la variable de entorno `PYWISCAT_GDC_URL`:
+    Si estás realizando este ejercicio durante una sesión de capacitación local, puedes configurar pywiscat para consultar el GDC local configurando la variable de entorno `PYWISCAT_GDC_URL`:
 
     ```bash
-    export PYWISCAT_GDC_URL=http://gdc.training.wis2dev.io
+    export PYWISCAT_GDC_URL=http://gdc.training.wis2dev.io/collections/wis2-discovery-metadata
     ```
 
 Para ver las opciones disponibles, ejecuta:
@@ -85,7 +85,7 @@ pywiscat search
     ¿Cuántos registros se devuelven de la búsqueda?
 
 ??? success "Haz clic para revelar la respuesta"
-    El número de registros depende del GDC que estás consultando. Al usar el GDC de capacitación local, deberías ver que el número de registros es igual al número de conjuntos de datos que se han ingresado en el GDC durante las otras sesiones prácticas.
+    El número de registros depende del GDC que estés consultando. Al usar el GDC de capacitación local, deberías ver que el número de registros es igual al número de conjuntos de datos que se han ingresado en el GDC durante las otras sesiones prácticas.
 
 Intentemos consultar el GDC con una palabra clave:
 
@@ -113,7 +113,7 @@ Prueba consultas adicionales con `-q`
     - `-q "synop OR temp"`: encuentra todos los registros con "synop" o "temp"
     - `-q "obs*"`: búsqueda difusa
 
-    Cuando busques términos con espacios, encierra en comillas dobles.
+    Al buscar términos con espacios, encierra el texto entre comillas dobles.
 
 Obtengamos más detalles sobre un resultado de búsqueda específico que nos interese:
 
@@ -129,6 +129,6 @@ pywiscat get <id>
 
 !!! success "¡Felicidades!"
 
-    En esta sesión práctica, aprendiste cómo:
+    En esta sesión práctica, aprendiste a:
 
     - usar pywiscat para descubrir conjuntos de datos del WIS2 Global Discovery Catalogue
