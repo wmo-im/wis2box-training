@@ -29,7 +29,7 @@ sudo pip3 install --upgrade pip pyopenssl
 sudo pip3 install urllib3==1.26.0
 
 sudo pip3 install minio
-sudo pip3 install pywiscat==0.2.2
+sudo pip3 install pywiscat==0.4.0
 
 # ==========================
 # Create user with random password

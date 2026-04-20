@@ -1,31 +1,31 @@
 ---
-title: Découverte des ensembles de données depuis le WIS2 Global Discovery Catalogue
+title: Découverte des ensembles de données du WIS2 Global Discovery Catalogue
 ---
 
-# Découverte des ensembles de données depuis le WIS2 Global Discovery Catalogue
+# Découverte des ensembles de données du WIS2 Global Discovery Catalogue
 
 !!! abstract "Objectifs d'apprentissage !"
 
     À la fin de cette session pratique, vous serez capable de :
 
-    - utiliser pywiscat pour découvrir des ensembles de données depuis le Global Discovery Catalogue (GDC)
+    - utiliser pywiscat pour découvrir des ensembles de données dans le Global Discovery Catalogue (GDC)
 
 ## Introduction
 
-Dans cette session, vous apprendrez à découvrir des données depuis le WIS2 Global Discovery Catalogue (GDC) en utilisant [pywiscat](https://github.com/wmo-im/pywiscat), un outil en ligne de commande permettant de rechercher et de récupérer des métadonnées depuis un GDC WIS2.
+Dans cette session, vous apprendrez à découvrir des données dans le WIS2 Global Discovery Catalogue (GDC) en utilisant [pywiscat](https://github.com/wmo-im/pywiscat), un outil en ligne de commande permettant de rechercher et récupérer des métadonnées depuis un WIS2 GDC.
 
 Actuellement, les GDC suivants sont disponibles :
 
-- Environnement et Changement climatique Canada, Service météorologique du Canada : <https://wis2-gdc.weather.gc.ca>
-- Administration météorologique de Chine : <https://gdc.wis.cma.cn>
-- Deutscher Wetterdienst : <https://wis2.dwd.de/gdc>
+- Environnement et Changement Climatique Canada, Service météorologique du Canada : <https://wis2-gdc.weather.gc.ca/collections/wis2-discovery-metadata>
+- Administration météorologique de Chine : <https://gdc.wis.cma.cn/collections/wis2-discovery-metadata>
+- Deutscher Wetterdienst : <https://wis2.dwd.de/gdc/collections/wis2-discovery-metadata>
 
-Lors des sessions de formation locale, un GDC local est configuré pour permettre aux participants d'interroger le GDC pour les métadonnées qu'ils ont publiées depuis leurs instances de wis2box. Dans ce cas, les formateurs fourniront l'URL du GDC local.
+Lors des sessions de formation locales, un GDC local est configuré pour permettre aux participants d'interroger le GDC pour les métadonnées qu'ils ont publiées depuis leurs instances wis2box. Dans ce cas, les formateurs fourniront l'URL du GDC local.
 
 ## Préparation
 
 !!! note
-    Avant de commencer, veuillez vous connecter à votre machine virtuelle étudiante (VM).
+    Avant de commencer, veuillez vous connecter à votre VM étudiant.
 
 ## Installation de pywiscat
 
@@ -59,13 +59,13 @@ pywiscat --version
 
 ## Recherche de données avec pywiscat
 
-Par défaut, pywiscat se connecte au Global Discovery Catalogue (GDC) hébergé par Environnement et Changement climatique Canada (ECCC).
+Par défaut, pywiscat se connecte au Global Discovery Catalogue (GDC) hébergé par Environnement et Changement Climatique Canada (ECCC).
 
 !!! note "Changer l'URL du GDC"
-    Si vous effectuez cet exercice lors d'une session de formation locale, vous pouvez configurer pywiscat pour interroger le GDC local en définissant la variable d'environnement `PYWISCAT_GDC_URL` :
+    Si vous effectuez cet exercice pendant une session de formation locale, vous pouvez configurer pywiscat pour interroger le GDC local en définissant la variable d'environnement `PYWISCAT_GDC_URL` :
 
     ```bash
-    export PYWISCAT_GDC_URL=http://gdc.training.wis2dev.io
+    export PYWISCAT_GDC_URL=http://gdc.training.wis2dev.io/collections/wis2-discovery-metadata
     ```
 
 Pour voir les options disponibles, exécutez :
@@ -85,9 +85,9 @@ pywiscat search
     Combien d'enregistrements sont retournés par la recherche ?
 
 ??? success "Cliquez pour révéler la réponse"
-    Le nombre d'enregistrements dépend du GDC que vous interrogez. Lors de l'utilisation du GDC local de formation, vous devriez constater que le nombre d'enregistrements est égal au nombre d'ensembles de données qui ont été ingérés dans le GDC lors des autres sessions pratiques.
+    Le nombre d'enregistrements dépend du GDC que vous interrogez. Lors de l'utilisation du GDC de formation locale, vous devriez constater que le nombre d'enregistrements est égal au nombre d'ensembles de données qui ont été intégrés dans le GDC pendant les autres sessions pratiques.
 
-Essayons d'interroger le GDC avec un mot-clé :
+Essayons de rechercher dans le GDC avec un mot-clé :
 
 ```bash
 pywiscat search -q observations
@@ -98,9 +98,9 @@ pywiscat search -q observations
     Quelle est la politique de données des résultats ?
 
 ??? success "Cliquez pour révéler la réponse"
-    Toutes les données retournées doivent spécifier des données "core".
+    Toutes les données retournées doivent spécifier "core" data.
 
-Essayez des requêtes supplémentaires avec `-q`.
+Essayez des recherches supplémentaires avec `-q`.
 
 !!! tip
 
@@ -113,7 +113,7 @@ Essayez des requêtes supplémentaires avec `-q`.
     - `-q "synop OR temp"` : trouver tous les enregistrements contenant "synop" ou "temp"
     - `-q "obs*"` : recherche approximative
 
-    Lors de la recherche de termes contenant des espaces, utilisez des guillemets doubles.
+    Lors de la recherche de termes avec des espaces, utilisez des guillemets doubles.
 
 Obtenons plus de détails sur un résultat de recherche spécifique qui nous intéresse :
 
@@ -123,12 +123,12 @@ pywiscat get <id>
 
 !!! tip
 
-    Utilisez la valeur `id` obtenue lors de la recherche précédente.
+    Utilisez la valeur `id` de la recherche précédente.
 
 ## Conclusion
 
 !!! success "Félicitations !"
 
-    Lors de cette session pratique, vous avez appris à :
+    Dans cette session pratique, vous avez appris à :
 
-    - utiliser pywiscat pour découvrir des ensembles de données depuis le WIS2 Global Discovery Catalogue
+    - utiliser pywiscat pour découvrir des ensembles de données dans le WIS2 Global Discovery Catalogue

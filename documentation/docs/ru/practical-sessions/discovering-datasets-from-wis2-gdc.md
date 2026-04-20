@@ -16,20 +16,20 @@ title: Обнаружение наборов данных из WIS2 Global Disco
 
 На данный момент доступны следующие GDC:
 
-- Environment and Climate Change Canada, Meteorological Service of Canada: <https://wis2-gdc.weather.gc.ca>
-- China Meteorological Administration: <https://gdc.wis.cma.cn>
-- Deutscher Wetterdienst: <https://wis2.dwd.de/gdc>
+- Environment and Climate Change Canada, Meteorological Service of Canada: <https://wis2-gdc.weather.gc.ca/collections/wis2-discovery-metadata>
+- China Meteorological Administration: <https://gdc.wis.cma.cn/collections/wis2-discovery-metadata>
+- Deutscher Wetterdienst: <https://wis2.dwd.de/gdc/collections/wis2-discovery-metadata>
 
-Во время локальных учебных сессий настраивается локальный GDC, чтобы участники могли запрашивать GDC для получения метаданных, опубликованных из их экземпляров wis2box. В этом случае тренеры предоставят URL для локального GDC.
+Во время локальных тренировочных сессий настраивается локальный GDC, чтобы участники могли запрашивать метаданные, опубликованные из их экземпляров wis2box. В этом случае тренеры предоставят URL-адрес локального GDC.
 
 ## Подготовка
 
 !!! note
-    Перед началом, пожалуйста, войдите в свою виртуальную машину (VM) для студентов.
+    Перед началом, пожалуйста, войдите в вашу виртуальную машину (VM) студента.
 
 ## Установка pywiscat
 
-Используйте установщик пакетов Python `pip3` для установки pywiscat на вашу виртуальную машину (VM):
+Используйте установщик пакетов Python `pip3` для установки pywiscat на вашу виртуальную машину:
 ```bash
 pip3 install pywiscat
 ```
@@ -49,7 +49,7 @@ pip3 install pywiscat
     export PATH=$PATH:/home/$USER/.local/bin
     ```
 
-    ...где `$USER` — это ваше имя пользователя на вашей виртуальной машине.
+    ...где `$USER` — это ваше имя пользователя на виртуальной машине.
 
 Убедитесь, что установка прошла успешно:
 
@@ -61,14 +61,14 @@ pywiscat --version
 
 По умолчанию pywiscat подключается к Global Discovery Catalogue (GDC), размещенному Environment and Climate Change Canada (ECCC).
 
-!!! note "Изменение URL GDC"
-    Если вы выполняете это упражнение во время локальной учебной сессии, вы можете настроить pywiscat для запроса локального GDC, установив переменную окружения `PYWISCAT_GDC_URL`:
+!!! note "Изменение URL-адреса GDC"
+    Если вы выполняете это упражнение во время локальной тренировочной сессии, вы можете настроить pywiscat для запроса локального GDC, установив переменную окружения `PYWISCAT_GDC_URL`:
 
     ```bash
-    export PYWISCAT_GDC_URL=http://gdc.training.wis2dev.io
+    export PYWISCAT_GDC_URL=http://gdc.training.wis2dev.io/collections/wis2-discovery-metadata
     ```
 
-Чтобы увидеть доступные параметры, выполните:
+Чтобы увидеть доступные опции, выполните:
 
 ```bash
 pywiscat search --help
@@ -85,7 +85,7 @@ pywiscat search
     Сколько записей возвращается в результате поиска?
 
 ??? success "Нажмите, чтобы увидеть ответ"
-    Количество записей зависит от GDC, который вы запрашиваете. При использовании локального учебного GDC вы должны увидеть, что количество записей равно количеству наборов данных, которые были загружены в GDC во время других практических сессий.
+    Количество записей зависит от GDC, который вы запрашиваете. При использовании локального тренировочного GDC вы должны увидеть, что количество записей равно количеству наборов данных, загруженных в GDC во время других практических сессий.
 
 Попробуем выполнить запрос к GDC с использованием ключевого слова:
 
@@ -95,10 +95,10 @@ pywiscat search -q observations
 
 !!! question
 
-    Какова политика данных для результатов?
+    Какова политика данных в результатах?
 
 ??? success "Нажмите, чтобы увидеть ответ"
-    Все возвращенные данные должны быть помечены как "core" (основные данные).
+    Все возвращенные данные должны указывать на "core" данные.
 
 Попробуйте дополнительные запросы с использованием `-q`.
 
@@ -109,13 +109,13 @@ pywiscat search -q observations
     - `-q synop`: найти все записи с словом "synop"
     - `-q temp`: найти все записи с словом "temp"
     - `-q "observations AND oman"`: найти все записи с словами "observations" и "oman"
-    - `-q "observations NOT oman"`: найти все записи, содержащие слово "observations", но не слово "oman"
+    - `-q "observations NOT oman"`: найти все записи, содержащие слово "observations", но не содержащее слово "oman"
     - `-q "synop OR temp"`: найти все записи с "synop" или "temp"
     - `-q "obs*"`: нечеткий поиск
 
     При поиске терминов с пробелами заключайте их в двойные кавычки.
 
-Получим больше информации о конкретном результате поиска, который нас интересует:
+Давайте получим больше информации о конкретном результате поиска, который нас интересует:
 
 ```bash
 pywiscat get <id>
