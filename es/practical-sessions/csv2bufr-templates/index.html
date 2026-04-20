@@ -1,0 +1,1769 @@
+
+<!doctype html>
+<html lang="es" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="WIS2 in a box (wis2box) is a Free and Open Source (FOSS) Reference Implementation of a WMO WIS2 Node. The project provides a plug and play toolset to ingest, process, and publish weather/climate/water data using standards-based approaches in alignment with the WIS2 principles. wis2box also provides access to all data in the WIS2 network. wis2box is designed to have a low barrier to entry for data providers, providing enabling infrastructure and services for data discovery, access, and visualization.">
+      
+      
+        <meta name="author" content="World Meteorological Organization">
+      
+      
+        <link rel="canonical" href="https://training.wis2box.wis.wmo.int/es/practical-sessions/csv2bufr-templates/">
+      
+      
+        <link rel="prev" href="../data-conversion-tools/">
+      
+      
+        <link rel="next" href="../adding-gts-headers-to-wis2-notifications/">
+      
+      
+        
+          <link rel="alternate" href="../../../practical-sessions/csv2bufr-templates/" hreflang="en">
+        
+          <link rel="alternate" href="../../../fr/practical-sessions/csv2bufr-templates/" hreflang="fr">
+        
+          <link rel="alternate" href="./" hreflang="es">
+        
+          <link rel="alternate" href="../../../zh/practical-sessions/csv2bufr-templates/" hreflang="zh">
+        
+          <link rel="alternate" href="../../../ru/practical-sessions/csv2bufr-templates/" hreflang="ru">
+        
+          <link rel="alternate" href="../../../ar/practical-sessions/csv2bufr-templates/" hreflang="ar">
+        
+      
+      
+      <link rel="icon" href="https://public.wmo.int/sites/all/themes/wmo/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Plantillas de mapeo de CSV a BUFR - WIS2 in a box training</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/css/custom.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#plantillas-de-mapeo-de-csv-a-bufr" class="md-skip">
+          Saltar a contenido
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Cabecera">
+    <a href="../../" title="WIS2 in a box training" class="md-header__button md-logo" aria-label="WIS2 in a box training" data-md-component="logo">
+      
+  <img src="../../../assets/img/wmo-logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            WIS2 in a box training
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Plantillas de mapeo de CSV a BUFR
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+      <div class="md-header__option">
+  <div class="md-select">
+    
+    <button class="md-header__button md-icon" aria-label="Seleccionar idioma">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12.87 15.07-2.54-2.51.03-.03A17.5 17.5 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2zm-2.62 7 1.62-4.33L19.12 17z"/></svg>
+    </button>
+    <div class="md-select__inner">
+      <ul class="md-select__list">
+        
+          <li class="md-select__item">
+            <a href="../../../practical-sessions/csv2bufr-templates/" hreflang="en" class="md-select__link">
+              English
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="../../../fr/practical-sessions/csv2bufr-templates/" hreflang="fr" class="md-select__link">
+              Français
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="./" hreflang="es" class="md-select__link">
+              Español
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="../../../zh/practical-sessions/csv2bufr-templates/" hreflang="zh" class="md-select__link">
+              中文
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="../../../ru/practical-sessions/csv2bufr-templates/" hreflang="ru" class="md-select__link">
+              Русский
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="../../../ar/practical-sessions/csv2bufr-templates/" hreflang="ar" class="md-select__link">
+              العربية
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</div>
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Búsqueda" placeholder="Búsqueda" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Buscar">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Limpiar" aria-label="Limpiar" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Inicializando búsqueda
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navegación" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../" title="WIS2 in a box training" class="md-nav__button md-logo" aria-label="WIS2 in a box training" data-md-component="logo">
+      
+  <img src="../../../assets/img/wmo-logo.png" alt="logo">
+
+    </a>
+    WIS2 in a box training
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inicio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hojas de referencia
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Hojas de referencia
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cheatsheets/linux/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Linux cheatsheet
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cheatsheets/docker/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Docker cheatsheet
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cheatsheets/wis2box/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    WIS2 in a box cheatsheet
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Plantillas csv2bufr
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Plantillas csv2bufr
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../csv2bufr-templates/aws-template/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Plantilla AWS
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../csv2bufr-templates/daycli-template/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Plantilla DAYCLI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sesiones Prácticas
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Sesiones Prácticas
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../connecting-to-wis2-over-mqtt/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Conectarse a WIS2 mediante MQTT
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../accessing-your-student-vm/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Accediendo a tu VM de estudiante
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../initializing-wis2box/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inicializando wis2box
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../configuring-wis2box-datasets/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configuración de conjuntos de datos en wis2box
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../configuring-station-metadata/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configuración de metadatos de estaciones
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ingesting-data-for-publication/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ingestión de datos para publicación
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../data-conversion-tools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Herramientas de Conversión de Datos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Plantillas de mapeo de CSV a BUFR
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Plantillas de mapeo de CSV a BUFR
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduccion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Introducción
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#preparacion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Preparación
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#creando-una-plantilla-de-mapeo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Creando una plantilla de mapeo
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Creando una plantilla de mapeo">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#herramienta-de-linea-de-comandos-csv2bufr-mappings" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Herramienta de línea de comandos csv2bufr mappings
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#usar-la-plantilla-de-mapeo-en-el-wis2box" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Usar la plantilla de mapeo en el wis2box
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#usar-la-plantilla-aws" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Usar la plantilla 'AWS'
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Usar la plantilla &#39;AWS&#39;">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#revisar-los-datos-de-entrada-del-ejemplo-aws" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Revisar los datos de entrada del ejemplo aws
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#actualizar-el-archivo-de-ejemplo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Actualizar el archivo de ejemplo
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subir-los-datos-a-minio-y-verificar-el-resultado" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Subir los datos a MinIO y verificar el resultado
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#usar-la-plantilla-daycli" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Usar la plantilla 'DayCLI'
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Usar la plantilla &#39;DayCLI&#39;">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#crear-un-conjunto-de-datos-en-wis2box-para-publicar-mensajes-daycli" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Crear un conjunto de datos en wis2box para publicar mensajes DAYCLI
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#revisar-los-datos-de-entrada-del-ejemplo-daycli" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Revisar los datos de entrada del ejemplo daycli
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#actualizar-el-archivo-de-ejemplo_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Actualizar el archivo de ejemplo
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subir-los-datos-a-minio-y-verificar-el-resultado_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Subir los datos a MinIO y verificar el resultado
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conclusión
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../adding-gts-headers-to-wis2-notifications/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Añadiendo encabezados GTS a las notificaciones WIS2
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../datasets-with-access-control/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configuración de un conjunto de datos recomendado
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../downloading-data-from-wis2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Descargando datos de WIS2 usando wis2downloader
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../decoding-data/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Decodificación de datos desde formatos binarios de la OMM
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../discovering-datasets-from-wis2-gdc/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Descubriendo conjuntos de datos del WIS2 Global Discovery Catalogue
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduccion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Introducción
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#preparacion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Preparación
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#creando-una-plantilla-de-mapeo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Creando una plantilla de mapeo
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Creando una plantilla de mapeo">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#herramienta-de-linea-de-comandos-csv2bufr-mappings" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Herramienta de línea de comandos csv2bufr mappings
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#usar-la-plantilla-de-mapeo-en-el-wis2box" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Usar la plantilla de mapeo en el wis2box
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#usar-la-plantilla-aws" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Usar la plantilla 'AWS'
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Usar la plantilla &#39;AWS&#39;">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#revisar-los-datos-de-entrada-del-ejemplo-aws" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Revisar los datos de entrada del ejemplo aws
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#actualizar-el-archivo-de-ejemplo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Actualizar el archivo de ejemplo
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subir-los-datos-a-minio-y-verificar-el-resultado" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Subir los datos a MinIO y verificar el resultado
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#usar-la-plantilla-daycli" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Usar la plantilla 'DayCLI'
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Usar la plantilla &#39;DayCLI&#39;">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#crear-un-conjunto-de-datos-en-wis2box-para-publicar-mensajes-daycli" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Crear un conjunto de datos en wis2box para publicar mensajes DAYCLI
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#revisar-los-datos-de-entrada-del-ejemplo-daycli" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Revisar los datos de entrada del ejemplo daycli
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#actualizar-el-archivo-de-ejemplo_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Actualizar el archivo de ejemplo
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subir-los-datos-a-minio-y-verificar-el-resultado_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Subir los datos a MinIO y verificar el resultado
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conclusión
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="plantillas-de-mapeo-de-csv-a-bufr">Plantillas de mapeo de CSV a BUFR</h1>
+<div class="admonition abstract">
+<p class="admonition-title">Resultados de aprendizaje</p>
+<p>Al final de esta sesión práctica, serás capaz de:</p>
+<ul>
+<li>crear una nueva plantilla de mapeo BUFR para tus datos CSV</li>
+<li>editar y depurar tu plantilla de mapeo BUFR personalizada desde la línea de comandos</li>
+<li>configurar el complemento de datos CSV a BUFR para usar una plantilla de mapeo BUFR personalizada</li>
+<li>usar las plantillas integradas AWS y DAYCLI para convertir datos CSV a BUFR</li>
+</ul>
+</div>
+<h2 id="introduccion">Introducción</h2>
+<p>Los archivos de datos con valores separados por comas (CSV) se utilizan frecuentemente para registrar datos observacionales y otros en un formato tabular. 
+La mayoría de los registradores de datos utilizados para capturar la salida de sensores pueden exportar las observaciones en archivos delimitados, incluidos los CSV. 
+De manera similar, cuando los datos se ingresan en una base de datos, es fácil exportar los datos requeridos en archivos con formato CSV.</p>
+<p>El módulo wis2box csv2bufr proporciona una herramienta de línea de comandos para convertir datos CSV al formato BUFR. Al usar csv2bufr, necesitas proporcionar una plantilla de mapeo BUFR que asocie las columnas del CSV con los elementos correspondientes de BUFR. Si no deseas crear tu propia plantilla de mapeo, puedes usar las plantillas integradas AWS y DAYCLI para convertir datos CSV a BUFR, pero deberás asegurarte de que los datos CSV que estás utilizando estén en el formato correcto para estas plantillas. Si deseas decodificar parámetros que no están incluidos en las plantillas AWS y DAYCLI, necesitarás crear tu propia plantilla de mapeo.</p>
+<p>En esta sesión aprenderás cómo crear tu propia plantilla de mapeo para convertir datos CSV a BUFR. También aprenderás cómo usar las plantillas integradas AWS y DAYCLI para convertir datos CSV a BUFR.</p>
+<h2 id="preparacion">Preparación</h2>
+<p>Asegúrate de que el wis2box-stack se haya iniciado con <code>python3 wis2box.py start</code>.</p>
+<p>Asegúrate de tener un navegador web abierto con la interfaz de usuario de MinIO para tu instancia accediendo a <code>http://YOUR-HOST:9000</code>.<br />
+Si no recuerdas tus credenciales de MinIO, puedes encontrarlas en el archivo <code>wis2box.env</code> en el directorio <code>wis2box</code> de tu VM de estudiante.</p>
+<p>Asegúrate de tener MQTT Explorer abierto y conectado a tu broker utilizando las credenciales <code>everyone/everyone</code>.</p>
+<h2 id="creando-una-plantilla-de-mapeo">Creando una plantilla de mapeo</h2>
+<p>El módulo csv2bufr incluye una herramienta de línea de comandos para crear tu propia plantilla de mapeo utilizando un conjunto de secuencias BUFR y/o elementos BUFR como entrada.</p>
+<p>Para encontrar secuencias y elementos BUFR específicos, puedes consultar las tablas BUFR en <a href="https://confluence.ecmwf.int/display/ECC/BUFR+tables">https://confluence.ecmwf.int/display/ECC/BUFR+tables</a>.</p>
+<h3 id="herramienta-de-linea-de-comandos-csv2bufr-mappings">Herramienta de línea de comandos csv2bufr mappings</h3>
+<p>Para acceder a la herramienta de línea de comandos csv2bufr, necesitas iniciar sesión en el contenedor wis2box-api:</p>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>~/wis2box
+python3<span class="w"> </span>wis2box-ctl.py<span class="w"> </span>login<span class="w"> </span>wis2box-api
+</code></pre></div>
+<p>Para imprimir la página de ayuda del comando <code>csv2bufr mapping</code>:</p>
+<div class="highlight"><pre><span></span><code>csv2bufr<span class="w"> </span>mappings<span class="w"> </span>--help
+</code></pre></div>
+<p>La página de ayuda muestra 2 subcomandos:</p>
+<ul>
+<li><code>csv2bufr mappings create</code> : Crear una nueva plantilla de mapeo</li>
+<li><code>csv2bufr mappings list</code> : Listar las plantillas de mapeo disponibles en el sistema</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">csv2bufr mapping list</p>
+<p>El comando <code>csv2bufr mapping list</code> mostrará las plantillas de mapeo disponibles en el sistema.<br />
+Las plantillas predeterminadas se almacenan en el directorio <code>/opt/wis2box/csv2bufr/templates</code> dentro del contenedor.</p>
+<p>Para compartir plantillas de mapeo personalizadas con el sistema, puedes almacenarlas en el directorio definido por <code>$CSV2BUFR_TEMPLATES</code>, que está configurado como <code>/data/wis2box/mappings</code> por defecto en el contenedor. Dado que el directorio <code>/data/wis2box/mappings</code> en el contenedor está montado en el directorio <code>$WIS2BOX_HOST_DATADIR/mappings</code> en el host, encontrarás tus plantillas de mapeo personalizadas en el directorio <code>$WIS2BOX_HOST_DATADIR/mappings</code> en el host.</p>
+</div>
+<p>Intentemos crear una nueva plantilla de mapeo personalizada utilizando el comando <code>csv2bufr mapping create</code> con la secuencia BUFR 301150 y el elemento BUFR 012101 como entrada.</p>
+<div class="highlight"><pre><span></span><code>csv2bufr<span class="w"> </span>mappings<span class="w"> </span>create<span class="w"> </span><span class="m">301150</span><span class="w"> </span><span class="m">012101</span><span class="w"> </span>--output<span class="w"> </span>/data/wis2box/mappings/my_custom_template.json
+</code></pre></div>
+<p>Puedes verificar el contenido de la plantilla de mapeo que acabas de crear utilizando el comando <code>cat</code>:</p>
+<div class="highlight"><pre><span></span><code>cat<span class="w"> </span>/data/wis2box/mappings/my_custom_template.json
+</code></pre></div>
+<div class="admonition question">
+<p class="admonition-title">Inspección de la plantilla de mapeo</p>
+<p>¿Cuántas columnas CSV están siendo mapeadas a elementos BUFR? ¿Cuál es el encabezado CSV para cada elemento BUFR mapeado?</p>
+</div>
+<details class="success">
+<summary>Haz clic para revelar la respuesta</summary>
+<p>La plantilla de mapeo que creaste mapea <strong>5</strong> columnas CSV a elementos BUFR, específicamente los 4 elementos BUFR en la secuencia 301150 más el elemento BUFR 012101. </p>
+<p>Las siguientes columnas CSV están siendo mapeadas a elementos BUFR:</p>
+<ul>
+<li><strong>wigosIdentifierSeries</strong> se mapea a <code>"eccodes_key": "#1#wigosIdentifierSeries"</code> (elemento BUFR 001125)</li>
+<li><strong>wigosIssuerOfIdentifier</strong> se mapea a <code>"eccodes_key": "#1#wigosIssuerOfIdentifier</code> (elemento BUFR 001126)</li>
+<li><strong>wigosIssueNumber</strong> se mapea a <code>"eccodes_key": "#1#wigosIssueNumber"</code> (elemento BUFR 001127)</li>
+<li><strong>wigosLocalIdentifierCharacter</strong> se mapea a <code>"eccodes_key": "#1#wigosLocalIdentifierCharacter"</code> (elemento BUFR 001128)</li>
+<li><strong>airTemperature</strong> se mapea a <code>"eccodes_key": "#1#airTemperature"</code> (elemento BUFR 012101)</li>
+</ul>
+</details>
+<p>La plantilla de mapeo que creaste carece de metadatos importantes sobre la observación realizada, como la fecha y hora de la observación, y la latitud y longitud de la estación.</p>
+<p>A continuación, actualizaremos la plantilla de mapeo y añadiremos las siguientes secuencias:</p>
+<ul>
+<li><strong>301011</strong> para Fecha (Año, mes, día)</li>
+<li><strong>301012</strong> para Hora (Hora, minuto)</li>
+<li><strong>301023</strong> para Ubicación (Latitud/longitud (precisión gruesa))</li>
+</ul>
+<p>Y los siguientes elementos:</p>
+<ul>
+<li><strong>010004</strong> para Presión</li>
+<li><strong>007031</strong> para Altura del barómetro sobre el nivel medio del mar</li>
+</ul>
+<p>Ejecuta el siguiente comando para actualizar la plantilla de mapeo:</p>
+<div class="highlight"><pre><span></span><code>csv2bufr<span class="w"> </span>mappings<span class="w"> </span>create<span class="w"> </span><span class="m">301150</span><span class="w"> </span><span class="m">301011</span><span class="w"> </span><span class="m">301012</span><span class="w"> </span><span class="m">301023</span><span class="w"> </span><span class="m">007031</span><span class="w"> </span><span class="m">012101</span><span class="w"> </span><span class="m">010004</span><span class="w">  </span>--output<span class="w"> </span>/data/wis2box/mappings/my_custom_template.json
+</code></pre></div>
+<p>Y vuelve a inspeccionar el contenido de la plantilla de mapeo:</p>
+<div class="highlight"><pre><span></span><code>cat<span class="w"> </span>/data/wis2box/mappings/my_custom_template.json
+</code></pre></div>
+<div class="admonition question">
+<p class="admonition-title">Inspección de la plantilla de mapeo actualizada</p>
+<p>¿Cuántas columnas CSV están siendo mapeadas ahora a elementos BUFR? ¿Cuál es el encabezado CSV para cada elemento BUFR mapeado?</p>
+</div>
+<details class="success">
+<summary>Haz clic para revelar la respuesta</summary>
+<p>La plantilla de mapeo que creaste ahora mapea <strong>18</strong> columnas CSV a elementos BUFR:
+- 4 elementos BUFR de la secuencia BUFR 301150
+- 3 elementos BUFR de la secuencia BUFR 301011
+- 2 elementos BUFR de la secuencia BUFR 301012
+- 2 elementos BUFR de la secuencia BUFR 301023
+- Elemento BUFR 007031
+- Elemento BUFR 012101</p>
+<p>Las siguientes columnas CSV están siendo mapeadas a elementos BUFR:</p>
+<ul>
+<li><strong>wigosIdentifierSeries</strong> se mapea a <code>"eccodes_key": "#1#wigosIdentifierSeries"</code> (elemento BUFR 001125)</li>
+<li><strong>wigosIssuerOfIdentifier</strong> se mapea a <code>"eccodes_key": "#1#wigosIssuerOfIdentifier</code> (elemento BUFR 001126)</li>
+<li><strong>wigosIssueNumber</strong> se mapea a <code>"eccodes_key": "#1#wigosIssueNumber"</code> (elemento BUFR 001127)</li>
+<li><strong>wigosLocalIdentifierCharacter</strong> se mapea a <code>"eccodes_key": "#1#wigosLocalIdentifierCharacter"</code> (elemento BUFR 001128)</li>
+<li><strong>year</strong> se mapea a <code>"eccodes_key": "#1#year"</code> (elemento BUFR 004001)</li>
+<li><strong>month</strong> se mapea a <code>"eccodes_key": "#1#month"</code> (elemento BUFR 004002)</li>
+<li><strong>day</strong> se mapea a <code>"eccodes_key": "#1#day"</code> (elemento BUFR 004003)</li>
+<li><strong>hour</strong> se mapea a <code>"eccodes_key": "#1#hour"</code> (elemento BUFR 004004)</li>
+<li><strong>minute</strong> se mapea a <code>"eccodes_key": "#1#minute"</code> (elemento BUFR 004005)</li>
+<li><strong>latitude</strong> se mapea a <code>"eccodes_key": "#1#latitude"</code> (elemento BUFR 005002)</li>
+<li><strong>longitude</strong> se mapea a <code>"eccodes_key": "#1#longitude"</code> (elemento BUFR 006002)</li>
+<li><strong>heightOfBarometerAboveMeanSeaLevel"</strong> se mapea a <code>"eccodes_key": "#1#heightOfBarometerAboveMeanSeaLevel"</code> (elemento BUFR 007031)</li>
+<li><strong>airTemperature</strong> se mapea a <code>"eccodes_key": "#1#airTemperature"</code> (elemento BUFR 012101)</li>
+<li><strong>nonCoordinatePressure</strong> se mapea a <code>"eccodes_key": "#1#nonCoordinatePressure"</code> (elemento BUFR 010004)</li>
+</ul>
+</details>
+<p>Verifica el contenido del archivo <code>custom_template_data.csv</code> en el directorio <code>/wis2box-api/data-conversion-exercises</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>/wis2box-api/data-conversion-exercises
+cat<span class="w"> </span>custom_template_data.csv
+</code></pre></div>
+<p>Nota que los encabezados de este archivo CSV son los mismos que los encabezados del CSV en la plantilla de mapeo que creaste.</p>
+<p>Para probar la conversión de datos, podemos usar la herramienta de línea de comandos <code>csv2bufr</code> para convertir el archivo CSV a BUFR utilizando la plantilla de mapeo que creamos:</p>
+<div class="highlight"><pre><span></span><code>csv2bufr<span class="w"> </span>data<span class="w"> </span>transform<span class="w"> </span>--bufr-template<span class="w"> </span>my_custom_template<span class="w"> </span>/wis2box-api/data-conversion-exercises/custom_template_data.csv
+</code></pre></div>
+<p>Deberías ver el siguiente resultado:</p>
+<div class="highlight"><pre><span></span><code>CLI:<span class="w">    </span>...<span class="w"> </span>Transforming<span class="w"> </span>/wis2box-api/data-conversion-exercises/custom_template_data.csv<span class="w"> </span>to<span class="w"> </span>BUFR<span class="w"> </span>...
+CLI:<span class="w">    </span>...<span class="w"> </span>Processing<span class="w"> </span>subsets:
+CLI:<span class="w">    </span>.....<span class="w"> </span><span class="m">94</span><span class="w"> </span>bytes<span class="w"> </span>written<span class="w"> </span>to<span class="w"> </span>./WIGOS_0-20000-0-15015_20250412T210000.bufr4
+CLI:<span class="w">    </span>End<span class="w"> </span>of<span class="w"> </span>processing,<span class="w"> </span>exiting.
+</code></pre></div>
+<div class="admonition question">
+<p class="admonition-title">Verifica el contenido del archivo BUFR</p>
+<p>¿Cómo puedes verificar el contenido del archivo BUFR que acabas de crear y comprobar que los datos se han codificado correctamente?</p>
+</div>
+<details class="success">
+<summary>Haz clic para revelar la respuesta</summary>
+<p>Puedes usar el comando <code>bufr_dump -p</code> para verificar el contenido del archivo BUFR que acabas de crear. 
+Este comando mostrará el contenido del archivo BUFR en un formato legible para humanos.</p>
+<div class="highlight"><pre><span></span><code>bufr_dump<span class="w"> </span>-p<span class="w"> </span>./WIGOS_0-20000-0-15015_20250412T210000.bufr4
+</code></pre></div>
+<p>En el resultado, verás los valores de los elementos BUFR que mapeaste en la plantilla, por ejemplo, "airTemperature" mostrará:</p>
+<div class="highlight"><pre><span></span><code><span class="nv">airTemperature</span><span class="o">=</span><span class="m">298</span>.15
+</code></pre></div>
+</details>
+<p>Ahora puedes salir del contenedor:</p>
+<div class="highlight"><pre><span></span><code><span class="nb">exit</span>
+</code></pre></div>
+<h3 id="usar-la-plantilla-de-mapeo-en-el-wis2box">Usar la plantilla de mapeo en el wis2box</h3>
+<p>Para asegurarte de que la nueva plantilla de mapeo sea reconocida por el contenedor wis2box-api, necesitas reiniciar el contenedor:</p>
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>restart<span class="w"> </span>wis2box-api
+</code></pre></div>
+<p>Ahora puedes configurar tu conjunto de datos en la wis2box-webapp para usar la plantilla de mapeo personalizada con el plugin de conversión de CSV a BUFR.</p>
+<p>La wis2box-webapp detectará automáticamente la plantilla de mapeo que creaste y la hará disponible en la lista de plantillas para el plugin de conversión de CSV a BUFR.</p>
+<p>Haz clic en el conjunto de datos que creaste en la sesión práctica anterior y haz clic en "UPDATE" junto al plugin con el nombre "CSV data converted to BUFR":</p>
+<p><img alt="Imagen que muestra el editor de conjuntos de datos en la wis2box-webapp" src="/../assets/img/wis2box-webapp-data-mapping-update-csv2bufr.png"/></p>
+<p>Deberías ver la nueva plantilla que creaste en la lista de plantillas disponibles:</p>
+<p><img alt="Imagen que muestra las plantillas csv2bufr en la wis2box-webapp" src="/../assets/img/wis2box-webapp-csv2bufr-templates.png"/></p>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>Nota que si no ves la nueva plantilla que creaste, intenta refrescar la página o abrirla en una nueva ventana de incógnito.</p>
+</div>
+<p>Por ahora, mantén la selección predeterminada de la plantilla AWS (haz clic en la esquina superior derecha para cerrar la configuración del plugin).</p>
+<h2 id="usar-la-plantilla-aws">Usar la plantilla 'AWS'</h2>
+<p>La plantilla 'AWS' proporciona una plantilla de mapeo para convertir datos CSV a la secuencia BUFR 301150, 307096, en apoyo a los requisitos mínimos de GBON.</p>
+<p>La descripción de la plantilla AWS se puede encontrar aquí <a href="../../csv2bufr-templates/aws-template/">aws-template</a>.</p>
+<h3 id="revisar-los-datos-de-entrada-del-ejemplo-aws">Revisar los datos de entrada del ejemplo aws</h3>
+<p>Descarga el ejemplo para este ejercicio desde el siguiente enlace:</p>
+<p><a href="../../../sample-data/aws-example.csv">aws-example.csv</a></p>
+<p>Abre el archivo que descargaste en un editor e inspecciona el contenido:</p>
+<div class="admonition question">
+<p class="admonition-title">Question</p>
+<p>Examinando los campos de fecha, hora e identificación (identificadores WIGOS y tradicionales), ¿qué notas? ¿Cómo se representaría la fecha de hoy?</p>
+</div>
+<details class="success">
+<summary>Haz clic para revelar la respuesta</summary>
+<p>Cada columna contiene una sola pieza de información. Por ejemplo, la fecha está dividida en año, mes y día, reflejando cómo los datos se almacenan en BUFR. La fecha de hoy estaría dividida entre las columnas "year", "month" y "day". De manera similar, la hora necesita dividirse en "hour" y "minute", y el identificador de estación WIGOS en sus componentes respectivos.</p>
+</details>
+<div class="admonition question">
+<p class="admonition-title">Question</p>
+<p>Observando el archivo de datos, ¿cómo se codifican los datos faltantes?</p>
+</div>
+<details class="success">
+<summary>Haz clic para revelar la respuesta</summary>
+<p>Los datos faltantes dentro del archivo están representados por celdas vacías. En un archivo CSV esto se codificaría como <code>,,</code>. Nota que esto es una celda vacía y no está codificada como una cadena de longitud cero, por ejemplo, <code>,"",</code>.</p>
+</details>
+<div class="admonition hint">
+<p class="admonition-title">Datos faltantes</p>
+<p>Se reconoce que los datos pueden faltar por una variedad de razones, ya sea por fallos en el sensor o porque el parámetro no fue observado. En estos casos, los datos faltantes pueden codificarse según la respuesta anterior, mientras que los otros datos en el informe permanecen válidos.</p>
+</div>
+<h3 id="actualizar-el-archivo-de-ejemplo">Actualizar el archivo de ejemplo</h3>
+<p>Actualiza el archivo de ejemplo que descargaste para usar la fecha y hora de hoy y cambia los identificadores de estación WIGOS para usar estaciones que hayas registrado en la wis2box-webapp.</p>
+<h3 id="subir-los-datos-a-minio-y-verificar-el-resultado">Subir los datos a MinIO y verificar el resultado</h3>
+<p>Navega a la interfaz de usuario de MinIO e inicia sesión usando las credenciales del archivo <code>wis2box.env</code>.</p>
+<p>Navega a <strong>wis2box-incoming</strong> y haz clic en el botón "Create new path":</p>
+<p><img alt="Imagen que muestra la interfaz de usuario de MinIO con el botón para crear una nueva carpeta resaltado" src="/../assets/img/minio-create-new-path.png"/></p>
+<p>Crea una nueva carpeta en el bucket de MinIO que coincida con el dataset-id del conjunto de datos que creaste con la plantilla='weather/surface-weather-observations/synop':</p>
+<p><img alt="Imagen que muestra la interfaz de usuario de MinIO con el botón para crear una nueva carpeta resaltado" src="/../assets/img/minio-create-new-path-metadata_id.png"/></p>
+<p>Sube el archivo de ejemplo que descargaste a la carpeta que creaste en el bucket de MinIO:</p>
+<p><img alt="Imagen que muestra la interfaz de usuario de MinIO con aws-example subido" src="/../assets/img/minio-upload-aws-example.png"/></center></p>
+<p>Revisa el panel de Grafana en <code>http://YOUR-HOST:3000</code> para ver si hay WARNINGS o ERRORES. Si ves alguno, intenta solucionarlo y repite el ejercicio.</p>
+<p>Revisa el MQTT Explorer para ver si recibes notificaciones de datos WIS2.</p>
+<p>Si ingresaste los datos correctamente, deberías ver 3 notificaciones en MQTT Explorer en el tema <code>origin/a/wis2/&lt;centre-id&gt;/data/weather/surface-weather-observations/synop</code> para las 3 estaciones para las que reportaste datos:</p>
+<p><img width="450" alt="Imagen que muestra MQTT Explorer después de subir AWS" src="/../assets/img/mqtt-explorer-aws-upload.png"/></p>
+<h2 id="usar-la-plantilla-daycli">Usar la plantilla 'DayCLI'</h2>
+<p>La plantilla <strong>DayCLI</strong> proporciona una plantilla de mapeo para convertir datos climáticos diarios en CSV a la secuencia BUFR 307075, en apoyo al reporte de datos climáticos diarios.</p>
+<p>La descripción de la plantilla DAYCLI se puede encontrar aquí <a href="../../csv2bufr-templates/daycli-template/">daycli-template</a>.</p>
+<p>Para compartir estos datos en WIS2, necesitarás crear un nuevo conjunto de datos en la wis2box-webapp que tenga la jerarquía de temas WIS2 correcta y que use la plantilla DAYCLI para convertir datos CSV a BUFR.</p>
+<h3 id="crear-un-conjunto-de-datos-en-wis2box-para-publicar-mensajes-daycli">Crear un conjunto de datos en wis2box para publicar mensajes DAYCLI</h3>
+<p>Ve al editor de conjuntos de datos en la wis2box-webapp y crea un nuevo conjunto de datos. Usa el mismo centre-id que en las sesiones prácticas anteriores y selecciona <strong>Data Type='climate/surface-based-observations/daily'</strong>:</p>
+<p><img alt="Crear un nuevo conjunto de datos en la wis2box-webapp para DAYCLI" src="/../assets/img/wis2box-webapp-create-dataset-daycli.png"/></p>
+<p>Haz clic en "CONTINUE TO FORM" y agrega una descripción para tu conjunto de datos, establece el cuadro delimitador y proporciona la información de contacto para el conjunto de datos. Una vez que hayas completado todas las secciones, haz clic en 'VALIDATE FORM' y verifica el formulario.</p>
+<p>Revisa los plugins de datos para los conjuntos de datos. Haz clic en "UPDATE" junto al plugin con el nombre "CSV data converted to BUFR" y verás que la plantilla está configurada como <strong>DayCLI</strong>:</p>
+<p><img alt="Actualizar el plugin de datos para el conjunto de datos para usar la plantilla DAYCLI" src="/../assets/img/wis2box-webapp-update-data-plugin-daycli.png"/></p>
+<p>Cierra la configuración del plugin y envía el formulario usando el token de autenticación que creaste en la sesión práctica anterior.</p>
+<p>Ahora deberías tener un segundo conjunto de datos en la wis2box-webapp configurado para usar la plantilla DAYCLI para convertir datos CSV a BUFR.</p>
+<h3 id="revisar-los-datos-de-entrada-del-ejemplo-daycli">Revisar los datos de entrada del ejemplo daycli</h3>
+<p>Descarga el ejemplo para este ejercicio desde el siguiente enlace:</p>
+<p><a href="../../../sample-data/daycli-example.csv">daycli-example.csv</a></p>
+<p>Abre el archivo que descargaste en un editor e inspecciona el contenido:</p>
+<div class="admonition question">
+<p class="admonition-title">Question</p>
+<p>¿Qué variables adicionales se incluyen en la plantilla daycli?</p>
+</div>
+<details class="success">
+<summary>Haz clic para revelar la respuesta</summary>
+<p>La plantilla daycli incluye metadatos importantes sobre la ubicación del instrumento y clasificaciones de calidad de medición para temperatura y humedad, indicadores de control de calidad e información sobre cómo se ha calculado la temperatura promedio diaria.</p>
+</details>
+<h3 id="actualizar-el-archivo-de-ejemplo_1">Actualizar el archivo de ejemplo</h3>
+<p>El archivo de ejemplo contiene una fila de datos para cada día de un mes y reporta datos para una estación. Actualiza el archivo de ejemplo que descargaste para usar la fecha y hora de hoy y cambia los identificadores de estación WIGOS para usar una estación que hayas registrado en la wis2box-webapp.</p>
+<h3 id="subir-los-datos-a-minio-y-verificar-el-resultado_1">Subir los datos a MinIO y verificar el resultado</h3>
+<p>Como antes, necesitarás cargar los datos en el bucket 'wis2box-incoming' en MinIO para que sean procesados por el convertidor csv2bufr. Esta vez, deberás crear una nueva carpeta en el bucket de MinIO que coincida con el dataset-id del conjunto de datos que creaste con la plantilla='climate/surface-based-observations/daily', la cual será diferente del dataset-id que utilizaste en el ejercicio anterior:</p>
+<p><img alt="Image showing MinIO UI with DAYCLI-example uploaded" src="/../assets/img/minio-upload-daycli-example.png"/></center></p>
+<p>Después de cargar los datos, verifica que no haya WARNINGS ni ERRORS en el panel de Grafana y revisa el MQTT Explorer para confirmar si recibes notificaciones de datos WIS2.</p>
+<p>Si los datos fueron ingeridos exitosamente, deberías ver 30 notificaciones en MQTT Explorer en el tema <code>origin/a/wis2/&lt;centre-id&gt;/data/climate/surface-based-observations/daily</code> correspondientes a los 30 días del mes para los cuales reportaste datos:</p>
+<p><img width="450" alt="Image showing MQTT explorer after uploading DAYCLI" src="/../assets/img/mqtt-daycli-template-success.png"/></p>
+<h2 id="conclusion">Conclusión</h2>
+<div class="admonition success">
+<p class="admonition-title">¡Felicidades!</p>
+<p>En esta sesión práctica has aprendido:</p>
+<ul>
+<li>cómo crear una plantilla de mapeo personalizada para convertir datos CSV a BUFR</li>
+<li>cómo utilizar las plantillas integradas de AWS y DAYCLI para convertir datos CSV a BUFR</li>
+</ul>
+</div>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      &copy; 2025 World Meteorological Organization
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.indexes", "content.code.copy"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copiado al portapapeles", "clipboard.copy": "Copiar al portapapeles", "search.result.more.one": "1 m\u00e1s en esta p\u00e1gina", "search.result.more.other": "# m\u00e1s en esta p\u00e1gina", "search.result.none": "No se encontraron documentos", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.placeholder": "Teclee para comenzar b\u00fasqueda", "search.result.term.missing": "Falta", "select.version": "Seleccionar versi\u00f3n"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../../assets/js/disclaimer.js"></script>
+      
+    
+  </body>
+</html>
