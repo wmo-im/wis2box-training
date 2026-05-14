@@ -1,0 +1,115 @@
+Column,Units,Data Type,Description
+wigos_identifier_series, ,int,WIGOS Identifier Series
+wigos_issuer_of_identifier, ,int,WIGOS Issuer Of Identifier
+wigos_issue_number, ,int,WIGOS Issue Number
+wigos_local_identifier_character, ,char,WIGOS Local Identifier Character
+block_number, ,int,"WMO Blockl Number,"
+station_number, ,int,"WMO Station Number,"
+station_or_site_name, ,char,Station name
+station_type, ,int,"Type of observing station, encoded using table 0 02 001 (i.e. 0 for AWSs)"
+year, ,int,"Year(UTC), time of report creation"
+month, ,int,"Month(UTC), time of report creation"
+day, ,int,"Day(UTC), time of report creation"
+hour, ,int,"Hour(UTC), time of report creation"
+minute, ,int,"Minute(UTC), time of report creation"
+latitude,degrees,float,Latitude of the station up to 5 decimal places
+longitude,degrees,float,Longitude of the station up to 5 decimal places
+height_of_station,metres,float,"Height of the station above mean sea level, up to 1 decimal place"
+height_of_barometer,metres,float,"Height of the barometer above mean sea level, up to 1 decimal place"
+time_zone_offset, ,int,"Offset between UTC and local time, UTC-LT"
+days_in_month, ,int,Number of days in the month of the report
+mean_pressure,Pa,int,"Monthly mean value for the observed pressure at station height, to the nearest 10 Pa"
+mean_pressure_sea_level,Pa,int,"Monthly mean value for the observed pressure at sea level, to the nearest 10 Pa"
+standard_pressure_level,Pa,int,"Standard pressure level to the nearest 10 Pa, leave empty if lowland station"
+geopotential_height,gpm,int,"Geopotential height , leave empty if lowland station"
+height_of_sensor,metres,float,Height of barometer above local ground to 1 decimal place
+air_temperature,K,float,"Monthly mean value for the observed air temperature, up to 2 decimal places"
+method_for_extreme_temperatures, ,int,"Method for observing extreme temperatures, table 0 02 051"
+daily_read_time_max_temp, ,int,Principal hour of reading maximum temperature daily
+max_temperature_last_24h,K,float,"Maximum temperature in the month, up to 2 decimal places"
+daily_read_time_min_temp, ,int,Principal hour of reading minimum temperature daily
+min_temperature_last_24h,K,float,"Minimum temperature in the month, up to 2 decimal places"
+vapour_pressure,Pa,int,"Monthly mean value for the observed vapour pressure, up to the nearest 10 Pa"
+daily_mean_temp_deviation,K,float,"Monthly standard deviation of daily mean temperature, up to 2 decimal places"
+days_missing_pressure, ,int,Amount of days in month where pressure was not collected
+days_missing_mean_temperature, ,int,Amount of days in month where temperature was not collected
+days_missing_vapour_pressure, ,int,Amount of days in month where vapour pressure was not collected
+days_missing_max_temperature, ,int,Amount of days in month where maximum temperature was not collected
+days_missing_min_temperature, ,int,Amount of days in month where minimum temperature was not collected
+total_sunshine_hours, ,int,Montly daily mean amount of sunshine hours
+total_sunshine_percent,%,int,Monthly mean of sunshine percent
+days_missing_total_sunshine, ,int,Amount of days in month where sunshine was not collected
+wind_over_10mps_days, ,int,Amount of days in month where mean wind speed exceeded 10 ms-1
+wind_over_20mps_days, ,int,Amount of days in month where mean wind speed exceeded 20 ms-1
+wind_over_30mps_days, ,int,Amount of days in month where mean wind speed exceeded 30 ms-1
+max_temp_below_zero_days, ,int,Amount of days in month where maximum temperature stayed below 0 degrees celsius
+max_temp_above_25_days, ,int,Amount of days in month where maximum temperature exceeded 25 degrees celsius
+max_temp_above_30_days, ,int,Amount of days in month where maximum temperature exceeded 30 degrees celsius
+max_temp_above_35_days, ,int,Amount of days in month where maximum temperature exceeded 35 degrees celsius
+max_temp_above_40_days, ,int,Amount of days in month where maximum temperature exceeded 40 degrees celsius
+min_temp_below_zero_days, ,int,Amount of days in month where minimum temperature stayed below 0 degrees celsius
+snow_over_0cm_days, ,int,Amount of days in month where snow height exceeded 0cm
+snow_over_1cm_days, ,int,Amount of days in month where snow height exceeded 1cm
+snow_over_10cm_days, ,int,Amount of days in month where snow height exceeded 10cm
+snow_over_50cm_days, ,int,Amount of days in month where snow height exceeded 50cm
+horizontal_visibility_below_50m_days, ,int,Amount of days in month where horizontal visisbility stayed below 50m
+horizontal_visibility_below_100m_days, ,int,Amount of days in month where horizontal visisbility stayed below 100m
+horizontal_visibility_below_1000m_days, ,int,Amount of days in month where horizontal visisbility stayed below 1000m
+hail_days, ,int,Amount of days in month with hail
+storm_days, ,int,Amount of days in month with storm occurrence
+height_of_temp_sensor,metres,float,Height of temperature sensor above local ground to 1 decimal place
+highest_daily_mean_temperature _qualifier, ,int,"Qualifier for the daily occurrence, 0 if only occurred once in the month, 1 if occurred 2 times or more"
+highest_daily_mean_temperature_day, ,int,Day of the month where the highest daily mean temperature was meassured
+highest_daily_mean_temperature,K,float,"Highest daily mean temperature in the month, up to 2 decimal places"
+lowest_daily_mean_temperature_qualifier, ,int,"Qualifier for the daily occurrence, 0 if only occurred once in the month, 1 if occurred 2 times or more"
+lowest_daily_mean_temperature_day, ,int,Day of the month where the lowest daily mean temperature was meassured
+lowest_daily_mean_temperature,K,float,"Lowest daily mean temperature in the month, up to 2 decimal places"
+monthly_max_temperature_qualifier, ,int,"Qualifier for the daily occurrence, 0 if only occurred once in the month, 1 if occurred 2 times or more"
+monthly_max_temperature_day, ,int,Day of the month where the maximum temperature was meassured
+monthly_max_temperature,K,float,"Maximum temperature in the month, up to 2 decimal places"
+monthly_min_temperature_qualifier, ,int,"Qualifier for the daily occurrence, 0 if only occurred once in the month, 1 if occurred 2 times or more"
+monthly_min_temperature_day, ,int,Day of the month where the minimum temperature was meassured
+monthly_min_temperature,K,float,"Minimum temperature in the month, up to 2 decimal places"
+height_of_wind_sensor,metres,float,Height of anemometer above local ground to 1 decimal place
+instrumentation_for_wind_measurement, ,int,"Type of instrumentation for wind meassurement, table 0 02 002"
+maximum_instantaneous_wind_speed _qualifier, ,int,"Qualifier for the daily occurrence, 0 if only occurred once in the month, 1 if occurred 2 times or more"
+maximum_instantaneous_wind_speed _day, ,int,Day of the month where the maximum instantenous wind speed was meassured
+maximum_instantaneous_wind_speed,ms-1,float,"Maximum instanteneous wind speed in the month, up to 1 decimal place"
+height_of_rain_sensor,metres,float,Height of pluviometer above local ground to 1 decimal place
+total_accumulated_precipitation,kg m-2,float,Monthly total accumulated precipitation
+frequency_group_precipitation, ,int,"Precipitation frequency group, table 0 13 051"
+days_with_precipitation_above_1mm, ,int,Amount of days in month where precipitation exceeded 1mm
+total_missing_days_with_respect_to _accumulation_or_average_precipitation, ,int,Total misssing days for the monthly precipitation accumulation
+rain_above_1kgpsm_days, ,int,Amount of days in month where precipitation exceeded 1 kgm-2
+rain_above_5kgpsm_days, ,int,Amount of days in month where precipitation exceeded 5 kgm-2
+rain_above_10kgpsm_days, ,int,Amount of days in month where precipitation exceeded 10 kgm-2
+rain_above_50kgpsm_days, ,int,Amount of days in month where precipitation exceeded 50 kgm-2
+rain_above_100kgpsm_days, ,int,Amount of days in month where precipitation exceeded 100 kgm-2
+rain_above_150kgpsm_days, ,int,Amount of days in month where precipitation exceeded 150 kgm-2
+highest_daily_amount_of_precipitation _qualifier, ,int,"Qualifier for the daily occurrence, 0 if only occurred once in the month, 1 if occurred 2 times or more"
+highest_daily_amount_of_precipitation _day, ,int,Day of the month with the highest amount of precipitation meassured
+highest_daily_amount_of_precipitation,kg m-2,float,"Highest daily amount of precipitation in the month, up to 1 decimal place"
+starting_reference_period_year, ,int,Beginning year of the reference period
+ending_reference_period_year, ,int,Ending year of the reference period
+normal_mean_pressure,Pa,int,"Nomal monthly mean pressure, up to the nearest 10 Pa"
+normal_mean_pressure_sea_level,Pa,int,"Nomal monthly mean sea level pressure, up to the nearest 10 Pa"
+normal_standard_pressure_level,Pa,int,"Nomal monthly mean standard pressure, up to the nearest 10 Pa, leave empty of lowland station"
+normal_geopotential_height_of_pressure_level,gpm,int,"Nomal geopotential height, leave empty of lowland station"
+normal_air_temperature,K,float,"Nomal monthly mean air temperature, up to 2 decimal places"
+normal_max_temperature_last_24h,K,float,"Nomal monthly maximum temperature, up to 2 decimal places"
+normal_min_temperature_last_24h,K,float,"Nomal monthly minimum temperature, up to 2 decimal places"
+normal_vapour_pressure,Pa,int,"Nomal monthly mean vapour pressure, up to the nearest 10Pa"
+normal_daily_mean_temp_deviation,K,float,"Nomal monthly mean temperature deviation, up to 2 decimal places"
+normal_total_sunshine, ,int,Normal montly daily mean amount of sunshine hours
+rain_starting_reference_period_year, ,int,Beginning year of the reference period for precipitation
+rain_ending_reference_period_year, ,int,Ending year of the reference period for precipitation
+normal_total_accumulated_precipitation,kg m-2,float,Normal monthly total accumulated precipitation
+normal_days_with_precipitation_above _1mm, ,int,Normal amount of days in month where precipitation exceeded 1mm
+normal_pressure_missing_years, ,int,Amount of years in reference period where pressure was not collected
+normal_temperature_missing_years, ,int,Amount of years in reference period where temperature was not collected
+normal_extreme_temperature_missing _years, ,int,Amount of years in reference period where extreme temperatures were not collected
+normal_vapour_pressure_missing_years, ,int,Amount of years in reference period where vapour pressure was not collected
+normal_rain_missing_years, ,int,Amount of years in reference period where precipitation was not collected
+normal_sunshine_duration_missing_years, ,int,Amount of years in reference period where sunshine duration was not collected
+normal_max_temperature_missing_years, ,int,Amount of years in reference period where maximum temperature was not collected
+normal_min_temperature_missing_years, ,int,Amount of years in reference period where minimum temperature was not collected
