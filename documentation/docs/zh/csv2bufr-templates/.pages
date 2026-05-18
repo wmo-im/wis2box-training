@@ -1,4 +1,5 @@
-title: csv2bufr 模板
-nav:
-  - aws-template.md
-  - daycli-template.md
+title: csv2bufr-模板  
+nav:  
+  - aws-template.md  
+  - daycli-template.md  
+  - climat-template.md

@@ -1,4 +1,5 @@
-title: Modèles csv2bufr
-nav:
-  - aws-template.md
-  - daycli-template.md
+title: csv2bufr-modèles  
+nav:  
+  - aws-template.md  
+  - daycli-template.md  
+  - climat-template.md
