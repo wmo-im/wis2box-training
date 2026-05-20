@@ -2,7 +2,7 @@
 title: CLIMAT Template
 ---
 
-# csv2bufr template for daily climate data (CLIMAT)
+# csv2bufr template for monthly climate data (CLIMAT)
 
 **CLIMAT** messages report monthly climate summaries compiled from daily observations at synoptic and climatological stations, to support climate monitoring, research, and archiving.
 
