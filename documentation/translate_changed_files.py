@@ -169,8 +169,13 @@ def main():
     if '--changed-only' in sys.argv:
         changed = get_changed_files()
         print(f"Changed files: {changed}")
+        changed_and_exists = []
+        for f in changed:
+            file_path = Path(f)
+            if file_path.exists():
+                changed_and_exists.append(f)
         md_files = [
-            Path(f) for f in changed
+            Path(f) for f in changed_and_exists
             if f.replace('documentation/', '').startswith(str(EN_DIR)) and f.endswith(('.md', '.pages'))
         ]
     else:
