@@ -171,11 +171,11 @@ def main():
         print(f"Changed files: {changed}")
         changed_and_exists = []
         for f in changed:
-            file_path = Path(f)
-            if file_path.exists():
+            normalized = f.replace('documentation/', '')
+            if Path(normalized).exists() or Path(f).exists():
                 changed_and_exists.append(f)
         md_files = [
-            Path(f) for f in changed_and_exists
+            Path(f.replace('documentation/', '')) for f in changed_and_exists
             if f.replace('documentation/', '').startswith(str(EN_DIR)) and f.endswith(('.md', '.pages'))
         ]
     else:
