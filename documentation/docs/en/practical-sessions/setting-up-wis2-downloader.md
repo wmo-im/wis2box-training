@@ -99,7 +99,7 @@ docker compose up -d
 Wait about 30 seconds for the health checks to pass, then confirm the subscription manager is ready:
 
 ```bash
-curl http://localhost:5002/health
+curl http://<WIS2DOWNLOADER_BASE_URL>:5002/health
 ```
 
 !!! note "Checking the running containers"
@@ -111,7 +111,7 @@ curl http://localhost:5002/health
 
 ### Accesing the WIS2 Downloader UI
 
-Open a web browser and navigate to the UI for your WIS2 Downloader instance by going to `http://localhost:8080`.
+Open a web browser and navigate to the UI for your WIS2 Downloader instance by going to `http://<WIS2DOWNLOADER_BASE_URL>:8080`.
 
 You will find yourself in the landing page which is set to the `Help` section by default showing the documentation.
 
@@ -121,13 +121,52 @@ In the left sidebar menu you'll be able to navigate through all the different se
 
 The main sections available are:
 
-- **Dashboard** — an embedded Grafana dashboard showing download activity, queue status, and metrics for the running service. Also available at `http://localhost:3000`.
+- **Dashboard** — an embedded Grafana dashboard showing download activity, queue status, and metrics for the running service. Also available at `http://<WIS2DOWNLOADER_BASE_URL>:3000`.
 - **Catalogue View** — browse available WIS2 datasets by searching or filtering the global catalogue. Select a topic and a save directory, then click *Subscribe* to start downloading.
 - **Tree View** — navigate the WIS2 topic hierarchy as a collapsible tree. Useful for exploring what topics are available before subscribing.
-- **Manual Subscription** — create a subscription by entering a topic and broker details directly, without relying on the Global Discovery Catalogues. Useful for subscribing to topics from specific WIS2 Nodes or private brokers.
-- **Subscriptions** — view and manage all active subscriptions. From here you can see which topics are being monitored and remove any you no longer need.
+- **Manual Subscribe** — create a subscription by entering a topic and broker details directly, without relying on the Global Discovery Catalogues. Useful for subscribing to topics from specific WIS2 Nodes or private brokers.
+- **Manage Subscriptions** — view and manage all active subscriptions. From here you can see which topics are being monitored and remove any you no longer need.
 - **Settings** — currently allows you to reload the dataset catalogue from the Global Discovery Catalogues. This section will be expanded in future releases to cover general configuration and management of the WIS2 Downloader.
 - **Help** — the default landing page, showing the built-in documentation for the WIS2 Downloader.
+
+### Managing subscriptions in the UI
+
+As in the last example you will acesss the UI of running instance by going to `http://<WIS2DOWNLOADER_BASE_URL>:8080`.
+
+From there there are 3 ways to set up a subscription:
+
+- In the **Catalogue View** by browsing thorugh the available topics in a similar fashion to the GDC portals.
+- In the **Tree View** by selecting a topic from the GDC catalogue by exploring topics as in MQTT Explorer.
+- In **Manual Subscribe** where you can type in your own desired topics, filters and other parameters.
+
+For the following exercise we will subscribe to the notifications coming from the GTS to WIS2 Gateway managed by DWD:
+
+- First, go to **Manual Subscribe**.
+- Type in the topics as `cache/a/wis2/de-dwd-gts-to-wis2/data/core/#`
+- Set the destination folder as `gts-data`
+
+The final result should be similar to:
+![WIS2 Downloader Manual Subscribe](../assets/img/wis2-downloader-manual-subscribe.png)
+
+Following this go to the download folder in your student VM by using the commands:
+
+```bash
+ls -R wisdownloader/downloads
+```
+
+And now you should see a series of files that have been downloaded by your instance.
+
+As a final step we can delete the subscription by going to the **Manage Subscriptions** view and pressing the **Unsubscribe** button.
+
+![WIS2 Downloader Delete Subscription](../assets/img/wis2-downloader-delete-subscription.png)
+
+!!! note "Deleting downloaded files"
+
+    It is recommended to clean up the downloads folder after completing an exercise in order to free up space on the student VM. As such run the following command to delete the previous exercises files.
+
+    ```bash
+    rm -fr wisdownloader/downloads
+    ```
 
 ### Reviewing the WIS2 Downloader configuration
 
@@ -192,7 +231,6 @@ curl -X DELETE <WIS2DOWNLOADER_BASE_URL>:5002/api/subscriptions/{id}
 ```
 
 For the full list of available endpoints (list, get, update subscriptions and more), refer to the interactive Swagger documentation available at `<WIS2DOWNLOADER_BASE_URL>:5002/api/openapi`.
-
 
 ## Conclusion
 
