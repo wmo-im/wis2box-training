@@ -9,7 +9,7 @@ title: Set up WIS2 Downloader on your student VM
     By the end of this practical session, you will be able to:
 
     - set up your own "WIS2 Downloader" instance and manage the specific configurations required
-    - navigate through the instance to make use of it's different capabilities 
+    - navigate through the instance and set up a subscription
 
 ## Introduction
 
@@ -109,7 +109,7 @@ curl http://<WIS2DOWNLOADER_BASE_URL>:5002/health
     ```
     You should see services for the subscription manager, MQTT subscribers, UI, Celery workers, Redis, Prometheus, Grafana, and Loki.
 
-### Accesing the WIS2 Downloader UI
+## Accesing the WIS2 Downloader UI
 
 Open a web browser and navigate to the UI for your WIS2 Downloader instance by going to `http://<WIS2DOWNLOADER_BASE_URL>:8080`.
 
@@ -129,7 +129,7 @@ The main sections available are:
 - **Settings** — currently allows you to reload the dataset catalogue from the Global Discovery Catalogues. This section will be expanded in future releases to cover general configuration and management of the WIS2 Downloader.
 - **Help** — the default landing page, showing the built-in documentation for the WIS2 Downloader.
 
-### Managing subscriptions in the UI
+## Managing subscriptions in the UI
 
 As in the last example you will acesss the UI of running instance by going to `http://<WIS2DOWNLOADER_BASE_URL>:8080`.
 
@@ -165,10 +165,10 @@ As a final step we can delete the subscription by going to the **Manage Subscrip
     It is recommended to clean up the downloads folder after completing an exercise in order to free up space on the student VM. As such run the following command to delete the previous exercises files.
 
     ```bash
-    rm -fr wisdownloader/downloads
+    rm -fr wisdownloader/downloads/gts-data
     ```
 
-### Reviewing the WIS2 Downloader configuration
+## Reviewing the WIS2 Downloader configuration
 
 The WIS2 Downloader instance can be configured using the environment variables defined in your `.env` file.
 
@@ -202,7 +202,7 @@ cat .env
 
 You can keep the default configuration for the next exercises.
 
-### WIS2 Downloader API
+## WIS2 Downloader API
 
 The WIS2 Downloader exposes a REST API at `<WIS2DOWNLOADER_BASE_URL>:5002/api`. Confirm the service is ready:
 
