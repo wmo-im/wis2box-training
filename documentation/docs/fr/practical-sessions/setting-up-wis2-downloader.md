@@ -8,8 +8,8 @@ title: Configurer WIS2 Downloader sur votre VM étudiant
 
     À la fin de cette session pratique, vous serez capable de :
 
-    - configurer votre propre instance de "WIS2 Downloader" et gérer les configurations spécifiques nécessaires
-    - naviguer dans l'instance pour utiliser ses différentes fonctionnalités
+    - configurer votre propre instance de "WIS2 Downloader" et gérer les configurations spécifiques requises
+    - naviguer dans l'instance et configurer un abonnement
 
 ## Introduction
 
@@ -17,7 +17,7 @@ Dans cette session, vous apprendrez à configurer une instance de WIS2 Downloade
 
 !!! note "À propos de WIS2 Downloader"
      
-     WIS2 Downloader est disponible en tant que projet autonome Docker Compose et il est recommandé de l'exécuter sur un serveur distinct de wis2box, afin d'éviter que les téléchargements n'interfèrent avec la publication des messages.
+     WIS2 Downloader est disponible en tant que projet autonome Docker Compose et il est recommandé de l'exécuter sur un serveur séparé de wis2box, afin d'éviter que les téléchargements n'interfèrent avec la publication des messages.
 
      Si vous souhaitez développer votre propre service pour vous abonner aux notifications WIS2 et télécharger des données, vous pouvez utiliser le [code source de WIS2 Downloader](https://github.com/World-Meteorological-Organization/wis2downloader) comme référence.
 
@@ -25,9 +25,9 @@ Dans cette session, vous apprendrez à configurer une instance de WIS2 Downloade
 
 !!! note "Si ce n'est pas pendant la formation"
 
-    Les étapes suivantes doivent être appliquées uniquement si les ports mentionnés ne sont pas disponibles par défaut sur le serveur. Dans toute configuration, ce sont les seuls ports nécessaires pour utiliser pleinement les capacités de la pile WIS2 Downloader.
+    Les étapes suivantes ne doivent être appliquées que si les ports mentionnés ne sont pas disponibles par défaut sur le serveur. Dans toute configuration, ce sont les seuls ports nécessaires pour accéder à toutes les fonctionnalités de la pile WIS2 Downloader.    
 
-Avant de commencer, connectez-vous à votre VM étudiant en vous assurant de tunneliser via SSH les ports suivants :
+Avant de commencer, connectez-vous à votre VM étudiant en vous assurant de faire un tunnel via SSH pour les ports suivants :
 
 - `5002 (API)`
 - `8080 (UI)`
@@ -57,9 +57,9 @@ Exécutez le script de configuration pour générer votre fichier de configurati
 bash setup.sh
 ```
 
-Cela crée un fichier `.env` à partir des valeurs par défaut et génère des valeurs aléatoires pour `FLASK_SECRET_KEY` et `REDIS_PASSWORD`. Vous pouvez consulter le fichier avec `cat .env` — les valeurs par défaut conviennent à un déploiement sur une seule machine.
+Cela crée un fichier `.env` à partir des valeurs par défaut et génère des valeurs aléatoires pour `FLASK_SECRET_KEY` et `REDIS_PASSWORD`. Vous pouvez examiner le fichier avec `cat .env` — les valeurs par défaut conviennent à un déploiement sur une seule machine.
 
-Installez le plugin Docker Loki utilisé pour l'envoi des journaux :
+Installez le plugin Docker Loki utilisé pour l'expédition des journaux :
 
 ```bash
 ARCH=$(uname -m | sed 's/x86_64/amd64/;s/aarch64/arm64/')
@@ -102,17 +102,17 @@ curl http://<WIS2DOWNLOADER_BASE_URL>:5002/health
 ```
 
 !!! note "Vérification des conteneurs en cours d'exécution"
-    Vous pouvez vérifier que tous les conteneurs ont démarré avec succès en exécutant :
+    Vous pouvez vérifier que tous les conteneurs ont démarré avec succès avec :
     ```bash
     docker compose ps
     ```
-    Vous devriez voir des services pour le gestionnaire d'abonnement, les abonnés MQTT, l'interface utilisateur, les travailleurs Celery, Redis, Prometheus, Grafana et Loki.
+    Vous devriez voir des services pour le gestionnaire d'abonnement, les abonnés MQTT, l'interface utilisateur, les workers Celery, Redis, Prometheus, Grafana et Loki.
 
-### Accéder à l'interface utilisateur de WIS2 Downloader
+## Accéder à l'interface utilisateur de WIS2 Downloader
 
 Ouvrez un navigateur web et accédez à l'interface utilisateur de votre instance WIS2 Downloader en allant sur `http://<WIS2DOWNLOADER_BASE_URL>:8080`.
 
-Vous arriverez sur la page d'accueil, qui est par défaut définie sur la section `Help` affichant la documentation.
+Vous arriverez sur la page d'accueil qui est par défaut définie sur la section `Help` affichant la documentation.
 
 ![WIS2 Downloader Landing Page](../assets/img/wis2-downloader-landing-page.png)
 
@@ -120,34 +120,34 @@ Dans le menu de la barre latérale gauche, vous pourrez naviguer dans toutes les
 
 Les principales sections disponibles sont :
 
-- **Dashboard** — un tableau de bord Grafana intégré montrant l'activité de téléchargement, l'état de la file d'attente et les métriques du service en cours d'exécution. Également disponible à `http://<WIS2DOWNLOADER_BASE_URL>:3000`.
-- **Catalogue View** — parcourez les ensembles de données WIS2 disponibles en recherchant ou en filtrant le catalogue global. Sélectionnez un sujet et un répertoire de sauvegarde, puis cliquez sur *Subscribe* pour commencer le téléchargement.
-- **Tree View** — naviguez dans la hiérarchie des sujets WIS2 sous forme d'arborescence pliable. Utile pour explorer les sujets disponibles avant de s'abonner.
-- **Manual Subscribe** — créez un abonnement en saisissant directement un sujet et les détails du broker, sans dépendre des Global Discovery Catalogues. Utile pour s'abonner à des sujets provenant de WIS2 Nodes spécifiques ou de brokers privés.
-- **Manage Subscriptions** — consultez et gérez tous les abonnements actifs. À partir de cette section, vous pouvez voir quels sujets sont surveillés et supprimer ceux dont vous n'avez plus besoin.
+- **Dashboard** — un tableau de bord Grafana intégré montrant l'activité de téléchargement, l'état de la file d'attente et les métriques du service en cours d'exécution. Également disponible sur `http://<WIS2DOWNLOADER_BASE_URL>:3000`.
+- **Catalogue View** — parcourir les ensembles de données WIS2 disponibles en recherchant ou en filtrant le catalogue global. Sélectionnez un sujet et un répertoire de sauvegarde, puis cliquez sur *Subscribe* pour commencer le téléchargement.
+- **Tree View** — naviguer dans la hiérarchie des sujets WIS2 sous forme d'arborescence pliable. Utile pour explorer les sujets disponibles avant de s'abonner.
+- **Manual Subscribe** — créer un abonnement en saisissant directement un sujet et les détails du broker, sans dépendre des Global Discovery Catalogues. Utile pour s'abonner à des sujets provenant de WIS2 Nodes spécifiques ou de brokers privés.
+- **Manage Subscriptions** — afficher et gérer tous les abonnements actifs. À partir de cette section, vous pouvez voir quels sujets sont surveillés et supprimer ceux dont vous n'avez plus besoin.
 - **Settings** — permet actuellement de recharger le catalogue de données à partir des Global Discovery Catalogues. Cette section sera étendue dans les futures versions pour couvrir la configuration générale et la gestion de WIS2 Downloader.
 - **Help** — la page d'accueil par défaut, affichant la documentation intégrée de WIS2 Downloader.
 
-### Gestion des abonnements dans l'interface utilisateur
+## Gestion des abonnements dans l'interface utilisateur
 
-Comme dans l'exemple précédent, vous accéderez à l'interface utilisateur de l'instance en cours d'exécution en allant sur `http://<WIS2DOWNLOADER_BASE_URL>:8080`.
+Comme dans le dernier exemple, vous accéderez à l'interface utilisateur de l'instance en cours d'exécution en allant sur `http://<WIS2DOWNLOADER_BASE_URL>:8080`.
 
 À partir de là, il existe 3 façons de configurer un abonnement :
 
-- Dans **Catalogue View**, en parcourant les sujets disponibles de manière similaire aux portails GDC.
-- Dans **Tree View**, en sélectionnant un sujet du catalogue GDC en explorant les sujets comme dans MQTT Explorer.
-- Dans **Manual Subscribe**, où vous pouvez saisir vos propres sujets, filtres et autres paramètres souhaités.
+- Dans **Catalogue View** en parcourant les sujets disponibles de manière similaire aux portails GDC.
+- Dans **Tree View** en sélectionnant un sujet du catalogue GDC en explorant les sujets comme dans MQTT Explorer.
+- Dans **Manual Subscribe** où vous pouvez saisir vos propres sujets, filtres et autres paramètres souhaités.
 
-Pour l'exercice suivant, nous nous abonnerons aux notifications provenant de la passerelle GTS vers WIS2 gérée par DWD :
+Pour l'exercice suivant, nous allons nous abonner aux notifications provenant du GTS vers la passerelle WIS2 gérée par DWD :
 
 - Tout d'abord, allez dans **Manual Subscribe**.
-- Saisissez le sujet comme `cache/a/wis2/de-dwd-gts-to-wis2/data/core/#`
+- Saisissez les sujets comme `cache/a/wis2/de-dwd-gts-to-wis2/data/core/#`
 - Définissez le dossier de destination comme `gts-data`
 
-Le résultat final devrait ressembler à ceci :
+Le résultat final devrait ressembler à :
 ![WIS2 Downloader Manual Subscribe](../assets/img/wis2-downloader-manual-subscribe.png)
 
-Ensuite, accédez au dossier de téléchargement sur votre VM étudiant en utilisant les commandes suivantes :
+Ensuite, accédez au dossier de téléchargement sur votre VM étudiant en utilisant les commandes :
 
 ```bash
 ls -R wisdownloader/downloads
@@ -155,7 +155,7 @@ ls -R wisdownloader/downloads
 
 Vous devriez maintenant voir une série de fichiers qui ont été téléchargés par votre instance.
 
-Enfin, nous pouvons supprimer l'abonnement en allant dans la vue **Manage Subscriptions** et en appuyant sur le bouton **Unsubscribe**.
+En dernier lieu, nous pouvons supprimer l'abonnement en allant dans la vue **Manage Subscriptions** et en appuyant sur le bouton **Unsubscribe**.
 
 ![WIS2 Downloader Delete Subscription](../assets/img/wis2-downloader-delete-subscription.png)
 
@@ -164,14 +164,14 @@ Enfin, nous pouvons supprimer l'abonnement en allant dans la vue **Manage Subscr
     Il est recommandé de nettoyer le dossier de téléchargements après avoir terminé un exercice afin de libérer de l'espace sur la VM étudiant. Pour ce faire, exécutez la commande suivante pour supprimer les fichiers des exercices précédents.
 
     ```bash
-    rm -fr wisdownloader/downloads
+    rm -fr wisdownloader/downloads/gts-data
     ```
 
-### Revue de la configuration de WIS2 Downloader
+## Révision de la configuration de WIS2 Downloader
 
 L'instance WIS2 Downloader peut être configurée à l'aide des variables d'environnement définies dans votre fichier `.env`.
 
-Vous pouvez consulter une répartition des variables d'environnement dans la [Section 2.1 du Guide Administrateur de WIS2 Downloader](https://world-meteorological-organization.github.io/wis2downloader/en/admin-guide.html).
+Vous pouvez consulter une répartition des variables d'environnement dans la [Section 2.1 du Guide Administrateur de WIS2 Downloader](https://world-meteorological-organization.github.io/wis2downloader/en/admin-guide.html)
 
 Pour examiner la configuration actuelle de WIS2 Downloader, vous pouvez utiliser la commande suivante :
 
@@ -179,11 +179,11 @@ Pour examiner la configuration actuelle de WIS2 Downloader, vous pouvez utiliser
 cat .env
 ```
 
-!!! question "Examinez la configuration de WIS2 Downloader"
+!!! question "Examiner la configuration de WIS2 Downloader"
 
     Quelle est la période de rétention par défaut pour les données téléchargées ?
 
-    Sur quel port l'API du gestionnaire d'abonnement écoute-t-elle ?
+    Quel port l'API du gestionnaire d'abonnement écoute-t-elle ?
 
 ??? success "Cliquez pour révéler la réponse"
 
@@ -201,7 +201,7 @@ cat .env
 
 Vous pouvez conserver la configuration par défaut pour les prochains exercices.
 
-### API de WIS2 Downloader
+## API de WIS2 Downloader
 
 WIS2 Downloader expose une API REST à `<WIS2DOWNLOADER_BASE_URL>:5002/api`. Confirmez que le service est prêt :
 
@@ -223,7 +223,7 @@ curl -s -X POST <WIS2DOWNLOADER_BASE_URL>:5002/api/subscriptions \
   -d '{"topic": "cache/a/wis2/+/data/core/weather/surface-based-observations/#", "target": "surface-obs"}'
 ```
 
-La réponse inclut l'UUID attribué au nouvel abonnement. Utilisez-le pour supprimer l'abonnement lorsque vous n'en avez plus besoin :
+La réponse inclut l'UUID attribué au nouvel abonnement. Utilisez-le pour supprimer l'abonnement lorsqu'il n'est plus nécessaire :
 
 ```bash
 curl -X DELETE <WIS2DOWNLOADER_BASE_URL>:5002/api/subscriptions/{id}
@@ -235,9 +235,9 @@ Pour la liste complète des points de terminaison disponibles (lister, obtenir, 
 
 !!! success "Félicitations !"
 
-    Au cours de cette session pratique, vous avez appris à :
+    Dans cette session pratique, vous avez appris à :
 
     - installer WIS2 Downloader sur votre système local et modifier les configurations par défaut
     - interagir avec l'interface utilisateur pour créer et supprimer des abonnements
-    - gérer les abonnements en utilisant l'API
-    - consulter les données téléchargées sur votre système local
+    - gérer les abonnements à l'aide de l'API
+    - visualiser les données téléchargées sur votre système local

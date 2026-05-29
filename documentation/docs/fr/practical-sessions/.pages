@@ -9,8 +9,9 @@ nav:
   - data-conversion-tools.md  
   - csv2bufr-templates.md  
   - adding-gts-headers-to-wis2-notifications.md  
-  - setting-up-wis2-downloader.md  
   - datasets-with-access-control.md  
+  - setting-up-wis2-downloader.md  
+  - downloading-with-wis2-downloader.md  
   - decoding-data.md  
   - discovering-datasets-from-wis2-gdc.md  
 
