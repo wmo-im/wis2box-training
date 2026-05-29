@@ -1,0 +1,243 @@
+---
+title: إعداد WIS2 Downloader على الجهاز الافتراضي الخاص بالطلاب
+---
+
+# إعداد WIS2 Downloader على الجهاز الافتراضي الخاص بالطلاب
+
+!!! abstract "نتائج التعلم!"
+
+    بنهاية هذه الجلسة العملية، ستكون قادرًا على:
+
+    - إعداد نسخة خاصة بك من "WIS2 Downloader" وإدارة التكوينات المطلوبة
+    - التنقل عبر النسخة للاستفادة من قدراتها المختلفة
+
+## المقدمة
+
+في هذه الجلسة، ستتعلم كيفية إعداد نسخة من WIS2 Downloader على الجهاز الافتراضي المخصص للطلاب وكيفية التنقل عبر خدماته المختلفة.
+
+!!! note "حول WIS2 Downloader"
+     
+     يتوفر WIS2 Downloader كمشروع مستقل باستخدام Docker Compose، ويوصى بتشغيله على خادم منفصل عن wis2box لتجنب تعارض التنزيلات مع نشر الرسائل.
+
+     إذا كنت ترغب في تطوير خدمة خاصة بك للاشتراك في إشعارات WIS2 وتنزيل البيانات، يمكنك استخدام [الشفرة المصدرية لـ WIS2 Downloader](https://github.com/World-Meteorological-Organization/wis2downloader) كمرجع.
+
+## التحضير والمتطلبات
+
+!!! note "إذا لم يكن أثناء التدريب"
+
+    الخطوات التالية يتم تطبيقها فقط إذا كانت المنافذ المذكورة غير متوفرة افتراضيًا على الخادم. في أي تكوين، هذه هي المنافذ الوحيدة التي تحتاج إلى الوصول إليها لاستخدام الإمكانيات الكاملة لحزمة WIS2 Downloader.
+
+قبل البدء، يرجى تسجيل الدخول إلى الجهاز الافتراضي الخاص بك مع التأكد من إنشاء نفق عبر SSH للمنافذ التالية:
+
+- `5002 (API)`
+- `8080 (UI)`
+- `3000 (Grafana)`
+
+للقيام بذلك، يمكنك تغيير إعدادات الاتصال في Putty:
+
+![access putty tunnel settings](../assets/img/putty-tunnel-settings.png)
+
+ثم أضف تعيين المنافذ الثلاثة إلى منافذ على جهازك المحلي (localhost):
+
+![adding tunnels in putty](../assets/img/putty-add-tunnel.png)
+
+## تثبيت WIS2 Downloader
+
+قم بتنزيل أحدث إصدار من GitHub واستخرجه على الجهاز الافتراضي الخاص بك:
+
+```bash
+wget https://github.com/World-Meteorological-Organization/wis2downloader/releases/latest/download/wis2downloader-latest.tar.gz
+tar -xzf wis2downloader-latest.tar.gz
+cd wis2downloader-*
+```
+
+قم بتشغيل سكربت الإعداد لإنشاء ملف التكوين الخاص بك:
+
+```bash
+bash setup.sh
+```
+
+سيقوم هذا بإنشاء ملف `.env` باستخدام الإعدادات الافتراضية وتوليد قيم عشوائية لـ `FLASK_SECRET_KEY` و `REDIS_PASSWORD`. يمكنك مراجعة الملف باستخدام `cat .env` — الإعدادات الافتراضية مناسبة لنشر على جهاز واحد.
+
+قم بتثبيت إضافة Docker الخاصة بـ Loki المستخدمة لنقل السجلات:
+
+```bash
+ARCH=$(uname -m | sed 's/x86_64/amd64/;s/aarch64/arm64/')
+docker plugin install grafana/loki-docker-driver:3.6.7-${ARCH} --alias loki --grant-all-permissions
+```
+
+تحقق من تمكين الإضافة:
+
+```bash
+docker plugin ls
+```
+
+يجب أن ترى `loki:latest` مدرجًا مع تعيين `ENABLED` إلى `true`.
+
+قم بإنشاء مجموعة مخصصة باسم `wis2`، أضف المستخدم الخاص بك إليها، وقم بتكوين ملف `.env` ودليل التنزيلات وفقًا لذلك:
+
+```bash
+sudo groupadd wis2
+sudo usermod -aG wis2 $USER
+sed -i "s/^UID=.*/UID=$(id -u)/" .env
+sed -i "s/^GID=.*/GID=$(getent group wis2 | cut -d: -f3)/" .env
+mkdir -p downloads
+sudo chown $(id -un):wis2 downloads
+chmod 775 downloads
+```
+
+!!! note "إعادة تسجيل الدخول مطلوبة"
+    لن يتم تفعيل تغيير عضوية المجموعة إلا بعد تسجيل الخروج وإعادة تسجيل الدخول إلى جلسة SSH الخاصة بك.
+
+ابدأ تشغيل الحزمة الكاملة للخدمة:
+
+```bash
+docker compose up -d
+```
+
+انتظر حوالي 30 ثانية حتى تمر فحوصات الصحة، ثم تأكد من أن مدير الاشتراك جاهز:
+
+```bash
+curl http://<WIS2DOWNLOADER_BASE_URL>:5002/health
+```
+
+!!! note "التحقق من الحاويات التي تعمل"
+    يمكنك التحقق من أن جميع الحاويات بدأت بنجاح باستخدام:
+    ```bash
+    docker compose ps
+    ```
+    يجب أن ترى خدمات لمدير الاشتراك، مشتركي MQTT، واجهة المستخدم، عمال Celery، Redis، Prometheus، Grafana، وLoki.
+
+### الوصول إلى واجهة WIS2 Downloader
+
+افتح متصفح الويب وانتقل إلى واجهة المستخدم الخاصة بنسخة WIS2 Downloader الخاصة بك عن طريق الذهاب إلى `http://<WIS2DOWNLOADER_BASE_URL>:8080`.
+
+ستجد نفسك في صفحة البداية التي يتم تعيينها افتراضيًا إلى قسم `Help` الذي يعرض الوثائق.
+
+![WIS2 Downloader Landing Page](../assets/img/wis2-downloader-landing-page.png)
+
+في قائمة الشريط الجانبي الأيسر، ستتمكن من التنقل عبر جميع الأقسام المختلفة لواجهة المستخدم.
+
+الأقسام الرئيسية المتاحة هي:
+
+- **Dashboard** — لوحة تحكم Grafana مدمجة تعرض نشاط التنزيل، حالة الطابور، ومقاييس الخدمة التي تعمل. متوفرة أيضًا على `http://<WIS2DOWNLOADER_BASE_URL>:3000`.
+- **Catalogue View** — تصفح مجموعات بيانات WIS2 المتاحة عن طريق البحث أو التصفية في الكتالوج العالمي. اختر موضوعًا ودليل حفظ، ثم اضغط على *Subscribe* لبدء التنزيل.
+- **Tree View** — استعرض تسلسل مواضيع WIS2 كهيكل شجري قابل للطي. مفيد لاستكشاف المواضيع المتاحة قبل الاشتراك.
+- **Manual Subscribe** — أنشئ اشتراكًا عن طريق إدخال موضوع وتفاصيل الوسيط مباشرة، دون الاعتماد على الكتالوجات العالمية. مفيد للاشتراك في مواضيع من WIS2 Nodes محددة أو وسطاء خاصين.
+- **Manage Subscriptions** — عرض وإدارة جميع الاشتراكات النشطة. من هنا يمكنك رؤية المواضيع التي يتم مراقبتها وإزالة أي منها لم تعد بحاجة إليها.
+- **Settings** — يتيح حاليًا إعادة تحميل كتالوج البيانات من الكتالوجات العالمية. سيتم توسيع هذا القسم في الإصدارات المستقبلية ليشمل التكوين والإدارة العامة لـ WIS2 Downloader.
+- **Help** — صفحة البداية الافتراضية، تعرض الوثائق المدمجة لـ WIS2 Downloader.
+
+### إدارة الاشتراكات في واجهة المستخدم
+
+كما في المثال الأخير، ستصل إلى واجهة المستخدم للنسخة التي تعمل عن طريق الذهاب إلى `http://<WIS2DOWNLOADER_BASE_URL>:8080`.
+
+من هناك، هناك 3 طرق لإعداد اشتراك:
+
+- في **Catalogue View** عن طريق تصفح المواضيع المتاحة بطريقة مشابهة لبوابات GDC.
+- في **Tree View** عن طريق اختيار موضوع من كتالوج GDC من خلال استكشاف المواضيع كما في MQTT Explorer.
+- في **Manual Subscribe** حيث يمكنك كتابة المواضيع المطلوبة، الفلاتر والمعلمات الأخرى.
+
+للتمرين التالي، سنشترك في الإشعارات القادمة من GTS إلى بوابة WIS2 التي تديرها DWD:
+
+- أولاً، انتقل إلى **Manual Subscribe**.
+- اكتب المواضيع كـ `cache/a/wis2/de-dwd-gts-to-wis2/data/core/#`
+- قم بتعيين مجلد الوجهة كـ `gts-data`
+
+النتيجة النهائية يجب أن تكون مشابهة لـ:
+![WIS2 Downloader Manual Subscribe](../assets/img/wis2-downloader-manual-subscribe.png)
+
+بعد ذلك، انتقل إلى مجلد التنزيلات في الجهاز الافتراضي الخاص بك باستخدام الأوامر:
+
+```bash
+ls -R wisdownloader/downloads
+```
+
+والآن يجب أن ترى سلسلة من الملفات التي تم تنزيلها بواسطة النسخة الخاصة بك.
+
+كخطوة أخيرة، يمكننا حذف الاشتراك عن طريق الذهاب إلى عرض **Manage Subscriptions** والضغط على زر **Unsubscribe**.
+
+![WIS2 Downloader Delete Subscription](../assets/img/wis2-downloader-delete-subscription.png)
+
+!!! note "حذف الملفات التي تم تنزيلها"
+
+    يوصى بتنظيف مجلد التنزيلات بعد إكمال التمرين لتحرير مساحة على الجهاز الافتراضي الخاص بالطلاب. لذلك قم بتشغيل الأمر التالي لحذف ملفات التمارين السابقة.
+
+    ```bash
+    rm -fr wisdownloader/downloads
+    ```
+
+### مراجعة تكوين WIS2 Downloader
+
+يمكن تكوين نسخة WIS2 Downloader باستخدام متغيرات البيئة المحددة في ملف `.env`.
+
+يمكنك مراجعة تفصيل متغيرات البيئة في [دليل إدارة WIS2 Downloader القسم 2.1](https://world-meteorological-organization.github.io/wis2downloader/en/admin-guide.html)
+
+لمراجعة التكوين الحالي لـ WIS2 Downloader، يمكنك استخدام الأمر التالي:
+
+```bash
+cat .env
+```
+
+!!! question "راجع تكوين WIS2 Downloader"
+
+    ما هي فترة الاحتفاظ الافتراضية للبيانات التي تم تنزيلها؟
+
+    أي منفذ يستمع إليه API الخاص بمدير الاشتراك؟
+
+??? success "اضغط للكشف عن الإجابة"
+
+    فترة الاحتفاظ الافتراضية للبيانات التي تم تنزيلها هي `30` يومًا، كما هو محدد في `DOWNLOAD_RETENTION_PERIOD`.
+
+    يستمع API الخاص بمدير الاشتراك على المنفذ `5002`، كما هو محدد في `WIS2DOWNLOADER_SUBSCRIPTION_MANAGER_URL`.
+
+!!! note "تحديث تكوين WIS2 Downloader"
+
+    لتحديث التكوين، قم بتحرير ملف `.env` وأعد تشغيل الحزمة لتطبيق التغييرات:
+
+    ```bash
+    docker compose up -d
+    ```
+
+يمكنك الاحتفاظ بالتكوين الافتراضي للتمارين القادمة.
+
+### واجهة برمجة التطبيقات (API) الخاصة بـ WIS2 Downloader
+
+يوفر WIS2 Downloader واجهة REST API عند `<WIS2DOWNLOADER_BASE_URL>:5002/api`. تأكد من أن الخدمة جاهزة:
+
+```bash
+curl <WIS2DOWNLOADER_BASE_URL>:5002/api/health
+```
+
+يجب أن ترى:
+
+```json
+{"status": "healthy"}
+```
+
+لإنشاء اشتراك، أرسل طلب `POST` مع موضوع MQTT واختيارياً مجلد فرعي `target` حيث سيتم حفظ الملفات:
+
+```bash
+curl -s -X POST <WIS2DOWNLOADER_BASE_URL>:5002/api/subscriptions \
+  -H "Content-Type: application/json" \
+  -d '{"topic": "cache/a/wis2/+/data/core/weather/surface-based-observations/#", "target": "surface-obs"}'
+```
+
+يتضمن الرد UUID المخصص للاشتراك الجديد. استخدمه لحذف الاشتراك عند عدم الحاجة إليه:
+
+```bash
+curl -X DELETE <WIS2DOWNLOADER_BASE_URL>:5002/api/subscriptions/{id}
+```
+
+للحصول على القائمة الكاملة لنقاط النهاية المتاحة (قائمة، الحصول على، تحديث الاشتراكات والمزيد)، راجع الوثائق التفاعلية لـ Swagger المتوفرة عند `<WIS2DOWNLOADER_BASE_URL>:5002/api/openapi`.
+
+## الخاتمة
+
+!!! success "تهانينا!"
+
+    في هذه الجلسة العملية، تعلمت كيفية:
+
+    - تثبيت WIS2 Downloader على نظامك المحلي وتغيير التكوينات الافتراضية
+    - التفاعل مع واجهة المستخدم لإنشاء وإزالة الاشتراكات
+    - إدارة الاشتراكات باستخدام API
+    - عرض البيانات التي تم تنزيلها على نظامك المحلي
