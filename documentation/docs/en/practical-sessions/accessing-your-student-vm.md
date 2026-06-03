@@ -39,8 +39,8 @@ Your student VM has the following software pre-installed:
     The release archive for wis2box used in this training can be downloaded as follows:
 
     ```bash
-    wget https://github.com/World-Meteorological-Organization/wis2box-release/releases/download/1.2.0/wis2box-setup-1.2.0.zip
-    unzip wis2box-setup-1.2.0.zip
+    wget https://github.com/World-Meteorological-Organization/wis2box-release/releases/download/1.3.0/wis2box-setup-1.3.0.zip
+    unzip wis2box-setup-1.3.0.zip
     ```
     
     You can always find the latest 'wis2box-setup' archive at [https://github.com/World-Meteorological-Organization/wis2box/releases](https://github.com/World-Meteorological-Organization/wis2box-release/releases).
@@ -56,7 +56,7 @@ Your student VM has the following software pre-installed:
 
     ```bash
     pip3 install minio
-    pip3 install pywiscat==0.4.0
+    pip3 install pywiscat
     ```
 
     If you are using the student VM provided during local WIS2 training sessions, the required software will already be installed.
