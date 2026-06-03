@@ -16,7 +16,7 @@ title: Initializing wis2box
 
 !!! note
 
-    The current training materials are based on wis2box-release 1.2.0. 
+    The current training materials are based on wis2box-release 1.3.0. 
     
     See [accessing-your-student-vm](./accessing-your-student-vm.md) for instructions on how to download and install the wis2box software stack if you are running this training outside of a local training session.
 
@@ -148,11 +148,11 @@ When running this command for the first time, you will see the following output:
 
 ```
 No docker-compose.images-*.yml files found, creating one
-Current version=Undefined, latest version=1.2.0
+Current version=Undefined, latest version=1.3.0
 Would you like to update ? (y/n/exit)
 ```
 
-Select ``y`` and the the script will create the file ``docker-compose.images-1.2.0.yml``, download the required Docker images and start the services.
+Select ``y`` and the the script will create the file ``docker-compose.images-1.3.0.yml``, download the required Docker images and start the services.
 
 Downloading the images may take some time depending on your internet connection speed. This step is only required the first time you start wis2box.
 
@@ -205,23 +205,21 @@ docker ps --format "table {{.Names}} \t{{.Status}} \t{{.Image}}"
 You should see the following containers running:
 
 ```{bash}
-NAMES                     STATUS                   IMAGE
-elasticsearch            docker.elastic.co/elasticsearch/elasticsearch:8.6.2                              "/bin/tini -- /usr/l…"   elasticsearch            About a minute ago   Up About a minute (healthy)     9200/tcp, 9300/tcp
-elasticsearch-exporter   quay.io/prometheuscommunity/elasticsearch-exporter:latest                        "/bin/elasticsearch_…"   elasticsearch-exporter   About a minute ago   Up About a minute               7979/tcp
-grafana                  grafana/grafana-oss:9.0.3                                                        "/run.sh"                grafana                  About a minute ago   Up About a minute               0.0.0.0:3000->3000/tcp
-loki                     grafana/loki:2.4.1                                                               "/usr/bin/loki -conf…"   loki                     About a minute ago   Up About a minute               3100/tcp
-mosquitto                ghcr.io/world-meteorological-organization/wis2box-broker:1.2.0                   "/docker-entrypoint.…"   mosquitto                About a minute ago   Up About a minute               0.0.0.0:1883->1883/tcp, 0.0.0.0:8884->8884/tcp
-mqtt_metrics_collector   ghcr.io/world-meteorological-organization/wis2box-mqtt-metrics-collector:1.2.0   "python3 -u mqtt_met…"   mqtt_metrics_collector   About a minute ago   Up 10 seconds                   8000/tcp, 0.0.0.0:8001->8001/tcp
-nginx                    nginx:alpine                                                                     "/docker-entrypoint.…"   web-proxy                About a minute ago   Up 9 seconds                    0.0.0.0:80->80/tcp
-prometheus               prom/prometheus:v2.37.0                                                          "/bin/prometheus --c…"   prometheus               About a minute ago   Up About a minute               9090/tcp
-wis2box-api              ghcr.io/world-meteorological-organization/wis2box-api:1.2.0                      "/app/docker/es-entr…"   wis2box-api              About a minute ago   Up 36 seconds (healthy)         
-wis2box-auth             ghcr.io/world-meteorological-organization/wis2box-auth:1.2.0                     "/entrypoint.sh"         wis2box-auth             About a minute ago   Up 10 seconds                   
-wis2box-management       ghcr.io/world-meteorological-organization/wis2box-management:1.2.0               "/home/wis2box/entry…"   wis2box-management       About a minute ago   Up 12 seconds                   
-wis2box-minio            minio/minio:RELEASE.2024-08-03T04-33-23Z-cpuv1                                   "/usr/bin/docker-ent…"   minio                    About a minute ago   Up About a minute (healthy)     0.0.0.0:8022->8022/tcp, 0.0.0.0:9000-9001->9000-9001/tcp
-wis2box-ui               ghcr.io/world-meteorological-organization/wis2box-ui:1.2.0                       "/docker-entrypoint.…"   wis2box-ui               About a minute ago   Up 35 seconds                   0.0.0.0:9999->80/tcp
-wis2box-webapp           ghcr.io/world-meteorological-organization/wis2box-webapp:1.2.0                   "sh /wis2box-webapp/…"   wis2box-webapp           About a minute ago   Up About a minute (unhealthy)   4173/tcp
-wis2downloader           ghcr.io/wmo-im/wis2downloader:v0.3.2                                             "/home/wis2downloade…"   wis2downloader           About a minute ago   Up About a minute (healthy)
-
+NAMES                     STATUS                         IMAGE
+nginx                     Up 56 seconds                  nginx:1.30.1-alpine
+mqtt_metrics_collector    Up 58 seconds                  ghcr.io/world-meteorological-organization/wis2box-mqtt-metrics-collector:1.3.0
+wis2box-auth              Up 59 seconds                  ghcr.io/world-meteorological-organization/wis2box-auth:1.3.0
+wis2box-ui                Up About a minute              ghcr.io/world-meteorological-organization/wis2box-ui:1.3.0
+wis2box-management        Up About a minute              ghcr.io/world-meteorological-organization/wis2box-management:1.3.0
+wis2box-minio             Up 2 minutes (healthy)         ghcr.io/world-meteorological-organization/wis2box-minio:latest
+wis2box-api               Up About a minute (healthy)    ghcr.io/world-meteorological-organization/wis2box-api:1.3.0
+elasticsearch             Up 2 minutes (healthy)         docker.elastic.co/elasticsearch/elasticsearch:8.6.2
+grafana                   Up 2 minutes                   grafana/grafana-oss:12.4.2
+loki                      Up 2 minutes                   grafana/loki:2.4.1
+elasticsearch-exporter    Up 2 minutes                   quay.io/prometheuscommunity/elasticsearch-exporter:latest
+prometheus                Up 2 minutes                   prom/prometheus:v2.37.0
+mosquitto                 Up 2 minutes                   ghcr.io/world-meteorological-organization/wis2box-broker:1.3.0
+wis2box-webapp            Up 2 minutes (healthy)         ghcr.io/world-meteorological-organization/wis2box-webapp:1.3.0
 ```
 
 These containers are part of the wis2box software stack and provide the various services required to run the wis2box.
@@ -352,13 +350,15 @@ Make sure to click "SAVE" to store your connection details.
 
 Then click "CONNECT" to connect to your **wis2box-broker**.
 
-<img alt="mqtt-explorer-wis2box-broker.png" src="/../assets/img/mqtt-explorer-wis2box-broker.png" width="600">
+<img alt="mqtt-explorer-wis2box-broker-port1883.png" src="/../assets/img/mqtt-explorer-wis2box-broker-port1883.png" width="700">
 
-Once you are connected, verify that your the internal mosquitto statistics being published by your broker under the `$SYS` topic:
+Once you are connected, you will see the internal mosquitto statistics being published by your broker under the `$SYS` topic:
 
 <img alt="mqtt-explorer-sys-topic.png" src="/../assets/img/mqtt-explorer-sys-topic.png" width="400">
 
-Keep the MQTT Explorer open, as we will use it to monitor the messages published on the broker.
+The same connection can also be achieved using MQTT over WebSockets on port 80, using the following connection details:
+
+<img alt="mqtt-explorer-wis2box-broker-websockets.png" src="/../assets/img/mqtt-explorer-wis2box-broker-websockets.png" width="700">
 
 ## Conclusion
 

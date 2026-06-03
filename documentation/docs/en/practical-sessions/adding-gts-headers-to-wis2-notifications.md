@@ -11,6 +11,7 @@ title: Adding GTS headers to WIS2 notifications
     - configure a mapping between filename and GTS headers
     - ingest data with a filename that matches the GTS headers
     - view the GTS headers in the WIS2 notifications
+    - used the FM-12 SYNOP form to manually add GTS headers to a WIS2 notification
 
 ## Introduction
 
@@ -37,6 +38,12 @@ This file should be placed in the directory defined by `WIS2BOX_HOST_DATADIR` in
 - `TTAAii`: the TTAAii header to be added to the WIS2 notification
 - `CCCC`: the CCCC header to be added to the WIS2 notification
 
+ As of wis2box-1.3.0, data publishers have two options to (optionally) add GTS properties to their notifications:
+
+1. For files uploaded into MinIO, prepare mapping-file “gts_headers_mappings.csv” with required properties.
+
+2. For data input using FM-12 SYNOP form in wis2box-webapp, select “Add GTS headers” and provide manually input
+
 ## Preparation
 
 Ensure you have SSH access to your student VM and that your wis2box instance is up and running.
@@ -45,28 +52,31 @@ Make sure that you are connected to the MQTT broker of your wis2box instance usi
 
 Make sure you have a web browser open with the Grafana dashboard for your instance by going to `http://YOUR-HOST:3000`
 
-## creating `gts_headers_mapping.csv`
+## Exercise 1: Using a mapping file for data uploaded into MinIO
+
+The first exercise will demonstrate how to add GTS headers for data that is uploaded into MinIO, using a mapping file named `gts_headers_mapping.csv`.
+
+### creating `gts_headers_mapping.csv`
 
 To add GTS headers to your WIS2 notifications, a CSV file is required that maps GTS headers to incoming filenames.
 
 The CSV file should be named (exactly) `gts_headers_mapping.csv` and should be placed in the directory defined by `WIS2BOX_HOST_DATADIR` in your `wis2box.env`. 
 
-## Providing a `gts_headers_mapping.csv` file
-    
 Copy the file `exercise-materials/gts-headers-exercises/gts_headers_mapping.csv` to your wis2box instance and place it in the directory defined by `WIS2BOX_HOST_DATADIR` in your `wis2box.env`.
-
 
 ```bash
 cp ~/exercise-materials/gts-headers-exercises/gts_headers_mapping.csv ~/wis2box-data
 ```
 
-Then restart the wis2box-management container to apply the changes:
+### Applying the mappings
+    
+After creating the `gts_headers_mapping.csv` file, you need to restart the wis2box-management container to apply the changes. You can do this by running the following command in your student VM:
 
 ```bash
 docker restart wis2box-management
 ```
 
-## Ingesting data with GTS headers
+### Ingesting data with GTS headers
 
 Copy the file `exercise-materials/gts-headers-exercises/A_SMRO01YRBK171200_C_EDZW_20240717120502.txt` to the directory defined by `WIS2BOX_HOST_DATADIR` in your `wis2box.env`:
 
@@ -91,11 +101,49 @@ Make sure to replace the `metadata-id` option with the correct identifier for yo
 
 Check the Grafana dashboard to see if the data was ingested correctly. If you see any WARNINGS or ERRORS, try to fix them and repeat the exercise the `wis2box data ingest` command.
 
-## Viewing the GTS headers in the WIS2 Notification
+### Viewing the GTS headers in the WIS2 Notification
 
 Go to the MQTT Explorer and check for the WIS2 Notification Message for the data you just ingested.
 
 The WIS2 Notification Message should contain the GTS headers you provided in the `gts_headers_mapping.csv` file.
+
+## Exercise 2: Using the FM-12 SYNOP form
+
+When using the FM-12 SYNOP form in the wis2box-webapp, you can manually add GTS headers to your WIS2 notifications by selecting the "Add GTS headers" option and providing the required information.
+
+For this exercise, you can use the example data below or provide your own:
+
+FM-12 SYNOP message:
+
+```{copy}
+AAXX 03094
+64400 42460 71004 10285 20245 30113 40133 8493/
+    333 59005 83813 81930 87363 94966 95836=
+```
+
+GTS headers: TTAAii=`ISIH01` and CCCC=`FCBB`
+
+!!! note
+    The synop2bufr-plugin in wis2box converts FM-12 SYNOP messages into BUFR,  so the TTAAii should start with `IS`:
+
+    - I = Observational data (Binary coded) – BUFR
+    - S = Surface/sea level
+
+### Manually submit the FM-12 SYNOP form with GTS headers
+
+Go to the FM-12 SYNOP form in the wis2box-webapp and fill in the form with the example data above or user your own.
+
+Make sure to select the "Add GTS headers" option and provide the required GTS header information:
+
+<img alt="fm-12-synop-form-gts-headers.png" src="/../assets/img/fm-12-synop-form-gts-headers.png" width="800">
+
+Provide the required authentication token and submit the form.
+
+You will likely see an error message because this station is not in your station-list. You will need to add the station "0-20000-0-64400" to your station list in order for the data to be converted and published successfully.
+
+### Viewing the GTS headers in the WIS2 Notification
+
+Go to the MQTT Explorer and check the WIS2 Notification Message for the data you just ingested to see if the GTS headers are included in the notification.
 
 ## Conclusion
 

@@ -57,7 +57,7 @@ This is an example of the WIS2 notification message structure for a message rece
          "href":"https://oscar.wmo.int/surface/#/search/station/stationReportDetails/0-20000-0-76679"
       }
    ],
-   "generated_by":"wis2box 1.2.0"
+   "generated_by":"wis2box 1.3.0"
 }
 ``` 
 
