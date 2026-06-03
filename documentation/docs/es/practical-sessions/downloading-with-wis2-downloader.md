@@ -10,20 +10,20 @@ title: Descargando con WIS2 Downloader
 
     - explorar y encontrar conjuntos de datos en WIS2 Downloader
     - usar filtros para controlar los archivos descargados
-    - utilizar autenticación para descargar conjuntos de datos con acceso controlado
+    - usar autenticación para descargar conjuntos de datos con acceso controlado
     - cambiar la configuración predeterminada de WIS2 Downloader para casos de uso más avanzados
 
 ## Introducción
 
 En WIS2, todos los conjuntos de datos tienen un archivo de metadatos que se puede encontrar en los **Global Discovery Catalogues**. Por lo tanto, se espera que los usuarios consulten siempre estos servicios para encontrar los datos compartidos en WIS2.
 
-WIS2 Downloader utiliza este principio encontrando todos los registros disponibles en estos GDCs y combinándolos internamente para permitir al usuario navegar por los datos disponibles en WIS2. Dado que hay un gran número de registros para mostrar, es esencial proporcionar una forma para que el usuario los filtre y encuentre el registro correcto. Incluso después de encontrar y suscribirse al registro adecuado, puede haber conjuntos de datos donde el número de archivos exceda las necesidades actuales del usuario. Por esta razón, se necesita un segundo nivel de filtrado, uno que opere en el momento de decidir si un archivo debe descargarse.
+WIS2 Downloader utiliza este principio al encontrar todos los registros disponibles en estos GDCs y combinarlos internamente para permitir al usuario navegar por los datos disponibles en WIS2. Dado que hay un gran número de registros para mostrar, es esencial proporcionar una forma para que el usuario los filtre y encuentre el registro correcto. Incluso después de encontrar y suscribirse al registro correcto, puede haber conjuntos de datos donde el número de archivos exceda las necesidades actuales del usuario. Por esta razón, se necesita un segundo nivel de filtrado: uno que opere en el momento de decidir si un archivo debe descargarse.
 
-## Explorando y buscando en la Vista de Catálogo
+## Usando la Vista de Catálogo
 
-La **Vista de Catálogo** es una de las dos formas de encontrar y suscribirse a conjuntos de datos en WIS2 Downloader. Agrega registros de los Global Discovery Catalogues y los presenta en una interfaz que permite búsquedas y filtros, similar a navegar directamente en un portal GDC.
+La **Vista de Catálogo** es una de las dos formas de encontrar y suscribirse a conjuntos de datos en WIS2 Downloader. Agrega registros de los Global Discovery Catalogues y los presenta en una interfaz que se puede buscar y filtrar, similar a navegar directamente por un portal GDC.
 
-Navega a **Catalogue View** en la barra lateral izquierda.
+Navega a **Vista de Catálogo** en la barra lateral izquierda.
 
 ![WIS2 Downloader Catalogue View](../assets/img/wis2-downloader-catalogue-view.png)
 
@@ -31,25 +31,25 @@ En la parte superior de la página encontrarás una barra de búsqueda y un conj
 
 También puedes filtrar espacialmente definiendo un **bounding box** usando cuatro entradas de coordenadas: **North**, **West**, **South** y **East**, expresadas como valores decimales de latitud y longitud. Cuando se establece un bounding box, puedes elegir entre dos modos de coincidencia:
 
-- **Intersects** — devuelve registros cuya extensión espacial se superpone con el bounding box de cualquier manera.
-- **Within** — devuelve solo registros cuya extensión espacial cae completamente dentro del bounding box.
+- **Intersects** — devuelve registros cuyo alcance espacial se superpone con el bounding box de cualquier manera.
+- **Within** — devuelve solo registros cuyo alcance espacial cae completamente dentro del bounding box.
 
 !!! note "Recargando el catálogo"
 
-    El catálogo se carga desde los GDCs cuando se inicia WIS2 Downloader. Si crees que la lista está desactualizada, puedes forzar una recarga desde la sección **Settings** en la barra lateral izquierda.
+    El catálogo se carga desde los GDCs cuando WIS2 Downloader se inicia. Si crees que la lista está desactualizada, puedes forzar una recarga desde la sección **Settings** en la barra lateral izquierda.
 
 ### Ejercicio: encontrar y suscribirse a un conjunto de datos
 
-!!! question "Encuentra un conjunto de datos de observación de superficie"
+!!! question "Encontrar un conjunto de datos de observación de superficie"
 
-    Usa los filtros en la Vista de Catálogo para encontrar un conjunto de datos de observación de superficie **core** relacionado con temperatura y precipitación.
+    Usa los filtros en la Vista de Catálogo para encontrar un conjunto de datos **core** de observación de superficie relacionado con temperatura y precipitación.
 
     1. Escribe `surface` en la barra de búsqueda y observa cómo se filtra la lista de registros.
-    2. Configura el filtro de política de datos en **core**.
+    2. Establece el filtro de política de datos en **core**.
     3. Configura las palabras clave para incluir `temperature, precipitation` y observa cómo cambian los resultados.
     4. Selecciona un registro de los resultados para expandir sus detalles.
-    5. Revisa los metadatos mostrados: toma nota del tema, el centro de origen y la política de datos.
-    6. Configura la carpeta de destino como `surface-obs`.
+    5. Revisa los metadatos mostrados: nota el tema, el centro de origen y la política de datos.
+    6. Establece la carpeta de destino en `surface-obs`.
     7. Haz clic en **Subscribe** para crear la suscripción.
 
     Después de suscribirte, navega a **Manage Subscriptions** para confirmar que la nueva suscripción aparece en la lista.
@@ -60,38 +60,40 @@ También puedes filtrar espacialmente definiendo un **bounding box** usando cuat
 
     Una vez suscrito, la vista **Manage Subscriptions** mostrará la suscripción activa con su tema y carpeta de destino. Los archivos comenzarán a descargarse a medida que lleguen nuevas notificaciones al broker.
 
-!!! note "Eliminando archivos descargados"
+!!! note "Cancelar suscripción y eliminar archivos descargados"
+    
+    Ve a la vista **Manage Subscriptions** y haz clic en `Unsubscribe` del tema seleccionado en el ejercicio anterior.
 
-    Se recomienda limpiar la carpeta de descargas después de completar un ejercicio para liberar espacio en la máquina virtual del estudiante:
+    Después de eso, limpia la carpeta de descargas:
 
     ```bash
-    rm -fr wis2downloader/downloads/surface-obs
+    rm -fr /home/{USER}/wis2-downloads/surface-obs
     ```
 
-## Explorando y buscando en la Vista de Árbol
+## Usando la Vista de Árbol
 
-La **Vista de Árbol** presenta la jerarquía de temas de WIS2 como un árbol colapsable, permitiéndote explorar los temas disponibles nivel por nivel, similar a navegar temas en MQTT Explorer. Está diseñada para una exploración de alto nivel, de arriba hacia abajo, de los datos disponibles en WIS2, comenzando desde la raíz de la jerarquía y profundizando. Esto contrasta con la Vista de Catálogo, que te lleva directamente a registros individuales de conjuntos de datos y es más adecuada cuando ya sabes lo que estás buscando.
+La **Vista de Árbol** presenta la jerarquía de temas de WIS2 como un árbol colapsable, permitiéndote explorar los temas disponibles nivel por nivel, similar a navegar por temas en MQTT Explorer. Está diseñada para una exploración de nivel superior, de arriba hacia abajo, de los datos disponibles en WIS2, comenzando desde la raíz de la jerarquía y profundizando. Esto contrasta con la Vista de Catálogo, que te lleva directamente a registros individuales de conjuntos de datos y es más adecuada cuando ya sabes lo que estás buscando.
 
-Navega a **Tree View** en la barra lateral izquierda.
+Navega a **Vista de Árbol** en la barra lateral izquierda.
 
 ![WIS2 Downloader Tree View](../assets/img/wis2-downloader-tree-view.png)
 
-El árbol está organizado siguiendo la jerarquía de temas de WIS2. Expande cada nivel haciendo clic en un nodo para revelar sus hijos. En cualquier nivel puedes suscribirte seleccionando un nodo y haciendo clic en **Subscribe**, utilizando un comodín (`#`) para capturar todos los temas debajo de ese nodo.
+El árbol está organizado siguiendo la jerarquía de temas de WIS2. Expande cada nivel haciendo clic en un nodo para revelar sus hijos. En cualquier nivel puedes suscribirte seleccionando un nodo y haciendo clic en **Subscribe**, usando un comodín (`#`) para capturar todos los temas debajo de ese nodo.
 
 !!! note "Suscribirse en diferentes niveles"
 
-    Suscribirse en niveles superiores del árbol (por ejemplo, en el nivel de Centre ID) capturará todos los conjuntos de datos publicados por ese centro. Suscribirse en niveles inferiores te da un control más granular. Usa el sufijo comodín `#` que WIS2 Downloader agrega automáticamente al suscribirte desde la Vista de Árbol.
+    Suscribirse más arriba en el árbol (por ejemplo, en el nivel de Centre ID) capturará todos los conjuntos de datos publicados por ese centro. Suscribirse más abajo te da un control más granular. Usa el sufijo comodín `#` que WIS2 Downloader agrega automáticamente al suscribirse desde la Vista de Árbol.
 
 ### Ejercicio: encontrar y suscribirse usando la Vista de Árbol
 
-!!! question "Suscríbete a un conjunto de datos mediante la Vista de Árbol"
+!!! question "Suscribirse a un conjunto de datos mediante la Vista de Árbol"
 
     Usa la Vista de Árbol para encontrar y suscribirte a datos de observación de superficie de un centro específico.
 
     1. Expande el árbol comenzando desde el nodo `cache`, luego navega a través de `a` → `wis2`.
     2. Selecciona un Centre ID de tu elección y continúa expandiendo hasta llegar a un tema relacionado con `surface-based-observations`.
     3. Revisa la ruta completa del tema mostrada: confirma que corresponde al conjunto de datos que deseas.
-    4. Configura la carpeta de destino como `surface-obs-tree`.
+    4. Establece la carpeta de destino en `surface-obs-tree`.
     5. Haz clic en **Subscribe** para crear la suscripción.
 
     Navega a **Manage Subscriptions** para confirmar que la suscripción está activa.
@@ -102,10 +104,127 @@ El árbol está organizado siguiendo la jerarquía de temas de WIS2. Expande cad
 
     La vista **Manage Subscriptions** mostrará la nueva suscripción junto con cualquier otra creada previamente.
 
-!!! note "Eliminando archivos descargados"
+!!! note "Cancelar suscripción y eliminar archivos descargados"
+    
+    Ve a la vista **Manage Subscriptions** y haz clic en `Unsubscribe` del tema seleccionado en el ejercicio anterior.
 
-    Limpia la carpeta de descargas después de completar el ejercicio:
+    Después de eso, limpia la carpeta de descargas:
 
     ```bash
-    rm -fr wis2downloader/downloads/surface-obs-tree
+    rm -fr /home/{USER}/wis2-downloads/surface-obs-tree
+    ```
+
+## Usando la Vista de Suscripción Manual
+
+La **Vista de Suscripción Manual** te permite crear una suscripción ingresando directamente un tema, sin depender de los Global Discovery Catalogues. A diferencia de la Vista de Catálogo y la Vista de Árbol — que obtienen sus temas de los GDCs — la Suscripción Manual es útil cuando ya conoces el tema exacto al que deseas suscribirte y quieres configurarlo sin navegar por el catálogo, con más libertad sobre el WTH que se utilizará.
+
+Navega a **Vista de Suscripción Manual** en la barra lateral izquierda.
+
+![WIS2 Downloader Manual Subscribe](../assets/img/wis2-downloader-manual-subscribe.png)
+
+El formulario te permite especificar:
+
+- **Topic** — el tema completo de MQTT al que suscribirse, incluyendo cualquier comodín (por ejemplo, `#` y `+`).
+- **Destination folder** — el subdirectorio local donde se guardarán los archivos descargados.
+- **Filter** — un objeto de filtro opcional en forma de texto para controlar qué notificaciones se descargan.
+- **Priority queue** — controla la prioridad de descarga asignada a las notificaciones de esta suscripción.
+- **Authentication** — credenciales requeridas para conjuntos de datos con acceso controlado.
+
+!!! note "Cuándo usar Suscripción Manual"
+
+    Usa Suscripción Manual cuando ya conoces el tema exacto que deseas y quieres configurarlo rápidamente sin navegar por el catálogo, cuando el tema no está incluido en el catálogo, o cuando necesitas proporcionar credenciales para un conjunto de datos con acceso controlado.
+
+## Descargando desde un conjunto de datos con acceso controlado
+
+Algunos conjuntos de datos en WIS2 tienen acceso controlado, lo que significa que requieren credenciales válidas antes de que los archivos puedan descargarse. WIS2 Downloader admite dos métodos de autenticación en la Vista de Suscripción Manual:
+
+- **Autenticación HTTP básica** — proporciona un nombre de usuario y contraseña asociados con tus credenciales de acceso.
+- **Token Bearer** — proporciona un token emitido por el publicador de datos en lugar de un nombre de usuario y contraseña.
+
+Estas credenciales se almacenan por suscripción y se aplican automáticamente al descargar archivos para ese tema.
+
+### Ejercicio: suscribirse a un conjunto de datos con acceso controlado en tu wis2box
+
+En este ejercicio configurarás un conjunto de datos con acceso controlado en tu instancia de wis2box, configurarás WIS2 Downloader para suscribirse a su broker y verificarás que los archivos se descarguen correctamente cuando se proporcione un token bearer.
+
+!!! question "Configurar y suscribirse a un conjunto de datos con acceso controlado"
+
+    **Paso 1 — Crear un conjunto de datos con acceso controlado en wis2box**
+
+    En tu instancia de wis2box, crea un conjunto de datos con control de acceso habilitado y toma nota del tema y del token bearer generado para él. Si aún no lo has hecho, consulta la sesión práctica [Datasets with access control](../datasets-with-access-control) para los pasos completos de configuración.
+
+    **Paso 2 — Configurar WIS2 Downloader para escuchar el broker de wis2box**
+
+    Por defecto, WIS2 Downloader escucha el Global Broker. Para recibir notificaciones directamente desde tu instancia de wis2box, necesitas agregar un suscriptor en el archivo compose de WIS2 Downloader que apunte al broker interno MQTT de wis2box.
+
+    Abre el archivo `docker-compose.yml` en tu directorio de WIS2 Downloader y agrega la siguiente configuración de suscriptor:
+
+    ```yaml
+      subscriber-test:
+    container_name: subscriber-test
+    restart: always
+    build:
+      context: .
+      dockerfile: ./containers/subscriber/Dockerfile
+      args:
+        WIS2DOWNLOADER_UID: ${WIS2DOWNLOADER_UID:-10001}
+        WIS2DOWNLOADER_GID: ${WIS2DOWNLOADER_GID:-988}
+    env_file: *default-env
+    environment:
+      GLOBAL_BROKER_HOST: WIS2BOX_URL
+      GLOBAL_BROKER_PORT: 443
+      GLOBAL_BROKER_USERNAME: everyone
+      GLOBAL_BROKER_PASSWORD: everyone
+      MQTT_PROTOCOL: websockets
+    depends_on:
+      - redis
+    networks:
+      - redis-net
+    logging: *loki-logging
+    healthcheck:
+      test: ["CMD", "pgrep", "-f", "subscriber_start"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+    ```
+
+    Reinicia el stack para aplicar los cambios:
+
+    ```bash
+    docker compose down
+    docker compose up -d
+    ```
+
+    **Paso 3 — Suscribirse al conjunto de datos en WIS2 Downloader**
+
+    1. Navega a **Manual Subscribe** en la interfaz de WIS2 Downloader.
+    2. Configura el tema con el configurado para tu conjunto de datos con acceso controlado en wis2box.
+    3. Establece la carpeta de destino en `restricted-data`.
+    4. Ingresa el token bearer generado en el Paso 1 en el campo **Authentication**.
+    5. Haz clic en **Subscribe** para crear la suscripción.
+
+    **Paso 4 — Enviar datos al conjunto de datos en wis2box**
+
+    En tu instancia de wis2box, publica un archivo en el conjunto de datos con acceso controlado. Consulta la sesión práctica [Ingesting data for publication](../ingesting-data-for-publication) para los pasos para ingresar datos.
+
+    **Paso 5 — Verificar la descarga**
+
+    Verifica que el archivo se haya descargado por WIS2 Downloader:
+
+    ```bash
+    ls /home/{USER}/wis2-downloads/restricted-data
+    ```
+
+??? success "Haz clic para revelar la respuesta"
+
+    Con un token bearer válido, WIS2 Downloader se autenticará al descargar archivos para el tema restringido. El archivo publicado en el Paso 4 debería aparecer en la carpeta `restricted-data` poco después de ser ingresado por wis2box.
+
+    Si la autenticación falla, los archivos no se descargarán aunque la suscripción aparezca activa en la vista **Manage Subscriptions**. Verifica que el token bearer coincida con el configurado en el conjunto de datos en wis2box.
+
+!!! note "Cancelar suscripción y eliminar archivos descargados"
+
+    Ve a la vista **Manage Subscriptions** y haz clic en **Unsubscribe** del tema, luego limpia la carpeta de descargas:
+
+    ```bash
+    rm -fr /home/{USER}/wis2-downloads/restricted-data
     ```
