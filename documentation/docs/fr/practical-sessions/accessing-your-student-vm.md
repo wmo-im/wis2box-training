@@ -28,22 +28,22 @@ Votre VM étudiant dispose des logiciels suivants préinstallés :
 
     Si vous souhaitez suivre cette formation en dehors d'une session de formation locale, vous pouvez fournir votre propre instance en utilisant n'importe quel fournisseur de cloud, par exemple :
 
-    - GCP (Google Cloud Platform) VM instance `e2-medium`
-    - AWS (Amazon Web Services)  ec2-instance `t3a.medium` 
-    - Azure (Microsoft) Azure Virtual Machine `standard_b2s`
+    - GCP (Google Cloud Platform) instance VM `e2-medium`
+    - AWS (Amazon Web Services) instance ec2 `t3a.medium`
+    - Azure (Microsoft) machine virtuelle Azure `standard_b2s`
 
     Sélectionnez Ubuntu Server 22.0.4 LTS comme système d'exploitation.
     
-    Après avoir créé votre VM, assurez-vous d'avoir installé Python, Docker et Docker Compose, comme décrit dans [wis2box-software-dependencies](https://docs.wis2box.wis.wmo.int/en/latest/user/getting-started.html#software-dependencies).
+    Après avoir créé votre VM, assurez-vous d'avoir installé Python, Docker et Docker Compose, comme décrit sur [wis2box-software-dependencies](https://docs.wis2box.wis.wmo.int/en/latest/user/getting-started.html#software-dependencies).
     
     L'archive de la version de wis2box utilisée dans cette formation peut être téléchargée comme suit :
 
     ```bash
-    wget https://github.com/World-Meteorological-Organization/wis2box-release/releases/download/1.2.0/wis2box-setup-1.2.0.zip
-    unzip wis2box-setup-1.2.0.zip
+    wget https://github.com/World-Meteorological-Organization/wis2box-release/releases/download/1.3.0/wis2box-setup-1.3.0.zip
+    unzip wis2box-setup-1.3.0.zip
     ```
     
-    Vous pouvez toujours trouver la dernière archive 'wis2box-setup' à [https://github.com/World-Meteorological-Organization/wis2box/releases](https://github.com/World-Meteorological-Organization/wis2box-release/releases).
+    Vous pouvez toujours trouver la dernière archive 'wis2box-setup' sur [https://github.com/World-Meteorological-Organization/wis2box/releases](https://github.com/World-Meteorological-Organization/wis2box-release/releases).
 
     Les supports d'exercice utilisés dans cette formation peuvent être téléchargés comme suit :
 
@@ -56,10 +56,10 @@ Votre VM étudiant dispose des logiciels suivants préinstallés :
 
     ```bash
     pip3 install minio
-    pip3 install pywiscat==0.4.0
+    pip3 install pywiscat
     ```
 
-    Si vous utilisez la VM étudiant fournie lors des sessions de formation locales WIS2, les logiciels requis seront déjà installés.
+    Si vous utilisez la VM étudiant fournie lors des sessions de formation WIS2 locales, les logiciels requis seront déjà installés.
 
 ## Se connecter à votre VM étudiant sur le réseau de formation local
 
@@ -117,9 +117,9 @@ résultat :
 Docker Compose version v2.21.0
 ```
 
-Pour garantir que votre utilisateur peut exécuter des commandes Docker, il a été ajouté au groupe `docker`. 
+Pour garantir que votre utilisateur peut exécuter des commandes Docker, il a été ajouté au groupe `docker`.
 
-Pour tester que votre utilisateur peut exécuter docker hello-world, exécutez la commande suivante :
+Pour tester que votre utilisateur peut exécuter le conteneur hello-world, exécutez la commande suivante :
 ```bash
 docker run hello-world
 ```
@@ -147,7 +147,7 @@ résultat :
 exercise-materials  wis2box
 ```
 
-Si vous avez installé WinSCP sur votre PC local, vous pouvez l'utiliser pour vous connecter à votre VM étudiant, inspecter le contenu de votre répertoire personnel et télécharger ou envoyer des fichiers entre votre VM et votre PC local. 
+Si vous avez installé WinSCP sur votre PC local, vous pouvez l'utiliser pour vous connecter à votre VM étudiant, inspecter le contenu de votre répertoire personnel et télécharger ou téléverser des fichiers entre votre VM et votre PC local. 
 
 WinSCP n'est pas requis pour la formation, mais il peut être utile si vous souhaitez éditer des fichiers sur votre VM en utilisant un éditeur de texte sur votre PC local.
 
@@ -159,7 +159,7 @@ Ouvrez WinSCP et cliquez sur "New Site". Vous pouvez créer une nouvelle connexi
 
 Cliquez sur 'Save' puis sur 'Login' pour vous connecter à votre VM.
 
-Vous devriez maintenant pouvoir voir le contenu du répertoire personnel sur votre VM étudiant et accéder à vos fichiers.
+Vous devriez maintenant être en mesure de voir le contenu du répertoire personnel sur votre VM étudiant et d'accéder à vos fichiers.
 
 ## Conclusion
 
