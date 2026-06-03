@@ -34,7 +34,7 @@ Votre VM étudiant dispose des logiciels suivants préinstallés :
 
     Sélectionnez Ubuntu Server 22.0.4 LTS comme système d'exploitation.
     
-    Après avoir créé votre VM, assurez-vous d'avoir installé python, docker et docker compose, comme décrit dans [wis2box-software-dependencies](https://docs.wis2box.wis.wmo.int/en/latest/user/getting-started.html#software-dependencies).
+    Après avoir créé votre VM, assurez-vous d'avoir installé Python, Docker et Docker Compose, comme décrit sur [wis2box-software-dependencies](https://docs.wis2box.wis.wmo.int/en/latest/user/getting-started.html#software-dependencies).
     
     L'archive de la version de wis2box utilisée dans cette formation peut être téléchargée comme suit :
 
@@ -43,7 +43,7 @@ Votre VM étudiant dispose des logiciels suivants préinstallés :
     unzip wis2box-setup-1.3.0.zip
     ```
     
-    Vous pouvez toujours trouver la dernière archive 'wis2box-setup' à [https://github.com/World-Meteorological-Organization/wis2box/releases](https://github.com/World-Meteorological-Organization/wis2box-release/releases).
+    Vous pouvez toujours trouver la dernière archive 'wis2box-setup' sur [https://github.com/World-Meteorological-Organization/wis2box/releases](https://github.com/World-Meteorological-Organization/wis2box-release/releases).
 
     Les supports d'exercice utilisés dans cette formation peuvent être téléchargés comme suit :
 
@@ -67,10 +67,10 @@ Connectez votre PC au Wi-Fi local diffusé dans la salle pendant la formation WI
 
 Utilisez un client SSH pour vous connecter à votre VM étudiant en utilisant les informations suivantes :
 
-- **Hôte : (fourni lors de la formation en présentiel)**
+- **Hôte : (fourni pendant la formation en présentiel)**
 - **Port : 22**
-- **Nom d'utilisateur : (fourni lors de la formation en présentiel)**
-- **Mot de passe : (fourni lors de la formation en présentiel)**
+- **Nom d'utilisateur : (fourni pendant la formation en présentiel)**
+- **Mot de passe : (fourni pendant la formation en présentiel)**
 
 !!! tip
     Contactez un formateur si vous ne connaissez pas le nom d'hôte/nom d'utilisateur ou si vous rencontrez des problèmes de connexion.
@@ -117,9 +117,9 @@ résultat :
 Docker Compose version v2.21.0
 ```
 
-Pour garantir que votre utilisateur peut exécuter des commandes Docker, votre utilisateur a été ajouté au groupe `docker`.
+Pour garantir que votre utilisateur peut exécuter des commandes Docker, il a été ajouté au groupe `docker`.
 
-Pour tester que votre utilisateur peut exécuter le conteneur hello-world de Docker, exécutez la commande suivante :
+Pour tester que votre utilisateur peut exécuter le conteneur hello-world, exécutez la commande suivante :
 ```bash
 docker run hello-world
 ```
@@ -159,7 +159,7 @@ Ouvrez WinSCP et cliquez sur "New Site". Vous pouvez créer une nouvelle connexi
 
 Cliquez sur 'Save' puis sur 'Login' pour vous connecter à votre VM.
 
-Vous devriez maintenant être en mesure de voir le contenu du répertoire personnel de votre VM étudiant et d'accéder à vos fichiers.
+Vous devriez maintenant être en mesure de voir le contenu du répertoire personnel sur votre VM étudiant et d'accéder à vos fichiers.
 
 ## Conclusion
 

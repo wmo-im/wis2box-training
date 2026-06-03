@@ -11,13 +11,13 @@ title: Añadiendo encabezados GTS a las notificaciones WIS2
     - configurar un mapeo entre nombres de archivo y encabezados GTS
     - ingerir datos con un nombre de archivo que coincida con los encabezados GTS
     - visualizar los encabezados GTS en las notificaciones WIS2
-    - utilizar el formulario FM-12 SYNOP para añadir manualmente encabezados GTS a una notificación WIS2
+    - usar el formulario FM-12 SYNOP para añadir manualmente encabezados GTS a una notificación WIS2
 
 ## Introducción
 
 Los Miembros de la OMM que deseen detener la transmisión de sus datos en GTS durante la fase de transición a WIS2 necesitarán añadir encabezados GTS a sus notificaciones WIS2. Estos encabezados permiten que el gateway de WIS2 a GTS reenvíe los datos a la red GTS.
 
-Esto permite que los Miembros que hayan migrado a usar un nodo WIS2 para la publicación de datos desactiven su sistema MSS y aseguren que sus datos aún estén disponibles para los Miembros que no hayan migrado a WIS2.
+Esto permite a los Miembros que han migrado a usar un nodo WIS2 para la publicación de datos deshabilitar su sistema MSS y garantizar que sus datos sigan estando disponibles para los Miembros que aún no han migrado a WIS2.
 
 La propiedad GTS en el Mensaje de Notificación WIS2 debe añadirse como una propiedad adicional al Mensaje de Notificación WIS2. La propiedad GTS es un objeto JSON que contiene los encabezados GTS necesarios para que los datos sean reenviados a la red GTS.
 
@@ -40,23 +40,23 @@ Este archivo debe colocarse en el directorio definido por `WIS2BOX_HOST_DATADIR`
 
 A partir de wis2box-1.3.0, los publicadores de datos tienen dos opciones para (opcionalmente) añadir propiedades GTS a sus notificaciones:
 
-1. Para archivos cargados en MinIO, preparar el archivo de mapeo “gts_headers_mappings.csv” con las propiedades requeridas.
+1. Para archivos subidos a MinIO, preparar el archivo de mapeo `gts_headers_mappings.csv` con las propiedades requeridas.
 
-2. Para entrada de datos utilizando el formulario FM-12 SYNOP en wis2box-webapp, seleccionar “Add GTS headers” y proporcionar la información manualmente.
+2. Para entrada de datos usando el formulario FM-12 SYNOP en wis2box-webapp, seleccionar `Add GTS headers` y proporcionar la información manualmente.
 
 ## Preparación
 
 Asegúrate de tener acceso SSH a tu VM de estudiante y que tu instancia de wis2box esté funcionando.
 
-Verifica que estás conectado al broker MQTT de tu instancia de wis2box utilizando MQTT Explorer. Puedes usar las credenciales públicas `everyone/everyone` para conectarte al broker.
+Asegúrate de estar conectado al broker MQTT de tu instancia de wis2box usando MQTT Explorer. Puedes usar las credenciales públicas `everyone/everyone` para conectarte al broker.
 
 Asegúrate de tener un navegador web abierto con el tablero de Grafana para tu instancia accediendo a `http://YOUR-HOST:3000`.
 
-## Ejercicio 1: Usando un archivo de mapeo para datos cargados en MinIO
+## Ejercicio 1: Usar un archivo de mapeo para datos subidos a MinIO
 
-El primer ejercicio demostrará cómo añadir encabezados GTS para datos que se cargan en MinIO, utilizando un archivo de mapeo llamado `gts_headers_mapping.csv`.
+El primer ejercicio demostrará cómo añadir encabezados GTS para datos que se suben a MinIO, usando un archivo de mapeo llamado `gts_headers_mapping.csv`.
 
-### Creando `gts_headers_mapping.csv`
+### Crear `gts_headers_mapping.csv`
 
 Para añadir encabezados GTS a tus notificaciones WIS2, se requiere un archivo CSV que mapee los encabezados GTS a los nombres de archivo entrantes.
 
@@ -68,7 +68,7 @@ Copia el archivo `exercise-materials/gts-headers-exercises/gts_headers_mapping.c
 cp ~/exercise-materials/gts-headers-exercises/gts_headers_mapping.csv ~/wis2box-data
 ```
 
-### Aplicando los mapeos
+### Aplicar los mapeos
     
 Después de crear el archivo `gts_headers_mapping.csv`, necesitas reiniciar el contenedor wis2box-management para aplicar los cambios. Puedes hacerlo ejecutando el siguiente comando en tu VM de estudiante:
 
@@ -99,17 +99,17 @@ wis2box data ingest -p /data/wis2box/A_SMRO01YRBK171200_C_EDZW_20240717120502.tx
 
 Asegúrate de reemplazar la opción `metadata-id` con el identificador correcto para tu conjunto de datos.
 
-Verifica el tablero de Grafana para ver si los datos se ingirieron correctamente. Si ves algún WARNING o ERROR, intenta solucionarlos y repite el ejercicio con el comando `wis2box data ingest`.
+Revisa el tablero de Grafana para verificar si los datos fueron ingeridos correctamente. Si ves algún WARNING o ERROR, intenta solucionarlos y repite el ejercicio con el comando `wis2box data ingest`.
 
-### Visualizando los encabezados GTS en la Notificación WIS2
+### Visualizar los encabezados GTS en la Notificación WIS2
 
 Ve a MQTT Explorer y verifica el Mensaje de Notificación WIS2 para los datos que acabas de ingerir.
 
 El Mensaje de Notificación WIS2 debería contener los encabezados GTS que proporcionaste en el archivo `gts_headers_mapping.csv`.
 
-## Ejercicio 2: Usando el formulario FM-12 SYNOP
+## Ejercicio 2: Usar el formulario FM-12 SYNOP
 
-Al usar el formulario FM-12 SYNOP en wis2box-webapp, puedes añadir manualmente encabezados GTS a tus notificaciones WIS2 seleccionando la opción "Add GTS headers" y proporcionando la información requerida.
+Cuando uses el formulario FM-12 SYNOP en wis2box-webapp, puedes añadir manualmente encabezados GTS a tus notificaciones WIS2 seleccionando la opción "Add GTS headers" y proporcionando la información requerida.
 
 Para este ejercicio, puedes usar los datos de ejemplo a continuación o proporcionar los tuyos propios:
 
@@ -131,17 +131,17 @@ Encabezados GTS: TTAAii=`ISIH01` y CCCC=`FCBB`
 
 ### Enviar manualmente el formulario FM-12 SYNOP con encabezados GTS
 
-Ve al formulario FM-12 SYNOP en wis2box-webapp y completa el formulario con los datos de ejemplo anteriores o utiliza los tuyos propios.
+Ve al formulario FM-12 SYNOP en wis2box-webapp y completa el formulario con los datos de ejemplo anteriores o usa los tuyos propios.
 
-Asegúrate de seleccionar la opción "Add GTS headers" y proporcionar la información requerida de encabezados GTS:
+Asegúrate de seleccionar la opción "Add GTS headers" y proporcionar la información requerida de los encabezados GTS:
 
 <img alt="fm-12-synop-form-gts-headers.png" src="/../assets/img/fm-12-synop-form-gts-headers.png" width="800">
 
 Proporciona el token de autenticación requerido y envía el formulario.
 
-Probablemente verás un mensaje de error porque esta estación no está en tu lista de estaciones. Necesitarás añadir la estación "0-20000-0-64400" a tu lista de estaciones para que los datos se conviertan y publiquen correctamente.
+Es probable que veas un mensaje de error porque esta estación no está en tu lista de estaciones. Necesitarás añadir la estación "0-20000-0-64400" a tu lista de estaciones para que los datos se conviertan y publiquen correctamente.
 
-### Visualizando los encabezados GTS en la Notificación WIS2
+### Visualizar los encabezados GTS en la Notificación WIS2
 
 Ve a MQTT Explorer y verifica el Mensaje de Notificación WIS2 para los datos que acabas de ingerir para ver si los encabezados GTS están incluidos en la notificación.
 

@@ -22,7 +22,7 @@ title: Inicializando wis2box
 
 ## Preparación
 
-Inicia sesión en tu VM designada con tu nombre de usuario y contraseña y asegúrate de estar en el directorio `wis2box`:
+Inicia sesión en tu VM asignada con tu nombre de usuario y contraseña, y asegúrate de estar en el directorio `wis2box`:
 
 ```bash
 cd ~/wis2box
@@ -37,7 +37,7 @@ La configuración inicial para wis2box requiere:
 
 El script `wis2box-create-config.py` puede ser utilizado para crear la configuración inicial de tu wis2box. 
 
-Te hará una serie de preguntas para ayudarte a configurar tu configuración.
+Te hará una serie de preguntas para ayudar a configurar tu configuración.
 
 Podrás revisar y actualizar los archivos de configuración después de que el script haya finalizado.
 
@@ -84,9 +84,9 @@ Is this correct? (y/n/exit)
 
 ### Contraseñas de WEBAPP, STORAGE y BROKER
 
-Puedes utilizar la opción de generación aleatoria de contraseñas cuando se te solicite para `WIS2BOX_WEBAPP_PASSWORD`, `WIS2BOX_STORAGE_PASSWORD`, `WIS2BOX_BROKER_PASSWORD` y definir las tuyas propias.
+Puedes usar la opción de generación aleatoria de contraseñas cuando se te solicite para `WIS2BOX_WEBAPP_PASSWORD`, `WIS2BOX_STORAGE_PASSWORD`, `WIS2BOX_BROKER_PASSWORD` o definir las tuyas propias.
 
-No te preocupes por recordar estas contraseñas, se almacenarán en el archivo `wis2box.env` dentro de tu directorio wis2box.
+No te preocupes por recordar estas contraseñas, estarán almacenadas en el archivo `wis2box.env` en tu directorio wis2box.
 
 ### Revisar `wis2box.env`
 
@@ -96,7 +96,7 @@ Una vez que el script haya finalizado, verifica el contenido del archivo `wis2bo
 cat ~/wis2box/wis2box.env
 ```
 
-O verifica el contenido del archivo a través de WinSCP.
+O verifica el contenido del archivo mediante WinSCP.
 
 !!! question
 
@@ -104,9 +104,9 @@ O verifica el contenido del archivo a través de WinSCP.
 
 ??? success "Haz clic para revelar la respuesta"
 
-    El valor predeterminado de WIS2BOX_BASEMAP_URL es `https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png`.
+    El valor predeterminado para WIS2BOX_BASEMAP_URL es `https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png`.
 
-    Esta URL se refiere al servidor de mosaicos de OpenStreetMap. Si deseas utilizar un proveedor de mapas diferente, puedes cambiar esta URL para que apunte a otro servidor de mosaicos.
+    Esta URL se refiere al servidor de tiles de OpenStreetMap. Si deseas usar un proveedor de mapas diferente, puedes cambiar esta URL para que apunte a otro servidor de tiles.
 
 !!! question 
 
@@ -114,7 +114,7 @@ O verifica el contenido del archivo a través de WinSCP.
 
 ??? success "Haz clic para revelar la respuesta"
 
-    El valor predeterminado de WIS2BOX_STORAGE_DATA_RETENTION_DAYS es 30 días. Puedes cambiar este valor a otro número de días si lo deseas.
+    El valor predeterminado para WIS2BOX_STORAGE_DATA_RETENTION_DAYS es 30 días. Puedes cambiar este valor a otro número de días si lo deseas.
     
     El contenedor wis2box-management ejecuta un cronjob diariamente para eliminar datos más antiguos que el número de días definido por WIS2BOX_STORAGE_DATA_RETENTION_DAYS del bucket `wis2box-public` y del backend de la API:
     
@@ -124,7 +124,7 @@ O verifica el contenido del archivo a través de WinSCP.
 
 !!! note
 
-    El archivo `wis2box.env` contiene variables de entorno que definen la configuración de tu wis2box. Para más información consulta la [wis2box-documentation](https://docs.wis2box.wis.wmo.int/en/latest/reference/configuration.html).
+    El archivo `wis2box.env` contiene variables de entorno que definen la configuración de tu wis2box. Para más información, consulta la [wis2box-documentation](https://docs.wis2box.wis.wmo.int/en/latest/reference/configuration.html).
 
     No edites el archivo `wis2box.env` a menos que estés seguro de los cambios que estás realizando. Cambios incorrectos pueden hacer que tu wis2box deje de funcionar.
 
@@ -144,7 +144,7 @@ Inicia wis2box con el siguiente comando:
 python3 wis2box-ctl.py start
 ```
 
-Cuando ejecutes este comando por primera vez, verás el siguiente resultado:
+Cuando ejecutes este comando por primera vez, verás la siguiente salida:
 
 ```
 No docker-compose.images-*.yml files found, creating one
@@ -152,9 +152,9 @@ Current version=Undefined, latest version=1.3.0
 Would you like to update ? (y/n/exit)
 ```
 
-Selecciona ``y`` y el script creará el archivo ``docker-compose.images-1.3.0.yml``, descargará las imágenes de Docker necesarias e iniciará los servicios.
+Selecciona ``y`` y el script creará el archivo ``docker-compose.images-1.3.0.yml``, descargará las imágenes de Docker necesarias y comenzará los servicios.
 
-La descarga de las imágenes puede tomar tiempo dependiendo de la velocidad de tu conexión a internet. Este paso solo es necesario la primera vez que inicias wis2box.
+La descarga de las imágenes puede tomar tiempo dependiendo de la velocidad de tu conexión a internet. Este paso solo es necesario la primera vez que inicies wis2box.
 
 Inspecciona el estado con el siguiente comando:
 
@@ -190,7 +190,7 @@ Dentro del contenedor wis2box-management puedes ejecutar varios comandos para ge
 - `wis2box auth add-token --path processes/wis2box` : para crear un token de autorización para el endpoint *processes/wis2box*
 - `wis2box data clean --days=<number-of-days>` : para limpiar datos más antiguos que un cierto número de días del bucket *wis2box-public*
 
-Para salir del contenedor y regresar a tu máquina anfitriona, utiliza el siguiente comando:
+Para salir del contenedor y volver a tu máquina anfitriona, utiliza el siguiente comando:
 
 ```{.copy}
 exit
@@ -284,7 +284,7 @@ Esta es la página de inicio de la API de wis2box (ejecutándose a través del c
 
 Abra un navegador web y visite la página `http://YOUR-HOST/wis2box-webapp`.
 
-Verá un cuadro emergente solicitando su nombre de usuario y contraseña. Use el nombre de usuario predeterminado `wis2box-user` y la contraseña `WIS2BOX_WEBAPP_PASSWORD` definida en el archivo `wis2box.env` y haga clic en "Sign in":
+Verá un mensaje emergente solicitando su nombre de usuario y contraseña. Use el nombre de usuario predeterminado `wis2box-user` y la contraseña `WIS2BOX_WEBAPP_PASSWORD` definida en el archivo `wis2box.env` y haga clic en "Sign in":
 
 !!! note 
 
@@ -328,13 +328,13 @@ Puede hacer clic en el botón 'ADVANCED' y verificar que tiene suscripciones a l
 
     Los mensajes publicados bajo el tema `$SYS` son mensajes del sistema publicados por el servicio mosquitto.
 
-Use los siguientes detalles de conexión, asegurándose de reemplazar el valor de `<your-host>` con su nombre de host y `<WIS2BOX_BROKER_PASSWORD>` con el valor de su archivo `wis2box.env`:
+Utilice los siguientes detalles de conexión, asegurándose de reemplazar el valor de `<your-host>` con su nombre de host y `<WIS2BOX_BROKER_PASSWORD>` con el valor de su archivo `wis2box.env`:
 
-- **Protocolo: mqtt://**
+- **Protocol: mqtt://**
 - **Host: `<your-host>`**
-- **Puerto: 1883**
-- **Nombre de usuario: wis2box**
-- **Contraseña: `<WIS2BOX_BROKER_PASSWORD>`**
+- **Port: 1883**
+- **Username: wis2box**
+- **Password: `<WIS2BOX_BROKER_PASSWORD>`**
 
 !!! note 
 
@@ -344,15 +344,15 @@ Use los siguientes detalles de conexión, asegurándose de reemplazar el valor d
     cat ~/wis2box/wis2box.env | grep WIS2BOX_BROKER_PASSWORD
     ```
 
-    Tenga en cuenta que esta es su contraseña **interna** del broker. El Global Broker utilizará credenciales diferentes (solo lectura) para suscribirse a su broker. Nunca comparta esta contraseña con nadie.
+    Tenga en cuenta que esta es su contraseña **interna** del broker. El Global Broker utilizará credenciales diferentes (de solo lectura) para suscribirse a su broker. Nunca comparta esta contraseña con nadie.
 
-Asegúrese de hacer clic en "SAVE" para guardar los detalles de su conexión.
+Asegúrese de hacer clic en "SAVE" para almacenar los detalles de su conexión.
 
 Luego haga clic en "CONNECT" para conectarse a su **wis2box-broker**.
 
 <img alt="mqtt-explorer-wis2box-broker-port1883.png" src="/../assets/img/mqtt-explorer-wis2box-broker-port1883.png" width="700">
 
-Una vez conectado, verá las estadísticas internas de mosquitto publicadas por su broker bajo el tema `$SYS`:
+Una vez conectado, verá las estadísticas internas de mosquitto que se publican en su broker bajo el tema `$SYS`:
 
 <img alt="mqtt-explorer-sys-topic.png" src="/../assets/img/mqtt-explorer-sys-topic.png" width="400">
 

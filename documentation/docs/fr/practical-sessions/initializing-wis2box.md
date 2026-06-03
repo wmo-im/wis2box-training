@@ -12,23 +12,23 @@ title: Initialiser wis2box
     - démarrer wis2box et vérifier l'état de ses composants
     - consulter le contenu de **wis2box-api**
     - accéder à **wis2box-webapp**
-    - se connecter au **wis2box-broker** local en utilisant MQTT Explorer
+    - vous connecter au **wis2box-broker** local en utilisant MQTT Explorer
 
 !!! note
 
-    Les supports de formation actuels sont basés sur wis2box-release 1.3.0. 
+    Les supports de formation actuels sont basés sur la version wis2box-release 1.3.0. 
     
-    Consultez [accessing-your-student-vm](./accessing-your-student-vm.md) pour obtenir des instructions sur la manière de télécharger et d'installer la pile logicielle wis2box si vous suivez cette formation en dehors d'une session de formation locale.
+    Consultez [accessing-your-student-vm](./accessing-your-student-vm.md) pour des instructions sur la manière de télécharger et d'installer la pile logicielle wis2box si vous suivez cette formation en dehors d'une session de formation locale.
 
 ## Préparation
 
-Connectez-vous à votre VM désignée avec votre nom d'utilisateur et mot de passe et assurez-vous d'être dans le répertoire `wis2box` :
+Connectez-vous à votre VM désignée avec votre nom d'utilisateur et mot de passe, et assurez-vous d'être dans le répertoire `wis2box` :
 
 ```bash
 cd ~/wis2box
 ```
 
-## Créer la configuration initiale
+## Création de la configuration initiale
 
 La configuration initiale de wis2box nécessite :
 
@@ -39,7 +39,7 @@ Le script `wis2box-create-config.py` peut être utilisé pour créer la configur
 
 Il vous posera une série de questions pour vous aider à configurer votre environnement.
 
-Vous pourrez examiner et mettre à jour les fichiers de configuration une fois le script terminé.
+Vous pourrez examiner et mettre à jour les fichiers de configuration une fois que le script sera terminé.
 
 Exécutez le script comme suit :
 
@@ -49,7 +49,7 @@ python3 wis2box-create-config.py
 
 ### Répertoire wis2box-host-data
 
-Le script vous demandera d'entrer le répertoire à utiliser pour la variable d'environnement `WIS2BOX_HOST_DATADIR`.
+Le script vous demandera de saisir le répertoire à utiliser pour la variable d'environnement `WIS2BOX_HOST_DATADIR`.
 
 Notez que vous devez définir le chemin complet vers ce répertoire.
 
@@ -68,7 +68,7 @@ The directory /home/username/wis2box-data has been created.
 
 ### URL de wis2box
 
-Ensuite, il vous sera demandé d'entrer l'URL de votre wis2box. Cette URL sera utilisée pour accéder à l'application web, à l'API et à l'interface utilisateur de wis2box.
+Ensuite, vous serez invité à saisir l'URL de votre wis2box. Cette URL sera utilisée pour accéder à l'application web, à l'API et à l'interface utilisateur de wis2box.
 
 Veuillez utiliser `http://<your-hostname-or-ip>` comme URL.
 
@@ -88,7 +88,7 @@ Vous pouvez utiliser l'option de génération aléatoire de mots de passe lorsqu
 
 Ne vous inquiétez pas de mémoriser ces mots de passe, ils seront stockés dans le fichier `wis2box.env` dans votre répertoire wis2box.
 
-### Vérifier `wis2box.env`
+### Vérification de `wis2box.env`
 
 Une fois le script terminé, vérifiez le contenu du fichier `wis2box.env` dans votre répertoire actuel :
 
@@ -116,7 +116,7 @@ Ou vérifiez le contenu du fichier via WinSCP.
 
     La valeur par défaut de WIS2BOX_STORAGE_DATA_RETENTION_DAYS est de 30 jours. Vous pouvez modifier cette valeur pour un autre nombre de jours si vous le souhaitez.
     
-    Le conteneur wis2box-management exécute un cronjob quotidien pour supprimer les données plus anciennes que le nombre de jours défini par WIS2BOX_STORAGE_DATA_RETENTION_DAYS du bucket `wis2box-public` et du backend API :
+    Le conteneur wis2box-management exécute une tâche cron quotidiennement pour supprimer les données plus anciennes que le nombre de jours défini par WIS2BOX_STORAGE_DATA_RETENTION_DAYS du bucket `wis2box-public` et du backend API :
     
     ```{.copy}
     0 0 * * * su wis2box -c "wis2box data clean --days=$WIS2BOX_STORAGE_DATA_RETENTION_DAYS"
@@ -126,7 +126,7 @@ Ou vérifiez le contenu du fichier via WinSCP.
 
     Le fichier `wis2box.env` contient des variables d'environnement définissant la configuration de votre wis2box. Pour plus d'informations, consultez la [documentation wis2box](https://docs.wis2box.wis.wmo.int/en/latest/reference/configuration.html).
 
-    Ne modifiez pas le fichier `wis2box.env` sauf si vous êtes sûr des changements que vous effectuez. Des modifications incorrectes peuvent empêcher votre wis2box de fonctionner.
+    Ne modifiez pas le fichier `wis2box.env` sauf si vous êtes sûr des modifications que vous apportez. Des modifications incorrectes peuvent empêcher votre wis2box de fonctionner.
 
     Ne partagez pas le contenu de votre fichier `wis2box.env` avec quiconque, car il contient des informations sensibles telles que des mots de passe.
 
@@ -245,7 +245,7 @@ Les volumes commençant par `wis2box_project_` sont utilisés pour stocker des d
 
 ## wis2box API
 
-Le wis2box contient une API (Interface de Programmation d'Applications) qui fournit un accès aux données et des processus pour la visualisation interactive, la transformation des données et leur publication.
+Le wis2box contient une API (Interface de Programmation d'Application) qui fournit un accès aux données et des processus pour la visualisation interactive, la transformation des données et leur publication.
 
 Ouvrez un nouvel onglet et accédez à la page `http://YOUR-HOST/oapi`.
 
@@ -344,9 +344,9 @@ Utilisez les détails de connexion suivants, en veillant à remplacer la valeur 
     cat ~/wis2box/wis2box.env | grep WIS2BOX_BROKER_PASSWORD
     ```
 
-    Notez que ceci est votre mot de passe **interne** pour le broker. Le Global Broker utilisera des identifiants différents (en lecture seule) pour s'abonner à votre broker. Ne partagez jamais ce mot de passe avec quiconque.
+    Notez que ceci est votre mot de passe **interne** pour le broker. Le Global Broker utilisera des identifiants différents (en lecture seule) pour s'abonner à votre broker. Ne partagez jamais ce mot de passe avec qui que ce soit.
 
-Assurez-vous de cliquer sur "SAVE" pour enregistrer vos détails de connexion.
+Assurez-vous de cliquer sur "SAVE" pour enregistrer les détails de votre connexion.
 
 Puis cliquez sur "CONNECT" pour vous connecter à votre **wis2box-broker**.
 
@@ -356,16 +356,16 @@ Une fois connecté, vous verrez les statistiques internes de mosquitto publiées
 
 <img alt="mqtt-explorer-sys-topic.png" src="/../assets/img/mqtt-explorer-sys-topic.png" width="400">
 
-La même connexion peut également être établie en utilisant MQTT via WebSockets sur le port 80, avec les détails de connexion suivants :
+La même connexion peut également être réalisée en utilisant MQTT via WebSockets sur le port 80, avec les détails de connexion suivants :
 
 <img alt="mqtt-explorer-wis2box-broker-websockets.png" src="/../assets/img/mqtt-explorer-wis2box-broker-websockets.png" width="700">
 
 ## Conclusion
 
 !!! success "Félicitations !"
-    Lors de cette session pratique, vous avez appris à :
+    Dans cette session pratique, vous avez appris à :
 
     - exécuter le script `wis2box-create-config.py` pour créer la configuration initiale
-    - démarrer wis2box et vérifier le statut de ses composants
+    - démarrer wis2box et vérifier l'état de ses composants
     - accéder à wis2box-webapp et wis2box-API dans un navigateur
-    - vous connecter au broker MQTT sur votre VM étudiant en utilisant MQTT Explorer
+    - vous connecter au broker MQTT sur votre VM étudiante en utilisant MQTT Explorer
