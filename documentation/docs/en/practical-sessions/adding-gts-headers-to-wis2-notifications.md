@@ -40,9 +40,9 @@ This file should be placed in the directory defined by `WIS2BOX_HOST_DATADIR` in
 
  As of wis2box-1.3.0, data publishers have two options to (optionally) add GTS properties to their notifications:
 
-1. For files uploaded into MinIO, prepare mapping-file “gts_headers_mappings.csv” with required properties.
+1. For files uploaded into MinIO, prepare mapping-file `gts_headers_mappings.csv` with required properties.
 
-2. For data input using FM-12 SYNOP form in wis2box-webapp, select “Add GTS headers” and provide manually input
+2. For data input using FM-12 SYNOP form in wis2box-webapp, select `Add GTS headers` and provide manually input
 
 ## Preparation
 
