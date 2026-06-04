@@ -129,7 +129,7 @@ Now press the **Subscribe** button and confirm your subscription.
 Following this check the download folder in your student VM by using the command:
 
 ```bash
-ls -R /home/<username>/wis2-downloads
+ls -R ~/wis2-downloads
 ```
 
 And now you should see a series of files that have been downloaded by your instance.
@@ -143,7 +143,7 @@ As a final step we can delete the subscription by going to the **Manage Subscrip
     It is recommended to clean up the downloads folder after completing an exercise in order to free up space on the student VM. As such run the following command to delete the previous exercises files.
 
     ```bash
-    rm -fr /home/<username>/wis2-downloads/synop-data
+    rm -fr ~/wis2-downloads/synop-data
     ```
 
 ## Reviewing the WIS2 Downloader configuration
@@ -185,7 +185,7 @@ You can keep the default configuration for the next exercises.
 The WIS2 Downloader exposes a REST API at `<WIS2DOWNLOADER_BASE_URL>:5002`. Confirm the service is ready:
 
 ```bash
-curl <WIS2DOWNLOADER_BASE_URL>:5002/health
+curl localhost:5002/health
 ```
 
 You should see:
@@ -197,7 +197,7 @@ You should see:
 To create a subscription, send a `POST` request with the MQTT `topic` and an optional `target` subdirectory where files will be saved:
 
 ```bash
-curl -s -X POST <WIS2DOWNLOADER_BASE_URL>:5002/subscriptions \
+curl -s -X POST localhost:5002/subscriptions \
   -H "Content-Type: application/json" \
   -d '{"topic": "cache/a/wis2/+/data/core/weather/surface-based-observations/#", "target": "surface-obs"}'
 ```
@@ -205,14 +205,14 @@ curl -s -X POST <WIS2DOWNLOADER_BASE_URL>:5002/subscriptions \
 Same as before the downloaded files can be reviewed by checking the `surface-obs` folder in the download directory:
 
 ```bash
-ls -R /home/<username>/wis2-downloads/surface-obs
+ls -R ~/wis2-downloads/surface-obs
 ```
 
 
 The response includes the UUID assigned to the new subscription. Use it to delete the subscription when no longer needed:
 
 ```bash
-curl -X DELETE <WIS2DOWNLOADER_BASE_URL>:5002/subscriptions/{id}
+curl -X DELETE localhost:5002/subscriptions/{id}
 ```
 
 !!! note "Deleting downloaded files"
@@ -220,10 +220,10 @@ curl -X DELETE <WIS2DOWNLOADER_BASE_URL>:5002/subscriptions/{id}
     It is recommended to clean up the downloads folder after completing an exercise in order to free up space on the student VM. As such run the following command to delete the previous exercises files.
 
     ```bash
-    rm -fr /home/<username>/wis2-downloads/surface-obs
+    rm -fr ~/wis2-downloads/surface-obs
     ```
 
-For the full list of available endpoints (list, get, update subscriptions and more), refer to the interactive Swagger documentation available at `<WIS2DOWNLOADER_BASE_URL>:5002/swagger`.
+For the full list of available endpoints (list, get, update subscriptions and more), refer to the interactive Swagger documentation available at `localhost:5002/swagger`.
 
 ## Conclusion
 
