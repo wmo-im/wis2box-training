@@ -8,7 +8,7 @@ title: Downloading with WIS2 Downloader
 
     By the end of this practical session, you will be able to:
 
-    - explore and find datasets in WIS2 Downloader
+    - find and subscribe to datasets
     - use filtering to control the files downloaded
     - use authentication to download access-controlled datasets
     - change the default setup of WIS2 Downloader for more advanced use cases
@@ -151,13 +151,13 @@ In this exercise you will set up an access-controlled dataset on your wis2box in
 
     **Step 1 — Create an access-controlled dataset on wis2box**
 
-    On your wis2box instance, create a dataset with access control enabled and note the topic and the bearer token generated for it. If you have not done so already, refer to the [Datasets with access control](../datasets-with-access-control) practical session for the full setup steps.
+    On your wis2box instance, create a dataset with access control enabled and note the topic and the bearer token generated for it. If you have not done so already, refer to the [Datasets with access control](datasets-with-access-control.md) practical session for the full setup steps.
 
     **Step 2 — Configure WIS2 Downloader to listen to the wis2box broker**
 
     By default WIS2 Downloader listens to the Global Broker. To receive notifications from your wis2box instance directly, you need to add a subscriber in the WIS2 Downloader compose file that points to the wis2box internal MQTT broker.
 
-    Open the `docker-compose.yml` file in your WIS2 Downloader directory and add the following subscriber configuration:
+    Open the `docker-compose.yml` file in your WIS2 Downloader directory and add the following subscriber configuration replacing `WIS2BOX_URL` with the URL of your wis2box instance:
 
     ```yaml
       subscriber-test:
@@ -205,7 +205,7 @@ In this exercise you will set up an access-controlled dataset on your wis2box in
 
     **Step 4 — Push data to the dataset on wis2box**
 
-    On your wis2box instance, publish a file to the access-controlled dataset. Refer to the [Ingesting data for publication](../ingesting-data-for-publication) practical session for the steps to ingest data.
+    On your wis2box instance, publish a file to the access-controlled dataset. Refer to the [Ingesting data for publication](ingesting-data-for-publication.md) practical session for the steps to ingest data.
 
     **Step 5 — Verify the download**
 
@@ -228,3 +228,99 @@ In this exercise you will set up an access-controlled dataset on your wis2box in
     ```bash
     rm -fr /home/{USER}/wis2-downloads/restricted-data
     ```
+
+## Filtering downloads
+
+Filters allow you to control which files are downloaded from a subscription at the notification level — this is the second level of filtering mentioned in the introduction. Rather than downloading every file published on a topic, you can define a filter so that only notifications matching specific criteria trigger a download.
+
+After selecting a dataset in the **Catalogue View** or **Tree View**, a filter panel appears on the right-hand side of the screen before subscribing. Here you can fill in the filter values you want to apply. WIS2 Downloader builds the filter object from your inputs automatically.
+
+In the **Manual Subscribe** view you would input this filter object by hand by filling the `Filter (JSON)` input in the form.
+
+!!! note "Available filter inputs"
+
+    - **Media type** — restrict downloads to specific content types (e.g. `application/bufr`).
+    - **Dataset** — restrict downloads to a specific dataset by its metadata identifier.
+    - **Bounding box** — restrict downloads to notifications whose data falls within a spatial area, defined by `north`, `south`, `east`, and `west` values.
+    - **Date & time range** — restrict downloads to notifications published within a specific time range.
+    - **Custom filters** — filter on any other notification property as defined in the metadata record by specifying the property value(e.g. filtering by `wigos_station_identifier` to only download data from a specific station).
+
+    The following is an example of the filter object generated from these inputs:
+
+    ```json
+    {
+      "rules": [
+        {
+          "id": "accept",
+          "order": 1,
+          "match": {
+            "all": [
+              {
+                "any": [
+                  { "media_type": { "exists": false } },
+                  { "media_type": { "in": ["application/bufr", "application/x-bufr"] } }
+                ]
+              },
+              { "metadata_id": { "in": ["urn:wmo:md:ir-irimo:core.surface-based-observations.temp"] } },
+              { "bbox": { "north": 23.0, "south": 27.0, "east": 25.0, "west": 28.0 } },
+              {
+                "property": "pubtime",
+                "type": "datetime",
+                "between": ["2026-06-08T20:00:00+00:00", "2026-06-09T05:00:59+00:00"]
+              },
+              {
+                "property": "wigos_station_identifier",
+                "type": "string",
+                "in": ["0-20000-0-78338"]
+              }
+            ]
+          },
+          "action": "accept"
+        },
+        {
+          "id": "default",
+          "order": 999,
+          "match": { "always": true },
+          "action": "reject",
+          "reason": "No filter criteria matched"
+        }
+      ]
+    }
+    ```
+
+### Exercise: Subscribe with a filter
+
+  Use the Catalogue View to find a surface observation dataset and apply a spatial filter before subscribing.
+
+  1. Navigate to **Catalogue View** and search for a surface observation dataset of your choice.
+  2. Select the dataset to expand its details on the right-hand panel.
+  3. In the filter inputs, set a **bounding box** for a region of your choice.
+  4. Optionally, set a **media type** filter to restrict downloads to BUFR files.
+  5. Set the destination folder to `filtered-obs`.
+  6. Click **Subscribe** to create the subscription.
+
+  Wait for files to arrive and verify that only files matching your filter criteria are downloaded.
+
+??? success "Click to reveal answer"
+
+    Only notifications that match all the conditions you defined will be accepted and downloaded. All others will be rejected by the default catch-all rule.
+
+!!! note "Unsubscribing and deleting downloaded files"
+
+    Go to the **Manage Subscriptions** view and **Unsubscribe** from the topic, then clean up the downloads folder:
+
+    ```bash
+    rm -fr /home/{USER}/wis2-downloads/filtered-obs
+    ```
+
+## Conclusion
+
+!!! success "Congratulations!"
+
+    In this practical session, you learned how to:
+
+    - find and subscribe to datasets using the Catalogue View and Tree View
+    - subscribe to topics directly using the
+    Manual Subscribe view
+    - apply filters to control which files are downloaded from a subscription
+    - use authentication to download from access-controlled datasets

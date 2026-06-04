@@ -10,6 +10,7 @@ title: Set up WIS2 Downloader on your student VM
 
     - set up your own "WIS2 Downloader" instance and manage the specific configurations required
     - navigate through the instance and set up a subscription
+    - remove your subscriptions and find your downloaded data
 
 ## Introduction
 
@@ -91,13 +92,13 @@ In the left sidebar menu you'll be able to navigate through all the different se
 
 The main sections available are:
 
-- **Dashboard** — an embedded Grafana dashboard showing download activity, queue status, and metrics for the running service. Also available at `http://<WIS2DOWNLOADER_BASE_URL>:3000`.
+- **Dashboard** — the default landing page, an embedded Grafana dashboard showing download activity, queue status, and metrics for the running service. Also available at `http://<WIS2DOWNLOADER_BASE_URL>:3000`.
 - **Catalogue View** — browse available WIS2 datasets by searching or filtering the global catalogue. Select a topic and a save directory, then click *Subscribe* to start downloading.
 - **Tree View** — navigate the WIS2 topic hierarchy as a collapsible tree. Useful for exploring what topics are available before subscribing.
-- **Manual Subscribe** — create a subscription by entering a topic details directly, without relying on the Global Discovery Catalogues. Useful for subscribing to topics more freely using as many wildcards as needed and allows access to topics not found on the GDCs such as the GTS gateways and topics published on private brokers when used non-default configurations.
+- **Manual Subscribe** — create a subscription by entering a topic details directly, without relying on the Global Discovery Catalogues. Useful for subscribing to topics more freely using as many wildcards as needed and allows access to topics not found on the GDCs such as the GTS gateways and topics published on private brokers when used in non-default configurations.
 - **Manage Subscriptions** — view and manage all active subscriptions. From here you can see which topics are being monitored and remove any you no longer need.
 - **Settings** — currently allows you to reload the dataset catalogue from the Global Discovery Catalogues. This section will be expanded in future releases to cover general configuration and management of the WIS2 Downloader.
-- **Help** — the default landing page, showing the built-in documentation for the WIS2 Downloader.
+- **Documentation** — showing the built-in documentation for the WIS2 Downloader.
 
 ## Managing subscriptions in the UI
 
@@ -176,10 +177,10 @@ You can keep the default configuration for the next exercises.
 
 ## WIS2 Downloader API
 
-The WIS2 Downloader exposes a REST API at `<WIS2DOWNLOADER_BASE_URL>:5002/api`. Confirm the service is ready:
+The WIS2 Downloader exposes a REST API at `<WIS2DOWNLOADER_BASE_URL>:5002`. Confirm the service is ready:
 
 ```bash
-curl <WIS2DOWNLOADER_BASE_URL>:5002/api/health
+curl <WIS2DOWNLOADER_BASE_URL>:5002/health
 ```
 
 You should see:
