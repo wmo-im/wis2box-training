@@ -34,14 +34,19 @@ Before starting please log in to your student VM making sure to tunnel via SSH t
 - `8080 (UI)`
 - `3000 (Grafana)`
 
-To do this you can change the settings of your connection in Putty:
-
-![access putty tunnel settings](../assets/img/putty-tunnel-settings.png)
-
-Then add the 3 ports mapping to ports on your own pc(localhost):
+To do this you can change the settings of your connection in Putty by adding the 3 ports mapping to ports on your own pc (localhost):
 
 ![adding tunnels in putty](../assets/img/putty-add-tunnel.png)
 
+!!! note "Tunneling on Linux and macOS"
+
+    On Linux and macOS you can set up the same tunnels directly from the terminal using the `-L` flag with your SSH command:
+
+    ```bash
+    ssh -L 5002:localhost:5002 -L 8080:localhost:8080 -L 3000:localhost:3000 <username>@<WIS2DOWNLOADER_BASE_URL>
+    ```
+
+    Replace `<username>` and `<WIS2DOWNLOADER_BASE_URL>` with your student VM credentials.
 
 ## WIS2 Downloader installation
 
@@ -59,7 +64,7 @@ Run the setup script to generate your configuration file:
 bash setup.sh
 ```
 
-Use the following download path `/home/{USER}/wis2-downloads` and press Enter to use the defaults for both the user and groups.
+Use the following download path `/home/<username>/wis2-downloads` replacing `<username>` with your username. Next, press Enter to use the defaults for both the user and groups.
 
 !!! note "Managing user permissions"
     You can use your different values of the user and group by modifying `WIS2DWONLOADER_UID` and `WIS2DWONLOADER_GID` in the .env file.
@@ -102,9 +107,9 @@ The main sections available are:
 
 ## Managing subscriptions in the UI
 
-As in the last example you will acesss the UI of running instance by going to `http://<WIS2DOWNLOADER_BASE_URL>:8080`.
+As in the last example you will acesss the UI of the running instance by going to `http://<WIS2DOWNLOADER_BASE_URL>:8080`.
 
-From there there are 3 ways to set up a subscription:
+There are 3 ways to set up a subscription:
 
 - In the **Catalogue View** by browsing thorugh the available topics in a similar fashion to the GDC portals.
 - In the **Tree View** by selecting a topic from the GDC catalogue by exploring topics as in MQTT Explorer.
@@ -124,7 +129,7 @@ Now press the **Subscribe** button and confirm your subscription.
 Following this check the download folder in your student VM by using the command:
 
 ```bash
-ls -R /home/{USER}/wis2-downloads
+ls -R /home/<username>/wis2-downloads
 ```
 
 And now you should see a series of files that have been downloaded by your instance.
@@ -138,7 +143,7 @@ As a final step we can delete the subscription by going to the **Manage Subscrip
     It is recommended to clean up the downloads folder after completing an exercise in order to free up space on the student VM. As such run the following command to delete the previous exercises files.
 
     ```bash
-    rm -fr /home/{USER}/wis2-downloads/synop-data
+    rm -fr /home/<username>/wis2-downloads/synop-data
     ```
 
 ## Reviewing the WIS2 Downloader configuration
@@ -200,7 +205,7 @@ curl -s -X POST <WIS2DOWNLOADER_BASE_URL>:5002/subscriptions \
 Same as before the downloaded files can be reviewed by checking the `surface-obs` folder in the download directory:
 
 ```bash
-ls -R /home/{USER}/wis2-downloads/surface-obs
+ls -R /home/<username>/wis2-downloads/surface-obs
 ```
 
 
@@ -215,7 +220,7 @@ curl -X DELETE <WIS2DOWNLOADER_BASE_URL>:5002/subscriptions/{id}
     It is recommended to clean up the downloads folder after completing an exercise in order to free up space on the student VM. As such run the following command to delete the previous exercises files.
 
     ```bash
-    rm -fr /home/{USER}/wis2-downloads/surface-obs
+    rm -fr /home/<username>/wis2-downloads/surface-obs
     ```
 
 For the full list of available endpoints (list, get, update subscriptions and more), refer to the interactive Swagger documentation available at `<WIS2DOWNLOADER_BASE_URL>:5002/swagger`.

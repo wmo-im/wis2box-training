@@ -67,7 +67,7 @@ You can also filter spatially by defining a **bounding box** using four coordina
     Following that, clean up the downloads folder:
 
     ```bash
-    rm -fr /home/{USER}/wis2-downloads/surface-obs
+    rm -fr /home/<username>/wis2-downloads/surface-obs
     ```
 
 ## Using the Tree View
@@ -111,7 +111,7 @@ The tree is organised following the WIS2 topic hierarchy. Expand each level by c
     Following that, clean up the downloads folder:
 
     ```bash
-    rm -fr /home/{USER}/wis2-downloads/surface-obs-tree
+    rm -fr /home/<username>/wis2-downloads/surface-obs-tree
     ```
 
 ## Using the Manual Subscribe View
@@ -212,7 +212,7 @@ In this exercise you will set up an access-controlled dataset on your wis2box in
     Check that the file has been downloaded by WIS2 Downloader:
 
     ```bash
-    ls /home/{USER}/wis2-downloads/restricted-data
+    ls /home/<username>/wis2-downloads/restricted-data
     ```
 
 ??? success "Click to reveal answer"
@@ -226,7 +226,7 @@ In this exercise you will set up an access-controlled dataset on your wis2box in
     Go to the **Manage Subscriptions** view and **Unsubscribe** from the topic, then clean up the downloads folder:
 
     ```bash
-    rm -fr /home/{USER}/wis2-downloads/restricted-data
+    rm -fr /home/<username>/wis2-downloads/restricted-data
     ```
 
 ## Filtering downloads
@@ -310,7 +310,7 @@ In the **Manual Subscribe** view you would input this filter object by hand by f
     Go to the **Manage Subscriptions** view and **Unsubscribe** from the topic, then clean up the downloads folder:
 
     ```bash
-    rm -fr /home/{USER}/wis2-downloads/filtered-obs
+    rm -fr /home/<username>/wis2-downloads/filtered-obs
     ```
 
 ## Conclusion
