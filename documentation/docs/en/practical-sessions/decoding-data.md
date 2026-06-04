@@ -38,7 +38,7 @@ To start the container, use the following command:
 
 ```bash
 docker run -d --name demo-decode-eccodes-jupyter \
-    -v ~/wis2box-data/downloads:/root/downloads \
+    -v ~/wis2-downloads:/root/downloads \
     -p 8888:8888 \
     -e JUPYTER_TOKEN=dataismagic! \
     ghcr.io/wmo-im/wmo-im/demo-decode-eccodes-jupyter:latest
@@ -47,7 +47,7 @@ docker run -d --name demo-decode-eccodes-jupyter \
 Here is a breakdown of the above command:
 
 - `docker run -d --name demo-decode-eccodes-jupyter` starts a new container in detached mode (`-d`) and names it `demo-decode-eccodes-jupyter`
-- `-v ~/wis2box-data/downloads:/root/downloads` mounts the `~/wis2box-data/downloads` directory on your VM to `/root/downloads` in the container. This is where the data you downloaded from WIS2 is stored
+- `-v ~/wis2-downloads:/root/downloads` mounts the `~/wis2-downloads` directory on your VM to `/root/downloads` in the container. This is where the data you downloaded from WIS2 would be stored after you followed the instructions in the previous practical session on the WIS2 Downloader.
 - `-p 8888:8888` maps port 8888 on your VM to port 8888 in the container. This makes the Jupyter notebook server accessible from your web browser at `http://YOUR-HOST:8888`
 - `-e JUPYTER_TOKEN=dataismagic!` sets the token required to access the Jupyter notebook server. You will need to provide this token when you access the server from your web browser
 - `ghrc.io/wmo-im/demo-decode-eccodes-jupyter:latest` specifies the image used by the container which pre-includes the example Jupyter notebooks used in the next exercises
