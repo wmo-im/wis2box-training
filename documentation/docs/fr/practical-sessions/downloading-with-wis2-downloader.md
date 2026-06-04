@@ -11,52 +11,52 @@ title: Téléchargement avec WIS2 Downloader
     - trouver et vous abonner à des ensembles de données
     - utiliser des filtres pour contrôler les fichiers téléchargés
     - utiliser l'authentification pour télécharger des ensembles de données protégés par un contrôle d'accès
-    - modifier la configuration par défaut de WIS2 Downloader pour des cas d'utilisation plus avancés
+    - modifier la configuration par défaut de WIS2 Downloader pour des cas d'utilisation avancés
 
 ## Introduction
 
 Dans WIS2, tous les ensembles de données possèdent un fichier de métadonnées qui peut être trouvé dans les **Global Discovery Catalogues**. Ainsi, il est prévu que les utilisateurs consultent toujours ces services pour trouver les données partagées sur WIS2.
 
-WIS2 Downloader utilise ce principe en recherchant tous les enregistrements disponibles dans ces GDCs et en les combinant en interne pour permettre à l'utilisateur de naviguer parmi les données disponibles sur WIS2. Étant donné le grand nombre d'enregistrements à afficher, il est essentiel de fournir un moyen à l'utilisateur de filtrer ces enregistrements pour trouver le bon. Même après avoir trouvé et s'être abonné au bon enregistrement, il peut y avoir des ensembles de données où le nombre de fichiers dépasse les besoins actuels de l'utilisateur. Pour cette raison, un second niveau de filtrage est nécessaire — celui qui opère au moment de décider si un fichier doit être téléchargé.
+WIS2 Downloader utilise ce principe en recherchant tous les enregistrements disponibles dans ces GDCs et en les combinant en interne pour permettre à l'utilisateur de naviguer parmi les données disponibles sur WIS2. Étant donné le grand nombre d'enregistrements à afficher, il est essentiel de fournir un moyen à l'utilisateur de filtrer ces enregistrements afin de trouver celui qui convient. Même après avoir trouvé et s'être abonné au bon enregistrement, certains ensembles de données peuvent contenir un nombre de fichiers dépassant les besoins actuels de l'utilisateur. Pour cette raison, un second niveau de filtrage est nécessaire — celui qui opère au moment de décider si un fichier doit être téléchargé.
 
 ## Utilisation dans la vue Catalogue
 
 La **vue Catalogue** est l'une des deux façons de trouver et de s'abonner à des ensembles de données dans WIS2 Downloader. Elle regroupe les enregistrements des Global Discovery Catalogues et les présente dans une interface consultable et filtrable — similaire à la navigation directe sur un portail GDC.
 
-Naviguez vers la **vue Catalogue** dans la barre latérale gauche.
+Accédez à la **vue Catalogue** dans la barre latérale gauche.
 
 ![WIS2 Downloader Catalogue View](../assets/img/wis2-downloader-catalogue-view.png)
 
 En haut de la page, vous trouverez une barre de recherche et un ensemble de filtres. Vous pouvez les utiliser pour réduire la liste des enregistrements disponibles par mot-clé, Centre ID ou politique de données (core vs. recommended).
 
-Vous pouvez également filtrer spatialement en définissant une **boîte englobante** à l'aide de quatre entrées de coordonnées — **Nord**, **Ouest**, **Sud** et **Est** — exprimées en valeurs décimales de latitude et longitude. Lorsqu'une boîte englobante est définie, vous pouvez choisir entre deux modes de correspondance :
+Vous pouvez également filtrer spatialement en définissant une **bounding box** à l'aide de quatre champs de coordonnées — **Nord**, **Ouest**, **Sud** et **Est** — exprimés en valeurs décimales de latitude et longitude. Une fois la bounding box définie, vous pouvez choisir entre deux modes de correspondance :
 
-- **Intersects** — retourne les enregistrements dont l'étendue spatiale chevauche la boîte englobante de quelque manière que ce soit.
-- **Within** — retourne uniquement les enregistrements dont l'étendue spatiale se trouve entièrement à l'intérieur de la boîte englobante.
+- **Intersects** — retourne les enregistrements dont l'étendue spatiale chevauche la bounding box de quelque manière que ce soit.
+- **Within** — retourne uniquement les enregistrements dont l'étendue spatiale se trouve entièrement à l'intérieur de la bounding box.
 
 !!! note "Recharger le catalogue"
 
-    Le catalogue est chargé depuis les GDCs lorsque WIS2 Downloader démarre. Si vous pensez que la liste est obsolète, vous pouvez forcer un rechargement depuis la section **Paramètres** dans la barre latérale gauche.
+    Le catalogue est chargé à partir des GDCs lorsque WIS2 Downloader démarre. Si vous pensez que la liste est obsolète, vous pouvez forcer un rechargement depuis la section **Paramètres** dans la barre latérale gauche.
 
 ### Exercice : trouver et s'abonner à un ensemble de données
 
-!!! question "Trouver un ensemble de données d'observation de surface"
+!!! question "Trouver un ensemble de données d'observations de surface"
 
-    Utilisez les filtres dans la vue Catalogue pour trouver un ensemble de données d'observation de surface **core** lié à la température et aux précipitations.
+    Utilisez les filtres dans la vue Catalogue pour trouver un ensemble de données **core** d'observations de surface lié à la température et aux précipitations.
 
     1. Tapez `surface` dans la barre de recherche et observez comment la liste des enregistrements est filtrée.
     2. Réglez le filtre de politique de données sur **core**.
-    3. Configurez les mots-clés pour inclure `temperature, precipitation` et observez comment les résultats changent.
-    4. Sélectionnez un enregistrement dans les résultats pour développer ses détails.
+    3. Ajoutez les mots-clés `temperature, precipitation` et observez comment les résultats changent.
+    4. Sélectionnez un enregistrement parmi les résultats pour afficher ses détails.
     5. Examinez les métadonnées affichées — notez le sujet, le centre d'origine et la politique de données.
     6. Définissez le dossier de destination sur `surface-obs`.
     7. Cliquez sur **Subscribe** pour créer l'abonnement.
 
-    Après vous être abonné, naviguez vers **Manage Subscriptions** pour confirmer que le nouvel abonnement apparaît dans la liste.
+    Après vous être abonné, accédez à **Manage Subscriptions** pour confirmer que le nouvel abonnement apparaît dans la liste.
 
 ??? success "Cliquez pour révéler la réponse"
 
-    Tout enregistrement dont le sujet contient `surface-based-observations` et dont la politique de données est `core` est un choix valide. L'application du filtre de mots-clés pour `temperature, precipitation` réduira davantage les résultats aux ensembles de données pertinents pour ces variables.
+    Tout enregistrement dont le sujet contient `surface-based-observations` et dont la politique de données est `core` est un choix valide. L'application du filtre de mots-clés `temperature, precipitation` permettra de réduire davantage les résultats aux ensembles de données pertinents pour ces variables.
 
     Une fois abonné, la vue **Manage Subscriptions** affichera l'abonnement actif avec son sujet et son dossier cible. Les fichiers commenceront à se télécharger à mesure que de nouvelles notifications arrivent sur le broker.
 
@@ -70,15 +70,15 @@ Vous pouvez également filtrer spatialement en définissant une **boîte engloba
     rm -fr /home/<username>/wis2-downloads/surface-obs
     ```
 
-## Utilisation de la vue Arborescence
+## Utilisation dans la vue Arborescence
 
-La **vue Arborescence** présente la hiérarchie des sujets WIS2 sous forme d'arborescence extensible, permettant de parcourir les sujets disponibles niveau par niveau — similaire à la navigation des sujets dans MQTT Explorer. Elle est conçue pour une exploration de haut niveau, descendante, des données disponibles sur WIS2, en commençant par la racine de la hiérarchie et en approfondissant. Cela contraste avec la vue Catalogue, qui vous conduit directement aux enregistrements individuels des ensembles de données et est mieux adaptée lorsque vous savez déjà ce que vous recherchez.
+La **vue Arborescence** présente la hiérarchie des sujets WIS2 sous forme d'arborescence pliable, permettant de naviguer parmi les sujets disponibles niveau par niveau — similaire à la navigation des sujets dans MQTT Explorer. Elle est conçue pour une exploration plus générale et descendante des données disponibles sur WIS2, en partant de la racine de la hiérarchie et en approfondissant. Cela contraste avec la vue Catalogue, qui vous mène directement aux enregistrements individuels des ensembles de données et convient mieux lorsque vous savez déjà ce que vous recherchez.
 
-Naviguez vers la **vue Arborescence** dans la barre latérale gauche.
+Accédez à la **vue Arborescence** dans la barre latérale gauche.
 
 ![WIS2 Downloader Tree View](../assets/img/wis2-downloader-tree-view.png)
 
-L'arborescence est organisée selon la hiérarchie des sujets WIS2. Développez chaque niveau en cliquant sur un nœud pour révéler ses enfants. À tout niveau, vous pouvez vous abonner en sélectionnant un nœud et en cliquant sur **Subscribe** — en utilisant un caractère générique (`#`) pour capturer tous les sujets sous ce nœud.
+L'arborescence est organisée selon la hiérarchie des sujets WIS2. Développez chaque niveau en cliquant sur un nœud pour révéler ses enfants. À n'importe quel niveau, vous pouvez vous abonner en sélectionnant un nœud et en cliquant sur **Subscribe** — en utilisant un caractère générique (`#`) pour capturer tous les sujets situés sous ce nœud.
 
 !!! note "S'abonner à différents niveaux"
 
@@ -88,7 +88,7 @@ L'arborescence est organisée selon la hiérarchie des sujets WIS2. Développez 
 
 !!! question "S'abonner à un ensemble de données via la vue Arborescence"
 
-    Utilisez la vue Arborescence pour trouver et vous abonner à des données d'observation de surface provenant d'un centre spécifique.
+    Utilisez la vue Arborescence pour trouver et vous abonner à des données d'observations de surface provenant d'un centre spécifique.
 
     1. Développez l'arborescence en partant du nœud `cache`, puis naviguez à travers `a` → `wis2`.
     2. Sélectionnez un Centre ID de votre choix et continuez à développer jusqu'à atteindre un sujet lié à `surface-based-observations`.
@@ -96,7 +96,7 @@ L'arborescence est organisée selon la hiérarchie des sujets WIS2. Développez 
     4. Définissez le dossier de destination sur `surface-obs-tree`.
     5. Cliquez sur **Subscribe** pour créer l'abonnement.
 
-    Naviguez vers **Manage Subscriptions** pour confirmer que l'abonnement est actif.
+    Accédez à **Manage Subscriptions** pour confirmer que l'abonnement est actif.
 
 ??? success "Cliquez pour révéler la réponse"
 
@@ -116,9 +116,9 @@ L'arborescence est organisée selon la hiérarchie des sujets WIS2. Développez 
 
 ## Utilisation de la vue Abonnement manuel
 
-La vue **Abonnement manuel** vous permet de créer un abonnement en saisissant directement un sujet, sans dépendre des Global Discovery Catalogues. Contrairement aux vues Catalogue et Arborescence — qui tirent leurs sujets des GDCs — l'abonnement manuel est utile lorsque vous connaissez déjà le sujet exact auquel vous souhaitez vous abonner et que vous souhaitez le configurer sans parcourir le catalogue, avec plus de liberté sur le WTH à utiliser.
+La **vue Abonnement manuel** vous permet de créer un abonnement en saisissant directement un sujet, sans dépendre des Global Discovery Catalogues. Contrairement aux vues Catalogue et Arborescence — qui tirent leurs sujets des GDCs — l'abonnement manuel est utile lorsque vous connaissez déjà le sujet exact auquel vous souhaitez vous abonner et que vous souhaitez le configurer sans parcourir le catalogue, avec plus de liberté sur le WTH à utiliser.
 
-Naviguez vers la **vue Abonnement manuel** dans la barre latérale gauche.
+Accédez à la **vue Abonnement manuel** dans la barre latérale gauche.
 
 ![WIS2 Downloader Manual Subscribe](../assets/img/wis2-downloader-manual-subscribe.png)
 
@@ -127,12 +127,12 @@ Le formulaire vous permet de spécifier :
 - **Topic** — le sujet MQTT complet auquel s'abonner, incluant les caractères génériques (par exemple `#` & `+`).
 - **Dossier de destination** — le sous-répertoire local où les fichiers téléchargés seront enregistrés.
 - **Filtre** — un objet de filtre optionnel sous forme de texte pour contrôler quelles notifications sont téléchargées.
-- **File d'attente prioritaire** — contrôle la priorité de téléchargement attribuée aux notifications de cet abonnement.
+- **File d'attente prioritaire** — contrôle la priorité de téléchargement assignée aux notifications de cet abonnement.
 - **Authentification** — les identifiants requis pour les ensembles de données protégés par un contrôle d'accès.
 
 !!! note "Quand utiliser l'abonnement manuel"
 
-    Utilisez l'abonnement manuel lorsque vous connaissez déjà le sujet exact souhaité et que vous souhaitez le configurer rapidement sans parcourir le catalogue, lorsque le sujet n'est pas inclus dans le catalogue, ou lorsque vous devez fournir des identifiants pour un ensemble de données protégé par un contrôle d'accès.
+    Utilisez l'abonnement manuel lorsque vous connaissez déjà le sujet exact que vous souhaitez et que vous voulez le configurer rapidement sans parcourir le catalogue, lorsque le sujet n'est pas inclus dans le catalogue, ou lorsque vous devez fournir des identifiants pour un ensemble de données protégé par un contrôle d'accès.
 
 ## Téléchargement depuis un ensemble de données protégé par un contrôle d'accès
 
@@ -145,7 +145,7 @@ Ces identifiants sont stockés par abonnement et appliqués automatiquement lors
 
 ### Exercice : s'abonner à un ensemble de données protégé par un contrôle d'accès sur votre wis2box
 
-Dans cet exercice, vous configurerez un ensemble de données protégé par un contrôle d'accès sur votre instance wis2box, configurerez WIS2 Downloader pour s'abonner à son broker, et vérifierez que les fichiers sont correctement téléchargés lorsqu'un jeton Bearer est fourni.
+Dans cet exercice, vous allez configurer un ensemble de données protégé par un contrôle d'accès sur votre instance wis2box, configurer WIS2 Downloader pour s'abonner à son broker, et vérifier que les fichiers sont correctement téléchargés lorsqu'un jeton Bearer est fourni.
 
 !!! question "Configurer et s'abonner à un ensemble de données protégé par un contrôle d'accès"
 
@@ -155,9 +155,9 @@ Dans cet exercice, vous configurerez un ensemble de données protégé par un co
 
 **Étape 2 — Configurer WIS2 Downloader pour écouter le broker de wis2box**
 
-Par défaut, WIS2 Downloader écoute le Global Broker. Pour recevoir des notifications directement depuis votre instance de wis2box, vous devez ajouter un abonné dans le fichier compose de WIS2 Downloader qui pointe vers le broker MQTT interne de wis2box.
+Par défaut, WIS2 Downloader écoute le Global Broker. Pour recevoir directement les notifications de votre instance wis2box, vous devez ajouter un abonné dans le fichier compose de WIS2 Downloader qui pointe vers le broker MQTT interne de wis2box.
 
-Ouvrez le fichier `docker-compose.yml` dans le répertoire de WIS2 Downloader et ajoutez la configuration suivante pour l'abonné, en remplaçant `WIS2BOX_URL` par l'URL de votre instance de wis2box :
+Ouvrez le fichier `docker-compose.yml` dans le répertoire de WIS2 Downloader et ajoutez la configuration suivante pour l'abonné, en remplaçant `WIS2BOX_URL` par l'URL de votre instance wis2box :
 
 ```yaml
   subscriber-test:
@@ -198,14 +198,14 @@ docker compose up -d
 **Étape 3 — S'abonner au dataset dans WIS2 Downloader**
 
 1. Accédez à **Manual Subscribe** dans l'interface utilisateur de WIS2 Downloader.
-2. Configurez le topic avec celui défini pour votre dataset à accès contrôlé sur wis2box.
+2. Configurez le sujet avec celui défini pour votre dataset à accès contrôlé sur wis2box.
 3. Définissez le dossier de destination sur `restricted-data`.
-4. Entrez le token bearer généré à l'étape 1 dans le champ **Authentication**.
+4. Entrez le jeton d'accès généré à l'étape 1 dans le champ **Authentication**.
 5. Cliquez sur **Subscribe** pour créer l'abonnement.
 
-**Étape 4 — Pousser des données vers le dataset sur wis2box**
+**Étape 4 — Envoyer des données au dataset sur wis2box**
 
-Sur votre instance de wis2box, publiez un fichier vers le dataset à accès contrôlé. Consultez la session pratique [Ingesting data for publication](ingesting-data-for-publication.md) pour les étapes d'ingestion des données.
+Sur votre instance wis2box, publiez un fichier dans le dataset à accès contrôlé. Consultez la session pratique [Ingesting data for publication](ingesting-data-for-publication.md) pour les étapes d'ingestion des données.
 
 **Étape 5 — Vérifier le téléchargement**
 
@@ -217,13 +217,13 @@ ls /home/<username>/wis2-downloads/restricted-data
 
 ??? success "Cliquez pour révéler la réponse"
 
-Avec un token bearer valide, WIS2 Downloader s'authentifiera lors du téléchargement des fichiers pour le topic restreint. Le fichier publié à l'étape 4 devrait apparaître dans le dossier `restricted-data` peu après avoir été ingéré par wis2box.
+Avec un jeton d'accès valide, WIS2 Downloader s'authentifiera lors du téléchargement des fichiers pour le sujet restreint. Le fichier publié à l'étape 4 devrait apparaître dans le dossier `restricted-data` peu après avoir été ingéré par wis2box.
 
-Si l'authentification échoue, les fichiers ne seront pas téléchargés même si l'abonnement semble actif dans la vue **Manage Subscriptions**. Vérifiez que le token bearer correspond bien à celui configuré sur le dataset dans wis2box.
+Si l'authentification échoue, les fichiers ne seront pas téléchargés, même si l'abonnement semble actif dans la vue **Manage Subscriptions**. Vérifiez que le jeton d'accès correspond à celui configuré sur le dataset dans wis2box.
 
 !!! note "Se désabonner et supprimer les fichiers téléchargés"
 
-Accédez à la vue **Manage Subscriptions** et cliquez sur **Unsubscribe** pour le topic, puis nettoyez le dossier de téléchargements :
+Accédez à la vue **Manage Subscriptions** et cliquez sur **Unsubscribe** pour le sujet, puis nettoyez le dossier de téléchargements :
 
 ```bash
 rm -fr /home/<username>/wis2-downloads/restricted-data
@@ -231,21 +231,21 @@ rm -fr /home/<username>/wis2-downloads/restricted-data
 
 ## Filtrage des téléchargements
 
-Les filtres permettent de contrôler quels fichiers sont téléchargés à partir d'un abonnement au niveau des notifications — c'est le deuxième niveau de filtrage mentionné dans l'introduction. Plutôt que de télécharger chaque fichier publié sur un topic, vous pouvez définir un filtre pour que seules les notifications correspondant à des critères spécifiques déclenchent un téléchargement.
+Les filtres permettent de contrôler quels fichiers sont téléchargés à partir d'un abonnement au niveau des notifications — il s'agit du deuxième niveau de filtrage mentionné dans l'introduction. Plutôt que de télécharger tous les fichiers publiés sur un sujet, vous pouvez définir un filtre afin que seules les notifications correspondant à des critères spécifiques déclenchent un téléchargement.
 
-Après avoir sélectionné un dataset dans la **Catalogue View** ou la **Tree View**, un panneau de filtre apparaît sur le côté droit de l'écran avant de s'abonner. Ici, vous pouvez remplir les valeurs de filtre que vous souhaitez appliquer. WIS2 Downloader construit automatiquement l'objet filtre à partir de vos entrées.
+Après avoir sélectionné un dataset dans la **Catalogue View** ou la **Tree View**, un panneau de filtre apparaît sur le côté droit de l'écran avant de s'abonner. Ici, vous pouvez remplir les valeurs de filtre que vous souhaitez appliquer. WIS2 Downloader construit automatiquement l'objet de filtre à partir de vos entrées.
 
-Dans la vue **Manual Subscribe**, vous devez saisir cet objet filtre manuellement en remplissant le champ `Filter (JSON)` dans le formulaire.
+Dans la vue **Manual Subscribe**, vous devez saisir cet objet de filtre manuellement en remplissant le champ `Filter (JSON)` dans le formulaire.
 
 !!! note "Entrées de filtre disponibles"
 
-- **Type de média** — restreindre les téléchargements à des types de contenu spécifiques (par exemple `application/bufr`).
-- **Dataset** — restreindre les téléchargements à un dataset spécifique via son identifiant de métadonnées.
-- **Boîte englobante** — restreindre les téléchargements aux notifications dont les données se trouvent dans une zone spatiale définie par les valeurs `north`, `south`, `east` et `west`.
-- **Plage de date et heure** — restreindre les téléchargements aux notifications publiées dans une plage de temps spécifique.
+- **Type de média** — limiter les téléchargements à des types de contenu spécifiques (par exemple, `application/bufr`).
+- **Dataset** — limiter les téléchargements à un dataset spécifique via son identifiant de métadonnées.
+- **Boîte englobante** — limiter les téléchargements aux notifications dont les données se trouvent dans une zone spatiale définie par les valeurs `north`, `south`, `east` et `west`.
+- **Plage de date et heure** — limiter les téléchargements aux notifications publiées dans une plage de temps spécifique.
 - **Filtres personnalisés** — filtrer sur toute autre propriété de notification définie dans l'enregistrement de métadonnées en spécifiant la valeur de la propriété (par exemple, filtrer par `wigos_station_identifier` pour ne télécharger que les données d'une station spécifique).
 
-Voici un exemple d'objet filtre généré à partir de ces entrées :
+Voici un exemple d'objet de filtre généré à partir de ces entrées :
 
 ```json
 {
@@ -290,16 +290,16 @@ Voici un exemple d'objet filtre généré à partir de ces entrées :
 
 ### Exercice : S'abonner avec un filtre
 
-Utilisez la vue Catalogue pour trouver un dataset d'observations de surface et appliquez un filtre spatial avant de vous abonner.
+Utilisez la **Catalogue View** pour trouver un dataset d'observations de surface et appliquez un filtre spatial avant de vous abonner.
 
-1. Accédez à la **Catalogue View** et recherchez un dataset d'observations de surface de votre choix.
+1. Accédez à **Catalogue View** et recherchez un dataset d'observations de surface de votre choix.
 2. Sélectionnez le dataset pour afficher ses détails dans le panneau de droite.
 3. Dans les entrées de filtre, définissez une **boîte englobante** pour une région de votre choix.
-4. Optionnellement, définissez un filtre de **type de média** pour restreindre les téléchargements aux fichiers BUFR.
+4. Optionnellement, définissez un filtre de **type de média** pour limiter les téléchargements aux fichiers BUFR.
 5. Définissez le dossier de destination sur `filtered-obs`.
 6. Cliquez sur **Subscribe** pour créer l'abonnement.
 
-Attendez que les fichiers arrivent et vérifiez que seuls les fichiers correspondant à vos critères de filtre sont téléchargés.
+Attendez l'arrivée des fichiers et vérifiez que seuls les fichiers correspondant à vos critères de filtre sont téléchargés.
 
 ??? success "Cliquez pour révéler la réponse"
 
@@ -307,7 +307,7 @@ Seules les notifications correspondant à toutes les conditions que vous avez d�
 
 !!! note "Se désabonner et supprimer les fichiers téléchargés"
 
-Accédez à la vue **Manage Subscriptions** et cliquez sur **Unsubscribe** pour le topic, puis nettoyez le dossier de téléchargements :
+Accédez à la vue **Manage Subscriptions** et cliquez sur **Unsubscribe** pour le sujet, puis nettoyez le dossier de téléchargements :
 
 ```bash
 rm -fr /home/<username>/wis2-downloads/filtered-obs
@@ -317,9 +317,9 @@ rm -fr /home/<username>/wis2-downloads/filtered-obs
 
 !!! success "Félicitations !"
 
-Lors de cette session pratique, vous avez appris à :
+Dans cette session pratique, vous avez appris à :
 
 - trouver et vous abonner à des datasets en utilisant la **Catalogue View** et la **Tree View**
-- vous abonner directement à des topics via la vue **Manual Subscribe**
+- vous abonner directement à des sujets en utilisant la vue **Manual Subscribe**
 - appliquer des filtres pour contrôler quels fichiers sont téléchargés à partir d'un abonnement
 - utiliser l'authentification pour télécharger des datasets à accès contrôlé
