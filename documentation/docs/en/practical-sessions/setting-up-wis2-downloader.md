@@ -18,9 +18,11 @@ In this session you will learn how to set up a WIS2 Downloader instance on the p
 
 !!! note "About WIS2 Downloader"
      
-     The WIS2 Downloader is available as a standalone Docker Compose project and is recommended to be ran on a separate server from the wis2box, so as to not have the downloads interfering with the publication of messages.
+     The WIS2 Downloader is available as a standalone Docker Compose project and is recommended to be ran on a separate environment from a wis2box instance, so as to not have the downloads interfering with the publication of messages.
 
      If you would like to develop your own service for subscribing to WIS2 notifications and downloading data, you can use the [WIS2 Downloader source code](https://github.com/World-Meteorological-Organization/wis2downloader) as a reference.
+     
+     For a lighter alternative offering capabilites to both publish and download WIS2 messages, please check the [pywis-pubsub project](https://github.com/World-Meteorological-Organization/pywis-pubsub).
 
 ## Preparation and requirements
 
