@@ -1,0 +1,1774 @@
+
+<!doctype html>
+<html lang="ar" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="WIS2 in a box (wis2box) is a Free and Open Source (FOSS) Reference Implementation of a WMO WIS2 Node. The project provides a plug and play toolset to ingest, process, and publish weather/climate/water data using standards-based approaches in alignment with the WIS2 principles. wis2box also provides access to all data in the WIS2 network. wis2box is designed to have a low barrier to entry for data providers, providing enabling infrastructure and services for data discovery, access, and visualization.">
+      
+      
+        <meta name="author" content="World Meteorological Organization">
+      
+      
+        <link rel="canonical" href="https://training.wis2box.wis.wmo.int/ar/practical-sessions/downloading-with-wis2-downloader/">
+      
+      
+        <link rel="prev" href="../setting-up-wis2-downloader/">
+      
+      
+        <link rel="next" href="../decoding-data/">
+      
+      
+        
+          <link rel="alternate" href="../../../practical-sessions/downloading-with-wis2-downloader/" hreflang="en">
+        
+          <link rel="alternate" href="../../../fr/practical-sessions/downloading-with-wis2-downloader/" hreflang="fr">
+        
+          <link rel="alternate" href="../../../es/practical-sessions/downloading-with-wis2-downloader/" hreflang="es">
+        
+          <link rel="alternate" href="../../../zh/practical-sessions/downloading-with-wis2-downloader/" hreflang="zh">
+        
+          <link rel="alternate" href="../../../ru/practical-sessions/downloading-with-wis2-downloader/" hreflang="ru">
+        
+          <link rel="alternate" href="./" hreflang="ar">
+        
+      
+      
+      <link rel="icon" href="https://public.wmo.int/sites/all/themes/wmo/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>تنزيل باستخدام WIS2 Downloader - WIS2 in a box training</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/css/custom.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="rtl" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#wis2-downloader" class="md-skip">
+          انتقل إلى المحتوى
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="عنوان العارضة">
+    <a href="../../" title="WIS2 in a box training" class="md-header__button md-logo" aria-label="WIS2 in a box training" data-md-component="logo">
+      
+  <img src="../../../assets/img/wmo-logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            WIS2 in a box training
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              تنزيل باستخدام WIS2 Downloader
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+      <div class="md-header__option">
+  <div class="md-select">
+    
+    <button class="md-header__button md-icon" aria-label="إختر اللغة">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12.87 15.07-2.54-2.51.03-.03A17.5 17.5 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2zm-2.62 7 1.62-4.33L19.12 17z"/></svg>
+    </button>
+    <div class="md-select__inner">
+      <ul class="md-select__list">
+        
+          <li class="md-select__item">
+            <a href="../../../practical-sessions/downloading-with-wis2-downloader/" hreflang="en" class="md-select__link">
+              English
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="../../../fr/practical-sessions/downloading-with-wis2-downloader/" hreflang="fr" class="md-select__link">
+              Français
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="../../../es/practical-sessions/downloading-with-wis2-downloader/" hreflang="es" class="md-select__link">
+              Español
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="../../../zh/practical-sessions/downloading-with-wis2-downloader/" hreflang="zh" class="md-select__link">
+              中文
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="../../../ru/practical-sessions/downloading-with-wis2-downloader/" hreflang="ru" class="md-select__link">
+              Русский
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="./" hreflang="ar" class="md-select__link">
+              العربية
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</div>
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="بحث" placeholder="بحث" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="إبحث">
+        
+        <button type="reset" class="md-search__icon md-icon" title="مسح كلي" aria-label="مسح كلي" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            بدء البحث
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="تصفح" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../" title="WIS2 in a box training" class="md-nav__button md-logo" aria-label="WIS2 in a box training" data-md-component="logo">
+      
+  <img src="../../../assets/img/wmo-logo.png" alt="logo">
+
+    </a>
+    WIS2 in a box training
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    الصفحة الرئيسية
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    csv2bufr-templates
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    csv2bufr-templates
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../csv2bufr-templates/aws-template/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    قالب AWS
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../csv2bufr-templates/daycli-template/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    قالب DAYCLI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../csv2bufr-templates/climat-template/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    قالب CLIMAT
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    أوراق المساعدة
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    أوراق المساعدة
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cheatsheets/linux/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    دليل Linux المختصر
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cheatsheets/docker/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Docker cheatsheet
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cheatsheets/wis2box/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    دليل مختصر لـ WIS2 in a box
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    الجلسات العملية
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    الجلسات العملية
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../connecting-to-wis2-over-mqtt/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    الاتصال بـ WIS2 عبر MQTT
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../accessing-your-student-vm/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    الوصول إلى جهاز الطالب الافتراضي
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../initializing-wis2box/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    تهيئة wis2box
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../configuring-wis2box-datasets/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    إعداد مجموعات البيانات في wis2box
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../configuring-station-metadata/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    تكوين بيانات المحطة الوصفية
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ingesting-data-for-publication/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    استيعاب البيانات للنشر
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../data-conversion-tools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    أدوات تحويل البيانات
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../csv2bufr-templates/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    قوالب تحويل CSV إلى BUFR
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../adding-gts-headers-to-wis2-notifications/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    إضافة رؤوس GTS إلى إشعارات WIS2
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../datasets-with-access-control/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    إعداد مجموعة بيانات موصى بها
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../setting-up-wis2-downloader/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    إعداد WIS2 Downloader على الجهاز الافتراضي الخاص بالطالب
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    تنزيل باستخدام WIS2 Downloader
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    تنزيل باستخدام WIS2 Downloader
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="جدول المحتويات">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      جدول المحتويات
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        المقدمة
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        استخدام عرض الكتالوج
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="استخدام عرض الكتالوج">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        تمرين: العثور على مجموعة بيانات والاشتراك فيها
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        استخدام عرض الشجرة
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="استخدام عرض الشجرة">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        تمرين: العثور على مجموعة بيانات والاشتراك باستخدام عرض الشجرة
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        استخدام عرض الاشتراك اليدوي
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        التنزيل من مجموعة بيانات ذات وصول مقيد
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="التنزيل من مجموعة بيانات ذات وصول مقيد">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#wis2box" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        تمرين: الاشتراك في مجموعة بيانات ذات وصول مقيد على wis2box الخاص بك
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        تصفية التنزيلات
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="تصفية التنزيلات">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        تمرين: الاشتراك باستخدام فلتر
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        الخاتمة
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../decoding-data/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    فك تشفير البيانات من التنسيقات الثنائية الخاصة بـ WMO
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../discovering-datasets-from-wis2-gdc/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    اكتشاف مجموعات البيانات من الكتالوج العالمي للاكتشاف الخاص بـ WIS2
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="جدول المحتويات">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      جدول المحتويات
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        المقدمة
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        استخدام عرض الكتالوج
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="استخدام عرض الكتالوج">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        تمرين: العثور على مجموعة بيانات والاشتراك فيها
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        استخدام عرض الشجرة
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="استخدام عرض الشجرة">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        تمرين: العثور على مجموعة بيانات والاشتراك باستخدام عرض الشجرة
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        استخدام عرض الاشتراك اليدوي
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        التنزيل من مجموعة بيانات ذات وصول مقيد
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="التنزيل من مجموعة بيانات ذات وصول مقيد">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#wis2box" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        تمرين: الاشتراك في مجموعة بيانات ذات وصول مقيد على wis2box الخاص بك
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        تصفية التنزيلات
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="تصفية التنزيلات">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        تمرين: الاشتراك باستخدام فلتر
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        الخاتمة
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="wis2-downloader">تنزيل باستخدام WIS2 Downloader</h1>
+<div class="admonition abstract">
+<p class="admonition-title">نتائج التعلم!</p>
+<p>بنهاية هذه الجلسة العملية، ستكون قادرًا على:</p>
+<ul>
+<li>العثور على مجموعات البيانات والاشتراك فيها</li>
+<li>استخدام التصفية للتحكم في الملفات التي يتم تنزيلها</li>
+<li>استخدام المصادقة لتنزيل مجموعات البيانات ذات الوصول المقيد</li>
+<li>تغيير الإعداد الافتراضي لـ WIS2 Downloader لحالات الاستخدام المتقدمة</li>
+</ul>
+</div>
+<h2 id="_1">المقدمة</h2>
+<p>في نظام WIS2، تحتوي جميع مجموعات البيانات على ملف بيانات وصفية يمكن العثور عليه في <strong>Global Discovery Catalogues</strong>. لذلك، يُنصح دائمًا للمستخدمين بالرجوع إلى هذه الخدمات للعثور على البيانات التي يتم مشاركتها على WIS2.</p>
+<p>يستخدم WIS2 Downloader هذا المبدأ من خلال العثور على جميع السجلات المتاحة في هذه الـ GDCs ودمجها داخليًا لتمكين المستخدم من التنقل عبر البيانات المتاحة على WIS2. نظرًا للعدد الكبير من السجلات المعروضة، من الضروري توفير طريقة للمستخدم لتصفية السجلات والعثور على السجل الصحيح. حتى بعد العثور على السجل الصحيح والاشتراك فيه، قد تكون هناك مجموعات بيانات تحتوي على عدد من الملفات يفوق احتياجات المستخدم الحالية. لهذا السبب، هناك حاجة إلى مستوى ثانٍ من التصفية — يعمل عند اتخاذ قرار بشأن ما إذا كان يجب تنزيل ملف معين.</p>
+<h2 id="_2">استخدام عرض الكتالوج</h2>
+<p><strong>عرض الكتالوج</strong> هو إحدى الطريقتين للعثور على مجموعات البيانات والاشتراك فيها باستخدام WIS2 Downloader. يقوم بتجميع السجلات من Global Discovery Catalogues ويعرضها في واجهة قابلة للبحث والتصفية — مشابهة لتصفح بوابة GDC مباشرة.</p>
+<p>انتقل إلى <strong>عرض الكتالوج</strong> من الشريط الجانبي الأيسر.</p>
+<p><img alt="WIS2 Downloader Catalogue View" src="../../../assets/img/wis2-downloader-catalogue-view.png" /></p>
+<p>في أعلى الصفحة، ستجد شريط بحث ومجموعة من الفلاتر. يمكنك استخدام هذه الأدوات لتضييق قائمة السجلات المتاحة باستخدام الكلمات المفتاحية، أو <strong>Centre ID</strong>، أو سياسة البيانات (core مقابل recommended).</p>
+<p>يمكنك أيضًا التصفية مكانيًا عن طريق تحديد <strong>مربع حدود</strong> باستخدام أربعة مدخلات إحداثيات — <strong>الشمال</strong>، <strong>الغرب</strong>، <strong>الجنوب</strong>، و<strong>الشرق</strong> — معبرًا عنها كقيم خطوط الطول والعرض العشرية. عند تعيين مربع الحدود، يمكنك الاختيار بين وضعين للمطابقة:</p>
+<ul>
+<li><strong>Intersects</strong> — يعرض السجلات التي تتداخل مساحتها الجغرافية مع مربع الحدود بأي شكل.</li>
+<li><strong>Within</strong> — يعرض فقط السجلات التي تقع مساحتها الجغرافية بالكامل داخل مربع الحدود.</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">إعادة تحميل الكتالوج</p>
+<p>يتم تحميل الكتالوج من GDCs عند بدء تشغيل WIS2 Downloader. إذا كنت تعتقد أن القائمة قديمة، يمكنك فرض إعادة تحميل من قسم <strong>الإعدادات</strong> في الشريط الجانبي الأيسر.</p>
+</div>
+<h3 id="_3">تمرين: العثور على مجموعة بيانات والاشتراك فيها</h3>
+<div class="admonition question">
+<p class="admonition-title">العثور على مجموعة بيانات لمراقبة السطح</p>
+<p>استخدم الفلاتر في عرض الكتالوج للعثور على مجموعة بيانات <strong>core</strong> لمراقبة السطح تتعلق بدرجة الحرارة وهطول الأمطار.</p>
+<ol>
+<li>اكتب <code>surface</code> في شريط البحث ولاحظ كيف يتم تصفية قائمة السجلات.</li>
+<li>قم بتعيين فلتر سياسة البيانات إلى <strong>core</strong>.</li>
+<li>قم بتعيين الكلمات المفتاحية لتتضمن <code>temperature, precipitation</code> ولاحظ كيف تتغير النتائج.</li>
+<li>اختر سجلًا من النتائج لعرض تفاصيله.</li>
+<li>راجع البيانات الوصفية المعروضة — لاحظ الموضوع، المركز الأصلي، وسياسة البيانات.</li>
+<li>قم بتعيين مجلد الوجهة إلى <code>surface-obs</code>.</li>
+<li>انقر على <strong>Subscribe</strong> لإنشاء الاشتراك.</li>
+</ol>
+<p>بعد الاشتراك، انتقل إلى <strong>إدارة الاشتراكات</strong> لتأكيد ظهور الاشتراك الجديد في القائمة.</p>
+</div>
+<details class="success">
+<summary>انقر للكشف عن الإجابة</summary>
+<p>أي سجل يحتوي موضوعه على <code>surface-based-observations</code> وسياسة بياناته هي <code>core</code> يعتبر اختيارًا صالحًا. سيؤدي تطبيق فلتر الكلمات المفتاحية <code>temperature, precipitation</code> إلى تضييق النتائج أكثر لتشمل مجموعات البيانات ذات الصلة بهذه المتغيرات.</p>
+<p>بمجرد الاشتراك، ستعرض واجهة <strong>إدارة الاشتراكات</strong> الاشتراك النشط مع موضوعه ومجلد الهدف. ستبدأ الملفات في التنزيل عند وصول إشعارات جديدة على الوسيط.</p>
+</details>
+<div class="admonition note">
+<p class="admonition-title">إلغاء الاشتراك وحذف الملفات التي تم تنزيلها</p>
+<p>انتقل إلى واجهة <strong>إدارة الاشتراكات</strong> وقم بـ <code>Unsubscribe</code> من الموضوع الذي تم اختياره في التمرين السابق.</p>
+<p>بعد ذلك، قم بتنظيف مجلد التنزيلات:</p>
+<div class="highlight"><pre><span></span><code>rm<span class="w"> </span>-fr<span class="w"> </span>/home/&lt;username&gt;/wis2-downloads/surface-obs
+</code></pre></div>
+</div>
+<h2 id="_4">استخدام عرض الشجرة</h2>
+<p><strong>عرض الشجرة</strong> يعرض تسلسل موضوعات WIS2 كهيكل شجري قابل للطي، مما يتيح لك استكشاف الموضوعات المتاحة مستوى بمستوى — مشابه للتنقل في الموضوعات باستخدام MQTT Explorer. تم تصميمه لاستكشاف البيانات المتاحة على WIS2 من الأعلى إلى الأسفل، بدءًا من جذر التسلسل الهرمي والتعمق فيه. يختلف هذا عن عرض الكتالوج، الذي يأخذك مباشرة إلى سجلات مجموعات البيانات الفردية وهو أكثر ملاءمة عندما تعرف بالفعل ما تبحث عنه.</p>
+<p>انتقل إلى <strong>عرض الشجرة</strong> من الشريط الجانبي الأيسر.</p>
+<p><img alt="WIS2 Downloader Tree View" src="../../../assets/img/wis2-downloader-tree-view.png" /></p>
+<p>يتم تنظيم الشجرة وفقًا لتسلسل موضوعات WIS2. قم بتوسيع كل مستوى بالنقر على عقدة للكشف عن العناصر الفرعية. في أي مستوى، يمكنك الاشتراك عن طريق تحديد عقدة والنقر على <strong>Subscribe</strong> — باستخدام رمز البدل (<code>#</code>) لالتقاط جميع الموضوعات أسفل تلك العقدة.</p>
+<div class="admonition note">
+<p class="admonition-title">الاشتراك في مستويات مختلفة</p>
+<p>الاشتراك في مستوى أعلى في الشجرة (مثل مستوى <strong>Centre ID</strong>) سيشمل جميع مجموعات البيانات المنشورة من قبل هذا المركز. الاشتراك في مستوى أدنى يمنحك تحكمًا أكثر دقة. يتم تلقائيًا إلحاق رمز البدل <code>#</code> بواسطة WIS2 Downloader عند الاشتراك من عرض الشجرة.</p>
+</div>
+<h3 id="_5">تمرين: العثور على مجموعة بيانات والاشتراك باستخدام عرض الشجرة</h3>
+<div class="admonition question">
+<p class="admonition-title">الاشتراك في مجموعة بيانات عبر عرض الشجرة</p>
+<p>استخدم عرض الشجرة للعثور على بيانات مراقبة السطح من مركز معين والاشتراك فيها.</p>
+<ol>
+<li>قم بتوسيع الشجرة بدءًا من عقدة <code>cache</code>، ثم انتقل عبر <code>a</code> → <code>wis2</code>.</li>
+<li>اختر <strong>Centre ID</strong> من اختيارك واستمر في التوسع حتى تصل إلى موضوع متعلق بـ <code>surface-based-observations</code>.</li>
+<li>راجع المسار الكامل للموضوع المعروض — تأكد من أنه يتوافق مع مجموعة البيانات التي تريدها.</li>
+<li>قم بتعيين مجلد الوجهة إلى <code>surface-obs-tree</code>.</li>
+<li>انقر على <strong>Subscribe</strong> لإنشاء الاشتراك.</li>
+</ol>
+<p>انتقل إلى <strong>إدارة الاشتراكات</strong> لتأكيد أن الاشتراك نشط.</p>
+</div>
+<details class="success">
+<summary>انقر للكشف عن الإجابة</summary>
+<p>أي مسار موضوع يتبع النمط <code>cache/a/wis2/&lt;centre-id&gt;/data/core/weather/surface-based-observations/#</code> يعتبر اختيارًا صالحًا. سيختلف جزء <strong>Centre ID</strong> بناءً على المركز الذي اخترته في الشجرة.</p>
+<p>ستعرض واجهة <strong>إدارة الاشتراكات</strong> الاشتراك الجديد إلى جانب أي اشتراكات تم إنشاؤها مسبقًا.</p>
+</details>
+<div class="admonition note">
+<p class="admonition-title">إلغاء الاشتراك وحذف الملفات التي تم تنزيلها</p>
+<p>انتقل إلى واجهة <strong>إدارة الاشتراكات</strong> وقم بـ <code>Unsubscribe</code> من الموضوع الذي تم اختياره في التمرين السابق.</p>
+<p>بعد ذلك، قم بتنظيف مجلد التنزيلات:</p>
+<div class="highlight"><pre><span></span><code>rm<span class="w"> </span>-fr<span class="w"> </span>/home/&lt;username&gt;/wis2-downloads/surface-obs-tree
+</code></pre></div>
+</div>
+<h2 id="_6">استخدام عرض الاشتراك اليدوي</h2>
+<p><strong>عرض الاشتراك اليدوي</strong> يتيح لك إنشاء اشتراك عن طريق إدخال موضوع مباشرة، دون الاعتماد على Global Discovery Catalogues. على عكس عرض الكتالوج وعرض الشجرة — اللذين يستمدان موضوعاتهما من GDCs — يكون عرض الاشتراك اليدوي مفيدًا عندما تعرف بالفعل الموضوع الدقيق الذي تريد الاشتراك فيه وترغب في إعداده دون تصفح الكتالوج مع مزيد من الحرية في تحديد WTH المراد استخدامه.</p>
+<p>انتقل إلى <strong>عرض الاشتراك اليدوي</strong> من الشريط الجانبي الأيسر.</p>
+<p><img alt="WIS2 Downloader Manual Subscribe" src="../../../assets/img/wis2-downloader-manual-subscribe.png" /></p>
+<p>النموذج يتيح لك تحديد:</p>
+<ul>
+<li><strong>Topic</strong> — الموضوع الكامل لـ MQTT للاشتراك فيه، بما في ذلك أي رموز بدل (مثل <code>#</code> و <code>+</code>).</li>
+<li><strong>مجلد الوجهة</strong> — الدليل الفرعي المحلي حيث سيتم حفظ الملفات التي تم تنزيلها.</li>
+<li><strong>الفلتر</strong> — كائن فلتر اختياري في شكل نصي للتحكم في الإشعارات التي يتم تنزيلها.</li>
+<li><strong>أولوية قائمة الانتظار</strong> — تتحكم في أولوية التنزيل المخصصة للإشعارات من هذا الاشتراك.</li>
+<li><strong>المصادقة</strong> — بيانات الاعتماد المطلوبة لمجموعات البيانات ذات الوصول المقيد.</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">متى تستخدم عرض الاشتراك اليدوي</p>
+<p>استخدم عرض الاشتراك اليدوي عندما تعرف بالفعل الموضوع الدقيق الذي تريده وترغب في إعداده بسرعة دون تصفح الكتالوج، أو عندما لا يكون الموضوع مدرجًا في الكتالوج، أو عندما تحتاج إلى تقديم بيانات اعتماد لمجموعة بيانات ذات وصول مقيد.</p>
+</div>
+<h2 id="_7">التنزيل من مجموعة بيانات ذات وصول مقيد</h2>
+<p>بعض مجموعات البيانات على WIS2 ذات وصول مقيد، مما يعني أنها تتطلب بيانات اعتماد صالحة قبل أن يمكن تنزيل الملفات. يدعم WIS2 Downloader طريقتين للمصادقة في عرض الاشتراك اليدوي:</p>
+<ul>
+<li><strong>مصادقة HTTP الأساسية</strong> — تقديم اسم مستخدم وكلمة مرور مرتبطة ببيانات الاعتماد الخاصة بك.</li>
+<li><strong>رمز Bearer</strong> — تقديم رمز صادر عن ناشر البيانات بدلاً من اسم المستخدم وكلمة المرور.</li>
+</ul>
+<p>يتم تخزين بيانات الاعتماد هذه لكل اشتراك وتطبيقها تلقائيًا عند تنزيل الملفات لهذا الموضوع.</p>
+<h3 id="wis2box">تمرين: الاشتراك في مجموعة بيانات ذات وصول مقيد على wis2box الخاص بك</h3>
+<p>في هذا التمرين، ستقوم بإعداد مجموعة بيانات ذات وصول مقيد على مثيل wis2box الخاص بك، وتكوين WIS2 Downloader للاشتراك في الوسيط الخاص به، والتحقق من تنزيل الملفات بشكل صحيح عند تقديم رمز Bearer.</p>
+<div class="admonition question">
+<p class="admonition-title">إعداد والاشتراك في مجموعة بيانات ذات وصول مقيد</p>
+<p><strong>الخطوة 1 — إنشاء مجموعة بيانات ذات وصول مقيد على wis2box</strong></p>
+<p>على مثيل wis2box الخاص بك، قم بإنشاء مجموعة بيانات مع تمكين التحكم في الوصول وقم بتدوين الموضوع ورمز Bearer الذي تم إنشاؤه لها. إذا لم تقم بذلك بالفعل، راجع جلسة <a href="../datasets-with-access-control/">Datasets with access control</a> العملية للحصول على خطوات الإعداد الكاملة.</p>
+</div>
+<p><strong>الخطوة 2 — تكوين WIS2 Downloader للاستماع إلى الوسيط الخاص بـ wis2box</strong></p>
+<p>بشكل افتراضي، يستمع WIS2 Downloader إلى Global Broker. لتلقي الإشعارات مباشرة من مثيل wis2box الخاص بك، تحتاج إلى إضافة مشترك في ملف التكوين الخاص بـ WIS2 Downloader يشير إلى الوسيط الداخلي لـ MQTT الخاص بـ wis2box.</p>
+<p>افتح ملف <code>docker-compose.yml</code> في دليل WIS2 Downloader الخاص بك وأضف تكوين المشترك التالي مع استبدال <code>WIS2BOX_URL</code> بعنوان URL الخاص بمثيل wis2box الخاص بك:</p>
+<div class="highlight"><pre><span></span><code><span class="w">  </span><span class="nt">subscriber-test</span><span class="p">:</span>
+<span class="nt">container_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">subscriber-test</span>
+<span class="nt">restart</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">always</span>
+<span class="nt">build</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">context</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">.</span>
+<span class="w">  </span><span class="nt">dockerfile</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./containers/subscriber/Dockerfile</span>
+<span class="w">  </span><span class="nt">args</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">WIS2DOWNLOADER_UID</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${WIS2DOWNLOADER_UID:-10001}</span>
+<span class="w">    </span><span class="nt">WIS2DOWNLOADER_GID</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${WIS2DOWNLOADER_GID:-988}</span>
+<span class="nt">env_file</span><span class="p">:</span><span class="w"> </span><span class="nv">*default-env</span>
+<span class="nt">environment</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">GLOBAL_BROKER_HOST</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">WIS2BOX_URL</span>
+<span class="w">  </span><span class="nt">GLOBAL_BROKER_PORT</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">443</span>
+<span class="w">  </span><span class="nt">GLOBAL_BROKER_USERNAME</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">everyone</span>
+<span class="w">  </span><span class="nt">GLOBAL_BROKER_PASSWORD</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">everyone</span>
+<span class="w">  </span><span class="nt">MQTT_PROTOCOL</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">websockets</span>
+<span class="nt">depends_on</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">redis</span>
+<span class="nt">networks</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">redis-net</span>
+<span class="nt">logging</span><span class="p">:</span><span class="w"> </span><span class="nv">*loki-logging</span>
+<span class="nt">healthcheck</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">test</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;CMD&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;pgrep&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;-f&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;subscriber_start&quot;</span><span class="p p-Indicator">]</span>
+<span class="w">  </span><span class="nt">interval</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">30s</span>
+<span class="w">  </span><span class="nt">timeout</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5s</span>
+<span class="w">  </span><span class="nt">retries</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3</span>
+</code></pre></div>
+<p>أعد تشغيل الحزمة لتطبيق التغييرات:</p>
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>compose<span class="w"> </span>down
+docker<span class="w"> </span>compose<span class="w"> </span>up<span class="w"> </span>-d
+</code></pre></div>
+<p><strong>الخطوة 3 — الاشتراك في مجموعة البيانات في WIS2 Downloader</strong></p>
+<ol>
+<li>انتقل إلى <strong>Manual Subscribe</strong> في واجهة المستخدم الخاصة بـ WIS2 Downloader.  </li>
+<li>قم بتعيين الموضوع إلى الموضوع الذي تم تكوينه لمجموعة البيانات ذات التحكم في الوصول على wis2box.  </li>
+<li>قم بتعيين مجلد الوجهة إلى <code>restricted-data</code>.  </li>
+<li>أدخل رمز المصادقة (bearer token) الذي تم إنشاؤه في الخطوة 1 في حقل <strong>Authentication</strong>.  </li>
+<li>انقر على <strong>Subscribe</strong> لإنشاء الاشتراك.  </li>
+</ol>
+<p><strong>الخطوة 4 — دفع البيانات إلى مجموعة البيانات على wis2box</strong></p>
+<p>على مثيل wis2box الخاص بك، قم بنشر ملف إلى مجموعة البيانات ذات التحكم في الوصول. راجع <a href="../ingesting-data-for-publication/">Ingesting data for publication</a> للحصول على الخطوات اللازمة لإدخال البيانات.</p>
+<p><strong>الخطوة 5 — التحقق من التنزيل</strong></p>
+<p>تحقق من أن الملف قد تم تنزيله بواسطة WIS2 Downloader:</p>
+<div class="highlight"><pre><span></span><code>ls<span class="w"> </span>/home/&lt;username&gt;/wis2-downloads/restricted-data
+</code></pre></div>
+<details class="success">
+<summary>انقر للكشف عن الإجابة</summary>
+</details>
+<p>مع رمز مصادقة صالح، سيقوم WIS2 Downloader بالمصادقة عند تنزيل الملفات للموضوع المقيد. يجب أن يظهر الملف الذي تم نشره في الخطوة 4 في مجلد <code>restricted-data</code> بعد وقت قصير من إدخاله بواسطة wis2box.</p>
+<p>إذا فشلت المصادقة، فلن يتم تنزيل الملفات حتى إذا ظهر الاشتراك نشطًا في عرض <strong>Manage Subscriptions</strong>. تحقق جيدًا من أن رمز المصادقة (bearer token) يتطابق مع الرمز الذي تم تكوينه على مجموعة البيانات في wis2box.</p>
+<div class="admonition note">
+<p class="admonition-title">إلغاء الاشتراك وحذف الملفات التي تم تنزيلها</p>
+</div>
+<p>انتقل إلى عرض <strong>Manage Subscriptions</strong> وقم بـ <strong>Unsubscribe</strong> من الموضوع، ثم قم بتنظيف مجلد التنزيلات:</p>
+<div class="highlight"><pre><span></span><code>rm<span class="w"> </span>-fr<span class="w"> </span>/home/&lt;username&gt;/wis2-downloads/restricted-data
+</code></pre></div>
+<h2 id="_8">تصفية التنزيلات</h2>
+<p>تتيح لك الفلاتر التحكم في الملفات التي يتم تنزيلها من اشتراك على مستوى الإشعار — هذا هو المستوى الثاني من التصفية المذكور في المقدمة. بدلاً من تنزيل كل ملف يتم نشره على موضوع، يمكنك تعريف فلتر بحيث يتم تشغيل التنزيل فقط للإشعارات التي تطابق معايير محددة.</p>
+<p>بعد اختيار مجموعة بيانات في <strong>Catalogue View</strong> أو <strong>Tree View</strong>، تظهر لوحة الفلتر على الجانب الأيمن من الشاشة قبل الاشتراك. هنا يمكنك ملء قيم الفلتر التي تريد تطبيقها. يقوم WIS2 Downloader بإنشاء كائن الفلتر تلقائيًا بناءً على مدخلاتك.</p>
+<p>في عرض <strong>Manual Subscribe</strong>، ستقوم بإدخال كائن الفلتر يدويًا عن طريق ملء حقل الإدخال <code>Filter (JSON)</code> في النموذج.</p>
+<div class="admonition note">
+<p class="admonition-title">مدخلات الفلتر المتاحة</p>
+</div>
+<ul>
+<li><strong>نوع الوسائط (Media type)</strong> — تقييد التنزيلات على أنواع محتوى محددة (مثل <code>application/bufr</code>).  </li>
+<li><strong>مجموعة البيانات (Dataset)</strong> — تقييد التنزيلات على مجموعة بيانات محددة باستخدام معرف البيانات الوصفية الخاص بها.  </li>
+<li><strong>الصندوق المحيط (Bounding box)</strong> — تقييد التنزيلات على الإشعارات التي تقع بياناتها ضمن منطقة مكانية محددة، يتم تعريفها بواسطة القيم <code>north</code>، <code>south</code>، <code>east</code>، و<code>west</code>.  </li>
+<li><strong>النطاق الزمني والتاريخي (Date &amp; time range)</strong> — تقييد التنزيلات على الإشعارات المنشورة ضمن نطاق زمني محدد.  </li>
+<li><strong>الفلاتر المخصصة (Custom filters)</strong> — التصفية بناءً على أي خاصية إشعار أخرى كما هو محدد في سجل البيانات الوصفية عن طريق تحديد قيمة الخاصية (مثل التصفية باستخدام <code>wigos_station_identifier</code> لتنزيل البيانات فقط من محطة معينة).  </li>
+</ul>
+<p>المثال التالي هو كائن الفلتر الذي يتم إنشاؤه من هذه المدخلات:</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;rules&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;accept&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;order&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;match&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;all&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">          </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;any&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">              </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;media_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;exists&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">},</span>
+<span class="w">              </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;media_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;in&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;application/bufr&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;application/x-bufr&quot;</span><span class="p">]</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">}</span>
+<span class="w">            </span><span class="p">]</span>
+<span class="w">          </span><span class="p">},</span>
+<span class="w">          </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;metadata_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;in&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;urn:wmo:md:ir-irimo:core.surface-based-observations.temp&quot;</span><span class="p">]</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">},</span>
+<span class="w">          </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;bbox&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;north&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">23.0</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;south&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">27.0</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;east&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">25.0</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;west&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">28.0</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">},</span>
+<span class="w">          </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;property&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;pubtime&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;datetime&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;between&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;2026-06-08T20:00:00+00:00&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;2026-06-09T05:00:59+00:00&quot;</span><span class="p">]</span>
+<span class="w">          </span><span class="p">},</span>
+<span class="w">          </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;property&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;wigos_station_identifier&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;in&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;0-20000-0-78338&quot;</span><span class="p">]</span>
+<span class="w">          </span><span class="p">}</span>
+<span class="w">        </span><span class="p">]</span>
+<span class="w">      </span><span class="p">},</span>
+<span class="w">      </span><span class="nt">&quot;action&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;accept&quot;</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;default&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;order&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">999</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;match&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;always&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w"> </span><span class="p">},</span>
+<span class="w">      </span><span class="nt">&quot;action&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;reject&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;reason&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;No filter criteria matched&quot;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">]</span>
+<span class="p">}</span>
+</code></pre></div>
+<h3 id="_9">تمرين: الاشتراك باستخدام فلتر</h3>
+<p>استخدم <strong>Catalogue View</strong> للعثور على مجموعة بيانات للملاحظات السطحية وتطبيق فلتر مكاني قبل الاشتراك.</p>
+<ol>
+<li>انتقل إلى <strong>Catalogue View</strong> وابحث عن مجموعة بيانات للملاحظات السطحية التي تختارها.  </li>
+<li>اختر مجموعة البيانات لعرض تفاصيلها في اللوحة اليمنى.  </li>
+<li>في مدخلات الفلتر، قم بتعيين <strong>الصندوق المحيط (bounding box)</strong> لمنطقة من اختيارك.  </li>
+<li>اختياريًا، قم بتعيين فلتر <strong>نوع الوسائط (media type)</strong> لتقييد التنزيلات على ملفات BUFR.  </li>
+<li>قم بتعيين مجلد الوجهة إلى <code>filtered-obs</code>.  </li>
+<li>انقر على <strong>Subscribe</strong> لإنشاء الاشتراك.  </li>
+</ol>
+<p>انتظر وصول الملفات وتحقق من أن الملفات التي تطابق معايير الفلتر فقط هي التي تم تنزيلها.</p>
+<details class="success">
+<summary>انقر للكشف عن الإجابة</summary>
+</details>
+<p>سيتم قبول وتنزيل الإشعارات التي تطابق جميع الشروط التي قمت بتعريفها فقط. سيتم رفض جميع الإشعارات الأخرى بواسطة قاعدة الرفض الافتراضية.</p>
+<div class="admonition note">
+<p class="admonition-title">إلغاء الاشتراك وحذف الملفات التي تم تنزيلها</p>
+</div>
+<p>انتقل إلى عرض <strong>Manage Subscriptions</strong> وقم بـ <strong>Unsubscribe</strong> من الموضوع، ثم قم بتنظيف مجلد التنزيلات:</p>
+<div class="highlight"><pre><span></span><code>rm<span class="w"> </span>-fr<span class="w"> </span>/home/&lt;username&gt;/wis2-downloads/filtered-obs
+</code></pre></div>
+<h2 id="_10">الخاتمة</h2>
+<div class="admonition success">
+<p class="admonition-title">تهانينا!</p>
+</div>
+<p>في هذه الجلسة العملية، تعلمت كيفية:</p>
+<ul>
+<li>العثور على مجموعات البيانات والاشتراك فيها باستخدام <strong>Catalogue View</strong> و <strong>Tree View</strong>  </li>
+<li>الاشتراك في المواضيع مباشرة باستخدام عرض <strong>Manual Subscribe</strong>  </li>
+<li>تطبيق الفلاتر للتحكم في الملفات التي يتم تنزيلها من الاشتراك  </li>
+<li>استخدام المصادقة لتنزيل البيانات من مجموعات البيانات ذات التحكم في الوصول</li>
+</ul>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      &copy; 2025 World Meteorological Organization
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.indexes", "content.code.copy"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u062a\u0645 \u0627\u0644\u0646\u0633\u062e \u0627\u0644\u0649 \u0627\u0644\u062d\u0627\u0641\u0638\u0629", "clipboard.copy": "\u0646\u0633\u062e \u0625\u0644\u0649 \u0627\u0644\u062d\u0627\u0641\u0638\u0629", "search.result.more.one": "\u0623\u0643\u062b\u0631 \u0645\u0646 1 \u0641\u064a \u0647\u0630\u0647 \u0627\u0644\u0635\u0641\u062d\u0629", "search.result.more.other": "\u0623\u0643\u062b\u0631 \u0645\u0646 # \u0641\u064a \u0647\u0630\u0647 \u0627\u0644\u0635\u0641\u062d\u0629", "search.result.none": "\u0644\u0627 \u062a\u0648\u062c\u062f \u0646\u062a\u0627\u0626\u062c", "search.result.one": "\u0646\u062a\u0627\u0626\u062c \u0627\u0644\u0628\u062d\u062b \u0645\u0633\u062a\u0646\u062f \u0648\u0627\u062d\u062f", "search.result.other": "\u0646\u062a\u0627\u0626\u062c \u0627\u0644\u0628\u062d\u062b # \u0645\u0633\u062a\u0646\u062f\u0627\u062a", "search.result.placeholder": "\u0627\u0643\u062a\u0628 \u0644\u0628\u062f\u0621 \u0627\u0644\u0628\u062d\u062b", "search.result.term.missing": "\u0645\u0641\u0642\u0648\u062f", "select.version": "\u0625\u062e\u062a\u0631 \u0627\u0644\u0625\u0635\u062f\u0627\u0631"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../../assets/js/disclaimer.js"></script>
+      
+    
+  </body>
+</html>

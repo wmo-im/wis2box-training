@@ -1,0 +1,1966 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="WIS2 in a box (wis2box) is a Free and Open Source (FOSS) Reference Implementation of a WMO WIS2 Node. The project provides a plug and play toolset to ingest, process, and publish weather/climate/water data using standards-based approaches in alignment with the WIS2 principles. wis2box also provides access to all data in the WIS2 network. wis2box is designed to have a low barrier to entry for data providers, providing enabling infrastructure and services for data discovery, access, and visualization.">
+      
+      
+        <meta name="author" content="World Meteorological Organization">
+      
+      
+        <link rel="canonical" href="https://training.wis2box.wis.wmo.int/csv2bufr-templates/climat-template/">
+      
+      
+        <link rel="prev" href="../daycli-template/">
+      
+      
+        <link rel="next" href="../../cheatsheets/linux/">
+      
+      
+        
+          <link rel="alternate" href="./" hreflang="en">
+        
+          <link rel="alternate" href="../../fr/csv2bufr-templates/climat-template/" hreflang="fr">
+        
+          <link rel="alternate" href="../../es/csv2bufr-templates/climat-template/" hreflang="es">
+        
+          <link rel="alternate" href="../../zh/csv2bufr-templates/climat-template/" hreflang="zh">
+        
+          <link rel="alternate" href="../../ru/csv2bufr-templates/climat-template/" hreflang="ru">
+        
+          <link rel="alternate" href="../../ar/csv2bufr-templates/climat-template/" hreflang="ar">
+        
+      
+      
+      <link rel="icon" href="https://public.wmo.int/sites/all/themes/wmo/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>CLIMAT Template - WIS2 in a box training</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/css/custom.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#csv2bufr-template-for-monthly-climate-data-climat" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="WIS2 in a box training" class="md-header__button md-logo" aria-label="WIS2 in a box training" data-md-component="logo">
+      
+  <img src="../../assets/img/wmo-logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            WIS2 in a box training
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              CLIMAT Template
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+      <div class="md-header__option">
+  <div class="md-select">
+    
+    <button class="md-header__button md-icon" aria-label="Select language">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12.87 15.07-2.54-2.51.03-.03A17.5 17.5 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2zm-2.62 7 1.62-4.33L19.12 17z"/></svg>
+    </button>
+    <div class="md-select__inner">
+      <ul class="md-select__list">
+        
+          <li class="md-select__item">
+            <a href="./" hreflang="en" class="md-select__link">
+              English
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="../../fr/csv2bufr-templates/climat-template/" hreflang="fr" class="md-select__link">
+              Français
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="../../es/csv2bufr-templates/climat-template/" hreflang="es" class="md-select__link">
+              Español
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="../../zh/csv2bufr-templates/climat-template/" hreflang="zh" class="md-select__link">
+              中文
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="../../ru/csv2bufr-templates/climat-template/" hreflang="ru" class="md-select__link">
+              Русский
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="../../ar/csv2bufr-templates/climat-template/" hreflang="ar" class="md-select__link">
+              العربية
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</div>
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="WIS2 in a box training" class="md-nav__button md-logo" aria-label="WIS2 in a box training" data-md-component="logo">
+      
+  <img src="../../assets/img/wmo-logo.png" alt="logo">
+
+    </a>
+    WIS2 in a box training
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Practical Sessions
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Practical Sessions
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../practical-sessions/connecting-to-wis2-over-mqtt/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Connecting to WIS2 over MQTT
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../practical-sessions/accessing-your-student-vm/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Accessing your student VM
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../practical-sessions/initializing-wis2box/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Initializing wis2box
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../practical-sessions/configuring-wis2box-datasets/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configuring datasets in wis2box
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../practical-sessions/configuring-station-metadata/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configuring station metadata
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../practical-sessions/ingesting-data-for-publication/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ingesting data for Publication
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../practical-sessions/data-conversion-tools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data Conversion Tools
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../practical-sessions/csv2bufr-templates/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CSV-to-BUFR mapping templates
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../practical-sessions/adding-gts-headers-to-wis2-notifications/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Adding GTS headers to WIS2 notifications
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../practical-sessions/datasets-with-access-control/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Setting up a recommended dataset
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../practical-sessions/setting-up-wis2-downloader/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Set up WIS2 Downloader on your student VM
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../practical-sessions/downloading-with-wis2-downloader/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Downloading with WIS2 Downloader
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../practical-sessions/decoding-data/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Decoding data from WMO binary formats
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../practical-sessions/discovering-datasets-from-wis2-gdc/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Discovering datasets from the WIS2 Global Discovery Catalogue
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    cheatsheets
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    cheatsheets
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cheatsheets/linux/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Linux cheatsheet
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cheatsheets/docker/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Docker cheatsheet
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cheatsheets/wis2box/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    WIS2 in a box cheatsheet
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    csv2bufr-templates
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    csv2bufr-templates
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../aws-template/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AWS Template
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../daycli-template/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    DAYCLI Template
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CLIMAT Template
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CLIMAT Template
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#csv-columns-and-description" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CSV columns and description
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#csv-columns-and-description" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CSV columns and description
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="csv2bufr-template-for-monthly-climate-data-climat">csv2bufr template for monthly climate data (CLIMAT)</h1>
+<p><strong>CLIMAT</strong> messages report monthly climate summaries compiled from daily observations at synoptic and climatological stations, to support climate monitoring, research, and archiving.</p>
+<p>The CLIMAT template provides a standardized CSV format to produce CLIMAT messages encoded in BUFR format for sequence 301150,307073.</p>
+<h2 id="csv-columns-and-description">CSV columns and description</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Column</th>
+<th style="text-align: left;">Units</th>
+<th style="text-align: left;">Data Type</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">wigos_identifier_series</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;">WIGOS Identifier Series</td>
+</tr>
+<tr>
+<td style="text-align: left;">wigos_issuer_of_identifier</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;">WIGOS Issuer Of Identifier</td>
+</tr>
+<tr>
+<td style="text-align: left;">wigos_issue_number</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;">WIGOS Issue Number</td>
+</tr>
+<tr>
+<td style="text-align: left;">wigos_local_identifier_character</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Character</td>
+<td style="text-align: left;">WIGOS Local Identifier Character</td>
+</tr>
+<tr>
+<td style="text-align: left;">block_number</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;">WMO Block Number,</td>
+</tr>
+<tr>
+<td style="text-align: left;">station_number</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;">WMO Station Number,</td>
+</tr>
+<tr>
+<td style="text-align: left;">station_or_site_name</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Character</td>
+<td style="text-align: left;">Station name</td>
+</tr>
+<tr>
+<td style="text-align: left;">station_type</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;">Type of observing station, encoded using table 0 02 001 (i.e. 0 for AWSs)</td>
+</tr>
+<tr>
+<td style="text-align: left;">year</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;">Year(UTC), time of report creation</td>
+</tr>
+<tr>
+<td style="text-align: left;">month</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;">Month(UTC), time of report creation</td>
+</tr>
+<tr>
+<td style="text-align: left;">day</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;">Day(UTC), time of report creation</td>
+</tr>
+<tr>
+<td style="text-align: left;">hour</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;">Hour(UTC), time of report creation</td>
+</tr>
+<tr>
+<td style="text-align: left;">minute</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;">Minute(UTC), time of report creation</td>
+</tr>
+<tr>
+<td style="text-align: left;">latitude</td>
+<td style="text-align: left;">degrees</td>
+<td style="text-align: left;">Decimal</td>
+<td style="text-align: left;">Latitude of the station up to 5 decimal places</td>
+</tr>
+<tr>
+<td style="text-align: left;">longitude</td>
+<td style="text-align: left;">degrees</td>
+<td style="text-align: left;">Decimal</td>
+<td style="text-align: left;">Longitude of the station up to 5 decimal places</td>
+</tr>
+<tr>
+<td style="text-align: left;">height_of_station</td>
+<td style="text-align: left;">metres</td>
+<td style="text-align: left;">Decimal</td>
+<td style="text-align: left;">Height of the station above mean sea level, up to 1 decimal place</td>
+</tr>
+<tr>
+<td style="text-align: left;">height_of_barometer</td>
+<td style="text-align: left;">metres</td>
+<td style="text-align: left;">Decimal</td>
+<td style="text-align: left;">Height of the barometer above mean sea level, up to 1 decimal place</td>
+</tr>
+<tr>
+<td style="text-align: left;">time_zone_offset</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;">Offset between UTC and local time, UTC-LT</td>
+</tr>
+<tr>
+<td style="text-align: left;">days_in_month</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;">Number of days in the month of the report</td>
+</tr>
+<tr>
+<td style="text-align: left;">mean_pressure</td>
+<td style="text-align: left;">Pa</td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;">Monthly mean value for the observed pressure at station height, to the nearest 10 Pa</td>
+</tr>
+<tr>
+<td style="text-align: left;">mean_pressure_sea_level</td>
+<td style="text-align: left;">Pa</td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;">Monthly mean value for the observed pressure at sea level, to the nearest 10 Pa</td>
+</tr>
+<tr>
+<td style="text-align: left;">standard_pressure_level</td>
+<td style="text-align: left;">Pa</td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;">Standard pressure level to the nearest 10 Pa, leave empty if lowland station</td>
+</tr>
+<tr>
+<td style="text-align: left;">geopotential_height</td>
+<td style="text-align: left;">gpm</td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;">Geopotential height , leave empty if lowland station</td>
+</tr>
+<tr>
+<td style="text-align: left;">height_of_sensor</td>
+<td style="text-align: left;">metres</td>
+<td style="text-align: left;">Decimal</td>
+<td style="text-align: left;">Height of barometer above local ground to 1 decimal place</td>
+</tr>
+<tr>
+<td style="text-align: left;">air_temperature</td>
+<td style="text-align: left;">K</td>
+<td style="text-align: left;">Decimal</td>
+<td style="text-align: left;">Monthly mean value for the observed air temperature, up to 2 decimal places</td>
+</tr>
+<tr>
+<td style="text-align: left;">method_for_extreme_temperatures</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;">Method for observing extreme temperatures, table 0 02 051</td>
+</tr>
+<tr>
+<td style="text-align: left;">daily_read_time_max_temp</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;">Principal hour of reading maximum temperature daily</td>
+</tr>
+<tr>
+<td style="text-align: left;">max_temperature_last_24h</td>
+<td style="text-align: left;">K</td>
+<td style="text-align: left;">Decimal</td>
+<td style="text-align: left;">Maximum temperature in the month, up to 2 decimal places</td>
+</tr>
+<tr>
+<td style="text-align: left;">daily_read_time_min_temp</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;">Principal hour of reading minimum temperature daily</td>
+</tr>
+<tr>
+<td style="text-align: left;">min_temperature_last_24h</td>
+<td style="text-align: left;">K</td>
+<td style="text-align: left;">Decimal</td>
+<td style="text-align: left;">Minimum temperature in the month, up to 2 decimal places</td>
+</tr>
+<tr>
+<td style="text-align: left;">vapour_pressure</td>
+<td style="text-align: left;">Pa</td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;">Monthly mean value for the observed vapour pressure, up to the nearest 10 Pa</td>
+</tr>
+<tr>
+<td style="text-align: left;">daily_mean_temp_deviation</td>
+<td style="text-align: left;">K</td>
+<td style="text-align: left;">Decimal</td>
+<td style="text-align: left;">Monthly standard deviation of daily mean temperature, up to 2 decimal places</td>
+</tr>
+<tr>
+<td style="text-align: left;">days_missing_pressure</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;">Amount of days in month where pressure was not collected</td>
+</tr>
+<tr>
+<td style="text-align: left;">days_missing_mean_temperature</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;">Amount of days in month where temperature was not collected</td>
+</tr>
+<tr>
+<td style="text-align: left;">days_missing_vapour_pressure</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;">Amount of days in month where vapour pressure was not collected</td>
+</tr>
+<tr>
+<td style="text-align: left;">days_missing_max_temperature</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;">Amount of days in month where maximum temperature was not collected</td>
+</tr>
+<tr>
+<td style="text-align: left;">days_missing_min_temperature</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;">Amount of days in month where minimum temperature was not collected</td>
+</tr>
+<tr>
+<td style="text-align: left;">total_sunshine_hours</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;">Montly daily mean amount of sunshine hours</td>
+</tr>
+<tr>
+<td style="text-align: left;">total_sunshine_percent</td>
+<td style="text-align: left;">%</td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;">Monthly mean of sunshine percent</td>
+</tr>
+<tr>
+<td style="text-align: left;">days_missing_total_sunshine</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;">Amount of days in month where sunshine was not collected</td>
+</tr>
+<tr>
+<td style="text-align: left;">wind_over_10mps_days</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;">Amount of days in month where mean wind speed exceeded 10 ms-1</td>
+</tr>
+<tr>
+<td style="text-align: left;">wind_over_20mps_days</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;">Amount of days in month where mean wind speed exceeded 20 ms-1</td>
+</tr>
+<tr>
+<td style="text-align: left;">wind_over_30mps_days</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;">Amount of days in month where mean wind speed exceeded 30 ms-1</td>
+</tr>
+<tr>
+<td style="text-align: left;">max_temp_below_zero_days</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;">Amount of days in month where maximum temperature stayed below 0 degrees celsius</td>
+</tr>
+<tr>
+<td style="text-align: left;">max_temp_above_25_days</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;">Amount of days in month where maximum temperature exceeded 25 degrees celsius</td>
+</tr>
+<tr>
+<td style="text-align: left;">max_temp_above_30_days</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;">Amount of days in month where maximum temperature exceeded 30 degrees celsius</td>
+</tr>
+<tr>
+<td style="text-align: left;">max_temp_above_35_days</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;">Amount of days in month where maximum temperature exceeded 35 degrees celsius</td>
+</tr>
+<tr>
+<td style="text-align: left;">max_temp_above_40_days</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;">Amount of days in month where maximum temperature exceeded 40 degrees celsius</td>
+</tr>
+<tr>
+<td style="text-align: left;">min_temp_below_zero_days</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;">Amount of days in month where minimum temperature stayed below 0 degrees celsius</td>
+</tr>
+<tr>
+<td style="text-align: left;">snow_over_0cm_days</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;">Amount of days in month where snow height exceeded 0cm</td>
+</tr>
+<tr>
+<td style="text-align: left;">snow_over_1cm_days</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;">Amount of days in month where snow height exceeded 1cm</td>
+</tr>
+<tr>
+<td style="text-align: left;">snow_over_10cm_days</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;">Amount of days in month where snow height exceeded 10cm</td>
+</tr>
+<tr>
+<td style="text-align: left;">snow_over_50cm_days</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;">Amount of days in month where snow height exceeded 50cm</td>
+</tr>
+<tr>
+<td style="text-align: left;">horizontal_visibility_below_50m_days</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;">Amount of days in month where horizontal visisbility stayed below 50m</td>
+</tr>
+<tr>
+<td style="text-align: left;">horizontal_visibility_below_100m_days</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;">Amount of days in month where horizontal visisbility stayed below 100m</td>
+</tr>
+<tr>
+<td style="text-align: left;">horizontal_visibility_below_1000m_days</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;">Amount of days in month where horizontal visisbility stayed below 1000m</td>
+</tr>
+<tr>
+<td style="text-align: left;">hail_days</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;">Amount of days in month with hail</td>
+</tr>
+<tr>
+<td style="text-align: left;">storm_days</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;">Amount of days in month with storm occurrence</td>
+</tr>
+<tr>
+<td style="text-align: left;">height_of_temp_sensor</td>
+<td style="text-align: left;">metres</td>
+<td style="text-align: left;">Decimal</td>
+<td style="text-align: left;">Height of temperature sensor above local ground to 1 decimal place</td>
+</tr>
+<tr>
+<td style="text-align: left;">highest_daily_mean_temperature _qualifier</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;">Qualifier for the daily occurrence, 0 if only occurred once in the month, 1 if occurred 2 times or more</td>
+</tr>
+<tr>
+<td style="text-align: left;">highest_daily_mean_temperature_day</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;">Day of the month where the highest daily mean temperature was meassured</td>
+</tr>
+<tr>
+<td style="text-align: left;">highest_daily_mean_temperature</td>
+<td style="text-align: left;">K</td>
+<td style="text-align: left;">Decimal</td>
+<td style="text-align: left;">Highest daily mean temperature in the month, up to 2 decimal places</td>
+</tr>
+<tr>
+<td style="text-align: left;">lowest_daily_mean_temperature_qualifier</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;">Qualifier for the daily occurrence, 0 if only occurred once in the month, 1 if occurred 2 times or more</td>
+</tr>
+<tr>
+<td style="text-align: left;">lowest_daily_mean_temperature_day</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;">Day of the month where the lowest daily mean temperature was meassured</td>
+</tr>
+<tr>
+<td style="text-align: left;">lowest_daily_mean_temperature</td>
+<td style="text-align: left;">K</td>
+<td style="text-align: left;">Decimal</td>
+<td style="text-align: left;">Lowest daily mean temperature in the month, up to 2 decimal places</td>
+</tr>
+<tr>
+<td style="text-align: left;">monthly_max_temperature_qualifier</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;">Qualifier for the daily occurrence, 0 if only occurred once in the month, 1 if occurred 2 times or more</td>
+</tr>
+<tr>
+<td style="text-align: left;">monthly_max_temperature_day</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;">Day of the month where the maximum temperature was meassured</td>
+</tr>
+<tr>
+<td style="text-align: left;">monthly_max_temperature</td>
+<td style="text-align: left;">K</td>
+<td style="text-align: left;">Decimal</td>
+<td style="text-align: left;">Maximum temperature in the month, up to 2 decimal places</td>
+</tr>
+<tr>
+<td style="text-align: left;">monthly_min_temperature_qualifier</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;">Qualifier for the daily occurrence, 0 if only occurred once in the month, 1 if occurred 2 times or more</td>
+</tr>
+<tr>
+<td style="text-align: left;">monthly_min_temperature_day</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;">Day of the month where the minimum temperature was meassured</td>
+</tr>
+<tr>
+<td style="text-align: left;">monthly_min_temperature</td>
+<td style="text-align: left;">K</td>
+<td style="text-align: left;">Decimal</td>
+<td style="text-align: left;">Minimum temperature in the month, up to 2 decimal places</td>
+</tr>
+<tr>
+<td style="text-align: left;">height_of_wind_sensor</td>
+<td style="text-align: left;">metres</td>
+<td style="text-align: left;">Decimal</td>
+<td style="text-align: left;">Height of anemometer above local ground to 1 decimal place</td>
+</tr>
+<tr>
+<td style="text-align: left;">instrumentation_for_wind_measurement</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;">Type of instrumentation for wind meassurement, table 0 02 002</td>
+</tr>
+<tr>
+<td style="text-align: left;">maximum_instantaneous_wind_speed _qualifier</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;">Qualifier for the daily occurrence, 0 if only occurred once in the month, 1 if occurred 2 times or more</td>
+</tr>
+<tr>
+<td style="text-align: left;">maximum_instantaneous_wind_speed _day</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;">Day of the month where the maximum instantenous wind speed was meassured</td>
+</tr>
+<tr>
+<td style="text-align: left;">maximum_instantaneous_wind_speed</td>
+<td style="text-align: left;">ms-1</td>
+<td style="text-align: left;">Decimal</td>
+<td style="text-align: left;">Maximum instanteneous wind speed in the month, up to 1 decimal place</td>
+</tr>
+<tr>
+<td style="text-align: left;">height_of_rain_sensor</td>
+<td style="text-align: left;">metres</td>
+<td style="text-align: left;">Decimal</td>
+<td style="text-align: left;">Height of pluviometer above local ground to 1 decimal place</td>
+</tr>
+<tr>
+<td style="text-align: left;">total_accumulated_precipitation</td>
+<td style="text-align: left;">kg m-2</td>
+<td style="text-align: left;">Decimal</td>
+<td style="text-align: left;">Monthly total accumulated precipitation</td>
+</tr>
+<tr>
+<td style="text-align: left;">frequency_group_precipitation</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;">Precipitation frequency group, table 0 13 051</td>
+</tr>
+<tr>
+<td style="text-align: left;">days_with_precipitation_above_1mm</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;">Amount of days in month where precipitation exceeded 1mm</td>
+</tr>
+<tr>
+<td style="text-align: left;">total_missing_days_with_respect_to _accumulation_or_average_precipitation</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;">Total misssing days for the monthly precipitation accumulation</td>
+</tr>
+<tr>
+<td style="text-align: left;">rain_above_1kgpsm_days</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;">Amount of days in month where precipitation exceeded 1 kgm-2</td>
+</tr>
+<tr>
+<td style="text-align: left;">rain_above_5kgpsm_days</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;">Amount of days in month where precipitation exceeded 5 kgm-2</td>
+</tr>
+<tr>
+<td style="text-align: left;">rain_above_10kgpsm_days</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;">Amount of days in month where precipitation exceeded 10 kgm-2</td>
+</tr>
+<tr>
+<td style="text-align: left;">rain_above_50kgpsm_days</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;">Amount of days in month where precipitation exceeded 50 kgm-2</td>
+</tr>
+<tr>
+<td style="text-align: left;">rain_above_100kgpsm_days</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;">Amount of days in month where precipitation exceeded 100 kgm-2</td>
+</tr>
+<tr>
+<td style="text-align: left;">rain_above_150kgpsm_days</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;">Amount of days in month where precipitation exceeded 150 kgm-2</td>
+</tr>
+<tr>
+<td style="text-align: left;">highest_daily_amount_of_precipitation _qualifier</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;">Qualifier for the daily occurrence, 0 if only occurred once in the month, 1 if occurred 2 times or more</td>
+</tr>
+<tr>
+<td style="text-align: left;">highest_daily_amount_of_precipitation _day</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;">Day of the month with the highest amount of precipitation meassured</td>
+</tr>
+<tr>
+<td style="text-align: left;">highest_daily_amount_of_precipitation</td>
+<td style="text-align: left;">kg m-2</td>
+<td style="text-align: left;">Decimal</td>
+<td style="text-align: left;">Highest daily amount of precipitation in the month, up to 1 decimal place</td>
+</tr>
+<tr>
+<td style="text-align: left;">starting_reference_period_year</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;">Beginning year of the reference period</td>
+</tr>
+<tr>
+<td style="text-align: left;">ending_reference_period_year</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;">Ending year of the reference period</td>
+</tr>
+<tr>
+<td style="text-align: left;">normal_mean_pressure</td>
+<td style="text-align: left;">Pa</td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;">Nomal monthly mean pressure, up to the nearest 10 Pa</td>
+</tr>
+<tr>
+<td style="text-align: left;">normal_mean_pressure_sea_level</td>
+<td style="text-align: left;">Pa</td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;">Nomal monthly mean sea level pressure, up to the nearest 10 Pa</td>
+</tr>
+<tr>
+<td style="text-align: left;">normal_standard_pressure_level</td>
+<td style="text-align: left;">Pa</td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;">Nomal monthly mean standard pressure, up to the nearest 10 Pa, leave empty of lowland station</td>
+</tr>
+<tr>
+<td style="text-align: left;">normal_geopotential_height_of_pressure_level</td>
+<td style="text-align: left;">gpm</td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;">Nomal geopotential height, leave empty of lowland station</td>
+</tr>
+<tr>
+<td style="text-align: left;">normal_air_temperature</td>
+<td style="text-align: left;">K</td>
+<td style="text-align: left;">Decimal</td>
+<td style="text-align: left;">Nomal monthly mean air temperature, up to 2 decimal places</td>
+</tr>
+<tr>
+<td style="text-align: left;">normal_max_temperature_last_24h</td>
+<td style="text-align: left;">K</td>
+<td style="text-align: left;">Decimal</td>
+<td style="text-align: left;">Nomal monthly maximum temperature, up to 2 decimal places</td>
+</tr>
+<tr>
+<td style="text-align: left;">normal_min_temperature_last_24h</td>
+<td style="text-align: left;">K</td>
+<td style="text-align: left;">Decimal</td>
+<td style="text-align: left;">Nomal monthly minimum temperature, up to 2 decimal places</td>
+</tr>
+<tr>
+<td style="text-align: left;">normal_vapour_pressure</td>
+<td style="text-align: left;">Pa</td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;">Nomal monthly mean vapour pressure, up to the nearest 10Pa</td>
+</tr>
+<tr>
+<td style="text-align: left;">normal_daily_mean_temp_deviation</td>
+<td style="text-align: left;">K</td>
+<td style="text-align: left;">Decimal</td>
+<td style="text-align: left;">Nomal monthly mean temperature deviation, up to 2 decimal places</td>
+</tr>
+<tr>
+<td style="text-align: left;">normal_total_sunshine</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;">Normal montly daily mean amount of sunshine hours</td>
+</tr>
+<tr>
+<td style="text-align: left;">rain_starting_reference_period_year</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;">Beginning year of the reference period for precipitation</td>
+</tr>
+<tr>
+<td style="text-align: left;">rain_ending_reference_period_year</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;">Ending year of the reference period for precipitation</td>
+</tr>
+<tr>
+<td style="text-align: left;">normal_total_accumulated_precipitation</td>
+<td style="text-align: left;">kg m-2</td>
+<td style="text-align: left;">Decimal</td>
+<td style="text-align: left;">Normal monthly total accumulated precipitation</td>
+</tr>
+<tr>
+<td style="text-align: left;">normal_days_with_precipitation_above _1mm</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;">Normal amount of days in month where precipitation exceeded 1mm</td>
+</tr>
+<tr>
+<td style="text-align: left;">normal_pressure_missing_years</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;">Amount of years in reference period where pressure was not collected</td>
+</tr>
+<tr>
+<td style="text-align: left;">normal_temperature_missing_years</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;">Amount of years in reference period where temperature was not collected</td>
+</tr>
+<tr>
+<td style="text-align: left;">normal_extreme_temperature_missing _years</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;">Amount of years in reference period where extreme temperatures were not collected</td>
+</tr>
+<tr>
+<td style="text-align: left;">normal_vapour_pressure_missing_years</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;">Amount of years in reference period where vapour pressure was not collected</td>
+</tr>
+<tr>
+<td style="text-align: left;">normal_rain_missing_years</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;">Amount of years in reference period where precipitation was not collected</td>
+</tr>
+<tr>
+<td style="text-align: left;">normal_sunshine_duration_missing_years</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;">Amount of years in reference period where sunshine duration was not collected</td>
+</tr>
+<tr>
+<td style="text-align: left;">normal_max_temperature_missing_years</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;">Amount of years in reference period where maximum temperature was not collected</td>
+</tr>
+<tr>
+<td style="text-align: left;">normal_min_temperature_missing_years</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;">Amount of years in reference period where minimum temperature was not collected</td>
+</tr>
+</tbody>
+</table>
+<h2 id="example">Example</h2>
+<p>Example CSV file that conforms to the CLIMAT template: <a href="../../sample-data/climat-example.csv">climat-example.csv</a>.</p>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      &copy; 2025 World Meteorological Organization
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.indexes", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../assets/js/disclaimer.js"></script>
+      
+    
+  </body>
+</html>
