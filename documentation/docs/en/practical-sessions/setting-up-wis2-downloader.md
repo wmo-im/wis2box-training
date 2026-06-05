@@ -18,7 +18,7 @@ In this session you will learn how to set up a WIS2 Downloader instance on the p
 
 !!! note "About WIS2 Downloader"
      
-     The WIS2 Downloader is available as a standalone Docker Compose project and is recommended to be ran on a separate environment from a wis2box instance, so as to not have the downloads interfering with the publication of messages.
+     The WIS2 Downloader is available as a standalone Docker Compose project. It is recommended to be ran on a separate server or virtual machine from a wis2box instance, so as to not have the downloads interfering with the publication of messages.
 
      If you would like to develop your own service for subscribing to WIS2 notifications and downloading data, you can use the [WIS2 Downloader source code](https://github.com/World-Meteorological-Organization/wis2downloader) as a reference.
      
@@ -26,9 +26,9 @@ In this session you will learn how to set up a WIS2 Downloader instance on the p
 
 ## Preparation and requirements
 
-!!! note "If not during the training"
+!!! note "If on a restricted network"
 
-    The following steps are only to be applied if the mentioned ports are unavailable by default on the server. In any configuration, these are the only ports needed  to be accessed in order to use the full capabilities of the WIS2 Downloader stack.    
+    The following steps only need to be applied if the downloader is run on a different network and the mentioned ports are inaccessible. In any configuration, these are the only ports needed in order to use the full capabilities of the WIS2 Downloader stack.    
 
 Before starting please log in to your student VM making sure to tunnel via SSH the following ports:
 
@@ -150,7 +150,7 @@ As a final step we can delete the subscription by going to the **Manage Subscrip
 
 ## Reviewing the WIS2 Downloader configuration
 
-The WIS2 Downloader instance can be configured using the environment variables defined in your `.env` file.
+The WIS2 Downloader instance is configured using the environment variables defined in your `.env` file.
 
 You may check a breakdown of the environment variables in the [WIS2 Downloader Admin Guide Section 2.1](https://world-meteorological-organization.github.io/wis2downloader/en/admin-guide.html)
 
