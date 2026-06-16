@@ -161,31 +161,31 @@ In this exercise you will set up an access-controlled dataset on your wis2box in
 
     ```yaml
       subscriber-test:
-    container_name: subscriber-test
-    restart: always
-    build:
-      context: .
-      dockerfile: ./containers/subscriber/Dockerfile
-      args:
-        WIS2DOWNLOADER_UID: ${WIS2DOWNLOADER_UID:-10001}
-        WIS2DOWNLOADER_GID: ${WIS2DOWNLOADER_GID:-988}
-    env_file: *default-env
-    environment:
-      GLOBAL_BROKER_HOST: WIS2BOX_URL
-      GLOBAL_BROKER_PORT: 443
-      GLOBAL_BROKER_USERNAME: everyone
-      GLOBAL_BROKER_PASSWORD: everyone
-      MQTT_PROTOCOL: websockets
-    depends_on:
-      - redis
-    networks:
-      - redis-net
-    logging: *loki-logging
-    healthcheck:
-      test: ["CMD", "pgrep", "-f", "subscriber_start"]
-      interval: 30s
-      timeout: 5s
-      retries: 3
+        container_name: subscriber-test
+        restart: always
+        build:
+          context: .
+          dockerfile: ./containers/subscriber/Dockerfile
+          args:
+            WIS2DOWNLOADER_UID: ${WIS2DOWNLOADER_UID:-10001}
+            WIS2DOWNLOADER_GID: ${WIS2DOWNLOADER_GID:-988}
+        env_file: *default-env
+        environment:
+          GLOBAL_BROKER_HOST: WIS2BOX_URL
+          GLOBAL_BROKER_PORT: 443
+          GLOBAL_BROKER_USERNAME: everyone
+          GLOBAL_BROKER_PASSWORD: everyone
+          MQTT_PROTOCOL: websockets
+        depends_on:
+          - redis
+        networks:
+          - redis-net
+        logging: *loki-logging
+        healthcheck:
+          test: ["CMD", "pgrep", "-f", "subscriber_start"]
+          interval: 30s
+          timeout: 5s
+          retries: 3
     ```
 
     Restart the stack to apply the changes:
