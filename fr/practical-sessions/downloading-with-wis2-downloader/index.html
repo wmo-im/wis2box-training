@@ -1,0 +1,1774 @@
+
+<!doctype html>
+<html lang="fr" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="WIS2 in a box (wis2box) is a Free and Open Source (FOSS) Reference Implementation of a WMO WIS2 Node. The project provides a plug and play toolset to ingest, process, and publish weather/climate/water data using standards-based approaches in alignment with the WIS2 principles. wis2box also provides access to all data in the WIS2 network. wis2box is designed to have a low barrier to entry for data providers, providing enabling infrastructure and services for data discovery, access, and visualization.">
+      
+      
+        <meta name="author" content="World Meteorological Organization">
+      
+      
+        <link rel="canonical" href="https://training.wis2box.wis.wmo.int/fr/practical-sessions/downloading-with-wis2-downloader/">
+      
+      
+        <link rel="prev" href="../setting-up-wis2-downloader/">
+      
+      
+        <link rel="next" href="../decoding-data/">
+      
+      
+        
+          <link rel="alternate" href="../../../practical-sessions/downloading-with-wis2-downloader/" hreflang="en">
+        
+          <link rel="alternate" href="./" hreflang="fr">
+        
+          <link rel="alternate" href="../../../es/practical-sessions/downloading-with-wis2-downloader/" hreflang="es">
+        
+          <link rel="alternate" href="../../../zh/practical-sessions/downloading-with-wis2-downloader/" hreflang="zh">
+        
+          <link rel="alternate" href="../../../ru/practical-sessions/downloading-with-wis2-downloader/" hreflang="ru">
+        
+          <link rel="alternate" href="../../../ar/practical-sessions/downloading-with-wis2-downloader/" hreflang="ar">
+        
+      
+      
+      <link rel="icon" href="https://public.wmo.int/sites/all/themes/wmo/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Téléchargement avec WIS2 Downloader - WIS2 in a box training</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/css/custom.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#telechargement-avec-wis2-downloader" class="md-skip">
+          Aller au contenu
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="En-tête">
+    <a href="../../" title="WIS2 in a box training" class="md-header__button md-logo" aria-label="WIS2 in a box training" data-md-component="logo">
+      
+  <img src="../../../assets/img/wmo-logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            WIS2 in a box training
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Téléchargement avec WIS2 Downloader
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+      <div class="md-header__option">
+  <div class="md-select">
+    
+    <button class="md-header__button md-icon" aria-label="Sélectionner la langue">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12.87 15.07-2.54-2.51.03-.03A17.5 17.5 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2zm-2.62 7 1.62-4.33L19.12 17z"/></svg>
+    </button>
+    <div class="md-select__inner">
+      <ul class="md-select__list">
+        
+          <li class="md-select__item">
+            <a href="../../../practical-sessions/downloading-with-wis2-downloader/" hreflang="en" class="md-select__link">
+              English
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="./" hreflang="fr" class="md-select__link">
+              Français
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="../../../es/practical-sessions/downloading-with-wis2-downloader/" hreflang="es" class="md-select__link">
+              Español
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="../../../zh/practical-sessions/downloading-with-wis2-downloader/" hreflang="zh" class="md-select__link">
+              中文
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="../../../ru/practical-sessions/downloading-with-wis2-downloader/" hreflang="ru" class="md-select__link">
+              Русский
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="../../../ar/practical-sessions/downloading-with-wis2-downloader/" hreflang="ar" class="md-select__link">
+              العربية
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</div>
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Rechercher" placeholder="Rechercher" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Recherche">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Effacer" aria-label="Effacer" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initialisation de la recherche
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../" title="WIS2 in a box training" class="md-nav__button md-logo" aria-label="WIS2 in a box training" data-md-component="logo">
+      
+  <img src="../../../assets/img/wmo-logo.png" alt="logo">
+
+    </a>
+    WIS2 in a box training
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Accueil
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Aide-mémoire
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Aide-mémoire
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cheatsheets/linux/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Linux cheatsheet
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cheatsheets/docker/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Docker cheatsheet
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cheatsheets/wis2box/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    WIS2 in a box cheatsheet
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sessions Pratiques
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Sessions Pratiques
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../connecting-to-wis2-over-mqtt/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Connexion à WIS2 via MQTT
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../accessing-your-student-vm/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Accéder à votre VM étudiant
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../initializing-wis2box/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Initialiser wis2box
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../configuring-wis2box-datasets/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configuration des ensembles de données dans wis2box
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../configuring-station-metadata/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configuration des métadonnées des stations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ingesting-data-for-publication/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ingestion des données pour publication
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../data-conversion-tools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Outils de Conversion de Données
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../csv2bufr-templates/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Modèles de correspondance CSV-vers-BUFR
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../adding-gts-headers-to-wis2-notifications/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ajout des en-têtes GTS aux notifications WIS2
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../datasets-with-access-control/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configuration d'un jeu de données recommandé
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../setting-up-wis2-downloader/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configurer WIS2 Downloader sur votre VM étudiante
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Téléchargement avec WIS2 Downloader
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Téléchargement avec WIS2 Downloader
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table des matières">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table des matières
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Introduction
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#utilisation-de-la-vue-catalogue" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Utilisation de la vue Catalogue
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Utilisation de la vue Catalogue">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#exercice-trouver-et-sabonner-a-un-ensemble-de-donnees" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercice : trouver et s'abonner à un ensemble de données
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#utilisation-de-la-vue-arborescence" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Utilisation de la vue Arborescence
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Utilisation de la vue Arborescence">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#exercice-trouver-et-sabonner-via-la-vue-arborescence" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercice : trouver et s'abonner via la vue Arborescence
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#utilisation-de-la-vue-abonnement-manuel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Utilisation de la vue Abonnement manuel
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#telechargement-depuis-un-ensemble-de-donnees-protege-par-un-controle-dacces" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Téléchargement depuis un ensemble de données protégé par un contrôle d'accès
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Téléchargement depuis un ensemble de données protégé par un contrôle d&#39;accès">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#exercice-sabonner-a-un-ensemble-de-donnees-protege-par-un-controle-dacces-sur-votre-wis2box" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercice : s'abonner à un ensemble de données protégé par un contrôle d'accès sur votre wis2box
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#filtrer-les-telechargements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Filtrer les téléchargements
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Filtrer les téléchargements">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#exercice-sabonner-avec-un-filtre" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercice : S'abonner avec un filtre
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conclusion
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../decoding-data/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Décodage des données à partir des formats binaires de l'OMM
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../discovering-datasets-from-wis2-gdc/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Découverte des ensembles de données du WIS2 Global Discovery Catalogue
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    csv2bufr-modèles
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    csv2bufr-modèles
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../csv2bufr-templates/aws-template/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Modèle AWS
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../csv2bufr-templates/daycli-template/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Modèle DAYCLI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../csv2bufr-templates/climat-template/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Modèle CLIMAT
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table des matières">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table des matières
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Introduction
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#utilisation-de-la-vue-catalogue" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Utilisation de la vue Catalogue
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Utilisation de la vue Catalogue">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#exercice-trouver-et-sabonner-a-un-ensemble-de-donnees" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercice : trouver et s'abonner à un ensemble de données
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#utilisation-de-la-vue-arborescence" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Utilisation de la vue Arborescence
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Utilisation de la vue Arborescence">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#exercice-trouver-et-sabonner-via-la-vue-arborescence" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercice : trouver et s'abonner via la vue Arborescence
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#utilisation-de-la-vue-abonnement-manuel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Utilisation de la vue Abonnement manuel
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#telechargement-depuis-un-ensemble-de-donnees-protege-par-un-controle-dacces" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Téléchargement depuis un ensemble de données protégé par un contrôle d'accès
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Téléchargement depuis un ensemble de données protégé par un contrôle d&#39;accès">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#exercice-sabonner-a-un-ensemble-de-donnees-protege-par-un-controle-dacces-sur-votre-wis2box" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercice : s'abonner à un ensemble de données protégé par un contrôle d'accès sur votre wis2box
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#filtrer-les-telechargements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Filtrer les téléchargements
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Filtrer les téléchargements">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#exercice-sabonner-avec-un-filtre" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercice : S'abonner avec un filtre
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conclusion
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="telechargement-avec-wis2-downloader">Téléchargement avec WIS2 Downloader</h1>
+<div class="admonition abstract">
+<p class="admonition-title">Objectifs d'apprentissage !</p>
+<p>À la fin de cette session pratique, vous serez capable de :</p>
+<ul>
+<li>trouver et vous abonner à des ensembles de données</li>
+<li>utiliser des filtres pour contrôler les fichiers téléchargés</li>
+<li>utiliser l'authentification pour télécharger des ensembles de données protégés par un contrôle d'accès</li>
+<li>modifier la configuration par défaut de WIS2 Downloader pour des cas d'utilisation avancés</li>
+</ul>
+</div>
+<h2 id="introduction">Introduction</h2>
+<p>Dans WIS2, tous les ensembles de données possèdent un fichier de métadonnées qui peut être trouvé dans les <strong>Global Discovery Catalogues</strong>. Ainsi, il est prévu que les utilisateurs consultent toujours ces services pour trouver les données partagées sur WIS2.</p>
+<p>WIS2 Downloader utilise ce principe en recherchant tous les enregistrements disponibles dans ces GDCs et en les combinant en interne pour permettre à l'utilisateur de naviguer parmi les données disponibles sur WIS2. Étant donné le grand nombre d'enregistrements à afficher, il est essentiel de fournir un moyen permettant à l'utilisateur de filtrer ces enregistrements et de trouver le bon. Même après avoir trouvé et s'être abonné au bon enregistrement, il peut y avoir des ensembles de données où le nombre de fichiers dépasse les besoins actuels de l'utilisateur. Pour cette raison, un second niveau de filtrage est nécessaire — celui qui opère au moment de décider si un fichier doit être téléchargé.</p>
+<h2 id="utilisation-de-la-vue-catalogue">Utilisation de la vue Catalogue</h2>
+<p>La <strong>vue Catalogue</strong> est l'une des deux façons de trouver et de s'abonner à des ensembles de données dans WIS2 Downloader. Elle regroupe les enregistrements des Global Discovery Catalogues et les présente dans une interface consultable et filtrable — similaire à la navigation directe sur un portail GDC.</p>
+<p>Accédez à la <strong>vue Catalogue</strong> dans la barre latérale gauche.</p>
+<p><img alt="WIS2 Downloader Catalogue View" src="../../../assets/img/wis2-downloader-catalogue-view.png" /></p>
+<p>En haut de la page, vous trouverez une barre de recherche et un ensemble de filtres. Vous pouvez les utiliser pour réduire la liste des enregistrements disponibles par mot-clé, Centre ID ou politique de données (core vs. recommended).</p>
+<p>Vous pouvez également filtrer spatialement en définissant une <strong>boîte englobante</strong> à l'aide de quatre coordonnées — <strong>Nord</strong>, <strong>Ouest</strong>, <strong>Sud</strong> et <strong>Est</strong> — exprimées en valeurs décimales de latitude et de longitude. Lorsque vous définissez une boîte englobante, vous pouvez choisir entre deux modes de correspondance :</p>
+<ul>
+<li><strong>Intersects</strong> — retourne les enregistrements dont l'étendue spatiale chevauche la boîte englobante de quelque manière que ce soit.</li>
+<li><strong>Within</strong> — retourne uniquement les enregistrements dont l'étendue spatiale se trouve entièrement à l'intérieur de la boîte englobante.</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Recharger le catalogue</p>
+<p>Le catalogue est chargé depuis les GDCs lorsque WIS2 Downloader démarre. Si vous pensez que la liste est obsolète, vous pouvez forcer un rechargement depuis la section <strong>Paramètres</strong> dans la barre latérale gauche.</p>
+</div>
+<h3 id="exercice-trouver-et-sabonner-a-un-ensemble-de-donnees">Exercice : trouver et s'abonner à un ensemble de données</h3>
+<div class="admonition question">
+<p class="admonition-title">Trouver un ensemble de données d'observation de surface</p>
+<p>Utilisez les filtres dans la vue Catalogue pour trouver un ensemble de données <strong>core</strong> d'observation de surface lié à la température et aux précipitations.</p>
+<ol>
+<li>Tapez <code>surface</code> dans la barre de recherche et observez comment la liste des enregistrements est filtrée.</li>
+<li>Définissez le filtre de politique de données sur <strong>core</strong>.</li>
+<li>Ajoutez les mots-clés <code>temperature, precipitation</code> et observez comment les résultats changent.</li>
+<li>Sélectionnez un enregistrement parmi les résultats pour afficher ses détails.</li>
+<li>Examinez les métadonnées affichées — notez le sujet, le centre d'origine et la politique de données.</li>
+<li>Définissez le dossier de destination sur <code>surface-obs</code>.</li>
+<li>Cliquez sur <strong>Subscribe</strong> pour créer l'abonnement.</li>
+</ol>
+<p>Après vous être abonné, accédez à <strong>Manage Subscriptions</strong> pour confirmer que le nouvel abonnement apparaît dans la liste.</p>
+</div>
+<details class="success">
+<summary>Cliquez pour révéler la réponse</summary>
+<p>Tout enregistrement dont le sujet contient <code>surface-based-observations</code> et dont la politique de données est <code>core</code> est un choix valide. L'application du filtre de mots-clés <code>temperature, precipitation</code> réduira davantage les résultats aux ensembles de données pertinents pour ces variables.</p>
+<p>Une fois abonné, la vue <strong>Manage Subscriptions</strong> affichera l'abonnement actif avec son sujet et son dossier cible. Les fichiers commenceront à être téléchargés à mesure que de nouvelles notifications arrivent sur le broker.</p>
+</details>
+<div class="admonition note">
+<p class="admonition-title">Se désabonner et supprimer les fichiers téléchargés</p>
+<p>Accédez à la vue <strong>Manage Subscriptions</strong> et cliquez sur <code>Unsubscribe</code> pour le sujet sélectionné dans l'exercice précédent.</p>
+<p>Ensuite, nettoyez le dossier de téléchargements :</p>
+<div class="highlight"><pre><span></span><code>rm<span class="w"> </span>-fr<span class="w"> </span>/home/&lt;username&gt;/wis2-downloads/surface-obs
+</code></pre></div>
+</div>
+<h2 id="utilisation-de-la-vue-arborescence">Utilisation de la vue Arborescence</h2>
+<p>La <strong>vue Arborescence</strong> présente la hiérarchie des sujets WIS2 sous forme d'arborescence repliable, permettant de parcourir les sujets disponibles niveau par niveau — similaire à la navigation des sujets dans MQTT Explorer. Elle est conçue pour une exploration de haut niveau, en partant de la racine de la hiérarchie et en descendant. Cela contraste avec la vue Catalogue, qui vous mène directement aux enregistrements individuels des ensembles de données et est mieux adaptée lorsque vous savez déjà ce que vous recherchez.</p>
+<p>Accédez à la <strong>vue Arborescence</strong> dans la barre latérale gauche.</p>
+<p><img alt="WIS2 Downloader Tree View" src="../../../assets/img/wis2-downloader-tree-view.png" /></p>
+<p>L'arborescence est organisée selon la hiérarchie des sujets WIS2. Développez chaque niveau en cliquant sur un nœud pour révéler ses enfants. À tout niveau, vous pouvez vous abonner en sélectionnant un nœud et en cliquant sur <strong>Subscribe</strong> — en utilisant un caractère générique (<code>#</code>) pour capturer tous les sujets en dessous de ce nœud.</p>
+<div class="admonition note">
+<p class="admonition-title">S'abonner à différents niveaux</p>
+<p>S'abonner plus haut dans l'arborescence (par exemple au niveau du Centre ID) capturera tous les ensembles de données publiés par ce centre. S'abonner plus bas offre un contrôle plus granulaire. Utilisez le suffixe générique <code>#</code> automatiquement ajouté par WIS2 Downloader lors de l'abonnement depuis la vue Arborescence.</p>
+</div>
+<h3 id="exercice-trouver-et-sabonner-via-la-vue-arborescence">Exercice : trouver et s'abonner via la vue Arborescence</h3>
+<div class="admonition question">
+<p class="admonition-title">S'abonner à un ensemble de données via la vue Arborescence</p>
+<p>Utilisez la vue Arborescence pour trouver et vous abonner à des données d'observation de surface provenant d'un centre spécifique.</p>
+<ol>
+<li>Développez l'arborescence en partant du nœud <code>cache</code>, puis naviguez à travers <code>a</code> → <code>wis2</code>.</li>
+<li>Sélectionnez un Centre ID de votre choix et continuez à développer jusqu'à atteindre un sujet lié à <code>surface-based-observations</code>.</li>
+<li>Examinez le chemin complet du sujet affiché — confirmez qu'il correspond à l'ensemble de données souhaité.</li>
+<li>Définissez le dossier de destination sur <code>surface-obs-tree</code>.</li>
+<li>Cliquez sur <strong>Subscribe</strong> pour créer l'abonnement.</li>
+</ol>
+<p>Accédez à <strong>Manage Subscriptions</strong> pour confirmer que l'abonnement est actif.</p>
+</div>
+<details class="success">
+<summary>Cliquez pour révéler la réponse</summary>
+<p>Tout chemin de sujet suivant le modèle <code>cache/a/wis2/&lt;centre-id&gt;/data/core/weather/surface-based-observations/#</code> est un choix valide. Le segment Centre ID variera en fonction du centre sélectionné dans l'arborescence.</p>
+<p>La vue <strong>Manage Subscriptions</strong> affichera le nouvel abonnement aux côtés de ceux créés précédemment.</p>
+</details>
+<div class="admonition note">
+<p class="admonition-title">Se désabonner et supprimer les fichiers téléchargés</p>
+<p>Accédez à la vue <strong>Manage Subscriptions</strong> et cliquez sur <code>Unsubscribe</code> pour le sujet sélectionné dans l'exercice précédent.</p>
+<p>Ensuite, nettoyez le dossier de téléchargements :</p>
+<div class="highlight"><pre><span></span><code>rm<span class="w"> </span>-fr<span class="w"> </span>/home/&lt;username&gt;/wis2-downloads/surface-obs-tree
+</code></pre></div>
+</div>
+<h2 id="utilisation-de-la-vue-abonnement-manuel">Utilisation de la vue Abonnement manuel</h2>
+<p>La <strong>vue Abonnement manuel</strong> vous permet de créer un abonnement en saisissant directement un sujet, sans dépendre des Global Discovery Catalogues. Contrairement aux vues Catalogue et Arborescence — qui tirent leurs sujets des GDCs — l'abonnement manuel est utile lorsque vous connaissez déjà le sujet exact auquel vous souhaitez vous abonner et que vous souhaitez le configurer sans parcourir le catalogue, avec plus de liberté sur le WTH à utiliser.</p>
+<p>Accédez à la <strong>vue Abonnement manuel</strong> dans la barre latérale gauche.</p>
+<p><img alt="WIS2 Downloader Manual Subscribe" src="../../../assets/img/wis2-downloader-manual-subscribe.png" /></p>
+<p>Le formulaire vous permet de spécifier :</p>
+<ul>
+<li><strong>Topic</strong> — le sujet MQTT complet auquel s'abonner, y compris les caractères génériques (par exemple, <code>#</code> et <code>+</code>).</li>
+<li><strong>Destination folder</strong> — le sous-répertoire local où les fichiers téléchargés seront enregistrés.</li>
+<li><strong>Filter</strong> — un objet de filtre optionnel sous forme de texte pour contrôler les notifications téléchargées.</li>
+<li><strong>Priority queue</strong> — contrôle la priorité de téléchargement attribuée aux notifications de cet abonnement.</li>
+<li><strong>Authentication</strong> — les identifiants requis pour les ensembles de données protégés par un contrôle d'accès.</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Quand utiliser l'abonnement manuel</p>
+<p>Utilisez l'abonnement manuel lorsque vous connaissez déjà le sujet exact souhaité et que vous souhaitez le configurer rapidement sans parcourir le catalogue, lorsque le sujet n'est pas inclus dans le catalogue, ou lorsque vous devez fournir des identifiants pour un ensemble de données protégé par un contrôle d'accès.</p>
+</div>
+<h2 id="telechargement-depuis-un-ensemble-de-donnees-protege-par-un-controle-dacces">Téléchargement depuis un ensemble de données protégé par un contrôle d'accès</h2>
+<p>Certains ensembles de données sur WIS2 sont protégés par un contrôle d'accès, ce qui signifie qu'ils nécessitent des identifiants valides avant que les fichiers puissent être téléchargés. WIS2 Downloader prend en charge deux méthodes d'authentification dans la vue Abonnement manuel :</p>
+<ul>
+<li><strong>Authentification HTTP basique</strong> — fournissez un nom d'utilisateur et un mot de passe associés à vos identifiants d'accès.</li>
+<li><strong>Jeton Bearer</strong> — fournissez un jeton délivré par l'éditeur de données à la place d'un nom d'utilisateur et d'un mot de passe.</li>
+</ul>
+<p>Ces identifiants sont stockés par abonnement et appliqués automatiquement lors du téléchargement des fichiers pour ce sujet.</p>
+<h3 id="exercice-sabonner-a-un-ensemble-de-donnees-protege-par-un-controle-dacces-sur-votre-wis2box">Exercice : s'abonner à un ensemble de données protégé par un contrôle d'accès sur votre wis2box</h3>
+<p>Dans cet exercice, vous configurerez un ensemble de données protégé par un contrôle d'accès sur votre instance wis2box, configurerez WIS2 Downloader pour s'abonner à son broker, et vérifierez que les fichiers sont correctement téléchargés lorsqu'un jeton Bearer est fourni.</p>
+<div class="admonition question">
+<p class="admonition-title">Configurer et s'abonner à un ensemble de données protégé par un contrôle d'accès</p>
+<p><strong>Étape 1 — Créer un ensemble de données protégé par un contrôle d'accès sur wis2box</strong></p>
+<p>Sur votre instance wis2box, créez un ensemble de données avec contrôle d'accès activé et notez le sujet et le jeton Bearer généré pour celui-ci. Si vous ne l'avez pas encore fait, consultez la session pratique <a href="../datasets-with-access-control/">Datasets with access control</a> pour les étapes complètes de configuration.</p>
+</div>
+<p><strong>Étape 2 — Configurer WIS2 Downloader pour écouter le broker de wis2box</strong></p>
+<p>Par défaut, WIS2 Downloader écoute le Global Broker. Pour recevoir directement les notifications de votre instance de wis2box, vous devez ajouter un abonné dans le fichier compose de WIS2 Downloader qui pointe vers le broker MQTT interne de wis2box.</p>
+<p>Ouvrez le fichier <code>docker-compose.yml</code> dans le répertoire de WIS2 Downloader et ajoutez la configuration suivante pour l'abonné en remplaçant <code>WIS2BOX_URL</code> par l'URL de votre instance de wis2box :</p>
+<div class="highlight"><pre><span></span><code><span class="w">  </span><span class="nt">subscriber-test</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">container_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">subscriber-test</span>
+<span class="w">    </span><span class="nt">restart</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">always</span>
+<span class="w">    </span><span class="nt">build</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">context</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">.</span>
+<span class="w">      </span><span class="nt">dockerfile</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./containers/subscriber/Dockerfile</span>
+<span class="w">      </span><span class="nt">args</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">WIS2DOWNLOADER_UID</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${WIS2DOWNLOADER_UID:-10001}</span>
+<span class="w">        </span><span class="nt">WIS2DOWNLOADER_GID</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${WIS2DOWNLOADER_GID:-988}</span>
+<span class="w">    </span><span class="nt">env_file</span><span class="p">:</span><span class="w"> </span><span class="nv">*default-env</span>
+<span class="w">    </span><span class="nt">environment</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">GLOBAL_BROKER_HOST</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">WIS2BOX_URL</span>
+<span class="w">      </span><span class="nt">GLOBAL_BROKER_PORT</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">443</span>
+<span class="w">      </span><span class="nt">GLOBAL_BROKER_USERNAME</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">everyone</span>
+<span class="w">      </span><span class="nt">GLOBAL_BROKER_PASSWORD</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">everyone</span>
+<span class="w">      </span><span class="nt">MQTT_PROTOCOL</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">websockets</span>
+<span class="w">    </span><span class="nt">depends_on</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">redis</span>
+<span class="w">    </span><span class="nt">networks</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">redis-net</span>
+<span class="w">    </span><span class="nt">logging</span><span class="p">:</span><span class="w"> </span><span class="nv">*loki-logging</span>
+<span class="w">    </span><span class="nt">healthcheck</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">test</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;CMD&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;pgrep&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;-f&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;subscriber_start&quot;</span><span class="p p-Indicator">]</span>
+<span class="w">      </span><span class="nt">interval</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">30s</span>
+<span class="w">      </span><span class="nt">timeout</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5s</span>
+<span class="w">      </span><span class="nt">retries</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3</span>
+</code></pre></div>
+<p>Redémarrez la stack pour appliquer les modifications :</p>
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>compose<span class="w"> </span>down
+docker<span class="w"> </span>compose<span class="w"> </span>up<span class="w"> </span>-d
+</code></pre></div>
+<p><strong>Étape 3 — S'abonner au dataset dans WIS2 Downloader</strong></p>
+<ol>
+<li>Accédez à <strong>Manual Subscribe</strong> dans l'interface utilisateur de WIS2 Downloader.</li>
+<li>Définissez le topic sur celui configuré pour votre dataset à accès contrôlé sur wis2box.</li>
+<li>Définissez le dossier de destination sur <code>restricted-data</code>.</li>
+<li>Entrez le token bearer généré à l'étape 1 dans le champ <strong>Authentication</strong>.</li>
+<li>Cliquez sur <strong>Subscribe</strong> pour créer l'abonnement.</li>
+</ol>
+<p><strong>Étape 4 — Pousser des données vers le dataset sur wis2box</strong></p>
+<p>Sur votre instance de wis2box, publiez un fichier dans le dataset à accès contrôlé. Consultez la session pratique <a href="../ingesting-data-for-publication/">Ingesting data for publication</a> pour les étapes d'ingestion des données.</p>
+<p><strong>Étape 5 — Vérifier le téléchargement</strong></p>
+<p>Vérifiez que le fichier a été téléchargé par WIS2 Downloader :</p>
+<div class="highlight"><pre><span></span><code>ls<span class="w"> </span>/home/&lt;username&gt;/wis2-downloads/restricted-data
+</code></pre></div>
+<details class="success">
+<summary>Cliquez pour révéler la réponse</summary>
+</details>
+<p>Avec un token bearer valide, WIS2 Downloader s'authentifiera lors du téléchargement des fichiers pour le topic restreint. Le fichier publié à l'étape 4 devrait apparaître dans le dossier <code>restricted-data</code> peu après avoir été ingéré par wis2box.</p>
+<p>Si l'authentification échoue, les fichiers ne seront pas téléchargés même si l'abonnement apparaît actif dans la vue <strong>Manage Subscriptions</strong>. Vérifiez que le token bearer correspond à celui configuré sur le dataset dans wis2box.</p>
+<div class="admonition note">
+<p class="admonition-title">Se désabonner et supprimer les fichiers téléchargés</p>
+</div>
+<p>Accédez à la vue <strong>Manage Subscriptions</strong> et cliquez sur <strong>Unsubscribe</strong> pour le topic, puis nettoyez le dossier de téléchargements :</p>
+<div class="highlight"><pre><span></span><code>rm<span class="w"> </span>-fr<span class="w"> </span>/home/&lt;username&gt;/wis2-downloads/restricted-data
+</code></pre></div>
+<h2 id="filtrer-les-telechargements">Filtrer les téléchargements</h2>
+<p>Les filtres permettent de contrôler quels fichiers sont téléchargés à partir d'un abonnement au niveau des notifications — il s'agit du deuxième niveau de filtrage mentionné dans l'introduction. Plutôt que de télécharger chaque fichier publié sur un topic, vous pouvez définir un filtre afin que seules les notifications correspondant à des critères spécifiques déclenchent un téléchargement.</p>
+<p>Après avoir sélectionné un dataset dans la <strong>Catalogue View</strong> ou la <strong>Tree View</strong>, un panneau de filtre apparaît sur le côté droit de l'écran avant de s'abonner. Ici, vous pouvez remplir les valeurs de filtre que vous souhaitez appliquer. WIS2 Downloader construit automatiquement l'objet filtre à partir de vos entrées.</p>
+<p>Dans la vue <strong>Manual Subscribe</strong>, vous devez saisir cet objet filtre manuellement en remplissant le champ <code>Filter (JSON)</code> dans le formulaire.</p>
+<div class="admonition note">
+<p class="admonition-title">Entrées de filtre disponibles</p>
+</div>
+<ul>
+<li><strong>Type de média</strong> — restreindre les téléchargements à des types de contenu spécifiques (par exemple, <code>application/bufr</code>).</li>
+<li><strong>Dataset</strong> — restreindre les téléchargements à un dataset spécifique par son identifiant de métadonnées.</li>
+<li><strong>Boîte englobante</strong> — restreindre les téléchargements aux notifications dont les données se situent dans une zone spatiale définie par les valeurs <code>north</code>, <code>south</code>, <code>east</code> et <code>west</code>.</li>
+<li><strong>Plage de date et heure</strong> — restreindre les téléchargements aux notifications publiées dans une plage de temps spécifique.</li>
+<li><strong>Filtres personnalisés</strong> — filtrer sur toute autre propriété de notification définie dans l'enregistrement de métadonnées en spécifiant la valeur de la propriété (par exemple, filtrer par <code>wigos_station_identifier</code> pour ne télécharger que les données d'une station spécifique).</li>
+</ul>
+<p>Voici un exemple d'objet filtre généré à partir de ces entrées :</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;rules&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;accept&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;order&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;match&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;all&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">          </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;any&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">              </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;media_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;exists&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">},</span>
+<span class="w">              </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;media_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;in&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;application/bufr&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;application/x-bufr&quot;</span><span class="p">]</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">}</span>
+<span class="w">            </span><span class="p">]</span>
+<span class="w">          </span><span class="p">},</span>
+<span class="w">          </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;metadata_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;in&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;urn:wmo:md:ir-irimo:core.surface-based-observations.temp&quot;</span><span class="p">]</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">},</span>
+<span class="w">          </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;bbox&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;north&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">23.0</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;south&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">27.0</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;east&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">25.0</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;west&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">28.0</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">},</span>
+<span class="w">          </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;property&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;pubtime&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;datetime&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;between&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;2026-06-08T20:00:00+00:00&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;2026-06-09T05:00:59+00:00&quot;</span><span class="p">]</span>
+<span class="w">          </span><span class="p">},</span>
+<span class="w">          </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;property&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;wigos_station_identifier&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;in&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;0-20000-0-78338&quot;</span><span class="p">]</span>
+<span class="w">          </span><span class="p">}</span>
+<span class="w">        </span><span class="p">]</span>
+<span class="w">      </span><span class="p">},</span>
+<span class="w">      </span><span class="nt">&quot;action&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;accept&quot;</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;default&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;order&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">999</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;match&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;always&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w"> </span><span class="p">},</span>
+<span class="w">      </span><span class="nt">&quot;action&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;reject&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;reason&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;No filter criteria matched&quot;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">]</span>
+<span class="p">}</span>
+</code></pre></div>
+<h3 id="exercice-sabonner-avec-un-filtre">Exercice : S'abonner avec un filtre</h3>
+<p>Utilisez la vue Catalogue View pour trouver un dataset d'observations de surface et appliquez un filtre spatial avant de vous abonner.</p>
+<ol>
+<li>Accédez à <strong>Catalogue View</strong> et recherchez un dataset d'observations de surface de votre choix.</li>
+<li>Sélectionnez le dataset pour afficher ses détails dans le panneau de droite.</li>
+<li>Dans les entrées de filtre, définissez une <strong>boîte englobante</strong> pour une région de votre choix.</li>
+<li>Optionnellement, définissez un filtre <strong>type de média</strong> pour restreindre les téléchargements aux fichiers BUFR.</li>
+<li>Définissez le dossier de destination sur <code>filtered-obs</code>.</li>
+<li>Cliquez sur <strong>Subscribe</strong> pour créer l'abonnement.</li>
+</ol>
+<p>Attendez l'arrivée des fichiers et vérifiez que seuls les fichiers correspondant à vos critères de filtre sont téléchargés.</p>
+<details class="success">
+<summary>Cliquez pour révéler la réponse</summary>
+</details>
+<p>Seules les notifications correspondant à toutes les conditions que vous avez définies seront acceptées et téléchargées. Toutes les autres seront rejetées par la règle par défaut.</p>
+<div class="admonition note">
+<p class="admonition-title">Se désabonner et supprimer les fichiers téléchargés</p>
+</div>
+<p>Accédez à la vue <strong>Manage Subscriptions</strong> et cliquez sur <strong>Unsubscribe</strong> pour le topic, puis nettoyez le dossier de téléchargements :</p>
+<div class="highlight"><pre><span></span><code>rm<span class="w"> </span>-fr<span class="w"> </span>/home/&lt;username&gt;/wis2-downloads/filtered-obs
+</code></pre></div>
+<h2 id="conclusion">Conclusion</h2>
+<div class="admonition success">
+<p class="admonition-title">Félicitations !</p>
+</div>
+<p>Dans cette session pratique, vous avez appris à :</p>
+<ul>
+<li>trouver et vous abonner à des datasets en utilisant les vues Catalogue View et Tree View</li>
+<li>vous abonner directement à des topics en utilisant la vue Manual Subscribe</li>
+<li>appliquer des filtres pour contrôler quels fichiers sont téléchargés à partir d'un abonnement</li>
+<li>utiliser l'authentification pour télécharger des datasets à accès contrôlé</li>
+</ul>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      &copy; 2025 World Meteorological Organization
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.indexes", "content.code.copy"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copi\u00e9 dans le presse-papier", "clipboard.copy": "Copier dans le presse-papier", "search.result.more.one": "1 de plus sur cette page", "search.result.more.other": "# de plus sur cette page", "search.result.none": "Aucun document trouv\u00e9", "search.result.one": "1 document trouv\u00e9", "search.result.other": "# documents trouv\u00e9s", "search.result.placeholder": "Taper pour d\u00e9marrer la recherche", "search.result.term.missing": "Non trouv\u00e9", "select.version": "S\u00e9lectionner la version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../../assets/js/disclaimer.js"></script>
+      
+    
+  </body>
+</html>
