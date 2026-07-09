@@ -18,8 +18,8 @@ As part of locally run WIS2 Training workshops, you can access your personal stu
 
 Your student VM has the following software pre-installed:
 
-- Ubuntu 22.04 LTS [ubuntu-22.04.5-live-server-amd64.iso](https://releases.ubuntu.com/jammy/ubuntu-22.04.5-live-server-amd64.iso)
-- Python 3.10.12
+- Ubuntu 24.04 LTS [ubuntu-24.04.3-live-server-amd64.iso](https://releases.ubuntu.com/noble/ubuntu-24.04.3-live-server-amd64.iso)
+- Python 3.12.3
 - Docker 24.0.6
 - Docker Compose 2.21.0
 - Text editors: vim, nano
@@ -32,9 +32,9 @@ Your student VM has the following software pre-installed:
     - AWS (Amazon Web Services)  ec2-instance `t3a.medium` 
     - Azure (Microsoft) Azure Virtual Machine `standard_b2s`
 
-    Select Ubuntu Server 22.0.4 LTS as OS.
+    Select Ubuntu Server 24.04 LTS as OS.
     
-    After creating your VM ensure you have installed python, docker and docker compose, as described at [wis2box-software-dependencies](https://docs.wis2box.wis.wmo.int/en/latest/user/getting-started.html#software-dependencies).
+    After creating your VM ensure you have installed Python, Docker and Docker Compose, as described at [wis2box-software-dependencies](https://docs.wis2box.wis.wmo.int/en/latest/user/getting-started.html#software-dependencies).
     
     The release archive for wis2box used in this training can be downloaded as follows:
 

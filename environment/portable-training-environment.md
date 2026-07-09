@@ -31,9 +31,9 @@ The 'vm-clone-base' template consists of:
 - 2 vCPUs
 - 48 GB local storage
 - 4 GB RAM
-- Ubuntu 22.0.4 LTS with the following system packages installed:
+- Ubuntu 24.04 LTS with the following system packages installed:
     - Docker CE v2.21.0
-    - docker compose 24.0.6
+    - Docker Compose 24.0.6
     - packages installed via `pip3`:
       - minio
       - pywiscat

@@ -18,7 +18,7 @@ SERVER_NAME="${USERNAME}.training.wis2dev.io"
 echo "=== Creating OpenStack server for ${USERNAME} ==="
 openstack server create \
   --flavor 2cpu-4gbmem-30gbdisk \
-  --image Ubuntu-22.04 \
+  --image Ubuntu-24.04 \
   --key-name EWC-mlimper-training \
   --network external-internet \
   --security-group wis2box-security-group \
