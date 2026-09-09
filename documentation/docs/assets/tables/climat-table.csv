@@ -5,7 +5,7 @@ wigos_issue_number, ,Integer,WIGOS Issue Number
 wigos_local_identifier_character, ,Character,WIGOS Local Identifier Character
 block_number, ,Integer,"WMO Block Number,"
 station_number, ,Integer,"WMO Station Number,"
-station_or_site_name, ,Character,Station name
+station_or_site_name, ,Character,Station name (20 Chars maximum!)
 station_type, ,Integer,"Type of observing station, encoded using table 0 02 001 (i.e. 0 for AWSs)"
 year, ,Integer,"Year(UTC), time of report creation"
 month, ,Integer,"Month(UTC), time of report creation"
