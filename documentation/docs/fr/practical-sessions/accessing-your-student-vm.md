@@ -9,7 +9,7 @@ title: Accéder à votre VM étudiant
     À la fin de cette session pratique, vous serez capable de :
 
     - accéder à votre VM étudiant via SSH et WinSCP
-    - vérifier que les logiciels requis pour les exercices pratiques sont installés
+    - vérifier que les logiciels nécessaires aux exercices pratiques sont installés
     - vérifier que vous avez accès aux supports d'exercice pour cette formation sur votre VM étudiant locale
 
 ## Introduction
@@ -18,8 +18,8 @@ Dans le cadre des ateliers de formation WIS2 organisés localement, vous pouvez 
 
 Votre VM étudiant dispose des logiciels suivants préinstallés :
 
-- Ubuntu 22.04 LTS [ubuntu-22.04.5-live-server-amd64.iso](https://releases.ubuntu.com/jammy/ubuntu-22.04.5-live-server-amd64.iso)
-- Python 3.10.12
+- Ubuntu 24.04 LTS [ubuntu-24.04.3-live-server-amd64.iso](https://releases.ubuntu.com/noble/ubuntu-24.04.3-live-server-amd64.iso)
+- Python 3.12.3
 - Docker 24.0.6
 - Docker Compose 2.21.0
 - Éditeurs de texte : vim, nano
@@ -28,13 +28,13 @@ Votre VM étudiant dispose des logiciels suivants préinstallés :
 
     Si vous souhaitez suivre cette formation en dehors d'une session de formation locale, vous pouvez fournir votre propre instance en utilisant n'importe quel fournisseur de cloud, par exemple :
 
-    - GCP (Google Cloud Platform) instance VM `e2-medium`
-    - AWS (Amazon Web Services) instance ec2 `t3a.medium`
-    - Azure (Microsoft) machine virtuelle Azure `standard_b2s`
+    - Instance VM GCP (Google Cloud Platform) `e2-medium`
+    - Instance ec2 AWS (Amazon Web Services) `t3a.medium` 
+    - Machine virtuelle Azure (Microsoft) `standard_b2s`
 
-    Sélectionnez Ubuntu Server 22.0.4 LTS comme système d'exploitation.
+    Sélectionnez Ubuntu Server 24.04 LTS comme système d'exploitation.
     
-    Après avoir créé votre VM, assurez-vous d'avoir installé Python, Docker et Docker Compose, comme décrit sur [wis2box-software-dependencies](https://docs.wis2box.wis.wmo.int/en/latest/user/getting-started.html#software-dependencies).
+    Après avoir créé votre VM, assurez-vous d'avoir installé Python, Docker et Docker Compose, comme décrit dans [wis2box-software-dependencies](https://docs.wis2box.wis.wmo.int/en/latest/user/getting-started.html#software-dependencies).
     
     L'archive de la version de wis2box utilisée dans cette formation peut être téléchargée comme suit :
 
@@ -43,7 +43,7 @@ Votre VM étudiant dispose des logiciels suivants préinstallés :
     unzip wis2box-setup-1.3.0.zip
     ```
     
-    Vous pouvez toujours trouver la dernière archive 'wis2box-setup' sur [https://github.com/World-Meteorological-Organization/wis2box/releases](https://github.com/World-Meteorological-Organization/wis2box-release/releases).
+    Vous pouvez toujours trouver la dernière archive 'wis2box-setup' à [https://github.com/World-Meteorological-Organization/wis2box/releases](https://github.com/World-Meteorological-Organization/wis2box-release/releases).
 
     Les supports d'exercice utilisés dans cette formation peuvent être téléchargés comme suit :
 
@@ -59,18 +59,18 @@ Votre VM étudiant dispose des logiciels suivants préinstallés :
     pip3 install pywiscat
     ```
 
-    Si vous utilisez la VM étudiant fournie lors des sessions de formation WIS2 locales, les logiciels requis seront déjà installés.
+    Si vous utilisez la VM étudiant fournie lors des sessions de formation locales WIS2, les logiciels nécessaires seront déjà installés.
 
-## Se connecter à votre VM étudiant sur le réseau de formation local
+## Connectez-vous à votre VM étudiant sur le réseau de formation local
 
 Connectez votre PC au Wi-Fi local diffusé dans la salle pendant la formation WIS2, conformément aux instructions fournies par le formateur.
 
 Utilisez un client SSH pour vous connecter à votre VM étudiant en utilisant les informations suivantes :
 
-- **Hôte : (fourni pendant la formation en présentiel)**
+- **Hôte : (fourni lors de la formation en présentiel)**
 - **Port : 22**
-- **Nom d'utilisateur : (fourni pendant la formation en présentiel)**
-- **Mot de passe : (fourni pendant la formation en présentiel)**
+- **Nom d'utilisateur : (fourni lors de la formation en présentiel)**
+- **Mot de passe : (fourni lors de la formation en présentiel)**
 
 !!! tip
     Contactez un formateur si vous ne connaissez pas le nom d'hôte/nom d'utilisateur ou si vous rencontrez des problèmes de connexion.
@@ -86,7 +86,7 @@ Retype new password:
 passwd: password updated successfully
 ```
 
-## Vérifier les versions des logiciels
+## Vérifiez les versions des logiciels
 
 Pour pouvoir exécuter wis2box, la VM étudiant doit avoir Python, Docker et Docker Compose préinstallés. 
 
@@ -117,9 +117,9 @@ résultat :
 Docker Compose version v2.21.0
 ```
 
-Pour garantir que votre utilisateur peut exécuter des commandes Docker, il a été ajouté au groupe `docker`.
+Pour garantir que votre utilisateur peut exécuter des commandes Docker, il a été ajouté au groupe `docker`. 
 
-Pour tester que votre utilisateur peut exécuter le conteneur hello-world, exécutez la commande suivante :
+Pour tester que votre utilisateur peut exécuter docker hello-world, exécutez la commande suivante :
 ```bash
 docker run hello-world
 ```
@@ -135,7 +135,7 @@ This message shows that your installation appears to be working correctly.
 ...
 ```
 
-## Inspecter les supports d'exercice
+## Inspectez les supports d'exercice
 
 Inspectez le contenu de votre répertoire personnel ; ce sont les supports utilisés dans le cadre de la formation et des sessions pratiques.
 
@@ -167,5 +167,5 @@ Vous devriez maintenant être en mesure de voir le contenu du répertoire person
     Au cours de cette session pratique, vous avez appris à :
 
     - accéder à votre VM étudiant via SSH et WinSCP
-    - vérifier que les logiciels requis pour les exercices pratiques sont installés
+    - vérifier que les logiciels nécessaires aux exercices pratiques sont installés
     - vérifier que vous avez accès aux supports d'exercice pour cette formation sur votre VM étudiant locale
