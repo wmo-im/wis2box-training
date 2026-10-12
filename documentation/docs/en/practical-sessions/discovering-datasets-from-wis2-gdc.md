@@ -8,11 +8,11 @@ title: Discovering datasets from the WIS2 Global Discovery Catalogue
 
     By the end of this practical session, you will be able to:
 
-    - use pywiscat to discover datasets from the Global Discovery Catalogue (GDC)
+    - use pywmocat to discover datasets from the Global Discovery Catalogue (GDC)
 
 ## Introduction
 
-In this session you will learn how to discover data from the WIS2 Global Discovery Catalogue (GDC) using [pywiscat](https://github.com/wmo-im/pywiscat), a command line tool to search and retrieve metadata from a WIS2 GDC.
+In this session you will learn how to discover data from the WIS2 Global Discovery Catalogue (GDC) using [pywmocat](https://github.com/wmo-im/pywmocat), a command line tool to search and retrieve metadata from a WIS2 GDC.
 
 At the moment, the following GDCs are available:
 
@@ -28,11 +28,11 @@ During local training sessions, a local GDC is set up to allow participants to q
 !!! note
     Before starting please login to your student VM.
 
-## Installing pywiscat
+## Installing pywmocat
 
-Use the `pip3` Python package installer to install pywiscat on your VM:
+Use the `pip3` Python package installer to install pywmocat on your VM:
 ```bash
-pip3 install pywiscat
+pip3 install pywmocat
 ```
 
 !!! note
@@ -40,7 +40,7 @@ pip3 install pywiscat
     If you encounter the following error:
 
     ```
-    WARNING: The script pywiscat is installed in '/home/username/.local/bin' which is not on PATH.
+    WARNING: The script pywmocat is installed in '/home/username/.local/bin' which is not on PATH.
     Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
     ```
 
@@ -55,30 +55,30 @@ pip3 install pywiscat
 Verify that the installation was successful:
 
 ```bash
-pywiscat --version
+pywmocat --version
 ```
 
-## Finding data with pywiscat
+## Finding data with pywmocat
 
 By default, pywsicat connects to Global Discovery Catalogue (GDC) hosted by Environment and Climate Change Canada (ECCC).
 
 !!! note "Changing the GDC URL"
-    If you are doing this exercise during a local training session, you can configure pywiscat to query the local GDC by setting the `PYWISCAT_GDC_URL` environment variable:
+    If you are doing this exercise during a local training session, you can configure pywmocat to query the local GDC by setting the `PYWISCAT_GDC_URL` environment variable:
 
     ```bash
-    export PYWISCAT_GDC_URL=http://gdc.training.wis2dev.io/collections/wis2-discovery-metadata
+    export PYWMOCAT_WIS2_GDC_URL=http://gdc.training.wis2dev.io/collections/wis2-discovery-metadata
     ```
 
 To see the available options, run:
 
 ```bash
-pywiscat search --help
+pywmocat wis2-gdc search --help
 ```
 
 You can search the GDC for all records:
 
 ```bash
-pywiscat search
+pywmocat wis2-gdc search
 ```
 
 !!! question
@@ -91,7 +91,7 @@ pywiscat search
 Let's try querying the GDC with a keyword:
 
 ```bash
-pywiscat search -q observations
+pywmocat wis2-gdc search -q observations
 ```
 
 !!! question
@@ -119,7 +119,7 @@ Try additional queries with `-q`
 Let's get more details on a specific search result that we are interested in:
 
 ```bash
-pywiscat get <id>
+pywmocat wis2-gdc get <id>
 ```
 
 !!! tip
@@ -133,5 +133,5 @@ pywiscat get <id>
 
     In this practical session, you learned how to:
 
-    - use pywiscat to discover datasets from the WIS2 Global Discovery Catalogue
+    - use pywmocat to discover datasets from the WIS2 Global Discovery Catalogue
 
