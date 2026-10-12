@@ -1,18 +1,18 @@
 ---
-title: Découverte des ensembles de données du WIS2 Global Discovery Catalogue
+title: Découverte des ensembles de données du Global Discovery Catalogue de WIS2
 ---
 
-# Découverte des ensembles de données du WIS2 Global Discovery Catalogue
+# Découverte des ensembles de données du Global Discovery Catalogue de WIS2
 
 !!! abstract "Objectifs d'apprentissage !"
 
     À la fin de cette session pratique, vous serez capable de :
 
-    - utiliser pywiscat pour découvrir des ensembles de données dans le Global Discovery Catalogue (GDC)
+    - utiliser pywmocat pour découvrir des ensembles de données dans le Global Discovery Catalogue (GDC)
 
 ## Introduction
 
-Dans cette session, vous apprendrez à découvrir des données dans le WIS2 Global Discovery Catalogue (GDC) en utilisant [pywiscat](https://github.com/wmo-im/pywiscat), un outil en ligne de commande permettant de rechercher et récupérer des métadonnées depuis un WIS2 GDC.
+Dans cette session, vous apprendrez à découvrir des données dans le Global Discovery Catalogue (GDC) de WIS2 en utilisant [pywmocat](https://github.com/wmo-im/pywmocat), un outil en ligne de commande permettant de rechercher et de récupérer des métadonnées depuis un GDC de WIS2.
 
 Actuellement, les GDC suivants sont disponibles :
 
@@ -20,18 +20,18 @@ Actuellement, les GDC suivants sont disponibles :
 - Administration météorologique de Chine : <https://gdc.wis.cma.cn/collections/wis2-discovery-metadata>
 - Deutscher Wetterdienst : <https://wis2.dwd.de/gdc/collections/wis2-discovery-metadata>
 
-Lors des sessions de formation locales, un GDC local est configuré pour permettre aux participants d'interroger le GDC pour les métadonnées qu'ils ont publiées depuis leurs instances wis2box. Dans ce cas, les formateurs fourniront l'URL du GDC local.
+Lors des sessions de formation locales, un GDC local est configuré pour permettre aux participants de consulter le GDC pour les métadonnées qu'ils ont publiées depuis leurs instances de wis2box. Dans ce cas, les formateurs fourniront l'URL du GDC local.
 
 ## Préparation
 
 !!! note
     Avant de commencer, veuillez vous connecter à votre VM étudiant.
 
-## Installation de pywiscat
+## Installation de pywmocat
 
-Utilisez l'installateur de paquets Python `pip3` pour installer pywiscat sur votre VM :
+Utilisez l'installateur de paquets Python `pip3` pour installer pywmocat sur votre VM :
 ```bash
-pip3 install pywiscat
+pip3 install pywmocat
 ```
 
 !!! note
@@ -39,7 +39,7 @@ pip3 install pywiscat
     Si vous rencontrez l'erreur suivante :
 
     ```
-    WARNING: The script pywiscat is installed in '/home/username/.local/bin' which is not on PATH.
+    WARNING: The script pywmocat is installed in '/home/username/.local/bin' which is not on PATH.
     Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
     ```
 
@@ -54,30 +54,30 @@ pip3 install pywiscat
 Vérifiez que l'installation a réussi :
 
 ```bash
-pywiscat --version
+pywmocat --version
 ```
 
-## Recherche de données avec pywiscat
+## Recherche de données avec pywmocat
 
-Par défaut, pywiscat se connecte au Global Discovery Catalogue (GDC) hébergé par Environnement et Changement Climatique Canada (ECCC).
+Par défaut, pywmocat se connecte au Global Discovery Catalogue (GDC) hébergé par Environnement et Changement Climatique Canada (ECCC).
 
 !!! note "Changer l'URL du GDC"
-    Si vous effectuez cet exercice pendant une session de formation locale, vous pouvez configurer pywiscat pour interroger le GDC local en définissant la variable d'environnement `PYWISCAT_GDC_URL` :
+    Si vous effectuez cet exercice lors d'une session de formation locale, vous pouvez configurer pywmocat pour interroger le GDC local en définissant la variable d'environnement `PYWISCAT_GDC_URL` :
 
     ```bash
-    export PYWISCAT_GDC_URL=http://gdc.training.wis2dev.io/collections/wis2-discovery-metadata
+    export PYWMOCAT_WIS2_GDC_URL=http://gdc.training.wis2dev.io/collections/wis2-discovery-metadata
     ```
 
 Pour voir les options disponibles, exécutez :
 
 ```bash
-pywiscat search --help
+pywmocat wis2-gdc search --help
 ```
 
-Vous pouvez rechercher dans le GDC tous les enregistrements :
+Vous pouvez rechercher tous les enregistrements dans le GDC :
 
 ```bash
-pywiscat search
+pywmocat wis2-gdc search
 ```
 
 !!! question
@@ -85,12 +85,12 @@ pywiscat search
     Combien d'enregistrements sont retournés par la recherche ?
 
 ??? success "Cliquez pour révéler la réponse"
-    Le nombre d'enregistrements dépend du GDC que vous interrogez. Lors de l'utilisation du GDC de formation locale, vous devriez constater que le nombre d'enregistrements est égal au nombre d'ensembles de données qui ont été intégrés dans le GDC pendant les autres sessions pratiques.
+    Le nombre d'enregistrements dépend du GDC que vous interrogez. Lors de l'utilisation du GDC de formation locale, vous devriez constater que le nombre d'enregistrements est égal au nombre d'ensembles de données qui ont été intégrés dans le GDC au cours des autres sessions pratiques.
 
 Essayons de rechercher dans le GDC avec un mot-clé :
 
 ```bash
-pywiscat search -q observations
+pywmocat wis2-gdc search -q observations
 ```
 
 !!! question
@@ -98,7 +98,7 @@ pywiscat search -q observations
     Quelle est la politique de données des résultats ?
 
 ??? success "Cliquez pour révéler la réponse"
-    Toutes les données retournées doivent spécifier "core" data.
+    Toutes les données retournées devraient spécifier des données "core".
 
 Essayez des recherches supplémentaires avec `-q`.
 
@@ -113,22 +113,22 @@ Essayez des recherches supplémentaires avec `-q`.
     - `-q "synop OR temp"` : trouver tous les enregistrements contenant "synop" ou "temp"
     - `-q "obs*"` : recherche approximative
 
-    Lors de la recherche de termes avec des espaces, utilisez des guillemets doubles.
+    Lors de la recherche de termes contenant des espaces, utilisez des guillemets doubles.
 
 Obtenons plus de détails sur un résultat de recherche spécifique qui nous intéresse :
 
 ```bash
-pywiscat get <id>
+pywmocat wis2-gdc get <id>
 ```
 
 !!! tip
 
-    Utilisez la valeur `id` de la recherche précédente.
+    Utilisez la valeur `id` obtenue lors de la recherche précédente.
 
 ## Conclusion
 
 !!! success "Félicitations !"
 
-    Dans cette session pratique, vous avez appris à :
+    Lors de cette session pratique, vous avez appris à :
 
-    - utiliser pywiscat pour découvrir des ensembles de données dans le WIS2 Global Discovery Catalogue
+    - utiliser pywmocat pour découvrir des ensembles de données dans le Global Discovery Catalogue de WIS2

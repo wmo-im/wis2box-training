@@ -8,30 +8,30 @@ title: 从 WIS2 全球发现目录中发现数据集
 
     在本次实践课程结束时，您将能够：
 
-    - 使用 pywiscat 从全球发现目录 (GDC) 中发现数据集
+    - 使用 pywmocat 从 Global Discovery Catalogue (GDC) 中发现数据集
 
 ## 介绍
 
-在本次课程中，您将学习如何使用 [pywiscat](https://github.com/wmo-im/pywiscat) 从 WIS2 全球发现目录 (GDC) 中发现数据。pywiscat 是一个命令行工具，用于从 WIS2 GDC 中搜索和检索元数据。
+在本次课程中，您将学习如何使用 [pywmocat](https://github.com/wmo-im/pywmocat) 从 WIS2 全球发现目录 (GDC) 中发现数据。pywmocat 是一个命令行工具，用于搜索和检索 WIS2 GDC 的元数据。
 
 目前，可用的 GDC 包括：
 
-- 加拿大环境与气候变化部，加拿大气象服务：<https://wis2-gdc.weather.gc.ca/collections/wis2-discovery-metadata>
+- 加拿大环境与气候变化部，加拿大气象局：<https://wis2-gdc.weather.gc.ca/collections/wis2-discovery-metadata>
 - 中国气象局：<https://gdc.wis.cma.cn/collections/wis2-discovery-metadata>
 - 德国气象局：<https://wis2.dwd.de/gdc/collections/wis2-discovery-metadata>
 
-在本地培训课程中，会设置一个本地 GDC，允许参与者查询他们从 wis2box-instances 发布的元数据。在这种情况下，培训师将提供本地 GDC 的 URL。
+在本地培训课程中，会设置一个本地 GDC，允许参与者查询他们从各自的 wis2box 实例发布的元数据。在这种情况下，培训师会提供本地 GDC 的 URL。
 
 ## 准备工作
 
 !!! note
     开始之前，请登录到您的学生虚拟机 (VM)。
 
-## 安装 pywiscat
+## 安装 pywmocat
 
-使用 `pip3` Python 包安装工具在您的虚拟机上安装 pywiscat：
+使用 `pip3` Python 包管理器在您的虚拟机上安装 pywmocat：
 ```bash
-pip3 install pywiscat
+pip3 install pywmocat
 ```
 
 !!! note
@@ -39,45 +39,45 @@ pip3 install pywiscat
     如果您遇到以下错误：
 
     ```
-    WARNING: The script pywiscat is installed in '/home/username/.local/bin' which is not on PATH.
+    WARNING: The script pywmocat is installed in '/home/username/.local/bin' which is not on PATH.
     Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
     ```
 
-    请运行以下命令：
+    那么请运行以下命令：
 
     ```bash
     export PATH=$PATH:/home/$USER/.local/bin
     ```
 
-    ...其中 `$USER` 是您虚拟机上的用户名。
+    ...其中 `$USER` 是您在虚拟机上的用户名。
 
 验证安装是否成功：
 
 ```bash
-pywiscat --version
+pywmocat --version
 ```
 
-## 使用 pywiscat 查找数据
+## 使用 pywmocat 查找数据
 
-默认情况下，pywiscat 连接到由加拿大环境与气候变化部 (ECCC) 托管的全球发现目录 (GDC)。
+默认情况下，pywmocat 连接到由加拿大环境与气候变化部 (ECCC) 托管的 Global Discovery Catalogue (GDC)。
 
 !!! note "更改 GDC URL"
-    如果您在本地培训课程中进行此练习，可以通过设置 `PYWISCAT_GDC_URL` 环境变量来配置 pywiscat 查询本地 GDC：
+    如果您在本地培训课程中进行此练习，可以通过设置环境变量 `PYWISCAT_GDC_URL` 来配置 pywmocat 查询本地 GDC：
 
     ```bash
-    export PYWISCAT_GDC_URL=http://gdc.training.wis2dev.io/collections/wis2-discovery-metadata
+    export PYWMOCAT_WIS2_GDC_URL=http://gdc.training.wis2dev.io/collections/wis2-discovery-metadata
     ```
 
 查看可用选项，请运行：
 
 ```bash
-pywiscat search --help
+pywmocat wis2-gdc search --help
 ```
 
 您可以搜索 GDC 中的所有记录：
 
 ```bash
-pywiscat search
+pywmocat wis2-gdc search
 ```
 
 !!! question
@@ -85,32 +85,32 @@ pywiscat search
     搜索返回了多少条记录？
 
 ??? success "点击查看答案"
-    返回的记录数量取决于您查询的 GDC。在使用本地培训 GDC 时，您应该看到记录数量等于在其他实践课程中已被导入 GDC 的数据集数量。
+    返回的记录数量取决于您查询的 GDC。当使用本地培训 GDC 时，您应该会看到记录数量等于其他实践课程中已导入 GDC 的数据集数量。
 
 让我们尝试使用关键字查询 GDC：
 
 ```bash
-pywiscat search -q observations
+pywmocat wis2-gdc search -q observations
 ```
 
 !!! question
 
-    结果的数据政策是什么？
+    查询结果的数据政策是什么？
 
 ??? success "点击查看答案"
-    所有返回的数据应指定为“核心”数据。
+    所有返回的数据都应指定为 "core" 数据。
 
 尝试使用 `-q` 进行其他查询。
 
 !!! tip
 
-    `-q` 标志允许以下语法：
+    `-q` 标志允许使用以下语法：
 
-    - `-q synop`：查找所有包含单词“synop”的记录
-    - `-q temp`：查找所有包含单词“temp”的记录
-    - `-q "observations AND oman"`：查找所有包含单词“observations”和“oman”的记录
-    - `-q "observations NOT oman"`：查找所有包含单词“observations”但不包含单词“oman”的记录
-    - `-q "synop OR temp"`：查找所有包含“synop”或“temp”的记录
+    - `-q synop`：查找包含单词 "synop" 的所有记录
+    - `-q temp`：查找包含单词 "temp" 的所有记录
+    - `-q "observations AND oman"`：查找包含单词 "observations" 和 "oman" 的所有记录
+    - `-q "observations NOT oman"`：查找包含单词 "observations" 但不包含单词 "oman" 的所有记录
+    - `-q "synop OR temp"`：查找包含 "synop" 或 "temp" 的所有记录
     - `-q "obs*"`：模糊搜索
 
     当搜索包含空格的术语时，请使用双引号括起来。
@@ -118,12 +118,12 @@ pywiscat search -q observations
 让我们获取我们感兴趣的特定搜索结果的更多详细信息：
 
 ```bash
-pywiscat get <id>
+pywmocat wis2-gdc get <id>
 ```
 
 !!! tip
 
-    使用之前搜索结果中的 `id` 值。
+    使用上一条搜索结果中的 `id` 值。
 
 ## 总结
 
@@ -131,4 +131,4 @@ pywiscat get <id>
 
     在本次实践课程中，您学习了如何：
 
-    - 使用 pywiscat 从 WIS2 全球发现目录中发现数据集
+    - 使用 pywmocat 从 WIS2 全球发现目录中发现数据集
