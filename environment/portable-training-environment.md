@@ -36,7 +36,7 @@ The 'vm-clone-base' template consists of:
     - docker compose 24.0.6
     - packages installed via `pip3`:
       - minio
-      - pywiscat
+      - pywmocat
 
 Each vm-clone-base should have been prepared with the wis2box-images for the wis2box-release to be used during the training.
 See https://github.com/World-Meteorological-Organization/wis2box-release/blob/1.0.0/docker-compose.images.yml
